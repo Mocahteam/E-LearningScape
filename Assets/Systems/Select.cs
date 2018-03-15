@@ -4,7 +4,7 @@ using FYFY_plugins.PointerManager;
 
 public class Select : FSystem {
 
-    private Family objects = FamilyManager.getFamily(new AnyOfTags("Object", "Plank", "Box", "Tablet", "TableE05"), new AllOfComponents(typeof(Selectable)));
+    private Family objects = FamilyManager.getFamily(new AnyOfTags("Object", "Plank", "Box", "Tablet", "TableE05", "Sheet"), new AllOfComponents(typeof(Selectable)));
     private Family tObjects = FamilyManager.getFamily(new AnyOfTags("Object", "Box", "Tablet", "TableE05"), new AllOfComponents(typeof(Selectable), typeof(Takable)));
 
     // Use this to update member variables when system pause. 

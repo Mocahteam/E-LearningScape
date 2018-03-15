@@ -8,7 +8,7 @@ using TMPro;
 
 public class ShowUI : FSystem {
 
-    private Family objects = FamilyManager.getFamily(new AnyOfTags("Object", "Plank", "Box", "Tablet", "TableE05"), new AllOfComponents(typeof(Selectable)));
+    private Family objects = FamilyManager.getFamily(new AnyOfTags("Object", "Plank", "Box", "Tablet", "TableE05", "Sheet"), new AllOfComponents(typeof(Selectable)));
     private Family buttons = FamilyManager.getFamily(new AllOfComponents(typeof(Button)));
     private Family ui = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
@@ -62,6 +62,9 @@ public class ShowUI : FSystem {
     private GameObject focusedTable = null;
     private Vector3 camNewDir;
     private Vector3 newDir;
+    private bool onSheet = false;
+    private GameObject focusedSheet;
+    private Quaternion rotBeforeSheet;
 
 
     public ShowUI()
@@ -458,6 +461,31 @@ public class ShowUI : FSystem {
                                         onTable = true;
                                         moveToTable = true;
                                     }
+                                    else if(go.tag == "Sheet")
+                                    {
+                                        focusedSheet = go;
+                                        onSheet = true;
+                                        foreach (Transform ch in c.transform)
+                                        {
+                                            if (ch.gameObject.name == "Close")
+                                            {
+                                                //if (go.GetComponentsInChildren<Image>().Length == 3)
+                                                ch.gameObject.GetComponent<RectTransform>().localPosition = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth;
+                                                ch.gameObject.GetComponent<RectTransform>().localPosition = ch.gameObject.GetComponent<RectTransform>().localPosition - new Vector3(ch.gameObject.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, ch.gameObject.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                                            }
+                                        }
+                                        Camera.main.transform.localRotation = Quaternion.Euler(0, 0, 0); //make an animation rather than this
+                                        rotBeforeSheet = focusedSheet.transform.rotation;
+                                        focusedSheet.transform.rotation = Quaternion.RotateTowards(focusedSheet.transform.rotation,Quaternion.Euler(0, player.First().transform.rotation.eulerAngles.y-90, 0), 360);
+                                        foreach(Transform canvas in focusedSheet.transform)
+                                        {
+                                            if(canvas.gameObject.name == "Display")
+                                            {
+                                                canvas.GetComponent<Canvas>().planeDistance = 0.33f;
+                                                canvas.gameObject.SetActive(true);
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -691,6 +719,17 @@ public class ShowUI : FSystem {
                     }
                     moveToTable = true;
                 }
+                else if (onSheet)
+                {
+                    focusedSheet.transform.rotation = rotBeforeSheet;
+                    foreach (Canvas canvas in focusedSheet.GetComponentsInChildren<Canvas>())
+                    {
+                        if (canvas.gameObject.name == "Display")
+                        {
+                            canvas.gameObject.SetActive(false);
+                        }
+                    }
+                }
                 c.SetActive(false);
             }
             else if (c.name == "Cursor")
@@ -708,6 +747,7 @@ public class ShowUI : FSystem {
                 break;
             }
         }
+        onSheet = false;
         onPlank = false;
         onBox = false;
         onTablet = false;

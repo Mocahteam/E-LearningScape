@@ -21,6 +21,7 @@ TagManager:
   - ChangeRoom
   - WrongTimerText
   - TableE05
+  - Sheet
   layers:
   - Default
   - TransparentFX
