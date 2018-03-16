@@ -13,6 +13,7 @@ public class Pause : FSystem {
 
     public Pause()
     {
+        //initialise pause menu's buttons with listeners
         foreach(GameObject ui in canvas)
         {
             if(ui.name == "PauseMenu")
@@ -37,7 +38,7 @@ public class Pause : FSystem {
                             break;
                     }
                 }
-                ui.SetActive(false);
+                ui.SetActive(false);    //hide pause menu at the beginning
             }
         }
     }
@@ -54,11 +55,11 @@ public class Pause : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return)) //when entre key is pressed (the big one, not num pad)
         {
             if (gamePaused)
             {
-                Resume();
+                Resume(); //resume the game if it was paused
             }
             else
             {
@@ -66,17 +67,18 @@ public class Pause : FSystem {
                 {
                     if (ui.name == "PauseMenu")
                     {
-                        ui.SetActive(true);
+                        ui.SetActive(true); //show pause menu
                     }
                 }
                 foreach(FSystem s in FSystemManager.updateSystems())
                 {
-                    if(s.ToString() != "Pause" && s.ToString() != "TimerSystem")
+                    //stop all FYFY systems but "Pause" and the timer
+                    if (s.ToString() != "Pause" && s.ToString() != "TimerSystem")
                     {
                         s.Pause = true;
                     }
                 }
-                playerEnabled = player.First().GetComponent<FirstPersonController>().enabled;
+                playerEnabled = player.First().GetComponent<FirstPersonController>().enabled; //save the playing state of the player (moving or object selected/using cursor)
                 //disable player moves
                 player.First().GetComponent<FirstPersonController>().enabled = false;
                 Cursor.lockState = CursorLockMode.None;
@@ -87,21 +89,19 @@ public class Pause : FSystem {
         }
 	}
 
-    void Resume()
+    void Resume()   //resume game
     {
         foreach (GameObject ui in canvas)
         {
             if (ui.name == "PauseMenu")
             {
-                ui.SetActive(false);
+                ui.SetActive(false); // hide pause menu
             }
         }
+        //unpause all FYFY systems
         foreach (FSystem s in FSystemManager.updateSystems())
         {
-            if (s.ToString() != "Pause" && s.ToString() != "TimerSystem")
-            {
-                s.Pause = false;
-            }
+            s.Pause = false;
         }
         if (playerEnabled)
         {
@@ -114,12 +114,12 @@ public class Pause : FSystem {
         gamePaused = false;
     }
 
-    void Restart()
+    void Restart() //restart game from beginning
     {
 
     }
 
-    void GoToMenu()
+    void GoToMenu() //open menu scene
     {
         GameObjectManager.loadScene("Menu");
     }

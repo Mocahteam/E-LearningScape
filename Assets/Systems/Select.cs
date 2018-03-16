@@ -4,8 +4,13 @@ using FYFY_plugins.PointerManager;
 
 public class Select : FSystem {
 
+    //all selectable objects
     private Family objects = FamilyManager.getFamily(new AnyOfTags("Object", "Plank", "Box", "Tablet", "TableE05", "Sheet"), new AllOfComponents(typeof(Selectable)));
+    //all takable objects
     private Family tObjects = FamilyManager.getFamily(new AnyOfTags("Object", "Box", "Tablet", "TableE05"), new AllOfComponents(typeof(Selectable), typeof(Takable)));
+
+    private GameObject focused;
+    private bool selected = false;
 
     // Use this to update member variables when system pause. 
     // Advice: avoid to update your families inside this function.
@@ -19,19 +24,22 @@ public class Select : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        GameObject focused = null; //slected or mouse over object
-        bool selected = false;
+        focused = null; //selected or mouse over object
+        selected = false;   //initial value
 
         foreach(GameObject go in objects)
         {
             foreach(Transform child in go.transform)
             {
+                //hide all gameobject's "Mouse over overlay"
                 if(child.gameObject.tag == "MouseOver" && child.gameObject.activeSelf)
                 {
                     child.gameObject.SetActive(false);
                     go.GetComponent<Selectable>().focused = false;
                 }
             }
+
+            //if the gameobject is selected, save it as focused object
             if (go.GetComponent<Selectable>().isSelected)
             {
                 focused = go;
@@ -39,8 +47,9 @@ public class Select : FSystem {
             }
         }
 
-        if (!selected)
+        if (!selected) //if there is no selected objects
         {
+            //if an object is taken, save it as focused object
             if (Takable.objectTaken)
             {
                 foreach(GameObject go in tObjects)
@@ -54,6 +63,9 @@ public class Select : FSystem {
             }
             else
             {
+                /*look for the first selectable object in the direction of the player (on the cursor)
+                 * and save it as focused object
+                 */
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
                 {
@@ -71,13 +83,15 @@ public class Select : FSystem {
             }
         }
 
-        if (focused)
+        if (focused)    //if there is a focused object
         {
+            //if the player clicks on the object while it is not taken, select it
             if (Input.GetMouseButtonDown(0) && !Takable.objectTaken)
             {
                 focused.GetComponent<Selectable>().isSelected = true;
                 Selectable.selected = true;
             }
+            //if the object isn't the plank or the box and is selected, show the mouse over overlay
             if(!((focused.tag == "Plank" || focused.tag == "Box") && focused.GetComponent<Selectable>().isSelected))
             {
                 foreach (Transform child in focused.transform)

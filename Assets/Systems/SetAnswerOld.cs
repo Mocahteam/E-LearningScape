@@ -2,7 +2,7 @@
 using FYFY;
 using UnityEngine.UI;
 
-public class SetAnswerOld : FSystem {
+public class SetAnswerOld : FSystem { //set answer for first prototype (not used anymore)
 
     private Family canvas = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
     private Family objects = FamilyManager.getFamily(new AnyOfTags("Object"), new AllOfComponents(typeof(Selectable)));

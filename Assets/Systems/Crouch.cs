@@ -15,6 +15,7 @@ public class Crouch : FSystem
 
     public Crouch()
     {
+        //when crouching, the scale of the player is changed (rather than its position)
         crouchingScale = new Vector3(0.2f, 0.2f, 0.2f);
     }
 
@@ -30,11 +31,12 @@ public class Crouch : FSystem
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        if (!Selectable.selected)
+        if (!Selectable.selected)   //if nothing is selected (the player can't move when an object is selected)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E))    //when "e" is pressed
             {
-                changingPose = true;
+                changingPose = true; //true when the player is crouching or standing
+                //change moving speed according to the stance
                 if (crouching)
                 {
                     player.First().GetComponent<FirstPersonController>().m_WalkSpeed = 5;
@@ -47,24 +49,26 @@ public class Crouch : FSystem
                 }
             }
         }
+
+        //if the player is changing stance
         if (changingPose)
         {
             if (crouching)
             {
-                player.First().transform.localScale = Vector3.MoveTowards(player.First().transform.localScale, standingScale, crouchingSpeed/10);
-                if(player.First().transform.localScale == standingScale)
+                player.First().transform.localScale = Vector3.MoveTowards(player.First().transform.localScale, standingScale, crouchingSpeed/10); //change stance gradually
+                if(player.First().transform.localScale == standingScale) //when standing scale is reached
                 {
                     changingPose = false;
-                    crouching = !crouching;
+                    crouching = !crouching; //true when the player is crouching
                 }
             }
             else
             {
-                player.First().transform.localScale = Vector3.MoveTowards(player.First().transform.localScale, crouchingScale, crouchingSpeed/10);
-                if (player.First().transform.localScale == crouchingScale)
+                player.First().transform.localScale = Vector3.MoveTowards(player.First().transform.localScale, crouchingScale, crouchingSpeed/10); //change stance gradually
+                if (player.First().transform.localScale == crouchingScale) //when crouching scale is reached
                 {
                     changingPose = false;
-                    crouching = !crouching;
+                    crouching = !crouching; //true when the player is crouching
                 }
             }
         }
