@@ -83,6 +83,8 @@ public class ShowUI : FSystem {
     private GameObject focusedSheet;    //store the focused sheet
     private Quaternion rotBeforeSheet;  //rotation of the sheet before selection
 
+    private bool onObject = false;
+
 
     public ShowUI()
     {
@@ -417,136 +419,157 @@ public class ShowUI : FSystem {
                 if (go.GetComponent<Selectable>().isSelected)   //if a gameobject is selected
                 {
                     noSelection = false;
-                    //show ui
+                    //set and show ui
                     foreach(GameObject c in ui)
                     {
                         if(c.name == "UI")
                         {
                             c.SetActive(true);
-                            foreach (Transform child in c.transform)
+                            if (go.tag == "Object") //set ui for gameobjects with tag "object"
                             {
-                                if (child.gameObject.name == "Window")
+                                foreach (Transform child in c.transform)
                                 {
-                                    child.gameObject.SetActive(false);
-                                    if (go.tag == "Object")
+                                    if (child.gameObject.name == "Window")
                                     {
+                                        //show a window (used in the first prototype)
                                         child.gameObject.SetActive(true);
+                                        onObject = true;
                                     }
-                                    else if(go.tag == "Plank")
+                                }
+                            }
+                            else if(go.tag == "Plank")  //set plank
+                            {
+                                //the position in front of the plank is not the same depending on the scale of the player
+                                if(player.First().transform.localScale.x < 0.9f)
+                                {
+                                    plankPos = new Vector3(plank.First().transform.position.x + 1.5f, 1.6f, plank.First().transform.position.z);
+                                }
+                                else
+                                {
+                                    plankPos = new Vector3(plank.First().transform.position.x + 1.5f, 0.98f, plank.First().transform.position.z);
+                                }
+                                //calculate the correct speed so that the translation and the rotation finish at the same time
+                                dist = (plankPos - player.First().transform.position).magnitude;
+                                foreach (Transform t in player.First().transform)
+                                {
+                                    if (t.gameObject.tag == "MainCamera")
                                     {
-                                        if(player.First().transform.localScale.x < 0.9f)
-                                        {
-                                            plankPos = new Vector3(plank.First().transform.position.x + 1.5f, 1.6f, plank.First().transform.position.z);
-                                        }
-                                        else
-                                        {
-                                            plankPos = new Vector3(plank.First().transform.position.x + 1.5f, 0.98f, plank.First().transform.position.z);
-                                        }
-                                        dist = (plankPos - player.First().transform.position).magnitude;
-                                        foreach (Transform t in player.First().transform)
-                                        {
-                                            if (t.gameObject.tag == "MainCamera")
-                                            {
-                                                speedRotation = Vector3.Angle(t.gameObject.transform.forward, Vector3.left) * speed / dist;
-                                            }
-                                        }
-                                        moveToPlank = true;
-                                        c.SetActive(false);
-                                        onPlank = true;
+                                        speedRotation = Vector3.Angle(t.gameObject.transform.forward, Vector3.left) * speed / dist;
                                     }
-                                    else if(go.tag == "Box")
+                                }
+                                moveToPlank = true; //start animation to move the player in front of the plank
+                                c.SetActive(false); //hide ui during animation
+                                onPlank = true;
+                            }
+                            else if(go.tag == "Box")    //set box
+                            {
+                                go.GetComponent<Rigidbody>().isKinematic = true;
+                                //calculate the position in front of the player
+                                Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+                                v.Normalize();
+                                objectPos = new Vector3(player.First().transform.position.x, 1.78f-1, player.First().transform.position.z) + v * (go.transform.localScale.y + 1.5f);
+                                //calculate the correct speed so that the translation and the rotation finish at the same time
+                                dist = (objectPos - go.transform.position).magnitude;
+                                speedRotation = Vector3.Angle(box.First().transform.forward, -player.First().transform.forward) * speed / dist;
+                                speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
+                                moveBox = true; //start animation to move the box in front of the player
+                                c.SetActive(false); //hide ui during animation
+                                onBox = true;
+                            }
+                            else if(go.tag == "Tablet") //set tablet
+                            {
+                                go.GetComponent<Rigidbody>().isKinematic = true;
+                                //calculate the distance between the tablet and the player depending on the screen size
+                                //(not really necessary since the tablet screen is displayed on the screen and not in the world)
+                                float d = 0.33f;
+                                if ((float)Camera.main.pixelWidth / 900 < (float)Camera.main.pixelHeight / 600)
+                                {
+                                    d = aTabletDist * (float)Camera.main.pixelHeight / (float)Camera.main.pixelWidth + bTabletDist;
+                                }
+                                else
+                                {
+                                    d = 0.56f;
+                                }
+                                tablet.First().GetComponent<Rigidbody>().isKinematic = true;
+                                //calculate the position in front of the player
+                                Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+                                v.Normalize();
+                                objectPos = new Vector3(player.First().transform.position.x, 1.78f, player.First().transform.position.z) + v * (d);
+                                //calculate the correct speed so that the translation and the rotation finish at the same time
+                                dist = (objectPos - go.transform.position).magnitude;
+                                speedRotation = Vector3.Angle(tablet.First().transform.forward, player.First().transform.forward) * speed / dist;
+                                speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
+                                c.SetActive(false); //hide ui during animation
+                                onTablet = true;
+                                moveTablet = true;  //start animation to move the tablet in front of the player
+                            }
+                            else if (go.tag == "TableE05")  //set tables of enigma 5
+                            {
+                                /* set the position where the player will be moved depending on the selected table
+                                 * the position is chosen so that when the tables are assembled, the formed picture is in the center of the screen
+                                 */
+                                if (go.name.Contains(1.ToString()))
+                                {
+                                    //front left of the table
+                                    onTablePoint = go.transform.position - go.transform.right * 0.75f + go.transform.forward * 0.75f + Vector3.up * (go.transform.localScale.y * 0.55f + 1);
+                                    dist = (onTablePoint - player.First().transform.position).magnitude;
+                                }
+                                else if (go.name.Contains(2.ToString()))
+                                {
+                                    //front right of the table
+                                    onTablePoint = go.transform.position + go.transform.right * 0.75f + go.transform.forward * 0.75f + Vector3.up * (go.transform.localScale.y * 0.55f + 1);
+                                    dist = (onTablePoint - player.First().transform.position).magnitude;
+                                }
+                                else if (go.name.Contains(3.ToString()))
+                                {
+                                    //back of the table (back according to unity axes)
+                                    onTablePoint = go.transform.position - go.transform.forward * 0.75f + Vector3.up * (go.transform.localScale.y * 0.55f + 1);
+                                    dist = (onTablePoint - player.First().transform.position).magnitude;
+                                }
+                                //calculate the correct speed so that the translation and the rotation finish at the same time
+                                speedRotation = Vector3.Angle(Camera.main.transform.forward, Vector3.down) * speed / dist;
+                                speedRotation2 = Vector3.Angle(player.First().transform.forward, go.transform.forward) * speed / dist;
+                                //save rotation and position of the player before moving
+                                posBeforeTable = player.First().transform.position;
+                                rotBeforeTable = Camera.main.transform.localRotation;
+                                rot2BeforeTable = player.First().transform.rotation;
+                                focusedTable = go;  //store the selected table
+                                c.SetActive(false); //hide ui during animation
+                                onTable = true;
+                                moveToTable = true; //start animation to move the playre above the table
+                            }
+                            else if(go.tag == "Sheet")  //set sheets of enigma 6 and 7
+                            {
+                                focusedSheet = go;  //store the selected sheet
+                                onSheet = true;
+                                foreach (Transform ch in c.transform)
+                                {
+                                    if (ch.gameObject.name == "Close")
                                     {
-                                        go.GetComponent<Rigidbody>().isKinematic = true;
-                                        Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
-                                        v.Normalize();
-                                        objectPos = new Vector3(player.First().transform.position.x, 1.78f-1, player.First().transform.position.z) + v * (go.transform.localScale.y + 1.5f);
-                                        dist = (objectPos - go.transform.position).magnitude;
-                                        speedRotation = Vector3.Angle(box.First().transform.forward, -player.First().transform.forward) * speed / dist;
-                                        speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
-                                        moveBox = true;
-                                        c.SetActive(false);
-                                        onBox = true;
+                                        //set the position of the "close" button
+                                        //if (go.GetComponentsInChildren<Image>().Length == 3)
+                                        ch.gameObject.GetComponent<RectTransform>().localPosition = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth;
+                                        ch.gameObject.GetComponent<RectTransform>().localPosition = ch.gameObject.GetComponent<RectTransform>().localPosition - new Vector3(ch.gameObject.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, ch.gameObject.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
                                     }
-                                    else if(go.tag == "Tablet")
+                                }
+                                Camera.main.transform.localRotation = Quaternion.Euler(0, 0, 0); //set the x rotation of the player to 0 (make an animation rather than this)
+                                rotBeforeSheet = focusedSheet.transform.rotation;   //the the rotation of the sheet before selection
+                                //rotate the sheet toward the player before displaying it (else it would be distorted in the ui)
+                                focusedSheet.transform.rotation = Quaternion.RotateTowards(focusedSheet.transform.rotation,Quaternion.Euler(0, player.First().transform.rotation.eulerAngles.y-90, 0), 360);
+                                foreach(Transform canvas in focusedSheet.transform)
+                                {
+                                    if(canvas.gameObject.name == "Display")
                                     {
-                                        go.GetComponent<Rigidbody>().isKinematic = true;
-                                        float d = 0.33f;
-                                        if ((float)Camera.main.pixelWidth / 900 < (float)Camera.main.pixelHeight / 600)
-                                        {
-                                            d = aTabletDist * (float)Camera.main.pixelHeight / (float)Camera.main.pixelWidth + bTabletDist;
-                                        }
-                                        else
-                                        {
-                                            d = 0.56f;
-                                        }
-                                        tablet.First().GetComponent<Rigidbody>().isKinematic = true;
-                                        Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
-                                        v.Normalize();
-                                        objectPos = new Vector3(player.First().transform.position.x, 1.78f, player.First().transform.position.z) + v * (d);
-                                        dist = (objectPos - go.transform.position).magnitude;
-                                        speedRotation = Vector3.Angle(tablet.First().transform.forward, player.First().transform.forward) * speed / dist;
-                                        speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
-                                        c.SetActive(false);
-                                        onTablet = true;
-                                        moveTablet = true;
-                                    }
-                                    else if (go.tag == "TableE05")
-                                    {
-                                        if (go.name.Contains(1.ToString()))
-                                        {
-                                            onTablePoint = go.transform.position - go.transform.right * 0.75f + go.transform.forward * 0.75f + Vector3.up * (go.transform.localScale.y * 0.55f + 1);
-                                            dist = (onTablePoint - player.First().transform.position).magnitude;
-                                        }
-                                        else if (go.name.Contains(2.ToString()))
-                                        {
-                                            onTablePoint = go.transform.position + go.transform.right * 0.75f + go.transform.forward * 0.75f + Vector3.up * (go.transform.localScale.y * 0.55f + 1);
-                                            dist = (onTablePoint - player.First().transform.position).magnitude;
-                                        }
-                                        else if (go.name.Contains(3.ToString()))
-                                        {
-                                            onTablePoint = go.transform.position - go.transform.forward * 0.75f + Vector3.up * (go.transform.localScale.y * 0.55f + 1);
-                                            dist = (onTablePoint - player.First().transform.position).magnitude;
-                                        }
-                                        speedRotation = Vector3.Angle(Camera.main.transform.forward, Vector3.down) * speed / dist;
-                                        speedRotation2 = Vector3.Angle(player.First().transform.forward, go.transform.forward) * speed / dist;
-                                        posBeforeTable = player.First().transform.position;
-                                        rotBeforeTable = Camera.main.transform.localRotation;
-                                        rot2BeforeTable = player.First().transform.rotation;
-                                        focusedTable = go;
-                                        c.SetActive(false);
-                                        onTable = true;
-                                        moveToTable = true;
-                                    }
-                                    else if(go.tag == "Sheet")
-                                    {
-                                        focusedSheet = go;
-                                        onSheet = true;
-                                        foreach (Transform ch in c.transform)
-                                        {
-                                            if (ch.gameObject.name == "Close")
-                                            {
-                                                //if (go.GetComponentsInChildren<Image>().Length == 3)
-                                                ch.gameObject.GetComponent<RectTransform>().localPosition = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth;
-                                                ch.gameObject.GetComponent<RectTransform>().localPosition = ch.gameObject.GetComponent<RectTransform>().localPosition - new Vector3(ch.gameObject.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, ch.gameObject.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
-                                            }
-                                        }
-                                        Camera.main.transform.localRotation = Quaternion.Euler(0, 0, 0); //make an animation rather than this
-                                        rotBeforeSheet = focusedSheet.transform.rotation;
-                                        focusedSheet.transform.rotation = Quaternion.RotateTowards(focusedSheet.transform.rotation,Quaternion.Euler(0, player.First().transform.rotation.eulerAngles.y-90, 0), 360);
-                                        foreach(Transform canvas in focusedSheet.transform)
-                                        {
-                                            if(canvas.gameObject.name == "Display")
-                                            {
-                                                canvas.GetComponent<Canvas>().planeDistance = 0.33f;
-                                                canvas.gameObject.SetActive(true);
-                                            }
-                                        }
+                                        //show the sheet in an ui
+                                        canvas.GetComponent<Canvas>().planeDistance = 0.33f;
+                                        canvas.gameObject.SetActive(true);
                                     }
                                 }
                             }
                         }
                         else if (c.name == "Cursor")
                         {
+                            //hide the cursor when an object is selected
                             c.SetActive(false);
                         }
                     }
@@ -559,148 +582,158 @@ public class ShowUI : FSystem {
                 }
             }
         }
-        else
+        else    //if "noselection" is false
         {
-            foreach(GameObject go in objects)
+            if(onPlank)
             {
-                if (go.GetComponent<Selectable>().isSelected)
+                pointerOverWord = false;
+                foreach(GameObject word in plankWords)
                 {
-                    if(go.tag == "Plank")
+                    if (word.GetComponent<PointerOver>())
                     {
-                        pointerOverWord = false;
-                        foreach(GameObject word in plankWords)
+                        pointerOverWord = true;
+                        if (Input.GetMouseButtonDown(0))    //if a selectable word is clicked
                         {
-                            if (word.GetComponent<PointerOver>())
+                            //if the word is selected (color red)
+                            if (word.GetComponent<TextMeshPro>().color == Color.red)
                             {
-                                pointerOverWord = true;
-                                if (Input.GetMouseButtonDown(0))
+                                //unselect it
+                                word.GetComponent<TextMeshPro>().color = Color.black;
+                                //remove the vertex from the linerenderer
+                                lr.positionCount--;
+                                //if there were 4 points, remove a second one (should use linerenderer loop rather than this)
+                                if (lr.positionCount == 3)
                                 {
-                                    if (word.GetComponent<TextMeshPro>().color == Color.red)
-                                    {
-                                        word.GetComponent<TextMeshPro>().color = Color.black;
-                                        lr.positionCount--;
-                                        if (lr.positionCount == 3)
-                                        {
-                                            lr.positionCount--;
-                                            lrPositions.RemoveAt(lrPositions.LastIndexOf(lrFirstPosition));
-                                        }
-                                        if(word.transform.position == lrFirstPosition)
-                                        {
-                                            lrPositions.Remove(word.transform.position);
-                                            lrFirstPosition = lrPositions.Find(ReturnFirst);
-                                        }
-                                        else
-                                        {
-                                            lrPositions.Remove(word.transform.position);
-                                        }
-                                        lr.SetPositions(lrPositions.ToArray());
-                                    }
-                                    else
-                                    {
-                                        if (lr.positionCount > 2)
-                                        {
-                                            foreach (GameObject w in plankWords)
-                                            {
-                                                w.GetComponent<TextMeshPro>().color = Color.black;
-                                            }
-                                            lr.positionCount = 0;
-                                            lrPositions.Clear();
-                                        }
-                                        word.GetComponent<TextMeshPro>().color = Color.red;
-                                        lr.positionCount++;
-                                        lrPositions.Add(word.transform.position);
-                                        if(lr.positionCount == 1)
-                                        {
-                                            lrFirstPosition = word.transform.position;
-                                        }
-                                        if (lr.positionCount == 3)
-                                        {
-                                            lr.positionCount++;
-                                            lrPositions.Add(lrFirstPosition);
-                                        }
-                                        lr.SetPositions(lrPositions.ToArray());
-                                    }
+                                    lr.positionCount--;
+                                    lrPositions.RemoveAt(lrPositions.LastIndexOf(lrFirstPosition));
+                                }
+                                if(word.transform.position == lrFirstPosition)
+                                {
+                                    lrPositions.Remove(word.transform.position);
+                                    lrFirstPosition = lrPositions.Find(ReturnFirst);
                                 }
                                 else
                                 {
-                                    if(word.GetComponent<TextMeshPro>().color != Color.red)
-                                    {
-                                        word.GetComponent<TextMeshPro>().color = Color.yellow;
-                                    }
+                                    lrPositions.Remove(word.transform.position);
                                 }
+                                //set the new positions
+                                lr.SetPositions(lrPositions.ToArray());
                             }
-                            else
+                            else    //if the word wasn't selected
                             {
-                                if (word.GetComponent<TextMeshPro>().color != Color.red)
+                                if (lr.positionCount > 2)
                                 {
-                                    word.GetComponent<TextMeshPro>().color = Color.black;
+                                    //if there is already 3 selected words, unselect them and select the new one
+                                    foreach (GameObject w in plankWords)
+                                    {
+                                        w.GetComponent<TextMeshPro>().color = Color.black;
+                                    }
+                                    lr.positionCount = 0;
+                                    lrPositions.Clear();
                                 }
+                                word.GetComponent<TextMeshPro>().color = Color.red;
+                                //update the linerenderer (will be changed with linrenderer loop)
+                                lr.positionCount++;
+                                lrPositions.Add(word.transform.position);
+                                if(lr.positionCount == 1)
+                                {
+                                    lrFirstPosition = word.transform.position;
+                                }
+                                if (lr.positionCount == 3)
+                                {
+                                    lr.positionCount++;
+                                    lrPositions.Add(lrFirstPosition);
+                                }
+                                lr.SetPositions(lrPositions.ToArray());
                             }
                         }
-                        if (!pointerOverWord && Input.GetMouseButtonDown(0))
+                        else    //if mouse over a word without click
                         {
-                            foreach (GameObject word in plankWords)
+                            if(word.GetComponent<TextMeshPro>().color != Color.red)
                             {
-                                word.GetComponent<TextMeshPro>().color = Color.black;
-                                lr.positionCount = 0;
-                                lrPositions.Clear();
+                                //if the word isn't selected change its color to yellow
+                                word.GetComponent<TextMeshPro>().color = Color.yellow;
                             }
                         }
                     }
-                    else if (go.tag == "Box")
+                    else    //if mouse isn't over a word
                     {
-                        if (ballsout)
+                        if (word.GetComponent<TextMeshPro>().color != Color.red)
                         {
-                            Ball b = null;
-                            if (ballFocused)
+                            //if the word isn't selected change its color to black (initial)
+                            word.GetComponent<TextMeshPro>().color = Color.black;
+                        }
+                    }
+                }
+                if (!pointerOverWord && Input.GetMouseButtonDown(0))
+                {
+                    //if click over nothing unselect all
+                    foreach (GameObject word in plankWords)
+                    {
+                        word.GetComponent<TextMeshPro>().color = Color.black;
+                        lr.positionCount = 0;
+                        lrPositions.Clear();
+                    }
+                }
+            }
+            else if (onBox)
+            {
+                if (ballsout)   //if all balls are out of the box
+                {
+                    Ball b = null;
+                    if (ballFocused)    //if there is a selected ball
+                    {
+                        if(Input.GetMouseButtonDown(0) && !moveBall)
+                        {
+                            //onclick if the ball isn't moving, move it back to its position with other balls
+                            ballFocused = false;
+                            moveBall = true;
+                            foreach (Transform child in focusedBall.transform)
                             {
-                                if(Input.GetMouseButtonDown(0) && !moveBall)
+                                if (child.gameObject.name == "Text")
                                 {
-                                    ballFocused = false;
+                                    child.gameObject.SetActive(true);
+                                }
+                            }
+                            //calculate position and speeds for the animation
+                            ballPos = Vector3.up * ((float)balls.Count / 10 - (float)(focusedBall.GetComponent<Ball>().id / 5) / 3) + Vector3.right * ((float)(focusedBall.GetComponent<Ball>().id % 5) * -2f / 4 + 1f) + Vector3.forward * 0.2f;
+                            dist = (box.First().transform.TransformPoint(ballPos) - ballToCamera).magnitude;
+                            speedRotation = 180 * speed / dist/2;
+                        }
+                    }
+                    else if(!moveBall)  //if there isn't animations and selected ball
+                    {
+                        foreach (GameObject ballGO in balls)
+                        {
+                            b = ballGO.GetComponent<Ball>();
+                            if (ballGO.GetComponent<PointerOver>())
+                            {
+                                //if pointer over a ball change its color to yellow
+                                ballGO.GetComponent<Renderer>().material.color = Color.yellow + Color.white / 4;
+                                if (Input.GetMouseButtonDown(0))    //if a ball is clicked
+                                {
+                                    //move it in front of the camera
+                                    ballFocused = true;
                                     moveBall = true;
-                                    foreach (Transform child in focusedBall.transform)
+                                    focusedBall = ballGO;
+                                    foreach(Transform child in focusedBall.transform)
                                     {
-                                        if (child.gameObject.name == "Text")
+                                        if(child.gameObject.name == "Number")
                                         {
                                             child.gameObject.SetActive(true);
                                         }
                                     }
+                                    ballGO.GetComponent<Renderer>().material.color = b.color; //initial color
+                                    //calculate position and speeds for the animation
                                     ballPos = Vector3.up * ((float)balls.Count / 10 - (float)(focusedBall.GetComponent<Ball>().id / 5) / 3) + Vector3.right * ((float)(focusedBall.GetComponent<Ball>().id % 5) * -2f / 4 + 1f) + Vector3.forward * 0.2f;
                                     dist = (box.First().transform.TransformPoint(ballPos) - ballToCamera).magnitude;
                                     speedRotation = 180 * speed / dist/2;
                                 }
                             }
-                            else if(!moveBall)
+                            else
                             {
-                                foreach (GameObject ballGO in balls)
-                                {
-                                    b = ballGO.GetComponent<Ball>();
-                                    if (ballGO.GetComponent<PointerOver>() && !ballFocused)
-                                    {
-                                        ballGO.GetComponent<Renderer>().material.color = Color.yellow + Color.white / 4;
-                                        if (Input.GetMouseButtonDown(0))
-                                        {
-                                            ballFocused = true;
-                                            moveBall = true;
-                                            focusedBall = ballGO;
-                                            foreach(Transform child in focusedBall.transform)
-                                            {
-                                                if(child.gameObject.name == "Number")
-                                                {
-                                                    child.gameObject.SetActive(true);
-                                                }
-                                            }
-                                            ballGO.GetComponent<Renderer>().material.color = b.color;
-                                            ballPos = Vector3.up * ((float)balls.Count / 10 - (float)(focusedBall.GetComponent<Ball>().id / 5) / 3) + Vector3.right * ((float)(focusedBall.GetComponent<Ball>().id % 5) * -2f / 4 + 1f) + Vector3.forward * 0.2f;
-                                            dist = (box.First().transform.TransformPoint(ballPos) - ballToCamera).magnitude;
-                                            speedRotation = 180 * speed / dist/2;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        ballGO.GetComponent<Renderer>().material.color = b.color;
-                                    }
-                                }
+                                //if there isn't animations, mouse over or click, set to initial color
+                                ballGO.GetComponent<Renderer>().material.color = b.color;
                             }
                         }
                     }
@@ -713,6 +746,7 @@ public class ShowUI : FSystem {
     {
         if (!onTable)
         {
+            //enable player
             player.First().GetComponent<FirstPersonController>().enabled = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.lockState = CursorLockMode.Locked;
@@ -722,25 +756,23 @@ public class ShowUI : FSystem {
         {
             if (c.name == "UI")
             {
-                if (onPlank)
+                if (onObject)
                 {
                     foreach (Transform child in c.transform)
                     {
-                        if (child.gameObject.name == "Close")
+                        if (child.gameObject.name == "Window")
                         {
-                            child.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(105, 90, 0);
+                            //hide window
+                            child.gameObject.SetActive(false);
                         }
                     }
                 }
+                else if (onPlank)
+                {
+                }
                 else if(onBox)
                 {
-                    foreach (Transform child in c.transform)
-                    {
-                        if (child.gameObject.name == "Close")
-                        {
-                            child.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(105, 90, 0);
-                        }
-                    }
+                    //close box, set balls to initial position and everything to not kinematic
                     boxTop.First().transform.localPosition = boxTopIniPos;
                     box.First().GetComponent<Rigidbody>().isKinematic = false;
                     foreach(GameObject go in balls)
@@ -753,30 +785,18 @@ public class ShowUI : FSystem {
                 }
                 else if (onTablet)
                 {
-                    foreach (Transform child in c.transform)
-                    {
-                        if (child.gameObject.name == "Close")
-                        {
-                            child.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(105, 90, 0);
-                            tablet.First().GetComponent<Rigidbody>().isKinematic = false;
-                        }
-                    }
+                    //put the screen on the tablet
                     screen1.First().GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
                     screen1.First().GetComponent<RectTransform>().localPosition = Vector3.forward * -0.026f;
                 }
                 else if (onTable)
                 {
-                    foreach (Transform child in c.transform)
-                    {
-                        if (child.gameObject.name == "Close")
-                        {
-                            child.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(105, 90, 0);
-                        }
-                    }
+                    //start animation to move the player back to its position
                     moveToTable = true;
                 }
                 else if (onSheet)
                 {
+                    //set sheet to initial rotation and hide ui
                     focusedSheet.transform.rotation = rotBeforeSheet;
                     foreach (Canvas canvas in focusedSheet.GetComponentsInChildren<Canvas>())
                     {
@@ -790,6 +810,7 @@ public class ShowUI : FSystem {
             }
             else if (c.name == "Cursor")
             {
+                //show cursor
                 c.SetActive(true);
             }
         }
@@ -797,12 +818,14 @@ public class ShowUI : FSystem {
         {
             if (go.GetComponent<Selectable>().isSelected)
             {
+                //unselect the gameobject
                 go.GetComponent<Selectable>().isSelected = false;
                 Selectable.selected = false;
                 noSelection = true;
                 break;
             }
         }
+        onObject = false;
         onSheet = false;
         onPlank = false;
         onBox = false;
@@ -810,6 +833,7 @@ public class ShowUI : FSystem {
         onTable = false;
     }
 
+    //predicate to return the first vector of the list
     private bool ReturnFirst(Vector3 v)
     {
         return true;
