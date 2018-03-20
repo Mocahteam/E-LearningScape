@@ -62,7 +62,7 @@ public class Inventory : FSystem {
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit);
         foreach (GameObject go in cGO)
         {
-            if (Input.GetMouseButtonDown(0) && (Object.ReferenceEquals(go, hit.transform.gameObject) || (go.GetComponent<RectTransform>() && go.GetComponent<PointerOver>())))
+            if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && (Object.ReferenceEquals(go, hit.transform.gameObject) || (go.GetComponent<RectTransform>() && go.GetComponent<PointerOver>())))
             {
                 if (go.GetComponent<CollectableGO>().goui)
                 {

@@ -4,7 +4,7 @@ using FYFY;
 public class TakeObject : FSystem {
 
     //all takable objects
-    private Family tObjects = FamilyManager.getFamily(new AnyOfTags("Object", "Box", "Tablet", "TableE05"), new AllOfComponents(typeof(Selectable), typeof(Takable)));
+    private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(Takable)));
     //enigma03's balls
     private Family balls = FamilyManager.getFamily(new AnyOfTags("Ball"));
 

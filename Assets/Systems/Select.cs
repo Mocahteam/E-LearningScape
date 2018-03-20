@@ -5,9 +5,9 @@ using FYFY_plugins.PointerManager;
 public class Select : FSystem {
 
     //all selectable objects
-    private Family objects = FamilyManager.getFamily(new AnyOfTags("Object", "Plank", "Box", "Tablet", "TableE05", "Sheet"), new AllOfComponents(typeof(Selectable)));
+    private Family objects = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable)));
     //all takable objects
-    private Family tObjects = FamilyManager.getFamily(new AnyOfTags("Object", "Box", "Tablet", "TableE05"), new AllOfComponents(typeof(Selectable), typeof(Takable)));
+    private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(Takable)));
 
     private GameObject focused;
     private bool selected = false;

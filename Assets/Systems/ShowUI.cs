@@ -265,7 +265,6 @@ public class ShowUI : FSystem {
             }
             else if (unlockBox)
             {
-                Debug.Log("test");
                 dist = 1.5f - boxPadlock.transform.localPosition.y;
                 boxPadlock.transform.localPosition = Vector3.MoveTowards(boxPadlock.transform.localPosition, boxPadlock.transform.localPosition + Vector3.up * dist, (dist + 1)/100);
                 boxPadlock.transform.localRotation = Quaternion.Euler(boxPadlock.transform.localRotation.eulerAngles+Vector3.up* (boxPadlock.transform.localPosition.y - 0.2f) *35);
