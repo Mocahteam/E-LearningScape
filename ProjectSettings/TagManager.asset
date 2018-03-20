@@ -25,6 +25,7 @@ TagManager:
   - Inventory
   - Syllabus
   - DisplayInventory
+  - Bag
   layers:
   - Default
   - TransparentFX

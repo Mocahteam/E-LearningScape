@@ -5,6 +5,7 @@ public class CollectableGO : MonoBehaviour {
     public static bool onInventory = false;
     public static bool usingWire = false;
     public static bool usingKeyE03 = false;
+    public static bool usingKeyE08 = false;
 
     public GameObject goui; //the corresponding gameobject or ui element
 }

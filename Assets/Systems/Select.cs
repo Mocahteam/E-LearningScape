@@ -92,7 +92,7 @@ public class Select : FSystem {
                 Selectable.selected = true;
             }
             //if the object isn't the plank or the box and is selected, show the mouse over overlay
-            if(!((focused.tag == "Plank" || focused.tag == "Box") && focused.GetComponent<Selectable>().isSelected))
+            if(!((focused.tag == "Plank" || focused.tag == "Box" || focused.tag == "Bag") && focused.GetComponent<Selectable>().isSelected))
             {
                 foreach (Transform child in focused.transform)
                 {
