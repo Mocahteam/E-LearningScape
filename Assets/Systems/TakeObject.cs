@@ -38,7 +38,7 @@ public class TakeObject : FSystem {
             }
         }
 
-        if (!Selectable.selected)   //if there is not selected object
+        if (!Selectable.selected && !CollectableGO.onInventory)   //if there is not selected object and inventory isn't opened
         {
             if (Takable.objectTaken)    //if an object is taken
             {

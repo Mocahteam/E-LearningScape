@@ -22,6 +22,9 @@ TagManager:
   - WrongTimerText
   - TableE05
   - Sheet
+  - Inventory
+  - Syllabus
+  - DisplayInventory
   layers:
   - Default
   - TransparentFX

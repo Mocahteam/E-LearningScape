@@ -85,8 +85,8 @@ public class Select : FSystem {
 
         if (focused)    //if there is a focused object
         {
-            //if the player clicks on the object while it is not taken, select it
-            if (Input.GetMouseButtonDown(0) && !Takable.objectTaken)
+            //if the player clicks on the object while it is not taken and inventory isn't opened, select it
+            if (Input.GetMouseButtonDown(0) && !Takable.objectTaken && !CollectableGO.onInventory)
             {
                 focused.GetComponent<Selectable>().isSelected = true;
                 Selectable.selected = true;

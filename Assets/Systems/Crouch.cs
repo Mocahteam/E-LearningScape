@@ -31,7 +31,7 @@ public class Crouch : FSystem
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        if (!Selectable.selected)   //if nothing is selected (the player can't move when an object is selected)
+        if (!Selectable.selected && !CollectableGO.onInventory)   //if nothing is selected and inventory isn't opened (the player can't move)
         {
             if (Input.GetKeyDown(KeyCode.E))    //when "e" is pressed
             {

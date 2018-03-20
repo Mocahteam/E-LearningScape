@@ -21,7 +21,9 @@ public class ShowUI : FSystem {
     private Family balls = FamilyManager.getFamily(new AnyOfTags("Ball"));
     private Family tablet = FamilyManager.getFamily(new AnyOfTags("Tablet"));
     private Family screen1 = FamilyManager.getFamily(new AnyOfTags("Screen1")); //screen on the table room 1 (ui)
-    
+    private Family inventory = FamilyManager.getFamily(new AnyOfTags("Inventory"));
+    private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ENABLED));
+
     private bool noSelection = true;    //true if all objects are unselected
 
     //information for animations
@@ -53,6 +55,8 @@ public class ShowUI : FSystem {
     private Vector3 boxTopIniPos;               //position of the box lid when closed
     private bool ballsout = false;              //true when all balss are out
     private Vector3 boxTopRight = Vector3.zero; //position of "close" button when using box
+    private GameObject boxPadlock;
+    private bool unlockBox = false;
     //used during the selection of a ball
     private Vector3 ballPos = Vector3.zero;
     private bool ballFocused = false;       //true when a ball is focused
@@ -130,6 +134,14 @@ public class ShowUI : FSystem {
             go.GetComponent<Renderer>().material.color = Random.ColorHSV() + Color.white/2.5f;  //set color to random color
             b.color = go.GetComponent<Renderer>().material.color;
             //init text and number
+        }
+
+        foreach(Transform child in box.First().transform)
+        {
+            if(child.gameObject.name == "Padlock")
+            {
+                boxPadlock = child.gameObject;
+            }
         }
     }
 
@@ -251,6 +263,33 @@ public class ShowUI : FSystem {
                     }
                 }
             }
+            else if (unlockBox)
+            {
+                Debug.Log("test");
+                dist = 1.5f - boxPadlock.transform.localPosition.y;
+                boxPadlock.transform.localPosition = Vector3.MoveTowards(boxPadlock.transform.localPosition, boxPadlock.transform.localPosition + Vector3.up * dist, (dist + 1)/100);
+                boxPadlock.transform.localRotation = Quaternion.Euler(boxPadlock.transform.localRotation.eulerAngles+Vector3.up* (boxPadlock.transform.localPosition.y - 0.2f) *35);
+                if(boxPadlock.transform.localPosition.y > 1.4f)
+                {
+                    boxPadlock.SetActive(false);
+                    unlockBox = false;
+                    CollectableGO.usingKeyE03 = false;
+                    foreach (Transform child in inventory.First().transform)
+                    {
+                        if (child.gameObject.name == "Display" || child.gameObject.name == "Selected")
+                        {
+                            child.gameObject.SetActive(false);
+                        }
+                    }
+                    foreach(GameObject go in cGO)
+                    {
+                        if(go.name == "KeyE03")
+                        {
+                            go.SetActive(false);
+                        }
+                    }
+                }
+            }
             else
             {
                 if (player.First().transform.localScale.x < 0.9f)
@@ -266,7 +305,22 @@ public class ShowUI : FSystem {
                 //when the box arrives
                 if(box.First().transform.position == objectPos && box.First().transform.forward == -player.First().transform.forward)
                 {
-                    openBox = true; //start opening box
+                    if (!boxPadlock.activeSelf)
+                    {
+                        objectPos += Vector3.up * (1.78f - 1 - objectPos.y);
+                        if(box.First().transform.position == objectPos)
+                        {
+                            openBox = true; //start opening box
+                        }
+                    }
+                    else
+                    {
+                        objectPos += Vector3.up*(1.78f - 0.5f -objectPos.y);
+                        if (CollectableGO.usingKeyE03)
+                        {
+                            unlockBox = true;
+                        }
+                    }
                     boxTopPos = boxTop.First().transform.position + box.First().transform.right * boxTop.First().transform.localScale.x; //set lid position
                     ballToCamera = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0.5f));  //set position of balls when in front of the screen
                 }
@@ -584,7 +638,7 @@ public class ShowUI : FSystem {
         }
         else    //if "noselection" is false
         {
-            if(onPlank)
+            if(onPlank && CollectableGO.usingWire)
             {
                 pointerOverWord = false;
                 foreach(GameObject word in plankWords)
