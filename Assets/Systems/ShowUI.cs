@@ -98,6 +98,8 @@ public class ShowUI : FSystem {
     private bool unlockBag = false;
     private GameObject bagPadlock;
     private bool showBagPaper = false;
+    private GameObject bagAnswer;
+    private bool usingGlassesTmp = false;
 
     private bool onObject = false;
 
@@ -165,6 +167,15 @@ public class ShowUI : FSystem {
                 bagPadlock = child.gameObject;
             }
         }
+        foreach(Transform child in inventory.First().transform) {
+            if(child.gameObject.name == "GlassesBackground")
+            {
+                foreach(Transform c in child)
+                {
+                    bagAnswer = c.gameObject;
+                }
+            }
+        }
     }
 
     // Use this to update member variables when system pause. 
@@ -180,6 +191,19 @@ public class ShowUI : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
     {
+        if (onBag)
+        {
+            if (usingGlassesTmp && !CollectableGO.usingGlasses)
+            {
+                bagAnswer.SetActive(false);
+            }
+            else if (!usingGlassesTmp && CollectableGO.usingGlasses)
+            {
+                bagAnswer.SetActive(true);
+            }
+        }
+        usingGlassesTmp = CollectableGO.usingGlasses;
+
         if (moveToPlank)
         {
             //animation to move the player in front of the plank
@@ -484,6 +508,10 @@ public class ShowUI : FSystem {
                         bagTopRight = Vector3.up * Camera.main.pixelHeight/2 + Vector3.right * Camera.main.pixelWidth/2 + (Vector3.up + Vector3.right) * bag.First().GetComponentInChildren<Image>().gameObject.GetComponent<RectTransform>().rect.width*0.225f;
                         closeButton.GetComponent<RectTransform>().localPosition = bagTopRight;
                         closeButton.GetComponent<RectTransform>().localPosition = closeButton.GetComponent<RectTransform>().localPosition - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0)/2;
+                        if (CollectableGO.usingGlasses)
+                        {
+                            bagAnswer.SetActive(true);
+                        }
                     }
                 }
                 else
@@ -942,12 +970,14 @@ public class ShowUI : FSystem {
             moveBag = false;
             if(bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y != 0)
             {
+                bagAnswer.SetActive(false);
                 showBagPaper = true;
                 moveBag = true;
                 bag.First().GetComponent<Rigidbody>().isKinematic = true;
                 bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition += Vector3.up * (0.9f - bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y);
                 bag.First().GetComponentInChildren<Canvas>().renderMode = RenderMode.WorldSpace;
                 bag.First().GetComponentInChildren<Canvas>().gameObject.GetComponent<RectTransform>().localPosition = Vector3.forward * (-0.51f - bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.z);
+                bag.First().GetComponentInChildren<Canvas>().gameObject.GetComponent<RectTransform>().localScale = Vector3.one * 0.000535786f;
             }
             else
             {
