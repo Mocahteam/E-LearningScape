@@ -2,5 +2,5 @@
 
 public class Timer : MonoBehaviour {
     // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
-    public static bool addTimer = false;
+    public static bool addTimer = false;    //when true, the current time is saved and displayed on screen
 }

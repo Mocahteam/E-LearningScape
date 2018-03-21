@@ -8,42 +8,47 @@ public class SetAnswer : FSystem {
 
     private Family canvas = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
     private Family objects = FamilyManager.getFamily(new AnyOfTags("Object"), new AllOfComponents(typeof(Selectable)));
-    private Family answers = FamilyManager.getFamily(new AnyOfTags("Answer"), new AllOfComponents(typeof(Button)));
-    private Family displayAnswer = FamilyManager.getFamily(new AnyOfTags("Answer"), new NoneOfComponents(typeof(Button)));
     private Family audioSource = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)));
     private Family images = FamilyManager.getFamily(new AllOfComponents(typeof(Image)));
-    private Family qRoom1 = FamilyManager.getFamily(new AnyOfTags("Q-R1"));
+    private Family qRoom1 = FamilyManager.getFamily(new AnyOfTags("Q-R1")); //questions of the room 1 (tablet)
     private Family tablet = FamilyManager.getFamily(new AnyOfTags("Tablet"));
-    private Family aRoom1 = FamilyManager.getFamily(new AnyOfTags("A-R1"));
-    private Family screen1 = FamilyManager.getFamily(new AnyOfTags("Screen1"));
+    private Family aRoom1 = FamilyManager.getFamily(new AnyOfTags("A-R1")); //answers of the room 1 (tablet)
+    private Family screen1 = FamilyManager.getFamily(new AnyOfTags("Screen1")); //screen of the tablet room 1 (UI)
     private Family gears = FamilyManager.getFamily(new AllOfComponents(typeof(Gear)));
-    private Family rotatingGears = FamilyManager.getFamily(new AnyOfTags("RotateGear"));
+    private Family rotatingGears = FamilyManager.getFamily(new AnyOfTags("RotateGear")); //gears that can rotate (middle top, middle bot, and the solution gear)
     private Family wTimerText = FamilyManager.getFamily(new AnyOfTags("WrongTimerText"));
 
+    //used for the first prototype (not used anymore)
+    private Family answers = FamilyManager.getFamily(new AnyOfTags("Answer"), new AllOfComponents(typeof(Button)));
+    private Family displayAnswer = FamilyManager.getFamily(new AnyOfTags("Answer"), new NoneOfComponents(typeof(Button)));
     private bool initialized = false;
     private string vrai = "VRAI";
+    private string faux = "FAUX";
+
+    //elements used for visual and audio feedback when answering
     private GameObject rightBG;
     private float timeR = 0;
-    private string faux = "FAUX";
     private GameObject wrongBG;
     private float timeW = 0;
     private AudioSource source;
-    private int aq1r1 = 128;//answer question 1 room 1
-    private int aq2r1 = 459;
-    private string aq3r1 = "il faut savoir changer de posture";
-    private GameObject answersRoom1;
-    private GameObject enigma4;
-    private GameObject whiteBG;
-    private float timerWhite = Mathf.Infinity;
+
+    private int aq1r1 = 128;    //answer question 1 room 1
+    private int aq2r1 = 459;    //answer question 2 room 1
+    private string aq3r1 = "il faut savoir changer de posture"; //answer question 3 room 1
+    private GameObject answersRoom1; //ui empty containing inputfields to answer
+    private GameObject enigma4; //ui empty containing enigma04
+    private GameObject whiteBG; // white ui image used for transition between answers and enigma04 on tablet
+    private float timerWhite = Mathf.Infinity;  //timer used for the fading
     private bool fadingToEnigma4 = false;
     private GameObject gearDragged = null;
     private bool rotateGear = false;
-    private float wTimerE04 = Mathf.Infinity;
-    private TextMeshProUGUI wtt;
+    private float wTimerE04 = Mathf.Infinity;   //timer used when the player gives a wrong answer to enigma04
+    private TextMeshProUGUI wtt;    //text displaying wTimerE04
     private bool wrongAnswerE04 = false;
 
     public SetAnswer()
     {
+        //initialise buttons with listener
         foreach (GameObject b in answers)
         {
             b.GetComponent<Button>().onClick.AddListener(delegate { Answer(b.GetComponent<Button>()); });
@@ -53,28 +58,6 @@ public class SetAnswer : FSystem {
             if(g.name == "Result")
             {
                 g.GetComponentInChildren<Button>().onClick.AddListener(CloseResult);
-            }
-        }
-        foreach(GameObject g in audioSource)
-        {
-            if(g.name == "Game")
-            {
-                source = g.GetComponent<AudioSource>();
-            }
-        }
-        foreach(GameObject go in images)
-        {
-            if(go.name == "Right")
-            {
-                rightBG = go;
-            }
-            else if (go.name == "Wrong")
-            {
-                wrongBG = go;
-            }
-            else if (go.name == "White")
-            {
-                whiteBG = go;
             }
         }
         foreach (GameObject go in qRoom1)
@@ -92,6 +75,31 @@ public class SetAnswer : FSystem {
                 go.GetComponentInChildren<Button>().onClick.AddListener(CheckAnswer3);
             }
         }
+
+        //setting audio and visual elements for feedback when the player answers
+        foreach (GameObject g in audioSource)
+        {
+            if(g.name == "Game")
+            {
+                source = g.GetComponent<AudioSource>(); //setting audio source playing "Right" and "Wrong" audios
+            }
+        }
+        foreach(GameObject go in images)
+        {
+            if(go.name == "Right")
+            {
+                rightBG = go;
+            }
+            else if (go.name == "Wrong")
+            {
+                wrongBG = go;
+            }
+            else if (go.name == "White")
+            {
+                whiteBG = go;
+            }
+        }
+
         foreach(Transform child in screen1.First().transform)
         {
             if(child.gameObject.name == "AnswersInput")
@@ -103,11 +111,12 @@ public class SetAnswer : FSystem {
                 enigma4 = child.gameObject;
             }
         }
-        foreach(GameObject go in gears)
+        wtt = wTimerText.First().GetComponent<TextMeshProUGUI>();
+        foreach (GameObject go in gears)
         {
+            //set the initial position of each gear to their local position at the beginning of the game
             go.GetComponent<Gear>().initialPosition = go.transform.localPosition;
         }
-        wtt = wTimerText.First().GetComponent<TextMeshProUGUI>();
     }
 
 	// Use this to update member variables when system pause. 
@@ -122,6 +131,7 @@ public class SetAnswer : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
+        //animation for the red/green blink when the answer is wrong/right
         float dr = Time.time - timeR;
         float dw = Time.time - timeW;
         if (dr < 0.1 || (dr < 0.4 && dr > 0.3))
@@ -140,76 +150,88 @@ public class SetAnswer : FSystem {
         {
             wrongBG.SetActive(false);
         }
-
+        
+        //tablet room 1 animation and interaction//
+        //if the tablet is "solved" but enigma04 isn't diplayed
         if (tablet.First().GetComponent<Selectable>().solved && (!enigma4.activeSelf || fadingToEnigma4))
         {
+            //wait the end of the "Right answer" animation before fading to enigma04
             if (rightBG.activeSelf)
             {
                 timerWhite = Time.time;
             }
-            else
+            else //when the "Right answer" animation is finished
             {
+                //from time: 0 to 1.5, screen: answers to white
                 if (Time.time - timerWhite < 1.5f && Time.time - timerWhite >= 0f)
                 {
                     fadingToEnigma4 = true;
                     whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, (Time.time - timerWhite) / 1.5f);
                 }
+                //from time: 1.5 to 3, screen: white to enigma04
                 else if (Time.time - timerWhite < 3f && Time.time - timerWhite > 1.5f)
                 {
                     answersRoom1.SetActive(false);
                     enigma4.SetActive(true);
                     whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, 1 - (Time.time - timerWhite - 1.5f) / 1.5f);
                 }
-                else
+                else //if time not between 0 and 3
                 {
+                    //stop fading and set tablet to unsolved
                     whiteBG.SetActive(false);
                     tablet.First().GetComponent<Selectable>().solved = false;
                     fadingToEnigma4 = false;
                 }
             }
         }
+        //if the tablet is "solved" and enigma04 is displayed
         else if (tablet.First().GetComponent<Selectable>().solved && enigma4.activeSelf && !fadingToEnigma4)
         {
-            //enigma 4 solved
+            //enigma 4 solved, open door to room 2
         }
+        //if the player is playing enigma04 and didn't answer
         else if(!tablet.First().GetComponent<Selectable>().solved && enigma4.activeSelf && !wrongAnswerE04)
         {
             foreach(GameObject gear in gears)
             {
-                if (gear.GetComponent<PointerOver>())
+                //if a gear is dragged
+                if (gear.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
                 {
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        gearDragged = gear;
-                    }
+                    gearDragged = gear; //save the dragged gear
                 }
             }
-            if(gearDragged != null)
+            if(gearDragged != null) //if a gear is dragged
             {
-                rotateGear = false;
-                if (Input.GetMouseButtonUp(0))
+                rotateGear = false; //initial value
+                if (Input.GetMouseButtonUp(0))  //when the gear is released
                 {
+                    //if the gear is released in the center of the tablet (player answering)
                     if(gearDragged.transform.localPosition.x<125 && gearDragged.transform.localPosition.x > -125 && gearDragged.transform.localPosition.y < 125f/2 && gearDragged.transform.localPosition.x > -125f / 2)
                     {
-                        gearDragged.transform.localPosition = Vector3.zero;
-                        if (gearDragged.GetComponent<Gear>().isSolution)
+                        gearDragged.transform.localPosition = Vector3.zero; //place the gear at the center
+                        if (gearDragged.GetComponent<Gear>().isSolution) //if answer is correct
                         {
+                            //start audio and animation for "Right answer"
                             source.PlayOneShot(tablet.First().GetComponent<Selectable>().right);
                             timeR = Time.time;
-                            rotateGear = true;
-                            tablet.First().GetComponent<Selectable>().solved = true;
+
+                            rotateGear = true;  //rotate gears in the middle
+                            tablet.First().GetComponent<Selectable>().solved = true; //set tablet to solved
                             foreach(GameObject q in qRoom1)
                             {
+                                //hide the question text of enigma04
                                 if (q.name.Contains(4.ToString()))
                                 {
                                     q.SetActive(false);
                                 }
                             }
                         }
-                        else
+                        else //if answer is wrong
                         {
+                            //start audio and animation for "Wrong answer"
                             source.PlayOneShot(tablet.First().GetComponent<Selectable>().wrong);
                             timeW = Time.time;
+
                             foreach (GameObject q in qRoom1)
                             {
                                 if (q.name.Contains(4.ToString()))
@@ -217,17 +239,19 @@ public class SetAnswer : FSystem {
                                     q.SetActive(true);
                                 }
                             }
+                            //start the timer for wrong answer
                             wTimerE04 = Time.time;
                             wtt.gameObject.SetActive(true);
                             wtt.text = (15 + wTimerE04 - Time.time).ToString("n2");
                             wrongAnswerE04 = true;
-                            gearDragged.transform.localPosition = gearDragged.GetComponent<Gear>().initialPosition;
+
+                            gearDragged.transform.localPosition = gearDragged.GetComponent<Gear>().initialPosition; //set gear position to initial position
                         }
-                        gearDragged = null;
+                        gearDragged = null; //initial value
                     }
-                    else
+                    else //if the gear is not released in the center
                     {
-                        gearDragged.transform.localPosition = gearDragged.GetComponent<Gear>().initialPosition;
+                        gearDragged.transform.localPosition = gearDragged.GetComponent<Gear>().initialPosition; //set gear position to initial position
                         foreach (GameObject q in qRoom1)
                         {
                             if (q.name.Contains(4.ToString()))
@@ -236,30 +260,34 @@ public class SetAnswer : FSystem {
                             }
                         }
                     }
-                    gearDragged = null;
+                    gearDragged = null; //initial value
                 }
-                else
+                else //when dragging a gear
                 {
+                    //move the gear to mouse position
                     gearDragged.transform.localPosition = Input.mousePosition - Vector3.right * (float)Camera.main.pixelWidth / 2 - Vector3.up * (float)Camera.main.pixelHeight / 2;
                 }
             }
         }
-        else if (wrongAnswerE04)
+        else if (wrongAnswerE04) //true when the wrong gear is dragged in the center
         {
             if(15 + wTimerE04 - Time.time < 0)
             {
+                //when the timer if finished, the player can drag a gear again
                 wrongAnswerE04 = false;
                 wtt.gameObject.SetActive(false);
             }
             else
             {
+                //update the timer
                 wtt.text = (15 + wTimerE04 - Time.time).ToString("n2");
             }
         }
-        if (rotateGear)
+        if (rotateGear) //true when the correct answer is given
         {
             foreach(GameObject g in rotatingGears)
             {
+                //rotate gears in the middle
                 if (g.GetComponent<Gear>())
                 {
                     g.transform.rotation = Quaternion.Euler(g.transform.rotation.eulerAngles.x, g.transform.rotation.eulerAngles.y, g.transform.rotation.eulerAngles.z - 1);
@@ -271,6 +299,7 @@ public class SetAnswer : FSystem {
             }
         }
 
+        //used in the first prototype (not used anymore)
         if (!initialized)
         {
             foreach(GameObject ui in canvas)
@@ -281,37 +310,34 @@ public class SetAnswer : FSystem {
                     {
                         if (go.GetComponent<Selectable>().isSelected)
                         {
-                            if(go.tag == "Object")
+                            string[] words = null;
+                            bool solved = false;
+                            string answer = null;
+                            words = go.GetComponent<Selectable>().words;
+                            answer = go.GetComponent<Selectable>().answer;
+                            solved = go.GetComponent<Selectable>().solved;
+                            if (solved)
                             {
-                                string[] words = null;
-                                bool solved = false;
-                                string answer = null;
-                                words = go.GetComponent<Selectable>().words;
-                                answer = go.GetComponent<Selectable>().answer;
-                                solved = go.GetComponent<Selectable>().solved;
-                                if (solved)
+                                foreach (GameObject da in displayAnswer)
                                 {
-                                    foreach (GameObject da in displayAnswer)
+                                    if (da.name == "DisplayAnswer")
                                     {
-                                        if (da.name == "DisplayAnswer")
-                                        {
-                                            da.SetActive(true);
-                                            da.GetComponent<Text>().text = answer;
-                                        }
+                                        da.SetActive(true);
+                                        da.GetComponent<Text>().text = answer;
                                     }
                                 }
-                                else
+                            }
+                            else
+                            {
+                                int nb = words.Length;
+                                int i = 0;
+                                foreach (GameObject b in answers)
                                 {
-                                    int nb = words.Length;
-                                    int i = 0;
-                                    foreach (GameObject b in answers)
+                                    if (i < nb)
                                     {
-                                        if (i < nb)
-                                        {
-                                            b.SetActive(true);
-                                            b.GetComponentInChildren<Text>().text = words[i];
-                                            i++;
-                                        }
+                                        b.SetActive(true);
+                                        b.GetComponentInChildren<Text>().text = words[i];
+                                        i++;
                                     }
                                 }
                             }
@@ -345,6 +371,7 @@ public class SetAnswer : FSystem {
         }
 	}
 
+    //used in the first prototype (not used anymore)
     void Answer(Button b)
     {
         foreach (GameObject g in answers)
@@ -387,6 +414,7 @@ public class SetAnswer : FSystem {
         }
     }
 
+    //used in the first prototype (not used anymore)
     void CloseResult()
     {
         foreach (GameObject g in displayAnswer)
@@ -430,37 +458,47 @@ public class SetAnswer : FSystem {
         }
     }
 
+    /* check the answer of the first question on the tablet
+     * called when the corresponding button is clicked
+     */
     private void CheckAnswer1()
     {
         foreach(GameObject q in qRoom1)
         {
+            //find question 1 of room 1
             if (q.name.Contains(1.ToString()))
             {
-                string answer = q.GetComponentInChildren<InputField>().text;
+                string answer = q.GetComponentInChildren<InputField>().text; //player's answer
+                //if the answer's length is 3 and the answer contains aq1r1's numbers
                 if (answer.Length == 3 && answer.Contains((aq1r1 / 100).ToString()) && answer.Contains(((aq1r1 / 10)%10).ToString()) && answer.Contains((aq1r1 % 10).ToString()))
                 {
-                    //right
-                    bool solved = true;
+                    //feedback right answer
                     source.PlayOneShot(tablet.First().GetComponent<Selectable>().right);
                     timeR = Time.time;
-                    q.SetActive(false);
-                    foreach(GameObject a in aRoom1)
+
+                    q.SetActive(false); //hide the question
+                    bool solved = true;
+                    foreach (GameObject a in aRoom1)
                     {
                         if (a.name.Contains(1.ToString()))
                         {
+                            //show the solution of question 1
                             a.SetActive(true);
                         }
                         else
                         {
+                            //check if other question are solved
                             if (!a.activeSelf)
                             {
                                 solved = false;
                             }
                         }
                     }
-                    if (solved)
+
+                    if (solved) //if all question are solved
                     {
-                        tablet.First().GetComponent<Selectable>().solved = true;
+                        tablet.First().GetComponent<Selectable>().solved = true;    //set tablet to solved
+                        //start fading to enigma04
                         timerWhite = Time.time;
                         whiteBG.SetActive(true);
                         Color c = whiteBG.GetComponent<Image>().color;
@@ -469,7 +507,7 @@ public class SetAnswer : FSystem {
                 }
                 else
                 {
-                    //wrong
+                    //feedback wrong answer
                     source.PlayOneShot(tablet.First().GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
@@ -477,37 +515,45 @@ public class SetAnswer : FSystem {
         }
     }
 
+    /* check the answer of the second question on the tablet
+     * called when the corresponding button is clicked
+     */
     private void CheckAnswer2()
     {
         foreach (GameObject q in qRoom1)
         {
+            //find question 2 of room 1
             if (q.name.Contains(2.ToString()))
             {
-                string answer = q.GetComponentInChildren<InputField>().text;
+                string answer = q.GetComponentInChildren<InputField>().text; //player's answer
                 if (answer.Length == 3 && answer.Contains((aq2r1 / 100).ToString()) && answer.Contains(((aq2r1 / 10) % 10).ToString()) && answer.Contains((aq2r1 % 10).ToString()))
                 {
-                    //right
-                    bool solved = true;
+                    //feedback right answer
                     source.PlayOneShot(tablet.First().GetComponent<Selectable>().right);
                     timeR = Time.time;
-                    q.SetActive(false);
+
+                    q.SetActive(false); //hide the question
+                    bool solved = true;
                     foreach (GameObject a in aRoom1)
                     {
                         if (a.name.Contains(2.ToString()))
                         {
+                            //show the solution of question 2
                             a.SetActive(true);
                         }
                         else
                         {
+                            //check if other question are solved
                             if (!a.activeSelf)
                             {
                                 solved = false;
                             }
                         }
                     }
-                    if (solved)
+                    if (solved) //if all question are solved
                     {
-                        tablet.First().GetComponent<Selectable>().solved = true;
+                        tablet.First().GetComponent<Selectable>().solved = true;    //set tablet to solved
+                        //start fading to enigma04
                         timerWhite = Time.time;
                         whiteBG.SetActive(true);
                         Color c = whiteBG.GetComponent<Image>().color;
@@ -516,7 +562,7 @@ public class SetAnswer : FSystem {
                 }
                 else
                 {
-                    //wrong
+                    //feedback wrong answer
                     source.PlayOneShot(tablet.First().GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
@@ -524,38 +570,46 @@ public class SetAnswer : FSystem {
         }
     }
 
+    /* check the answer of the third question on the tablet
+     * called when the corresponding button is clicked
+     */
     private void CheckAnswer3()
     {
         foreach (GameObject q in qRoom1)
         {
+            //find question 3 of room 1
             if (q.name.Contains(3.ToString()))
             {
-                string answer = q.GetComponentInChildren<InputField>().text;
-                answer = answer.ToLower();
-                if(answer == aq3r1)
+                string answer = q.GetComponentInChildren<InputField>().text; //player's answer
+                answer = answer.ToLower();  //minimize the answer
+                if(answer == aq3r1) //if answer is correct
                 {
-                    //right
-                    bool solved = true;
+                    //feedback right answer
                     source.PlayOneShot(tablet.First().GetComponent<Selectable>().right);
                     timeR = Time.time;
-                    q.SetActive(false);
+
+                    q.SetActive(false); //hide the question
+                    bool solved = true;
                     foreach (GameObject a in aRoom1)
                     {
                         if (a.name.Contains(3.ToString()))
                         {
+                            //show the solution of question 3
                             a.SetActive(true);
                         }
                         else
                         {
+                            //check if other question are solved
                             if (!a.activeSelf)
                             {
                                 solved = false;
                             }
                         }
                     }
-                    if (solved)
+                    if (solved) //if all question are solved
                     {
-                        tablet.First().GetComponent<Selectable>().solved = true;
+                        tablet.First().GetComponent<Selectable>().solved = true;    //set tablet to solved
+                        //start fading to enigma04
                         timerWhite = Time.time;
                         whiteBG.SetActive(true);
                         Color c = whiteBG.GetComponent<Image>().color;
@@ -564,7 +618,7 @@ public class SetAnswer : FSystem {
                 }
                 else
                 {
-                    //wrong
+                    //feedback wrong answer
                     source.PlayOneShot(tablet.First().GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
