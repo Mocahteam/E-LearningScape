@@ -11,6 +11,7 @@ public class Inventory : FSystem {
     private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ENABLED));
     private Family ui = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
     private Family syllabusElems = FamilyManager.getFamily(new AnyOfTags("Syllabus"), new AllOfComponents(typeof(CollectableGO)), new NoneOfComponents(typeof(Image)));
+    private Family inputfields = FamilyManager.getFamily(new AllOfComponents(typeof(InputField)));
 
     private bool playerEnabled = true;
     private GameObject displayer;
@@ -18,7 +19,12 @@ public class Inventory : FSystem {
     private GameObject selection;
     private GameObject selectedUI;
 
+    private GameObject glassesBG;
+    private GameObject glassesUI;
+    private GameObject glassesSelected;
+
     private RaycastHit hit;
+    private bool inputfieldFocused;
 
     public Inventory()
     {
@@ -43,6 +49,18 @@ public class Inventory : FSystem {
             else if (child.gameObject.name == "Selected")
             {
                 selection = child.gameObject;
+            }
+            else if (child.gameObject.name == "Glasses")
+            {
+                glassesUI = child.gameObject;
+            }
+            else if (child.gameObject.name == "GlassesBackground")
+            {
+                glassesBG = child.gameObject;
+            }
+            else if (child.gameObject.name == "GlassesSelected")
+            {
+                glassesSelected = child.gameObject;
             }
         }
     }
@@ -71,141 +89,174 @@ public class Inventory : FSystem {
                 }
                 else
                 {
-                    CollectableGO.usingWire = false;
-                    CollectableGO.usingKeyE03 = false;
-                    CollectableGO.usingKeyE08 = false;
-
-                    selection.SetActive(true);
-                    selection.GetComponent<RectTransform>().localPosition = go.GetComponent<RectTransform>().localPosition;
-                    if (displayer.activeSelf && Object.ReferenceEquals(go, selectedUI))
+                    if (go.name == "Glasses")
                     {
-                        if (displayedElement)
+                        if (CollectableGO.usingGlasses)
                         {
-                            displayedElement.SetActive(false);
+                            CollectableGO.usingGlasses = false;
+                            glassesSelected.SetActive(false);
+                            glassesBG.SetActive(false);
                         }
-                        displayer.SetActive(false);
-                        selection.SetActive(false);
+                        else
+                        {
+                            glassesSelected.SetActive(true);
+                            glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
+                            CollectableGO.usingGlasses = true;
+                            glassesBG.SetActive(true);
+                        }
                     }
                     else
                     {
-                        selectedUI = go;
-                        if (displayedElement)
+                        CollectableGO.usingWire = false;
+                        CollectableGO.usingKeyE03 = false;
+                        CollectableGO.usingKeyE08 = false;
+
+                        selection.SetActive(true);
+                        selection.GetComponent<RectTransform>().localPosition = go.GetComponent<RectTransform>().localPosition;
+                        if (displayer.activeSelf && Object.ReferenceEquals(go, selectedUI))
                         {
-                            displayedElement.SetActive(false);
+                            if (displayedElement)
+                            {
+                                displayedElement.SetActive(false);
+                            }
+                            displayer.SetActive(false);
+                            selection.SetActive(false);
+                            selectedUI = null;
                         }
-                        displayer.SetActive(true);
-                        switch (go.name)
+                        else
                         {
-                            case "Syllabus":
-                                bool elem1 = false;
-                                bool elem2 = false;
-                                foreach (GameObject elem in syllabusElems)
-                                {
-                                    if (elem.name.Contains(1.ToString()))
+                            selectedUI = go;
+                            if (displayedElement)
+                            {
+                                displayedElement.SetActive(false);
+                            }
+                            displayer.SetActive(true);
+                            switch (go.name)
+                            {
+                                case "Syllabus":
+                                    bool elem1 = false;
+                                    bool elem2 = false;
+                                    foreach (GameObject elem in syllabusElems)
                                     {
-                                        elem1 = !elem.activeSelf;
+                                        if (elem.name.Contains(1.ToString()))
+                                        {
+                                            elem1 = !elem.activeSelf;
+                                        }
+                                        else if (elem.name.Contains(2.ToString()))
+                                        {
+                                            elem2 = !elem.activeSelf;
+                                        }
                                     }
-                                    else if (elem.name.Contains(2.ToString()))
+                                    if (elem1 && elem2)
                                     {
-                                        elem2 = !elem.activeSelf;
+                                        foreach (Transform child in displayer.transform)
+                                        {
+                                            if (child.gameObject.name == "Syllabus_Complete")
+                                            {
+                                                displayedElement = child.gameObject;
+                                                displayedElement.SetActive(true);
+                                            }
+                                        }
                                     }
-                                }
-                                if (elem1 && elem2)
-                                {
+                                    else if (elem1)
+                                    {
+                                        foreach (Transform child in displayer.transform)
+                                        {
+                                            if (child.gameObject.name == "Syllabus_Half1")
+                                            {
+                                                displayedElement = child.gameObject;
+                                                displayedElement.SetActive(true);
+                                            }
+                                        }
+                                    }
+                                    else if (elem2)
+                                    {
+                                        foreach (Transform child in displayer.transform)
+                                        {
+                                            if (child.gameObject.name == "Syllabus_Half2")
+                                            {
+                                                displayedElement = child.gameObject;
+                                                displayedElement.SetActive(true);
+                                            }
+                                        }
+                                    }
+                                    break;
+
+                                case "Wire":
+                                    displayedElement = null;
+                                    CollectableGO.usingWire = true;
+                                    break;
+
+                                case "KeyE03":
+                                    displayedElement = null;
+                                    CollectableGO.usingKeyE03 = true;
+                                    break;
+
+                                case "KeyE08":
+                                    displayedElement = null;
+                                    CollectableGO.usingKeyE08 = true;
+                                    break;
+
+                                case "TipE07":
                                     foreach (Transform child in displayer.transform)
                                     {
-                                        if (child.gameObject.name == "Syllabus_Complete")
+                                        if (child.gameObject.name == "Tip_E07")
                                         {
                                             displayedElement = child.gameObject;
                                             displayedElement.SetActive(true);
                                         }
                                     }
-                                }
-                                else if (elem1)
-                                {
-                                    foreach (Transform child in displayer.transform)
-                                    {
-                                        if (child.gameObject.name == "Syllabus_Half1")
-                                        {
-                                            displayedElement = child.gameObject;
-                                            displayedElement.SetActive(true);
-                                        }
-                                    }
-                                }
-                                else if (elem2)
-                                {
-                                    foreach (Transform child in displayer.transform)
-                                    {
-                                        if (child.gameObject.name == "Syllabus_Half2")
-                                        {
-                                            displayedElement = child.gameObject;
-                                            displayedElement.SetActive(true);
-                                        }
-                                    }
-                                }
-                                break;
+                                    break;
 
-                            case "Wire":
-                                displayedElement = null;
-                                CollectableGO.usingWire = true;
-                                break;
-
-                            case "KeyE03":
-                                displayedElement = null;
-                                CollectableGO.usingKeyE03 = true;
-                                break;
-
-                            case "KeyE08":
-                                displayedElement = null;
-                                CollectableGO.usingKeyE08 = true;
-                                break;
-
-                            case "TipE07":
-                                foreach (Transform child in displayer.transform)
-                                {
-                                    if (child.gameObject.name == "Tip_E07")
-                                    {
-                                        displayedElement = child.gameObject;
-                                        displayedElement.SetActive(true);
-                                    }
-                                }
-                                break;
-
-                            default:
-                                break;
+                                default:
+                                    break;
+                            }
                         }
                     }
                 }
             }
         }
+
         if (Input.GetKeyDown(KeyCode.A))
         {
-            if (CollectableGO.onInventory)
+            inputfieldFocused = false;
+            foreach (GameObject go in inputfields)
             {
-                CloseInventory();
+                if (go.GetComponent<InputField>().isFocused)
+                {
+                    inputfieldFocused = true;
+                    break;
+                }
             }
-            else
+            if (!inputfieldFocused)
             {
-                foreach (Transform child in inventory.First().transform)
+                if (CollectableGO.onInventory)
                 {
-                    if (child.gameObject.name == "Enabled")
-                    {
-                        child.gameObject.SetActive(true);
-                    }
+                    CloseInventory();
                 }
-                playerEnabled = player.First().GetComponent<FirstPersonController>().enabled;
-                player.First().GetComponent<FirstPersonController>().enabled = false;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.lockState = CursorLockMode.Confined;
-                Cursor.visible = true;
-                foreach (GameObject canvas in ui)
+                else
                 {
-                    if (canvas.name == "Cursor")
+                    foreach (Transform child in inventory.First().transform)
                     {
-                        canvas.SetActive(false);
+                        if (child.gameObject.name == "Enabled")
+                        {
+                            child.gameObject.SetActive(true);
+                        }
                     }
+                    playerEnabled = player.First().GetComponent<FirstPersonController>().enabled;
+                    player.First().GetComponent<FirstPersonController>().enabled = false;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.lockState = CursorLockMode.Confined;
+                    Cursor.visible = true;
+                    foreach (GameObject canvas in ui)
+                    {
+                        if (canvas.name == "Cursor")
+                        {
+                            canvas.SetActive(false);
+                        }
+                    }
+                    CollectableGO.onInventory = true;
                 }
-                CollectableGO.onInventory = true;
             }
         }
 	}

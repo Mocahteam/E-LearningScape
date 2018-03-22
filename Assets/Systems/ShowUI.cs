@@ -26,6 +26,9 @@ public class ShowUI : FSystem {
     private Family bag = FamilyManager.getFamily(new AnyOfTags("Bag"));
 
     private bool noSelection = true;    //true if all objects are unselected
+    private GameObject closeButton;
+    private GameObject uiGO;
+    private GameObject cursorUI;
 
     //information for animations
     private float speed = 0.1f;
@@ -95,6 +98,8 @@ public class ShowUI : FSystem {
     private bool unlockBag = false;
     private GameObject bagPadlock;
     private bool showBagPaper = false;
+    private GameObject bagAnswer;
+    private bool usingGlassesTmp = false;
 
     private bool onObject = false;
 
@@ -114,6 +119,7 @@ public class ShowUI : FSystem {
             {
                 //add listener to ui's close button
                 button.GetComponent<Button>().onClick.AddListener(CloseWindow);
+                closeButton = button;
             }
         }
 
@@ -121,11 +127,13 @@ public class ShowUI : FSystem {
         {
             if (c.name == "UI")
             {
+                uiGO = c;
                 c.SetActive(false); //hide ui
             }
             else if (c.name == "Cursor")
             {
                 c.SetActive(true);  //display cursor
+                cursorUI = c;
             }
             else if (c.name == "Timer")
             {
@@ -159,6 +167,15 @@ public class ShowUI : FSystem {
                 bagPadlock = child.gameObject;
             }
         }
+        foreach(Transform child in inventory.First().transform) {
+            if(child.gameObject.name == "GlassesBackground")
+            {
+                foreach(Transform c in child)
+                {
+                    bagAnswer = c.gameObject;
+                }
+            }
+        }
     }
 
     // Use this to update member variables when system pause. 
@@ -174,6 +191,19 @@ public class ShowUI : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
     {
+        if (onBag)
+        {
+            if (usingGlassesTmp && !CollectableGO.usingGlasses)
+            {
+                bagAnswer.SetActive(false);
+            }
+            else if (!usingGlassesTmp && CollectableGO.usingGlasses)
+            {
+                bagAnswer.SetActive(true);
+            }
+        }
+        usingGlassesTmp = CollectableGO.usingGlasses;
+
         if (moveToPlank)
         {
             //animation to move the player in front of the plank
@@ -190,21 +220,8 @@ public class ShowUI : FSystem {
                 newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, 360, 0);
                 Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
                 //show ui and set close button position
-                foreach (GameObject c in ui)
-                {
-                    if (c.name == "UI")
-                    {
-                        c.SetActive(true);
-                        foreach (Transform child in c.transform)
-                        {
-                            if (child.gameObject.name == "Close")
-                            {
-                                child.gameObject.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(plankTopRight);
-                                child.gameObject.GetComponent<RectTransform>().localPosition = child.gameObject.GetComponent<RectTransform>().localPosition -new Vector3(child.gameObject.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, child.gameObject.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0)/2;
-                            }
-                        }
-                    }
-                }
+                closeButton.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(plankTopRight) - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                uiGO.SetActive(true);
                 moveToPlank = false;
             }
         }
@@ -246,22 +263,9 @@ public class ShowUI : FSystem {
                                 moveBox = false;
                                 ballsout = true;
                                 //show ui and set "close" button position
-                                foreach (GameObject c in ui)
-                                {
-                                    if (c.name == "UI")
-                                    {
-                                        c.SetActive(true);
-                                        boxTopRight = Vector3.up * ((float)balls.Count / 10 + 0.3f) + Vector3.right * -1.3f + Vector3.forward * 0.2f;
-                                        foreach (Transform child in c.transform)
-                                        {
-                                            if (child.gameObject.name == "Close")
-                                            {
-                                                child.gameObject.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(box.First().transform.TransformPoint(boxTopRight));
-                                                child.gameObject.GetComponent<RectTransform>().localPosition = child.gameObject.GetComponent<RectTransform>().localPosition - new Vector3(child.gameObject.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, child.gameObject.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
-                                            }
-                                        }
-                                    }
-                                }
+                                boxTopRight = Vector3.up * ((float)balls.Count / 10 + 0.3f) + Vector3.right * -1.3f + Vector3.forward * 0.2f;
+                                closeButton.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(box.First().transform.TransformPoint(boxTopRight)) - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                                uiGO.SetActive(true);
                             }
                         }
                         else //if the ball is still in the box
@@ -330,22 +334,9 @@ public class ShowUI : FSystem {
                     }
                     else
                     {
-                        foreach (GameObject c in ui)
-                        {
-                            if (c.name == "UI")
-                            {
-                                c.SetActive(true);
-                                boxTopRight = Vector3.up * ((float)balls.Count / 10 + 0.3f) + Vector3.right * -1.3f + Vector3.forward * 0.2f;
-                                foreach (Transform child in c.transform)
-                                {
-                                    if (child.gameObject.name == "Close")
-                                    {
-                                        child.gameObject.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(box.First().transform.TransformPoint(boxTopRight));
-                                        child.gameObject.GetComponent<RectTransform>().localPosition = child.gameObject.GetComponent<RectTransform>().localPosition - new Vector3(child.gameObject.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, child.gameObject.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
-                                    }
-                                }
-                            }
-                        }
+                        boxTopRight = Vector3.up * ((float)balls.Count / 10 + 0.3f) + Vector3.right * -1.3f + Vector3.forward * 0.2f;
+                        closeButton.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(box.First().transform.TransformPoint(boxTopRight)) - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                        uiGO.SetActive(true);
                         objectPos += Vector3.up*(1.78f - 0.5f -objectPos.y);
                         if (CollectableGO.usingKeyE03)
                         {
@@ -426,22 +417,9 @@ public class ShowUI : FSystem {
             {
                 moveTablet = false;
                 //show ui and put the "close" button at the top right of the screen
-                foreach (GameObject c in ui)
-                {
-                    if (c.name == "UI")
-                    {
-                        c.SetActive(true);
-                        tabletTopRight = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth;
-                        foreach (Transform child in c.transform)
-                        {
-                            if (child.gameObject.name == "Close")
-                            {
-                                child.gameObject.GetComponent<RectTransform>().localPosition = tabletTopRight;
-                                child.gameObject.GetComponent<RectTransform>().localPosition = child.gameObject.GetComponent<RectTransform>().localPosition - new Vector3(child.gameObject.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, child.gameObject.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
-                            }
-                        }
-                    }
-                }
+                tabletTopRight = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth;
+                closeButton.GetComponent<RectTransform>().localPosition = tabletTopRight - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                uiGO.SetActive(true);
                 //put the ui "screen1" on the screen (rather than on the tablet)
                 screen1.First().GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
             }
@@ -459,21 +437,8 @@ public class ShowUI : FSystem {
                 if (player.First().transform.position == onTablePoint)
                 {
                     //show ui and set "close" button's position
-                    foreach (GameObject c in ui)
-                    {
-                        if (c.name == "UI")
-                        {
-                            c.SetActive(true);
-                            foreach (Transform child in c.transform)
-                            {
-                                if (child.gameObject.name == "Close")
-                                {
-                                    child.gameObject.GetComponent<RectTransform>().localPosition = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth;
-                                    child.gameObject.GetComponent<RectTransform>().localPosition = child.gameObject.GetComponent<RectTransform>().localPosition - new Vector3(child.gameObject.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, child.gameObject.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
-                                }
-                            }
-                        }
-                    }
+                    closeButton.GetComponent<RectTransform>().localPosition = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                    uiGO.SetActive(true);
                     moveToTable = false;
                 }
             }
@@ -533,15 +498,19 @@ public class ShowUI : FSystem {
                     {
                         showBagPaper = false;
                         moveBag = false;
-                        bag.First().GetComponentInChildren<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+                        bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition += Vector3.up * (bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.InverseTransformPoint(Camera.main.transform.position).y - bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y);
+                        bag.First().GetComponentInChildren<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+                        bagTopRight = Vector3.up * Camera.main.pixelHeight/2 + Vector3.right * Camera.main.pixelWidth/2 + (Vector3.up + Vector3.right) * bag.First().GetComponentInChildren<Image>().gameObject.GetComponent<RectTransform>().rect.width*0.225f;
+                        closeButton.GetComponent<RectTransform>().localPosition = bagTopRight - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0)/2;
+                        if (CollectableGO.usingGlasses)
+                        {
+                            bagAnswer.SetActive(true);
+                        }
                     }
                 }
                 else
                 {
-                    bag.First().GetComponentInChildren<Canvas>().renderMode = RenderMode.WorldSpace;
-                    bag.First().GetComponentInChildren<Canvas>().gameObject.transform.localPosition = Vector3.zero;
-                    bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition = Vector3.up * bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y;
-                    bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition = Vector3.MoveTowards(bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition, Vector3.zero, speed / 10);
+                    bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition = Vector3.MoveTowards(bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition, Vector3.zero, speed / 5);
                     if (bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y == 0f)
                     {
                         player.First().GetComponent<FirstPersonController>().enabled = true;
@@ -570,22 +539,12 @@ public class ShowUI : FSystem {
                 if (bag.First().transform.position == objectPos && Vector3.Angle(bag.First().transform.forward, player.First().transform.forward)<1)
                 {
                     //show ui and set close button position
-                    foreach (GameObject c in ui)
+                    if (bagPadlock.activeSelf)
                     {
-                        if (c.name == "UI")
-                        {
-                            c.SetActive(true);
-                            foreach (Transform child in c.transform)
-                            {
-                                if (child.gameObject.name == "Close")
-                                {
-                                    bagTopRight = bag.First().transform.position + bag.First().transform.up*bag.First().transform.localScale.y+ bag.First().transform.right * bag.First().transform.localScale.x;
-                                    child.gameObject.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(bagTopRight);
-                                    child.gameObject.GetComponent<RectTransform>().localPosition = child.gameObject.GetComponent<RectTransform>().localPosition - new Vector3(child.gameObject.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, child.gameObject.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
-                                }
-                            }
-                        }
+                        bagTopRight = bag.First().transform.position + bag.First().transform.up * bag.First().transform.localScale.y + bag.First().transform.right * bag.First().transform.localScale.x;
                     }
+                    closeButton.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(bagTopRight) - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                    uiGO.SetActive(true);
                     if (!bagPadlock.activeSelf)
                     {
                         showBagPaper = true;
@@ -610,180 +569,170 @@ public class ShowUI : FSystem {
                 {
                     noSelection = false;
                     //set and show ui
-                    foreach(GameObject c in ui)
+                    uiGO.SetActive(true);
+                    if (go.tag == "Object") //set ui for gameobjects with tag "object"
                     {
-                        if(c.name == "UI")
+                        foreach (Transform child in uiGO.transform)
                         {
-                            c.SetActive(true);
-                            if (go.tag == "Object") //set ui for gameobjects with tag "object"
+                            if (child.gameObject.name == "Window")
                             {
-                                foreach (Transform child in c.transform)
-                                {
-                                    if (child.gameObject.name == "Window")
-                                    {
-                                        //show a window (used in the first prototype)
-                                        child.gameObject.SetActive(true);
-                                        onObject = true;
-                                    }
-                                }
+                                //show a window (used in the first prototype)
+                                child.gameObject.SetActive(true);
+                                onObject = true;
                             }
-                            else if(go.tag == "Plank")  //set plank
-                            {
-                                //the position in front of the plank is not the same depending on the scale of the player
-                                if(player.First().transform.localScale.x < 0.9f)
-                                {
-                                    plankPos = new Vector3(plank.First().transform.position.x + 1.5f, 1.6f, plank.First().transform.position.z);
-                                }
-                                else
-                                {
-                                    plankPos = new Vector3(plank.First().transform.position.x + 1.5f, 0.98f, plank.First().transform.position.z);
-                                }
-                                //calculate the correct speed so that the translation and the rotation finish at the same time
-                                dist = (plankPos - player.First().transform.position).magnitude;
-                                foreach (Transform t in player.First().transform)
-                                {
-                                    if (t.gameObject.tag == "MainCamera")
-                                    {
-                                        speedRotation = Vector3.Angle(t.gameObject.transform.forward, Vector3.left) * speed / dist;
-                                    }
-                                }
-                                moveToPlank = true; //start animation to move the player in front of the plank
-                                c.SetActive(false); //hide ui during animation
-                                onPlank = true;
-                            }
-                            else if(go.tag == "Box")    //set box
-                            {
-                                go.GetComponent<Rigidbody>().isKinematic = true;
-                                //calculate the position in front of the player
-                                Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
-                                v.Normalize();
-                                objectPos = new Vector3(player.First().transform.position.x, 1.78f-1, player.First().transform.position.z) + v * (go.transform.localScale.y + 1.5f);
-                                //calculate the correct speed so that the translation and the rotation finish at the same time
-                                dist = (objectPos - go.transform.position).magnitude;
-                                speedRotation = Vector3.Angle(box.First().transform.forward, -player.First().transform.forward) * speed / dist;
-                                speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
-                                moveBox = true; //start animation to move the box in front of the player
-                                c.SetActive(false); //hide ui during animation
-                                onBox = true;
-                            }
-                            else if(go.tag == "Tablet") //set tablet
-                            {
-                                go.GetComponent<Rigidbody>().isKinematic = true;
-                                //calculate the distance between the tablet and the player depending on the screen size
-                                //(not really necessary since the tablet screen is displayed on the screen and not in the world)
-                                float d = 0.33f;
-                                if ((float)Camera.main.pixelWidth / 900 < (float)Camera.main.pixelHeight / 600)
-                                {
-                                    d = aTabletDist * (float)Camera.main.pixelHeight / (float)Camera.main.pixelWidth + bTabletDist;
-                                }
-                                else
-                                {
-                                    d = 0.56f;
-                                }
-                                tablet.First().GetComponent<Rigidbody>().isKinematic = true;
-                                //calculate the position in front of the player
-                                Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
-                                v.Normalize();
-                                objectPos = new Vector3(player.First().transform.position.x, 1.78f, player.First().transform.position.z) + v * (d);
-                                //calculate the correct speed so that the translation and the rotation finish at the same time
-                                dist = (objectPos - go.transform.position).magnitude;
-                                speedRotation = Vector3.Angle(tablet.First().transform.forward, player.First().transform.forward) * speed / dist;
-                                speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
-                                c.SetActive(false); //hide ui during animation
-                                onTablet = true;
-                                moveTablet = true;  //start animation to move the tablet in front of the player
-                            }
-                            else if (go.tag == "TableE05")  //set tables of enigma 5
-                            {
-                                /* set the position where the player will be moved depending on the selected table
-                                 * the position is chosen so that when the tables are assembled, the formed picture is in the center of the screen
-                                 */
-                                if (go.name.Contains(1.ToString()))
-                                {
-                                    //front left of the table
-                                    onTablePoint = go.transform.position - go.transform.right * 0.75f + go.transform.forward * 0.75f + Vector3.up * (go.transform.localScale.y * 0.55f + 1);
-                                    dist = (onTablePoint - player.First().transform.position).magnitude;
-                                }
-                                else if (go.name.Contains(2.ToString()))
-                                {
-                                    //front right of the table
-                                    onTablePoint = go.transform.position + go.transform.right * 0.75f + go.transform.forward * 0.75f + Vector3.up * (go.transform.localScale.y * 0.55f + 1);
-                                    dist = (onTablePoint - player.First().transform.position).magnitude;
-                                }
-                                else if (go.name.Contains(3.ToString()))
-                                {
-                                    //back of the table (back according to unity axes)
-                                    onTablePoint = go.transform.position - go.transform.forward * 0.75f + Vector3.up * (go.transform.localScale.y * 0.55f + 1);
-                                    dist = (onTablePoint - player.First().transform.position).magnitude;
-                                }
-                                //calculate the correct speed so that the translation and the rotation finish at the same time
-                                speedRotation = Vector3.Angle(Camera.main.transform.forward, Vector3.down) * speed / dist;
-                                speedRotation2 = Vector3.Angle(player.First().transform.forward, go.transform.forward) * speed / dist;
-                                //save rotation and position of the player before moving
-                                posBeforeTable = player.First().transform.position;
-                                rotBeforeTable = Camera.main.transform.localRotation;
-                                rot2BeforeTable = player.First().transform.rotation;
-                                focusedTable = go;  //store the selected table
-                                c.SetActive(false); //hide ui during animation
-                                onTable = true;
-                                moveToTable = true; //start animation to move the playre above the table
-                            }
-                            else if(go.tag == "Sheet")  //set sheets of enigma 6 and 7
-                            {
-                                focusedSheet = go;  //store the selected sheet
-                                onSheet = true;
-                                foreach (Transform ch in c.transform)
-                                {
-                                    if (ch.gameObject.name == "Close")
-                                    {
-                                        //set the position of the "close" button
-                                        //if (go.GetComponentsInChildren<Image>().Length == 3)
-                                        ch.gameObject.GetComponent<RectTransform>().localPosition = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth;
-                                        ch.gameObject.GetComponent<RectTransform>().localPosition = ch.gameObject.GetComponent<RectTransform>().localPosition - new Vector3(ch.gameObject.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, ch.gameObject.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
-                                    }
-                                }
-                                Camera.main.transform.localRotation = Quaternion.Euler(0, 0, 0); //set the x rotation of the player to 0 (make an animation rather than this)
-                                rotBeforeSheet = focusedSheet.transform.rotation;   //the the rotation of the sheet before selection
-                                //rotate the sheet toward the player before displaying it (else it would be distorted in the ui)
-                                focusedSheet.transform.rotation = Quaternion.RotateTowards(focusedSheet.transform.rotation,Quaternion.Euler(0, player.First().transform.rotation.eulerAngles.y-90, 0), 360);
-                                foreach(Transform canvas in focusedSheet.transform)
-                                {
-                                    if(canvas.gameObject.name == "Display")
-                                    {
-                                        //show the sheet in an ui
-                                        canvas.GetComponent<Canvas>().planeDistance = 0.33f;
-                                        canvas.gameObject.SetActive(true);
-                                    }
-                                }
-                            }
-                            else if(go.tag == "Bag")
-                            {
-                                go.GetComponent<Rigidbody>().isKinematic = true;
-                                //calculate the position in front of the player
-                                Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
-                                v.Normalize();
-                                objectPos = new Vector3(player.First().transform.position.x, 1.78f - 0.5f, player.First().transform.position.z) + v * (go.transform.localScale.y + 1.5f);
-                                //calculate the correct speed so that the translation and the rotation finish at the same time
-                                dist = (objectPos - go.transform.position).magnitude;
-                                speedRotation = Vector3.Angle(bag.First().transform.forward, player.First().transform.forward) * speed / dist;
-                                speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
-                                moveBag = true; //start animation to move the bag in front of the player
-                                c.SetActive(false); //hide ui during animation
-                                onBag = true;
-                            }
-                        }
-                        else if (c.name == "Cursor")
-                        {
-                            //hide the cursor when an object is selected
-                            c.SetActive(false);
                         }
                     }
+                    else if(go.tag == "Plank")  //set plank
+                    {
+                        //the position in front of the plank is not the same depending on the scale of the player
+                        if(player.First().transform.localScale.x < 0.9f)
+                        {
+                            plankPos = new Vector3(plank.First().transform.position.x + 1.5f, 1.6f, plank.First().transform.position.z);
+                        }
+                        else
+                        {
+                            plankPos = new Vector3(plank.First().transform.position.x + 1.5f, 0.98f, plank.First().transform.position.z);
+                        }
+                        //calculate the correct speed so that the translation and the rotation finish at the same time
+                        dist = (plankPos - player.First().transform.position).magnitude;
+                        foreach (Transform t in player.First().transform)
+                        {
+                            if (t.gameObject.tag == "MainCamera")
+                            {
+                                speedRotation = Vector3.Angle(t.gameObject.transform.forward, Vector3.left) * speed / dist;
+                            }
+                        }
+                        moveToPlank = true; //start animation to move the player in front of the plank
+                        uiGO.SetActive(false); //hide ui during animation
+                        onPlank = true;
+                    }
+                    else if(go.tag == "Box")    //set box
+                    {
+                        go.GetComponent<Rigidbody>().isKinematic = true;
+                        //calculate the position in front of the player
+                        Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+                        v.Normalize();
+                        objectPos = new Vector3(player.First().transform.position.x, 1.78f-1, player.First().transform.position.z) + v * (go.transform.localScale.y + 1.5f);
+                        //calculate the correct speed so that the translation and the rotation finish at the same time
+                        dist = (objectPos - go.transform.position).magnitude;
+                        speedRotation = Vector3.Angle(box.First().transform.forward, -player.First().transform.forward) * speed / dist;
+                        speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
+                        moveBox = true; //start animation to move the box in front of the player
+                        uiGO.SetActive(false); //hide ui during animation
+                        onBox = true;
+                    }
+                    else if(go.tag == "Tablet") //set tablet
+                    {
+                        go.GetComponent<Rigidbody>().isKinematic = true;
+                        //calculate the distance between the tablet and the player depending on the screen size
+                        //(not really necessary since the tablet screen is displayed on the screen and not in the world)
+                        float d = 0.33f;
+                        if ((float)Camera.main.pixelWidth / 900 < (float)Camera.main.pixelHeight / 600)
+                        {
+                            d = aTabletDist * (float)Camera.main.pixelHeight / (float)Camera.main.pixelWidth + bTabletDist;
+                        }
+                        else
+                        {
+                            d = 0.56f;
+                        }
+                        tablet.First().GetComponent<Rigidbody>().isKinematic = true;
+                        //calculate the position in front of the player
+                        Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+                        v.Normalize();
+                        objectPos = new Vector3(player.First().transform.position.x, 1.78f, player.First().transform.position.z) + v * (d);
+                        //calculate the correct speed so that the translation and the rotation finish at the same time
+                        dist = (objectPos - go.transform.position).magnitude;
+                        speedRotation = Vector3.Angle(tablet.First().transform.forward, player.First().transform.forward) * speed / dist;
+                        speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
+                        uiGO.SetActive(false); //hide ui during animation
+                        onTablet = true;
+                        moveTablet = true;  //start animation to move the tablet in front of the player
+                    }
+                    else if (go.tag == "TableE05")  //set tables of enigma 5
+                    {
+                        /* set the position where the player will be moved depending on the selected table
+                            * the position is chosen so that when the tables are assembled, the formed picture is in the center of the screen
+                            */
+                        if (go.name.Contains(1.ToString()))
+                        {
+                            //front left of the table
+                            onTablePoint = go.transform.position - go.transform.right * 0.75f + go.transform.forward * 0.75f + Vector3.up * (go.transform.localScale.y * 0.55f + 1);
+                            dist = (onTablePoint - player.First().transform.position).magnitude;
+                        }
+                        else if (go.name.Contains(2.ToString()))
+                        {
+                            //front right of the table
+                            onTablePoint = go.transform.position + go.transform.right * 0.75f + go.transform.forward * 0.75f + Vector3.up * (go.transform.localScale.y * 0.55f + 1);
+                            dist = (onTablePoint - player.First().transform.position).magnitude;
+                        }
+                        else if (go.name.Contains(3.ToString()))
+                        {
+                            //back of the table (back according to unity axes)
+                            onTablePoint = go.transform.position - go.transform.forward * 0.75f + Vector3.up * (go.transform.localScale.y * 0.55f + 1);
+                            dist = (onTablePoint - player.First().transform.position).magnitude;
+                        }
+                        //calculate the correct speed so that the translation and the rotation finish at the same time
+                        speedRotation = Vector3.Angle(Camera.main.transform.forward, Vector3.down) * speed / dist;
+                        speedRotation2 = Vector3.Angle(player.First().transform.forward, go.transform.forward) * speed / dist;
+                        //save rotation and position of the player before moving
+                        posBeforeTable = player.First().transform.position;
+                        rotBeforeTable = Camera.main.transform.localRotation;
+                        rot2BeforeTable = player.First().transform.rotation;
+                        focusedTable = go;  //store the selected table
+                        uiGO.SetActive(false); //hide ui during animation
+                        onTable = true;
+                        moveToTable = true; //start animation to move the playre above the table
+                    }
+                    else if(go.tag == "Sheet")  //set sheets of enigma 6 and 7
+                    {
+                        focusedSheet = go;  //store the selected sheet
+                        onSheet = true;
+                        foreach (Transform ch in uiGO.transform)
+                        {
+                            if (ch.gameObject.name == "Close")
+                            {
+                                //set the position of the "close" button
+                                //if (go.GetComponentsInChildren<Image>().Length == 3)
+                                ch.gameObject.GetComponent<RectTransform>().localPosition = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth;
+                                ch.gameObject.GetComponent<RectTransform>().localPosition = ch.gameObject.GetComponent<RectTransform>().localPosition - new Vector3(ch.gameObject.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, ch.gameObject.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                            }
+                        }
+                        Camera.main.transform.localRotation = Quaternion.Euler(0, 0, 0); //set the x rotation of the player to 0 (make an animation rather than this)
+                        rotBeforeSheet = focusedSheet.transform.rotation;   //the the rotation of the sheet before selection
+                        //rotate the sheet toward the player before displaying it (else it would be distorted in the ui)
+                        focusedSheet.transform.rotation = Quaternion.RotateTowards(focusedSheet.transform.rotation,Quaternion.Euler(0, player.First().transform.rotation.eulerAngles.y-90, 0), 360);
+                        foreach(Transform canvas in focusedSheet.transform)
+                        {
+                            if(canvas.gameObject.name == "Display")
+                            {
+                                //show the sheet in an ui
+                                canvas.GetComponent<Canvas>().planeDistance = 0.33f;
+                                canvas.gameObject.SetActive(true);
+                            }
+                        }
+                    }
+                    else if(go.tag == "Bag")
+                    {
+                        go.GetComponent<Rigidbody>().isKinematic = true;
+                        //calculate the position in front of the player
+                        Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+                        v.Normalize();
+                        objectPos = new Vector3(player.First().transform.position.x, 1.78f - 0.5f, player.First().transform.position.z) + v * (go.transform.localScale.y + 1.5f);
+                        //calculate the correct speed so that the translation and the rotation finish at the same time
+                        dist = (objectPos - go.transform.position).magnitude;
+                        speedRotation = Vector3.Angle(bag.First().transform.forward, player.First().transform.forward) * speed / dist;
+                        speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
+                        moveBag = true; //start animation to move the bag in front of the player
+                        uiGO.SetActive(false); //hide ui during animation
+                        onBag = true;
+                    }
+                    //hide the cursor when an object is selected
+                    cursorUI.SetActive(false);
                     //disable player moves
                     player.First().GetComponent<FirstPersonController>().enabled = false;
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.lockState = CursorLockMode.Confined;
                     Cursor.visible = true;
-                    break;
                 }
             }
         }
@@ -957,80 +906,90 @@ public class ShowUI : FSystem {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-        foreach (GameObject c in ui)
+        if (onObject)
         {
-            if (c.name == "UI")
+            foreach (Transform child in uiGO.transform)
             {
-                if (onObject)
+                if (child.gameObject.name == "Window")
                 {
-                    foreach (Transform child in c.transform)
-                    {
-                        if (child.gameObject.name == "Window")
-                        {
-                            //hide window
-                            child.gameObject.SetActive(false);
-                        }
-                    }
+                    //hide window
+                    child.gameObject.SetActive(false);
                 }
-                /*else if (onPlank)
-                {
-                }*/
-                else if(onBox)
-                {
-                    //close box, set balls to initial position and everything to not kinematic
-                    boxTop.First().transform.localPosition = boxTopIniPos;
-                    box.First().GetComponent<Rigidbody>().isKinematic = false;
-                    foreach(GameObject go in balls)
-                    {
-                        go.transform.localPosition = go.GetComponent<Ball>().initialPosition;
-                        go.GetComponent<Ball>().outOfBox = false;
-                        go.GetComponent<Rigidbody>().isKinematic = false;
-                    }
-                    tmpCount = 1;
-                    moveBox = false;
-                }
-                else if (onTablet)
-                {
-                    //put the screen on the tablet
-                    screen1.First().GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
-                    screen1.First().GetComponent<RectTransform>().localPosition = Vector3.forward * -0.026f;
-                }
-                else if (onTable)
-                {
-                    //start animation to move the player back to its position
-                    moveToTable = true;
-                }
-                else if (onSheet)
-                {
-                    //set sheet to initial rotation and hide ui
-                    focusedSheet.transform.rotation = rotBeforeSheet;
-                    foreach (Canvas canvas in focusedSheet.GetComponentsInChildren<Canvas>())
-                    {
-                        if (canvas.gameObject.name == "Display")
-                        {
-                            canvas.gameObject.SetActive(false);
-                        }
-                    }
-                }
-                else if (onBag)
-                {
-                    bag.First().GetComponent<Rigidbody>().isKinematic = false;
-                    moveBag = false;
-                    if(bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y != 0)
-                    {
-                        showBagPaper = true;
-                        moveBag = true;
-                        bag.First().GetComponent<Rigidbody>().isKinematic = true;
-                    }
-                }
-                c.SetActive(false);
-            }
-            else if (c.name == "Cursor")
-            {
-                //show cursor
-                c.SetActive(true);
             }
         }
+        else if (onPlank)
+        {
+            player.First().transform.forward = -plank.First().transform.right;
+            Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        }
+        else if(onBox)
+        {
+            //close box, set balls to initial position and everything to not kinematic
+            boxTop.First().transform.localPosition = boxTopIniPos;
+            box.First().GetComponent<Rigidbody>().isKinematic = false;
+            foreach(GameObject go in balls)
+            {
+                go.transform.localPosition = go.GetComponent<Ball>().initialPosition;
+                go.GetComponent<Ball>().outOfBox = false;
+                go.GetComponent<Rigidbody>().isKinematic = false;
+            }
+            tmpCount = 1;
+            moveBox = false;
+        }
+        else if (onTablet)
+        {
+            tablet.First().GetComponent<Rigidbody>().isKinematic = false;
+            //put the screen on the tablet
+            screen1.First().GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+            screen1.First().GetComponent<RectTransform>().localPosition = Vector3.forward * -0.026f;
+            screen1.First().GetComponent<RectTransform>().sizeDelta = new Vector2(900,600);
+            screen1.First().GetComponent<RectTransform>().localScale = Vector3.one * -0.0008327437f;
+            screen1.First().GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, 180);
+        }
+        else if (onTable)
+        {
+            //start animation to move the player back to its position
+            moveToTable = true;
+        }
+        else if (onSheet)
+        {
+            //set sheet to initial rotation and hide ui
+            focusedSheet.transform.rotation = rotBeforeSheet;
+            foreach (Canvas canvas in focusedSheet.GetComponentsInChildren<Canvas>())
+            {
+                if (canvas.gameObject.name == "Display")
+                {
+                    canvas.gameObject.SetActive(false);
+                }
+            }
+        }
+        else if (onBag)
+        {
+            bag.First().GetComponent<Rigidbody>().isKinematic = false;
+            moveBag = false;
+            if(bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y != 0)
+            {
+                bagAnswer.SetActive(false);
+                showBagPaper = true;
+                moveBag = true;
+                bag.First().GetComponent<Rigidbody>().isKinematic = true;
+                bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition += Vector3.up * (0.9f - bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y);
+                bag.First().GetComponentInChildren<Canvas>().renderMode = RenderMode.WorldSpace;
+                bag.First().GetComponentInChildren<Canvas>().gameObject.GetComponent<RectTransform>().localPosition = Vector3.forward * (-0.51f - bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.z);
+                bag.First().GetComponentInChildren<Canvas>().gameObject.GetComponent<RectTransform>().localScale = Vector3.one * 0.000535786f;
+            }
+            else
+            {
+                //enable player
+                player.First().GetComponent<FirstPersonController>().enabled = true;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
+        uiGO.SetActive(false);
+        //show cursor
+        cursorUI.SetActive(true);
         foreach (GameObject go in objects)
         {
             if (go.GetComponent<Selectable>().isSelected)

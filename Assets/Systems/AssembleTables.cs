@@ -34,7 +34,7 @@ public class AssembleTables : FSystem {
             {
                 if (go.GetComponent<Takable>().taken)   //find the taken object
                 {
-                    if (taken.tag == "TableE05")
+                    if (go.GetComponent<Takable>().tag == "TableE05")
                     {
                         taken = go; //save it if it's a table
                     }

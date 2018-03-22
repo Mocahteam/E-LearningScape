@@ -6,6 +6,7 @@ public class CollectableGO : MonoBehaviour {
     public static bool usingWire = false;
     public static bool usingKeyE03 = false;
     public static bool usingKeyE08 = false;
+    public static bool usingGlasses = false;
 
     public GameObject goui; //the corresponding gameobject or ui element
 }

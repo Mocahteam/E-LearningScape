@@ -265,7 +265,7 @@ public class SetAnswer : FSystem {
                 else //when dragging a gear
                 {
                     //move the gear to mouse position
-                    gearDragged.transform.localPosition = Input.mousePosition - Vector3.right * (float)Camera.main.pixelWidth / 2 - Vector3.up * (float)Camera.main.pixelHeight / 2;
+                    gearDragged.transform.localPosition = (Input.mousePosition - Vector3.right * (float)Camera.main.pixelWidth / 2 - Vector3.up * (float)Camera.main.pixelHeight / 2)*0.627f;
                 }
             }
         }
