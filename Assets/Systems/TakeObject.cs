@@ -2,7 +2,8 @@
 using FYFY;
 
 public class TakeObject : FSystem {
-
+    // Both of the Vive Controllers
+    private Family controllers = FamilyManager.getFamily(new AllOfComponents(typeof(ViveController)));
     //all takable objects
     private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(Takable)));
     //enigma03's balls

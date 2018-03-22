@@ -5173,6 +5173,9 @@ public class OpenVR
 	/** Finds the active installation of vrclient.dll and initializes it */
 	public static CVRSystem Init(ref EVRInitError peError, EVRApplicationType eApplicationType = EVRApplicationType.VRApplication_Scene)
 	{
+        #if UNITY_EDITOR_LINUX
+            return null;
+        #endif
 		VRToken = InitInternal(ref peError, eApplicationType);
 		OpenVRInternal_ModuleContext.Clear();
 

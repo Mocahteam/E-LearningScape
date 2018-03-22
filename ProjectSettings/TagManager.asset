@@ -3,6 +3,30 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
+  tags:
+  - FxTemporaire
+  - Sheet
+  - MouseOver
+  - projectile
+  - TableE05
+  - Object
+  - Screen1
+  - A-R1
+  - Syllabus
+  - Answer
+  - RotateGear
+  - Timings
+  - ChangeRoom
+  - Tablet
+  - Inventory
+  - Q-R1
+  - Plank
+  - Box
+  - Bag
+  - BoxTop
+  - WrongTimerText
+  - Ball
+  - PlankText
   layers:
   - Default
   - TransparentFX
@@ -12,7 +36,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - CanTeleport
   - 
   - 
   - 
