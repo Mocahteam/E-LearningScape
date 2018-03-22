@@ -120,7 +120,6 @@ public class ShowUI : FSystem {
                 //add listener to ui's close button
                 button.GetComponent<Button>().onClick.AddListener(CloseWindow);
                 closeButton = button;
-                closeButton.GetComponent<RectTransform>().localPosition = Vector3.zero;
             }
         }
 
@@ -221,8 +220,8 @@ public class ShowUI : FSystem {
                 newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, 360, 0);
                 Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
                 //show ui and set close button position
-                uiGO.SetActive(true);
                 closeButton.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(plankTopRight) - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                uiGO.SetActive(true);
                 moveToPlank = false;
             }
         }
@@ -264,9 +263,9 @@ public class ShowUI : FSystem {
                                 moveBox = false;
                                 ballsout = true;
                                 //show ui and set "close" button position
-                                uiGO.SetActive(true);
                                 boxTopRight = Vector3.up * ((float)balls.Count / 10 + 0.3f) + Vector3.right * -1.3f + Vector3.forward * 0.2f;
                                 closeButton.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(box.First().transform.TransformPoint(boxTopRight)) - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                                uiGO.SetActive(true);
                             }
                         }
                         else //if the ball is still in the box
@@ -335,9 +334,9 @@ public class ShowUI : FSystem {
                     }
                     else
                     {
-                        uiGO.SetActive(true);
                         boxTopRight = Vector3.up * ((float)balls.Count / 10 + 0.3f) + Vector3.right * -1.3f + Vector3.forward * 0.2f;
                         closeButton.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(box.First().transform.TransformPoint(boxTopRight)) - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                        uiGO.SetActive(true);
                         objectPos += Vector3.up*(1.78f - 0.5f -objectPos.y);
                         if (CollectableGO.usingKeyE03)
                         {
@@ -418,9 +417,9 @@ public class ShowUI : FSystem {
             {
                 moveTablet = false;
                 //show ui and put the "close" button at the top right of the screen
-                uiGO.SetActive(true);
                 tabletTopRight = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth;
                 closeButton.GetComponent<RectTransform>().localPosition = tabletTopRight - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                uiGO.SetActive(true);
                 //put the ui "screen1" on the screen (rather than on the tablet)
                 screen1.First().GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
             }
@@ -438,8 +437,8 @@ public class ShowUI : FSystem {
                 if (player.First().transform.position == onTablePoint)
                 {
                     //show ui and set "close" button's position
-                    uiGO.SetActive(true);
                     closeButton.GetComponent<RectTransform>().localPosition = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                    uiGO.SetActive(true);
                     moveToTable = false;
                 }
             }
@@ -540,12 +539,12 @@ public class ShowUI : FSystem {
                 if (bag.First().transform.position == objectPos && Vector3.Angle(bag.First().transform.forward, player.First().transform.forward)<1)
                 {
                     //show ui and set close button position
-                    uiGO.SetActive(true);
                     if (bagPadlock.activeSelf)
                     {
                         bagTopRight = bag.First().transform.position + bag.First().transform.up * bag.First().transform.localScale.y + bag.First().transform.right * bag.First().transform.localScale.x;
                     }
                     closeButton.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(bagTopRight) - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                    uiGO.SetActive(true);
                     if (!bagPadlock.activeSelf)
                     {
                         showBagPaper = true;
