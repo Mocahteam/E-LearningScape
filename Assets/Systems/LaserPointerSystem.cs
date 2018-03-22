@@ -4,7 +4,7 @@ using FYFY;
 public class LaserPointerSystem : FSystem
 {
     // Both Vive controllers (they also have TriggerSensitive3D)
-    private Family controllers = FamilyManager.getFamily(new AllOfComponents(typeof(ViveController), typeof(LaserPointer)));
+    private Family controllers = FamilyManager.getFamily(new AllOfComponents(typeof(LaserPointer)));
 
     public LaserPointerSystem()
     {
@@ -45,8 +45,12 @@ public class LaserPointerSystem : FSystem
         {
             LaserPointer lp = c.GetComponent<LaserPointer>();
             SteamVR_Controller.Device controller = SteamVR_Controller.Input((int) lp.trackedObj.index);
+
+            // If the controller is holding an item, stop
+            Grabber g = c.GetComponent<Grabber>();
+            if(g && g.objectInHand) { continue; }
             
-            // If the touchpad is pressed
+            // If the touchpad
             if(controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
             {
                 RaycastHit hit;

@@ -3,7 +3,7 @@ using FYFY;
 
 public class TakeObject : FSystem {
     // Both of the Vive Controllers
-    private Family controllers = FamilyManager.getFamily(new AllOfComponents(typeof(ViveController)));
+    private Family controllers = FamilyManager.getFamily(new AllOfComponents(typeof(Grabber)));
     //all takable objects
     private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(Takable)));
     //enigma03's balls
@@ -11,8 +11,16 @@ public class TakeObject : FSystem {
 
     public TakeObject()
     {
+        // For each controller
+        foreach (GameObject c in controllers)
+        {
+            Grabber g = c.GetComponent<Grabber>();
+            // Get the tracked object (device)
+            g.trackedObj = g.GetComponent<SteamVR_TrackedObject>();
+        }
+
         //at the beginning of the game, all taken object are not kinematic
-        foreach(GameObject go in tObjects)
+        foreach (GameObject go in tObjects)
         {
             go.GetComponent<Rigidbody>().isKinematic = false;
         }
@@ -39,7 +47,7 @@ public class TakeObject : FSystem {
             }
         }
 
-        if (!Selectable.selected && !CollectableGO.onInventory)   //if there is not selected object and inventory isn't opened
+        /*if (!Selectable.selected && !CollectableGO.onInventory)   //if there is not selected object and inventory isn't opened
         {
             if (Takable.objectTaken)    //if an object is taken
             {
@@ -89,6 +97,60 @@ public class TakeObject : FSystem {
                     }
                 }
             }
+        }*/
+        foreach (GameObject c in controllers)
+        {
+            Grabber g = c.GetComponent<Grabber>();
+            SteamVR_Controller.Device controller = SteamVR_Controller.Input((int)g.trackedObj.index);
+
+            // If the user is pressing the trigger
+            if (controller.GetHairTriggerDown())
+            {
+                if(g.collidingObject)
+                {
+                    GrabObject(g);
+                }
+            }
+
+            // If the user has released the trigger
+            if (controller.GetHairTriggerUp())
+            {
+                ReleaseObject(g);
+            }
         }
 	}
+
+    private void GrabObject(Grabber g)
+    {
+        // Move the collidingObject inside the hand
+        g.objectInHand = g.collidingObject;
+        g.collidingObject = null;
+        // Joint
+        var joint = AddFixedJoint(g);
+        joint.connectedBody = g.objectInHand.GetComponent<Rigidbody>();
+    }
+
+    private FixedJoint AddFixedJoint(Grabber g)
+    {
+        FixedJoint fx = g.gameObject.AddComponent<FixedJoint>();
+        fx.breakForce = 20000;
+        fx.breakTorque = 20000;
+        return fx;
+    }
+
+    private void ReleaseObject(Grabber g)
+    {
+        // Check the joint
+        if(g.GetComponent<FixedJoint>())
+        {
+            // Remove the connected body
+            g.GetComponent<FixedJoint>().connectedBody = null;
+            GameObject.Destroy(g.GetComponent<FixedJoint>());
+            // Throw !
+            SteamVR_Controller.Device controller = SteamVR_Controller.Input((int)g.trackedObj.index);
+            g.objectInHand.GetComponent<Rigidbody>().velocity = controller.velocity;
+            g.objectInHand.GetComponent<Rigidbody>().angularVelocity = controller.angularVelocity;
+        }
+        g.objectInHand = null;
+    }
 }

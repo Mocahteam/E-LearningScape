@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class LaserPointer : MonoBehaviour
 {
+    [HideInInspector]
+    public SteamVR_TrackedObject trackedObj;
+
     // Laser
     // Laser prebab
     public GameObject laserPrefab;
@@ -14,8 +17,6 @@ public class LaserPointer : MonoBehaviour
     // Point hit by the laser
     [HideInInspector]
     public Vector3 hitPoint;
-    [HideInInspector]
-    public SteamVR_TrackedObject trackedObj;
 
     // Teleportation
     // Camera rig transform
