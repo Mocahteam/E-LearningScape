@@ -32,7 +32,7 @@ public class Select : FSystem {
             foreach(GameObject target in t3d.Targets)
             {
                 // Select only the first Gameobject
-                // TODO
+                Debug.Log(target);
                 return;
             }
 
