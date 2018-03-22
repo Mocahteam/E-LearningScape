@@ -7,6 +7,9 @@ public class TakeObject : FSystem {
     private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(Takable)));
     //enigma03's balls
     private Family balls = FamilyManager.getFamily(new AnyOfTags("Ball"));
+    private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
+
+    private float onTableHeight;
 
     public TakeObject()
     {
@@ -46,10 +49,27 @@ public class TakeObject : FSystem {
                 {
                     if (go.GetComponent<Takable>().taken)   //find the taken object
                     {
-                        Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
-                        v.Normalize();
-                        go.transform.position = Camera.main.transform.position + v * (go.transform.localScale.y + 1.5f);    //move the object in front of the camera
-                        go.transform.rotation = Quaternion.Euler(10, Camera.main.transform.rotation.eulerAngles.y, 0);      //rotate the object to the camera
+                        if(go.tag == "TableE05")
+                        {
+                            Camera.main.transform.localRotation = Quaternion.Euler(90,0,0);
+                            player.First().transform.position += Vector3.up * (onTableHeight - player.First().transform.position.y);
+                            go.transform.position = player.First().transform.position + Vector3.down*2;    //move the object under the player
+                            go.transform.rotation = Quaternion.Euler(0, player.First().transform.rotation.eulerAngles.y, 0);      //rotate the object to the camera
+                        }
+                        else
+                        {
+                            Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+                            v.Normalize();
+                            go.transform.position = Camera.main.transform.position + v * (go.transform.localScale.y + 1.5f);    //move the object in front of the camera
+                            if (go.GetComponent<MirrorScript>())
+                            {
+                                go.transform.rotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0);      //rotate the object to the camera
+                            }
+                            else
+                            {
+                                go.transform.rotation = Quaternion.Euler(10, Camera.main.transform.rotation.eulerAngles.y, 0);      //rotate the object to the camera
+                            }
+                        }
                         if (Input.GetMouseButtonDown(1)) //if right click, release the object
                         {
                             go.GetComponent<Takable>().taken = false;
@@ -62,8 +82,13 @@ public class TakeObject : FSystem {
                                     ball.GetComponent<Rigidbody>().isKinematic = false;
                                 }
                             }
-                            break;
+                            else if(go.tag == "TableE05")
+                            {
+                                Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                                player.First().transform.position = go.transform.position - go.transform.forward * 1.5f;
+                            }
                         }
+                        break;
                     }
                 }
             }
@@ -83,6 +108,12 @@ public class TakeObject : FSystem {
                             {
                                 ball.GetComponent<Rigidbody>().isKinematic = true;
                             }
+                        }
+                        else if(go.tag == "TableE05")
+                        {
+                            player.First().transform.forward = go.transform.forward;
+                            player.First().transform.position = go.transform.position + Vector3.up * 2;
+                            onTableHeight = player.First().transform.position.y;
                         }
                         break;
                     }
