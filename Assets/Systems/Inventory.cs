@@ -11,6 +11,7 @@ public class Inventory : FSystem {
     private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ENABLED));
     private Family ui = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
     private Family syllabusElems = FamilyManager.getFamily(new AnyOfTags("Syllabus"), new AllOfComponents(typeof(CollectableGO)), new NoneOfComponents(typeof(Image)));
+    private Family inputfields = FamilyManager.getFamily(new AllOfComponents(typeof(InputField)));
 
     private bool playerEnabled = true;
     private GameObject displayer;
@@ -23,6 +24,7 @@ public class Inventory : FSystem {
     private GameObject glassesSelected;
 
     private RaycastHit hit;
+    private bool inputfieldFocused;
 
     public Inventory()
     {
@@ -214,34 +216,47 @@ public class Inventory : FSystem {
                 }
             }
         }
+
         if (Input.GetKeyDown(KeyCode.A))
         {
-            if (CollectableGO.onInventory)
+            inputfieldFocused = false;
+            foreach (GameObject go in inputfields)
             {
-                CloseInventory();
+                if (go.GetComponent<InputField>().isFocused)
+                {
+                    inputfieldFocused = true;
+                    break;
+                }
             }
-            else
+            if (!inputfieldFocused)
             {
-                foreach (Transform child in inventory.First().transform)
+                if (CollectableGO.onInventory)
                 {
-                    if (child.gameObject.name == "Enabled")
-                    {
-                        child.gameObject.SetActive(true);
-                    }
+                    CloseInventory();
                 }
-                playerEnabled = player.First().GetComponent<FirstPersonController>().enabled;
-                player.First().GetComponent<FirstPersonController>().enabled = false;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.lockState = CursorLockMode.Confined;
-                Cursor.visible = true;
-                foreach (GameObject canvas in ui)
+                else
                 {
-                    if (canvas.name == "Cursor")
+                    foreach (Transform child in inventory.First().transform)
                     {
-                        canvas.SetActive(false);
+                        if (child.gameObject.name == "Enabled")
+                        {
+                            child.gameObject.SetActive(true);
+                        }
                     }
+                    playerEnabled = player.First().GetComponent<FirstPersonController>().enabled;
+                    player.First().GetComponent<FirstPersonController>().enabled = false;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.lockState = CursorLockMode.Confined;
+                    Cursor.visible = true;
+                    foreach (GameObject canvas in ui)
+                    {
+                        if (canvas.name == "Cursor")
+                        {
+                            canvas.SetActive(false);
+                        }
+                    }
+                    CollectableGO.onInventory = true;
                 }
-                CollectableGO.onInventory = true;
             }
         }
 	}

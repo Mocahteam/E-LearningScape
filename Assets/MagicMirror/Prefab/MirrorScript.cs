@@ -9,7 +9,7 @@ public class MirrorScript : MonoBehaviour
     public int MaximumPerPixelLights = 2;
 
     [Tooltip("Texture size for the mirror, depending on how close the player can get to the mirror, this will need to be larger")]
-    public int TextureSize = 768;
+    public int TextureSize = 2000;
 
     [Tooltip("Subtracted from the near plane of the mirror")]
     public float ClipPlaneOffset = 0.07f;

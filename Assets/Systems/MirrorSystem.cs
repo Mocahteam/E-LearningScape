@@ -1,0 +1,23 @@
+﻿using UnityEngine;
+using FYFY;
+
+public class MirrorSystem : FSystem {
+
+    private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
+    private Family mirror = FamilyManager.getFamily(new AllOfComponents(typeof(MirrorScript)));
+
+    // Use this to update member variables when system pause. 
+    // Advice: avoid to update your families inside this function.
+    protected override void onPause(int currentFrame) {
+	}
+
+	// Use this to update member variables when system resume.
+	// Advice: avoid to update your families inside this function.
+	protected override void onResume(int currentFrame){
+	}
+
+	// Use to process your families.
+	protected override void onProcess(int familiesUpdateCount) {
+        mirror.First().transform.rotation = Quaternion.Euler(0, player.First().transform.rotation.eulerAngles.y,0);
+	}
+}

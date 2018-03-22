@@ -917,9 +917,11 @@ public class ShowUI : FSystem {
                 }
             }
         }
-        /*else if (onPlank)
+        else if (onPlank)
         {
-        }*/
+            player.First().transform.forward = -plank.First().transform.right;
+            Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        }
         else if(onBox)
         {
             //close box, set balls to initial position and everything to not kinematic
