@@ -8,8 +8,13 @@ public class TakeObject : FSystem {
     //enigma03's balls
     private Family balls = FamilyManager.getFamily(new AnyOfTags("Ball"));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
+    private Family plankE09 = FamilyManager.getFamily(new AnyOfTags("PlankE09"));
+    private Family mirror = FamilyManager.getFamily(new AllOfComponents(typeof(MirrorScript)));
 
     private float onTableHeight;
+    private GameObject tmpGO;
+    private bool moveMirrorToPlank = false;
+    private Vector3 objPos;
 
     public TakeObject()
     {
@@ -32,6 +37,25 @@ public class TakeObject : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
+        if (moveMirrorToPlank)
+        {
+            mirror.First().transform.position = Vector3.MoveTowards(mirror.First().transform.position, objPos, 0.05f);
+            if(mirror.First().transform.position == objPos)
+            {
+                mirror.First().GetComponent<Rigidbody>().isKinematic = false;
+                moveMirrorToPlank = false;
+                Takable.mirrorOnPlank = true;
+            }
+        }
+        if(Takable.mirrorOnPlank && (mirror.First().transform.hasChanged || plankE09.First().transform.hasChanged))
+        {
+            objPos = plankE09.First().transform.position + Vector3.up * (0.1f + mirror.First().GetComponentInChildren<MirrorReflectionScript>().gameObject.transform.localScale.y / 2 + tmpGO.transform.localScale.y / 2);
+            if ((mirror.First().transform.position - objPos).magnitude > 0.15f)
+            {
+                Takable.mirrorOnPlank = false;
+            }
+        }
+
         //respawn objects that fall under the room
         foreach(GameObject go in tObjects)
         {
@@ -86,6 +110,16 @@ public class TakeObject : FSystem {
                             {
                                 Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
                                 player.First().transform.position = go.transform.position - go.transform.forward * 1.5f;
+                            }
+                            else if (go.GetComponent<MirrorScript>())
+                            {
+                                tmpGO = plankE09.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.gameObject;
+                                if(go.transform.position.x < tmpGO.transform.position.x + tmpGO.transform.localScale.x/2 && go.transform.position.x > tmpGO.transform.position.x - tmpGO.transform.localScale.x / 2 && go.transform.position.z < tmpGO.transform.position.z + tmpGO.transform.localScale.z / 2 && go.transform.position.z > tmpGO.transform.position.z - tmpGO.transform.localScale.z / 2 && go.transform.position.y > tmpGO.transform.position.y)
+                                {
+                                    objPos = plankE09.First().transform.position + Vector3.up * (0.1f + mirror.First().GetComponentInChildren<MirrorReflectionScript>().gameObject.transform.localScale.y/2 + tmpGO.transform.localScale.y / 2);
+                                    mirror.First().GetComponent<Rigidbody>().isKinematic = true;
+                                    moveMirrorToPlank = true;
+                                }
                             }
                         }
                         break;

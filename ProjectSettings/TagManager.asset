@@ -26,6 +26,7 @@ TagManager:
   - Syllabus
   - DisplayInventory
   - Bag
+  - PlankE09
   layers:
   - Default
   - TransparentFX
@@ -35,7 +36,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - MirrorGO
   - 
   - 
   - 
