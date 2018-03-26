@@ -18,6 +18,8 @@ public class SetAnswer : FSystem {
     private Family wTimerText = FamilyManager.getFamily(new AnyOfTags("WrongTimerText"));
     private Family qRoom2 = FamilyManager.getFamily(new AnyOfTags("Q-R2")); //questions of the room 2 (tablet)
     private Family aRoom2 = FamilyManager.getFamily(new AnyOfTags("A-R2")); //answers of the room 2 (tablet)
+    private Family door = FamilyManager.getFamily(new AllOfComponents(typeof(Door)));
+    private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
 
     //used for the first prototype (not used anymore)
     private Family answers = FamilyManager.getFamily(new AnyOfTags("Answer"), new AllOfComponents(typeof(Button)));
@@ -50,6 +52,7 @@ public class SetAnswer : FSystem {
     private float wTimerE04 = Mathf.Infinity;   //timer used when the player gives a wrong answer to enigma04
     private TextMeshProUGUI wtt;    //text displaying wTimerE04
     private bool wrongAnswerE04 = false;
+    private bool doorSoundPlayed = false;
 
     private GameObject tablet2;
     private GameObject screen2;
@@ -71,10 +74,19 @@ public class SetAnswer : FSystem {
     private int aq4r2 = 1956;
     private string aq5r2 = "grille criteriee";
     private string aq6r2 = "collaboration";
+    
+    private string previousTryPassword = "";
+    private string password = 703.ToString();
+    private GameObject wallRoom2;
+    private bool moveWall = false;
 
     public SetAnswer()
     {
-        foreach(GameObject go in tablet)
+        door.First().transform.rotation = Quaternion.Euler(0, -135, 0); //opened
+        //door.First().transform.rotation = Quaternion.Euler(0, 0, 0);    //closed
+        wallRoom2 = lockR2.First().transform.parent.gameObject;
+
+        foreach (GameObject go in tablet)
         {
             if (go.name.Contains(1.ToString()))
             {
@@ -206,6 +218,7 @@ public class SetAnswer : FSystem {
             }
         }
         connectionR2.GetComponentInChildren<Button>().onClick.AddListener(CheckConnection);
+        lockR2.First().GetComponentInChildren<InputField>().onEndEdit.AddListener(CheckPasswordRoom2);
 
         //setting audio and visual elements for feedback when the player answers
         foreach (GameObject g in audioSource)
@@ -263,7 +276,18 @@ public class SetAnswer : FSystem {
         {
             wrongBG.SetActive(false);
         }
-        
+
+        if (moveWall)
+        {
+            wallRoom2.transform.position += Vector3.up * 0.01f + Vector3.forward * ((Random.value -0.5f)/10 - wallRoom2.transform.position.z);
+            if(wallRoom2.transform.position.y > 7.5)
+            {
+                wallRoom2.SetActive(false);
+                moveWall = false;
+                source.loop = false;
+            }
+        }
+
         //tablet room 1 animation and interaction//
         //if the tablet is "solved" but enigma04 isn't diplayed
         if (tablet1.GetComponent<Selectable>().solved && (!enigma4.activeSelf || fadingToEnigma4))
@@ -298,9 +322,12 @@ public class SetAnswer : FSystem {
             }
         }
         //if the tablet is "solved" and enigma04 is displayed
-        else if (tablet1.GetComponent<Selectable>().solved && enigma4.activeSelf && !fadingToEnigma4)
+        else if (tablet1.GetComponent<Selectable>().solved && enigma4.activeSelf && !fadingToEnigma4 && !doorSoundPlayed)
         {
             //enigma 4 solved, open door to room 2
+            door.First().transform.rotation = Quaternion.Euler(0, -135, 0);
+            source.PlayOneShot(door.First().GetComponent<Door>().openAudio);
+            doorSoundPlayed = true;
         }
         //if the player is playing enigma04 and didn't answer
         else if(!tablet1.GetComponent<Selectable>().solved && enigma4.activeSelf && !wrongAnswerE04)
@@ -1209,6 +1236,28 @@ public class SetAnswer : FSystem {
                     source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
+            }
+        }
+    }
+
+    private void CheckPasswordRoom2(string value)
+    {
+        if(value != previousTryPassword && value != "")
+        {
+            previousTryPassword = value;
+            if(value == password)
+            {
+                lockR2.First().GetComponent<Selectable>().solved = true;
+                moveWall = true;
+                source.clip = lockR2.First().GetComponent<Selectable>().right;
+                source.PlayDelayed(0);
+                source.loop = true;
+            }
+            else
+            {
+                //feedback wrong answer
+                source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
+                timeW = Time.time;
             }
         }
     }

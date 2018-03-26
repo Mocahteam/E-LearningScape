@@ -22,6 +22,7 @@ public class ShowUI : FSystem {
     private Family inventory = FamilyManager.getFamily(new AnyOfTags("Inventory"));
     private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ENABLED));
     private Family bag = FamilyManager.getFamily(new AnyOfTags("Bag"));
+    private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
 
     private bool noSelection = true;    //true if all objects are unselected
     private GameObject closeButton;
@@ -101,6 +102,12 @@ public class ShowUI : FSystem {
     private GameObject bagAnswer;
     private bool usingGlassesTmp = false;
 
+    //lock room 2
+    private bool onLockR2 = false;
+    private bool moveToLockR2 = false;
+    private Vector3 lockR2Pos;
+    private Vector3 lockR2TopRight;
+
     private bool onObject = false;
 
 
@@ -110,6 +117,7 @@ public class ShowUI : FSystem {
         ballToCamera = Camera.main.transform.position + Camera.main.transform.forward;
         boxTopIniPos = new Vector3(0, 0.2625f, 0);
         plankTopRight = plank.First().transform.position + plank.First().transform.localScale/2;
+        lockR2TopRight = lockR2.First().transform.position + lockR2.First().transform.localScale / 2;
         lr = plank.First().GetComponent<LineRenderer>();
         lrPositions = new List<Vector3>();
 
@@ -559,6 +567,27 @@ public class ShowUI : FSystem {
                 }
             }
         }
+        else if (moveToLockR2)
+        {
+            //animation to move the player in front of the lock room 2
+            player.First().transform.position = Vector3.MoveTowards(player.First().transform.position, lockR2Pos, speed);
+            camNewDir = Vector3.right;
+            newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, Mathf.Deg2Rad * speedRotation, 0);
+            Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
+            //when the animation is finished
+            if (Vector3.Angle(Camera.main.transform.forward, camNewDir) < 0.5f && player.First().transform.position == lockR2Pos)
+            {
+                //correct the rotation
+                newDir = Vector3.RotateTowards(player.First().transform.forward, Vector3.right, 360, 0);
+                player.First().transform.rotation = Quaternion.LookRotation(newDir);
+                newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, 360, 0);
+                Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
+                //show ui and set close button position
+                closeButton.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(lockR2TopRight) - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                uiGO.SetActive(true);
+                moveToLockR2 = false;
+            }
+        }
 
         if (noSelection)
         {
@@ -725,6 +754,30 @@ public class ShowUI : FSystem {
                         moveBag = true; //start animation to move the bag in front of the player
                         uiGO.SetActive(false); //hide ui during animation
                         onBag = true;
+                    }
+                    else if (go.tag == "LockRoom2")  //set lock room 2
+                    {
+                        //the position in front of the lock is not the same depending on the scale of the player
+                        if (player.First().transform.localScale.x < 0.9f)
+                        {
+                            lockR2Pos = new Vector3(lockR2.First().transform.position.x - 1.5f, 1.6f, lockR2.First().transform.position.z);
+                        }
+                        else
+                        {
+                            lockR2Pos = new Vector3(lockR2.First().transform.position.x - 1.5f, 0.98f, lockR2.First().transform.position.z);
+                        }
+                        //calculate the correct speed so that the translation and the rotation finish at the same time
+                        dist = (lockR2Pos - player.First().transform.position).magnitude;
+                        foreach (Transform t in player.First().transform)
+                        {
+                            if (t.gameObject.tag == "MainCamera")
+                            {
+                                speedRotation = Vector3.Angle(t.gameObject.transform.forward, Vector3.right) * speed / dist;
+                            }
+                        }
+                        moveToLockR2 = true; //start animation to move the player in front of the lock
+                        uiGO.SetActive(false); //hide ui during animation
+                        onLockR2 = true;
                     }
                     //hide the cursor when an object is selected
                     cursorUI.SetActive(false);
@@ -893,6 +946,13 @@ public class ShowUI : FSystem {
                     }
                 }
             }
+            else if (onLockR2)
+            {
+                if (lockR2.First().GetComponent<Selectable>().solved)
+                {
+                    CloseWindow();
+                }
+            }
         }
 	}
 
@@ -1008,6 +1068,7 @@ public class ShowUI : FSystem {
         onTablet = false;
         onTable = false;
         onBag = false;
+        onLockR2 = false;
     }
 
     //predicate to return the first vector of the list

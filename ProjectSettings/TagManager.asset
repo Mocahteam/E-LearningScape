@@ -17,7 +17,6 @@ TagManager:
   - Q-R1
   - A-R1
   - RotateGear
-  - ChangeRoom
   - WrongTimerText
   - TableE05
   - Sheet
@@ -28,6 +27,7 @@ TagManager:
   - PlankE09
   - Q-R2
   - A-R2
+  - LockRoom2
   layers:
   - Default
   - TransparentFX

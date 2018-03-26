@@ -222,7 +222,7 @@ public class Inventory : FSystem {
             inputfieldFocused = false;
             foreach (GameObject go in inputfields)
             {
-                if (go.GetComponent<InputField>().isFocused)
+                if (go.GetComponent<InputField>().isFocused && go.GetComponent<InputField>().contentType == InputField.ContentType.Standard)
                 {
                     inputfieldFocused = true;
                     break;

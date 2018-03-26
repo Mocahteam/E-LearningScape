@@ -35,8 +35,8 @@ public class Select : FSystem {
                 if(child.gameObject.tag == "MouseOver" && child.gameObject.activeSelf)
                 {
                     child.gameObject.SetActive(false);
-                    go.GetComponent<Selectable>().focused = false;
                 }
+                go.GetComponent<Selectable>().focused = false;
             }
 
             //if the gameobject is selected, save it as focused object
@@ -91,8 +91,8 @@ public class Select : FSystem {
                 focused.GetComponent<Selectable>().isSelected = true;
                 Selectable.selected = true;
             }
-            //if the object isn't the plank or the box and is selected, show the mouse over overlay
-            if(!((focused.tag == "Plank" || focused.tag == "Box" || focused.tag == "Bag") && focused.GetComponent<Selectable>().isSelected) && !(Takable.mirrorOnPlank && focused.GetComponent<MirrorScript>()))
+            //if the object isn't the plank, the box, the bag or the lock room 2 and is selected, show the mouse over overlay
+            if (!((focused.tag == "Plank" || focused.tag == "Box" || focused.tag == "Bag" || focused.tag == "LockRoom2") && focused.GetComponent<Selectable>().isSelected) && !(Takable.mirrorOnPlank && focused.GetComponent<MirrorScript>()))
             {
                 foreach (Transform child in focused.transform)
                 {

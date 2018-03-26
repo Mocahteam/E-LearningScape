@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using FYFY;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class TakeObject : FSystem {
 
@@ -15,6 +16,8 @@ public class TakeObject : FSystem {
     private GameObject tmpGO;
     private bool moveMirrorToPlank = false;
     private Vector3 objPos;
+
+    private bool initialiseView = false;
 
     public TakeObject()
     {
@@ -37,6 +40,13 @@ public class TakeObject : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
+        if (initialiseView)
+        {
+            player.First().GetComponent<FirstPersonController>().m_MouseLook.MinimumX = -90;
+            player.First().GetComponent<FirstPersonController>().m_MouseLook.MaximumX = 90;
+            initialiseView = false;
+        }
+
         if (moveMirrorToPlank)
         {
             mirror.First().transform.position = Vector3.MoveTowards(mirror.First().transform.position, objPos, 0.05f);
@@ -65,7 +75,7 @@ public class TakeObject : FSystem {
             }
         }
 
-        if (!Selectable.selected && !CollectableGO.onInventory)   //if there is not selected object and inventory isn't opened
+        if (!Selectable.selected && !CollectableGO.onInventory)   //if there is no selected object and inventory isn't opened
         {
             if (Takable.objectTaken)    //if an object is taken
             {
@@ -75,7 +85,7 @@ public class TakeObject : FSystem {
                     {
                         if(go.tag == "TableE05")
                         {
-                            Camera.main.transform.localRotation = Quaternion.Euler(90,0,0);
+                            //Camera.main.transform.localRotation = Quaternion.Euler(90,0,0);
                             player.First().transform.position += Vector3.up * (onTableHeight - player.First().transform.position.y);
                             go.transform.position = player.First().transform.position + Vector3.down*2;    //move the object under the player
                             go.transform.rotation = Quaternion.Euler(0, player.First().transform.rotation.eulerAngles.y, 0);      //rotate the object to the camera
@@ -108,8 +118,10 @@ public class TakeObject : FSystem {
                             }
                             else if(go.tag == "TableE05")
                             {
-                                Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
                                 player.First().transform.position = go.transform.position - go.transform.forward * 1.5f;
+                                player.First().GetComponent<FirstPersonController>().m_MouseLook.MinimumX = 0;
+                                player.First().GetComponent<FirstPersonController>().m_MouseLook.MaximumX = 0;
+                                initialiseView = true;
                             }
                             else if (go.GetComponent<MirrorScript>())
                             {
@@ -126,7 +138,7 @@ public class TakeObject : FSystem {
                     }
                 }
             }
-            else    //is there is not taken object
+            else    //if there is no taken object
             {
                 foreach (GameObject go in tObjects)
                 {
@@ -148,6 +160,7 @@ public class TakeObject : FSystem {
                             player.First().transform.forward = go.transform.forward;
                             player.First().transform.position = go.transform.position + Vector3.up * 2;
                             onTableHeight = player.First().transform.position.y;
+                            player.First().GetComponent<FirstPersonController>().m_MouseLook.MinimumX = 90;
                         }
                         break;
                     }
