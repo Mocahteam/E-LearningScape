@@ -19,8 +19,6 @@ public class ShowUI : FSystem {
     private Family box = FamilyManager.getFamily(new AnyOfTags("Box"));
     private Family boxTop = FamilyManager.getFamily(new AnyOfTags("BoxTop"));   //box lid
     private Family balls = FamilyManager.getFamily(new AnyOfTags("Ball"));
-    private Family tablet = FamilyManager.getFamily(new AnyOfTags("Tablet"));
-    private Family screen1 = FamilyManager.getFamily(new AnyOfTags("Screen1")); //screen on the table room 1 (ui)
     private Family inventory = FamilyManager.getFamily(new AnyOfTags("Inventory"));
     private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ENABLED));
     private Family bag = FamilyManager.getFamily(new AnyOfTags("Bag"));
@@ -69,6 +67,8 @@ public class ShowUI : FSystem {
     private Vector3 ballToCamera;           //position of the ball when selected
 
     //tablet
+    private GameObject selectedTablet;
+    private GameObject tabletScreen;
     private bool onTablet = false;                  //true when the player is using the tablet
     private bool moveTablet = false;                //true during the animation to move the tablet in front of the player
     private Vector3 tabletTopRight = Vector3.zero;  //position of "close" button when using tablet
@@ -403,25 +403,24 @@ public class ShowUI : FSystem {
             {
                 d = 0.56f;
             }
-            tablet.First().GetComponent<Rigidbody>().isKinematic = true;
             //animation to move the tablet in front of the player
             Vector3 vec = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
             vec.Normalize();
             objectPos = new Vector3(player.First().transform.position.x, 1.78f, player.First().transform.position.z) + vec * (d);
-            tablet.First().transform.position = Vector3.MoveTowards(tablet.First().transform.position, objectPos, speed);
-            newDir = Vector3.RotateTowards(tablet.First().transform.forward, player.First().transform.forward, Mathf.Deg2Rad * speedRotation, 0);
-            tablet.First().transform.rotation = Quaternion.LookRotation(newDir);
+            selectedTablet.transform.position = Vector3.MoveTowards(selectedTablet.transform.position, objectPos, speed);
+            newDir = Vector3.RotateTowards(selectedTablet.transform.forward, player.First().transform.forward, Mathf.Deg2Rad * speedRotation, 0);
+            selectedTablet.transform.rotation = Quaternion.LookRotation(newDir);
             Camera.main.transform.localRotation = Quaternion.Euler(Vector3.MoveTowards(Camera.main.transform.localRotation.eulerAngles, Vector3.zero, speedRotation2));
             //when the tablet arrives
-            if (tablet.First().transform.position == objectPos)
+            if (selectedTablet.transform.position == objectPos)
             {
                 moveTablet = false;
                 //show ui and put the "close" button at the top right of the screen
                 tabletTopRight = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth;
                 closeButton.GetComponent<RectTransform>().localPosition = tabletTopRight - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
                 uiGO.SetActive(true);
-                //put the ui "screen1" on the screen (rather than on the tablet)
-                screen1.First().GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+                //put the ui "screen" on the screen (rather than on the tablet)
+                tabletScreen.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
             }
         }
         else if (moveToTable)
@@ -623,7 +622,9 @@ public class ShowUI : FSystem {
                     }
                     else if(go.tag == "Tablet") //set tablet
                     {
-                        go.GetComponent<Rigidbody>().isKinematic = true;
+                        selectedTablet = go;
+                        tabletScreen = selectedTablet.GetComponentInChildren<Canvas>().gameObject;
+                        selectedTablet.GetComponent<Rigidbody>().isKinematic = true;
                         //calculate the distance between the tablet and the player depending on the screen size
                         //(not really necessary since the tablet screen is displayed on the screen and not in the world)
                         float d = 0.33f;
@@ -635,14 +636,13 @@ public class ShowUI : FSystem {
                         {
                             d = 0.56f;
                         }
-                        tablet.First().GetComponent<Rigidbody>().isKinematic = true;
                         //calculate the position in front of the player
                         Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
                         v.Normalize();
                         objectPos = new Vector3(player.First().transform.position.x, 1.78f, player.First().transform.position.z) + v * (d);
                         //calculate the correct speed so that the translation and the rotation finish at the same time
                         dist = (objectPos - go.transform.position).magnitude;
-                        speedRotation = Vector3.Angle(tablet.First().transform.forward, player.First().transform.forward) * speed / dist;
+                        speedRotation = Vector3.Angle(selectedTablet.transform.forward, player.First().transform.forward) * speed / dist;
                         speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
                         uiGO.SetActive(false); //hide ui during animation
                         onTablet = true;
@@ -938,13 +938,13 @@ public class ShowUI : FSystem {
         }
         else if (onTablet)
         {
-            tablet.First().GetComponent<Rigidbody>().isKinematic = false;
+            selectedTablet.GetComponent<Rigidbody>().isKinematic = false;
             //put the screen on the tablet
-            screen1.First().GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
-            screen1.First().GetComponent<RectTransform>().localPosition = Vector3.forward * -0.026f;
-            screen1.First().GetComponent<RectTransform>().sizeDelta = new Vector2(900,600);
-            screen1.First().GetComponent<RectTransform>().localScale = Vector3.one * -0.0008327437f;
-            screen1.First().GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, 180);
+            tabletScreen.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+            tabletScreen.GetComponent<RectTransform>().localPosition = Vector3.forward * -0.026f;
+            tabletScreen.GetComponent<RectTransform>().sizeDelta = new Vector2(900,600);
+            tabletScreen.GetComponent<RectTransform>().localScale = Vector3.one * -0.0008327437f;
+            tabletScreen.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, 180);
         }
         else if (onTable)
         {

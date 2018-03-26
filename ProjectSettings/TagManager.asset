@@ -15,7 +15,6 @@ TagManager:
   - BoxTop
   - Tablet
   - Q-R1
-  - Screen1
   - A-R1
   - RotateGear
   - ChangeRoom
@@ -27,6 +26,8 @@ TagManager:
   - DisplayInventory
   - Bag
   - PlankE09
+  - Q-R2
+  - A-R2
   layers:
   - Default
   - TransparentFX
