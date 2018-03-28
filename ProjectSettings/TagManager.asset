@@ -28,6 +28,8 @@ TagManager:
   - Q-R2
   - A-R2
   - LockRoom2
+  - Puzzle
+  - PuzzleUI
   layers:
   - Default
   - TransparentFX

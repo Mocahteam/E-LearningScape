@@ -508,7 +508,8 @@ public class ShowUI : FSystem {
                         bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition += Vector3.up * (bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.InverseTransformPoint(Camera.main.transform.position).y - bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y);
                         bag.First().GetComponentInChildren<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
                         bagTopRight = Vector3.up * Camera.main.pixelHeight/2 + Vector3.right * Camera.main.pixelWidth/2 + (Vector3.up + Vector3.right) * bag.First().GetComponentInChildren<Image>().gameObject.GetComponent<RectTransform>().rect.width*0.225f;
-                        closeButton.GetComponent<RectTransform>().localPosition = bagTopRight - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0)/2;
+                        //closeButton.GetComponent<RectTransform>().localPosition = bagTopRight - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0)/2;
+                        closeButton.GetComponent<RectTransform>().localPosition = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
                         if (CollectableGO.usingGlasses)
                         {
                             bagAnswer.SetActive(true);
