@@ -11,6 +11,12 @@ TagManager:
   - TableE05
   - Object
   - Screen1
+  - PlankText
+  - Box
+  - Ball
+  - BoxTop
+  - Tablet
+  - Q-R1
   - A-R1
   - Syllabus
   - Answer
@@ -18,6 +24,9 @@ TagManager:
   - Timings
   - ChangeRoom
   - Tablet
+  - WrongTimerText
+  - TableE05
+  - Sheet
   - Inventory
   - Q-R1
   - Plank
@@ -27,6 +36,12 @@ TagManager:
   - WrongTimerText
   - Ball
   - PlankText
+  - PlankE09
+  - Q-R2
+  - A-R2
+  - LockRoom2
+  - Puzzle
+  - PuzzleUI
   layers:
   - Default
   - TransparentFX
@@ -37,6 +52,7 @@ TagManager:
   - 
   - 
   - CanTeleport
+  - MirrorGO
   - 
   - 
   - 

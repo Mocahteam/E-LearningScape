@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using FYFY;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class TakeObject : FSystem {
     // Both of the Vive Controllers
@@ -9,8 +10,15 @@ public class TakeObject : FSystem {
     //enigma03's balls
     private Family balls = FamilyManager.getFamily(new AnyOfTags("Ball"));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
+    private Family plankE09 = FamilyManager.getFamily(new AnyOfTags("PlankE09"));
+    private Family mirror = FamilyManager.getFamily(new AllOfComponents(typeof(MirrorScript)));
 
     private float onTableHeight;
+    private GameObject tmpGO;
+    private bool moveMirrorToPlank = false;
+    private Vector3 objPos;
+
+    private bool initialiseView = false;
 
     public TakeObject()
     {
@@ -41,6 +49,32 @@ public class TakeObject : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
+        if (initialiseView)
+        {
+            player.First().GetComponent<FirstPersonController>().m_MouseLook.MinimumX = -90;
+            player.First().GetComponent<FirstPersonController>().m_MouseLook.MaximumX = 90;
+            initialiseView = false;
+        }
+
+        if (moveMirrorToPlank)
+        {
+            mirror.First().transform.position = Vector3.MoveTowards(mirror.First().transform.position, objPos, 0.05f);
+            if(mirror.First().transform.position == objPos)
+            {
+                mirror.First().GetComponent<Rigidbody>().isKinematic = false;
+                moveMirrorToPlank = false;
+                Takable.mirrorOnPlank = true;
+            }
+        }
+        if(Takable.mirrorOnPlank && (mirror.First().transform.hasChanged || plankE09.First().transform.hasChanged))
+        {
+            objPos = plankE09.First().transform.position + Vector3.up * (0.1f + mirror.First().GetComponentInChildren<MirrorReflectionScript>().gameObject.transform.localScale.y / 2 + tmpGO.transform.localScale.y / 2);
+            if ((mirror.First().transform.position - objPos).magnitude > 0.15f)
+            {
+                Takable.mirrorOnPlank = false;
+            }
+        }
+
         //respawn objects that fall under the room
         foreach(GameObject go in tObjects)
         {
@@ -60,7 +94,7 @@ public class TakeObject : FSystem {
                     {
                         if(go.tag == "TableE05")
                         {
-                            Camera.main.transform.localRotation = Quaternion.Euler(90,0,0);
+                            //Camera.main.transform.localRotation = Quaternion.Euler(90,0,0);
                             player.First().transform.position += Vector3.up * (onTableHeight - player.First().transform.position.y);
                             go.transform.position = player.First().transform.position + Vector3.down*2;    //move the object under the player
                             go.transform.rotation = Quaternion.Euler(0, player.First().transform.rotation.eulerAngles.y, 0);      //rotate the object to the camera
@@ -93,15 +127,27 @@ public class TakeObject : FSystem {
                             }
                             else if(go.tag == "TableE05")
                             {
-                                Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
                                 player.First().transform.position = go.transform.position - go.transform.forward * 1.5f;
+                                player.First().GetComponent<FirstPersonController>().m_MouseLook.MinimumX = 0;
+                                player.First().GetComponent<FirstPersonController>().m_MouseLook.MaximumX = 0;
+                                initialiseView = true;
+                            }
+                            else if (go.GetComponent<MirrorScript>())
+                            {
+                                tmpGO = plankE09.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.gameObject;
+                                if(go.transform.position.x < tmpGO.transform.position.x + tmpGO.transform.localScale.x/2 && go.transform.position.x > tmpGO.transform.position.x - tmpGO.transform.localScale.x / 2 && go.transform.position.z < tmpGO.transform.position.z + tmpGO.transform.localScale.z / 2 && go.transform.position.z > tmpGO.transform.position.z - tmpGO.transform.localScale.z / 2 && go.transform.position.y > tmpGO.transform.position.y)
+                                {
+                                    objPos = plankE09.First().transform.position + Vector3.up * (0.1f + mirror.First().GetComponentInChildren<MirrorReflectionScript>().gameObject.transform.localScale.y/2 + tmpGO.transform.localScale.y / 2);
+                                    mirror.First().GetComponent<Rigidbody>().isKinematic = true;
+                                    moveMirrorToPlank = true;
+                                }
                             }
                         }
                         break;
                     }
                 }
             }
-            else    //is there is not taken object
+            else    //if there is no taken object
             {
                 foreach (GameObject go in tObjects)
                 {
@@ -123,6 +169,7 @@ public class TakeObject : FSystem {
                             player.First().transform.forward = go.transform.forward;
                             player.First().transform.position = go.transform.position + Vector3.up * 2;
                             onTableHeight = player.First().transform.position.y;
+                            player.First().GetComponent<FirstPersonController>().m_MouseLook.MinimumX = 90;
                         }
                         break;
                     }

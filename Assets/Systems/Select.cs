@@ -69,7 +69,8 @@ public class Select : FSystem { // TODO
                  s.GetComponent<Selectable>().isSelected = s.focused;
                  //Selectable.selected = true;
             }
-            if (!((go.tag == "Plank" || go.tag == "Box")))
+
+            if (!((go.tag == "Plank" || go.tag == "Box" || go.tag == "Bag" || go.tag == "LockRoom2")))
             {
                 foreach (Transform child in go.transform)
                 {

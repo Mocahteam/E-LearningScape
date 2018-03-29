@@ -3,6 +3,7 @@ using FYFY;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 using FYFY_plugins.PointerManager;
+using System.Collections.Generic;
 
 public class Inventory : FSystem {
 
@@ -12,6 +13,7 @@ public class Inventory : FSystem {
     private Family ui = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
     private Family syllabusElems = FamilyManager.getFamily(new AnyOfTags("Syllabus"), new AllOfComponents(typeof(CollectableGO)), new NoneOfComponents(typeof(Image)));
     private Family inputfields = FamilyManager.getFamily(new AllOfComponents(typeof(InputField)));
+    private Family pui = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"));
 
     private bool playerEnabled = true;
     private GameObject displayer;
@@ -25,6 +27,14 @@ public class Inventory : FSystem {
 
     private RaycastHit hit;
     private bool inputfieldFocused;
+
+    private Dictionary<int, GameObject> puzzleUI;
+    private GameObject puzzlePiece;
+    private bool onPuzzle = false;
+    private Vector3 posBeforeDrag;
+    private GameObject draggedPuzzle = null;
+    private Vector3 posFromMouse;
+
 
     public Inventory()
     {
@@ -63,6 +73,14 @@ public class Inventory : FSystem {
                 glassesSelected = child.gameObject;
             }
         }
+
+        puzzleUI = new Dictionary<int, GameObject>();
+        int id;
+        foreach(GameObject puzzle in pui)
+        {
+            int.TryParse(puzzle.name.Substring(puzzle.name.Length - 2, 2), out id);
+            puzzleUI.Add(id, puzzle);
+        }
     }
 
 	// Use this to update member variables when system pause. 
@@ -85,6 +103,20 @@ public class Inventory : FSystem {
                 if (go.GetComponent<CollectableGO>().goui)
                 {
                     GameObjectManager.setGameObjectState(go.GetComponent<CollectableGO>().goui, true);
+                    if(go.tag == "Puzzle")
+                    {
+                        int id;
+                        int.TryParse(go.name.Substring(go.name.Length - 2, 2), out id);
+                        puzzleUI.TryGetValue(id, out puzzlePiece);
+                        if (puzzlePiece)
+                        {
+                            puzzlePiece.SetActive(true);
+                        }
+                        else
+                        {
+                            Debug.Log(string.Concat("Puzzle piece ", id.ToString(), " doesn't exist."));
+                        }
+                    }
                     GameObjectManager.setGameObjectState(go, false);
                 }
                 else
@@ -208,6 +240,18 @@ public class Inventory : FSystem {
                                     }
                                     break;
 
+                                case "Puzzle":
+                                    foreach(Transform child in displayer.transform)
+                                    {
+                                        if(child.gameObject.name == "Puzzles")
+                                        {
+                                            displayedElement = child.gameObject;
+                                            displayedElement.SetActive(true);
+                                            onPuzzle = true;
+                                        }
+                                    }
+                                    break;
+
                                 default:
                                     break;
                             }
@@ -222,7 +266,7 @@ public class Inventory : FSystem {
             inputfieldFocused = false;
             foreach (GameObject go in inputfields)
             {
-                if (go.GetComponent<InputField>().isFocused)
+                if (go.GetComponent<InputField>().isFocused && go.GetComponent<InputField>().contentType == InputField.ContentType.Standard)
                 {
                     inputfieldFocused = true;
                     break;
@@ -255,7 +299,46 @@ public class Inventory : FSystem {
                             canvas.SetActive(false);
                         }
                     }
+                    onPuzzle = false;
                     CollectableGO.onInventory = true;
+                }
+            }
+        }
+        if (onPuzzle)
+        {
+            if (draggedPuzzle)
+            {
+                if (Input.GetMouseButtonUp(0))
+                {
+                    if(!(draggedPuzzle.GetComponent<RectTransform>().position.x >0 && draggedPuzzle.GetComponent<RectTransform>().position.x < Camera.main.pixelWidth && draggedPuzzle.GetComponent<RectTransform>().position.y > 0 && draggedPuzzle.GetComponent<RectTransform>().position.y < Camera.main.pixelHeight))
+                    {
+                        draggedPuzzle.GetComponent<RectTransform>().position = posBeforeDrag;
+                    }
+                    draggedPuzzle = null;
+                }
+                else
+                {
+                    if (Input.GetKeyDown(KeyCode.Q))
+                    {
+                        draggedPuzzle.GetComponent<RectTransform>().localRotation = Quaternion.Euler(draggedPuzzle.GetComponent<RectTransform>().localRotation.eulerAngles.x, draggedPuzzle.GetComponent<RectTransform>().localRotation.eulerAngles.y, draggedPuzzle.GetComponent<RectTransform>().localRotation.eulerAngles.z + 90);
+                    }
+                    if (Input.GetKeyDown(KeyCode.D))
+                    {
+                        draggedPuzzle.GetComponent<RectTransform>().localRotation = Quaternion.Euler(draggedPuzzle.GetComponent<RectTransform>().localRotation.eulerAngles.x, draggedPuzzle.GetComponent<RectTransform>().localRotation.eulerAngles.y, draggedPuzzle.GetComponent<RectTransform>().localRotation.eulerAngles.z - 90);
+                    }
+                    draggedPuzzle.GetComponent<RectTransform>().position = Input.mousePosition - posFromMouse;
+                }
+            }
+            else
+            {
+                foreach (GameObject puzzle in pui)
+                {
+                    if (puzzle.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
+                    {
+                        draggedPuzzle = puzzle;
+                        posBeforeDrag = draggedPuzzle.GetComponent<RectTransform>().position;
+                        posFromMouse = Input.mousePosition - draggedPuzzle.GetComponent<RectTransform>().position;
+                    }
                 }
             }
         }

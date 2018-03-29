@@ -67,8 +67,8 @@ public class AssembleTables : FSystem {
                 {
                     if (table.name.Contains(3.ToString()))  //the table with the piece of paper on the back (unity gameobject axes)
                     {
-                        point1 = table.transform.position - table.transform.forward * 1.5f + table.transform.right * 0.75f; //back right position
-                        point2 = table.transform.position - table.transform.forward * 1.5f - table.transform.right * 0.75f; //back left position
+                        point1 = table.transform.position - table.transform.forward * 1.55f + table.transform.right * 0.775f; //back right position
+                        point2 = table.transform.position - table.transform.forward * 1.55f - table.transform.right * 0.775f; //back left position
                         //if the table is close to one of the two points (dist < tableDist), move the released table to assemble the 2 table
                         if ((point1 - taken.transform.position).magnitude < tableDist && (point1 - taken.transform.position).magnitude > 0.01f)
                         {
@@ -85,8 +85,8 @@ public class AssembleTables : FSystem {
                     }
                     else if (table.name.Contains(1.ToString())) //the table with the piece of paper on the front left (unity gameobject axes)
                     {
-                        point1 = table.transform.position - table.transform.right * 1.5f;   //left position
-                        point2 = table.transform.position + table.transform.forward * 1.5f - table.transform.right * 0.75f; //forward left position
+                        point1 = table.transform.position - table.transform.right * 1.525f;   //left position
+                        point2 = table.transform.position + table.transform.forward * 1.55f - table.transform.right * 0.775f; //forward left position
                         //if the table is close to one of the two points (dist < tableDist), move the released table to assemble the 2 table
                         if ((point1 - taken.transform.position).magnitude < tableDist && (point1 - taken.transform.position).magnitude > 0.01f)
                         {
@@ -103,8 +103,8 @@ public class AssembleTables : FSystem {
                     }
                     else if (table.name.Contains(2.ToString())) //the table with the piece of paper on the front right (unity gameobject axes)
                     {
-                        point1 = table.transform.position + table.transform.right * 1.5f;   //right position
-                        point2 = table.transform.position + table.transform.forward * 1.5f + table.transform.right * 0.75f; //forward right position
+                        point1 = table.transform.position + table.transform.right * 1.525f;   //right position
+                        point2 = table.transform.position + table.transform.forward * 1.55f + table.transform.right * 0.775f; //forward right position
                         //if the table is close to one of the two points (dist < tableDist), move the released table to assemble the 2 table
                         if ((point1 - taken.transform.position).magnitude < tableDist && (point1 - taken.transform.position).magnitude > 0.01f)
                         {
