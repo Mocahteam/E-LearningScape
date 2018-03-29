@@ -19,6 +19,7 @@ public class Inventory : FSystem {
     private bool playerEnabled = true;
     private GameObject displayer;
     private GameObject displayedElement;
+    private bool displayedElementWasNull = true;
     private GameObject selection;
     private GameObject selectedUI;
     private GameObject closeButton;
@@ -153,6 +154,11 @@ public class Inventory : FSystem {
                             if (displayedElement)
                             {
                                 displayedElement.SetActive(false);
+                                foreach (GameObject elem in elemsInventory)
+                                {
+                                    elem.GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
+                                }
+                                glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
                             }
                             displayer.SetActive(false);
                             selection.SetActive(false);
@@ -165,6 +171,7 @@ public class Inventory : FSystem {
                             {
                                 displayedElement.SetActive(false);
                             }
+                            displayedElementWasNull = !(displayedElement && displayer.activeSelf);
                             displayer.SetActive(true);
                             switch (go.name)
                             {
@@ -258,6 +265,24 @@ public class Inventory : FSystem {
                                 default:
                                     break;
                             }
+                            if (displayedElement)
+                            {
+                                foreach (GameObject elem in elemsInventory)
+                                {
+                                    elem.GetComponent<RectTransform>().localPosition += Vector3.right * (Camera.main.pixelWidth / 2 - 250) + Vector3.down * (Camera.main.pixelHeight / 2 - 100);
+                                }
+                                selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
+                                glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
+                            }
+                            else if (!displayedElementWasNull)
+                            {
+                                foreach (GameObject elem in elemsInventory)
+                                {
+                                    elem.GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
+                                }
+                                selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
+                                glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
+                            }
                         }
                     }
                 }
@@ -310,6 +335,11 @@ public class Inventory : FSystem {
                             closeButton.GetComponent<RectTransform>().localPosition = elem.GetComponent<RectTransform>().localPosition + (Vector3.up + Vector3.right) * (60);
                         }
                     }
+                    if (selectedUI)
+                    {
+                        selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
+                    }
+                    glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
                     onPuzzle = false;
                     CollectableGO.onInventory = true;
                 }
@@ -357,6 +387,18 @@ public class Inventory : FSystem {
 
     private void CloseInventory()
     {
+        if (!(displayedElement && displayer.activeSelf))
+        {
+            foreach (GameObject elem in elemsInventory)
+            {
+                elem.GetComponent<RectTransform>().localPosition += Vector3.right * (Camera.main.pixelWidth / 2 - 250) + Vector3.down * (Camera.main.pixelHeight / 2 - 100);
+            }
+            if (selectedUI)
+            {
+                selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
+            }
+            glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
+        }
         if (displayedElement)
         {
             displayedElement.SetActive(false);
@@ -383,10 +425,6 @@ public class Inventory : FSystem {
                     canvas.SetActive(true);
                 }
             }
-        }
-        foreach (GameObject elem in elemsInventory)
-        {
-            elem.GetComponent<RectTransform>().localPosition += Vector3.right * (Camera.main.pixelWidth / 2 - 250) + Vector3.down * (Camera.main.pixelHeight / 2 - 100);
         }
         CollectableGO.onInventory = false;
     }
