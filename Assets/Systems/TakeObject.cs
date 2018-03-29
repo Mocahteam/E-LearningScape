@@ -33,7 +33,7 @@ public class TakeObject : FSystem {
         //at the beginning of the game, all taken object are not kinematic
         foreach (GameObject go in tObjects)
         {
-            go.GetComponent<Rigidbody>().isKinematic = false;
+            //go.GetComponent<Rigidbody>().isKinematic = false;
         }
     }
 

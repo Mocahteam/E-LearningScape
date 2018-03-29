@@ -2,8 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\Components",
-    "\\Systems"
+    "\\MagicMirror",
+    "\\Systems",
+    "\\TextMesh Pro\\Examples & Extras",
+    "\\TextMesh Pro\\Examples & Extras\\Scripts"
   ],
-  "SelectedNode": "\\Systems\\TakeObject.cs",
+  "SelectedNode": "\\Systems\\LaserPointerSystem.cs",
   "PreviewInSolutionExplorer": false
 }
