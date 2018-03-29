@@ -55,7 +55,7 @@ public class Pause : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        if (Input.GetKeyDown(KeyCode.Return)) //when entre key is pressed (the big one, not num pad)
+        if (Input.GetKeyDown(KeyCode.Escape)) //when escape key is pressed
         {
             if (gamePaused)
             {

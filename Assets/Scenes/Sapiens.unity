@@ -261,6 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!114 &13762453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,7 +275,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -499,7 +499,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words:
   - Rouge
   - Vert
@@ -601,6 +600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!1 &23588546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,7 +1002,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words:
   - Rouge
   - Vert
@@ -1104,6 +1103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!1001 &33498491
 Prefab:
   m_ObjectHideFlags: 0
@@ -4916,7 +4916,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -5257,7 +5256,7 @@ GameObject:
   - component: {fileID: 153731075}
   m_Layer: 5
   m_Name: Syllabus
-  m_TagString: Untagged
+  m_TagString: InventoryElements
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6294,8 +6293,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 170948837}
-  - component: {fileID: 170948838}
-  - component: {fileID: 170948839}
   m_Layer: 0
   m_Name: Cloud (1)
   m_TagString: Untagged
@@ -6327,35 +6324,6 @@ Transform:
   m_Father: {fileID: 1384623103}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 117.591, z: 0}
---- !u!114 &170948838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 170948836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3fb9b85555f01448a709c407c367920, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSelected: 0
-  focused: 0
-  words: []
-  answer: 
-  solved: 0
-  right: {fileID: 0}
-  wrong: {fileID: 0}
---- !u!114 &170948839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 170948836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -53623643, guid: 7e21338c98644544a9603d3992e5aaa8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &171826557
 GameObject:
   m_ObjectHideFlags: 0
@@ -7901,6 +7869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!114 &195641785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7913,7 +7882,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -11712,7 +11680,7 @@ GameObject:
   - component: {fileID: 295450246}
   m_Layer: 5
   m_Name: Glasses
-  m_TagString: Untagged
+  m_TagString: InventoryElements
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11874,6 +11842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!114 &303011509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11886,7 +11855,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -15482,7 +15450,9 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 0.7071068
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114860251868252440, guid: c7325ceeef097a042a44e756a1c78b14, type: 2}
+    - {fileID: 114007584566452790, guid: c7325ceeef097a042a44e756a1c78b14, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: c7325ceeef097a042a44e756a1c78b14, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &399632376
@@ -16389,7 +16359,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -17864,7 +17833,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words:
   - Rouge
   - Vert
@@ -18463,7 +18431,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -21259,7 +21226,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words:
   - Rouge
   - Vert
@@ -23110,7 +23076,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -25378,7 +25343,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -25482,6 +25446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!114 &657799323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25495,7 +25460,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -25527,7 +25491,6 @@ GameObject:
   m_Component:
   - component: {fileID: 801270228}
   - component: {fileID: 657819447}
-  - component: {fileID: 657819444}
   - component: {fileID: 657819445}
   - component: {fileID: 657819446}
   m_Layer: 0
@@ -25537,24 +25500,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &657819444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 657819443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3fb9b85555f01448a709c407c367920, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSelected: 0
-  focused: 0
-  words: []
-  answer: 
-  solved: 0
-  right: {fileID: 0}
-  wrong: {fileID: 0}
 --- !u!114 &657819445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25578,6 +25523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!54 &657819447
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -26941,7 +26887,6 @@ GameObject:
   m_Component:
   - component: {fileID: 546128052}
   - component: {fileID: 709743767}
-  - component: {fileID: 709743764}
   - component: {fileID: 709743765}
   - component: {fileID: 709743766}
   m_Layer: 0
@@ -26951,24 +26896,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &709743764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 709743763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3fb9b85555f01448a709c407c367920, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSelected: 0
-  focused: 0
-  words: []
-  answer: 
-  solved: 0
-  right: {fileID: 0}
-  wrong: {fileID: 0}
 --- !u!114 &709743765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26992,6 +26919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!54 &709743767
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -28226,7 +28154,8 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114946988014135294, guid: 8418279bbe994e3489dddb19ee8a315d, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 8418279bbe994e3489dddb19ee8a315d, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &755050378
@@ -32648,7 +32577,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words:
   - Rouge
   - Vert
@@ -35137,7 +35065,6 @@ GameObject:
   m_Component:
   - component: {fileID: 992299963}
   - component: {fileID: 992299966}
-  - component: {fileID: 992299965}
   - component: {fileID: 992299964}
   m_Layer: 0
   m_Name: Plank
@@ -35176,24 +35103,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &992299965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 992299962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3fb9b85555f01448a709c407c367920, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSelected: 0
-  focused: 0
-  words: []
-  answer: 
-  solved: 0
-  right: {fileID: 0}
-  wrong: {fileID: 0}
 --- !u!114 &992299966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35206,6 +35115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!1 &996161454
 GameObject:
   m_ObjectHideFlags: 0
@@ -35822,7 +35732,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -36348,7 +36257,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1983806422}
   - component: {fileID: 1028362012}
-  - component: {fileID: 1028362009}
   - component: {fileID: 1028362010}
   - component: {fileID: 1028362011}
   m_Layer: 0
@@ -36358,24 +36266,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1028362009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1028362008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3fb9b85555f01448a709c407c367920, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSelected: 0
-  focused: 0
-  words: []
-  answer: 
-  solved: 0
-  right: {fileID: 0}
-  wrong: {fileID: 0}
 --- !u!114 &1028362010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36399,6 +36289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!54 &1028362012
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -37000,7 +36891,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words:
   - Gauche
   - Droite
@@ -37020,6 +36910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!1 &1044353026
 GameObject:
   m_ObjectHideFlags: 0
@@ -38397,7 +38288,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -39266,6 +39156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!114 &1106639447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39279,7 +39170,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -40302,7 +40192,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words:
   - Rouge
   - Vert
@@ -43713,7 +43602,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -44999,7 +44887,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -46055,7 +45942,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -47220,7 +47106,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -47238,6 +47123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!1 &1303667904
 GameObject:
   m_ObjectHideFlags: 0
@@ -47838,7 +47724,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -50076,9 +49961,9 @@ Transform:
   - {fileID: 546128052}
   - {fileID: 801270228}
   - {fileID: 1744137935}
-  - {fileID: 1499756162}
   - {fileID: 1177830109}
   - {fileID: 2012492334}
+  - {fileID: 1499756162}
   - {fileID: 170948837}
   - {fileID: 1008057963}
   - {fileID: 1303274854}
@@ -50410,7 +50295,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -51616,7 +51500,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -52123,6 +52006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!114 &1456799295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52135,7 +52019,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -52257,7 +52140,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4853418430803580, guid: 37ab73719e6a577429ea6c641ae5560a, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114940922978838482, guid: 37ab73719e6a577429ea6c641ae5560a,
         type: 2}
@@ -52274,7 +52157,8 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114639401572016522, guid: 37ab73719e6a577429ea6c641ae5560a, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 37ab73719e6a577429ea6c641ae5560a, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1464953334
@@ -55187,7 +55071,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4978793344105726, guid: 64d6fb07b81cc824e8bca8ddfe6572cc, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 114509156168168406, guid: 64d6fb07b81cc824e8bca8ddfe6572cc,
         type: 2}
@@ -55234,7 +55118,9 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114028265019456582, guid: 64d6fb07b81cc824e8bca8ddfe6572cc, type: 2}
+    - {fileID: 114379706600775242, guid: 64d6fb07b81cc824e8bca8ddfe6572cc, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 64d6fb07b81cc824e8bca8ddfe6572cc, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1526382281
@@ -55734,7 +55620,7 @@ GameObject:
   - component: {fileID: 1546287237}
   m_Layer: 5
   m_Name: KeyE03
-  m_TagString: Untagged
+  m_TagString: InventoryElements
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56756,7 +56642,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -60970,7 +60855,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words:
   - Rouge
   - Vert
@@ -61535,7 +61419,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -61747,7 +61630,7 @@ GameObject:
   - component: {fileID: 1766555499}
   m_Layer: 5
   m_Name: Wire
-  m_TagString: Untagged
+  m_TagString: InventoryElements
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61837,7 +61720,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2012492334}
   - component: {fileID: 1772307927}
-  - component: {fileID: 1772307924}
   - component: {fileID: 1772307925}
   - component: {fileID: 1772307926}
   m_Layer: 0
@@ -61847,24 +61729,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1772307924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1772307923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3fb9b85555f01448a709c407c367920, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSelected: 0
-  focused: 0
-  words: []
-  answer: 
-  solved: 0
-  right: {fileID: 0}
-  wrong: {fileID: 0}
 --- !u!114 &1772307925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61888,6 +61752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!54 &1772307927
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -62553,7 +62418,7 @@ GameObject:
   - component: {fileID: 1782590650}
   m_Layer: 5
   m_Name: Puzzle
-  m_TagString: Untagged
+  m_TagString: InventoryElements
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62816,7 +62681,7 @@ GameObject:
   - component: {fileID: 1792035016}
   m_Layer: 5
   m_Name: TipE07
-  m_TagString: Untagged
+  m_TagString: InventoryElements
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64997,7 +64862,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -65746,7 +65610,7 @@ GameObject:
   - component: {fileID: 1862795716}
   m_Layer: 5
   m_Name: KeyE08
-  m_TagString: Untagged
+  m_TagString: InventoryElements
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67127,7 +66991,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -69301,7 +69164,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1970961238}
   - component: {fileID: 1970961242}
-  - component: {fileID: 1970961241}
   - component: {fileID: 1970961240}
   - component: {fileID: 1970961239}
   m_Layer: 8
@@ -69354,24 +69216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
---- !u!114 &1970961241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1970961237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3fb9b85555f01448a709c407c367920, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSelected: 0
   focused: 0
-  words: []
-  answer: 
-  solved: 0
-  right: {fileID: 0}
-  wrong: {fileID: 0}
 --- !u!114 &1970961242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69934,7 +69779,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words:
   - Gauche
   - Droite
@@ -70033,6 +69877,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!1 &1996398205
 GameObject:
   m_ObjectHideFlags: 0
@@ -71020,7 +70865,7 @@ Transform:
   - {fileID: 95929847}
   - {fileID: 1356758572}
   m_Father: {fileID: 1384623103}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 135, z: 0}
 --- !u!1 &2016650385
 GameObject:
@@ -71492,7 +71337,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
-  focused: 0
   words: []
   answer: 
   solved: 0
@@ -74134,7 +73978,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1744137935}
   - component: {fileID: 2108362825}
-  - component: {fileID: 2108362822}
   - component: {fileID: 2108362823}
   - component: {fileID: 2108362824}
   m_Layer: 0
@@ -74144,24 +73987,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2108362822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2108362821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3fb9b85555f01448a709c407c367920, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSelected: 0
-  focused: 0
-  words: []
-  answer: 
-  solved: 0
-  right: {fileID: 0}
-  wrong: {fileID: 0}
 --- !u!114 &2108362823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74185,6 +74010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+  focused: 0
 --- !u!54 &2108362825
 Rigidbody:
   m_ObjectHideFlags: 0

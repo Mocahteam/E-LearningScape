@@ -30,6 +30,7 @@ TagManager:
   - LockRoom2
   - Puzzle
   - PuzzleUI
+  - InventoryElements
   layers:
   - Default
   - TransparentFX

@@ -14,12 +14,14 @@ public class Inventory : FSystem {
     private Family syllabusElems = FamilyManager.getFamily(new AnyOfTags("Syllabus"), new AllOfComponents(typeof(CollectableGO)), new NoneOfComponents(typeof(Image)));
     private Family inputfields = FamilyManager.getFamily(new AllOfComponents(typeof(InputField)));
     private Family pui = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"));
+    private Family elemsInventory = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
 
     private bool playerEnabled = true;
     private GameObject displayer;
     private GameObject displayedElement;
     private GameObject selection;
     private GameObject selectedUI;
+    private GameObject closeButton;
 
     private GameObject glassesBG;
     private GameObject glassesUI;
@@ -48,6 +50,7 @@ public class Inventory : FSystem {
                     {
                         //initialise button with listener
                         c.gameObject.GetComponent<Button>().onClick.AddListener(CloseInventory);
+                        closeButton = c.gameObject;
                     }
                 }
                 child.gameObject.SetActive(false);
@@ -299,6 +302,14 @@ public class Inventory : FSystem {
                             canvas.SetActive(false);
                         }
                     }
+                    foreach(GameObject elem in elemsInventory)
+                    {
+                        elem.GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
+                        if(elem.name == "KeyE03")
+                        {
+                            closeButton.GetComponent<RectTransform>().localPosition = elem.GetComponent<RectTransform>().localPosition + (Vector3.up + Vector3.right) * (60);
+                        }
+                    }
                     onPuzzle = false;
                     CollectableGO.onInventory = true;
                 }
@@ -372,6 +383,10 @@ public class Inventory : FSystem {
                     canvas.SetActive(true);
                 }
             }
+        }
+        foreach (GameObject elem in elemsInventory)
+        {
+            elem.GetComponent<RectTransform>().localPosition += Vector3.right * (Camera.main.pixelWidth / 2 - 250) + Vector3.down * (Camera.main.pixelHeight / 2 - 100);
         }
         CollectableGO.onInventory = false;
     }

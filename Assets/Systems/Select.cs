@@ -5,9 +5,9 @@ using FYFY_plugins.PointerManager;
 public class Select : FSystem {
 
     //all selectable objects
-    private Family objects = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable)));
+    private Family objects = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(Takable)));
     //all takable objects
-    private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(Takable)));
+    private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Takable)));
 
     private GameObject focused;
     private bool selected = false;
@@ -35,15 +35,22 @@ public class Select : FSystem {
                 if(child.gameObject.tag == "MouseOver" && child.gameObject.activeSelf)
                 {
                     child.gameObject.SetActive(false);
+                    break;
                 }
-                go.GetComponent<Selectable>().focused = false;
+            }
+            if (go.GetComponent<Takable>())
+            {
+                go.GetComponent<Takable>().focused = false;
             }
 
             //if the gameobject is selected, save it as focused object
-            if (go.GetComponent<Selectable>().isSelected)
+            if (go.GetComponent<Selectable>())
             {
-                focused = go;
-                selected = true;
+                if (go.GetComponent<Selectable>().isSelected)
+                {
+                    focused = go;
+                    selected = true;
+                }
             }
         }
 
@@ -69,15 +76,23 @@ public class Select : FSystem {
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
                 {
-                    if (hit.transform.gameObject.GetComponent<Selectable>())
+                    if (hit.transform.gameObject.GetComponent<Takable>())
+                    {
+                        hit.transform.gameObject.GetComponent<Takable>().focused = true;
+                        focused = hit.transform.gameObject;
+                    }
+                    else if (hit.transform.parent.gameObject.GetComponent<Takable>())
+                    {
+                        hit.transform.parent.gameObject.GetComponent<Takable>().focused = true;
+                        focused = hit.transform.parent.gameObject;
+                    }
+                    else if (hit.transform.gameObject.GetComponent<Selectable>())
                     {
                         focused = hit.transform.gameObject;
-                        focused.GetComponent<Selectable>().focused = true;
                     }
                     else if (hit.transform.parent.gameObject.GetComponent<Selectable>())
                     {
                         focused = hit.transform.parent.gameObject;
-                        focused.GetComponent<Selectable>().focused = true;
                     }
                 }
             }
@@ -86,7 +101,7 @@ public class Select : FSystem {
         if (focused)    //if there is a focused object
         {
             //if the player clicks on the object while it is not taken and inventory isn't opened, select it
-            if (Input.GetMouseButtonDown(0) && !Takable.objectTaken && !CollectableGO.onInventory)
+            if (Input.GetMouseButtonDown(0) && !Takable.objectTaken && !CollectableGO.onInventory && focused.GetComponent<Selectable>())
             {
                 focused.GetComponent<Selectable>().isSelected = true;
                 Selectable.selected = true;
@@ -99,6 +114,7 @@ public class Select : FSystem {
                     if (child.gameObject.tag == "MouseOver" && !child.gameObject.activeSelf)
                     {
                         child.gameObject.SetActive(true);
+                        break;
                     }
                 }
             }

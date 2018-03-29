@@ -5,7 +5,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class TakeObject : FSystem {
 
     //all takable objects
-    private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(Takable)));
+    private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Takable)));
     //enigma03's balls
     private Family balls = FamilyManager.getFamily(new AnyOfTags("Ball"));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
@@ -21,7 +21,7 @@ public class TakeObject : FSystem {
 
     public TakeObject()
     {
-        //at the beginning of the game, all taken object are not kinematic
+        //at the beginning of the game, all takable object are not kinematic
         foreach(GameObject go in tObjects)
         {
             go.GetComponent<Rigidbody>().isKinematic = false;
@@ -83,7 +83,7 @@ public class TakeObject : FSystem {
                 {
                     if (go.GetComponent<Takable>().taken)   //find the taken object
                     {
-                        if(go.tag == "TableE05")
+                        if (go.tag == "TableE05")
                         {
                             //Camera.main.transform.localRotation = Quaternion.Euler(90,0,0);
                             player.First().transform.position += Vector3.up * (onTableHeight - player.First().transform.position.y);
@@ -119,8 +119,6 @@ public class TakeObject : FSystem {
                             else if(go.tag == "TableE05")
                             {
                                 player.First().transform.position = go.transform.position - go.transform.forward * 1.5f;
-                                player.First().GetComponent<FirstPersonController>().m_MouseLook.MinimumX = 0;
-                                player.First().GetComponent<FirstPersonController>().m_MouseLook.MaximumX = 0;
                                 initialiseView = true;
                             }
                             else if (go.GetComponent<MirrorScript>())
@@ -143,7 +141,7 @@ public class TakeObject : FSystem {
                 foreach (GameObject go in tObjects)
                 {
                     //if right click on a focused (but not selected) object, take it
-                    if (go.GetComponent<Selectable>().focused && Input.GetMouseButtonDown(1))
+                    if (go.GetComponent<Takable>().focused && Input.GetMouseButtonDown(1))
                     {
                         go.GetComponent<Takable>().taken = true;
                         go.GetComponent<Rigidbody>().isKinematic = true;

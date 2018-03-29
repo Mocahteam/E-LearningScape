@@ -173,14 +173,32 @@ public class SetAnswer : FSystem {
             if (go.name.Contains(1.ToString()))
             {
                 go.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer1);
+                go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                    if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                    {
+                        CheckT1Answer1();
+                    }
+                });
             }
             else if (go.name.Contains(2.ToString()))
             {
                 go.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer2);
+                go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                    if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                    {
+                        CheckT1Answer2();
+                    }
+                });
             }
             else if (go.name.Contains(3.ToString()))
             {
                 go.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer3);
+                go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                    if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                    {
+                        CheckT1Answer3();
+                    }
+                });
             }
         }
         int id;
@@ -191,26 +209,62 @@ public class SetAnswer : FSystem {
             {
                 case 1:
                     go.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer1);
+                    go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                        {
+                            CheckT2Answer1();
+                        }
+                    });
                     break;
 
                 case 2:
                     go.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer2);
+                    go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                        {
+                            CheckT2Answer2();
+                        }
+                    });
                     break;
 
                 case 3:
                     go.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer3);
+                    go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                        {
+                            CheckT2Answer3();
+                        }
+                    });
                     break;
 
                 case 4:
                     go.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer4);
+                    go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                        {
+                            CheckT2Answer4();
+                        }
+                    });
                     break;
 
                 case 5:
                     go.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer5);
+                    go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                        {
+                            CheckT2Answer5();
+                        }
+                    });
                     break;
 
                 case 6:
                     go.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer6);
+                    go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                        {
+                            CheckT2Answer6();
+                        }
+                    });
                     break;
 
                 default:
@@ -218,6 +272,12 @@ public class SetAnswer : FSystem {
             }
         }
         connectionR2.GetComponentInChildren<Button>().onClick.AddListener(CheckConnection);
+        connectionR2.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            {
+                CheckConnection();
+            }
+        });
         lockR2.First().GetComponentInChildren<InputField>().onEndEdit.AddListener(CheckPasswordRoom2);
 
         //setting audio and visual elements for feedback when the player answers
@@ -738,6 +798,11 @@ public class SetAnswer : FSystem {
         }
     }
 
+    private void CheckT1Answer1(string s)
+    {
+        CheckT1Answer1();
+    }
+
     /* check the answer of the second question on the tablet 1
      * called when the corresponding button is clicked
      */
@@ -791,6 +856,11 @@ public class SetAnswer : FSystem {
                 }
             }
         }
+    }
+
+    private void CheckT1Answer2(string s)
+    {
+        CheckT1Answer2();
     }
 
     /* check the answer of the third question on the tablet 1
@@ -849,6 +919,11 @@ public class SetAnswer : FSystem {
         }
     }
 
+    private void CheckT1Answer3(string s)
+    {
+        CheckT1Answer3();
+    }
+
     private void CheckConnection()
     {
         int answer;
@@ -856,12 +931,19 @@ public class SetAnswer : FSystem {
         
         if(answer == connectionPassword)
         {
+            connectionAnswerCheck1.text = "O";
+            connectionAnswerCheck1.color = cacGreen;
+            connectionAnswerCheck2.text = "O";
+            connectionAnswerCheck2.color = cacGreen;
+            connectionAnswerCheck3.text = "O";
+            connectionAnswerCheck3.color = cacGreen;
             fadingToAnswersRoom2 = true;
             timerWhite = Time.time;
             whiteBG.SetActive(true);
             whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, 0);
         }
         else {
+            connectionR2.GetComponentInChildren<InputField>().ActivateInputField();
             if (answer / 100 == connectionPassword / 100)
             {
                 connectionAnswerCheck1.text = "O";
@@ -910,6 +992,11 @@ public class SetAnswer : FSystem {
                 connectionAnswerCheck3.color = cacRed;
             }
         }
+    }
+
+    private void CheckConnection(string s)
+    {
+        CheckConnection();
     }
 
     private void CheckT2Answer1()
@@ -968,6 +1055,11 @@ public class SetAnswer : FSystem {
         }
     }
 
+    private void CheckT2Answer1(string s)
+    {
+        CheckT2Answer1();
+    }
+
     private void CheckT2Answer2()
     {
         foreach (GameObject q in qRoom2)
@@ -1020,6 +1112,11 @@ public class SetAnswer : FSystem {
                 }
             }
         }
+    }
+
+    private void CheckT2Answer2(string s)
+    {
+        CheckT2Answer2();
     }
 
     private void CheckT2Answer3()
@@ -1076,6 +1173,11 @@ public class SetAnswer : FSystem {
         }
     }
 
+    private void CheckT2Answer3(string s)
+    {
+        CheckT2Answer3();
+    }
+
     private void CheckT2Answer4()
     {
         foreach (GameObject q in qRoom2)
@@ -1128,6 +1230,11 @@ public class SetAnswer : FSystem {
                 }
             }
         }
+    }
+
+    private void CheckT2Answer4(string s)
+    {
+        CheckT2Answer4();
     }
 
     private void CheckT2Answer5()
@@ -1186,6 +1293,11 @@ public class SetAnswer : FSystem {
         }
     }
 
+    private void CheckT2Answer5(string s)
+    {
+        CheckT2Answer5();
+    }
+
     private void CheckT2Answer6()
     {
         foreach (GameObject q in qRoom2)
@@ -1240,24 +1352,32 @@ public class SetAnswer : FSystem {
         }
     }
 
+    private void CheckT2Answer6(string s)
+    {
+        CheckT2Answer6();
+    }
+
     private void CheckPasswordRoom2(string value)
     {
-        if(value != previousTryPassword && value != "")
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            previousTryPassword = value;
-            if(value == password)
+            if (value != previousTryPassword && value != "")
             {
-                lockR2.First().GetComponent<Selectable>().solved = true;
-                moveWall = true;
-                source.clip = lockR2.First().GetComponent<Selectable>().right;
-                source.PlayDelayed(0);
-                source.loop = true;
-            }
-            else
-            {
-                //feedback wrong answer
-                source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
-                timeW = Time.time;
+                previousTryPassword = value;
+                if (value == password)
+                {
+                    lockR2.First().GetComponent<Selectable>().solved = true;
+                    moveWall = true;
+                    source.clip = lockR2.First().GetComponent<Selectable>().right;
+                    source.PlayDelayed(0);
+                    source.loop = true;
+                }
+                else
+                {
+                    //feedback wrong answer
+                    source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
+                    timeW = Time.time;
+                }
             }
         }
     }

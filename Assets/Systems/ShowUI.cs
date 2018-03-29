@@ -586,6 +586,7 @@ public class ShowUI : FSystem {
                 //show ui and set close button position
                 closeButton.GetComponent<RectTransform>().localPosition = Camera.main.WorldToScreenPoint(lockR2TopRight) - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
                 uiGO.SetActive(true);
+                lockR2.First().GetComponentInChildren<InputField>().ActivateInputField();
                 moveToLockR2 = false;
             }
         }
