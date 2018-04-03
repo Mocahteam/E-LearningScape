@@ -11,14 +11,18 @@ public class Pause : FSystem {
     private bool gamePaused = false;
     private bool playerEnabled = true;
 
+	private GameObject forGO;
+
     public Pause()
     {
+		int nbCanvas = canvas.Count;
         //initialise pause menu's buttons with listeners
-        foreach(GameObject ui in canvas)
+		for(int i = 0; i < nbCanvas; i++)
         {
-            if(ui.name == "PauseMenu")
+			forGO = canvas.getAt (i);
+			if(forGO.name == "PauseMenu")
             {
-                foreach(Button b in ui.GetComponentsInChildren<Button>())
+				foreach(Button b in forGO.GetComponentsInChildren<Button>())
                 {
                     switch (b.name)
                     {
@@ -38,7 +42,7 @@ public class Pause : FSystem {
                             break;
                     }
                 }
-                ui.SetActive(false);    //hide pause menu at the beginning
+				forGO.SetActive(false);    //hide pause menu at the beginning
             }
         }
     }
@@ -63,11 +67,13 @@ public class Pause : FSystem {
             }
             else
             {
-                foreach (GameObject ui in canvas)
+				int nbCanvas = canvas.Count;
+				for(int i = 0; i < nbCanvas; i++)
                 {
-                    if (ui.name == "PauseMenu")
+					forGO = canvas.getAt (i);
+					if (forGO.name == "PauseMenu")
                     {
-                        ui.SetActive(true); //show pause menu
+						forGO.SetActive(true); //show pause menu
                     }
                 }
                 foreach(FSystem s in FSystemManager.updateSystems())
@@ -90,14 +96,16 @@ public class Pause : FSystem {
 	}
 
     void Resume()   //resume game
-    {
-        foreach (GameObject ui in canvas)
-        {
-            if (ui.name == "PauseMenu")
-            {
-                ui.SetActive(false); // hide pause menu
-            }
-        }
+	{
+		int nbCanvas = canvas.Count;
+		for(int i = 0; i < nbCanvas; i++)
+		{
+			forGO = canvas.getAt (i);
+			if (forGO.name == "PauseMenu")
+			{
+				forGO.SetActive(false); //hide pause menu
+			}
+		}
         //unpause all FYFY systems
         foreach (FSystem s in FSystemManager.updateSystems())
         {

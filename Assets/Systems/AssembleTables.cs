@@ -15,6 +15,8 @@ public class AssembleTables : FSystem {
     private float speed = 0.03f;            //speed of the animation when assembling tables
     private bool movingTable = false;
 
+	private GameObject forGO;
+
     // Use this to update member variables when system pause. 
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame) {
@@ -30,13 +32,15 @@ public class AssembleTables : FSystem {
         if(Takable.objectTaken && checkTakenObject) //if an object is taken but wasn't saved in "taken" yet
         {
             checkTakenObject = false;   //false when the currently taken object is saved in "taken"
-            foreach(GameObject go in tObjects)
+			int forCount = tObjects.Count;
+			for(int i =0; i < forCount; i++)
             {
-                if (go.GetComponent<Takable>().taken)   //find the taken object
+				forGO = tObjects.getAt (i);
+				if (forGO.GetComponent<Takable>().taken)   //find the taken object
                 {
-                    if (go.GetComponent<Takable>().tag == "TableE05")
+					if (forGO.GetComponent<Takable>().tag == "TableE05")
                     {
-                        taken = go; //save it if it's a table
+						taken = forGO; //save it if it's a table
                     }
                     else
                     {
@@ -63,59 +67,61 @@ public class AssembleTables : FSystem {
                 /*this loop checks if the released table is close to another table
                  *the positions from which the animation can be started are different depending on the table
                  */
-                foreach (GameObject table in tablesE05)
+				int forCount = tablesE05.Count;
+				for (int i = 0; i < forCount; i++)
                 {
-                    if (table.name.Contains(3.ToString()))  //the table with the piece of paper on the back (unity gameobject axes)
+					forGO = tablesE05.getAt (i);
+					if (forGO.name.Contains(3.ToString()))  //the table with the piece of paper on the back (unity gameobject axes)
                     {
-                        point1 = table.transform.position - table.transform.forward * 1.55f + table.transform.right * 0.775f; //back right position
-                        point2 = table.transform.position - table.transform.forward * 1.55f - table.transform.right * 0.775f; //back left position
+						point1 = forGO.transform.position - forGO.transform.forward * 1.55f + forGO.transform.right * 0.775f; //back right position
+						point2 = forGO.transform.position - forGO.transform.forward * 1.55f - forGO.transform.right * 0.775f; //back left position
                         //if the table is close to one of the two points (dist < tableDist), move the released table to assemble the 2 table
                         if ((point1 - taken.transform.position).magnitude < tableDist && (point1 - taken.transform.position).magnitude > 0.01f)
                         {
                             taken.transform.position = Vector3.MoveTowards(taken.transform.position, point1, speed);
-                            taken.transform.rotation = table.transform.rotation;
+							taken.transform.rotation = forGO.transform.rotation;
                             movingTable = true;
                         }
                         else if ((point2 - taken.transform.position).magnitude < tableDist && (point2 - taken.transform.position).magnitude > 0.01f)
                         {
                             taken.transform.position = Vector3.MoveTowards(taken.transform.position, point2, speed);
-                            taken.transform.rotation = table.transform.rotation;
+							taken.transform.rotation = forGO.transform.rotation;
                             movingTable = true;
                         }
                     }
-                    else if (table.name.Contains(1.ToString())) //the table with the piece of paper on the front left (unity gameobject axes)
+					else if (forGO.name.Contains(1.ToString())) //the table with the piece of paper on the front left (unity gameobject axes)
                     {
-                        point1 = table.transform.position - table.transform.right * 1.525f;   //left position
-                        point2 = table.transform.position + table.transform.forward * 1.55f - table.transform.right * 0.775f; //forward left position
+						point1 = forGO.transform.position - forGO.transform.right * 1.525f;   //left position
+						point2 = forGO.transform.position + forGO.transform.forward * 1.55f - forGO.transform.right * 0.775f; //forward left position
                         //if the table is close to one of the two points (dist < tableDist), move the released table to assemble the 2 table
                         if ((point1 - taken.transform.position).magnitude < tableDist && (point1 - taken.transform.position).magnitude > 0.01f)
                         {
                             taken.transform.position = Vector3.MoveTowards(taken.transform.position, point1, speed);
-                            taken.transform.rotation = table.transform.rotation;
+							taken.transform.rotation = forGO.transform.rotation;
                             movingTable = true;
                         }
                         else if ((point2 - taken.transform.position).magnitude < tableDist && (point2 - taken.transform.position).magnitude > 0.01f)
                         {
                             taken.transform.position = Vector3.MoveTowards(taken.transform.position, point2, speed);
-                            taken.transform.rotation = table.transform.rotation;
+							taken.transform.rotation = forGO.transform.rotation;
                             movingTable = true;
                         }
                     }
-                    else if (table.name.Contains(2.ToString())) //the table with the piece of paper on the front right (unity gameobject axes)
+					else if (forGO.name.Contains(2.ToString())) //the table with the piece of paper on the front right (unity gameobject axes)
                     {
-                        point1 = table.transform.position + table.transform.right * 1.525f;   //right position
-                        point2 = table.transform.position + table.transform.forward * 1.55f + table.transform.right * 0.775f; //forward right position
+						point1 = forGO.transform.position + forGO.transform.right * 1.525f;   //right position
+						point2 = forGO.transform.position + forGO.transform.forward * 1.55f + forGO.transform.right * 0.775f; //forward right position
                         //if the table is close to one of the two points (dist < tableDist), move the released table to assemble the 2 table
                         if ((point1 - taken.transform.position).magnitude < tableDist && (point1 - taken.transform.position).magnitude > 0.01f)
                         {
                             taken.transform.position = Vector3.MoveTowards(taken.transform.position, point1, speed);
-                            taken.transform.rotation = table.transform.rotation;
+							taken.transform.rotation = forGO.transform.rotation;
                             movingTable = true;
                         }
                         else if ((point2 - taken.transform.position).magnitude < tableDist && (point2 - taken.transform.position).magnitude > 0.01f)
                         {
                             taken.transform.position = Vector3.MoveTowards(taken.transform.position, point2, speed);
-                            taken.transform.rotation = table.transform.rotation;
+							taken.transform.rotation = forGO.transform.rotation;
                             movingTable = true;
                         }
                     }

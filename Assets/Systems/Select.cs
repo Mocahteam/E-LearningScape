@@ -12,6 +12,8 @@ public class Select : FSystem {
     private GameObject focused;
     private bool selected = false;
 
+	private GameObject forGO;
+
     // Use this to update member variables when system pause. 
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame) {
@@ -27,9 +29,11 @@ public class Select : FSystem {
         focused = null; //selected or mouse over object
         selected = false;   //initial value
 
-        foreach(GameObject go in objects)
+		int nbObjects = objects.Count;
+		for(int i = 0; i < nbObjects; i++)
         {
-            foreach(Transform child in go.transform)
+			forGO = objects.getAt (i);
+			foreach(Transform child in forGO.transform)
             {
                 //hide all gameobject's "Mouse over overlay"
                 if(child.gameObject.tag == "MouseOver" && child.gameObject.activeSelf)
@@ -38,17 +42,17 @@ public class Select : FSystem {
                     break;
                 }
             }
-            if (go.GetComponent<Takable>())
+			if (forGO.GetComponent<Takable>())
             {
-                go.GetComponent<Takable>().focused = false;
+				forGO.GetComponent<Takable>().focused = false;
             }
 
             //if the gameobject is selected, save it as focused object
-            if (go.GetComponent<Selectable>())
+			if (forGO.GetComponent<Selectable>())
             {
-                if (go.GetComponent<Selectable>().isSelected)
+				if (forGO.GetComponent<Selectable>().isSelected)
                 {
-                    focused = go;
+					focused = forGO;
                     selected = true;
                 }
             }
@@ -59,11 +63,13 @@ public class Select : FSystem {
             //if an object is taken, save it as focused object
             if (Takable.objectTaken)
             {
-                foreach(GameObject go in tObjects)
+				int nbTakable = tObjects.Count;
+				for(int i = 0; i < nbTakable; i++)
                 {
-                    if (go.GetComponent<Takable>().taken)
+					forGO = tObjects.getAt(i);
+					if (forGO.GetComponent<Takable>().taken)
                     {
-                        focused = go;
+						focused = forGO;
                         break;
                     }
                 }

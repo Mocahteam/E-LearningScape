@@ -80,22 +80,29 @@ public class SetAnswer : FSystem {
     private GameObject wallRoom2;
     private bool moveWall = false;
 
+	//tmp gameobjects used to loop in famillies
+	private GameObject forGO;
+	private GameObject forGO2;
+	private GameObject forGO3;
+
     public SetAnswer()
     {
         door.First().transform.rotation = Quaternion.Euler(0, -135, 0); //opened
         //door.First().transform.rotation = Quaternion.Euler(0, 0, 0);    //closed
         wallRoom2 = lockR2.First().transform.parent.gameObject;
 
-        foreach (GameObject go in tablet)
+		int nbTablet = tablet.Count;
+		for(int i = 0; i < nbTablet; i++)
         {
-            if (go.name.Contains(1.ToString()))
+			forGO = tablet.getAt (i);
+			if (forGO.name.Contains(1.ToString()))
             {
-                tablet1 = go;
+				tablet1 = forGO;
                 screen1 = tablet1.GetComponentInChildren<Canvas>().gameObject;
             }
-            else if (go.name.Contains(2.ToString()))
+			else if (forGO.name.Contains(2.ToString()))
             {
-                tablet2 = go;
+				tablet2 = forGO;
                 screen2 = tablet2.GetComponentInChildren<Canvas>().gameObject;
             }
         }
@@ -112,10 +119,12 @@ public class SetAnswer : FSystem {
             }
         }
         wtt = wTimerText.First().GetComponent<TextMeshProUGUI>();
-        foreach (GameObject go in gears)
+		int nbGears = gears.Count;
+		for(int i = 0; i < nbGears; i++)
         {
+			forGO = gears.getAt (i);
             //set the initial position of each gear to their local position at the beginning of the game
-            go.GetComponent<Gear>().initialPosition = go.transform.localPosition;
+			forGO.GetComponent<Gear>().initialPosition = forGO.transform.localPosition;
         }
 
         foreach (Transform child in screen2.transform)
@@ -157,43 +166,34 @@ public class SetAnswer : FSystem {
         }
 
         //initialise buttons with listener
-        foreach (GameObject b in answers)
+		int nb = qRoom1.Count;
+		for(int i = 0; i < nb; i++)
         {
-            b.GetComponent<Button>().onClick.AddListener(delegate { Answer(b.GetComponent<Button>()); });
-        }
-        foreach(GameObject g in displayAnswer)
-        {
-            if(g.name == "Result")
+			forGO = qRoom1.getAt (i);
+			if (forGO.name.Contains(1.ToString()))
             {
-                g.GetComponentInChildren<Button>().onClick.AddListener(CloseResult);
-            }
-        }
-        foreach (GameObject go in qRoom1)
-        {
-            if (go.name.Contains(1.ToString()))
-            {
-                go.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer1);
-                go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+				forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer1);
+				forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
                     if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                     {
                         CheckT1Answer1();
                     }
                 });
             }
-            else if (go.name.Contains(2.ToString()))
+			else if (forGO.name.Contains(2.ToString()))
             {
-                go.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer2);
-                go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+				forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer2);
+				forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
                     if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                     {
                         CheckT1Answer2();
                     }
                 });
             }
-            else if (go.name.Contains(3.ToString()))
+			else if (forGO.name.Contains(3.ToString()))
             {
-                go.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer3);
-                go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+				forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer3);
+				forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
                     if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                     {
                         CheckT1Answer3();
@@ -202,14 +202,16 @@ public class SetAnswer : FSystem {
             }
         }
         int id;
-        foreach (GameObject go in qRoom2)
+		nb = qRoom2.Count;
+		for(int i = 0; i < nb; i++)
         {
-            int.TryParse(go.name.Substring(go.name.Length - 1, 1), out id);
+			forGO = qRoom2.getAt (i);
+			int.TryParse(forGO.name.Substring(forGO.name.Length - 1, 1), out id);
             switch (id)
             {
                 case 1:
-                    go.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer1);
-                    go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+					forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer1);
+					forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
                         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                         {
                             CheckT2Answer1();
@@ -218,8 +220,8 @@ public class SetAnswer : FSystem {
                     break;
 
                 case 2:
-                    go.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer2);
-                    go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+					forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer2);
+					forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
                         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                         {
                             CheckT2Answer2();
@@ -228,8 +230,8 @@ public class SetAnswer : FSystem {
                     break;
 
                 case 3:
-                    go.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer3);
-                    go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+					forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer3);
+					forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
                         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                         {
                             CheckT2Answer3();
@@ -238,8 +240,8 @@ public class SetAnswer : FSystem {
                     break;
 
                 case 4:
-                    go.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer4);
-                    go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+					forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer4);
+					forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
                         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                         {
                             CheckT2Answer4();
@@ -248,8 +250,8 @@ public class SetAnswer : FSystem {
                     break;
 
                 case 5:
-                    go.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer5);
-                    go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+					forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer5);
+					forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
                         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                         {
                             CheckT2Answer5();
@@ -258,8 +260,8 @@ public class SetAnswer : FSystem {
                     break;
 
                 case 6:
-                    go.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer6);
-                    go.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+					forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer6);
+					forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
                         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                         {
                             CheckT2Answer6();
@@ -281,26 +283,30 @@ public class SetAnswer : FSystem {
         lockR2.First().GetComponentInChildren<InputField>().onEndEdit.AddListener(CheckPasswordRoom2);
 
         //setting audio and visual elements for feedback when the player answers
-        foreach (GameObject g in audioSource)
+		nb = audioSource.Count;
+		for(int i = 0; i < nb; i++)
         {
-            if(g.name == "Game")
+			forGO = audioSource.getAt (i);
+			if(forGO.name == "Game")
             {
-                source = g.GetComponent<AudioSource>(); //setting audio source playing "Right" and "Wrong" audios
+				source = forGO.GetComponent<AudioSource>(); //setting audio source playing "Right" and "Wrong" audios
             }
         }
-        foreach(GameObject go in images)
+		nb = images.Count;
+		for(int i = 0; i < nb; i++)
         {
-            if(go.name == "Right")
+			forGO = images.getAt (i);
+			if(forGO.name == "Right")
             {
-                rightBG = go;
+				rightBG = forGO;
             }
-            else if (go.name == "Wrong")
+			else if (forGO.name == "Wrong")
             {
-                wrongBG = go;
+				wrongBG = forGO;
             }
-            else if (go.name == "White")
+			else if (forGO.name == "White")
             {
-                whiteBG = go;
+				whiteBG = forGO;
             }
         }
     }
@@ -392,12 +398,14 @@ public class SetAnswer : FSystem {
         //if the player is playing enigma04 and didn't answer
         else if(!tablet1.GetComponent<Selectable>().solved && enigma4.activeSelf && !wrongAnswerE04)
         {
-            foreach(GameObject gear in gears)
+			int nbGears = gears.Count;
+			for(int i = 0; i < nbGears; i++)
             {
+				forGO = gears.getAt (i);
                 //if a gear is dragged
-                if (gear.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
+				if (forGO.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
                 {
-                    gearDragged = gear; //save the dragged gear
+					gearDragged = forGO; //save the dragged gear
                 }
             }
             if(gearDragged != null) //if a gear is dragged
@@ -417,12 +425,14 @@ public class SetAnswer : FSystem {
 
                             rotateGear = true;  //rotate gears in the middle
                             tablet1.GetComponent<Selectable>().solved = true; //set tablet to solved
-                            foreach(GameObject q in qRoom1)
+							int nbQRoom1 = qRoom1.Count;
+							for(int i = 0; i < nbQRoom1; i++)
                             {
+								forGO = qRoom1.getAt (i);
                                 //hide the question text of enigma04
-                                if (q.name.Contains(4.ToString()))
+								if (forGO.name.Contains(4.ToString()))
                                 {
-                                    q.SetActive(false);
+									forGO.SetActive(false);
                                 }
                             }
                         }
@@ -432,11 +442,13 @@ public class SetAnswer : FSystem {
                             source.PlayOneShot(tablet1.GetComponent<Selectable>().wrong);
                             timeW = Time.time;
 
-                            foreach (GameObject q in qRoom1)
+							int nbQRoom1 = qRoom1.Count;
+							for(int i = 0; i < nbQRoom1; i++)
                             {
-                                if (q.name.Contains(4.ToString()))
+								forGO = qRoom1.getAt (i);
+								if (forGO.name.Contains(4.ToString()))
                                 {
-                                    q.SetActive(true);
+									forGO.SetActive(true);
                                 }
                             }
                             //start the timer for wrong answer
@@ -451,14 +463,16 @@ public class SetAnswer : FSystem {
                     }
                     else //if the gear is not released in the center
                     {
-                        gearDragged.transform.localPosition = gearDragged.GetComponent<Gear>().initialPosition; //set gear position to initial position
-                        foreach (GameObject q in qRoom1)
-                        {
-                            if (q.name.Contains(4.ToString()))
-                            {
-                                q.SetActive(true);
-                            }
-                        }
+						gearDragged.transform.localPosition = gearDragged.GetComponent<Gear>().initialPosition; //set gear position to initial position
+						int nbQRoom1 = qRoom1.Count;
+						for(int i = 0; i < nbQRoom1; i++)
+						{
+							forGO = qRoom1.getAt (i);
+							if (forGO.name.Contains(4.ToString()))
+							{
+								forGO.SetActive(true);
+							}
+						}
                     }
                     gearDragged = null; //initial value
                 }
@@ -485,16 +499,18 @@ public class SetAnswer : FSystem {
         }
         if (rotateGear) //true when the correct answer is given
         {
-            foreach(GameObject g in rotatingGears)
+			int nbRotGears = rotatingGears.Count;
+			for(int i = 0; i < nbRotGears; i++)
             {
+				forGO = rotatingGears.getAt (i);
                 //rotate gears in the middle
-                if (g.GetComponent<Gear>())
+				if (forGO.GetComponent<Gear>())
                 {
-                    g.transform.rotation = Quaternion.Euler(g.transform.rotation.eulerAngles.x, g.transform.rotation.eulerAngles.y, g.transform.rotation.eulerAngles.z - 1);
+					forGO.transform.rotation = Quaternion.Euler(forGO.transform.rotation.eulerAngles.x, forGO.transform.rotation.eulerAngles.y, forGO.transform.rotation.eulerAngles.z - 1);
                 }
                 else
                 {
-                    g.transform.rotation = Quaternion.Euler(g.transform.rotation.eulerAngles.x, g.transform.rotation.eulerAngles.y, g.transform.rotation.eulerAngles.z + 1);
+					forGO.transform.rotation = Quaternion.Euler(forGO.transform.rotation.eulerAngles.x, forGO.transform.rotation.eulerAngles.y, forGO.transform.rotation.eulerAngles.z + 1);
                 }
             }
         }
@@ -581,177 +597,21 @@ public class SetAnswer : FSystem {
                 fadingToAnswersRoom2 = false;
             }
         }
-
-        //used in the first prototype (not used anymore)
-        if (!initialized)
-        {
-            foreach(GameObject ui in canvas)
-            {
-                if(ui.name == "UI" && ui.activeSelf)
-                {
-                    foreach(GameObject go in objects)
-                    {
-                        if (go.GetComponent<Selectable>().isSelected)
-                        {
-                            string[] words = null;
-                            bool solved = false;
-                            string answer = null;
-                            words = go.GetComponent<Selectable>().words;
-                            answer = go.GetComponent<Selectable>().answer;
-                            solved = go.GetComponent<Selectable>().solved;
-                            if (solved)
-                            {
-                                foreach (GameObject da in displayAnswer)
-                                {
-                                    if (da.name == "DisplayAnswer")
-                                    {
-                                        da.SetActive(true);
-                                        da.GetComponent<Text>().text = answer;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                int nb = words.Length;
-                                int i = 0;
-                                foreach (GameObject b in answers)
-                                {
-                                    if (i < nb)
-                                    {
-                                        b.SetActive(true);
-                                        b.GetComponentInChildren<Text>().text = words[i];
-                                        i++;
-                                    }
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    initialized = true;
-                }
-            }
-        }
-        else
-        {
-            foreach (GameObject ui in canvas)
-            {
-                if (ui.name == "UI" && !ui.activeSelf)
-                {
-                    foreach(GameObject b in answers)
-                    {
-                        b.SetActive(false);
-                    }
-                    foreach (GameObject da in displayAnswer)
-                    {
-                        if (da.name == "DisplayAnswer")
-                        {
-                            da.SetActive(false);
-                        }
-                    }
-                    initialized = false;
-                }
-            }
-        }
 	}
-
-    //used in the first prototype (not used anymore)
-    void Answer(Button b)
-    {
-        foreach (GameObject g in answers)
-        {
-            g.SetActive(false);
-        }
-        foreach (GameObject go in objects)
-        {
-            if (go.GetComponent<Selectable>().isSelected)
-            {
-                if (b.GetComponentInChildren<Text>().text == go.GetComponent<Selectable>().answer)
-                {
-                    go.GetComponent<Selectable>().solved = true;
-                    Timer.addTimer = true;
-                    foreach (GameObject g in displayAnswer)
-                    {
-                        if (g.name == "Result")
-                        {
-                            g.GetComponent<Text>().text = vrai;
-                            source.PlayOneShot(go.GetComponent<Selectable>().right);
-                            timeR = Time.time;
-                            g.SetActive(true);
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (GameObject g in displayAnswer)
-                    {
-                        if (g.name == "Result")
-                        {
-                            g.GetComponent<Text>().text = faux;
-                            source.PlayOneShot(go.GetComponent<Selectable>().wrong);
-                            timeW = Time.time;
-                            g.SetActive(true);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    //used in the first prototype (not used anymore)
-    void CloseResult()
-    {
-        foreach (GameObject g in displayAnswer)
-        {
-            if (g.name == "Result")
-            {
-                g.SetActive(false);
-            }
-        }
-        foreach (GameObject go in objects)
-        {
-            if (go.GetComponent<Selectable>().isSelected)
-            {
-                if (go.GetComponent<Selectable>().solved)
-                {
-                    foreach (GameObject da in displayAnswer)
-                    {
-                        if (da.name == "DisplayAnswer")
-                        {
-                            da.SetActive(true);
-                            da.GetComponent<Text>().text = go.GetComponent<Selectable>().answer;
-                        }
-                    }
-                }
-                else
-                {
-                    string[] words = go.GetComponent<Selectable>().words;
-                    int nb = words.Length;
-                    int i = 0;
-                    foreach (GameObject b in answers)
-                    {
-                        if (i < nb)
-                        {
-                            b.SetActive(true);
-                            b.GetComponentInChildren<Text>().text = words[i];
-                            i++;
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     /* check the answer of the first question on the tablet 1
      * called when the corresponding button is clicked
      */
     private void CheckT1Answer1()
     {
-        foreach(GameObject q in qRoom1)
+		int nbQRoom1 = qRoom1.Count;
+		for(int i = 0; i < nbQRoom1; i++)
         {
+			forGO = qRoom1.getAt (i);
             //find question 1 of room 1
-            if (q.name.Contains(1.ToString()))
+			if (forGO.name.Contains(1.ToString()))
             {
-                answer = q.GetComponentInChildren<InputField>().text; //player's answer
+				answer = forGO.GetComponentInChildren<InputField>().text; //player's answer
                 //if the answer's length is 3 and the answer contains aq1r1's numbers
                 if (answer.Length == 3 && answer.Contains((aq1r1 / 100).ToString()) && answer.Contains(((aq1r1 / 10)%10).ToString()) && answer.Contains((aq1r1 % 10).ToString()))
                 {
@@ -759,19 +619,21 @@ public class SetAnswer : FSystem {
                     source.PlayOneShot(tablet1.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
-                    q.SetActive(false); //hide the question
+					forGO.SetActive(false); //hide the question
                     bool solved = true;
-                    foreach (GameObject a in aRoom1)
+					int nbARoom1 = aRoom1.Count;
+					for(int j = 0; j < nbARoom1; j++)
                     {
-                        if (a.name.Contains(1.ToString()))
+						forGO2 = aRoom1.getAt (j);
+						if (forGO2.name.Contains(1.ToString()))
                         {
                             //show the solution of question 1
-                            a.SetActive(true);
+							forGO2.SetActive(true);
                         }
                         else
                         {
                             //check if other question are solved
-                            if (!a.activeSelf)
+							if (!forGO2.activeSelf)
                             {
                                 solved = false;
                             }
@@ -808,31 +670,35 @@ public class SetAnswer : FSystem {
      */
     private void CheckT1Answer2()
     {
-        foreach (GameObject q in qRoom1)
-        {
+		int nbQRoom1 = qRoom1.Count;
+		for(int i = 0; i < nbQRoom1; i++)
+		{
+			forGO = qRoom1.getAt (i);
             //find question 2 of room 1
-            if (q.name.Contains(2.ToString()))
+			if (forGO.name.Contains(2.ToString()))
             {
-                answer = q.GetComponentInChildren<InputField>().text; //player's answer
+				answer = forGO.GetComponentInChildren<InputField>().text; //player's answer
                 if (answer.Length == 3 && answer.Contains((aq2r1 / 100).ToString()) && answer.Contains(((aq2r1 / 10) % 10).ToString()) && answer.Contains((aq2r1 % 10).ToString()))
                 {
                     //feedback right answer
                     source.PlayOneShot(tablet1.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
-                    q.SetActive(false); //hide the question
+					forGO.SetActive(false); //hide the question
                     bool solved = true;
-                    foreach (GameObject a in aRoom1)
+					int nbARoom1 = aRoom1.Count;
+					for(int j = 0; j < nbARoom1; j++)
                     {
-                        if (a.name.Contains(2.ToString()))
+						forGO2 = aRoom1.getAt (j);
+						if (forGO2.name.Contains(2.ToString()))
                         {
                             //show the solution of question 2
-                            a.SetActive(true);
+							forGO2.SetActive(true);
                         }
                         else
                         {
                             //check if other question are solved
-                            if (!a.activeSelf)
+							if (!forGO2.activeSelf)
                             {
                                 solved = false;
                             }
@@ -868,12 +734,14 @@ public class SetAnswer : FSystem {
      */
     private void CheckT1Answer3()
     {
-        foreach (GameObject q in qRoom1)
-        {
+		int nbQRoom1 = qRoom1.Count;
+		for(int i = 0; i < nbQRoom1; i++)
+		{
+			forGO = qRoom1.getAt (i);
             //find question 3 of room 1
-            if (q.name.Contains(3.ToString()))
+			if (forGO.name.Contains(3.ToString()))
             {
-                answer = q.GetComponentInChildren<InputField>().text; //player's answer
+				answer = forGO.GetComponentInChildren<InputField>().text; //player's answer
                 answer = answer.ToLower();  //minimize the answer
                 if(answer == aq3r1) //if answer is correct
                 {
@@ -881,19 +749,21 @@ public class SetAnswer : FSystem {
                     source.PlayOneShot(tablet1.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
-                    q.SetActive(false); //hide the question
+					forGO.SetActive(false); //hide the question
                     bool solved = true;
-                    foreach (GameObject a in aRoom1)
+					int nbARoom1 = aRoom1.Count;
+					for(int j = 0; j < nbARoom1; j++)
                     {
-                        if (a.name.Contains(3.ToString()))
+						forGO2 = aRoom1.getAt (j);
+						if (forGO2.name.Contains(3.ToString()))
                         {
                             //show the solution of question 3
-                            a.SetActive(true);
+							forGO2.SetActive(true);
                         }
                         else
                         {
                             //check if other question are solved
-                            if (!a.activeSelf)
+							if (!forGO2.activeSelf)
                             {
                                 solved = false;
                             }
@@ -1001,11 +871,13 @@ public class SetAnswer : FSystem {
 
     private void CheckT2Answer1()
     {
-        foreach(GameObject q in qRoom2)
+		int nbQRoom2 = qRoom2.Count;
+		for(int i = 0; i < nbQRoom2; i++)
         {
-            if (q.name.Contains(1.ToString()))
+			forGO = qRoom2.getAt (i);
+			if (forGO.name.Contains(1.ToString()))
             {
-                answer = q.GetComponentInChildren<InputField>().text;
+				answer = forGO.GetComponentInChildren<InputField>().text;
                 answer = answer.ToLower();
                 answer = answer.Replace('é', 'e');
                 answer = answer.Replace('è', 'e');
@@ -1016,19 +888,21 @@ public class SetAnswer : FSystem {
                     source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
-                    q.SetActive(false); //hide the question
+					forGO.SetActive(false); //hide the question
                     bool solved = true;
-                    foreach (GameObject a in aRoom2)
+					int nbARoom2 = aRoom2.Count;
+					for(int j = 0; j < nbARoom2; j++)
                     {
-                        if (a.name.Contains(1.ToString()))
+						forGO2 = qRoom2.getAt (j);
+						if (forGO2.name.Contains(1.ToString()))
                         {
                             //show the solution of question 1
-                            a.SetActive(true);
+							forGO2.SetActive(true);
                         }
                         else
                         {
                             //check if other question are solved
-                            if (!a.activeSelf)
+							if (!forGO2.activeSelf)
                             {
                                 solved = false;
                             }
@@ -1062,11 +936,13 @@ public class SetAnswer : FSystem {
 
     private void CheckT2Answer2()
     {
-        foreach (GameObject q in qRoom2)
+		int nbQRoom2 = qRoom2.Count;
+		for(int i = 0; i < nbQRoom2; i++)
         {
-            if (q.name.Contains(2.ToString()))
+			forGO = qRoom2.getAt (i);
+			if (forGO.name.Contains(2.ToString()))
             {
-                answer = q.GetComponentInChildren<InputField>().text;
+				answer = forGO.GetComponentInChildren<InputField>().text;
 
                 //if the answer's length is 3 and the answer contains aq1r1's numbers
                 if (answer.Length == 3 && answer.Contains((aq2r2 / 100).ToString()) && answer.Contains(((aq2r2 / 10) % 10).ToString()) && answer.Contains((aq2r2 % 10).ToString()))
@@ -1075,19 +951,21 @@ public class SetAnswer : FSystem {
                     source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
-                    q.SetActive(false); //hide the question
+					forGO.SetActive(false); //hide the question
                     bool solved = true;
-                    foreach (GameObject a in aRoom2)
+					int nbARoom2 = aRoom2.Count;
+					for(int j = 0; j < nbARoom2; j++)
                     {
-                        if (a.name.Contains(2.ToString()))
+						forGO2 = aRoom2.getAt (j);
+						if (forGO2.name.Contains(2.ToString()))
                         {
                             //show the solution of question 2
-                            a.SetActive(true);
+							forGO2.SetActive(true);
                         }
                         else
                         {
                             //check if other question are solved
-                            if (!a.activeSelf)
+							if (!forGO2.activeSelf)
                             {
                                 solved = false;
                             }
@@ -1121,11 +999,13 @@ public class SetAnswer : FSystem {
 
     private void CheckT2Answer3()
     {
-        foreach (GameObject q in qRoom2)
+		int nbQRoom2 = qRoom2.Count;
+		for(int i = 0; i < nbQRoom2; i++)
         {
-            if (q.name.Contains(3.ToString()))
+			forGO = qRoom2.getAt (i);
+			if (forGO.name.Contains(3.ToString()))
             {
-                answer = q.GetComponentInChildren<InputField>().text;
+				answer = forGO.GetComponentInChildren<InputField>().text;
                 answer = answer.ToLower();
 
                 if (answer == aq3r2) //if answer is correct
@@ -1134,19 +1014,21 @@ public class SetAnswer : FSystem {
                     source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
-                    q.SetActive(false); //hide the question
+					forGO.SetActive(false); //hide the question
                     bool solved = true;
-                    foreach (GameObject a in aRoom2)
+					int nbARoom2 = aRoom2.Count;
+					for(int j = 0; j < nbARoom2; j++)
                     {
-                        if (a.name.Contains(3.ToString()))
+						forGO2 = aRoom2.getAt (j);
+						if (forGO2.name.Contains(3.ToString()))
                         {
                             //show the solution of question 3
-                            a.SetActive(true);
+							forGO2.SetActive(true);
                         }
                         else
                         {
                             //check if other question are solved
-                            if (!a.activeSelf)
+							if (!forGO2.activeSelf)
                             {
                                 solved = false;
                             }
@@ -1180,12 +1062,14 @@ public class SetAnswer : FSystem {
 
     private void CheckT2Answer4()
     {
-        foreach (GameObject q in qRoom2)
+		int nbQRoom2 = qRoom2.Count;
+		for(int i = 0; i < nbQRoom2; i++)
         {
-            if (q.name.Contains(4.ToString()))
+			forGO = qRoom2.getAt (i);
+			if (forGO.name.Contains(4.ToString()))
             {
                 int answer;
-                int.TryParse(q.GetComponentInChildren<InputField>().text, out answer);
+				int.TryParse(forGO.GetComponentInChildren<InputField>().text, out answer);
 
                 if (answer == aq4r2) //if answer is correct
                 {
@@ -1193,19 +1077,21 @@ public class SetAnswer : FSystem {
                     source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
-                    q.SetActive(false); //hide the question
+					forGO.SetActive(false); //hide the question
                     bool solved = true;
-                    foreach (GameObject a in aRoom2)
+					int nbARoom2 = aRoom2.Count;
+					for(int j = 0; j < nbARoom2; j++)
                     {
-                        if (a.name.Contains(4.ToString()))
+						forGO2 = aRoom2.getAt(j);
+						if (forGO2.name.Contains(4.ToString()))
                         {
                             //show the solution of question 4
-                            a.SetActive(true);
+							forGO2.SetActive(true);
                         }
                         else
                         {
                             //check if other question are solved
-                            if (!a.activeSelf)
+							if (!forGO2.activeSelf)
                             {
                                 solved = false;
                             }
@@ -1239,11 +1125,13 @@ public class SetAnswer : FSystem {
 
     private void CheckT2Answer5()
     {
-        foreach (GameObject q in qRoom2)
+		int nbQRoom2 = qRoom2.Count;
+		for(int i = 0; i < nbQRoom2; i++)
         {
-            if (q.name.Contains(5.ToString()))
+			forGO = qRoom2.getAt (i);
+			if (forGO.name.Contains(5.ToString()))
             {
-                answer = q.GetComponentInChildren<InputField>().text;
+				answer = forGO.GetComponentInChildren<InputField>().text;
                 answer = answer.ToLower();
                 answer = answer.Replace('é', 'e');
                 answer = answer.Replace('è', 'e');
@@ -1254,19 +1142,21 @@ public class SetAnswer : FSystem {
                     source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
-                    q.SetActive(false); //hide the question
+					forGO.SetActive(false); //hide the question
                     bool solved = true;
-                    foreach (GameObject a in aRoom2)
+					int nbARoom2 = aRoom2.Count;
+					for(int j = 0; j < nbARoom2; j++)
                     {
-                        if (a.name.Contains(5.ToString()))
+						forGO2 = aRoom2.getAt (j);
+						if (forGO2.name.Contains(5.ToString()))
                         {
                             //show the solution of question 5
-                            a.SetActive(true);
+							forGO2.SetActive(true);
                         }
                         else
                         {
                             //check if other question are solved
-                            if (!a.activeSelf)
+							if (!forGO2.activeSelf)
                             {
                                 solved = false;
                             }
@@ -1300,11 +1190,13 @@ public class SetAnswer : FSystem {
 
     private void CheckT2Answer6()
     {
-        foreach (GameObject q in qRoom2)
+		int nbQRoom2 = qRoom2.Count;
+		for(int i = 0; i < nbQRoom2; i++)
         {
-            if (q.name.Contains(6.ToString()))
+			forGO = qRoom2.getAt (i);
+			if (forGO.name.Contains(6.ToString()))
             {
-                answer = q.GetComponentInChildren<InputField>().text;
+				answer = forGO.GetComponentInChildren<InputField>().text;
                 answer = answer.ToLower();
                 
                 if (answer == aq6r2) //if answer is correct
@@ -1313,19 +1205,21 @@ public class SetAnswer : FSystem {
                     source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
-                    q.SetActive(false); //hide the question
+					forGO.SetActive(false); //hide the question
                     bool solved = true;
-                    foreach (GameObject a in aRoom2)
+					int nbARoom2 = aRoom2.Count;
+					for(int j = 0; j < nbARoom2; j++)
                     {
-                        if (a.name.Contains(6.ToString()))
+						forGO2 = aRoom2.getAt (j);
+						if (forGO2.name.Contains(6.ToString()))
                         {
                             //show the solution of question 6
-                            a.SetActive(true);
+							forGO2.SetActive(true);
                         }
                         else
                         {
                             //check if other question are solved
-                            if (!a.activeSelf)
+							if (!forGO2.activeSelf)
                             {
                                 solved = false;
                             }
