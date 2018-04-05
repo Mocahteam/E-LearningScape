@@ -10,15 +10,19 @@ public class TimerSystem : FSystem {
     private Text timer; //text ui displaying the timer
     private float initialTime;  //time at the beginning of the game
 
+	private GameObject forGO;
+
     public TimerSystem()
     {
         initialTime = Time.time;
         timer = null;
-        foreach(GameObject t in texts)
+		int nbText = texts.Count;
+		for(int i = 0; i < nbText; i++)
         {
-            if(t.name == "CurrentTime")
+			forGO = texts.getAt (i);
+			if(forGO.name == "CurrentTime")
             {
-                timer = t.GetComponent<Text>();
+				timer = forGO.GetComponent<Text>();
             }
         }
     }
@@ -43,12 +47,14 @@ public class TimerSystem : FSystem {
         timer.text = t;
         if (Timer.addTimer) //when true, the current time is saved and displayed on screen
         {
-            foreach(GameObject timing in timings)
+			int nbTimings = timings.Count;
+			for(int i = 0; i < nbTimings; i++)
             {
-                if (!timing.activeSelf) //find an unused timing ui text
+				forGO = timings.getAt (i);
+				if (!forGO.activeSelf) //find an unused timing ui text
                 {
-                    timing.SetActive(true);
-                    timing.GetComponent<Text>().text = t;
+					forGO.SetActive(true);
+					forGO.GetComponent<Text>().text = t;
                     break;
                 }
             }

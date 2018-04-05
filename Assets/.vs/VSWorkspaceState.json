@@ -3,10 +3,8 @@
     "",
     "\\Components",
     "\\MagicMirror",
-    "\\Systems",
-    "\\TextMesh Pro\\Examples & Extras",
-    "\\TextMesh Pro\\Examples & Extras\\Scripts"
+    "\\Systems"
   ],
-  "SelectedNode": "\\Systems\\LaserPointerSystem.cs",
+  "SelectedNode": "\\Systems\\Select.cs",
   "PreviewInSolutionExplorer": false
 }

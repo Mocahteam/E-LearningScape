@@ -14,12 +14,15 @@ public class Inventory : FSystem {
     private Family syllabusElems = FamilyManager.getFamily(new AnyOfTags("Syllabus"), new AllOfComponents(typeof(CollectableGO)), new NoneOfComponents(typeof(Image)));
     private Family inputfields = FamilyManager.getFamily(new AllOfComponents(typeof(InputField)));
     private Family pui = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"));
+    private Family elemsInventory = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
 
     private bool playerEnabled = true;
     private GameObject displayer;
     private GameObject displayedElement;
+    private bool displayedElementWasNull = true;
     private GameObject selection;
     private GameObject selectedUI;
+    private GameObject closeButton;
 
     private GameObject glassesBG;
     private GameObject glassesUI;
@@ -35,6 +38,9 @@ public class Inventory : FSystem {
     private GameObject draggedPuzzle = null;
     private Vector3 posFromMouse;
 
+	//tmp variables used to loop in famillies
+	private GameObject forGO;
+	private GameObject forGO2;
 
     public Inventory()
     {
@@ -48,6 +54,7 @@ public class Inventory : FSystem {
                     {
                         //initialise button with listener
                         c.gameObject.GetComponent<Button>().onClick.AddListener(CloseInventory);
+                        closeButton = c.gameObject;
                     }
                 }
                 child.gameObject.SetActive(false);
@@ -76,10 +83,12 @@ public class Inventory : FSystem {
 
         puzzleUI = new Dictionary<int, GameObject>();
         int id;
-        foreach(GameObject puzzle in pui)
+		int forCount = pui.Count;
+		for(int i = 0; i < forCount; i++)
         {
-            int.TryParse(puzzle.name.Substring(puzzle.name.Length - 2, 2), out id);
-            puzzleUI.Add(id, puzzle);
+			forGO = pui.getAt (i);
+			int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out id);
+			puzzleUI.Add(id, forGO);
         }
     }
 
@@ -96,17 +105,19 @@ public class Inventory : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit);
-        foreach (GameObject go in cGO)
+		int nbCGO = cGO.Count;
+		for(int i = 0; i < nbCGO; i++)
         {
-            if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && (Object.ReferenceEquals(go, hit.transform.gameObject) || (go.GetComponent<RectTransform>() && go.GetComponent<PointerOver>())))
+			forGO = cGO.getAt (i);
+			if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && (Object.ReferenceEquals(forGO, hit.transform.gameObject) || (forGO.GetComponent<RectTransform>() && forGO.GetComponent<PointerOver>())))
             {
-                if (go.GetComponent<CollectableGO>().goui)
+				if (forGO.GetComponent<CollectableGO>().goui)
                 {
-                    GameObjectManager.setGameObjectState(go.GetComponent<CollectableGO>().goui, true);
-                    if(go.tag == "Puzzle")
+					GameObjectManager.setGameObjectState(forGO.GetComponent<CollectableGO>().goui, true);
+					if(forGO.tag == "Puzzle")
                     {
                         int id;
-                        int.TryParse(go.name.Substring(go.name.Length - 2, 2), out id);
+						int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out id);
                         puzzleUI.TryGetValue(id, out puzzlePiece);
                         if (puzzlePiece)
                         {
@@ -117,11 +128,11 @@ public class Inventory : FSystem {
                             Debug.Log(string.Concat("Puzzle piece ", id.ToString(), " doesn't exist."));
                         }
                     }
-                    GameObjectManager.setGameObjectState(go, false);
+					GameObjectManager.setGameObjectState(forGO, false);
                 }
                 else
                 {
-                    if (go.name == "Glasses")
+					if (forGO.name == "Glasses")
                     {
                         if (CollectableGO.usingGlasses)
                         {
@@ -144,12 +155,18 @@ public class Inventory : FSystem {
                         CollectableGO.usingKeyE08 = false;
 
                         selection.SetActive(true);
-                        selection.GetComponent<RectTransform>().localPosition = go.GetComponent<RectTransform>().localPosition;
-                        if (displayer.activeSelf && Object.ReferenceEquals(go, selectedUI))
+						selection.GetComponent<RectTransform>().localPosition = forGO.GetComponent<RectTransform>().localPosition;
+						if (displayer.activeSelf && Object.ReferenceEquals(forGO, selectedUI))
                         {
                             if (displayedElement)
                             {
                                 displayedElement.SetActive(false);
+								int nbElems = elemsInventory.Count;
+								for(int j = 0; j < nbElems; j++)
+                                {
+									elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
+                                }
+                                glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
                             }
                             displayer.SetActive(false);
                             selection.SetActive(false);
@@ -157,26 +174,29 @@ public class Inventory : FSystem {
                         }
                         else
                         {
-                            selectedUI = go;
+							selectedUI = forGO;
                             if (displayedElement)
                             {
                                 displayedElement.SetActive(false);
                             }
+                            displayedElementWasNull = !(displayedElement && displayer.activeSelf);
                             displayer.SetActive(true);
-                            switch (go.name)
+							switch (forGO.name)
                             {
-                                case "Syllabus":
-                                    bool elem1 = false;
-                                    bool elem2 = false;
-                                    foreach (GameObject elem in syllabusElems)
+							case "Syllabus":
+								bool elem1 = false;
+								bool elem2 = false;
+									int nbSyllabus = syllabusElems.Count;
+									for(int j = 0; j< nbSyllabus; j++)	
                                     {
-                                        if (elem.name.Contains(1.ToString()))
+										forGO2 = syllabusElems.getAt (j);
+										if (forGO2.name.Contains(1.ToString()))
                                         {
-                                            elem1 = !elem.activeSelf;
+											elem1 = !forGO2.activeSelf;
                                         }
-                                        else if (elem.name.Contains(2.ToString()))
+										else if (forGO2.name.Contains(2.ToString()))
                                         {
-                                            elem2 = !elem.activeSelf;
+											elem2 = !forGO2.activeSelf;
                                         }
                                     }
                                     if (elem1 && elem2)
@@ -255,6 +275,26 @@ public class Inventory : FSystem {
                                 default:
                                     break;
                             }
+                            if (displayedElement)
+                            {
+								int nbElems = elemsInventory.Count;
+								for (int j = 0; j< nbElems; j++)
+                                {
+									elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.right * (Camera.main.pixelWidth / 2 - 250) + Vector3.down * (Camera.main.pixelHeight / 2 - 100);
+                                }
+                                selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
+                                glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
+                            }
+                            else if (!displayedElementWasNull)
+							{
+								int nbElems = elemsInventory.Count;
+								for (int j = 0; j< nbElems; j++)
+                                {
+									elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
+                                }
+                                selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
+                                glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
+                            }
                         }
                     }
                 }
@@ -264,9 +304,11 @@ public class Inventory : FSystem {
         if (Input.GetKeyDown(KeyCode.A))
         {
             inputfieldFocused = false;
-            foreach (GameObject go in inputfields)
+			int nbInputFields = inputfields.Count;
+			for(int i = 0; i < nbInputFields; i++)
             {
-                if (go.GetComponent<InputField>().isFocused && go.GetComponent<InputField>().contentType == InputField.ContentType.Standard)
+				forGO = inputfields.getAt (i);
+				if (forGO.GetComponent<InputField>().isFocused && forGO.GetComponent<InputField>().contentType == InputField.ContentType.Standard)
                 {
                     inputfieldFocused = true;
                     break;
@@ -292,13 +334,30 @@ public class Inventory : FSystem {
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.lockState = CursorLockMode.Confined;
                     Cursor.visible = true;
-                    foreach (GameObject canvas in ui)
+					int nb = ui.Count;
+					for(int i = 0; i < nb; i++)
                     {
-                        if (canvas.name == "Cursor")
+						forGO = ui.getAt (i);
+						if (forGO.name == "Cursor")
                         {
-                            canvas.SetActive(false);
+							forGO.SetActive(false);
                         }
                     }
+					nb = elemsInventory.Count;
+					for(int i = 0; i < nb; i++)
+                    {
+						forGO = elemsInventory.getAt (i);
+						forGO.GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
+						if(forGO.name == "KeyE03")
+                        {
+							closeButton.GetComponent<RectTransform>().localPosition = forGO.GetComponent<RectTransform>().localPosition + (Vector3.up + Vector3.right) * (60);
+                        }
+                    }
+                    if (selectedUI)
+                    {
+                        selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
+                    }
+                    glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
                     onPuzzle = false;
                     CollectableGO.onInventory = true;
                 }
@@ -331,11 +390,13 @@ public class Inventory : FSystem {
             }
             else
             {
-                foreach (GameObject puzzle in pui)
+				int nbPuzzle = pui.Count;
+				for(int i = 0; i < nbPuzzle; i++)
                 {
-                    if (puzzle.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
+					forGO = pui.getAt (i);
+					if (forGO.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
                     {
-                        draggedPuzzle = puzzle;
+						draggedPuzzle = forGO;
                         posBeforeDrag = draggedPuzzle.GetComponent<RectTransform>().position;
                         posFromMouse = Input.mousePosition - draggedPuzzle.GetComponent<RectTransform>().position;
                     }
@@ -346,6 +407,19 @@ public class Inventory : FSystem {
 
     private void CloseInventory()
     {
+        if (!(displayedElement && displayer.activeSelf))
+        {
+			int nbElems = elemsInventory.Count;
+			for(int i = 0; i < nbElems; i++)
+            {
+				elemsInventory.getAt(i).GetComponent<RectTransform>().localPosition += Vector3.right * (Camera.main.pixelWidth / 2 - 250) + Vector3.down * (Camera.main.pixelHeight / 2 - 100);
+            }
+            if (selectedUI)
+            {
+                selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
+            }
+            glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
+        }
         if (displayedElement)
         {
             displayedElement.SetActive(false);
@@ -365,11 +439,13 @@ public class Inventory : FSystem {
             Cursor.lockState = CursorLockMode.None;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            foreach (GameObject canvas in ui)
+			int nbCanvas = ui.Count;
+			for(int i = 0; i < nbCanvas; i++)
             {
-                if (canvas.name == "Cursor")
+				forGO = ui.getAt (i);
+				if (forGO.name == "Cursor")
                 {
-                    canvas.SetActive(true);
+					forGO.SetActive(true);
                 }
             }
         }

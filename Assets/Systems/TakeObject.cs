@@ -6,7 +6,7 @@ public class TakeObject : FSystem {
     // Both of the Vive Controllers
     private Family controllers = FamilyManager.getFamily(new AllOfComponents(typeof(Grabber)));
     //all takable objects
-    private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(Takable)));
+    private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Takable)));
     //enigma03's balls
     private Family balls = FamilyManager.getFamily(new AnyOfTags("Ball"));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
@@ -19,6 +19,8 @@ public class TakeObject : FSystem {
     private Vector3 objPos;
 
     private bool initialiseView = false;
+
+	private GameObject forGO;
 
     public TakeObject()
     {
@@ -76,11 +78,13 @@ public class TakeObject : FSystem {
         }
 
         //respawn objects that fall under the room
-        foreach(GameObject go in tObjects)
+		int nbTakable = tObjects.Count;
+		for(int i = 0; i < nbTakable; i++)
         {
-            if(go.transform.position.y < go.transform.parent.transform.position.y-1)
+			forGO = tObjects.getAt (i);
+			if(forGO.transform.position.y < forGO.transform.parent.transform.position.y-1)
             {
-                go.transform.position = go.transform.parent.transform.position + Vector3.up*3;
+				forGO.transform.position = forGO.transform.parent.transform.position + Vector3.up*3;
             }
         }
 
@@ -88,54 +92,53 @@ public class TakeObject : FSystem {
         {
             if (Takable.objectTaken)    //if an object is taken
             {
-                foreach (GameObject go in tObjects)
+				for(int i = 0; i < nbTakable; i++)
                 {
-                    if (go.GetComponent<Takable>().taken)   //find the taken object
+					forGO = tObjects.getAt (i);
+					if (forGO.GetComponent<Takable>().taken)   //find the taken object
                     {
-                        if(go.tag == "TableE05")
+						if (forGO.tag == "TableE05")
                         {
                             //Camera.main.transform.localRotation = Quaternion.Euler(90,0,0);
                             player.First().transform.position += Vector3.up * (onTableHeight - player.First().transform.position.y);
-                            go.transform.position = player.First().transform.position + Vector3.down*2;    //move the object under the player
-                            go.transform.rotation = Quaternion.Euler(0, player.First().transform.rotation.eulerAngles.y, 0);      //rotate the object to the camera
+							forGO.transform.position = player.First().transform.position + Vector3.down*2;    //move the object under the player
+							forGO.transform.rotation = Quaternion.Euler(0, player.First().transform.rotation.eulerAngles.y, 0);      //rotate the object to the camera
                         }
                         else
                         {
                             Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
                             v.Normalize();
-                            go.transform.position = Camera.main.transform.position + v * (go.transform.localScale.y + 1.5f);    //move the object in front of the camera
-                            if (go.GetComponent<MirrorScript>())
+							forGO.transform.position = Camera.main.transform.position + v * (forGO.transform.localScale.y + 1.5f);    //move the object in front of the camera
+							if (forGO.GetComponent<MirrorScript>())
                             {
-                                go.transform.rotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0);      //rotate the object to the camera
+								forGO.transform.rotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0);      //rotate the object to the camera
                             }
                             else
                             {
-                                go.transform.rotation = Quaternion.Euler(10, Camera.main.transform.rotation.eulerAngles.y, 0);      //rotate the object to the camera
+								forGO.transform.rotation = Quaternion.Euler(10, Camera.main.transform.rotation.eulerAngles.y, 0);      //rotate the object to the camera
                             }
                         }
                         if (Input.GetMouseButtonDown(1)) //if right click, release the object
                         {
-                            go.GetComponent<Takable>().taken = false;
-                            go.GetComponent<Rigidbody>().isKinematic = false;
+							forGO.GetComponent<Takable>().taken = false;
+							forGO.GetComponent<Rigidbody>().isKinematic = false;
                             Takable.objectTaken = false;
-                            if (go.tag == "Box")    //when box is released, balls are no more kinematic 
+							if (forGO.tag == "Box")    //when box is released, balls are no more kinematic 
                             {
                                 foreach (GameObject ball in balls)
                                 {
                                     ball.GetComponent<Rigidbody>().isKinematic = false;
                                 }
                             }
-                            else if(go.tag == "TableE05")
+							else if(forGO.tag == "TableE05")
                             {
-                                player.First().transform.position = go.transform.position - go.transform.forward * 1.5f;
-                                player.First().GetComponent<FirstPersonController>().m_MouseLook.MinimumX = 0;
-                                player.First().GetComponent<FirstPersonController>().m_MouseLook.MaximumX = 0;
+								player.First().transform.position = forGO.transform.position - forGO.transform.forward * 1.5f;
                                 initialiseView = true;
                             }
-                            else if (go.GetComponent<MirrorScript>())
+							else if (forGO.GetComponent<MirrorScript>())
                             {
                                 tmpGO = plankE09.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.gameObject;
-                                if(go.transform.position.x < tmpGO.transform.position.x + tmpGO.transform.localScale.x/2 && go.transform.position.x > tmpGO.transform.position.x - tmpGO.transform.localScale.x / 2 && go.transform.position.z < tmpGO.transform.position.z + tmpGO.transform.localScale.z / 2 && go.transform.position.z > tmpGO.transform.position.z - tmpGO.transform.localScale.z / 2 && go.transform.position.y > tmpGO.transform.position.y)
+								if(forGO.transform.position.x < tmpGO.transform.position.x + tmpGO.transform.localScale.x/2 && forGO.transform.position.x > tmpGO.transform.position.x - tmpGO.transform.localScale.x / 2 && forGO.transform.position.z < tmpGO.transform.position.z + tmpGO.transform.localScale.z / 2 && forGO.transform.position.z > tmpGO.transform.position.z - tmpGO.transform.localScale.z / 2 && forGO.transform.position.y > tmpGO.transform.position.y)
                                 {
                                     objPos = plankE09.First().transform.position + Vector3.up * (0.1f + mirror.First().GetComponentInChildren<MirrorReflectionScript>().gameObject.transform.localScale.y/2 + tmpGO.transform.localScale.y / 2);
                                     mirror.First().GetComponent<Rigidbody>().isKinematic = true;
@@ -149,25 +152,27 @@ public class TakeObject : FSystem {
             }
             else    //if there is no taken object
             {
-                foreach (GameObject go in tObjects)
+				for(int i = 0; i < nbTakable; i++)
                 {
+					forGO = tObjects.getAt (i);
                     //if right click on a focused (but not selected) object, take it
-                    if (go.GetComponent<Selectable>().focused && Input.GetMouseButtonDown(1))
+					if (forGO.GetComponent<Takable>().focused && Input.GetMouseButtonDown(1))
                     {
-                        go.GetComponent<Takable>().taken = true;
-                        go.GetComponent<Rigidbody>().isKinematic = true;
+						forGO.GetComponent<Takable>().taken = true;
+						forGO.GetComponent<Rigidbody>().isKinematic = true;
                         Takable.objectTaken = true;
-                        if (go.tag == "Box")
+						if (forGO.tag == "Box")
                         {
-                            foreach (GameObject ball in balls)
+							int nbBalls = balls.Count;
+							for(int j = 0; j < nbBalls; j++)
                             {
-                                ball.GetComponent<Rigidbody>().isKinematic = true;
+								balls.getAt(j).GetComponent<Rigidbody>().isKinematic = true;
                             }
                         }
-                        else if(go.tag == "TableE05")
+						else if(forGO.tag == "TableE05")
                         {
-                            player.First().transform.forward = go.transform.forward;
-                            player.First().transform.position = go.transform.position + Vector3.up * 2;
+							player.First().transform.forward = forGO.transform.forward;
+							player.First().transform.position = forGO.transform.position + Vector3.up * 2;
                             onTableHeight = player.First().transform.position.y;
                             player.First().GetComponent<FirstPersonController>().m_MouseLook.MinimumX = 90;
                         }
