@@ -34,6 +34,7 @@ TagManager:
   - Puzzle
   - PuzzleUI
   - InventoryElements
+  - VRGazeInteractable
   layers:
   - Default
   - TransparentFX
@@ -45,8 +46,7 @@ TagManager:
   - 
   - CanTeleport
   - MirrorGO
-  - 
-  - 
+  - CanLaserPoint
   - 
   - 
   - 

@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using FYFY;
+using FYFY_plugins.TriggerManager;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class TakeObject : FSystem {
     // Both of the Vive Controllers
     private Family controllers = FamilyManager.getFamily(new AllOfComponents(typeof(Grabber)));
     //all takable objects
-    private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Takable)));
+    private Family takables = FamilyManager.getFamily(new AllOfComponents(typeof(Takable)));
     //enigma03's balls
     private Family balls = FamilyManager.getFamily(new AnyOfTags("Ball"));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
@@ -33,7 +34,7 @@ public class TakeObject : FSystem {
         }
 
         //at the beginning of the game, all taken object are not kinematic
-        foreach (GameObject go in tObjects)
+        foreach (GameObject go in takables)
         {
             //go.GetComponent<Rigidbody>().isKinematic = false;
         }
@@ -51,7 +52,7 @@ public class TakeObject : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        if (initialiseView)
+        /*if (initialiseView)
         {
             player.First().GetComponent<FirstPersonController>().m_MouseLook.MinimumX = -90;
             player.First().GetComponent<FirstPersonController>().m_MouseLook.MaximumX = 90;
@@ -78,17 +79,17 @@ public class TakeObject : FSystem {
         }
 
         //respawn objects that fall under the room
-		int nbTakable = tObjects.Count;
+		int nbTakable = takables.Count;
 		for(int i = 0; i < nbTakable; i++)
         {
-			forGO = tObjects.getAt (i);
+			forGO = takables.getAt (i);
 			if(forGO.transform.position.y < forGO.transform.parent.transform.position.y-1)
             {
 				forGO.transform.position = forGO.transform.parent.transform.position + Vector3.up*3;
             }
         }
 
-        /*if (!Selectable.selected && !CollectableGO.onInventory)   //if there is not selected object and inventory isn't opened
+        if (!Selectable.selected && !CollectableGO.onInventory)   //if there is not selected object and inventory isn't opened
         {
             if (Takable.objectTaken)    //if an object is taken
             {
@@ -181,26 +182,66 @@ public class TakeObject : FSystem {
                 }
             }
         }*/
+
+        // Make the outline disappear
+        foreach (GameObject go in takables)
+        {
+            foreach (Transform child in go.transform)
+            {
+                if (child.gameObject.tag == "MouseOver")
+                {
+                    child.gameObject.SetActive(false);
+                }
+            }
+        }
+
         foreach (GameObject c in controllers)
         {
             Grabber g = c.GetComponent<Grabber>();
+            g.collidingObject = null;
+            Triggered3D t3d = c.GetComponent<Triggered3D>();
+            if (!t3d) continue;
+            foreach (GameObject target in t3d.Targets)
+            {
+                Takable t = target.GetComponent<Takable>();
+                if (!t) continue;
+                g.collidingObject = target;
+                break; // Only the first
+            }
+
+            // Make the outline appear
+            if(g.collidingObject) 
+            {
+                foreach (Transform child in g.collidingObject.transform)
+                {
+                    if (child.gameObject.tag == "MouseOver")
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
+
+        foreach (GameObject c in controllers)
+        {
+            Grabber g = c.GetComponent<Grabber>();
+
             SteamVR_Controller.Device controller = SteamVR_Controller.Input((int)g.trackedObj.index);
 
             // If the user is pressing the trigger
-            if (controller.GetHairTriggerDown())
+            if (g.collidingObject && controller.GetHairTriggerDown())
             {
-                if(g.collidingObject)
-                {
-                    GrabObject(g);
-                }
+                GrabObject(g);
             }
 
             // If the user has released the trigger
             if (controller.GetHairTriggerUp())
             {
                 ReleaseObject(g);
+                g.objectInHand = null;
             }
         }
+        
 	}
 
     private void GrabObject(Grabber g)
@@ -234,6 +275,5 @@ public class TakeObject : FSystem {
             g.objectInHand.GetComponent<Rigidbody>().velocity = controller.velocity;
             g.objectInHand.GetComponent<Rigidbody>().angularVelocity = controller.angularVelocity;
         }
-        g.objectInHand = null;
     }
 }

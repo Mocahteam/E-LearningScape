@@ -31,7 +31,6 @@ public class LockSystem : FSystem { // TODO
             if (!t3d) continue;
             foreach (GameObject target in t3d.Targets)
             {
-                Debug.Log(target);
                 Key k = target.GetComponent<Key>();
                 if (k && k.id == l.id) open(l);
                 

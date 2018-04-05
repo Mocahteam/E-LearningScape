@@ -8,6 +8,7 @@ public class Selectable : MonoBehaviour {//objects that can be selected by the p
     public string[] words;          //list of possible answers (used in the first prototype, not used anymore)
     public string answer;           //the correct answer in "words" (used in the first prototype, not used anymore)
     public bool solved = false;     //true if the enigma associated to this gameobject is solved
+    public bool focused = false;
 
     //audios played when the player gives an answer
     public AudioClip right;

@@ -33,6 +33,8 @@ public class LaserPointer : MonoBehaviour
     public Transform headTransform;
     // Reticle offset (from the floor)
     public Vector3 reticleOffset;
+    // Layer mask (which layer can we point the laser at ?)
+    public LayerMask pointMask;
     // Layer mask (which layer can we teleport to ?)
     public LayerMask teleportMask;
     // Should the user teleport ?

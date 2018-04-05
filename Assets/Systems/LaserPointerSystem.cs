@@ -49,42 +49,47 @@ public class LaserPointerSystem : FSystem
             // If the controller is holding an item, stop
             Grabber g = c.GetComponent<Grabber>();
             if(g && g.objectInHand) { continue; }
+
+            RaycastHit hit;
             
-            // If the touchpad
+            // If the touchpad is pressed, show the teleportation laser
             if(controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
             {
-                RaycastHit hit;
-
-                // Shoot a ray from the controller
-                if(Physics.Raycast(lp.trackedObj.transform.position, lp.transform.forward, out hit, 100))
+                // Can we teleport ?
+                if(Physics.Raycast(lp.trackedObj.transform.position, lp.transform.forward, out hit, 100, lp.teleportMask))
                 {
                     lp.hitPoint = hit.point;
                     ShowLaser(lp, hit);
 
-                    // Can we teleport ?
-                    if(Physics.Raycast(lp.trackedObj.transform.position, lp.transform.forward, out hit, 100, lp.teleportMask))
-                    {
-                        // Show the reticle
-                        lp.reticle.SetActive(true);
-                        // Change the reticle position
-                        lp.reticleTransform.position = lp.hitPoint + lp.reticleOffset;
-                        // Indicate that we can teleport here
-                        lp.shouldTeleport = true;
-                    } else
-                    {
-                        lp.reticle.SetActive(false);
-                        lp.shouldTeleport = false;
-                    }
+                    // Show the reticle
+                    lp.reticle.SetActive(true);
+                    // Change the reticle position
+                    lp.reticleTransform.position = lp.hitPoint + lp.reticleOffset;
+                    // Indicate that we can teleport here
+                    lp.shouldTeleport = true;
+                } else // else hide the laser and the reticle
+                {
+                    lp.laser.SetActive(false);
+                    lp.reticle.SetActive(false);
+                    lp.shouldTeleport = false;
                 }
             } else // else hide the laser and the reticle
             {
                 lp.laser.SetActive(false);
+                lp.reticle.SetActive(false);
             }
 
-            // If touchpad is pressed up, teleport
+            // If touchpad is released, teleport
             if (controller.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad) && lp.shouldTeleport)
             {
                 Teleport(lp);
+            }
+
+            // Pointer on the canLaserPoint surfaces
+            if(Physics.Raycast(lp.trackedObj.transform.position, lp.transform.forward, out hit, 100, lp.pointMask))
+            {
+                lp.hitPoint = hit.point;
+                ShowLaser(lp, hit);
             }
         }
     }
