@@ -6,8 +6,6 @@ using TMPro;
 
 public class SetAnswer : FSystem {
 
-    private Family canvas = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
-    private Family objects = FamilyManager.getFamily(new AnyOfTags("Object"), new AllOfComponents(typeof(Selectable)));
     private Family audioSource = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)));
     private Family images = FamilyManager.getFamily(new AllOfComponents(typeof(Image)));
     private Family qRoom1 = FamilyManager.getFamily(new AnyOfTags("Q-R1")); //questions of the room 1 (tablet)
@@ -19,14 +17,8 @@ public class SetAnswer : FSystem {
     private Family qRoom2 = FamilyManager.getFamily(new AnyOfTags("Q-R2")); //questions of the room 2 (tablet)
     private Family aRoom2 = FamilyManager.getFamily(new AnyOfTags("A-R2")); //answers of the room 2 (tablet)
     private Family door = FamilyManager.getFamily(new AllOfComponents(typeof(Door)));
-    private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
-
-    //used for the first prototype (not used anymore)
-    private Family answers = FamilyManager.getFamily(new AnyOfTags("Answer"), new AllOfComponents(typeof(Button)));
-    private Family displayAnswer = FamilyManager.getFamily(new AnyOfTags("Answer"), new NoneOfComponents(typeof(Button)));
-    private bool initialized = false;
-    private string vrai = "VRAI";
-    private string faux = "FAUX";
+	private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
+	private Family symbolsE12 = FamilyManager.getFamily(new AnyOfTags("E12_Symbol"));
 
     //elements used for visual and audio feedback when answering
     private GameObject rightBG;
@@ -79,6 +71,8 @@ public class SetAnswer : FSystem {
     private string password = 703.ToString();
     private GameObject wallRoom2;
     private bool moveWall = false;
+
+	private bool usingLamp = false;
 
 	//tmp gameobjects used to loop in famillies
 	private GameObject forGO;
@@ -324,6 +318,18 @@ public class SetAnswer : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
         //animation for the red/green blink when the answer is wrong/right
+		if (Selectable.askRight) {
+			Selectable.askRight = false;
+			//feedback right answer
+			source.PlayOneShot(tablet1.GetComponent<Selectable>().right);
+			timeR = Time.time;
+		}
+		if (Selectable.askWrong) {
+			//feedback wrong answer
+			source.PlayOneShot(tablet1.GetComponent<Selectable>().wrong);
+			timeW = Time.time;
+			Selectable.askWrong = false;
+		}
         float dr = Time.time - timeR;
         float dw = Time.time - timeW;
         if (dr < 0.1 || (dr < 0.4 && dr > 0.3))
@@ -597,6 +603,24 @@ public class SetAnswer : FSystem {
                 fadingToAnswersRoom2 = false;
             }
         }
+
+		if (CollectableGO.usingLamp) {
+			int nbSymbols = symbolsE12.Count;
+			for (int i = 0; i < nbSymbols; i++) {
+				forGO = symbolsE12.getAt (i);
+				if (Vector3.Angle (forGO.transform.position - Camera.main.transform.position, Camera.main.transform.forward) < 15) {
+					forGO.SetActive (true);
+				} else {
+					forGO.SetActive (false);
+				}
+			}
+		} else if (usingLamp) {
+			int nbSymbols = symbolsE12.Count;
+			for (int i = 0; i < nbSymbols; i++) {
+				symbolsE12.getAt (i).SetActive (false);
+			}
+		}
+		usingLamp = CollectableGO.usingLamp;
 	}
 
     /* check the answer of the first question on the tablet 1

@@ -38,6 +38,8 @@ public class Inventory : FSystem {
     private GameObject draggedPuzzle = null;
     private Vector3 posFromMouse;
 
+	private GameObject blackLight;
+
 	//tmp variables used to loop in famillies
 	private GameObject forGO;
 	private GameObject forGO2;
@@ -90,6 +92,12 @@ public class Inventory : FSystem {
 			int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out id);
 			puzzleUI.Add(id, forGO);
         }
+
+		foreach (Transform child in player.First().GetComponentInChildren<Camera>().gameObject.transform) {
+			if (child.gameObject.GetComponent<Light> ()) {
+				blackLight = child.gameObject;
+			}
+		}
     }
 
 	// Use this to update member variables when system pause. 
@@ -152,7 +160,9 @@ public class Inventory : FSystem {
                     {
                         CollectableGO.usingWire = false;
                         CollectableGO.usingKeyE03 = false;
-                        CollectableGO.usingKeyE08 = false;
+						CollectableGO.usingKeyE08 = false;
+						CollectableGO.usingLamp = false;
+						blackLight.SetActive (false);
 
                         selection.SetActive(true);
 						selection.GetComponent<RectTransform>().localPosition = forGO.GetComponent<RectTransform>().localPosition;
@@ -272,6 +282,34 @@ public class Inventory : FSystem {
                                     }
                                     break;
 
+								case "Lamp":
+									displayedElement = null;
+									CollectableGO.usingLamp = true;
+									blackLight.SetActive (true);
+									break;
+
+								case "CodeE12":
+									foreach (Transform child in displayer.transform)
+									{
+										if (child.gameObject.name == "Code_E12")
+										{
+											displayedElement = child.gameObject;
+											displayedElement.SetActive(true);
+										}
+									}
+								break;
+
+								case "AlphabetE13":
+									foreach (Transform child in displayer.transform)
+									{
+									if (child.gameObject.name == "Alphabet_E13")
+										{
+											displayedElement = child.gameObject;
+											displayedElement.SetActive(true);
+										}
+									}
+									break;
+
                                 default:
                                     break;
                             }
@@ -301,68 +339,66 @@ public class Inventory : FSystem {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            inputfieldFocused = false;
+		if (Input.GetKeyDown (KeyCode.A)) {
+			inputfieldFocused = false;
 			int nbInputFields = inputfields.Count;
-			for(int i = 0; i < nbInputFields; i++)
-            {
+			for (int i = 0; i < nbInputFields; i++) {
 				forGO = inputfields.getAt (i);
-				if (forGO.GetComponent<InputField>().isFocused && forGO.GetComponent<InputField>().contentType == InputField.ContentType.Standard)
-                {
-                    inputfieldFocused = true;
-                    break;
-                }
-            }
-            if (!inputfieldFocused)
-            {
-                if (CollectableGO.onInventory)
-                {
-                    CloseInventory();
-                }
-                else
-                {
-                    foreach (Transform child in inventory.First().transform)
-                    {
-                        if (child.gameObject.name == "Enabled")
-                        {
-                            child.gameObject.SetActive(true);
-                        }
-                    }
-                    playerEnabled = player.First().GetComponent<FirstPersonController>().enabled;
-                    player.First().GetComponent<FirstPersonController>().enabled = false;
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.lockState = CursorLockMode.Confined;
-                    Cursor.visible = true;
+				if (forGO.GetComponent<InputField> ().isFocused && forGO.GetComponent<InputField> ().contentType == InputField.ContentType.Standard) {
+					inputfieldFocused = true;
+					break;
+				}
+			}
+			if (!inputfieldFocused) {
+				if (CollectableGO.onInventory) {
+					CloseInventory ();
+				} else {
+					foreach (Transform child in inventory.First().transform) {
+						if (child.gameObject.name == "Enabled") {
+							child.gameObject.SetActive (true);
+						}
+					}
+					playerEnabled = player.First ().GetComponent<FirstPersonController> ().enabled;
+					player.First ().GetComponent<FirstPersonController> ().enabled = false;
+					Cursor.lockState = CursorLockMode.None;
+					Cursor.lockState = CursorLockMode.Confined;
+					Cursor.visible = true;
 					int nb = ui.Count;
-					for(int i = 0; i < nb; i++)
-                    {
+					for (int i = 0; i < nb; i++) {
 						forGO = ui.getAt (i);
-						if (forGO.name == "Cursor")
-                        {
-							forGO.SetActive(false);
-                        }
-                    }
+						if (forGO.name == "Cursor") {
+							forGO.SetActive (false);
+						}
+					}
 					nb = elemsInventory.Count;
-					for(int i = 0; i < nb; i++)
-                    {
+					for (int i = 0; i < nb; i++) {
 						forGO = elemsInventory.getAt (i);
-						forGO.GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
-						if(forGO.name == "KeyE03")
-                        {
-							closeButton.GetComponent<RectTransform>().localPosition = forGO.GetComponent<RectTransform>().localPosition + (Vector3.up + Vector3.right) * (60);
-                        }
-                    }
-                    if (selectedUI)
-                    {
-                        selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
-                    }
-                    glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
-                    onPuzzle = false;
-                    CollectableGO.onInventory = true;
-                }
-            }
-        }
+						forGO.GetComponent<RectTransform> ().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
+						if (forGO.name == "KeyE03") {
+							closeButton.GetComponent<RectTransform> ().localPosition = forGO.GetComponent<RectTransform> ().localPosition + (Vector3.up + Vector3.right) * (60);
+						}
+					}
+					if (selectedUI) {
+						selection.GetComponent<RectTransform> ().localPosition = selectedUI.GetComponent<RectTransform> ().localPosition;
+					}
+					glassesSelected.GetComponent<RectTransform> ().localPosition = glassesUI.GetComponent<RectTransform> ().localPosition;
+					onPuzzle = false;
+					CollectableGO.onInventory = true;
+				}
+			}
+		} else if (CollectableGO.onInventory) {
+			bool onElem = false;
+			int nb = elemsInventory.Count;
+			for (int i = 0; i < nb; i++) {
+				if (elemsInventory.getAt (i).GetComponent<PointerOver> ()) {
+					onElem = true;
+					break;
+				}
+			}
+			if (!onElem && Input.GetMouseButtonDown (0)) {
+				CloseInventory ();
+			}
+		}
         if (onPuzzle)
         {
             if (draggedPuzzle)

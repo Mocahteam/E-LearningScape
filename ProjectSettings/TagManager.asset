@@ -31,6 +31,9 @@ TagManager:
   - Puzzle
   - PuzzleUI
   - InventoryElements
+  - E05UI
+  - E12_Symbol
+  - Carillon
   layers:
   - Default
   - TransparentFX

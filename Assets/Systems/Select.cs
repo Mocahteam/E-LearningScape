@@ -5,7 +5,7 @@ using FYFY_plugins.PointerManager;
 public class Select : FSystem {
 
     //all selectable objects
-    private Family objects = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(Takable)));
+	private Family objects = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(Takable), typeof(ToggleableGO)));
     //all takable objects
     private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Takable)));
 
@@ -45,7 +45,11 @@ public class Select : FSystem {
 			if (forGO.GetComponent<Takable>())
             {
 				forGO.GetComponent<Takable>().focused = false;
-            }
+			}
+			if (forGO.GetComponent<ToggleableGO>())
+			{
+				forGO.GetComponent<ToggleableGO>().focused = false;
+			}
 
             //if the gameobject is selected, save it as focused object
 			if (forGO.GetComponent<Selectable>())
@@ -91,8 +95,18 @@ public class Select : FSystem {
                     {
                         hit.transform.parent.gameObject.GetComponent<Takable>().focused = true;
                         focused = hit.transform.parent.gameObject;
-                    }
-                    else if (hit.transform.gameObject.GetComponent<Selectable>())
+					}
+					if (hit.transform.gameObject.GetComponent<ToggleableGO>())
+					{
+						hit.transform.gameObject.GetComponent<ToggleableGO>().focused = true;
+						focused = hit.transform.gameObject;
+					}
+					else if (hit.transform.parent.gameObject.GetComponent<ToggleableGO>())
+					{
+						hit.transform.parent.gameObject.GetComponent<ToggleableGO>().focused = true;
+						focused = hit.transform.parent.gameObject;
+					}
+                    if (hit.transform.gameObject.GetComponent<Selectable>())
                     {
                         focused = hit.transform.gameObject;
                     }
