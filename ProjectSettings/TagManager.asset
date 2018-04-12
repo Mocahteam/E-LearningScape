@@ -35,6 +35,9 @@ TagManager:
   - PuzzleUI
   - InventoryElements
   - VRGazeInteractable
+  - E05UI
+  - E12_Symbol
+  - Carillon
   layers:
   - Default
   - TransparentFX
