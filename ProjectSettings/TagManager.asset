@@ -38,6 +38,7 @@ TagManager:
   - E05UI
   - E12_Symbol
   - Carillon
+  - PlankConnector
   layers:
   - Default
   - TransparentFX

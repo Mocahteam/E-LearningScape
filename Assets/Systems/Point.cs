@@ -43,15 +43,18 @@ public class Point : FSystem { // TODO
                 Pointable p = pointed.GetComponent<Pointable>();
                 if (!p) continue;
                 p.focused = true;
-            }
 
+                SteamVR_Controller.Device controller = SteamVR_Controller.Input((int)lp.trackedObj.index);
+                // If trigger is pressed, toggle selection
+                if (controller.GetHairTriggerDown()) p.selected = !p.selected;
+            }
         }
 
         // For each focused pointable element
-        foreach(GameObject go in pointables)
+        foreach (GameObject go in pointables)
         {
             Pointable p = go.GetComponent<Pointable>();
-            if(p.focused) p.mouseOver.SetActive(true);
+            if(p.focused || p.selected) p.mouseOver.SetActive(true);
             else p.mouseOver.SetActive(false);
         }
     }
