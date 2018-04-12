@@ -1,10 +1,14 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Components",
-    "\\MagicMirror",
+    "\\SteamVR",
+    "\\SteamVR\\Editor",
+    "\\SteamVR\\InteractionSystem\\Core",
+    "\\SteamVR\\InteractionSystem\\Core\\Materials",
+    "\\SteamVR\\InteractionSystem\\Core\\Scripts",
+    "\\SteamVR\\Scripts",
     "\\Systems"
   ],
-  "SelectedNode": "\\Systems\\SetAnswer.cs",
+  "SelectedNode": "\\SteamVR\\Scripts\\SteamVR_Utils.cs",
   "PreviewInSolutionExplorer": false
 }

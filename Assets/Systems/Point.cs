@@ -46,7 +46,7 @@ public class Point : FSystem { // TODO
 
                 SteamVR_Controller.Device controller = SteamVR_Controller.Input((int)lp.trackedObj.index);
                 // If trigger is pressed, toggle selection
-                if (controller.GetHairTriggerDown()) p.selected = !p.selected;
+                if (controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad)) p.selected = !p.selected;
             }
         }
 
