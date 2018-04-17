@@ -620,23 +620,14 @@ public class SetAnswer : FSystem {
 				if (Vector3.Angle (position - Camera.main.transform.position, Camera.main.transform.forward) < 32) {
 					forGO.SetActive (true);
 					//calculate the intersection between player direction and the wall
-					symbolLetter = forGO.name.Substring(forGO.name.Length-1);
-					Vector3 wallDot = Vector3.zero;
-					if (symbolLetter == "S" || symbolLetter == "E" || symbolLetter == "R") {
-						wallDot = Vector3.back * 4.9f;
-					} else if (symbolLetter == "C") {
-						wallDot = Vector3.left * 4.9f;
-					} else if (symbolLetter == "O" || symbolLetter == "U") {
-						wallDot = Vector3.forward * 4.9f;
-					}
-					float d = Vector3.Dot((wallDot - Camera.main.transform.position),forGO.transform.parent.up)/Vector3.Dot(Camera.main.transform.forward, forGO.transform.parent.up);
+					float d = Vector3.Dot((position - Camera.main.transform.position),forGO.transform.parent.up)/Vector3.Dot(Camera.main.transform.forward, forGO.transform.parent.up);
 					forGO.transform.position = Camera.main.transform.position + Camera.main.transform.forward * d;
 					forGO.GetComponentInChildren<E12_Symbol> ().gameObject.transform.position = position;
 					float a = (0.026f - 0.015f) / (5.49f - 3.29f);
 					float b = 0.026f - a * 5.49f;
 					float scale = a * (forGO.transform.position - Camera.main.transform.position).magnitude + b;
-					forGO.GetComponentInChildren<E12_Symbol> ().gameObject.transform.localScale *= forGO.transform.localScale.x / scale;
-					forGO.transform.localScale = new Vector3 (scale, scale * 2, scale);
+					forGO.GetComponentInChildren<E12_Symbol> ().gameObject.transform.localScale *= forGO.transform.localScale.x / scale * forGO.transform.parent.localScale.x;
+					forGO.transform.localScale = new Vector3 (scale / forGO.transform.parent.localScale.x, scale * 2, scale);
 				} else {
                     forGO.transform.position = position;
                     forGO.GetComponentInChildren<E12_Symbol>().gameObject.transform.position = position;
