@@ -18,7 +18,8 @@ public class SetAnswer : FSystem {
     private Family aRoom2 = FamilyManager.getFamily(new AnyOfTags("A-R2")); //answers of the room 2 (tablet)
     private Family door = FamilyManager.getFamily(new AllOfComponents(typeof(Door)));
 	private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
-	private Family symbolsE12 = FamilyManager.getFamily(new AnyOfTags("E12_Symbol"));
+	private Family symbolsE12Tag = FamilyManager.getFamily(new AnyOfTags("E12_Symbol"));
+	private Family symbolsE12Component = FamilyManager.getFamily(new AllOfComponents(typeof(E12_Symbol)));
 
     //elements used for visual and audio feedback when answering
     private GameObject rightBG;
@@ -73,6 +74,7 @@ public class SetAnswer : FSystem {
     private bool moveWall = false;
 
 	private bool usingLamp = false;
+	private string symbolLetter;
 
 	//tmp gameobjects used to loop in famillies
 	private GameObject forGO;
@@ -158,6 +160,12 @@ public class SetAnswer : FSystem {
                 answersRoom2 = child.gameObject;
             }
         }
+
+		int nbSymbols = symbolsE12Component.Count;
+		for (int i = 0; i < nbSymbols; i++) {
+			forGO = symbolsE12Component.getAt (i);
+			forGO.GetComponent<E12_Symbol> ().position = forGO.transform.position;
+		}
 
         //initialise buttons with listener
 		int nb = qRoom1.Count;
@@ -605,19 +613,40 @@ public class SetAnswer : FSystem {
         }
 
 		if (CollectableGO.usingLamp) {
-			int nbSymbols = symbolsE12.Count;
+			int nbSymbols = symbolsE12Tag.Count;
 			for (int i = 0; i < nbSymbols; i++) {
-				forGO = symbolsE12.getAt (i);
-				if (Vector3.Angle (forGO.transform.position - Camera.main.transform.position, Camera.main.transform.forward) < 15) {
+				forGO = symbolsE12Tag.getAt (i);
+                Vector3 position = forGO.GetComponentInChildren<E12_Symbol>().position;
+				if (Vector3.Angle (position - Camera.main.transform.position, Camera.main.transform.forward) < 32) {
 					forGO.SetActive (true);
+					//calculate the intersection between player direction and the wall
+					symbolLetter = forGO.name.Substring(forGO.name.Length-1);
+					Vector3 wallDot = Vector3.zero;
+					if (symbolLetter == "S" || symbolLetter == "E" || symbolLetter == "R") {
+						wallDot = Vector3.back * 4.9f;
+					} else if (symbolLetter == "C") {
+						wallDot = Vector3.left * 4.9f;
+					} else if (symbolLetter == "O" || symbolLetter == "U") {
+						wallDot = Vector3.forward * 4.9f;
+					}
+					float d = Vector3.Dot((wallDot - Camera.main.transform.position),forGO.transform.parent.up)/Vector3.Dot(Camera.main.transform.forward, forGO.transform.parent.up);
+					forGO.transform.position = Camera.main.transform.position + Camera.main.transform.forward * d;
+					forGO.GetComponentInChildren<E12_Symbol> ().gameObject.transform.position = position;
+					float a = (0.026f - 0.015f) / (5.49f - 3.29f);
+					float b = 0.026f - a * 5.49f;
+					float scale = a * (forGO.transform.position - Camera.main.transform.position).magnitude + b;
+					forGO.GetComponentInChildren<E12_Symbol> ().gameObject.transform.localScale *= forGO.transform.localScale.x / scale;
+					forGO.transform.localScale = new Vector3 (scale, scale * 2, scale);
 				} else {
-					forGO.SetActive (false);
+                    forGO.transform.position = position;
+                    forGO.GetComponentInChildren<E12_Symbol>().gameObject.transform.position = position;
+                    forGO.SetActive (false);
 				}
 			}
 		} else if (usingLamp) {
-			int nbSymbols = symbolsE12.Count;
+			int nbSymbols = symbolsE12Tag.Count;
 			for (int i = 0; i < nbSymbols; i++) {
-				symbolsE12.getAt (i).SetActive (false);
+				symbolsE12Tag.getAt (i).SetActive (false);
 			}
 		}
 		usingLamp = CollectableGO.usingLamp;
