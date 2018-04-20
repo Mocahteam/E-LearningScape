@@ -121,22 +121,25 @@ public class Inventory : FSystem {
             {
 				if (forGO.GetComponent<CollectableGO>().goui)
                 {
-					GameObjectManager.setGameObjectState(forGO.GetComponent<CollectableGO>().goui, true);
-					if(forGO.tag == "Puzzle")
+                    if (!CollectableGO.onInventory)
                     {
-                        int id;
-						int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out id);
-                        puzzleUI.TryGetValue(id, out puzzlePiece);
-                        if (puzzlePiece)
+                        GameObjectManager.setGameObjectState(forGO.GetComponent<CollectableGO>().goui, true);
+                        if (forGO.tag == "Puzzle")
                         {
-                            puzzlePiece.SetActive(true);
+                            int id;
+                            int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out id);
+                            puzzleUI.TryGetValue(id, out puzzlePiece);
+                            if (puzzlePiece)
+                            {
+                                puzzlePiece.SetActive(true);
+                            }
+                            else
+                            {
+                                Debug.Log(string.Concat("Puzzle piece ", id.ToString(), " doesn't exist."));
+                            }
                         }
-                        else
-                        {
-                            Debug.Log(string.Concat("Puzzle piece ", id.ToString(), " doesn't exist."));
-                        }
+                        GameObjectManager.setGameObjectState(forGO, false);
                     }
-					GameObjectManager.setGameObjectState(forGO, false);
                 }
                 else
                 {
@@ -387,16 +390,42 @@ public class Inventory : FSystem {
 				}
 			}
 		} else if (CollectableGO.onInventory) {
-			bool onElem = false;
-			int nb = elemsInventory.Count;
-			for (int i = 0; i < nb; i++) {
-				if (elemsInventory.getAt (i).GetComponent<PointerOver> ()) {
-					onElem = true;
-					break;
-				}
-			}
-			if (!onElem && Input.GetMouseButtonDown (0)) {
-				CloseInventory ();
+			if (Input.GetMouseButtonDown (0))
+            {
+                bool onElem = false;
+                int nb = elemsInventory.Count;
+                for (int i = 0; i < nb; i++)
+                {
+                    if (elemsInventory.getAt(i).GetComponent<PointerOver>())
+                    {
+                        onElem = true;
+                        break;
+                    }
+                }
+                if (!onElem)
+                {
+                    if (onPuzzle)
+                    {
+                        int count = pui.Count;
+                        bool onPiece = false;
+                        for (int i = 0; i < count; i++)
+                        {
+                            if (pui.getAt(i).GetComponent<PointerOver>())
+                            {
+                                onPiece = true;
+                                break;
+                            }
+                        }
+                        if (!onPiece)
+                        {
+                            CloseInventory();
+                        }
+                    }
+                    else
+                    {
+                        CloseInventory();
+                    }
+                }
 			}
 		}
         if (onPuzzle)

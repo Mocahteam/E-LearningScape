@@ -20,6 +20,10 @@ public class SetAnswer : FSystem {
 	private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
 	private Family symbolsE12Tag = FamilyManager.getFamily(new AnyOfTags("E12_Symbol"));
 	private Family symbolsE12Component = FamilyManager.getFamily(new AllOfComponents(typeof(E12_Symbol)));
+    private Family removableBoardWords = FamilyManager.getFamily(new AnyOfTags("BoardWords"));
+    private Family qRoom3 = FamilyManager.getFamily(new AnyOfTags("Q-R3")); //questions of the room 3 (tablet)
+    private Family aRoom3 = FamilyManager.getFamily(new AnyOfTags("A-R3")); //answers of the room 3 (tablet)
+
 
     //elements used for visual and audio feedback when answering
     private GameObject rightBG;
@@ -67,7 +71,20 @@ public class SetAnswer : FSystem {
     private int aq4r2 = 1956;
     private string aq5r2 = "grille criteriee";
     private string aq6r2 = "collaboration";
-    
+
+    private GameObject tablet3;
+    private GameObject screen3;
+    private GameObject answersRoom3;
+    private string aq1r3 = "planification";
+    private string aq2r3 = "ressources";
+    private string aq3r3 = "contraintes";
+    private string aq4r3 = "contenu";
+    private bool answer1R3Given = false;
+    private bool answer2R3Given = false;
+    private bool answer3R3Given = false;
+    private bool answer4R3Given = false;
+    private bool fadingToPasswordRoom3 = false;
+
     private string previousTryPassword = "";
     private string password = 703.ToString();
     private GameObject wallRoom2;
@@ -100,6 +117,11 @@ public class SetAnswer : FSystem {
             {
 				tablet2 = forGO;
                 screen2 = tablet2.GetComponentInChildren<Canvas>().gameObject;
+            }
+            else if (forGO.name.Contains(3.ToString()))
+            {
+                tablet3 = forGO;
+                screen3 = tablet3.GetComponentInChildren<Canvas>().gameObject;
             }
         }
 
@@ -158,6 +180,13 @@ public class SetAnswer : FSystem {
             else if (child.gameObject.name == "AnswersInput")
             {
                 answersRoom2 = child.gameObject;
+            }
+        }
+        foreach(Transform child in screen3.transform)
+        {
+            if(child.gameObject.name == "AnswersInput")
+            {
+                answersRoom3 = child.gameObject;
             }
         }
 
@@ -282,7 +311,66 @@ public class SetAnswer : FSystem {
                 CheckConnection();
             }
         });
+        nb = qRoom3.Count;
+        for(int i = 0; i <nb; i++)
+        {
+            forGO = qRoom3.getAt(i);
+            switch (i)
+            {
+                case 0:
+                    forGO.GetComponentInChildren<Button>().onClick.AddListener(delegate {
+                        CheckT3Answer(qRoom3.getAt(0));
+                    });
+                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                        {
+                            CheckT3Answer(qRoom3.getAt(0));
+                        }
+                    });
+                    break;
+
+                case 1:
+                    forGO.GetComponentInChildren<Button>().onClick.AddListener(delegate {
+                        CheckT3Answer(qRoom3.getAt(1));
+                    });
+                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                        {
+                            CheckT3Answer(qRoom3.getAt(1));
+                        }
+                    });
+                    break;
+
+                case 2:
+                    forGO.GetComponentInChildren<Button>().onClick.AddListener(delegate {
+                        CheckT3Answer(qRoom3.getAt(2));
+                    });
+                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                        {
+                            CheckT3Answer(qRoom3.getAt(2));
+                        }
+                    });
+                    break;
+
+                case 3:
+                    forGO.GetComponentInChildren<Button>().onClick.AddListener(delegate {
+                        CheckT3Answer(qRoom3.getAt(3));
+                    });
+                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                        {
+                            CheckT3Answer(qRoom3.getAt(3));
+                        }
+                    });
+                    break;
+
+                default:
+                    break;
+            }
+        }
         lockR2.First().GetComponentInChildren<InputField>().onEndEdit.AddListener(CheckPasswordRoom2);
+
 
         //setting audio and visual elements for feedback when the player answers
 		nb = audioSource.Count;
@@ -309,6 +397,19 @@ public class SetAnswer : FSystem {
 			else if (forGO.name == "White")
             {
 				whiteBG = forGO;
+            }
+        }
+        /* set all board's removable words to "occludable"
+         * the occlusion is then made by an invisible material that hides all objects behind it having this setting
+         */
+        nb = removableBoardWords.Count;
+        Renderer[] renderers;
+        for(int i = 0; i < nb; i++)
+        {
+            renderers = removableBoardWords.getAt(i).GetComponentsInChildren<Renderer>();
+            foreach (Renderer r in renderers)
+            {
+                r.material.renderQueue = 3002;
             }
         }
     }
@@ -611,6 +712,52 @@ public class SetAnswer : FSystem {
                 fadingToAnswersRoom2 = false;
             }
         }
+        if (tablet3.GetComponent<Selectable>().solved && fadingToPasswordRoom3)
+        {
+            //wait the end of the "Right answer" animation before fading to password
+            if (rightBG.activeSelf)
+            {
+                timerWhite = Time.time;
+            }
+            else //when the "Right answer" animation is finished
+            {
+                //from time: 0 to 1.5, screen: answers to white
+                if (Time.time - timerWhite < 1.5f && Time.time - timerWhite >= 0f)
+                {
+                    whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, (Time.time - timerWhite) / 1.5f);
+                    if (Time.time - timerWhite > 1.45f)
+                    {
+                        answersRoom3.SetActive(false);
+                        foreach (Transform child in screen3.transform)
+                        {
+                            if (child.gameObject.name == "Background")
+                            {
+                                child.gameObject.SetActive(false);
+                            }
+                            else if (child.gameObject.name == "Background2")
+                            {
+                                child.gameObject.SetActive(true);
+                            }
+                            else if (child.gameObject.name == "Password")
+                            {
+                                child.gameObject.SetActive(true);
+                            }
+                        }
+                    }
+                }
+                //from time: 1.5 to 3, screen: white to password
+                else if (Time.time - timerWhite < 3f && Time.time - timerWhite > 1.5f)
+                {
+                    whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, 1 - (Time.time - timerWhite - 1.5f) / 1.5f);
+                }
+                else //if time not between 0 and 3
+                {
+                    //stop fading
+                    whiteBG.SetActive(false);
+                    fadingToPasswordRoom3 = false;
+                }
+            }
+        }
 
 		if (CollectableGO.usingLamp) {
 			int nbSymbols = symbolsE12Tag.Count;
@@ -704,11 +851,6 @@ public class SetAnswer : FSystem {
         }
     }
 
-    private void CheckT1Answer1(string s)
-    {
-        CheckT1Answer1();
-    }
-
     /* check the answer of the second question on the tablet 1
      * called when the corresponding button is clicked
      */
@@ -766,11 +908,6 @@ public class SetAnswer : FSystem {
                 }
             }
         }
-    }
-
-    private void CheckT1Answer2(string s)
-    {
-        CheckT1Answer2();
     }
 
     /* check the answer of the third question on the tablet 1
@@ -831,11 +968,6 @@ public class SetAnswer : FSystem {
                 }
             }
         }
-    }
-
-    private void CheckT1Answer3(string s)
-    {
-        CheckT1Answer3();
     }
 
     private void CheckConnection()
@@ -908,11 +1040,6 @@ public class SetAnswer : FSystem {
         }
     }
 
-    private void CheckConnection(string s)
-    {
-        CheckConnection();
-    }
-
     private void CheckT2Answer1()
     {
 		int nbQRoom2 = qRoom2.Count;
@@ -973,11 +1100,6 @@ public class SetAnswer : FSystem {
         }
     }
 
-    private void CheckT2Answer1(string s)
-    {
-        CheckT2Answer1();
-    }
-
     private void CheckT2Answer2()
     {
 		int nbQRoom2 = qRoom2.Count;
@@ -1034,11 +1156,6 @@ public class SetAnswer : FSystem {
                 }
             }
         }
-    }
-
-    private void CheckT2Answer2(string s)
-    {
-        CheckT2Answer2();
     }
 
     private void CheckT2Answer3()
@@ -1099,11 +1216,6 @@ public class SetAnswer : FSystem {
         }
     }
 
-    private void CheckT2Answer3(string s)
-    {
-        CheckT2Answer3();
-    }
-
     private void CheckT2Answer4()
     {
 		int nbQRoom2 = qRoom2.Count;
@@ -1160,11 +1272,6 @@ public class SetAnswer : FSystem {
                 }
             }
         }
-    }
-
-    private void CheckT2Answer4(string s)
-    {
-        CheckT2Answer4();
     }
 
     private void CheckT2Answer5()
@@ -1227,11 +1334,6 @@ public class SetAnswer : FSystem {
         }
     }
 
-    private void CheckT2Answer5(string s)
-    {
-        CheckT2Answer5();
-    }
-
     private void CheckT2Answer6()
     {
 		int nbQRoom2 = qRoom2.Count;
@@ -1290,11 +1392,6 @@ public class SetAnswer : FSystem {
         }
     }
 
-    private void CheckT2Answer6(string s)
-    {
-        CheckT2Answer6();
-    }
-
     private void CheckPasswordRoom2(string value)
     {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
@@ -1317,6 +1414,129 @@ public class SetAnswer : FSystem {
                     timeW = Time.time;
                 }
             }
+        }
+    }
+
+    private void CheckT3Answer(GameObject question)
+    {
+        answer = question.GetComponentInChildren<InputField>().text.ToLower();
+        if(answer == aq1r3 && !answer1R3Given)
+        {
+            int count = aRoom3.Count;
+            for(int i = 0; i < count; i++)
+            {
+                forGO = aRoom3.getAt(i);
+                if (forGO.name.Contains(1.ToString()))
+                {
+                    forGO.SetActive(true);
+                    forGO.transform.position = question.transform.position;
+                    question.SetActive(false);
+                    answer1R3Given = true;
+                    //feedback right answer
+                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    timeR = Time.time;
+                    if (answer2R3Given && answer3R3Given && answer4R3Given)
+                    {
+                        tablet3.GetComponent<Selectable>().solved = true;
+                        fadingToPasswordRoom3 = true;
+                        //start fading to password
+                        timerWhite = Time.time;
+                        whiteBG.SetActive(true);
+                        Color c = whiteBG.GetComponent<Image>().color;
+                        whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
+                    }
+                }
+            }
+        }
+        else if (answer == aq2r3 && !answer2R3Given)
+        {
+            int count = aRoom3.Count;
+            for (int i = 0; i < count; i++)
+            {
+                forGO = aRoom3.getAt(i);
+                if (forGO.name.Contains(2.ToString()))
+                {
+                    forGO.SetActive(true);
+                    forGO.transform.position = question.transform.position;
+                    question.SetActive(false);
+                    answer2R3Given = true;
+                    //feedback right answer
+                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    timeR = Time.time;
+                    if (answer1R3Given && answer3R3Given && answer4R3Given)
+                    {
+                        tablet3.GetComponent<Selectable>().solved = true;
+                        fadingToPasswordRoom3 = true;
+                        //start fading to password
+                        timerWhite = Time.time;
+                        whiteBG.SetActive(true);
+                        Color c = whiteBG.GetComponent<Image>().color;
+                        whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
+                    }
+                }
+            }
+        }
+        else if (answer == aq3r3 && !answer3R3Given)
+        {
+            int count = aRoom3.Count;
+            for (int i = 0; i < count; i++)
+            {
+                forGO = aRoom3.getAt(i);
+                if (forGO.name.Contains(3.ToString()))
+                {
+                    forGO.SetActive(true);
+                    forGO.transform.position = question.transform.position;
+                    question.SetActive(false);
+                    answer3R3Given = true;
+                    //feedback right answer
+                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    timeR = Time.time;
+                    if (answer2R3Given && answer1R3Given && answer4R3Given)
+                    {
+                        tablet3.GetComponent<Selectable>().solved = true;
+                        fadingToPasswordRoom3 = true;
+                        //start fading to password
+                        timerWhite = Time.time;
+                        whiteBG.SetActive(true);
+                        Color c = whiteBG.GetComponent<Image>().color;
+                        whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
+                    }
+                }
+            }
+        }
+        else if (answer == aq4r3 && !answer4R3Given)
+        {
+            int count = aRoom3.Count;
+            for (int i = 0; i < count; i++)
+            {
+                forGO = aRoom3.getAt(i);
+                if (forGO.name.Contains(4.ToString()))
+                {
+                    forGO.SetActive(true);
+                    forGO.transform.position = question.transform.position;
+                    question.SetActive(false);
+                    answer4R3Given = true;
+                    //feedback right answer
+                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    timeR = Time.time;
+                    if (answer2R3Given && answer3R3Given && answer1R3Given)
+                    {
+                        tablet3.GetComponent<Selectable>().solved = true;
+                        fadingToPasswordRoom3 = true;
+                        //start fading to password
+                        timerWhite = Time.time;
+                        whiteBG.SetActive(true);
+                        Color c = whiteBG.GetComponent<Image>().color;
+                        whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
+                    }
+                }
+            }
+        }
+        else
+        {
+            //feedback wrong answer
+            source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
+            timeW = Time.time;
         }
     }
 }
