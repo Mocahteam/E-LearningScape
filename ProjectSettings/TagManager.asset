@@ -15,12 +15,25 @@ TagManager:
   - BoxTop
   - Tablet
   - Q-R1
-  - Screen1
   - A-R1
   - RotateGear
-  - ChangeRoom
   - WrongTimerText
   - TableE05
+  - Sheet
+  - Inventory
+  - Syllabus
+  - DisplayInventory
+  - Bag
+  - PlankE09
+  - Q-R2
+  - A-R2
+  - LockRoom2
+  - Puzzle
+  - PuzzleUI
+  - InventoryElements
+  - E05UI
+  - E12_Symbol
+  - Carillon
   layers:
   - Default
   - TransparentFX
@@ -30,7 +43,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - MirrorGO
   - 
   - 
   - 

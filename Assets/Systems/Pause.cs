@@ -11,13 +11,18 @@ public class Pause : FSystem {
     private bool gamePaused = false;
     private bool playerEnabled = true;
 
+	private GameObject forGO;
+
     public Pause()
     {
-        foreach(GameObject ui in canvas)
+		int nbCanvas = canvas.Count;
+        //initialise pause menu's buttons with listeners
+		for(int i = 0; i < nbCanvas; i++)
         {
-            if(ui.name == "PauseMenu")
+			forGO = canvas.getAt (i);
+			if(forGO.name == "PauseMenu")
             {
-                foreach(Button b in ui.GetComponentsInChildren<Button>())
+				foreach(Button b in forGO.GetComponentsInChildren<Button>())
                 {
                     switch (b.name)
                     {
@@ -37,7 +42,7 @@ public class Pause : FSystem {
                             break;
                     }
                 }
-                ui.SetActive(false);
+				forGO.SetActive(false);    //hide pause menu at the beginning
             }
         }
     }
@@ -54,29 +59,32 @@ public class Pause : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Escape)) //when escape key is pressed
         {
             if (gamePaused)
             {
-                Resume();
+                Resume(); //resume the game if it was paused
             }
             else
             {
-                foreach (GameObject ui in canvas)
+				int nbCanvas = canvas.Count;
+				for(int i = 0; i < nbCanvas; i++)
                 {
-                    if (ui.name == "PauseMenu")
+					forGO = canvas.getAt (i);
+					if (forGO.name == "PauseMenu")
                     {
-                        ui.SetActive(true);
+						forGO.SetActive(true); //show pause menu
                     }
                 }
                 foreach(FSystem s in FSystemManager.updateSystems())
                 {
-                    if(s.ToString() != "Pause" && s.ToString() != "TimerSystem")
+                    //stop all FYFY systems but "Pause" and the timer
+                    if (s.ToString() != "Pause" && s.ToString() != "TimerSystem")
                     {
                         s.Pause = true;
                     }
                 }
-                playerEnabled = player.First().GetComponent<FirstPersonController>().enabled;
+                playerEnabled = player.First().GetComponent<FirstPersonController>().enabled; //save the playing state of the player (moving or object selected/using cursor)
                 //disable player moves
                 player.First().GetComponent<FirstPersonController>().enabled = false;
                 Cursor.lockState = CursorLockMode.None;
@@ -87,21 +95,21 @@ public class Pause : FSystem {
         }
 	}
 
-    void Resume()
-    {
-        foreach (GameObject ui in canvas)
-        {
-            if (ui.name == "PauseMenu")
-            {
-                ui.SetActive(false);
-            }
-        }
+    void Resume()   //resume game
+	{
+		int nbCanvas = canvas.Count;
+		for(int i = 0; i < nbCanvas; i++)
+		{
+			forGO = canvas.getAt (i);
+			if (forGO.name == "PauseMenu")
+			{
+				forGO.SetActive(false); //hide pause menu
+			}
+		}
+        //unpause all FYFY systems
         foreach (FSystem s in FSystemManager.updateSystems())
         {
-            if (s.ToString() != "Pause" && s.ToString() != "TimerSystem")
-            {
-                s.Pause = false;
-            }
+            s.Pause = false;
         }
         if (playerEnabled)
         {
@@ -114,12 +122,12 @@ public class Pause : FSystem {
         gamePaused = false;
     }
 
-    void Restart()
+    void Restart() //restart game from beginning
     {
 
     }
 
-    void GoToMenu()
+    void GoToMenu() //open menu scene
     {
         GameObjectManager.loadScene("Menu");
     }
