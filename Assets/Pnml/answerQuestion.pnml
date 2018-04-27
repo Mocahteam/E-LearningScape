@@ -1,0 +1,64 @@
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-2044-A3A5-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+  <name>
+   <text>answerQuestion</text>
+  </name>
+ <page id="g-2044-A3B0-1">
+  <place id="p-2044-A3B5-2">
+  <name>
+   <text>Answered</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="235" y="105"/>
+   </graphics>
+  </place>
+  <place id="p-2044-A3CA-3">
+  <name>
+   <text>Answering</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="40" y="115"/>
+   </graphics>
+  </place>
+  <transition id="t-2044-A3CD-4">
+  <name>
+   <text>Right</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="140" y="180"/>
+   </graphics>
+  </transition>
+  <transition id="t-2044-A3CF-5">
+  <name>
+   <text>Wrong</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="135" y="50"/>
+   </graphics>
+  </transition>
+  <arc id="e-2044-A3DA-6" source="t-2044-A3CD-4" target="p-2044-A3B5-2">
+  </arc>
+  <arc id="e-2044-A3DB-7" source="t-2044-A3CF-5" target="p-2044-A3CA-3">
+  </arc>
+  <arc id="e-2044-A3DC-8" source="p-2044-A3CA-3" target="t-2044-A3CF-5">
+  </arc>
+  <arc id="e-2044-A3DD-9" source="p-2044-A3CA-3" target="t-2044-A3CD-4">
+  </arc>
+ </page>
+ </net>
+</pnml>

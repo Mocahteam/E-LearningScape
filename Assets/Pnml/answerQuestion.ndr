@@ -1,0 +1,10 @@
+p 235.0 100.0 Answered 0 n
+t 135.0 180.0 Right n 0 w n {} ne
+t 135.0 50.0 Wrong n 0 w n {} ne
+p 40.0 120.0 Answering 1 n
+e Answering Wrong ?1 n
+e Answering Right 1 n
+e Right Answered 1 n
+h answerQuestion
+
+

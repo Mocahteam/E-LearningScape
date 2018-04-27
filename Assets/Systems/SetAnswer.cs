@@ -1064,7 +1064,7 @@ public class SetAnswer : FSystem {
 					int nbARoom2 = aRoom2.Count;
 					for(int j = 0; j < nbARoom2; j++)
                     {
-						forGO2 = qRoom2.getAt (j);
+						forGO2 = aRoom2.getAt (j);
 						if (forGO2.name.Contains(1.ToString()))
                         {
                             //show the solution of question 1

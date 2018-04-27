@@ -23,7 +23,7 @@ public class ShowUI : FSystem {
     private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ENABLED));
     private Family bag = FamilyManager.getFamily(new AnyOfTags("Bag"));
     private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
-	private Family closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PankText"), new AllOfComponents(typeof(PointerOver)));
+	private Family closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PlankText"), new AllOfComponents(typeof(PointerOver)));
 	private Family closeBox = FamilyManager.getFamily (new AnyOfTags ("Box", "Ball"), new AllOfComponents(typeof(PointerOver)));
 	private Family elemsInventory = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
 	private Family e05Pieces = FamilyManager.getFamily(new AnyOfTags("E05UI"));
