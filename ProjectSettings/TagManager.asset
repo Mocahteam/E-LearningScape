@@ -34,6 +34,11 @@ TagManager:
   - E05UI
   - E12_Symbol
   - Carillon
+  - Q-R3
+  - A-R3
+  - BoardRemovableWords
+  - Board
+  - Eraser
   layers:
   - Default
   - TransparentFX
@@ -44,8 +49,8 @@ TagManager:
   - 
   - 
   - MirrorGO
-  - 
-  - 
+  - Eraser
+  - EraserLinerenderer
   - 
   - 
   - 

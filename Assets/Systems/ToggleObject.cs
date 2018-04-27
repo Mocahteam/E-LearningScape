@@ -20,6 +20,7 @@ public class ToggleObject : FSystem {
 
 	private GameObject forGO;
 	private ToggleableGO tmpTGO;
+    private bool onInventory = false;
 
 	public ToggleObject(){
 		togglingChairsDown = new GameObject[6];
@@ -44,47 +45,65 @@ public class ToggleObject : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-		int nbToggleable = toggleable.Count;
-		for (int i = 0; i < nbToggleable; i++) {
-			forGO = toggleable.getAt (i);
-			tmpTGO = forGO.GetComponent<ToggleableGO> ();
-			if (tmpTGO.focused && Input.GetMouseButtonDown (0) && !tmpTGO.toggled) {
-				tmpTGO.toggled = true;
-				if (forGO.name.Contains ("Chair")) {
-					if (forGO.transform.rotation.eulerAngles.x == 0) {
-						togglingChairsDown [togglingChairsDownCount] = forGO;
-						togglingChairsDownCount++;
-					} else if (forGO.transform.rotation.eulerAngles.x == 90) {
-						togglingChairsUp [togglingChairsUpCount] = forGO;
-						togglingChairsUpCount++;
-					} else {
-						forGO.transform.rotation = Quaternion.Euler (0, forGO.transform.rotation.eulerAngles.y, forGO.transform.rotation.eulerAngles.z);
-					}
-				} else if (forGO.name == "Table") {
-					heightBeforeTableToggle = table.transform.position.y;
-					tableGoinUp = true;
-					tableTarget = new Vector3 (table.transform.position.x, heightBeforeTableToggle + 1, table.transform.position.z);
-					if (forGO.transform.rotation.eulerAngles.z > 90) {
-						toggleTableUp = true;
-					} else {
-						toggleTableDown = true;
-					}
-				}
-				break;
-			}
-		}
+        if (!onInventory)
+        {
+            int nbToggleable = toggleable.Count;
+            for (int i = 0; i < nbToggleable; i++)
+            {
+                forGO = toggleable.getAt(i);
+                tmpTGO = forGO.GetComponent<ToggleableGO>();
+                if (tmpTGO.focused && Input.GetMouseButtonDown(0) && !tmpTGO.toggled)
+                {
+                    tmpTGO.toggled = true;
+                    if (forGO.name.Contains("Chair"))
+                    {
+                        if (forGO.transform.rotation.eulerAngles.x < 0.0001f)
+                        {
+                            togglingChairsDown[togglingChairsDownCount] = forGO;
+                            togglingChairsDownCount++;
+                        }
+                        else if (forGO.transform.rotation.eulerAngles.x > 89.9999f)
+                        {
+                            togglingChairsUp[togglingChairsUpCount] = forGO;
+                            togglingChairsUpCount++;
+                        }
+                        else
+                        {
+                            forGO.transform.rotation = Quaternion.Euler(0, forGO.transform.rotation.eulerAngles.y, forGO.transform.rotation.eulerAngles.z);
+                        }
+                    }
+                    else if (forGO.name == "Table")
+                    {
+                        heightBeforeTableToggle = table.transform.position.y;
+                        tableGoinUp = true;
+                        tableTarget = new Vector3(table.transform.position.x, heightBeforeTableToggle + 1, table.transform.position.z);
+                        if (forGO.transform.rotation.eulerAngles.z > 90)
+                        {
+                            toggleTableUp = true;
+                        }
+                        else
+                        {
+                            toggleTableDown = true;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        onInventory = CollectableGO.onInventory;
 
 		for (int i = 0; i < togglingChairsDownCount; i++) {
 			togglingChairsDown[i].transform.rotation = Quaternion.RotateTowards(togglingChairsDown[i].transform.rotation, Quaternion.Euler(90,togglingChairsDown[i].transform.rotation.eulerAngles.y,togglingChairsDown[i].transform.rotation.eulerAngles.z), 10);
-			if (togglingChairsDown[i].transform.rotation.eulerAngles.x == 90) {
-				togglingChairsDown[i].GetComponent<ToggleableGO>().toggled = false;
+			if (togglingChairsDown[i].transform.rotation.eulerAngles.x > 89.9999f)
+            {
+                togglingChairsDown[i].GetComponent<ToggleableGO>().toggled = false;
 				togglingChairsDown[i] = togglingChairsDown[togglingChairsDownCount-1];
 				togglingChairsDownCount--;
 			}
 		}
 		for (int i = 0; i < togglingChairsUpCount; i++) {
 			togglingChairsUp[i].transform.rotation = Quaternion.RotateTowards(togglingChairsUp[i].transform.rotation, Quaternion.Euler(0,togglingChairsUp[i].transform.rotation.eulerAngles.y,togglingChairsUp[i].transform.rotation.eulerAngles.z), 10);
-			if (togglingChairsUp[i].transform.rotation.eulerAngles.x == 0) {
+            if (togglingChairsUp[i].transform.rotation.eulerAngles.x < 0.0001f) {
 				togglingChairsUp[i].GetComponent<ToggleableGO>().toggled = false;
 				togglingChairsUp[i] = togglingChairsUp[togglingChairsUpCount-1];
 				togglingChairsUpCount--;

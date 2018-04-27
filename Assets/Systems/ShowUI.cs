@@ -23,11 +23,14 @@ public class ShowUI : FSystem {
     private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ENABLED));
     private Family bag = FamilyManager.getFamily(new AnyOfTags("Bag"));
     private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
-	private Family closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PankText"), new AllOfComponents(typeof(PointerOver)));
-	private Family closeBox = FamilyManager.getFamily (new AnyOfTags ("Box", "Ball"), new AllOfComponents(typeof(PointerOver)));
-	private Family elemsInventory = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
+	private Family closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PlankText", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
+    private Family closeBox = FamilyManager.getFamily (new AnyOfTags ("Box", "Ball", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
+    private Family elemsInventory = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
 	private Family e05Pieces = FamilyManager.getFamily(new AnyOfTags("E05UI"));
 	private Family carillon = FamilyManager.getFamily(new AnyOfTags("Carillon"));
+    private Family boardFamilly = FamilyManager.getFamily(new AnyOfTags("Board"));
+    private Family closeBoard = FamilyManager.getFamily(new AnyOfTags("Board", "Eraser"), new AllOfComponents(typeof(PointerOver)));
+    private Family boardRemovableWords = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
 
     private bool noSelection = true;    //true if all objects are unselected
     private GameObject closeButton;
@@ -122,6 +125,15 @@ public class ShowUI : FSystem {
 	private bool onCarillon = false;
 	private GameObject carillonImage;
 
+    //board
+    private GameObject board;
+    private bool onBoard = false;
+    private bool moveToBoard = false;
+    private Vector3 boardPos;
+    private GameObject eraser;
+    private bool eraserDragged = false;
+    private float distToBoard;
+
     private bool onObject = false;
 
 	private GameObject forGO;
@@ -131,13 +143,22 @@ public class ShowUI : FSystem {
     {
         //initialise vairables
         ballToCamera = Camera.main.transform.position + Camera.main.transform.forward;
-        boxTopIniPos = new Vector3(0, 0.2625f, 0);
+        boxTopIniPos = boxTop.First().transform.localPosition;
+        boxTopPos = boxTop.First().transform.localPosition + boxTop.First().transform.right - boxTop.First().transform.up/2; //set lid position
         plankTopRight = plank.First().transform.position + plank.First().transform.localScale/2;
         lockR2TopRight = lockR2.First().transform.position + lockR2.First().transform.localScale / 2;
         lr = plank.First().GetComponent<LineRenderer>();
         lrPositions = new List<Vector3>();
+        board = boardFamilly.First();
+        foreach (Transform child in board.transform)
+        {
+            if (child.gameObject.name == "Eraser")
+            {
+                eraser = child.gameObject;
+            }
+        }
 
-		int nb = buttons.Count;
+        int nb = buttons.Count;
 		for(int i = 0; i < nb; i++)
         {
 			forGO = buttons.getAt (i);
@@ -218,7 +239,15 @@ public class ShowUI : FSystem {
 				carillonImage = child.gameObject;
 				break;
 			}
-		}
+        }
+
+        nb = boardRemovableWords.Count;
+        for (int i = 0; i < nb; i++)
+        {
+            boardRemovableWords.getAt(i).GetComponent<Renderer>().material.renderQueue = 2001;
+        }
+        board.GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
+        TextureFromCamera.draw = true;
     }
 
     // Use this to update member variables when system pause. 
@@ -251,7 +280,7 @@ public class ShowUI : FSystem {
         {
             //animation to move the player in front of the plank
             player.First().transform.position = Vector3.MoveTowards(player.First().transform.position, plankPos, speed);
-            camNewDir = Vector3.left;
+            camNewDir = plank.First().transform.up;
             newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, Mathf.Deg2Rad * speedRotation, 0);
             Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
             //when the animation is finished
@@ -274,9 +303,9 @@ public class ShowUI : FSystem {
             if (openBox)
             {
                 //animation to open the box
-                boxTop.First().transform.position = Vector3.MoveTowards(boxTop.First().transform.position, boxTopPos, speed / 10);
+                boxTop.First().transform.localPosition = Vector3.MoveTowards(boxTop.First().transform.localPosition, boxTopPos, speed);
                 //when the animation if finished
-                if(boxTop.First().transform.position == boxTopPos)
+                if(boxTop.First().transform.localPosition == boxTopPos)
                 {
                     openBox = false;
                     takingBalls = true; //start taking out balls
@@ -292,7 +321,7 @@ public class ShowUI : FSystem {
                 {
 					forGO = balls.getAt (i);
 					b = forGO.GetComponent<Ball>();
-					forGO.GetComponent<Rigidbody>().isKinematic = true;
+					//forGO.GetComponent<Rigidbody>().isKinematic = true;
                     if (b.id < tmpCount) //the animation doesn't take out all balls at the same time
                     {
                         if (b.outOfBox) //if the ball is out of the box
@@ -390,7 +419,6 @@ public class ShowUI : FSystem {
                             unlockBox = true;
                         }
                     }
-                    boxTopPos = boxTop.First().transform.position + box.First().transform.right * boxTop.First().transform.localScale.x; //set lid position
                     ballToCamera = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0.5f));  //set position of balls when in front of the screen
                 }
             }
@@ -401,7 +429,7 @@ public class ShowUI : FSystem {
             if (ballFocused)
             {
                 //if the ball is selected, move it in front of the camera and rotate it to make its back visible
-                focusedBall.transform.position = Vector3.MoveTowards(focusedBall.transform.position, ballToCamera, speed / 2);
+                focusedBall.transform.position = Vector3.MoveTowards(focusedBall.transform.position, ballToCamera, speed);
                 focusedBall.transform.localRotation = Quaternion.RotateTowards(focusedBall.transform.localRotation, Quaternion.Euler(0, 90, 0), speedRotation);
                 //when the ball arrives
                 if (focusedBall.transform.position == ballToCamera)
@@ -421,8 +449,8 @@ public class ShowUI : FSystem {
             {
                 //if the ball is not selected, move it back with the other balls and rotate it back
                 ballPos = Vector3.up * ((float)balls.Count / 10 - (float)(focusedBall.GetComponent<Ball>().id / 5) / 3) + Vector3.right * ((float)(focusedBall.GetComponent<Ball>().id % 5) * -2f / 4 + 1f) + Vector3.forward * 0.2f;
-                focusedBall.transform.localPosition = Vector3.MoveTowards(focusedBall.transform.localPosition, ballPos, speed / 2);
-                focusedBall.transform.localRotation = Quaternion.RotateTowards(focusedBall.transform.localRotation, Quaternion.Euler(0, -90, 0), speedRotation);
+                focusedBall.transform.localPosition = Vector3.MoveTowards(focusedBall.transform.localPosition, ballPos, speed);
+                focusedBall.transform.localRotation = Quaternion.RotateTowards(focusedBall.transform.localRotation, Quaternion.Euler(0, -90, 0), speedRotation * 2);
                 //when the ball arrives
                 if (focusedBall.transform.localPosition == ballPos)
                 {
@@ -453,11 +481,11 @@ public class ShowUI : FSystem {
             //animation to move the tablet in front of the player
             Vector3 vec = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
             vec.Normalize();
-            objectPos = new Vector3(player.First().transform.position.x, 1.78f, player.First().transform.position.z) + vec * (d);
+            objectPos = new Vector3(player.First().transform.position.x, Camera.main.transform.position.y, player.First().transform.position.z) + vec * (d);
             selectedTablet.transform.position = Vector3.MoveTowards(selectedTablet.transform.position, objectPos, speed);
             newDir = Vector3.RotateTowards(selectedTablet.transform.forward, player.First().transform.forward, Mathf.Deg2Rad * speedRotation, 0);
             selectedTablet.transform.rotation = Quaternion.LookRotation(newDir);
-            Camera.main.transform.localRotation = Quaternion.Euler(Vector3.MoveTowards(Camera.main.transform.localRotation.eulerAngles, Vector3.zero, speedRotation2));
+            Camera.main.transform.localRotation = Quaternion.RotateTowards(Camera.main.transform.localRotation, Quaternion.Euler(Vector3.zero), speedRotation2);
             //when the tablet arrives
             if (selectedTablet.transform.position == objectPos)
             {
@@ -477,8 +505,8 @@ public class ShowUI : FSystem {
             {
                 //animation to move the player above the table
                 player.First().transform.position = Vector3.MoveTowards(player.First().transform.position, onTablePoint, speed);
-                Camera.main.transform.localRotation = Quaternion.RotateTowards(Camera.main.transform.localRotation, Quaternion.Euler(90,0,0), speedRotation);
-                player.First().transform.rotation = Quaternion.RotateTowards(player.First().transform.rotation, Quaternion.Euler(0, focusedTable.transform.rotation.eulerAngles.y, 0), speedRotation2);
+                //Camera.main.transform.localRotation = Quaternion.RotateTowards(Camera.main.transform.localRotation, Quaternion.Euler(90,0,0), speedRotation);
+                //player.First().transform.rotation = Quaternion.RotateTowards(player.First().transform.rotation, Quaternion.Euler(0, focusedTable.transform.rotation.eulerAngles.y, 0), speedRotation2);
                 //when the player reaches the position
                 if (player.First().transform.position == onTablePoint)
                 {
@@ -634,6 +662,25 @@ public class ShowUI : FSystem {
                 moveToLockR2 = false;
             }
         }
+        else if (moveToBoard)
+        {
+            //animation to move the player in front of the board
+            player.First().transform.position = Vector3.MoveTowards(player.First().transform.position, boardPos, speed);
+            camNewDir = -board.transform.up + Vector3.up * 0.05f;
+            newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, Mathf.Deg2Rad * speedRotation, 0);
+            Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
+            //when the animation is finished
+            if (Vector3.Angle(Camera.main.transform.forward, camNewDir) < 0.5f && player.First().transform.position == boardPos)
+            {
+                //correct the rotation
+                newDir = Vector3.RotateTowards(player.First().transform.forward, Vector3.right, 360, 0);
+                player.First().transform.rotation = Quaternion.LookRotation(newDir);
+                newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, 360, 0);
+                Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
+                moveToBoard = false;
+                distToBoard = Mathf.Abs(Vector3.Dot((Camera.main.transform.position - eraser.transform.position), board.transform.up));
+            }
+        }
 
         if (noSelection)
         {
@@ -657,15 +704,15 @@ public class ShowUI : FSystem {
 					} else if (forGO.tag == "Plank") {  //set plank
 						//the position in front of the plank is not the same depending on the scale of the player
 						if (player.First ().transform.localScale.x < 0.9f) {
-							plankPos = new Vector3 (plank.First ().transform.position.x + 1.5f, 1.6f, plank.First ().transform.position.z);
+							plankPos = new Vector3 (plank.First ().transform.position.x, 1.6f, plank.First ().transform.position.z) - plank.First().transform.up * 1.7f;
 						} else {
-							plankPos = new Vector3 (plank.First ().transform.position.x + 1.5f, 0.98f, plank.First ().transform.position.z);
+							plankPos = new Vector3 (plank.First ().transform.position.x, 0.98f, plank.First ().transform.position.z) - plank.First().transform.up * 1.7f;
 						}
 						//calculate the correct speed so that the translation and the rotation finish at the same time
 						dist = (plankPos - player.First ().transform.position).magnitude;
 						foreach (Transform t in player.First().transform) {
 							if (t.gameObject.tag == "MainCamera") {
-								speedRotation = Vector3.Angle (t.gameObject.transform.forward, Vector3.left) * speed / dist;
+								speedRotation = Vector3.Angle (t.gameObject.transform.forward, plank.First().transform.up) * speed / dist;
 							}
 						}
 						moveToPlank = true; //start animation to move the player in front of the plank
@@ -699,7 +746,7 @@ public class ShowUI : FSystem {
 						//calculate the position in front of the player
 						Vector3 v = new Vector3 (Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
 						v.Normalize ();
-						objectPos = new Vector3 (player.First ().transform.position.x, 1.78f, player.First ().transform.position.z) + v * (d);
+						objectPos = new Vector3 (player.First ().transform.position.x, Camera.main.transform.position.y, player.First ().transform.position.z) + v * (d);
 						//calculate the correct speed so that the translation and the rotation finish at the same time
 						dist = (objectPos - forGO.transform.position).magnitude;
 						speedRotation = Vector3.Angle (selectedTablet.transform.forward, player.First ().transform.forward) * speed / dist;
@@ -711,7 +758,7 @@ public class ShowUI : FSystem {
 						/* set the position where the player will be moved depending on the selected table
                             * the position is chosen so that when the tables are assembled, the formed picture is in the center of the screen
                             */
-						if (forGO.name.Contains (1.ToString ())) {
+						/*if (forGO.name.Contains (1.ToString ())) {
 							//front left of the table
 							onTablePoint = forGO.transform.position - forGO.transform.right * 0.75f + forGO.transform.forward * 0.75f + Vector3.up * (forGO.transform.localScale.y * 0.55f + 1);
 							dist = (onTablePoint - player.First ().transform.position).magnitude;
@@ -723,9 +770,11 @@ public class ShowUI : FSystem {
 							//back of the table (back according to unity axes)
 							onTablePoint = forGO.transform.position - forGO.transform.forward * 0.75f + Vector3.up * (forGO.transform.localScale.y * 0.55f + 1);
 							dist = (onTablePoint - player.First ().transform.position).magnitude;
-						}
-						//calculate the correct speed so that the translation and the rotation finish at the same time
-						speedRotation = Vector3.Angle (Camera.main.transform.forward, Vector3.down) * speed / dist;
+                        }*/
+                        onTablePoint = player.First().transform.position;
+                        dist = 1;
+                        //calculate the correct speed so that the translation and the rotation finish at the same time
+                        speedRotation = Vector3.Angle (Camera.main.transform.forward, Vector3.down) * speed / dist;
 						speedRotation2 = Vector3.Angle (player.First ().transform.forward, forGO.transform.forward) * speed / dist;
 						//save rotation and position of the player before moving
 						posBeforeTable = player.First ().transform.position;
@@ -790,7 +839,25 @@ public class ShowUI : FSystem {
 					} else if (forGO.name == "Carillon") {
 						carillonImage.SetActive (true);
 						onCarillon = true;
-					}
+                    }
+                    else if (forGO.tag == "Board")
+                    {  //set board
+                       //the position in front of the board is not the same depending on the scale of the player
+                        if (player.First().transform.localScale.x < 0.9f)
+                        {
+                            boardPos = new Vector3(board.transform.position.x, 1.6f, board.transform.position.z) + board.transform.up * 3.5f;
+                        }
+                        else
+                        {
+                            boardPos = new Vector3(board.transform.position.x, 0.98f, board.transform.position.z) + board.transform.up * 3.5f;
+                        }
+                        //calculate the correct speed so that the translation and the rotation finish at the same time
+                        dist = (boardPos - player.First().transform.position).magnitude;
+                        speedRotation = Vector3.Angle(Camera.main.transform.forward, -board.transform.up + Vector3.up * 0.05f) * speed / dist;
+                        moveToBoard = true; //start animation to move the player in front of the board
+                        uiGO.SetActive(false); //hide ui during animation
+                        onBoard = true;
+                    }
                     //hide the cursor when an object is selected
                     cursorUI.SetActive(false);
                     //disable player moves
@@ -929,7 +996,7 @@ public class ShowUI : FSystem {
 									//calculate position and speeds for the animation
 									ballPos = Vector3.up * ((float)balls.Count / 10 - (float)(focusedBall.GetComponent<Ball> ().id / 5) / 3) + Vector3.right * ((float)(focusedBall.GetComponent<Ball> ().id % 5) * -2f / 4 + 1f) + Vector3.forward * 0.2f;
 									dist = (box.First ().transform.TransformPoint (ballPos) - ballToCamera).magnitude;
-									speedRotation = 180 * speed / dist / 2;
+									speedRotation = 180 * speed / dist;
 								}
 							} else {
 								//if there isn't animations, mouse over or click, set to initial color
@@ -997,7 +1064,50 @@ public class ShowUI : FSystem {
 				if (!onElem && Input.GetMouseButtonDown (0)) {
 					CloseWindow ();
 				}
-			}
+            }
+            else if (onBoard)
+            {
+                if (closeBoard.Count == 0 && Input.GetMouseButtonDown(0))
+                {
+                    CloseWindow();
+                }
+                else
+                {
+                    if (eraser.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
+                    {
+                        eraserDragged = true;
+                    }
+                    if (eraserDragged)
+                    {
+                        if (Input.GetMouseButtonUp(0))
+                        {
+                            eraserDragged = false;
+                        }
+                        else
+                        {
+                            Vector3 mousePos = board.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distToBoard)));
+                            eraser.transform.localPosition = new Vector3(mousePos.x, eraser.transform.position.y, mousePos.z);
+                            if (eraser.transform.localPosition.x > 0.5f)
+                            {
+                                eraser.transform.localPosition += Vector3.right * (0.5f - eraser.transform.localPosition.x);
+                            }
+                            else if (eraser.transform.localPosition.x < -0.5f)
+                            {
+                                eraser.transform.localPosition += Vector3.right * (-0.5f - eraser.transform.localPosition.x);
+                            }
+                            if (eraser.transform.localPosition.z > 0.5f)
+                            {
+                                eraser.transform.localPosition += Vector3.forward * (0.5f - eraser.transform.localPosition.z);
+                            }
+                            else if (eraser.transform.localPosition.z < -0.5f)
+                            {
+                                eraser.transform.localPosition += Vector3.forward * (-0.5f - eraser.transform.localPosition.z);
+                            }
+                            TextureFromCamera.draw = true;
+                        }
+                    }
+                }
+            }
         }
 	}
 
@@ -1030,7 +1140,7 @@ public class ShowUI : FSystem {
 				forGO = balls.getAt (i);
 				forGO.transform.localPosition = forGO.GetComponent<Ball> ().initialPosition;
 				forGO.GetComponent<Ball> ().outOfBox = false;
-				forGO.GetComponent<Rigidbody> ().isKinematic = false;
+				//forGO.GetComponent<Rigidbody> ().isKinematic = false;
 			}
 			tmpCount = 1;
 			moveBox = false;
@@ -1101,6 +1211,7 @@ public class ShowUI : FSystem {
         onBag = false;
         onLockR2 = false;
 		onCarillon = false;
+        onBoard = false;
     }
 
     //predicate to return the first vector of the list

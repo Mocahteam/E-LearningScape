@@ -27,7 +27,10 @@ public class TakeObject : FSystem {
 		int nbTakable = tObjects.Count;
 		for(int i = 0; i < nbTakable; i++)
         {
-			tObjects.getAt(i).GetComponent<Rigidbody>().isKinematic = false;
+            if(tObjects.getAt(i).tag != "TableE05")
+            {
+                tObjects.getAt(i).GetComponent<Rigidbody>().isKinematic = false;
+            }
         }
     }
 

@@ -15,6 +15,7 @@ public class Inventory : FSystem {
     private Family inputfields = FamilyManager.getFamily(new AllOfComponents(typeof(InputField)));
     private Family pui = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"));
     private Family elemsInventory = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
+    private Family onElem = FamilyManager.getFamily(new AnyOfTags("InventoryElements", "PuzzleUI"), new AllOfComponents(typeof(PointerOver)));
 
     private bool playerEnabled = true;
     private GameObject displayer;
@@ -112,12 +113,21 @@ public class Inventory : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit);
+        bool tryRaycast = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit);
 		int nbCGO = cGO.Count;
 		for(int i = 0; i < nbCGO; i++)
         {
 			forGO = cGO.getAt (i);
-			if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && (Object.ReferenceEquals(forGO, hit.transform.gameObject) || (forGO.GetComponent<RectTransform>() && forGO.GetComponent<PointerOver>())))
+            bool tryGO;
+            if (tryRaycast)
+            {
+                tryGO = Object.ReferenceEquals(forGO, hit.transform.gameObject) || (forGO.GetComponent<RectTransform>() && forGO.GetComponent<PointerOver>());
+            }
+            else
+            {
+                tryGO = forGO.GetComponent<RectTransform>() && forGO.GetComponent<PointerOver>();
+            }
+			if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && tryGO)
             {
 				if (forGO.GetComponent<CollectableGO>().goui)
                 {
@@ -387,15 +397,7 @@ public class Inventory : FSystem {
 				}
 			}
 		} else if (CollectableGO.onInventory) {
-			bool onElem = false;
-			int nb = elemsInventory.Count;
-			for (int i = 0; i < nb; i++) {
-				if (elemsInventory.getAt (i).GetComponent<PointerOver> ()) {
-					onElem = true;
-					break;
-				}
-			}
-			if (!onElem && Input.GetMouseButtonDown (0)) {
+			if (onElem.Count == 0 && Input.GetMouseButtonDown (0)) {
 				CloseInventory ();
 			}
 		}
