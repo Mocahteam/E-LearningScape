@@ -14,6 +14,8 @@ public class TextureFromCamera : MonoBehaviour
     private RenderTexture rt;
     private bool first = true;
 
+    private Texture2D texture;
+
     private void Start()
     {
         myCamera = this.GetComponent<Camera>();
@@ -26,7 +28,7 @@ public class TextureFromCamera : MonoBehaviour
         if (draw)
         {
             //Create a new texture with the width and height of the screen
-            Texture2D texture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+            texture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
             //Read the pixels in the Rect starting at 0,0 and ending at the screen's width and height
             texture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0, false);
             texture.Apply();
@@ -42,7 +44,7 @@ public class TextureFromCamera : MonoBehaviour
             draw = false;
             if (first)
             {
-                this.transform.parent.gameObject.GetComponentInChildren<Image>().color = Color.white;
+                m_Display.color = Color.white;
                 first = false;
             }
         }

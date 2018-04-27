@@ -15,6 +15,7 @@ public class Inventory : FSystem {
     private Family inputfields = FamilyManager.getFamily(new AllOfComponents(typeof(InputField)));
     private Family pui = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"));
     private Family elemsInventory = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
+    private Family onElem = FamilyManager.getFamily(new AnyOfTags("InventoryElements", "PuzzleUI"), new AllOfComponents(typeof(PointerOver)));
 
     private bool playerEnabled = true;
     private GameObject displayer;
@@ -112,34 +113,40 @@ public class Inventory : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit);
+        bool tryRaycast = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit);
 		int nbCGO = cGO.Count;
 		for(int i = 0; i < nbCGO; i++)
         {
 			forGO = cGO.getAt (i);
-			if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && (Object.ReferenceEquals(forGO, hit.transform.gameObject) || (forGO.GetComponent<RectTransform>() && forGO.GetComponent<PointerOver>())))
+            bool tryGO;
+            if (tryRaycast)
+            {
+                tryGO = Object.ReferenceEquals(forGO, hit.transform.gameObject) || (forGO.GetComponent<RectTransform>() && forGO.GetComponent<PointerOver>());
+            }
+            else
+            {
+                tryGO = forGO.GetComponent<RectTransform>() && forGO.GetComponent<PointerOver>();
+            }
+			if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && tryGO)
             {
 				if (forGO.GetComponent<CollectableGO>().goui)
                 {
-                    if (!CollectableGO.onInventory)
+					GameObjectManager.setGameObjectState(forGO.GetComponent<CollectableGO>().goui, true);
+					if(forGO.tag == "Puzzle")
                     {
-                        GameObjectManager.setGameObjectState(forGO.GetComponent<CollectableGO>().goui, true);
-                        if (forGO.tag == "Puzzle")
+                        int id;
+						int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out id);
+                        puzzleUI.TryGetValue(id, out puzzlePiece);
+                        if (puzzlePiece)
                         {
-                            int id;
-                            int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out id);
-                            puzzleUI.TryGetValue(id, out puzzlePiece);
-                            if (puzzlePiece)
-                            {
-                                puzzlePiece.SetActive(true);
-                            }
-                            else
-                            {
-                                Debug.Log(string.Concat("Puzzle piece ", id.ToString(), " doesn't exist."));
-                            }
+                            puzzlePiece.SetActive(true);
                         }
-                        GameObjectManager.setGameObjectState(forGO, false);
+                        else
+                        {
+                            Debug.Log(string.Concat("Puzzle piece ", id.ToString(), " doesn't exist."));
+                        }
                     }
+					GameObjectManager.setGameObjectState(forGO, false);
                 }
                 else
                 {
@@ -390,42 +397,8 @@ public class Inventory : FSystem {
 				}
 			}
 		} else if (CollectableGO.onInventory) {
-			if (Input.GetMouseButtonDown (0))
-            {
-                bool onElem = false;
-                int nb = elemsInventory.Count;
-                for (int i = 0; i < nb; i++)
-                {
-                    if (elemsInventory.getAt(i).GetComponent<PointerOver>())
-                    {
-                        onElem = true;
-                        break;
-                    }
-                }
-                if (!onElem)
-                {
-                    if (onPuzzle)
-                    {
-                        int count = pui.Count;
-                        bool onPiece = false;
-                        for (int i = 0; i < count; i++)
-                        {
-                            if (pui.getAt(i).GetComponent<PointerOver>())
-                            {
-                                onPiece = true;
-                                break;
-                            }
-                        }
-                        if (!onPiece)
-                        {
-                            CloseInventory();
-                        }
-                    }
-                    else
-                    {
-                        CloseInventory();
-                    }
-                }
+			if (onElem.Count == 0 && Input.GetMouseButtonDown (0)) {
+				CloseInventory ();
 			}
 		}
         if (onPuzzle)
