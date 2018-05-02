@@ -101,8 +101,8 @@ public class SetAnswer : FSystem
 
     public SetAnswer()
     {
-        door.First().transform.rotation = Quaternion.Euler(0, -135, 0); //opened
-        //door.First().transform.rotation = Quaternion.Euler(0, 0, 0);    //closed
+        door.First().transform.position += Vector3.up*(4.5f - door.First().transform.position.y); //opened
+        //door.First().transform.position += Vector3.up*(0.9f - door.First().transform.position.y);    //closed
         wallRoom2 = lockR2.First().transform.parent.gameObject;
 
         int nbTablet = tablet.Count;
@@ -513,7 +513,7 @@ public class SetAnswer : FSystem
         else if (tablet1.GetComponent<Selectable>().solved && enigma4.activeSelf && !fadingToEnigma4 && !doorSoundPlayed)
         {
             //enigma 4 solved, open door to room 2
-            door.First().transform.rotation = Quaternion.Euler(0, -135, 0);
+            door.First().transform.position += Vector3.up * (4.5f - door.First().transform.position.y);
             source.PlayOneShot(door.First().GetComponent<Door>().openAudio);
             doorSoundPlayed = true;
         }
@@ -576,7 +576,7 @@ public class SetAnswer : FSystem
                             //start the timer for wrong answer
                             wTimerE04 = Time.time;
                             wtt.gameObject.SetActive(true);
-                            wtt.text = (15 + wTimerE04 - Time.time).ToString("n2");
+                            wtt.text = (5 + wTimerE04 - Time.time).ToString("n2");
                             wrongAnswerE04 = true;
 
                             gearDragged.transform.localPosition = gearDragged.GetComponent<Gear>().initialPosition; //set gear position to initial position
@@ -607,7 +607,7 @@ public class SetAnswer : FSystem
         }
         else if (wrongAnswerE04) //true when the wrong gear is dragged in the center
         {
-            if (15 + wTimerE04 - Time.time < 0)
+            if (5 + wTimerE04 - Time.time < 0)
             {
                 //when the timer if finished, the player can drag a gear again
                 wrongAnswerE04 = false;
@@ -616,7 +616,7 @@ public class SetAnswer : FSystem
             else
             {
                 //update the timer
-                wtt.text = (15 + wTimerE04 - Time.time).ToString("n2");
+                wtt.text = (5 + wTimerE04 - Time.time).ToString("n2");
             }
         }
         if (rotateGear) //true when the correct answer is given

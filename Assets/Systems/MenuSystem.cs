@@ -10,7 +10,7 @@ public class MenuSystem : FSystem {
     public MenuSystem()
     {
         //initialise menu's buttons with listeners
-        foreach(GameObject b in buttons)
+        foreach (GameObject b in buttons)
         {
             switch (b.name)
             {

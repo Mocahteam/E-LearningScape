@@ -113,7 +113,7 @@ public class TakeObject : FSystem {
 								forGO.transform.rotation = Quaternion.Euler(10, Camera.main.transform.rotation.eulerAngles.y, 0);      //rotate the object to the camera
                             }
                         }
-                        if (Input.GetMouseButtonDown(1)) //if right click, release the object
+                        if (Input.GetMouseButtonDown(0)) //if left click, release the object
                         {
 							forGO.GetComponent<Takable>().taken = false;
 							forGO.GetComponent<Rigidbody>().isKinematic = false;
@@ -150,8 +150,8 @@ public class TakeObject : FSystem {
 				for(int i = 0; i < nbTakable; i++)
                 {
 					forGO = tObjects.getAt (i);
-                    //if right click on a focused (but not selected) object, take it
-					if (forGO.GetComponent<Takable>().focused && Input.GetMouseButtonDown(1))
+                    //if left click on a focused (but not selected) object, take it
+					if (forGO.GetComponent<Takable>().focused && Input.GetMouseButtonDown(0))
                     {
 						forGO.GetComponent<Takable>().taken = true;
 						forGO.GetComponent<Rigidbody>().isKinematic = true;

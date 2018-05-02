@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.PostProcessing;
 
 public class ShowUI : FSystem {
     
@@ -55,7 +56,6 @@ public class ShowUI : FSystem {
     private bool pointerOverWord = false;   //true when the pointer is over a selectable word
     private LineRenderer lr;                //used to link words
     private List<Vector3> lrPositions;
-    private Vector3 lrFirstPosition = Vector3.zero;
 
     //box
     private bool onBox = false;                 //true when the player is using the box
@@ -455,6 +455,7 @@ public class ShowUI : FSystem {
                 if (focusedBall.transform.localPosition == ballPos)
                 {
                     moveBall = false;
+                    Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = true;
                     //hide the number behind
                     foreach (Transform child in focusedBall.transform)
                     {
@@ -492,10 +493,13 @@ public class ShowUI : FSystem {
                 moveTablet = false;
                 //show ui and put the "close" button at the top right of the screen
                 tabletTopRight = Vector3.up * Camera.main.pixelHeight + Vector3.right * Camera.main.pixelWidth;
+                Debug.Log(uiGO.transform.position);
                 closeButton.GetComponent<RectTransform>().localPosition = tabletTopRight - new Vector3(closeButton.GetComponent<RectTransform>().rect.width + Camera.main.pixelWidth, closeButton.GetComponent<RectTransform>().rect.height + Camera.main.pixelHeight, 0) / 2;
+                Debug.Log(closeButton.GetComponent<RectTransform>().localPosition);
                 uiGO.SetActive(true);
                 //put the ui "screen" on the screen (rather than on the tablet)
                 tabletScreen.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+                Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = false;
             }
         }
         else if (moveToTable)
@@ -723,7 +727,7 @@ public class ShowUI : FSystem {
 						//calculate the position in front of the player
 						Vector3 v = new Vector3 (Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
 						v.Normalize ();
-						objectPos = new Vector3 (player.First ().transform.position.x, 1.78f - 1, player.First ().transform.position.z) + v * (forGO.transform.localScale.y + 1.5f);
+						objectPos = new Vector3 (player.First ().transform.position.x, 1.78f - 1, player.First ().transform.position.z) + v * (forGO.transform.localScale.y + 1f);
 						//calculate the correct speed so that the translation and the rotation finish at the same time
 						dist = (objectPos - forGO.transform.position).magnitude;
 						speedRotation = Vector3.Angle (box.First ().transform.forward, -player.First ().transform.forward) * speed / dist;
@@ -885,21 +889,11 @@ public class ShowUI : FSystem {
 								if (forGO.GetComponent<TextMeshPro> ().color == Color.red) {
 									//unselect it
 									forGO.GetComponent<TextMeshPro> ().color = Color.black;
-									//remove the vertex from the linerenderer
-									lr.positionCount--;
-									//if there were 4 points, remove a second one (should use linerenderer loop rather than this)
-									if (lr.positionCount == 3) {
-										lr.positionCount--;
-										lrPositions.RemoveAt (lrPositions.LastIndexOf (lrFirstPosition));
-									}
-									if (forGO.transform.position == lrFirstPosition) {
-										lrPositions.Remove (forGO.transform.position);
-										lrFirstPosition = lrPositions.Find (ReturnFirst);
-									} else {
-										lrPositions.Remove (forGO.transform.position);
-									}
-									//set the new positions
-									lr.SetPositions (lrPositions.ToArray ());
+                                    //remove the vertex from the linerenderer
+                                    lrPositions.Remove(forGO.transform.position);
+                                    lr.positionCount--;
+                                    //set the new positions
+                                    lr.SetPositions (lrPositions.ToArray ());
 								} else {    //if the word wasn't selected
 									if (lr.positionCount > 2) {
 										//if there is already 3 selected words, unselect them and select the new one
@@ -910,16 +904,9 @@ public class ShowUI : FSystem {
 										lrPositions.Clear ();
 									}
 									forGO.GetComponent<TextMeshPro> ().color = Color.red;
-									//update the linerenderer (will be changed with linrenderer loop)
+									//update the linerenderer
 									lr.positionCount++;
 									lrPositions.Add (forGO.transform.position);
-									if (lr.positionCount == 1) {
-										lrFirstPosition = forGO.transform.position;
-									}
-									if (lr.positionCount == 3) {
-										lr.positionCount++;
-										lrPositions.Add (lrFirstPosition);
-									}
 									lr.SetPositions (lrPositions.ToArray ());
 									bool correct = true;
 									for (int j = 0; j < nbPlankWords; j++) {
@@ -973,7 +960,7 @@ public class ShowUI : FSystem {
 							ballPos = Vector3.up * ((float)balls.Count / 10 - (float)(focusedBall.GetComponent<Ball> ().id / 5) / 3) + Vector3.right * ((float)(focusedBall.GetComponent<Ball> ().id % 5) * -2f / 4 + 1f) + Vector3.forward * 0.2f;
 							dist = (box.First ().transform.TransformPoint (ballPos) - ballToCamera).magnitude;
 							speedRotation = 180 * speed / dist / 2;
-						}
+                        }
 					} else if (!moveBall) {  //if there isn't animations and selected ball
 						int nbBalls = balls.Count;
 						for (int i = 0; i < nbBalls; i++) {
@@ -997,7 +984,8 @@ public class ShowUI : FSystem {
 									ballPos = Vector3.up * ((float)balls.Count / 10 - (float)(focusedBall.GetComponent<Ball> ().id / 5) / 3) + Vector3.right * ((float)(focusedBall.GetComponent<Ball> ().id % 5) * -2f / 4 + 1f) + Vector3.forward * 0.2f;
 									dist = (box.First ().transform.TransformPoint (ballPos) - ballToCamera).magnitude;
 									speedRotation = 180 * speed / dist;
-								}
+                                    Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = false;
+                                }
 							} else {
 								//if there isn't animations, mouse over or click, set to initial color
 								forGO.GetComponent<Renderer> ().material.color = b.color;
@@ -1152,7 +1140,8 @@ public class ShowUI : FSystem {
 			tabletScreen.GetComponent<RectTransform> ().sizeDelta = new Vector2 (900, 600);
 			tabletScreen.GetComponent<RectTransform> ().localScale = Vector3.one * -0.0008327437f;
 			tabletScreen.GetComponent<RectTransform> ().localRotation = Quaternion.Euler (0, 0, 180);
-		} else if (onTable) {
+            Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = true;
+        } else if (onTable) {
 			//start animation to move the player back to its position
 			moveToTable = true;
 			tableUI.SetActive (false);
