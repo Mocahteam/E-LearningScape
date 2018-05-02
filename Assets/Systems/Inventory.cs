@@ -23,7 +23,6 @@ public class Inventory : FSystem {
     private bool displayedElementWasNull = true;
     private GameObject selection;
     private GameObject selectedUI;
-    private GameObject closeButton;
 
     private GameObject glassesBG;
     private GameObject glassesUI;
@@ -51,15 +50,6 @@ public class Inventory : FSystem {
         {
             if(child.gameObject.name == "Enabled")
             {
-                foreach(Transform c in child)
-                {
-                    if(c.gameObject.name == "CloseButton")
-                    {
-                        //initialise button with listener
-                        c.gameObject.GetComponent<Button>().onClick.AddListener(CloseInventory);
-                        closeButton = c.gameObject;
-                    }
-                }
                 child.gameObject.SetActive(false);
             }
             else if(child.gameObject.name == "Display")
@@ -131,22 +121,25 @@ public class Inventory : FSystem {
             {
 				if (forGO.GetComponent<CollectableGO>().goui)
                 {
-					GameObjectManager.setGameObjectState(forGO.GetComponent<CollectableGO>().goui, true);
-					if(forGO.tag == "Puzzle")
+                    if (!CollectableGO.onInventory)
                     {
-                        int id;
-						int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out id);
-                        puzzleUI.TryGetValue(id, out puzzlePiece);
-                        if (puzzlePiece)
+                        GameObjectManager.setGameObjectState(forGO.GetComponent<CollectableGO>().goui, true);
+                        if (forGO.tag == "Puzzle")
                         {
-                            puzzlePiece.SetActive(true);
+                            int id;
+                            int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out id);
+                            puzzleUI.TryGetValue(id, out puzzlePiece);
+                            if (puzzlePiece)
+                            {
+                                puzzlePiece.SetActive(true);
+                            }
+                            else
+                            {
+                                Debug.Log(string.Concat("Puzzle piece ", id.ToString(), " doesn't exist."));
+                            }
                         }
-                        else
-                        {
-                            Debug.Log(string.Concat("Puzzle piece ", id.ToString(), " doesn't exist."));
-                        }
+                        GameObjectManager.setGameObjectState(forGO, false);
                     }
-					GameObjectManager.setGameObjectState(forGO, false);
                 }
                 else
                 {
@@ -384,9 +377,6 @@ public class Inventory : FSystem {
 					for (int i = 0; i < nb; i++) {
 						forGO = elemsInventory.getAt (i);
 						forGO.GetComponent<RectTransform> ().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
-						if (forGO.name == "KeyE03") {
-							closeButton.GetComponent<RectTransform> ().localPosition = forGO.GetComponent<RectTransform> ().localPosition + (Vector3.up + Vector3.right) * (60);
-						}
 					}
 					if (selectedUI) {
 						selection.GetComponent<RectTransform> ().localPosition = selectedUI.GetComponent<RectTransform> ().localPosition;

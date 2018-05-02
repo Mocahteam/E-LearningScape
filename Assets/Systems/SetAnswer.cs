@@ -101,8 +101,8 @@ public class SetAnswer : FSystem
 
     public SetAnswer()
     {
-        door.First().transform.position += Vector3.up*(4.5f - door.First().transform.position.y); //opened
-        //door.First().transform.position += Vector3.up*(0.9f - door.First().transform.position.y);    //closed
+        //door.First().transform.position += Vector3.up*(4.5f - door.First().transform.position.y); //opened
+        door.First().transform.position += Vector3.up*(0.9f - door.First().transform.position.y);    //closed
         wallRoom2 = lockR2.First().transform.parent.gameObject;
 
         int nbTablet = tablet.Count;

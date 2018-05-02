@@ -18,10 +18,6 @@ public class MenuSystem : FSystem {
                     b.GetComponent<Button>().onClick.AddListener(Play);
                     break;
 
-                case "Sapiens":
-                    b.GetComponent<Button>().onClick.AddListener(Sapiens);
-                    break;
-
                 case "Option":
                     b.GetComponent<Button>().onClick.AddListener(OpenOption);
                     break;
@@ -67,12 +63,7 @@ public class MenuSystem : FSystem {
 
     void Play()
     {
-        GameObjectManager.loadScene("Proto");   //load prototype scene (not used anymore)
-    }
-
-    void Sapiens()
-    {
-        GameObjectManager.loadScene("Sapiens"); //load Sapiens escape game scene
+        GameObjectManager.loadScene("Sapiens"); //load LearningScape scene
     }
 
     void OpenOption()
