@@ -159,10 +159,13 @@ public class MirrorCameraScript : MonoBehaviour
                 float oldclip = cameraObject.farClipPlane;
                 Vector3 newpos = reflectionMatrix.MultiplyPoint(oldpos);
 
-                Quaternion rot = cameraLookingAtThisMirror.transform.localRotation;
-                //cameraLookingAtThisMirror.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                Vector3 posBeforeLook = cameraLookingAtThisMirror.transform.position;
+                Quaternion rot = cameraLookingAtThisMirror.transform.rotation;
+                cameraLookingAtThisMirror.transform.rotation = Quaternion.LookRotation(cameraObject.transform.position - cameraLookingAtThisMirror.transform.position);
+                cameraLookingAtThisMirror.transform.position = cameraObject.transform.position + (cameraLookingAtThisMirror.transform.position - cameraObject.transform.position).normalized * 0.55f;
                 Matrix4x4 worldToCameraMatrix = cameraLookingAtThisMirror.worldToCameraMatrix;
-                cameraLookingAtThisMirror.transform.localRotation = rot;
+                cameraLookingAtThisMirror.transform.rotation = rot;
+                cameraLookingAtThisMirror.transform.position = posBeforeLook;
 
 				if (VRMode)
                 {

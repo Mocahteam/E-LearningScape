@@ -39,6 +39,11 @@ TagManager:
   - E12_Symbol
   - Carillon
   - PlankConnector
+  - Q-R3
+  - A-R3
+  - BoardRemovableWords
+  - Board
+  - Eraser
   layers:
   - Default
   - TransparentFX
@@ -51,6 +56,8 @@ TagManager:
   - CanTeleport
   - MirrorGO
   - CanLaserPoint
+  - Eraser
+  - EraserLinerenderer
   - 
   - 
   - 

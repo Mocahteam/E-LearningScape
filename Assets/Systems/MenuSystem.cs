@@ -10,16 +10,12 @@ public class MenuSystem : FSystem {
     public MenuSystem()
     {
         //initialise menu's buttons with listeners
-        foreach(GameObject b in buttons)
+        foreach (GameObject b in buttons)
         {
             switch (b.name)
             {
                 case "Play":
                     b.GetComponent<Button>().onClick.AddListener(Play);
-                    break;
-
-                case "Sapiens":
-                    b.GetComponent<Button>().onClick.AddListener(Sapiens);
                     break;
 
                 case "Option":
@@ -67,12 +63,7 @@ public class MenuSystem : FSystem {
 
     void Play()
     {
-        GameObjectManager.loadScene("Proto");   //load prototype scene (not used anymore)
-    }
-
-    void Sapiens()
-    {
-        GameObjectManager.loadScene("Sapiens"); //load Sapiens escape game scene
+        GameObjectManager.loadScene("Sapiens"); //load LearningScape scene
     }
 
     void OpenOption()

@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 14
-  productGUID: 3355557de5a687e44a6eface0a816616
+  productGUID: dc64445816708c540b043490db03f90f
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   defaultScreenOrientation: 4
@@ -143,7 +143,7 @@ PlayerSettings:
       enableVideoLayer: 0
       useProtectedVideoMemory: 0
       minimumSupportedHeadTracking: 0
-      maximumSupportedHeadTracking: 0
+      maximumSupportedHeadTracking: 1
     hololens:
       depthFormat: 1
       depthBufferSharingEnabled: 0
