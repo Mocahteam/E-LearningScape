@@ -113,7 +113,7 @@ public class Pause : FSystem {
         }
         if (playerEnabled)
         {
-            //enale player moves
+            //enable player moves
             player.First().GetComponent<FirstPersonController>().enabled = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.lockState = CursorLockMode.Locked;
@@ -124,7 +124,7 @@ public class Pause : FSystem {
 
     void Restart() //restart game from beginning
     {
-
+        GameObjectManager.loadScene("Sapiens");
     }
 
     void GoToMenu() //open menu scene
