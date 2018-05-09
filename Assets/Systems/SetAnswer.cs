@@ -24,6 +24,7 @@ public class SetAnswer : FSystem
     private Family removableBoardWords = FamilyManager.getFamily(new AnyOfTags("BoardWords"));
     private Family qRoom3 = FamilyManager.getFamily(new AnyOfTags("Q-R3")); //questions of the room 3 (tablet)
     private Family aRoom3 = FamilyManager.getFamily(new AnyOfTags("A-R3")); //answers of the room 3 (tablet)
+    private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ENABLED));
 
 
     //elements used for visual and audio feedback when answering
@@ -85,8 +86,7 @@ public class SetAnswer : FSystem
     private bool answer3R3Given = false;
     private bool answer4R3Given = false;
     private bool fadingToPasswordRoom3 = false;
-
-    private string previousTryPassword = "";
+    
     private string password = 703.ToString();
     private GameObject wallRoom2;
     private bool moveWall = false;
@@ -101,9 +101,13 @@ public class SetAnswer : FSystem
 
     public SetAnswer()
     {
-        //door.First().transform.position += Vector3.up*(4.5f - door.First().transform.position.y); //opened
-        door.First().transform.position += Vector3.up*(0.9f - door.First().transform.position.y);    //closed
+        door.First().transform.position += Vector3.up*(4.5f - door.First().transform.position.y); //opened
+        //door.First().transform.position += Vector3.up*(0.9f - door.First().transform.position.y);    //closed
         wallRoom2 = lockR2.First().transform.parent.gameObject;
+
+        timeR = -Mathf.Infinity;
+        timeW = -Mathf.Infinity;
+        timerWhite = -Mathf.Infinity;
 
         int nbTablet = tablet.Count;
         for (int i = 0; i < nbTablet; i++)
@@ -467,7 +471,7 @@ public class SetAnswer : FSystem
 
         if (moveWall)
         {
-            wallRoom2.transform.position += Vector3.up * 0.01f + Vector3.forward * ((Random.value - 0.5f) / 10 - wallRoom2.transform.position.z);
+            wallRoom2.transform.position += Vector3.up * 0.01f + Vector3.forward * ((Random.value - 0.5f) / 10);
             if (wallRoom2.transform.position.y > 7.5)
             {
                 wallRoom2.SetActive(false);
@@ -773,29 +777,37 @@ public class SetAnswer : FSystem
             {
                 forGO = symbolsE12Tag.getAt(i);
                 Vector3 position = forGO.GetComponentInChildren<E12_Symbol>().position;
+                //if the symbol is illuminated by the lamp
                 if (Vector3.Angle(position - Camera.main.transform.position, Camera.main.transform.forward) < 32)
                 {
                     forGO.SetActive(true);
                     //calculate the intersection between player direction and the wall
                     float d = Vector3.Dot((position - Camera.main.transform.position), forGO.transform.parent.up) / Vector3.Dot(Camera.main.transform.forward, forGO.transform.parent.up);
+                    //move the mask to the calculated position
                     forGO.transform.position = Camera.main.transform.position + Camera.main.transform.forward * d;
+                    //set the symbol position to its initial position (it shouldn't move but it is moved because of it being the mask's child)
                     forGO.GetComponentInChildren<E12_Symbol>().gameObject.transform.position = position;
+                    //calculate the new scale of the mask (depending on the distance with the player)
                     float a = (0.026f - 0.015f) / (5.49f - 3.29f);
                     float b = 0.026f - a * 5.49f;
                     float scale = a * (forGO.transform.position - Camera.main.transform.position).magnitude + b;
+                    //change the scale of the mask and set the symbol scale to its initial scale
                     forGO.GetComponentInChildren<E12_Symbol>().gameObject.transform.localScale *= forGO.transform.localScale.x / scale * forGO.transform.parent.localScale.x;
                     forGO.transform.localScale = new Vector3(scale, scale, scale) / forGO.transform.parent.localScale.x;
                 }
                 else
                 {
+                    //disable the mask and the symbol
                     forGO.transform.position = position;
                     forGO.GetComponentInChildren<E12_Symbol>().gameObject.transform.position = position;
                     forGO.SetActive(false);
                 }
             }
         }
+        //when lamp just got disabled
         else if (usingLamp)
         {
+            //disable all symbols and masks
             int nbSymbols = symbolsE12Tag.Count;
             for (int i = 0; i < nbSymbols; i++)
             {
@@ -885,6 +897,15 @@ public class SetAnswer : FSystem
                     source.PlayOneShot(tablet1.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
+                    int nb = cGO.Count;
+                    for(int j = 0; j < nb; j++)
+                    {
+                        forGO2 = cGO.getAt(j);
+                        if (forGO2.name.Contains("Syllabus") || forGO2.name.Contains("Wire"))
+                        {
+                            forGO2.SetActive(false);
+                        }
+                    }
                     forGO.SetActive(false); //hide the question
                     bool solved = true;
                     int nbARoom1 = aRoom1.Count;
@@ -985,19 +1006,22 @@ public class SetAnswer : FSystem
         }
     }
 
-    private void CheckConnection()
+    private void CheckConnection() //mastermind
     {
         int answer;
         int.TryParse(connectionR2.GetComponentInChildren<InputField>().text, out answer);
 
-        if (answer == connectionPassword)
+        if (answer == connectionPassword) //if the answer is correct
         {
+            //show correct answer feedback for the 3 numbers
             connectionAnswerCheck1.text = "O";
             connectionAnswerCheck1.color = cacGreen;
             connectionAnswerCheck2.text = "O";
             connectionAnswerCheck2.color = cacGreen;
             connectionAnswerCheck3.text = "O";
             connectionAnswerCheck3.color = cacGreen;
+
+            //start fading to the next step of the tablet (questions and inpufields)
             fadingToAnswersRoom2 = true;
             timerWhite = Time.time;
             whiteBG.SetActive(true);
@@ -1005,6 +1029,7 @@ public class SetAnswer : FSystem
         }
         else
         {
+            //else, feedback following the rules of mastermind ('O' correct, '?' right number but wrong place, 'X' wrong number)
             connectionR2.GetComponentInChildren<InputField>().ActivateInputField();
             if (answer / 100 == connectionPassword / 100)
             {
@@ -1075,6 +1100,15 @@ public class SetAnswer : FSystem
                     source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
+                    int nb = cGO.Count;
+                    for (int j = 0; j < nb; j++)
+                    {
+                        forGO2 = cGO.getAt(j);
+                        if (forGO2.name.Contains("Glasses"))
+                        {
+                            forGO2.SetActive(false);
+                        }
+                    }
                     forGO.SetActive(false); //hide the question
                     bool solved = true;
                     int nbARoom2 = aRoom2.Count;
@@ -1133,6 +1167,15 @@ public class SetAnswer : FSystem
                     source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
+                    int nb = cGO.Count;
+                    for (int j = 0; j < nb; j++)
+                    {
+                        forGO2 = cGO.getAt(j);
+                        if (forGO2.name.Contains("TipE07"))
+                        {
+                            forGO2.SetActive(false);
+                        }
+                    }
                     forGO.SetActive(false); //hide the question
                     bool solved = true;
                     int nbARoom2 = aRoom2.Count;
@@ -1412,30 +1455,29 @@ public class SetAnswer : FSystem
     {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            if (value != previousTryPassword && value != "")
+            if (value == password)
             {
-                previousTryPassword = value;
-                if (value == password)
-                {
-                    lockR2.First().GetComponent<Selectable>().solved = true;
-                    moveWall = true;
-                    source.clip = lockR2.First().GetComponent<Selectable>().right;
-                    source.PlayDelayed(0);
-                    source.loop = true;
-                }
-                else
-                {
-                    //feedback wrong answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
-                    timeW = Time.time;
-                }
+                //if password is correct, feedback right answer, start animation to move wall
+                lockR2.First().GetComponent<Selectable>().solved = true;
+                moveWall = true;
+                source.clip = lockR2.First().GetComponent<Selectable>().right;
+                source.PlayDelayed(0);
+                source.loop = true;
+            }
+            else
+            {
+                //feedback wrong answer
+                source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
+                timeW = Time.time;
             }
         }
     }
 
+    //check if the answer given in one of the inputfields equals an answer not given yet
     private void CheckT3Answer(GameObject question)
     {
         answer = question.GetComponentInChildren<InputField>().text.ToLower();
+        //if answer 1 is given and wasn't given
         if (answer == aq1r3 && !answer1R3Given)
         {
             int count = aRoom3.Count;
@@ -1444,13 +1486,25 @@ public class SetAnswer : FSystem
                 forGO = aRoom3.getAt(i);
                 if (forGO.name.Contains(1.ToString()))
                 {
+                    //find the corresponding answer UI and display it
                     forGO.SetActive(true);
                     forGO.transform.position = question.transform.position;
                     question.SetActive(false);
-                    answer1R3Given = true;
+                    answer1R3Given = true; //set this answer to "given"
                     //feedback right answer
                     source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
                     timeR = Time.time;
+                    //disable inventory elements used to answer to this question
+                    int nb = cGO.Count;
+                    for (int j = 0; j < nb; j++)
+                    {
+                        forGO2 = cGO.getAt(j);
+                        if (forGO2.name.Contains("Puzzle"))
+                        {
+                            forGO2.SetActive(false);
+                        }
+                    }
+                    //check if all anwer were given
                     if (answer2R3Given && answer3R3Given && answer4R3Given)
                     {
                         tablet3.GetComponent<Selectable>().solved = true;
@@ -1464,6 +1518,7 @@ public class SetAnswer : FSystem
                 }
             }
         }
+        //if answer 2 is given and wasn't given
         else if (answer == aq2r3 && !answer2R3Given)
         {
             int count = aRoom3.Count;
@@ -1472,13 +1527,25 @@ public class SetAnswer : FSystem
                 forGO = aRoom3.getAt(i);
                 if (forGO.name.Contains(2.ToString()))
                 {
+                    //find the corresponding answer UI and display it
                     forGO.SetActive(true);
                     forGO.transform.position = question.transform.position;
                     question.SetActive(false);
-                    answer2R3Given = true;
+                    answer2R3Given = true; //set this answer to "given"
                     //feedback right answer
                     source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
                     timeR = Time.time;
+                    //disable inventory elements used to answer to this question
+                    int nb = cGO.Count;
+                    for (int j = 0; j < nb; j++)
+                    {
+                        forGO2 = cGO.getAt(j);
+                        if (forGO2.name.Contains("Lamp") || forGO2.name.Contains("CodeE12"))
+                        {
+                            forGO2.SetActive(false);
+                        }
+                    }
+                    //check if all anwer were given
                     if (answer1R3Given && answer3R3Given && answer4R3Given)
                     {
                         tablet3.GetComponent<Selectable>().solved = true;
@@ -1492,6 +1559,7 @@ public class SetAnswer : FSystem
                 }
             }
         }
+        //if answer 3 is given and wasn't given
         else if (answer == aq3r3 && !answer3R3Given)
         {
             int count = aRoom3.Count;
@@ -1500,13 +1568,25 @@ public class SetAnswer : FSystem
                 forGO = aRoom3.getAt(i);
                 if (forGO.name.Contains(3.ToString()))
                 {
+                    //find the corresponding answer UI and display it
                     forGO.SetActive(true);
                     forGO.transform.position = question.transform.position;
                     question.SetActive(false);
-                    answer3R3Given = true;
+                    answer3R3Given = true; //set this answer to "given"
                     //feedback right answer
                     source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
                     timeR = Time.time;
+                    //disable inventory elements used to answer to this question
+                    int nb = cGO.Count;
+                    for (int j = 0; j < nb; j++)
+                    {
+                        forGO2 = cGO.getAt(j);
+                        if (forGO2.name.Contains("AlphabetE13"))
+                        {
+                            forGO2.SetActive(false);
+                        }
+                    }
+                    //check if all anwer were given
                     if (answer2R3Given && answer1R3Given && answer4R3Given)
                     {
                         tablet3.GetComponent<Selectable>().solved = true;
@@ -1520,6 +1600,7 @@ public class SetAnswer : FSystem
                 }
             }
         }
+        //if answer 4 is given and wasn't given
         else if (answer == aq4r3 && !answer4R3Given)
         {
             int count = aRoom3.Count;
@@ -1528,13 +1609,15 @@ public class SetAnswer : FSystem
                 forGO = aRoom3.getAt(i);
                 if (forGO.name.Contains(4.ToString()))
                 {
+                    //find the corresponding answer UI and display it
                     forGO.SetActive(true);
                     forGO.transform.position = question.transform.position;
                     question.SetActive(false);
-                    answer4R3Given = true;
+                    answer4R3Given = true; //set this answer to "given"
                     //feedback right answer
                     source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
                     timeR = Time.time;
+                    //check if all anwer were given
                     if (answer2R3Given && answer3R3Given && answer1R3Given)
                     {
                         tablet3.GetComponent<Selectable>().solved = true;

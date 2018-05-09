@@ -13,6 +13,7 @@ public class ShowUI : FSystem {
     private Family objects = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable)));
 
     private Family buttons = FamilyManager.getFamily(new AllOfComponents(typeof(Button)));
+    private Family inputFields = FamilyManager.getFamily(new AllOfComponents(typeof(InputField)));
     private Family ui = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family plank = FamilyManager.getFamily(new AnyOfTags("Plank"));
@@ -26,6 +27,7 @@ public class ShowUI : FSystem {
     private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
 	private Family closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PlankText", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family closeBox = FamilyManager.getFamily (new AnyOfTags ("Box", "Ball", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
+    private Family overInventoryElem = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family elemsInventory = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
 	private Family e05Pieces = FamilyManager.getFamily(new AnyOfTags("E05UI"));
 	private Family carillon = FamilyManager.getFamily(new AnyOfTags("Carillon"));
@@ -38,7 +40,7 @@ public class ShowUI : FSystem {
     private GameObject cursorUI;
 
     //information for animations
-    private float speed = 0.1f;
+    private float speed = 0.05f;
     private float speedRotation = 0;
     private float speedRotation2 = 0;
     private float dist = -1;
@@ -167,7 +169,6 @@ public class ShowUI : FSystem {
 			if (forGO.name == "UI")
             {
 				uiGO = forGO;
-				forGO.SetActive(false); //hide ui
 				foreach (Transform child in uiGO.transform) {
 					if (child.gameObject.name == "E05") {
 						tableUI = child.gameObject;
@@ -195,7 +196,7 @@ public class ShowUI : FSystem {
 			b.initialPosition = forGO.transform.localPosition; //set initial position to current local position
             b.id = j;   //set ball id
             j++;
-			forGO.GetComponent<Renderer>().material.color = Random.ColorHSV() + Color.white/2.5f;  //set color to random color
+			forGO.GetComponent<Renderer>().material.color = Random.ColorHSV() + Color.white*0.6f;  //set color to random color
 			b.color = forGO.GetComponent<Renderer>().material.color;
             //init text and number
         }
@@ -236,8 +237,6 @@ public class ShowUI : FSystem {
         {
             boardRemovableWords.getAt(i).GetComponent<Renderer>().material.renderQueue = 2001;
         }
-        board.GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
-        TextureFromCamera.draw = true;
     }
 
     // Use this to update member variables when system pause. 
@@ -342,14 +341,17 @@ public class ShowUI : FSystem {
             }
             else if (unlockBox)
             {
+                //move up and rotate the padlock
                 dist = 1.5f - boxPadlock.transform.localPosition.y;
                 boxPadlock.transform.localPosition = Vector3.MoveTowards(boxPadlock.transform.localPosition, boxPadlock.transform.localPosition + Vector3.up * dist, (dist + 1)/100);
                 boxPadlock.transform.localRotation = Quaternion.Euler(boxPadlock.transform.localRotation.eulerAngles+Vector3.up* (boxPadlock.transform.localPosition.y - 0.2f) *35);
                 if(boxPadlock.transform.localPosition.y > 1.4f)
                 {
+                    //stop animation when the padlock reaches a certain height
                     boxPadlock.SetActive(false);
                     unlockBox = false;
                     CollectableGO.usingKeyE03 = false;
+                    //hide inventory's displayed elements
                     foreach (Transform child in inventory.First().transform)
                     {
                         if (child.gameObject.name == "Display" || child.gameObject.name == "Selected")
@@ -357,6 +359,7 @@ public class ShowUI : FSystem {
                             child.gameObject.SetActive(false);
                         }
                     }
+                    //remove key from inventory
 					int nbCGO = cGO.Count;
 					for(int i = 0; i < nbCGO; i++)
                     {
@@ -394,6 +397,7 @@ public class ShowUI : FSystem {
                     else
                     {
                         objectPos += Vector3.up*(1.78f - 0.5f -objectPos.y);
+                        //start animation to unlock box if using key on box
                         if (CollectableGO.usingKeyE03)
                         {
                             unlockBox = true;
@@ -476,6 +480,7 @@ public class ShowUI : FSystem {
                 Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = false;
                 Camera.main.GetComponent<PostProcessingBehaviour>().profile.vignette.enabled = false;
                 Camera.main.GetComponent<PostProcessingBehaviour>().profile.chromaticAberration.enabled = false;
+                inventory.First().SetActive(false);
             }
         }
         else if (moveToTable)
@@ -491,7 +496,6 @@ public class ShowUI : FSystem {
                 if (player.First().transform.position == onTablePoint)
                 {
                     //show ui
-                    uiGO.SetActive(true);
 					tableUI.SetActive (true);
                     moveToTable = false;
                 }
@@ -519,14 +523,17 @@ public class ShowUI : FSystem {
         {
             if (unlockBag)
             {
+                //move up and rotate padlock
                 dist = 1.7f - boxPadlock.transform.localPosition.y;
                 bagPadlock.transform.localPosition = Vector3.MoveTowards(bagPadlock.transform.localPosition, bagPadlock.transform.localPosition + Vector3.up * dist, (dist + 1) / 100);
                 bagPadlock.transform.localRotation = Quaternion.Euler(bagPadlock.transform.localRotation.eulerAngles + Vector3.up * (bagPadlock.transform.localPosition.y - 0.3f) * 35);
                 if (bagPadlock.transform.localPosition.y > 1.6f)
                 {
+                    //stop animation when the padlock reaches a certain height
                     bagPadlock.SetActive(false);
                     unlockBag = false;
                     CollectableGO.usingKeyE08 = false;
+                    //hide inventory's displayed elements
                     foreach (Transform child in inventory.First().transform)
                     {
                         if (child.gameObject.name == "Display" || child.gameObject.name == "Selected")
@@ -534,6 +541,7 @@ public class ShowUI : FSystem {
                             child.gameObject.SetActive(false);
                         }
                     }
+                    //remove key from inventory
 					int nbCGO = cGO.Count;
 					for(int i = 0; i < nbCGO; i++)
                     {
@@ -549,15 +557,18 @@ public class ShowUI : FSystem {
             {
                 if(onBag)
                 {
+                    //take off the paper from the bag
                     bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition = Vector3.MoveTowards(bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition, Vector3.up*0.9f, speed / 10);
                     if(bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y == 0.9f)
                     {
+                        //show the paper on the camera screen when it reaches the final position
                         showBagPaper = false;
                         moveBag = false;
                         bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition += Vector3.up * (bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.InverseTransformPoint(Camera.main.transform.position).y - bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y);
                         bag.First().GetComponentInChildren<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
                         if (CollectableGO.usingGlasses)
                         {
+                            //show the answer if glasses are used
                             bagAnswer.SetActive(true);
                         }
 						onBagPaper = true;
@@ -565,10 +576,11 @@ public class ShowUI : FSystem {
                 }
                 else
 				{
-					onBagPaper = false;
+                    //put the paper back in the bag
                     bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition = Vector3.MoveTowards(bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition, Vector3.zero, speed / 5);
                     if (bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y == 0f)
                     {
+                        //when final position is reached, stop animation and give back control to the player
                         player.First().GetComponent<FirstPersonController>().enabled = true;
                         Cursor.lockState = CursorLockMode.None;
                         Cursor.lockState = CursorLockMode.Locked;
@@ -591,11 +603,12 @@ public class ShowUI : FSystem {
                 newDir = Vector3.RotateTowards(bag.First().transform.forward, player.First().transform.forward, Mathf.Deg2Rad * speedRotation, 0);
                 bag.First().transform.rotation = Quaternion.LookRotation(newDir);
                 Camera.main.transform.localRotation = Quaternion.Euler(Vector3.MoveTowards(Camera.main.transform.localRotation.eulerAngles, Vector3.zero, speedRotation2));
-                //when the box arrives
+                //when the bag arrives
                 if (bag.First().transform.position == objectPos && Vector3.Angle(bag.First().transform.forward, player.First().transform.forward)<1)
                 {
                     if (!bagPadlock.activeSelf)
                     {
+                        //if unlocked, show the paper
                         showBagPaper = true;
                     }
                     else
@@ -603,6 +616,7 @@ public class ShowUI : FSystem {
                         objectPos += Vector3.up * (1.78f - 0.8f - objectPos.y);
                         if (CollectableGO.usingKeyE08)
                         {
+                            //unlock if key used
                             unlockBag = true;
                         }
                     }
@@ -658,7 +672,6 @@ public class ShowUI : FSystem {
                 {
                     noSelection = false;
                     //set and show ui
-                    uiGO.SetActive(true);
 					if (forGO.tag == "Object") { //set ui for gameobjects with tag "object"
 						foreach (Transform child in uiGO.transform) {
 							if (child.gameObject.name == "Window") {
@@ -682,7 +695,6 @@ public class ShowUI : FSystem {
 							}
 						}
 						moveToPlank = true; //start animation to move the player in front of the plank
-						uiGO.SetActive (false); //hide ui during animation
 						onPlank = true;
 					} else if (forGO.tag == "Box") {    //set box
 						forGO.GetComponent<Rigidbody> ().isKinematic = true;
@@ -695,7 +707,6 @@ public class ShowUI : FSystem {
 						speedRotation = Vector3.Angle (box.First ().transform.forward, -player.First ().transform.forward) * speed / dist;
 						speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
 						moveBox = true; //start animation to move the box in front of the player
-						uiGO.SetActive (false); //hide ui during animation
 						onBox = true;
 					} else if (forGO.tag == "Tablet") { //set tablet
 						selectedTablet = forGO;
@@ -717,7 +728,6 @@ public class ShowUI : FSystem {
 						dist = (objectPos - forGO.transform.position).magnitude;
 						speedRotation = Vector3.Angle (selectedTablet.transform.forward, player.First ().transform.forward) * speed / dist;
 						speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
-						uiGO.SetActive (false); //hide ui during animation
 						onTablet = true;
 						moveTablet = true;  //start animation to move the tablet in front of the player
 					} else if (forGO.tag == "TableE05") {  //set tables of enigma 5
@@ -746,7 +756,6 @@ public class ShowUI : FSystem {
 						posBeforeTable = player.First ().transform.position;
 						rotBeforeTable = Camera.main.transform.localRotation;
 						rot2BeforeTable = player.First ().transform.rotation;
-						uiGO.SetActive (false); //hide ui during animation
 						onTable = true;
 						moveToTable = true; //start animation to move the playre above the table
 					} else if (forGO.tag == "Sheet") {  //set sheets of enigma 6 and 7
@@ -775,7 +784,6 @@ public class ShowUI : FSystem {
 						speedRotation = Vector3.Angle (bag.First ().transform.forward, player.First ().transform.forward) * speed / dist;
 						speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
 						moveBag = true; //start animation to move the bag in front of the player
-						uiGO.SetActive (false); //hide ui during animation
 						onBag = true;
 					} else if (forGO.tag == "LockRoom2") {  //set lock room 2
 						//the position in front of the lock is not the same depending on the scale of the player
@@ -792,7 +800,6 @@ public class ShowUI : FSystem {
 							}
 						}
 						moveToLockR2 = true; //start animation to move the player in front of the lock
-						uiGO.SetActive (false); //hide ui during animation
 						onLockR2 = true;
 					} else if (forGO.name == "Carillon") {
 						carillonImage.SetActive (true);
@@ -813,7 +820,6 @@ public class ShowUI : FSystem {
                         dist = (boardPos - player.First().transform.position).magnitude;
                         speedRotation = Vector3.Angle(Camera.main.transform.forward, -board.transform.up + Vector3.up * 0.05f) * speed / dist;
                         moveToBoard = true; //start animation to move the player in front of the board
-                        uiGO.SetActive(false); //hide ui during animation
                         onBoard = true;
                     }
                     //hide the cursor when an object is selected
@@ -948,10 +954,12 @@ public class ShowUI : FSystem {
 					}
 				}
 			} else if (onLockR2) {
-				if (lockR2.First ().GetComponent<Selectable> ().solved || (!lockR2.First ().GetComponent<PointerOver> () && Input.GetMouseButtonDown (0))) {
+                //"close" ui (give back control to the player) when the correct password is entered or when clicking on nothing
+				if (lockR2.First ().GetComponent<Selectable> ().solved || (!lockR2.First ().GetComponent<PointerOver> () && overInventoryElem.Count == 0 && Input.GetMouseButtonDown (0))) {
 					CloseWindow ();
 				}
-			} else if ((onSheet || onCarillon) && Input.GetMouseButtonDown (0)) {
+			} else if ((onSheet || onCarillon || onBag) && Input.GetMouseButtonDown (0) && overInventoryElem.Count == 0) {
+                //close ui on click 
 				CloseWindow ();
 			} else if (onTable) {
 				if (draggedE05) {
@@ -994,41 +1002,34 @@ public class ShowUI : FSystem {
 						CloseWindow ();
 					}
 				}
-			} else if (onBag) {
-				bool onElem = false;
-				int nb = elemsInventory.Count;
-				for (int i = 0; i < nb; i++) {
-					if (elemsInventory.getAt (i).GetComponent<PointerOver> ()) {
-						onElem = true;
-						break;
-					}
-				}
-				if (!onElem && Input.GetMouseButtonDown (0)) {
-					CloseWindow ();
-				}
-            }
+			}
             else if (onBoard)
             {
                 if (closeBoard.Count == 0 && Input.GetMouseButtonDown(0))
                 {
+                    //close ui when clicking on nothing
                     CloseWindow();
                 }
                 else
                 {
                     if (eraser.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
                     {
+                        //start dragging eraser when it s clicked
                         eraserDragged = true;
                     }
                     if (eraserDragged)
                     {
                         if (Input.GetMouseButtonUp(0))
                         {
+                            //stopo dragging eraser when the click is released
                             eraserDragged = false;
                         }
                         else
                         {
+                            //move eraser to mouse position
                             Vector3 mousePos = board.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distToBoard)));
-                            eraser.transform.localPosition = new Vector3(mousePos.x, eraser.transform.position.y, mousePos.z);
+                            eraser.transform.localPosition = new Vector3(mousePos.x, eraser.transform.localPosition.y, mousePos.z);
+                            //prevent eraser from going out of the board
                             if (eraser.transform.localPosition.x > 0.5f)
                             {
                                 eraser.transform.localPosition += Vector3.right * (0.5f - eraser.transform.localPosition.x);
@@ -1045,7 +1046,7 @@ public class ShowUI : FSystem {
                             {
                                 eraser.transform.localPosition += Vector3.forward * (-0.5f - eraser.transform.localPosition.z);
                             }
-                            TextureFromCamera.draw = true;
+                            TextureFromCamera.draw = true; //draw on the texture to erase words on board
                         }
                     }
                 }
@@ -1055,6 +1056,7 @@ public class ShowUI : FSystem {
 
     private void CloseWindow()
     {
+        CollectableGO.askCloseInventory = true;
         if (!onTable && !onBag)
         {
             //enable player
@@ -1097,6 +1099,8 @@ public class ShowUI : FSystem {
             Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = true;
             Camera.main.GetComponent<PostProcessingBehaviour>().profile.vignette.enabled = true;
             Camera.main.GetComponent<PostProcessingBehaviour>().profile.chromaticAberration.enabled = true;
+            int nb = inputFields.Count;
+            inventory.First().SetActive(true);
         } else if (onTable) {
 			//start animation to move the player back to its position
 			moveToTable = true;
@@ -1133,7 +1137,6 @@ public class ShowUI : FSystem {
 		} else if (onCarillon) {
 			carillonImage.SetActive (false);
 		}
-        uiGO.SetActive(false);
         //show cursor
         cursorUI.SetActive(true);
 		int nbObjects = objects.Count;
@@ -1156,6 +1159,7 @@ public class ShowUI : FSystem {
         onTablet = false;
         onTable = false;
         onBag = false;
+        onBagPaper = false;
         onLockR2 = false;
 		onCarillon = false;
         onBoard = false;

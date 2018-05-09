@@ -4,6 +4,8 @@ public class Selectable : MonoBehaviour {//objects that can be selected by the p
     // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
     public static bool selected = false; //true when a gameobject is selected
 
+    //when true, the feedback for right/wrong answer is played
+    //set to true when a system other than "SetAnswer" needs a feedback to be played
 	public static bool askRight = false;
 	public static bool askWrong = false;
 
