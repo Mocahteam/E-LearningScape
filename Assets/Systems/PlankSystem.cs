@@ -3,12 +3,12 @@ using System.Collections;
 using FYFY;
 
 public class PlankSystem : FSystem {
-    
-    private Family plank = FamilyManager.getFamily(new AnyOfTags("Plank"));//all takable objects
+
+    private Family plank = FamilyManager.getFamily(new AnyOfTags("Plank"));
     private Family plankTexts = FamilyManager.getFamily(new AnyOfTags("PlankText"));
     private Family connectors = FamilyManager.getFamily(new AnyOfTags("PlankConnector"));
 
-    // Use this to update member variables when system pause. 
+    // Use this to update member variables when system pause.
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame) {
 	}
@@ -42,10 +42,11 @@ public class PlankSystem : FSystem {
             GameObject elt2 = sArray[(i + 1) % selected.Count];
 
             GameObject c = connectors.getAt(i);
+            Debug.Log(c);
             c.transform.position = Vector3.Lerp(elt1.transform.position, elt2.transform.position, .5f);
             c.transform.LookAt(elt2.transform);
-            c.transform.localScale = new Vector3(c.transform.localScale.x, c.transform.localScale.y, Vector3.Distance(elt1.transform.position, elt2.transform.position));
+            c.transform.localScale = new Vector3(c.transform.localScale.x, c.transform.localScale.y, 5*Vector3.Distance(elt1.transform.position, elt2.transform.position));
             c.SetActive(true);
         }
-	}
+    }
 }
