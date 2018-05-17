@@ -139,6 +139,7 @@ public class TakeObject : FSystem {
 							else if (forGO.GetComponent<MirrorScript>())
                             {
                                 tmpGO = plankE09.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.gameObject;
+                                //if the mirror is released above the plank, put it at the the center of the plank
 								if(forGO.transform.position.x < tmpGO.transform.position.x + tmpGO.transform.localScale.x/2 && forGO.transform.position.x > tmpGO.transform.position.x - tmpGO.transform.localScale.x / 2 && forGO.transform.position.z < tmpGO.transform.position.z + tmpGO.transform.localScale.z / 2 && forGO.transform.position.z > tmpGO.transform.position.z - tmpGO.transform.localScale.z / 2 && forGO.transform.position.y > tmpGO.transform.position.y)
                                 {
                                     objPos = plankE09.First().transform.position + Vector3.up * (0.1f + mirror.First().GetComponentInChildren<MirrorReflectionScript>().gameObject.transform.localScale.y/2 + tmpGO.transform.localScale.y / 2);
@@ -162,7 +163,7 @@ public class TakeObject : FSystem {
 						forGO.GetComponent<Takable>().taken = true;
 						forGO.GetComponent<Rigidbody>().isKinematic = true;
                         Takable.objectTaken = true;
-						if (forGO.tag == "Box")
+						/*if (forGO.tag == "Box")
                         {
 							int nbBalls = balls.Count;
 							for(int j = 0; j < nbBalls; j++)
@@ -176,7 +177,7 @@ public class TakeObject : FSystem {
 							player.First().transform.position = forGO.transform.position + Vector3.up * 2;
                             onTableHeight = player.First().transform.position.y;
                             player.First().GetComponent<FirstPersonController>().m_MouseLook.MinimumX = 90;
-                        }
+                        }*/
                         break;
                     }
                 }

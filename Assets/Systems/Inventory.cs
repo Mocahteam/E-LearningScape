@@ -174,10 +174,13 @@ public class Inventory : FSystem {
                             if (displayedElement)
                             {
                                 displayedElement.SetActive(false);
-								int nbElems = elemsInventory.Count;
-								for(int j = 0; j < nbElems; j++)
+                                if (CollectableGO.onInventory)
                                 {
-									elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
+                                    int nbElems = elemsInventory.Count;
+                                    for (int j = 0; j < nbElems; j++)
+                                    {
+                                        elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
+                                    }
                                 }
                                 glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
                             }
@@ -316,25 +319,28 @@ public class Inventory : FSystem {
                                 default:
                                     break;
                             }
-                            if (displayedElement)
+                            if (CollectableGO.onInventory)
                             {
-								int nbElems = elemsInventory.Count;
-								for (int j = 0; j< nbElems; j++)
+                                if (displayedElement)
                                 {
-									elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.right * (Camera.main.pixelWidth / 2 - 250) + Vector3.down * (Camera.main.pixelHeight / 2 - 100);
+                                    int nbElems = elemsInventory.Count;
+                                    for (int j = 0; j < nbElems; j++)
+                                    {
+                                        elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.right * (Camera.main.pixelWidth / 2 - 250) + Vector3.down * (Camera.main.pixelHeight / 2 - 100);
+                                    }
+                                    selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
+                                    glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
                                 }
-                                selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
-                                glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
-                            }
-                            else if (!displayedElementWasNull)
-							{
-								int nbElems = elemsInventory.Count;
-								for (int j = 0; j< nbElems; j++)
+                                else if (!displayedElementWasNull)
                                 {
-									elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
+                                    int nbElems = elemsInventory.Count;
+                                    for (int j = 0; j < nbElems; j++)
+                                    {
+                                        elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
+                                    }
+                                    selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
+                                    glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
                                 }
-                                selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
-                                glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
                             }
                         }
                     }
@@ -431,11 +437,15 @@ public class Inventory : FSystem {
                 }
             }
         }
+        if (CollectableGO.askCloseInventory)
+        {
+            CloseInventory();
+        }
 	}
 
     private void CloseInventory()
     {
-        if (!(displayedElement && displayer.activeSelf))
+        if (!(displayedElement && displayer.activeSelf) && !CollectableGO.askCloseInventory)
         {
 			int nbElems = elemsInventory.Count;
 			for(int i = 0; i < nbElems; i++)
@@ -478,5 +488,6 @@ public class Inventory : FSystem {
             }
         }
         CollectableGO.onInventory = false;
+        CollectableGO.askCloseInventory = false;
     }
 }

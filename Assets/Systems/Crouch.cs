@@ -33,7 +33,7 @@ public class Crouch : FSystem
 	protected override void onProcess(int familiesUpdateCount) {
         if (!Selectable.selected && !CollectableGO.onInventory)   //if nothing is selected and inventory isn't opened (the player can't move)
         {
-            if (Input.GetKeyDown(KeyCode.E))    //when "e" is pressed
+            if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetMouseButtonDown(1))    //when control button or right click is pressed
             {
                 changingPose = true; //true when the player is crouching or standing
                 //change moving speed according to the stance

@@ -45,6 +45,7 @@ TagManager:
   - BoardRemovableWords
   - Board
   - Eraser
+  - test3DMask
   layers:
   - Default
   - TransparentFX

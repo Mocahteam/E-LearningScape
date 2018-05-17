@@ -18,6 +18,7 @@ public class MirrorSystem : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
+        //always rotate the mirror gameobject in the direction of the player
         mirror.First().transform.rotation = Quaternion.Euler(0, player.First().transform.rotation.eulerAngles.y - Vector3.SignedAngle(mirror.First().transform.position - player.First().transform.position - Vector3.up * (mirror.First().transform.position.y - player.First().transform.position.y), player.First().transform.forward, Vector3.up),0);
 	}
 }
