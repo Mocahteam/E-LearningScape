@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 126
+  m_StaticEditorFlags: 4294967294
   m_IsActive: 1
 --- !u!1002 &100001
 EditorExtensionImpl:
@@ -27,9 +27,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24.84, y: -0.51, z: -1.05}
-  m_LocalScale: {x: 44.73553, y: 2.7959702, z: 44.735523}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 43.11, y: -0.63, z: -2.51}
+  m_LocalScale: {x: 44, y: 2.8303082, z: 44}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -95,16 +95,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d3ef1a5bbfb4e0a910fbbe5830b1f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterMode: 2
-  disablePixelLights: 1
-  textureSize: 128
-  clipPlaneOffset: 0.07
-  reflectLayers:
+  m_WaterMode: 2
+  m_DisablePixelLights: 1
+  m_TextureSize: 256
+  m_ClipPlaneOffset: 0.07
+  m_TurnOffWaterOcclusion: 1
+  m_ReflectLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
-  refractLayers:
+    m_Bits: 4294967293
+  m_RefractLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967293
 --- !u!1002 &11400001
 EditorExtensionImpl:
   serializedVersion: 6

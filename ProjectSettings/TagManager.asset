@@ -39,7 +39,9 @@ TagManager:
   - BoardRemovableWords
   - Board
   - Eraser
-  - test3DMask
+  - ScreenIAR
+  - IARTab
+  - StoryDisplayer
   layers:
   - Default
   - TransparentFX

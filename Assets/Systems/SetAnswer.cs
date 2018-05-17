@@ -10,14 +10,13 @@ public class SetAnswer : FSystem
     private Family audioSource = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)));
     private Family images = FamilyManager.getFamily(new AllOfComponents(typeof(Image)));
     private Family qRoom1 = FamilyManager.getFamily(new AnyOfTags("Q-R1")); //questions of the room 1 (tablet)
-    private Family tablet = FamilyManager.getFamily(new AnyOfTags("Tablet"));
+    private Family screenIAR = FamilyManager.getFamily(new AnyOfTags("ScreenIAR"));
     private Family aRoom1 = FamilyManager.getFamily(new AnyOfTags("A-R1")); //answers of the room 1 (tablet)
     private Family gears = FamilyManager.getFamily(new AllOfComponents(typeof(Gear)));
     private Family rotatingGears = FamilyManager.getFamily(new AnyOfTags("RotateGear")); //gears that can rotate (middle top, middle bot, and the solution gear)
     private Family wTimerText = FamilyManager.getFamily(new AnyOfTags("WrongTimerText"));
     private Family qRoom2 = FamilyManager.getFamily(new AnyOfTags("Q-R2")); //questions of the room 2 (tablet)
     private Family aRoom2 = FamilyManager.getFamily(new AnyOfTags("A-R2")); //answers of the room 2 (tablet)
-    private Family door = FamilyManager.getFamily(new AllOfComponents(typeof(Door)));
     private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
     private Family symbolsE12Tag = FamilyManager.getFamily(new AnyOfTags("E12_Symbol"));
     private Family symbolsE12Component = FamilyManager.getFamily(new AllOfComponents(typeof(E12_Symbol)));
@@ -35,8 +34,7 @@ public class SetAnswer : FSystem
     private AudioSource source;
 
     string answer;
-
-    private GameObject tablet1;
+    
     private GameObject screen1;
     private int aq1r1 = 128;    //answer question 1 room 1
     private int aq2r1 = 459;    //answer question 2 room 1
@@ -51,9 +49,7 @@ public class SetAnswer : FSystem
     private float wTimerE04 = Mathf.Infinity;   //timer used when the player gives a wrong answer to enigma04
     private TextMeshProUGUI wtt;    //text displaying wTimerE04
     private bool wrongAnswerE04 = false;
-    private bool doorSoundPlayed = false;
-
-    private GameObject tablet2;
+    
     private GameObject screen2;
     private GameObject connectionR2;
     private InputField ifConnectionR2;
@@ -73,8 +69,7 @@ public class SetAnswer : FSystem
     private int aq4r2 = 1956;
     private string aq5r2 = "grille criteriee";
     private string aq6r2 = "collaboration";
-
-    private GameObject tablet3;
+    
     private GameObject screen3;
     private GameObject answersRoom3;
     private string aq1r3 = "planification";
@@ -101,32 +96,27 @@ public class SetAnswer : FSystem
 
     public SetAnswer()
     {
-        door.First().transform.position += Vector3.up*(4.5f - door.First().transform.position.y); //opened
-        //door.First().transform.position += Vector3.up*(0.9f - door.First().transform.position.y);    //closed
         wallRoom2 = lockR2.First().transform.parent.gameObject;
 
         timeR = -Mathf.Infinity;
         timeW = -Mathf.Infinity;
         timerWhite = -Mathf.Infinity;
 
-        int nbTablet = tablet.Count;
-        for (int i = 0; i < nbTablet; i++)
+        int nbScreen = screenIAR.Count;
+        for (int i = 0; i < nbScreen; i++)
         {
-            forGO = tablet.getAt(i);
+            forGO = screenIAR.getAt(i);
             if (forGO.name.Contains(1.ToString()))
             {
-                tablet1 = forGO;
-                screen1 = tablet1.GetComponentInChildren<Canvas>().gameObject;
+                screen1 = forGO;
             }
             else if (forGO.name.Contains(2.ToString()))
             {
-                tablet2 = forGO;
-                screen2 = tablet2.GetComponentInChildren<Canvas>().gameObject;
+                screen2 = forGO;
             }
             else if (forGO.name.Contains(3.ToString()))
             {
-                tablet3 = forGO;
-                screen3 = tablet3.GetComponentInChildren<Canvas>().gameObject;
+                screen3 = forGO;
             }
         }
 
@@ -440,13 +430,13 @@ public class SetAnswer : FSystem
         {
             Selectable.askRight = false;
             //feedback right answer
-            source.PlayOneShot(tablet1.GetComponent<Selectable>().right);
+            source.PlayOneShot(screen1.GetComponent<Selectable>().right);
             timeR = Time.time;
         }
         if (Selectable.askWrong)
         {
             //feedback wrong answer
-            source.PlayOneShot(tablet1.GetComponent<Selectable>().wrong);
+            source.PlayOneShot(screen1.GetComponent<Selectable>().wrong);
             timeW = Time.time;
             Selectable.askWrong = false;
         }
@@ -482,7 +472,7 @@ public class SetAnswer : FSystem
 
         //tablet room 1 animation and interaction//
         //if the tablet is "solved" but enigma04 isn't diplayed
-        if (tablet1.GetComponent<Selectable>().solved && (!enigma4.activeSelf || fadingToEnigma4))
+        if (screen1.GetComponent<Selectable>().solved && (!enigma4.activeSelf || fadingToEnigma4))
         {
             //wait the end of the "Right answer" animation before fading to enigma04
             if (rightBG.activeSelf)
@@ -508,21 +498,22 @@ public class SetAnswer : FSystem
                 {
                     //stop fading and set tablet to unsolved
                     whiteBG.SetActive(false);
-                    tablet1.GetComponent<Selectable>().solved = false;
+                    screen1.GetComponent<Selectable>().solved = false;
                     fadingToEnigma4 = false;
                 }
             }
         }
         //if the tablet is "solved" and enigma04 is displayed
-        else if (tablet1.GetComponent<Selectable>().solved && enigma4.activeSelf && !fadingToEnigma4 && !doorSoundPlayed)
+        else if (screen1.GetComponent<Selectable>().solved && enigma4.activeSelf && !fadingToEnigma4 && !IARTab.room2Unlocked)
         {
             //enigma 4 solved, open door to room 2
-            door.First().transform.position += Vector3.up * (4.5f - door.First().transform.position.y);
-            source.PlayOneShot(door.First().GetComponent<Door>().openAudio);
-            doorSoundPlayed = true;
+            if(dr > 0.4f)
+            {
+                IARTab.room2Unlocked = true;
+            }
         }
         //if the player is playing enigma04 and didn't answer
-        else if (!tablet1.GetComponent<Selectable>().solved && enigma4.activeSelf && !wrongAnswerE04)
+        else if (!screen1.GetComponent<Selectable>().solved && enigma4.activeSelf && !wrongAnswerE04)
         {
             int nbGears = gears.Count;
             for (int i = 0; i < nbGears; i++)
@@ -546,11 +537,11 @@ public class SetAnswer : FSystem
                         if (gearDragged.GetComponent<Gear>().isSolution) //if answer is correct
                         {
                             //start audio and animation for "Right answer"
-                            source.PlayOneShot(tablet1.GetComponent<Selectable>().right);
+                            source.PlayOneShot(screen1.GetComponent<Selectable>().right);
                             timeR = Time.time;
 
                             rotateGear = true;  //rotate gears in the middle
-                            tablet1.GetComponent<Selectable>().solved = true; //set tablet to solved
+                            screen1.GetComponent<Selectable>().solved = true; //set tablet to solved
                             int nbQRoom1 = qRoom1.Count;
                             for (int i = 0; i < nbQRoom1; i++)
                             {
@@ -565,7 +556,7 @@ public class SetAnswer : FSystem
                         else //if answer is wrong
                         {
                             //start audio and animation for "Wrong answer"
-                            source.PlayOneShot(tablet1.GetComponent<Selectable>().wrong);
+                            source.PlayOneShot(screen1.GetComponent<Selectable>().wrong);
                             timeW = Time.time;
 
                             int nbQRoom1 = qRoom1.Count;
@@ -656,7 +647,7 @@ public class SetAnswer : FSystem
                 }
             }
         }
-        if (tablet2.GetComponent<Selectable>().solved && fadingToAnswersRoom2)
+        if (screen2.GetComponent<Selectable>().solved && fadingToAnswersRoom2)
         {
             //wait the end of the "Right answer" animation before fading to password
             if (rightBG.activeSelf)
@@ -723,7 +714,7 @@ public class SetAnswer : FSystem
                 fadingToAnswersRoom2 = false;
             }
         }
-        if (tablet3.GetComponent<Selectable>().solved && fadingToPasswordRoom3)
+        if (screen3.GetComponent<Selectable>().solved && fadingToPasswordRoom3)
         {
             //wait the end of the "Right answer" animation before fading to password
             if (rightBG.activeSelf)
@@ -834,7 +825,7 @@ public class SetAnswer : FSystem
                 if (answer.Length == 3 && answer.Contains((aq1r1 / 100).ToString()) && answer.Contains(((aq1r1 / 10) % 10).ToString()) && answer.Contains((aq1r1 % 10).ToString()))
                 {
                     //feedback right answer
-                    source.PlayOneShot(tablet1.GetComponent<Selectable>().right);
+                    source.PlayOneShot(screen1.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
                     forGO.SetActive(false); //hide the question
@@ -860,7 +851,7 @@ public class SetAnswer : FSystem
 
                     if (solved) //if all question are solved
                     {
-                        tablet1.GetComponent<Selectable>().solved = true;    //set tablet to solved
+                        screen1.GetComponent<Selectable>().solved = true;    //set tablet to solved
                         //start fading to enigma04
                         timerWhite = Time.time;
                         whiteBG.SetActive(true);
@@ -871,7 +862,7 @@ public class SetAnswer : FSystem
                 else
                 {
                     //feedback wrong answer
-                    source.PlayOneShot(tablet1.GetComponent<Selectable>().wrong);
+                    source.PlayOneShot(screen1.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
             }
@@ -894,7 +885,7 @@ public class SetAnswer : FSystem
                 if (answer.Length == 3 && answer.Contains((aq2r1 / 100).ToString()) && answer.Contains(((aq2r1 / 10) % 10).ToString()) && answer.Contains((aq2r1 % 10).ToString()))
                 {
                     //feedback right answer
-                    source.PlayOneShot(tablet1.GetComponent<Selectable>().right);
+                    source.PlayOneShot(screen1.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
                     int nb = cGO.Count;
@@ -928,7 +919,7 @@ public class SetAnswer : FSystem
                     }
                     if (solved) //if all question are solved
                     {
-                        tablet1.GetComponent<Selectable>().solved = true;    //set tablet to solved
+                        screen1.GetComponent<Selectable>().solved = true;    //set tablet to solved
                         //start fading to enigma04
                         timerWhite = Time.time;
                         whiteBG.SetActive(true);
@@ -939,7 +930,7 @@ public class SetAnswer : FSystem
                 else
                 {
                     //feedback wrong answer
-                    source.PlayOneShot(tablet1.GetComponent<Selectable>().wrong);
+                    source.PlayOneShot(screen1.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
             }
@@ -963,7 +954,7 @@ public class SetAnswer : FSystem
                 if (answer == aq3r1) //if answer is correct
                 {
                     //feedback right answer
-                    source.PlayOneShot(tablet1.GetComponent<Selectable>().right);
+                    source.PlayOneShot(screen1.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
                     forGO.SetActive(false); //hide the question
@@ -988,7 +979,7 @@ public class SetAnswer : FSystem
                     }
                     if (solved) //if all question are solved
                     {
-                        tablet1.GetComponent<Selectable>().solved = true;    //set tablet to solved
+                        screen1.GetComponent<Selectable>().solved = true;    //set tablet to solved
                         //start fading to enigma04
                         timerWhite = Time.time;
                         whiteBG.SetActive(true);
@@ -999,7 +990,7 @@ public class SetAnswer : FSystem
                 else
                 {
                     //feedback wrong answer
-                    source.PlayOneShot(tablet1.GetComponent<Selectable>().wrong);
+                    source.PlayOneShot(screen1.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
             }
@@ -1097,7 +1088,7 @@ public class SetAnswer : FSystem
                 if (answer == aq1r2) //if answer is correct
                 {
                     //feedback right answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    source.PlayOneShot(screen2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
                     int nb = cGO.Count;
@@ -1131,7 +1122,7 @@ public class SetAnswer : FSystem
                     }
                     if (solved) //if all question are solved
                     {
-                        tablet2.GetComponent<Selectable>().solved = true;    //set tablet to solved
+                        screen2.GetComponent<Selectable>().solved = true;    //set tablet to solved
                         fadingToAnswersRoom2 = true;
                         //start fading to password
                         timerWhite = Time.time;
@@ -1143,7 +1134,7 @@ public class SetAnswer : FSystem
                 else
                 {
                     //feedback wrong answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
+                    source.PlayOneShot(screen2.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
             }
@@ -1164,7 +1155,7 @@ public class SetAnswer : FSystem
                 if (answer.Length == 3 && answer.Contains((aq2r2 / 100).ToString()) && answer.Contains(((aq2r2 / 10) % 10).ToString()) && answer.Contains((aq2r2 % 10).ToString()))
                 {
                     //feedback right answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    source.PlayOneShot(screen2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
                     int nb = cGO.Count;
@@ -1198,7 +1189,7 @@ public class SetAnswer : FSystem
                     }
                     if (solved) //if all question are solved
                     {
-                        tablet2.GetComponent<Selectable>().solved = true;    //set tablet to solved
+                        screen2.GetComponent<Selectable>().solved = true;    //set tablet to solved
                         fadingToAnswersRoom2 = true;
                         //start fading to password
                         timerWhite = Time.time;
@@ -1210,7 +1201,7 @@ public class SetAnswer : FSystem
                 else
                 {
                     //feedback wrong answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
+                    source.PlayOneShot(screen2.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
             }
@@ -1231,7 +1222,7 @@ public class SetAnswer : FSystem
                 if (answer == aq3r2) //if answer is correct
                 {
                     //feedback right answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    source.PlayOneShot(screen2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
                     forGO.SetActive(false); //hide the question
@@ -1256,7 +1247,7 @@ public class SetAnswer : FSystem
                     }
                     if (solved) //if all question are solved
                     {
-                        tablet2.GetComponent<Selectable>().solved = true;    //set tablet to solved
+                        screen2.GetComponent<Selectable>().solved = true;    //set tablet to solved
                         fadingToAnswersRoom2 = true;
                         //start fading to password
                         timerWhite = Time.time;
@@ -1268,7 +1259,7 @@ public class SetAnswer : FSystem
                 else
                 {
                     //feedback wrong answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
+                    source.PlayOneShot(screen2.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
             }
@@ -1289,7 +1280,7 @@ public class SetAnswer : FSystem
                 if (answer == aq4r2) //if answer is correct
                 {
                     //feedback right answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    source.PlayOneShot(screen2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
                     forGO.SetActive(false); //hide the question
@@ -1314,7 +1305,7 @@ public class SetAnswer : FSystem
                     }
                     if (solved) //if all question are solved
                     {
-                        tablet2.GetComponent<Selectable>().solved = true;    //set tablet to solved
+                        screen2.GetComponent<Selectable>().solved = true;    //set tablet to solved
                         fadingToAnswersRoom2 = true;
                         //start fading to password
                         timerWhite = Time.time;
@@ -1326,7 +1317,7 @@ public class SetAnswer : FSystem
                 else
                 {
                     //feedback wrong answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
+                    source.PlayOneShot(screen2.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
             }
@@ -1349,7 +1340,7 @@ public class SetAnswer : FSystem
                 if (answer == aq5r2) //if answer is correct
                 {
                     //feedback right answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    source.PlayOneShot(screen2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
                     forGO.SetActive(false); //hide the question
@@ -1374,7 +1365,7 @@ public class SetAnswer : FSystem
                     }
                     if (solved) //if all question are solved
                     {
-                        tablet2.GetComponent<Selectable>().solved = true;    //set tablet to solved
+                        screen2.GetComponent<Selectable>().solved = true;    //set tablet to solved
                         fadingToAnswersRoom2 = true;
                         //start fading to password
                         timerWhite = Time.time;
@@ -1386,7 +1377,7 @@ public class SetAnswer : FSystem
                 else
                 {
                     //feedback wrong answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
+                    source.PlayOneShot(screen2.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
             }
@@ -1407,7 +1398,7 @@ public class SetAnswer : FSystem
                 if (answer == aq6r2) //if answer is correct
                 {
                     //feedback right answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    source.PlayOneShot(screen2.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
                     forGO.SetActive(false); //hide the question
@@ -1432,7 +1423,7 @@ public class SetAnswer : FSystem
                     }
                     if (solved) //if all question are solved
                     {
-                        tablet2.GetComponent<Selectable>().solved = true;    //set tablet to solved
+                        screen2.GetComponent<Selectable>().solved = true;    //set tablet to solved
                         fadingToAnswersRoom2 = true;
                         //start fading to password
                         timerWhite = Time.time;
@@ -1444,7 +1435,7 @@ public class SetAnswer : FSystem
                 else
                 {
                     //feedback wrong answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
+                    source.PlayOneShot(screen2.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
             }
@@ -1463,11 +1454,12 @@ public class SetAnswer : FSystem
                 source.clip = lockR2.First().GetComponent<Selectable>().right;
                 source.PlayDelayed(0);
                 source.loop = true;
+                IARTab.room3Unlocked = true;
             }
             else
             {
                 //feedback wrong answer
-                source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
+                source.PlayOneShot(screen2.GetComponent<Selectable>().wrong);
                 timeW = Time.time;
             }
         }
@@ -1492,7 +1484,7 @@ public class SetAnswer : FSystem
                     question.SetActive(false);
                     answer1R3Given = true; //set this answer to "given"
                     //feedback right answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    source.PlayOneShot(screen3.GetComponent<Selectable>().right);
                     timeR = Time.time;
                     //disable inventory elements used to answer to this question
                     int nb = cGO.Count;
@@ -1507,7 +1499,7 @@ public class SetAnswer : FSystem
                     //check if all anwer were given
                     if (answer2R3Given && answer3R3Given && answer4R3Given)
                     {
-                        tablet3.GetComponent<Selectable>().solved = true;
+                        screen3.GetComponent<Selectable>().solved = true;
                         fadingToPasswordRoom3 = true;
                         //start fading to password
                         timerWhite = Time.time;
@@ -1533,7 +1525,7 @@ public class SetAnswer : FSystem
                     question.SetActive(false);
                     answer2R3Given = true; //set this answer to "given"
                     //feedback right answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    source.PlayOneShot(screen3.GetComponent<Selectable>().right);
                     timeR = Time.time;
                     //disable inventory elements used to answer to this question
                     int nb = cGO.Count;
@@ -1548,7 +1540,7 @@ public class SetAnswer : FSystem
                     //check if all anwer were given
                     if (answer1R3Given && answer3R3Given && answer4R3Given)
                     {
-                        tablet3.GetComponent<Selectable>().solved = true;
+                        screen3.GetComponent<Selectable>().solved = true;
                         fadingToPasswordRoom3 = true;
                         //start fading to password
                         timerWhite = Time.time;
@@ -1574,7 +1566,7 @@ public class SetAnswer : FSystem
                     question.SetActive(false);
                     answer3R3Given = true; //set this answer to "given"
                     //feedback right answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    source.PlayOneShot(screen3.GetComponent<Selectable>().right);
                     timeR = Time.time;
                     //disable inventory elements used to answer to this question
                     int nb = cGO.Count;
@@ -1589,7 +1581,7 @@ public class SetAnswer : FSystem
                     //check if all anwer were given
                     if (answer2R3Given && answer1R3Given && answer4R3Given)
                     {
-                        tablet3.GetComponent<Selectable>().solved = true;
+                        screen3.GetComponent<Selectable>().solved = true;
                         fadingToPasswordRoom3 = true;
                         //start fading to password
                         timerWhite = Time.time;
@@ -1615,12 +1607,12 @@ public class SetAnswer : FSystem
                     question.SetActive(false);
                     answer4R3Given = true; //set this answer to "given"
                     //feedback right answer
-                    source.PlayOneShot(tablet2.GetComponent<Selectable>().right);
+                    source.PlayOneShot(screen3.GetComponent<Selectable>().right);
                     timeR = Time.time;
                     //check if all anwer were given
                     if (answer2R3Given && answer3R3Given && answer1R3Given)
                     {
-                        tablet3.GetComponent<Selectable>().solved = true;
+                        screen3.GetComponent<Selectable>().solved = true;
                         fadingToPasswordRoom3 = true;
                         //start fading to password
                         timerWhite = Time.time;
@@ -1634,7 +1626,7 @@ public class SetAnswer : FSystem
         else
         {
             //feedback wrong answer
-            source.PlayOneShot(tablet2.GetComponent<Selectable>().wrong);
+            source.PlayOneShot(screen3.GetComponent<Selectable>().wrong);
             timeW = Time.time;
         }
     }

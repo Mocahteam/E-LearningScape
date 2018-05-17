@@ -10,8 +10,9 @@ public class CollectableGO : MonoBehaviour {
 	public static bool usingLamp = false;
 
     //when true the method "closeInventory" of the system "Inventory" is called
-    //set to true when a system other than "Inventory" needs the inventory to be closed
+    //set to true when a system other than "Inventory" needs the inventory to be opened/closed
     public static bool askCloseInventory = false;
+    public static bool askOpenInventory = false;
 
     public GameObject goui; //the corresponding gameobject or ui element
 }

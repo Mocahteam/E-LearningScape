@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
+using TMPro;
 
 public class Inventory : FSystem {
 
@@ -15,9 +16,10 @@ public class Inventory : FSystem {
     private Family inputfields = FamilyManager.getFamily(new AllOfComponents(typeof(InputField)));
     private Family pui = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"));
     private Family elemsInventory = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
-    private Family onElem = FamilyManager.getFamily(new AnyOfTags("InventoryElements", "PuzzleUI"), new AllOfComponents(typeof(PointerOver)));
+    private Family onElem = FamilyManager.getFamily(new AnyOfTags("InventoryElements", "PuzzleUI", "IARTab"), new AllOfComponents(typeof(PointerOver)));
+    private Family plank = FamilyManager.getFamily(new AnyOfTags("Plank"));
 
-    private bool playerEnabled = true;
+    public static bool playerEnabled = true;
     private GameObject displayer;
     private GameObject displayedElement;
     private bool displayedElementWasNull = true;
@@ -136,6 +138,18 @@ public class Inventory : FSystem {
                             else
                             {
                                 Debug.Log(string.Concat("Puzzle piece ", id.ToString(), " doesn't exist."));
+                            }
+                        }
+                        else if(forGO.name == "Wire")
+                        {
+
+                            foreach (Transform child in plank.First().transform)
+                            {
+                                if (child.gameObject.name == "SubTitles")
+                                {
+                                    child.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Maintenant je dois utiliser la corde";
+                                    break;
+                                }
                             }
                         }
                         GameObjectManager.setGameObjectState(forGO, false);
@@ -348,21 +362,30 @@ public class Inventory : FSystem {
             }
         }
 
-		if (Input.GetKeyDown (KeyCode.A)) {
-			inputfieldFocused = false;
-			int nbInputFields = inputfields.Count;
-			for (int i = 0; i < nbInputFields; i++) {
-				forGO = inputfields.getAt (i);
-				if (forGO.GetComponent<InputField> ().isFocused && forGO.GetComponent<InputField> ().contentType == InputField.ContentType.Standard) {
-					inputfieldFocused = true;
-					break;
-				}
-			}
-			if (!inputfieldFocused) {
+		if (Input.GetKeyDown (KeyCode.A) || CollectableGO.askOpenInventory) {
+            if (!CollectableGO.askOpenInventory)
+            {
+                inputfieldFocused = false;
+                int nbInputFields = inputfields.Count;
+                for (int i = 0; i < nbInputFields; i++)
+                {
+                    forGO = inputfields.getAt(i);
+                    if (forGO.GetComponent<InputField>().isFocused && forGO.GetComponent<InputField>().contentType == InputField.ContentType.Standard)
+                    {
+                        inputfieldFocused = true;
+                        break;
+                    }
+                }
+            }
+			if (!inputfieldFocused || CollectableGO.askOpenInventory)
+            {
+                CollectableGO.askOpenInventory = false;
 				if (CollectableGO.onInventory) {
 					CloseInventory ();
-				} else {
-					foreach (Transform child in inventory.First().transform) {
+				} else
+                {
+                    inventory.First().SetActive(true);
+                    foreach (Transform child in inventory.First().transform) {
 						if (child.gameObject.name == "Enabled") {
 							child.gameObject.SetActive (true);
 						}
@@ -393,7 +416,7 @@ public class Inventory : FSystem {
 				}
 			}
 		} else if (CollectableGO.onInventory) {
-			if (onElem.Count == 0 && Input.GetMouseButtonDown (0)) {
+			if ((onElem.Count == 0 && Input.GetMouseButtonDown (0) && inventory.First().activeSelf) || Input.GetKeyDown(KeyCode.Escape)) {
 				CloseInventory ();
 			}
 		}
@@ -489,5 +512,6 @@ public class Inventory : FSystem {
         }
         CollectableGO.onInventory = false;
         CollectableGO.askCloseInventory = false;
+        inventory.First().SetActive(false);
     }
 }
