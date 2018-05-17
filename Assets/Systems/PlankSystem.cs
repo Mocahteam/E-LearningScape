@@ -42,7 +42,6 @@ public class PlankSystem : FSystem {
             GameObject elt2 = sArray[(i + 1) % selected.Count];
 
             GameObject c = connectors.getAt(i);
-            Debug.Log(c);
             c.transform.position = Vector3.Lerp(elt1.transform.position, elt2.transform.position, .5f);
             c.transform.LookAt(elt2.transform);
             c.transform.localScale = new Vector3(c.transform.localScale.x, c.transform.localScale.y, 5*Vector3.Distance(elt1.transform.position, elt2.transform.position));

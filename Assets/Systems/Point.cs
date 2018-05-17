@@ -2,7 +2,7 @@
 using FYFY;
 using FYFY_plugins.TriggerManager;
 
-public class Point : FSystem { // TODO
+public class Point : FSystem {
     // Both Vive controllers (they also have TriggerSensitive3D)
     private Family controllers = FamilyManager.getFamily(new AllOfComponents(typeof(LaserPointer)));
 
@@ -12,7 +12,7 @@ public class Point : FSystem { // TODO
     private GameObject focused;
     private bool selected = false;
 
-    // Use this to update member variables when system pause. 
+    // Use this to update member variables when system pause.
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame) {
 	}
@@ -34,7 +34,7 @@ public class Point : FSystem { // TODO
         // For each controller
         foreach(GameObject go in controllers)
         {
-            
+
             LaserPointer lp = go.GetComponent<LaserPointer>();
             RaycastHit hit;
             if (Physics.Raycast(lp.trackedObj.transform.position, lp.transform.forward, out hit, 100, lp.pointMask))
