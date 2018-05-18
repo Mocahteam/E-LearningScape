@@ -17,7 +17,6 @@ public class SetAnswer : FSystem
     private Family wTimerText = FamilyManager.getFamily(new AnyOfTags("WrongTimerText"));
     private Family qRoom2 = FamilyManager.getFamily(new AnyOfTags("Q-R2")); //questions of the room 2 (tablet)
     private Family aRoom2 = FamilyManager.getFamily(new AnyOfTags("A-R2")); //answers of the room 2 (tablet)
-    private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
     private Family symbolsE12Tag = FamilyManager.getFamily(new AnyOfTags("E12_Symbol"));
     private Family symbolsE12Component = FamilyManager.getFamily(new AllOfComponents(typeof(E12_Symbol)));
     private Family removableBoardWords = FamilyManager.getFamily(new AnyOfTags("BoardWords"));
@@ -81,10 +80,6 @@ public class SetAnswer : FSystem
     private bool answer3R3Given = false;
     private bool answer4R3Given = false;
     private bool fadingToPasswordRoom3 = false;
-    
-    private string password = 703.ToString();
-    private GameObject wallRoom2;
-    private bool moveWall = false;
 
     private bool usingLamp = false;
     private string symbolLetter;
@@ -96,7 +91,6 @@ public class SetAnswer : FSystem
 
     public SetAnswer()
     {
-        wallRoom2 = lockR2.First().transform.parent.gameObject;
 
         timeR = -Mathf.Infinity;
         timeW = -Mathf.Infinity;
@@ -365,7 +359,6 @@ public class SetAnswer : FSystem
                     break;
             }
         }
-        lockR2.First().GetComponentInChildren<InputField>().onEndEdit.AddListener(CheckPasswordRoom2);
 
 
         //setting audio and visual elements for feedback when the player answers
@@ -457,17 +450,6 @@ public class SetAnswer : FSystem
         else
         {
             wrongBG.SetActive(false);
-        }
-
-        if (moveWall)
-        {
-            wallRoom2.transform.position += Vector3.up * 0.01f + Vector3.forward * ((Random.value - 0.5f) / 10);
-            if (wallRoom2.transform.position.y > 7.5)
-            {
-                wallRoom2.SetActive(false);
-                moveWall = false;
-                source.loop = false;
-            }
         }
 
         //tablet room 1 animation and interaction//
@@ -1438,29 +1420,6 @@ public class SetAnswer : FSystem
                     source.PlayOneShot(screen2.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
                 }
-            }
-        }
-    }
-
-    private void CheckPasswordRoom2(string value)
-    {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            if (value == password)
-            {
-                //if password is correct, feedback right answer, start animation to move wall
-                lockR2.First().GetComponent<Selectable>().solved = true;
-                moveWall = true;
-                source.clip = lockR2.First().GetComponent<Selectable>().right;
-                source.PlayDelayed(0);
-                source.loop = true;
-                IARTab.room3Unlocked = true;
-            }
-            else
-            {
-                //feedback wrong answer
-                source.PlayOneShot(screen2.GetComponent<Selectable>().wrong);
-                timeW = Time.time;
             }
         }
     }

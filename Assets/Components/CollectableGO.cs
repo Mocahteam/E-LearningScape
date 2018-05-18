@@ -6,8 +6,9 @@ public class CollectableGO : MonoBehaviour {
     public static bool usingWire = false;
     public static bool usingKeyE03 = false;
     public static bool usingKeyE08 = false;
-	public static bool usingGlasses = false;
-	public static bool usingLamp = false;
+	public static bool usingGlasses1 = false;
+    public static bool usingGlasses2 = false;
+    public static bool usingLamp = false;
 
     //when true the method "closeInventory" of the system "Inventory" is called
     //set to true when a system other than "Inventory" needs the inventory to be opened/closed

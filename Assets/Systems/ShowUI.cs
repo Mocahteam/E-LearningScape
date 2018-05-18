@@ -25,7 +25,8 @@ public class ShowUI : FSystem {
     private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ENABLED));
     private Family bag = FamilyManager.getFamily(new AnyOfTags("Bag"));
     private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
-	private Family closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PlankText", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
+    private Family lockR2Wheels = FamilyManager.getFamily(new AnyOfTags("LockR2Wheel"));
+    private Family closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PlankText", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family closeBox = FamilyManager.getFamily (new AnyOfTags ("Box", "Ball", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family overInventoryElem = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(PointerOver)));
 	private Family e05Pieces = FamilyManager.getFamily(new AnyOfTags("E05UI"));
@@ -110,18 +111,31 @@ public class ShowUI : FSystem {
     private bool unlockBag = false;
     private GameObject bagPadlock;
     private bool showBagPaper = false;
-    private GameObject bagAnswer;
-    private bool usingGlassesTmp = false;
-	private bool onBagPaper = false;
+    private bool usingGlassesTmp1 = false;
+    private bool usingGlassesTmp2 = false;
+    private bool onBagPaper = false;
     private Vector3 bagPaperInitialPos;
 
     //lock room 2
     private bool onLockR2 = false;
     private bool moveToLockR2 = false;
     private Vector3 lockR2Pos;
+    private GameObject lockWheel1;
+    private GameObject lockWheel2;
+    private GameObject lockWheel3;
+    private GameObject lockUD;
+    private GameObject lockLR;
+    private GameObject selectedWheel;
+    private bool lockRotationUp = false;
+    private bool lockRotationDown = false;
+    private Color lockWheelColor;
+    private int lockNumber1 = 0;
+    private int lockNumber2 = 0;
+    private int lockNumber3 = 0;
+    private int wheelRotationCount = 0;
 
-	//carillon
-	private bool onCarillon = false;
+    //carillon
+    private bool onCarillon = false;
 	private GameObject carillonImage;
 
     //board
@@ -197,6 +211,24 @@ public class ShowUI : FSystem {
                 }
             }
         }
+        nb = lockR2Wheels.Count;
+        for(int i = 0; i <nb; i++)
+        {
+            forGO = lockR2Wheels.getAt(i);
+            if (forGO.name.Contains(1.ToString()))
+            {
+                lockWheel1 = forGO;
+            }
+            else if (forGO.name.Contains(2.ToString()))
+            {
+                lockWheel2 = forGO;
+            }
+            else if (forGO.name.Contains(3.ToString()))
+            {
+                lockWheel3 = forGO;
+            }
+        }
+        lockWheelColor = lockWheel1.GetComponent<Renderer>().material.color;
 
         foreach(Transform child in plank.First().transform)
         {
@@ -220,21 +252,46 @@ public class ShowUI : FSystem {
                 bagPadlock = child.gameObject;
             }
         }
-        foreach(Transform child in inventory.First().transform) {
-            if(child.gameObject.name == "GlassesBackground")
-            {
-                foreach(Transform c in child)
-                {
-                    bagAnswer = c.gameObject;
-                }
-            }
-        }
 
 		foreach (Transform child in carillon.First().transform) {
 			if (child.gameObject.GetComponent<Canvas> ()) {
 				carillonImage = child.gameObject;
 				break;
 			}
+        }
+
+        foreach(Transform child in lockR2.First().transform)
+        {
+            if(child.gameObject.name == "LeftRight")
+            {
+                lockLR = child.gameObject;
+                foreach(Transform c in child)
+                {
+                    if(c.gameObject.name == "Left")
+                    {
+                        c.gameObject.GetComponent<Button>().onClick.AddListener(LockR2Left);
+                    }
+                    else if (c.gameObject.name == "Right")
+                    {
+                        c.gameObject.GetComponent<Button>().onClick.AddListener(LockR2Right);
+                    }
+                }
+            }
+            else if (child.gameObject.name == "UpDown")
+            {
+                lockUD = child.gameObject;
+                foreach (Transform c in child)
+                {
+                    if (c.gameObject.name == "Up")
+                    {
+                        c.gameObject.GetComponent<Button>().onClick.AddListener(LockR2Up);
+                    }
+                    else if (c.gameObject.name == "Down")
+                    {
+                        c.gameObject.GetComponent<Button>().onClick.AddListener(LockR2Down);
+                    }
+                }
+            }
         }
 
         foreach (Transform child in board.transform)
@@ -273,18 +330,30 @@ public class ShowUI : FSystem {
         
         if (onBag)
         {
-            if (usingGlassesTmp && !CollectableGO.usingGlasses)
+            if((usingGlassesTmp1 != CollectableGO.usingGlasses1) || (usingGlassesTmp2 != CollectableGO.usingGlasses2))
             {
-                bagAnswer.SetActive(false);
-            }
-			else if (!usingGlassesTmp && CollectableGO.usingGlasses && onBagPaper)
-            {
-                bagAnswer.SetActive(true);
+                if(CollectableGO.usingGlasses1 && CollectableGO.usingGlasses2)
+                {
+                    bag.First().GetComponentInChildren<Image>().sprite = bag.First().GetComponentInChildren<BagImage>().image4;
+                }
+                else if (CollectableGO.usingGlasses1)
+                {
+                    bag.First().GetComponentInChildren<Image>().sprite = bag.First().GetComponentInChildren<BagImage>().image3;
+                }
+                else if (CollectableGO.usingGlasses2)
+                {
+                    bag.First().GetComponentInChildren<Image>().sprite = bag.First().GetComponentInChildren<BagImage>().image2;
+                }
+                else
+                {
+                    bag.First().GetComponentInChildren<Image>().sprite = bag.First().GetComponentInChildren<BagImage>().image1;
+                }
             }
         }
-        usingGlassesTmp = CollectableGO.usingGlasses;
+        usingGlassesTmp1 = CollectableGO.usingGlasses1;
+        usingGlassesTmp2 = CollectableGO.usingGlasses2;
 
-        if(Time.time - plankSubtitlesTimer < 2 && !plankSubtitle.activeSelf)
+        if (Time.time - plankSubtitlesTimer < 2 && !plankSubtitle.activeSelf)
         {
             plankSubtitle.SetActive(true);
         }
@@ -597,11 +666,6 @@ public class ShowUI : FSystem {
                         moveBag = false;
                         bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition += Vector3.up * (bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.InverseTransformPoint(Camera.main.transform.position).y - bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y);
                         bag.First().GetComponentInChildren<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
-                        if (CollectableGO.usingGlasses)
-                        {
-                            //show the answer if glasses are used
-                            bagAnswer.SetActive(true);
-                        }
 						onBagPaper = true;
                     }
                 }
@@ -671,7 +735,11 @@ public class ShowUI : FSystem {
                 player.First().transform.rotation = Quaternion.LookRotation(newDir);
                 newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, 360, 0);
                 Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
-                lockR2.First().GetComponentInChildren<InputField>().ActivateInputField();
+                lockLR.SetActive(true);
+                lockUD.SetActive(true);
+                selectedWheel = lockWheel2;
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
+                lockUD.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - lockUD.transform.localPosition.x);
                 moveToLockR2 = false;
             }
         }
@@ -692,6 +760,37 @@ public class ShowUI : FSystem {
                 Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
                 moveToBoard = false;
                 distToBoard = Mathf.Abs(Vector3.Dot((Camera.main.transform.position - eraser.transform.position), board.transform.up));
+            }
+        }
+
+        if (lockRotationUp)
+        {
+            selectedWheel.transform.Rotate(1,0,0);
+            wheelRotationCount++;
+            if (wheelRotationCount == 36)
+            {
+                lockRotationUp = false;
+                wheelRotationCount = 0;
+                if (lockNumber1 == 7 && lockNumber2 == 0 && lockNumber3 == 3 && !IARTab.room3Unlocked)
+                {
+                    lockR2.First().GetComponent<Selectable>().solved = true;
+                    IARTab.room3Unlocked = true;
+                }
+            }
+        }
+        else if (lockRotationDown)
+        {
+            selectedWheel.transform.Rotate(-1, 0, 0);
+            wheelRotationCount++;
+            if (wheelRotationCount == 36)
+            {
+                lockRotationDown = false;
+                wheelRotationCount = 0;
+                if (lockNumber1 == 7 && lockNumber2 == 0 && lockNumber3 == 3 && !IARTab.room3Unlocked)
+                {
+                    lockR2.First().GetComponent<Selectable>().solved = true;
+                    IARTab.room3Unlocked = true;
+                }
             }
         }
 
@@ -813,9 +912,9 @@ public class ShowUI : FSystem {
 					} else if (forGO.tag == "LockRoom2") {  //set lock room 2
 						//the position in front of the lock is not the same depending on the scale of the player
 						if (player.First ().transform.localScale.x < 0.9f) {
-							lockR2Pos = new Vector3 (lockR2.First ().transform.position.x - 1.5f, 1.6f, lockR2.First ().transform.position.z);
+							lockR2Pos = new Vector3 (lockWheel2.transform.position.x - 2.5f, 2.68f, lockWheel2.transform.position.z);
 						} else {
-							lockR2Pos = new Vector3 (lockR2.First ().transform.position.x - 1.5f, 0.98f, lockR2.First ().transform.position.z);
+							lockR2Pos = new Vector3 (lockWheel2.transform.position.x - 2.5f, 2f, lockWheel2.transform.position.z);
 						}
 						//calculate the correct speed so that the translation and the rotation finish at the same time
 						dist = (lockR2Pos - player.First ().transform.position).magnitude;
@@ -857,7 +956,7 @@ public class ShowUI : FSystem {
                 }
             }
         }
-		else if(!CollectableGO.onInventory)    //if "noselection" is false
+		else if(!IARTab.onIAR)    //if "noselection" is false
         {
 			if (onPlank) {
 				if (closePlank.Count == 0 && Input.GetMouseButtonDown (0)) {
@@ -1149,7 +1248,6 @@ public class ShowUI : FSystem {
 			bag.First ().GetComponent<Rigidbody> ().isKinematic = false;
 			moveBag = false;
 			if (bag.First ().GetComponentInChildren<Canvas> ().gameObject.transform.parent.localPosition.y != bagPaperInitialPos.y) {
-				bagAnswer.SetActive (false);
 				showBagPaper = true;
 				moveBag = true;
 				bag.First ().GetComponent<Rigidbody> ().isKinematic = true;
@@ -1167,6 +1265,15 @@ public class ShowUI : FSystem {
 		} else if (onCarillon) {
 			carillonImage.SetActive (false);
 		}
+        else if (onLockR2)
+        {
+            lockLR.SetActive(false);
+            lockUD.SetActive(false);
+            lockWheel1.GetComponent<Renderer>().material.color = lockWheelColor;
+            lockWheel2.GetComponent<Renderer>().material.color = lockWheelColor;
+            lockWheel3.GetComponent<Renderer>().material.color = lockWheelColor;
+            lockR2.First().GetComponent<Selectable>().solved = false;
+        }
         //show cursor
         cursorUI.SetActive(true);
 		int nbObjects = objects.Count;
@@ -1193,10 +1300,128 @@ public class ShowUI : FSystem {
 		onCarillon = false;
         onBoard = false;
     }
-
-    //predicate to return the first vector of the list
-    private bool ReturnFirst(Vector3 v)
+    
+    private void LockR2Up()
     {
-        return true;
+        if (!lockRotationUp && !lockRotationDown)
+        {
+            lockRotationUp = true;
+            if (Object.ReferenceEquals(selectedWheel, lockWheel1))
+            {
+                if(lockNumber1 == 9)
+                {
+                    lockNumber1 = 0;
+                }
+                else
+                {
+                    lockNumber1++;
+                }
+            }
+            else if (Object.ReferenceEquals(selectedWheel, lockWheel2))
+            {
+                if (lockNumber2 == 9)
+                {
+                    lockNumber2 = 0;
+                }
+                else
+                {
+                    lockNumber2++;
+                }
+            }
+            else if (Object.ReferenceEquals(selectedWheel, lockWheel3))
+            {
+                if (lockNumber3 == 9)
+                {
+                    lockNumber3 = 0;
+                }
+                else
+                {
+                    lockNumber3++;
+                }
+            }
+        }
+    }
+
+    private void LockR2Down()
+    {
+        if (!lockRotationUp && !lockRotationDown)
+        {
+            lockRotationDown = true;
+            if (Object.ReferenceEquals(selectedWheel, lockWheel1))
+            {
+                if (lockNumber1 == 0)
+                {
+                    lockNumber1 = 9;
+                }
+                else
+                {
+                    lockNumber1--;
+                }
+            }
+            else if (Object.ReferenceEquals(selectedWheel, lockWheel2))
+            {
+                if (lockNumber2 == 0)
+                {
+                    lockNumber2 = 9;
+                }
+                else
+                {
+                    lockNumber2--;
+                }
+            }
+            else if (Object.ReferenceEquals(selectedWheel, lockWheel3))
+            {
+                if (lockNumber3 == 0)
+                {
+                    lockNumber3 = 9;
+                }
+                else
+                {
+                    lockNumber3--;
+                }
+            }
+        }
+    }
+
+    private void LockR2Left()
+    {
+        if (!lockRotationUp && !lockRotationDown)
+        {
+            if (Object.ReferenceEquals(selectedWheel, lockWheel2))
+            {
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
+                selectedWheel = lockWheel1;
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
+                lockUD.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - lockUD.transform.localPosition.x);
+            }
+            else if (Object.ReferenceEquals(selectedWheel, lockWheel3))
+            {
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
+                selectedWheel = lockWheel2;
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
+                lockUD.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - lockUD.transform.localPosition.x);
+            }
+        }
+    }
+
+    private void LockR2Right()
+    {
+        if (!lockRotationUp && !lockRotationDown)
+        {
+            if (Object.ReferenceEquals(selectedWheel, lockWheel1))
+            {
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
+                selectedWheel = lockWheel2;
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
+                lockUD.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - lockUD.transform.localPosition.x);
+            }
+            else if (Object.ReferenceEquals(selectedWheel, lockWheel2))
+            {
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
+                selectedWheel = lockWheel3;
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
+                lockUD.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - lockUD.transform.localPosition.x);
+            }
+        }
     }
 }

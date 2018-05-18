@@ -13,6 +13,8 @@ public class IARTab : FSystem {
     private Family audioSourceFamily = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)));
     private Family door = FamilyManager.getFamily(new AllOfComponents(typeof(Door)));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
+    private Family fences = FamilyManager.getFamily(new AnyOfTags("Fence"));
+    private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
 
     private GameObject tabsGO;
     public static bool onIAR = false;
@@ -42,15 +44,19 @@ public class IARTab : FSystem {
     private bool wasOnMenu = false;
     private bool windowClosed = false;
 
+    private GameObject fence1;
+    private GameObject fence2;
+
     private bool playerLookingToDoor = false;
     private Vector3 tmpTarget;
+    private int angleCount = 0;
 
     private AudioSource gameAudioSource;
 
     public IARTab()
     {
         door.First().transform.position += Vector3.up * (5.73f - door.First().transform.position.y); //opened
-        door.First().transform.position += Vector3.up*(2.13f - door.First().transform.position.y);    //closed
+        door.First().transform.position += Vector3.up * (2.13f - door.First().transform.position.y); //closed
 
         tabsGO = tabs.First().transform.parent.gameObject;
         inventory = inventoryFamily.First();
@@ -127,6 +133,19 @@ public class IARTab : FSystem {
             if (audioSourceFamily.getAt(i).name == "Game")
             {
                 gameAudioSource = audioSourceFamily.getAt(i).GetComponent<AudioSource>();
+            }
+        }
+
+        nb = fences.Count;
+        for (int i = 0; i < nb; i++)
+        {
+            if (fences.getAt(i).name.Contains(1.ToString()))
+            {
+                fence1 = fences.getAt(i);
+            }
+            else if (fences.getAt(i).name.Contains(2.ToString()))
+            {
+                fence2 = fences.getAt(i);
             }
         }
     }
@@ -267,11 +286,37 @@ public class IARTab : FSystem {
         }
         if (room3Unlocked && !listenerAddedRoom3)
         {
-            screen3ButtonImage.GetComponent<Button>().onClick.AddListener(delegate {
-                SwitchTab(screenR3, screen3ButtonImage);
-            });
-            screen3ButtonImage.GetComponentInChildren<Text>().text = "Rêve 3";
-            listenerAddedRoom3 = true;
+            player.First().GetComponent<FirstPersonController>().enabled = false;
+            Cursor.visible = false;
+            if (!playerLookingToDoor)
+            {
+                tmpTarget = (fence1.transform.position + fence2.transform.position)/2 - Camera.main.transform.position;
+                Vector3 newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, Mathf.PI / 180, 0);
+                Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
+                if (Vector3.Angle(tmpTarget, Camera.main.transform.forward) < 1)
+                {
+                    Camera.main.transform.forward = tmpTarget;
+                    gameAudioSource.PlayOneShot(lockR2.First().GetComponent<Selectable>().right);
+                    playerLookingToDoor = true;
+                }
+            }
+            else
+            {
+                fence1.transform.Rotate(0, 0, -1);
+                fence2.transform.Rotate(0, 0, 1);
+                angleCount++;
+                if (angleCount == 103)
+                {
+                    angleCount = 0;
+                    playerLookingToDoor = false;
+                    screen3ButtonImage.GetComponent<Button>().onClick.AddListener(delegate {
+                        SwitchTab(screenR3, screen3ButtonImage);
+                    });
+                    screen3ButtonImage.GetComponentInChildren<Text>().text = "Rêve 3";
+                    listenerAddedRoom3 = true;
+                    player.First().GetComponent<FirstPersonController>().enabled = true;
+                }
+            }
         }
     }
 

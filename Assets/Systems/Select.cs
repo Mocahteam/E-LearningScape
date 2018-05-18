@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Select : FSystem {
 
     //all selectable objects
-	private Family objects = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(Takable), typeof(ToggleableGO)));
+	private Family objects = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(Takable), typeof(ToggleableGO), typeof(CollectableGO)));
     //all takable objects
     private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Takable)));
     private Family focusedMatFamily = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
@@ -103,28 +103,37 @@ public class Select : FSystem {
                         hit.transform.gameObject.GetComponent<Takable>().focused = true;
                         focused = hit.transform.gameObject;
                     }
-                    else if (hit.transform.parent.gameObject.GetComponent<Takable>())
+                    else if (hit.transform.parent)
                     {
-                        hit.transform.parent.gameObject.GetComponent<Takable>().focused = true;
-                        focused = hit.transform.parent.gameObject;
+                        if (hit.transform.parent.gameObject.GetComponent<Takable>())
+                        {
+                            hit.transform.parent.gameObject.GetComponent<Takable>().focused = true;
+                            focused = hit.transform.parent.gameObject;
+                        }
 					}
 					if (hit.transform.gameObject.GetComponent<ToggleableGO>())
 					{
 						hit.transform.gameObject.GetComponent<ToggleableGO>().focused = true;
 						focused = hit.transform.gameObject;
 					}
-					else if (hit.transform.parent.gameObject.GetComponent<ToggleableGO>())
+					else if (hit.transform.parent)
 					{
-						hit.transform.parent.gameObject.GetComponent<ToggleableGO>().focused = true;
-						focused = hit.transform.parent.gameObject;
+                        if (hit.transform.parent.gameObject.GetComponent<ToggleableGO>())
+                        {
+                            hit.transform.parent.gameObject.GetComponent<ToggleableGO>().focused = true;
+                            focused = hit.transform.parent.gameObject;
+                        }
 					}
-                    if (hit.transform.gameObject.GetComponent<Selectable>())
+                    if (hit.transform.gameObject.GetComponent<Selectable>() || hit.transform.gameObject.GetComponent<CollectableGO>())
                     {
                         focused = hit.transform.gameObject;
                     }
-                    else if (hit.transform.parent.gameObject.GetComponent<Selectable>())
+                    else if (hit.transform.parent)
                     {
-                        focused = hit.transform.parent.gameObject;
+                        if (hit.transform.parent.gameObject.GetComponent<Selectable>() || hit.transform.parent.gameObject.GetComponent<CollectableGO>())
+                        {
+                            focused = hit.transform.parent.gameObject;
+                        }
                     }
                 }
             }

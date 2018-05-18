@@ -42,6 +42,11 @@ TagManager:
   - ScreenIAR
   - IARTab
   - StoryDisplayer
+  - DreamFragmentUI
+  - LockR2Wheel
+  - Fence
+  - DreamFragmentLight
+  - GlassesBG
   layers:
   - Default
   - TransparentFX

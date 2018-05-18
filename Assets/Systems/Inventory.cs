@@ -18,6 +18,7 @@ public class Inventory : FSystem {
     private Family elemsInventory = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
     private Family onElem = FamilyManager.getFamily(new AnyOfTags("InventoryElements", "PuzzleUI", "IARTab"), new AllOfComponents(typeof(PointerOver)));
     private Family plank = FamilyManager.getFamily(new AnyOfTags("Plank"));
+    private Family glassesBackgrounds = FamilyManager.getFamily(new AnyOfTags("GlassesBG"));
 
     public static bool playerEnabled = true;
     private GameObject displayer;
@@ -26,9 +27,12 @@ public class Inventory : FSystem {
     private GameObject selection;
     private GameObject selectedUI;
 
-    private GameObject glassesBG;
-    private GameObject glassesUI;
-    private GameObject glassesSelected;
+    private GameObject glassesBG1;
+    private GameObject glassesUI1;
+    private GameObject glassesSelected1;
+    private GameObject glassesBG2;
+    private GameObject glassesUI2;
+    private GameObject glassesSelected2;
 
     private RaycastHit hit;
     private bool inputfieldFocused;
@@ -62,24 +66,42 @@ public class Inventory : FSystem {
             {
                 selection = child.gameObject;
             }
-            else if (child.gameObject.name == "Glasses")
+            else if (child.gameObject.name == "Glasses1")
             {
-                glassesUI = child.gameObject;
+                glassesUI1 = child.gameObject;
             }
-            else if (child.gameObject.name == "GlassesBackground")
+            else if (child.gameObject.name == "GlassesSelected1")
             {
-                glassesBG = child.gameObject;
+                glassesSelected1 = child.gameObject;
             }
-            else if (child.gameObject.name == "GlassesSelected")
+            else if (child.gameObject.name == "Glasses2")
             {
-                glassesSelected = child.gameObject;
+                glassesUI2 = child.gameObject;
+            }
+            else if (child.gameObject.name == "GlassesSelected2")
+            {
+                glassesSelected2 = child.gameObject;
+            }
+        }
+
+        int nb = glassesBackgrounds.Count;
+        for(int i = 0; i < nb; i++)
+        {
+            forGO = glassesBackgrounds.getAt(i);
+            if (forGO.name.Contains(1.ToString()))
+            {
+                glassesBG1 = forGO;
+            }
+            else if (forGO.name.Contains(2.ToString()))
+            {
+                glassesBG2 = forGO;
             }
         }
 
         puzzleUI = new Dictionary<int, GameObject>();
         int id;
-		int forCount = pui.Count;
-		for(int i = 0; i < forCount; i++)
+		nb = pui.Count;
+		for(int i = 0; i < nb; i++)
         {
 			forGO = pui.getAt (i);
 			int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out id);
@@ -119,7 +141,7 @@ public class Inventory : FSystem {
             {
                 tryGO = forGO.GetComponent<RectTransform>() && forGO.GetComponent<PointerOver>();
             }
-			if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && tryGO)
+			if (Input.GetMouseButtonDown(0) && tryGO)
             {
 				if (forGO.GetComponent<CollectableGO>().goui)
                 {
@@ -157,20 +179,36 @@ public class Inventory : FSystem {
                 }
                 else
                 {
-					if (forGO.name == "Glasses")
+					if (forGO.name == "Glasses1")
                     {
-                        if (CollectableGO.usingGlasses)
+                        if (CollectableGO.usingGlasses1)
                         {
-                            CollectableGO.usingGlasses = false;
-                            glassesSelected.SetActive(false);
-                            glassesBG.SetActive(false);
+                            CollectableGO.usingGlasses1 = false;
+                            glassesSelected1.SetActive(false);
+                            glassesBG1.SetActive(false);
                         }
                         else
                         {
-                            glassesSelected.SetActive(true);
-                            glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
-                            CollectableGO.usingGlasses = true;
-                            glassesBG.SetActive(true);
+                            glassesSelected1.SetActive(true);
+                            glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
+                            CollectableGO.usingGlasses1 = true;
+                            glassesBG1.SetActive(true);
+                        }
+                    }
+                    else if (forGO.name == "Glasses2")
+                    {
+                        if (CollectableGO.usingGlasses2)
+                        {
+                            CollectableGO.usingGlasses2 = false;
+                            glassesSelected2.SetActive(false);
+                            glassesBG2.SetActive(false);
+                        }
+                        else
+                        {
+                            glassesSelected2.SetActive(true);
+                            glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
+                            CollectableGO.usingGlasses2 = true;
+                            glassesBG2.SetActive(true);
                         }
                     }
                     else
@@ -196,7 +234,8 @@ public class Inventory : FSystem {
                                         elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
                                     }
                                 }
-                                glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
+                                glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
+                                glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
                             }
                             displayer.SetActive(false);
                             selection.SetActive(false);
@@ -343,7 +382,8 @@ public class Inventory : FSystem {
                                         elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.right * (Camera.main.pixelWidth / 2 - 250) + Vector3.down * (Camera.main.pixelHeight / 2 - 100);
                                     }
                                     selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
-                                    glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
+                                    glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
+                                    glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
                                 }
                                 else if (!displayedElementWasNull)
                                 {
@@ -353,7 +393,8 @@ public class Inventory : FSystem {
                                         elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
                                     }
                                     selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
-                                    glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
+                                    glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
+                                    glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
                                 }
                             }
                         }
@@ -409,9 +450,10 @@ public class Inventory : FSystem {
 					}
 					if (selectedUI) {
 						selection.GetComponent<RectTransform> ().localPosition = selectedUI.GetComponent<RectTransform> ().localPosition;
-					}
-					glassesSelected.GetComponent<RectTransform> ().localPosition = glassesUI.GetComponent<RectTransform> ().localPosition;
-					onPuzzle = false;
+                    }
+                    glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
+                    glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
+                    onPuzzle = false;
 					CollectableGO.onInventory = true;
 				}
 			}
@@ -479,7 +521,8 @@ public class Inventory : FSystem {
             {
                 selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
             }
-            glassesSelected.GetComponent<RectTransform>().localPosition = glassesUI.GetComponent<RectTransform>().localPosition;
+            glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
+            glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
         }
         if (displayedElement)
         {
