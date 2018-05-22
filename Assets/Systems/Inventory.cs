@@ -19,6 +19,7 @@ public class Inventory : FSystem {
     private Family onElem = FamilyManager.getFamily(new AnyOfTags("InventoryElements", "PuzzleUI", "IARTab"), new AllOfComponents(typeof(PointerOver)));
     private Family plank = FamilyManager.getFamily(new AnyOfTags("Plank"));
     private Family glassesBackgrounds = FamilyManager.getFamily(new AnyOfTags("GlassesBG"));
+    private Family sUI = FamilyManager.getFamily(new AnyOfTags("ScrollUI"));
 
     public static bool playerEnabled = true;
     private GameObject displayer;
@@ -43,6 +44,10 @@ public class Inventory : FSystem {
     private Vector3 posBeforeDrag;
     private GameObject draggedPuzzle = null;
     private Vector3 posFromMouse;
+    private List<int> idTable;
+
+    private Dictionary<string, GameObject> scrollUI;
+    private GameObject scroll;
 
 	private GameObject blackLight;
 
@@ -98,6 +103,14 @@ public class Inventory : FSystem {
             }
         }
 
+        scrollUI = new Dictionary<string, GameObject>();
+        nb = sUI.Count;
+        for(int i = 0; i < nb; i++)
+        {
+            forGO = sUI.getAt(i);
+            scrollUI.Add(forGO.name, forGO);
+        }
+
         puzzleUI = new Dictionary<int, GameObject>();
         int id;
 		nb = pui.Count;
@@ -150,16 +163,35 @@ public class Inventory : FSystem {
                         GameObjectManager.setGameObjectState(forGO.GetComponent<CollectableGO>().goui, true);
                         if (forGO.tag == "Puzzle")
                         {
-                            int id;
-                            int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out id);
-                            puzzleUI.TryGetValue(id, out puzzlePiece);
-                            if (puzzlePiece)
+                            int nb, id;
+                            int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out nb);
+                            nb++;
+                            for(int j = 0; j < nb; j++)
                             {
-                                puzzlePiece.SetActive(true);
+                                idTable = new List<int>(puzzleUI.Keys);
+                                id = idTable[(int)(Random.value * idTable.Count)];
+                                puzzleUI.TryGetValue(id, out puzzlePiece);
+                                if (puzzlePiece)
+                                {
+                                    puzzlePiece.SetActive(true);
+                                    puzzleUI.Remove(id);
+                                }
+                                else
+                                {
+                                    Debug.Log(string.Concat("Puzzle piece ", id.ToString(), " doesn't exist."));
+                                }
+                            }
+                        }
+                        else if (forGO.tag == "Scroll")
+                        {
+                            scrollUI.TryGetValue(forGO.name[0].ToString(), out scroll);
+                            if (scroll)
+                            {
+                                scroll.SetActive(true);
                             }
                             else
                             {
-                                Debug.Log(string.Concat("Puzzle piece ", id.ToString(), " doesn't exist."));
+                                Debug.Log(string.Concat("Scroll ", forGO.name.Substring(0, 1), " doesn't exist."));
                             }
                         }
                         else if(forGO.name == "Wire")
@@ -252,9 +284,9 @@ public class Inventory : FSystem {
                             displayer.SetActive(true);
 							switch (forGO.name)
                             {
-							case "Syllabus":
-								bool elem1 = false;
-								bool elem2 = false;
+							    case "Syllabus":
+								    bool elem1 = false;
+								    bool elem2 = false;
 									int nbSyllabus = syllabusElems.Count;
 									for(int j = 0; j< nbSyllabus; j++)	
                                     {
@@ -329,10 +361,21 @@ public class Inventory : FSystem {
                                     }
                                     break;
 
-                                case "Puzzle":
-                                    foreach(Transform child in displayer.transform)
+                                case "Scroll":
+                                    foreach (Transform child in displayer.transform)
                                     {
-                                        if(child.gameObject.name == "Puzzles")
+                                        if (child.gameObject.name == "SMART")
+                                        {
+                                            displayedElement = child.gameObject;
+                                            displayedElement.SetActive(true);
+                                        }
+                                    }
+                                    break;
+
+                                case "Puzzle":
+                                    foreach (Transform child in displayer.transform)
+                                    {
+                                        if (child.gameObject.name == "Puzzles")
                                         {
                                             displayedElement = child.gameObject;
                                             displayedElement.SetActive(true);
@@ -341,7 +384,7 @@ public class Inventory : FSystem {
                                     }
                                     break;
 
-								case "Lamp":
+                                case "Lamp":
 									displayedElement = null;
 									CollectableGO.usingLamp = true;
 									blackLight.SetActive (true);

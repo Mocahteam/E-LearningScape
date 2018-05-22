@@ -47,6 +47,8 @@ TagManager:
   - Fence
   - DreamFragmentLight
   - GlassesBG
+  - ScrollUI
+  - Scroll
   layers:
   - Default
   - TransparentFX
