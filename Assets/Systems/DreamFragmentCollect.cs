@@ -15,6 +15,7 @@ public class DreamFragmentCollect : FSystem {
     private RaycastHit hit;
     private GameObject selectedFragment;
     private DreamFragment tmpDFComponent;
+    private bool onIAR = false;
 
     public DreamFragmentCollect()
     {
@@ -41,7 +42,7 @@ public class DreamFragmentCollect : FSystem {
             {
                 if (Object.ReferenceEquals(hit.transform.gameObject, dfFamily.getAt(i)))
                 {
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetMouseButtonDown(0) && !onIAR)
                     {
                         player.First().GetComponent<FirstPersonController>().enabled = false;
                         Cursor.lockState = CursorLockMode.None;
@@ -50,13 +51,18 @@ public class DreamFragmentCollect : FSystem {
                         selectedFragment = dfFamily.getAt(i);
                         dfUI.SetActive(true);
                         tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
-                        dfUI.GetComponentInChildren<TextMeshProUGUI>().text = string.Concat("Ouvrez l'enveloppe numéro ", tmpDFComponent.id, " et récupérez l'item \"", tmpDFComponent.itemName, "\"");
+                        if(tmpDFComponent.type == 0)
+                        {
+                            dfUI.GetComponentInChildren<TextMeshProUGUI>().text = string.Concat("Ouvrez l'enveloppe numéro ", tmpDFComponent.id, " et récupérez l'item \"", tmpDFComponent.itemName, "\"");
+                        }
                     }
                     break;
                 }
             }
         }
-	}
+        onIAR = IARTab.onIAR;
+
+    }
 
     private void CloseWindow()
     {

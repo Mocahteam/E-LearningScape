@@ -11,8 +11,7 @@ public class ShowUI : FSystem {
     
     //all selectable objects
     private Family objects = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable)));
-
-    private Family buttons = FamilyManager.getFamily(new AllOfComponents(typeof(Button)));
+    
     private Family inputFields = FamilyManager.getFamily(new AllOfComponents(typeof(InputField)));
     private Family ui = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
@@ -113,7 +112,6 @@ public class ShowUI : FSystem {
     private bool showBagPaper = false;
     private bool usingGlassesTmp1 = false;
     private bool usingGlassesTmp2 = false;
-    private bool onBagPaper = false;
     private Vector3 bagPaperInitialPos;
 
     //lock room 2
@@ -666,7 +664,6 @@ public class ShowUI : FSystem {
                         moveBag = false;
                         bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition += Vector3.up * (bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.InverseTransformPoint(Camera.main.transform.position).y - bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y);
                         bag.First().GetComponentInChildren<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
-						onBagPaper = true;
                     }
                 }
                 else
@@ -1295,7 +1292,6 @@ public class ShowUI : FSystem {
         onTablet = false;
         onTable = false;
         onBag = false;
-        onBagPaper = false;
         onLockR2 = false;
 		onCarillon = false;
         onBoard = false;

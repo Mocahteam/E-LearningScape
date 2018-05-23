@@ -49,6 +49,7 @@ TagManager:
   - GlassesBG
   - ScrollUI
   - Scroll
+  - PuzzleButton
   layers:
   - Default
   - TransparentFX

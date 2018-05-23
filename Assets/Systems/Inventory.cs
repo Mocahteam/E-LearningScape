@@ -16,7 +16,7 @@ public class Inventory : FSystem {
     private Family inputfields = FamilyManager.getFamily(new AllOfComponents(typeof(InputField)));
     private Family pui = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"));
     private Family elemsInventory = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
-    private Family onElem = FamilyManager.getFamily(new AnyOfTags("InventoryElements", "PuzzleUI", "IARTab"), new AllOfComponents(typeof(PointerOver)));
+    private Family onElem = FamilyManager.getFamily(new AnyOfTags("InventoryElements", "PuzzleUI", "PuzzleButton", "IARTab"), new AllOfComponents(typeof(PointerOver)));
     private Family plank = FamilyManager.getFamily(new AnyOfTags("Plank"));
     private Family glassesBackgrounds = FamilyManager.getFamily(new AnyOfTags("GlassesBG"));
     private Family sUI = FamilyManager.getFamily(new AnyOfTags("ScrollUI"));
@@ -24,7 +24,6 @@ public class Inventory : FSystem {
     public static bool playerEnabled = true;
     private GameObject displayer;
     private GameObject displayedElement;
-    private bool displayedElementWasNull = true;
     private GameObject selection;
     private GameObject selectedUI;
 
@@ -43,8 +42,10 @@ public class Inventory : FSystem {
     private bool onPuzzle = false;
     private Vector3 posBeforeDrag;
     private GameObject draggedPuzzle = null;
+    private GameObject selectedPuzzle;
     private Vector3 posFromMouse;
     private List<int> idTable;
+    private GameObject puzzleRotationButtons;
 
     private Dictionary<string, GameObject> scrollUI;
     private GameObject scroll;
@@ -121,11 +122,44 @@ public class Inventory : FSystem {
 			puzzleUI.Add(id, forGO);
         }
 
+        foreach(Transform child in pui.getAt(0).transform.parent)
+        {
+            if(child.gameObject.name == "RotationButtons")
+            {
+                puzzleRotationButtons = child.gameObject;
+                foreach(Transform c in child)
+                {
+                    if (c.name.Contains("Counter"))
+                    {
+                        c.gameObject.GetComponent<Button>().onClick.AddListener(delegate
+                        {
+                            RotatePuzzleCounterClockWise(selectedPuzzle);
+                        });
+                    }
+                    else
+                    {
+                        c.gameObject.GetComponent<Button>().onClick.AddListener(delegate
+                        {
+                            RotatePuzzleClockWise(selectedPuzzle);
+                        });
+                    }
+                }
+            }
+        }
+
 		foreach (Transform child in player.First().GetComponentInChildren<Camera>().gameObject.transform) {
 			if (child.gameObject.GetComponent<Light> ()) {
 				blackLight = child.gameObject;
 			}
 		}
+
+        nb = elemsInventory.Count;
+        for (int i = 0; i < nb; i++)
+        {
+            forGO = elemsInventory.getAt(i);
+            forGO.GetComponent<CollectableGO>().positionDown = forGO.GetComponent<RectTransform>().localPosition - Vector3.left * (Camera.main.pixelWidth / 2 - 50) - Vector3.up * (Camera.main.pixelHeight / 2 - 50);
+            forGO.GetComponent<CollectableGO>().positionMiddle = forGO.GetComponent<RectTransform>().localPosition - Vector3.left * 200 - Vector3.up * 50;
+        }
     }
 
 	// Use this to update member variables when system pause. 
@@ -263,7 +297,7 @@ public class Inventory : FSystem {
                                     int nbElems = elemsInventory.Count;
                                     for (int j = 0; j < nbElems; j++)
                                     {
-                                        elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
+                                        elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition = elemsInventory.getAt(j).GetComponent<CollectableGO>().positionMiddle;
                                     }
                                 }
                                 glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
@@ -280,7 +314,6 @@ public class Inventory : FSystem {
                             {
                                 displayedElement.SetActive(false);
                             }
-                            displayedElementWasNull = !(displayedElement && displayer.activeSelf);
                             displayer.SetActive(true);
 							switch (forGO.name)
                             {
@@ -422,18 +455,18 @@ public class Inventory : FSystem {
                                     int nbElems = elemsInventory.Count;
                                     for (int j = 0; j < nbElems; j++)
                                     {
-                                        elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.right * (Camera.main.pixelWidth / 2 - 250) + Vector3.down * (Camera.main.pixelHeight / 2 - 100);
+                                        elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition = elemsInventory.getAt(j).GetComponent<CollectableGO>().positionDown;
                                     }
                                     selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
                                     glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
                                     glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
                                 }
-                                else if (!displayedElementWasNull)
+                                else
                                 {
                                     int nbElems = elemsInventory.Count;
                                     for (int j = 0; j < nbElems; j++)
                                     {
-                                        elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
+                                        elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition = elemsInventory.getAt(j).GetComponent<CollectableGO>().positionMiddle;
                                     }
                                     selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
                                     glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
@@ -487,11 +520,11 @@ public class Inventory : FSystem {
 						}
 					}
 					nb = elemsInventory.Count;
-					for (int i = 0; i < nb; i++) {
-						forGO = elemsInventory.getAt (i);
-						forGO.GetComponent<RectTransform> ().localPosition += Vector3.left * (Camera.main.pixelWidth / 2 - 250) + Vector3.up * (Camera.main.pixelHeight / 2 - 100);
-					}
-					if (selectedUI) {
+                    for (int j = 0; j < nb; j++)
+                    {
+                        elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition = elemsInventory.getAt(j).GetComponent<CollectableGO>().positionMiddle;
+                    }
+                    if (selectedUI) {
 						selection.GetComponent<RectTransform> ().localPosition = selectedUI.GetComponent<RectTransform> ().localPosition;
                     }
                     glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
@@ -516,16 +549,18 @@ public class Inventory : FSystem {
                         draggedPuzzle.GetComponent<RectTransform>().position = posBeforeDrag;
                     }
                     draggedPuzzle = null;
+                    puzzleRotationButtons.SetActive(true);
+                    puzzleRotationButtons.GetComponent<RectTransform>().localPosition = selectedPuzzle.GetComponent<RectTransform>().localPosition;
                 }
                 else
                 {
                     if (Input.GetKeyDown(KeyCode.Q))
                     {
-                        draggedPuzzle.GetComponent<RectTransform>().localRotation = Quaternion.Euler(draggedPuzzle.GetComponent<RectTransform>().localRotation.eulerAngles.x, draggedPuzzle.GetComponent<RectTransform>().localRotation.eulerAngles.y, draggedPuzzle.GetComponent<RectTransform>().localRotation.eulerAngles.z + 90);
+                        RotatePuzzleCounterClockWise(draggedPuzzle);
                     }
                     if (Input.GetKeyDown(KeyCode.D))
                     {
-                        draggedPuzzle.GetComponent<RectTransform>().localRotation = Quaternion.Euler(draggedPuzzle.GetComponent<RectTransform>().localRotation.eulerAngles.x, draggedPuzzle.GetComponent<RectTransform>().localRotation.eulerAngles.y, draggedPuzzle.GetComponent<RectTransform>().localRotation.eulerAngles.z - 90);
+                        RotatePuzzleClockWise(draggedPuzzle);
                     }
                     draggedPuzzle.GetComponent<RectTransform>().position = Input.mousePosition - posFromMouse;
                 }
@@ -538,9 +573,22 @@ public class Inventory : FSystem {
 					forGO = pui.getAt (i);
 					if (forGO.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
                     {
+                        puzzleRotationButtons.SetActive(false);
+                        if (selectedPuzzle)
+                        {
+                            selectedPuzzle.GetComponent<Image>().color = Color.white;
+                        }
 						draggedPuzzle = forGO;
+                        selectedPuzzle = draggedPuzzle;
+                        selectedPuzzle.GetComponent<Image>().color = Color.yellow;
                         posBeforeDrag = draggedPuzzle.GetComponent<RectTransform>().position;
                         posFromMouse = Input.mousePosition - draggedPuzzle.GetComponent<RectTransform>().position;
+                        if (Input.GetMouseButtonUp(0))
+                        {
+                            draggedPuzzle = null;
+                            puzzleRotationButtons.SetActive(true);
+                            puzzleRotationButtons.GetComponent<RectTransform>().localPosition = selectedPuzzle.GetComponent<RectTransform>().localPosition;
+                        }
                     }
                 }
             }
@@ -553,20 +601,6 @@ public class Inventory : FSystem {
 
     private void CloseInventory()
     {
-        if (!(displayedElement && displayer.activeSelf) && !CollectableGO.askCloseInventory)
-        {
-			int nbElems = elemsInventory.Count;
-			for(int i = 0; i < nbElems; i++)
-            {
-				elemsInventory.getAt(i).GetComponent<RectTransform>().localPosition += Vector3.right * (Camera.main.pixelWidth / 2 - 250) + Vector3.down * (Camera.main.pixelHeight / 2 - 100);
-            }
-            if (selectedUI)
-            {
-                selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
-            }
-            glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
-            glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
-        }
         if (displayedElement)
         {
             displayedElement.SetActive(false);
@@ -596,8 +630,24 @@ public class Inventory : FSystem {
                 }
             }
         }
+        if (selectedPuzzle)
+        {
+            selectedPuzzle.GetComponent<Image>().color = Color.white;
+            puzzleRotationButtons.SetActive(false);
+        }
+        selectedPuzzle = null;
         CollectableGO.onInventory = false;
         CollectableGO.askCloseInventory = false;
         inventory.First().SetActive(false);
+    }
+
+    private void RotatePuzzleClockWise(GameObject puzzle)
+    {
+        puzzle.GetComponent<RectTransform>().localRotation = Quaternion.Euler(puzzle.GetComponent<RectTransform>().localRotation.eulerAngles.x, puzzle.GetComponent<RectTransform>().localRotation.eulerAngles.y, puzzle.GetComponent<RectTransform>().localRotation.eulerAngles.z - 90);
+    }
+
+    private void RotatePuzzleCounterClockWise(GameObject puzzle)
+    {
+        puzzle.GetComponent<RectTransform>().localRotation = Quaternion.Euler(puzzle.GetComponent<RectTransform>().localRotation.eulerAngles.x, puzzle.GetComponent<RectTransform>().localRotation.eulerAngles.y, puzzle.GetComponent<RectTransform>().localRotation.eulerAngles.z + 90);
     }
 }

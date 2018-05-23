@@ -16,4 +16,6 @@ public class CollectableGO : MonoBehaviour {
     public static bool askOpenInventory = false;
 
     public GameObject goui; //the corresponding gameobject or ui element
+    public Vector3 positionMiddle;
+    public Vector3 positionDown;
 }
