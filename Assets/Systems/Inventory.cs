@@ -26,6 +26,10 @@ public class Inventory : FSystem {
     private GameObject displayedElement;
     private GameObject selection;
     private GameObject selectedUI;
+    private GameObject inventoryElemGO;
+    private TextMeshProUGUI descriptionTitle;
+    private TextMeshProUGUI descriptionText;
+    private GameObject displayedDescriptionGO;
 
     private GameObject glassesBG1;
     private GameObject glassesUI1;
@@ -68,7 +72,25 @@ public class Inventory : FSystem {
             {
                 displayer = child.gameObject;
             }
-            else if (child.gameObject.name == "Selected")
+            else if (child.gameObject.name == "Description")
+            {
+                foreach(Transform c in child)
+                {
+                    if(c.gameObject.name == "Title")
+                    {
+                        descriptionTitle = c.gameObject.GetComponent<TextMeshProUGUI>();
+                    }
+                    else if (c.gameObject.name == "Description")
+                    {
+                        descriptionText = c.gameObject.GetComponent<TextMeshProUGUI>();
+                    }
+                }
+            }
+        }
+
+        foreach (Transform child in elemsInventory.First().transform.parent)
+        {
+            if (child.gameObject.name == "Selected")
             {
                 selection = child.gameObject;
             }
@@ -153,13 +175,14 @@ public class Inventory : FSystem {
 			}
 		}
 
-        nb = elemsInventory.Count;
+        inventoryElemGO = elemsInventory.First().transform.parent.gameObject;
+        /*nb = elemsInventory.Count;
         for (int i = 0; i < nb; i++)
         {
             forGO = elemsInventory.getAt(i);
             forGO.GetComponent<CollectableGO>().positionDown = forGO.GetComponent<RectTransform>().localPosition - Vector3.left * (Camera.main.pixelWidth / 2 - 50) - Vector3.up * (Camera.main.pixelHeight / 2 - 50);
             forGO.GetComponent<CollectableGO>().positionMiddle = forGO.GetComponent<RectTransform>().localPosition - Vector3.left * 200 - Vector3.up * 50;
-        }
+        }*/
     }
 
 	// Use this to update member variables when system pause. 
@@ -252,6 +275,27 @@ public class Inventory : FSystem {
                             CollectableGO.usingGlasses1 = false;
                             glassesSelected1.SetActive(false);
                             glassesBG1.SetActive(false);
+                            if(Object.ReferenceEquals(forGO, displayedDescriptionGO))
+                            {
+                                if (selectedUI)
+                                {
+                                    displayedDescriptionGO = selectedUI;
+                                    descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
+                                    descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
+                                }
+                                else if (CollectableGO.usingGlasses2)
+                                {
+                                    displayedDescriptionGO = glassesUI2;
+                                    descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
+                                    descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
+                                }
+                                else
+                                {
+                                    displayedDescriptionGO = null;
+                                    descriptionTitle.text = string.Empty;
+                                    descriptionText.text = string.Empty;
+                                }
+                            }
                         }
                         else
                         {
@@ -259,6 +303,9 @@ public class Inventory : FSystem {
                             glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
                             CollectableGO.usingGlasses1 = true;
                             glassesBG1.SetActive(true);
+                            displayedDescriptionGO = forGO;
+                            descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
+                            descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
                         }
                     }
                     else if (forGO.name == "Glasses2")
@@ -268,6 +315,27 @@ public class Inventory : FSystem {
                             CollectableGO.usingGlasses2 = false;
                             glassesSelected2.SetActive(false);
                             glassesBG2.SetActive(false);
+                            if (Object.ReferenceEquals(forGO, displayedDescriptionGO))
+                            {
+                                if (selectedUI)
+                                {
+                                    displayedDescriptionGO = selectedUI;
+                                    descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
+                                    descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
+                                }
+                                else if (CollectableGO.usingGlasses1)
+                                {
+                                    displayedDescriptionGO = glassesUI1;
+                                    descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
+                                    descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
+                                }
+                                else
+                                {
+                                    displayedDescriptionGO = null;
+                                    descriptionTitle.text = string.Empty;
+                                    descriptionText.text = string.Empty;
+                                }
+                            }
                         }
                         else
                         {
@@ -275,6 +343,9 @@ public class Inventory : FSystem {
                             glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
                             CollectableGO.usingGlasses2 = true;
                             glassesBG2.SetActive(true);
+                            displayedDescriptionGO = forGO;
+                            descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
+                            descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
                         }
                     }
                     else
@@ -299,6 +370,7 @@ public class Inventory : FSystem {
                                     {
                                         elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition = elemsInventory.getAt(j).GetComponent<CollectableGO>().positionMiddle;
                                     }
+                                    inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(-340, -20, 0);
                                 }
                                 glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
                                 glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
@@ -306,10 +378,35 @@ public class Inventory : FSystem {
                             displayer.SetActive(false);
                             selection.SetActive(false);
                             selectedUI = null;
+                            descriptionTitle.transform.parent.gameObject.SetActive(true);
+                            if (Object.ReferenceEquals(forGO, displayedDescriptionGO))
+                            {
+                                if (CollectableGO.usingGlasses1)
+                                {
+                                    displayedDescriptionGO = glassesUI1;
+                                    descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
+                                    descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
+                                }
+                                else if (CollectableGO.usingGlasses2)
+                                {
+                                    displayedDescriptionGO = glassesUI2;
+                                    descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
+                                    descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
+                                }
+                                else
+                                {
+                                    displayedDescriptionGO = null;
+                                    descriptionTitle.text = string.Empty;
+                                    descriptionText.text = string.Empty;
+                                }
+                            }
                         }
                         else
                         {
 							selectedUI = forGO;
+                            displayedDescriptionGO = forGO;
+                            descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
+                            descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
                             if (displayedElement)
                             {
                                 displayedElement.SetActive(false);
@@ -457,6 +554,8 @@ public class Inventory : FSystem {
                                     {
                                         elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition = elemsInventory.getAt(j).GetComponent<CollectableGO>().positionDown;
                                     }
+                                    inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(572, -335, 0);
+                                    descriptionTitle.transform.parent.gameObject.SetActive(false);
                                     selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
                                     glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
                                     glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
@@ -468,9 +567,11 @@ public class Inventory : FSystem {
                                     {
                                         elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition = elemsInventory.getAt(j).GetComponent<CollectableGO>().positionMiddle;
                                     }
+                                    inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(-340, -20, 0);
                                     selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
                                     glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
                                     glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
+                                    descriptionTitle.transform.parent.gameObject.SetActive(true);
                                 }
                             }
                         }
@@ -524,8 +625,33 @@ public class Inventory : FSystem {
                     {
                         elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition = elemsInventory.getAt(j).GetComponent<CollectableGO>().positionMiddle;
                     }
+                    inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(-340, -20, 0);
+                    descriptionTitle.transform.parent.gameObject.SetActive(true);
                     if (selectedUI) {
 						selection.GetComponent<RectTransform> ().localPosition = selectedUI.GetComponent<RectTransform> ().localPosition;
+                        descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
+                        descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
+                    }
+                    else
+                    {
+                        if (CollectableGO.usingGlasses1)
+                        {
+                            displayedDescriptionGO = glassesUI1;
+                            descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
+                            descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
+                        }
+                        else if (CollectableGO.usingGlasses2)
+                        {
+                            displayedDescriptionGO = glassesUI2;
+                            descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
+                            descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
+                        }
+                        else
+                        {
+                            displayedDescriptionGO = null;
+                            descriptionTitle.text = string.Empty;
+                            descriptionText.text = string.Empty;
+                        }
                     }
                     glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
                     glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
@@ -636,6 +762,8 @@ public class Inventory : FSystem {
             puzzleRotationButtons.SetActive(false);
         }
         selectedPuzzle = null;
+        descriptionTitle.text = string.Empty;
+        descriptionText.text = string.Empty;
         CollectableGO.onInventory = false;
         CollectableGO.askCloseInventory = false;
         inventory.First().SetActive(false);

@@ -55,6 +55,10 @@ public class DreamFragmentCollect : FSystem {
                         {
                             dfUI.GetComponentInChildren<TextMeshProUGUI>().text = string.Concat("Ouvrez l'enveloppe numéro ", tmpDFComponent.id, " et récupérez l'item \"", tmpDFComponent.itemName, "\"");
                         }
+                        else if (tmpDFComponent.type == 1)
+                        {
+                            dfUI.GetComponentInChildren<TextMeshProUGUI>().text = string.Concat("\"", tmpDFComponent.itemName, "\"");
+                        }
                     }
                     break;
                 }

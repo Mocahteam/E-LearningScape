@@ -810,6 +810,15 @@ public class SetAnswer : FSystem
                     source.PlayOneShot(screen1.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
+                    int nb = cGO.Count;
+                    for (int j = 0; j < nb; j++)
+                    {
+                        forGO2 = cGO.getAt(j);
+                        if (forGO2.name.Contains("KeyE03"))
+                        {
+                            forGO2.SetActive(false);
+                        }
+                    }
                     forGO.SetActive(false); //hide the question
                     bool solved = true;
                     int nbARoom1 = aRoom1.Count;
@@ -1077,7 +1086,7 @@ public class SetAnswer : FSystem
                     for (int j = 0; j < nb; j++)
                     {
                         forGO2 = cGO.getAt(j);
-                        if (forGO2.name.Contains("Glasses"))
+                        if (forGO2.name.Contains("Glasses") || forGO2.name.Contains("KeyE08"))
                         {
                             forGO2.SetActive(false);
                         }
@@ -1139,16 +1148,7 @@ public class SetAnswer : FSystem
                     //feedback right answer
                     source.PlayOneShot(screen2.GetComponent<Selectable>().right);
                     timeR = Time.time;
-
-                    int nb = cGO.Count;
-                    for (int j = 0; j < nb; j++)
-                    {
-                        forGO2 = cGO.getAt(j);
-                        if (forGO2.name.Contains("TipE07"))
-                        {
-                            forGO2.SetActive(false);
-                        }
-                    }
+                    
                     forGO.SetActive(false); //hide the question
                     bool solved = true;
                     int nbARoom2 = aRoom2.Count;
@@ -1491,7 +1491,7 @@ public class SetAnswer : FSystem
                     for (int j = 0; j < nb; j++)
                     {
                         forGO2 = cGO.getAt(j);
-                        if (forGO2.name.Contains("Lamp") || forGO2.name.Contains("CodeE12"))
+                        if (forGO2.name.Contains("Lamp"))
                         {
                             forGO2.SetActive(false);
                         }
@@ -1527,16 +1527,6 @@ public class SetAnswer : FSystem
                     //feedback right answer
                     source.PlayOneShot(screen3.GetComponent<Selectable>().right);
                     timeR = Time.time;
-                    //disable inventory elements used to answer to this question
-                    int nb = cGO.Count;
-                    for (int j = 0; j < nb; j++)
-                    {
-                        forGO2 = cGO.getAt(j);
-                        if (forGO2.name.Contains("AlphabetE13"))
-                        {
-                            forGO2.SetActive(false);
-                        }
-                    }
                     //check if all anwer were given
                     if (answer2R3Given && answer1R3Given && answer4R3Given)
                     {

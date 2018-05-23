@@ -118,7 +118,7 @@ public class Select : FSystem {
 					}
 					else if (hit.transform.parent)
 					{
-                        if (hit.transform.parent.gameObject.GetComponent<ToggleableGO>())
+                        if (hit.transform.parent.gameObject.GetComponent<ToggleableGO>() && !hit.transform.gameObject.GetComponent<DreamFragment>())
                         {
                             hit.transform.parent.gameObject.GetComponent<ToggleableGO>().focused = true;
                             focused = hit.transform.parent.gameObject;

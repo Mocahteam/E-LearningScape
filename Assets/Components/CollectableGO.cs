@@ -18,4 +18,6 @@ public class CollectableGO : MonoBehaviour {
     public GameObject goui; //the corresponding gameobject or ui element
     public Vector3 positionMiddle;
     public Vector3 positionDown;
+    public string itemName;
+    public string description;
 }

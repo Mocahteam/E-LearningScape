@@ -15,6 +15,7 @@ public class IARTab : FSystem {
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family fences = FamilyManager.getFamily(new AnyOfTags("Fence"));
     private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
+    private Family fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
 
     private GameObject tabsGO;
     public static bool onIAR = false;
@@ -34,6 +35,8 @@ public class IARTab : FSystem {
     private Image screen2ButtonImage;
     private Image screen3ButtonImage;
     private Image menuButtonImage;
+    private Sprite selectedTabSprite;
+    private Sprite initialTabSprite;
 
     private bool onInventory = false;
     private bool onMenu = false;
@@ -126,6 +129,9 @@ public class IARTab : FSystem {
                     break;
             }
         }
+
+        selectedTabSprite = fgm.First().GetComponent<FocusedGOMaterial>().selectedTabSprite;
+        initialTabSprite = inventoryButtonImage.sprite;
 
         nb = audioSourceFamily.Count;
         for(int i = 0; i < nb; i++)
@@ -334,11 +340,13 @@ public class IARTab : FSystem {
         int nb = tabs.Count;
         for(int i = 0; i < nb; i++)
         {
-            tabs.getAt(i).GetComponent<Image>().color = Color.white;
+            tabs.getAt(i).GetComponent<Image>().sprite = initialTabSprite;
+            tabs.getAt(i).GetComponentInChildren<Text>().fontStyle = FontStyle.Normal;
         }
 
         tabContent.SetActive(true);
-        button.color = Color.yellow;
+        button.sprite = selectedTabSprite;
+        button.GetComponentInChildren<Text>().fontStyle = FontStyle.Bold;
         activeUI = tabContent;
         Inventory.playerEnabled = playerEnabled;
         PauseSystem.playerEnabled = playerEnabled;
