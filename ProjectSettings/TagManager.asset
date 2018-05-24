@@ -53,6 +53,7 @@ TagManager:
   - LockIntro
   - LockIntroWheel
   - WallIntro
+  - ChestLid
   layers:
   - Default
   - TransparentFX

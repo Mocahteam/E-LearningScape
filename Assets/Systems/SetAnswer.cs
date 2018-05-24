@@ -752,11 +752,11 @@ public class SetAnswer : FSystem
                 forGO = symbolsE12Tag.getAt(i);
                 Vector3 position = forGO.GetComponentInChildren<E12_Symbol>().position;
                 //if the symbol is illuminated by the lamp
-                if (Vector3.Angle(position - Camera.main.transform.position, Camera.main.transform.forward) < 32)
+                if (Vector3.Angle(position - Camera.main.transform.position, Camera.main.transform.forward) < 22)
                 {
                     forGO.SetActive(true);
                     //calculate the intersection between player direction and the wall
-                    float d = Vector3.Dot((position - Camera.main.transform.position), forGO.transform.parent.up) / Vector3.Dot(Camera.main.transform.forward, forGO.transform.parent.up);
+                    float d = Vector3.Dot((position - Camera.main.transform.position), forGO.transform.forward) / Vector3.Dot(Camera.main.transform.forward, forGO.transform.forward);
                     //move the mask to the calculated position
                     forGO.transform.position = Camera.main.transform.position + Camera.main.transform.forward * d;
                     //set the symbol position to its initial position (it shouldn't move but it is moved because of it being the mask's child)
@@ -766,8 +766,8 @@ public class SetAnswer : FSystem
                     float b = 0.026f - a * 5.49f;
                     float scale = a * (forGO.transform.position - Camera.main.transform.position).magnitude + b;
                     //change the scale of the mask and set the symbol scale to its initial scale
-                    forGO.GetComponentInChildren<E12_Symbol>().gameObject.transform.localScale *= forGO.transform.localScale.x / scale * forGO.transform.parent.localScale.x;
-                    forGO.transform.localScale = new Vector3(scale, scale, scale) / forGO.transform.parent.localScale.x;
+                    forGO.GetComponentInChildren<E12_Symbol>().gameObject.transform.localScale *= forGO.transform.localScale.x / scale * forGO.transform.parent.localScale.x * 100;
+                    forGO.transform.localScale = new Vector3(scale, scale, scale) / forGO.transform.parent.localScale.x / 100;
                 }
                 else
                 {

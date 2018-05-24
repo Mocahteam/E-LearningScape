@@ -12,6 +12,7 @@ public class StoryDisplaying : FSystem {
     private Image background;
     private TextMeshProUGUI sdText;
     private Image fadingImage;
+    private GameObject clickFeedback;
 
     private bool readingIntro = false;
     public static bool readingTransition = false;
@@ -44,6 +45,10 @@ public class StoryDisplaying : FSystem {
             else if (child.gameObject.name == "FadingImage")
             {
                 fadingImage = child.gameObject.GetComponent<Image>();
+            }
+            else if (child.gameObject.name == "Click")
+            {
+                clickFeedback = child.gameObject;
             }
         }
 
@@ -125,12 +130,17 @@ public class StoryDisplaying : FSystem {
                 {
                     Color c = fadingImage.color;
                     fadingImage.color = new Color(c.r, c.g, c.b, 1 - (Time.time - readingTimer) / 2);
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        readingTimer = Time.time - 3;
+                    }
                 }
                 else
                 {
                     Color c = fadingImage.color;
                     fadingImage.color = new Color(c.r, c.g, c.b, 0);
                     fadingIn = false;
+                    clickFeedback.SetActive(true);
                 }
             }
             else if (fadingOut)
@@ -219,6 +229,7 @@ public class StoryDisplaying : FSystem {
                 {
                     fadingOut = true;
                     readingTimer = Time.time;
+                    clickFeedback.SetActive(false);
                 }
             }
         }

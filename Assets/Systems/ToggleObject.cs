@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class ToggleObject : FSystem {
 
 	private Family toggleable = FamilyManager.getFamily(new AllOfComponents(typeof(ToggleableGO)));
+    private Family lid = FamilyManager.getFamily(new AnyOfTags("ChestLid"));
 
     //variables used to toggle chairs in the first room
 	private GameObject[] togglingChairsDown;
@@ -20,9 +21,15 @@ public class ToggleObject : FSystem {
 	private bool tableGoinUp;
 	private Vector3 tableTarget;
 
+    //variables used to open the chest room 3
+    private GameObject chestLid;
+    private bool openingChest = false;
+    private bool closingChest = false;
+
     //temporary variables
-	private GameObject forGO;
+    private GameObject forGO;
 	private ToggleableGO tmpTGO;
+    private int tmpRotationCount = 0;
     private bool onInventory = false;
 
 	public ToggleObject(){
@@ -34,6 +41,8 @@ public class ToggleObject : FSystem {
 				table = toggleable.getAt (i);
 			}
 		}
+
+        chestLid = lid.First();
 	}
 
 	// Use this to update member variables when system pause. 
@@ -94,6 +103,17 @@ public class ToggleObject : FSystem {
                         else
                         {
                             toggleTableDown = true;
+                        }
+                    }
+                    else if(forGO.name == "boite")
+                    {
+                        if(chestLid.transform.localRotation.eulerAngles.x == 0)
+                        {
+                            openingChest = true;
+                        }
+                        else
+                        {
+                            closingChest = true;
                         }
                     }
                     break;
@@ -193,5 +213,32 @@ public class ToggleObject : FSystem {
             //rotate table
             table.transform.rotation = Quaternion.RotateTowards (table.transform.rotation, Quaternion.Euler (table.transform.rotation.eulerAngles.x, table.transform.rotation.eulerAngles.y, 0), 5);
 		}
-	}
+
+        //toggle chest room3
+        //open
+        if (openingChest)
+        {
+            chestLid.transform.Rotate(4 - (float)tmpRotationCount/40*2, 0, 0);
+            tmpRotationCount++;
+            if(tmpRotationCount == 40)
+            {
+                tmpRotationCount = 0;
+                openingChest = false;
+                chestLid.transform.parent.gameObject.GetComponent<ToggleableGO>().toggled = false;
+            }
+        }
+        //close
+        else if (closingChest)
+        {
+            chestLid.transform.Rotate(-4 + (float)tmpRotationCount/40*2, 0, 0);
+            tmpRotationCount++;
+            if (tmpRotationCount == 40)
+            {
+                chestLid.transform.localRotation = Quaternion.Euler(0, chestLid.transform.localRotation.eulerAngles.y, chestLid.transform.localRotation.eulerAngles.z);
+                tmpRotationCount = 0;
+                closingChest = false;
+                chestLid.transform.parent.gameObject.GetComponent<ToggleableGO>().toggled = false;
+            }
+        }
+    }
 }

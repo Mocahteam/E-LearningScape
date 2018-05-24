@@ -9,7 +9,7 @@ Material:
   m_Name: fleur
   m_Shader: {fileID: 4800000, guid: 2493027773fd46241bb878b3031066e1, type: 3}
   m_ShaderKeywords: _ALPHABLEND_ON _EMISSION
-  m_LightmapFlags: 1
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
