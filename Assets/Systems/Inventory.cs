@@ -24,7 +24,6 @@ public class Inventory : FSystem {
     public static bool playerEnabled = true;
     private GameObject displayer;
     private GameObject displayedElement;
-    private GameObject selection;
     private GameObject selectedUI;
     private GameObject inventoryElemGO;
     private TextMeshProUGUI descriptionTitle;
@@ -33,10 +32,8 @@ public class Inventory : FSystem {
 
     private GameObject glassesBG1;
     private GameObject glassesUI1;
-    private GameObject glassesSelected1;
     private GameObject glassesBG2;
     private GameObject glassesUI2;
-    private GameObject glassesSelected2;
 
     private RaycastHit hit;
     private bool inputfieldFocused;
@@ -90,25 +87,13 @@ public class Inventory : FSystem {
 
         foreach (Transform child in elemsInventory.First().transform.parent)
         {
-            if (child.gameObject.name == "Selected")
-            {
-                selection = child.gameObject;
-            }
-            else if (child.gameObject.name == "Glasses1")
+            if (child.gameObject.name == "Glasses1")
             {
                 glassesUI1 = child.gameObject;
-            }
-            else if (child.gameObject.name == "GlassesSelected1")
-            {
-                glassesSelected1 = child.gameObject;
             }
             else if (child.gameObject.name == "Glasses2")
             {
                 glassesUI2 = child.gameObject;
-            }
-            else if (child.gameObject.name == "GlassesSelected2")
-            {
-                glassesSelected2 = child.gameObject;
             }
         }
 
@@ -272,8 +257,8 @@ public class Inventory : FSystem {
                     {
                         if (CollectableGO.usingGlasses1)
                         {
+                            forGO.GetComponent<AnimatedSprites>().animate = false;
                             CollectableGO.usingGlasses1 = false;
-                            glassesSelected1.SetActive(false);
                             glassesBG1.SetActive(false);
                             if(Object.ReferenceEquals(forGO, displayedDescriptionGO))
                             {
@@ -299,8 +284,7 @@ public class Inventory : FSystem {
                         }
                         else
                         {
-                            glassesSelected1.SetActive(true);
-                            glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
+                            forGO.GetComponent<AnimatedSprites>().animate = true;
                             CollectableGO.usingGlasses1 = true;
                             glassesBG1.SetActive(true);
                             displayedDescriptionGO = forGO;
@@ -312,8 +296,8 @@ public class Inventory : FSystem {
                     {
                         if (CollectableGO.usingGlasses2)
                         {
+                            forGO.GetComponent<AnimatedSprites>().animate = false;
                             CollectableGO.usingGlasses2 = false;
-                            glassesSelected2.SetActive(false);
                             glassesBG2.SetActive(false);
                             if (Object.ReferenceEquals(forGO, displayedDescriptionGO))
                             {
@@ -339,8 +323,7 @@ public class Inventory : FSystem {
                         }
                         else
                         {
-                            glassesSelected2.SetActive(true);
-                            glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
+                            forGO.GetComponent<AnimatedSprites>().animate = true;
                             CollectableGO.usingGlasses2 = true;
                             glassesBG2.SetActive(true);
                             displayedDescriptionGO = forGO;
@@ -355,9 +338,7 @@ public class Inventory : FSystem {
 						CollectableGO.usingKeyE08 = false;
 						CollectableGO.usingLamp = false;
 						blackLight.SetActive (false);
-
-                        selection.SetActive(true);
-						selection.GetComponent<RectTransform>().localPosition = forGO.GetComponent<RectTransform>().localPosition;
+                        
 						if (displayer.activeSelf && Object.ReferenceEquals(forGO, selectedUI))
                         {
                             if (displayedElement)
@@ -372,11 +353,12 @@ public class Inventory : FSystem {
                                     }
                                     inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(-340, -20, 0);
                                 }
-                                glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
-                                glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
                             }
                             displayer.SetActive(false);
-                            selection.SetActive(false);
+                            if (selectedUI)
+                            {
+                                selectedUI.GetComponent<AnimatedSprites>().animate = false;
+                            }
                             selectedUI = null;
                             descriptionTitle.transform.parent.gameObject.SetActive(true);
                             if (Object.ReferenceEquals(forGO, displayedDescriptionGO))
@@ -403,7 +385,12 @@ public class Inventory : FSystem {
                         }
                         else
                         {
+                            if (selectedUI)
+                            {
+                                selectedUI.GetComponent<AnimatedSprites>().animate = false;
+                            }
 							selectedUI = forGO;
+                            selectedUI.GetComponent<AnimatedSprites>().animate = true;
                             displayedDescriptionGO = forGO;
                             descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
                             descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
@@ -461,6 +448,17 @@ public class Inventory : FSystem {
                                                 displayedElement = child.gameObject;
                                                 displayedElement.SetActive(true);
                                             }
+                                        }
+                                    }
+                                    break;
+
+                                case "ScrollIntro":
+                                    foreach (Transform child in displayer.transform)
+                                    {
+                                        if (child.gameObject.name == "ScrollIntro")
+                                        {
+                                            displayedElement = child.gameObject;
+                                            displayedElement.SetActive(true);
                                         }
                                     }
                                     break;
@@ -556,9 +554,6 @@ public class Inventory : FSystem {
                                     }
                                     inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(572, -335, 0);
                                     descriptionTitle.transform.parent.gameObject.SetActive(false);
-                                    selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
-                                    glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
-                                    glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
                                 }
                                 else
                                 {
@@ -568,9 +563,6 @@ public class Inventory : FSystem {
                                         elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition = elemsInventory.getAt(j).GetComponent<CollectableGO>().positionMiddle;
                                     }
                                     inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(-340, -20, 0);
-                                    selection.GetComponent<RectTransform>().localPosition = selectedUI.GetComponent<RectTransform>().localPosition;
-                                    glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
-                                    glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
                                     descriptionTitle.transform.parent.gameObject.SetActive(true);
                                 }
                             }
@@ -628,7 +620,6 @@ public class Inventory : FSystem {
                     inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(-340, -20, 0);
                     descriptionTitle.transform.parent.gameObject.SetActive(true);
                     if (selectedUI) {
-						selection.GetComponent<RectTransform> ().localPosition = selectedUI.GetComponent<RectTransform> ().localPosition;
                         descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
                         descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
                     }
@@ -653,8 +644,6 @@ public class Inventory : FSystem {
                             descriptionText.text = string.Empty;
                         }
                     }
-                    glassesSelected1.GetComponent<RectTransform>().localPosition = glassesUI1.GetComponent<RectTransform>().localPosition;
-                    glassesSelected2.GetComponent<RectTransform>().localPosition = glassesUI2.GetComponent<RectTransform>().localPosition;
                     onPuzzle = false;
 					CollectableGO.onInventory = true;
 				}
@@ -727,11 +716,16 @@ public class Inventory : FSystem {
 
     private void CloseInventory()
     {
+        inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(-340, -20, 0);
         if (displayedElement)
         {
             displayedElement.SetActive(false);
             displayer.SetActive(false);
-            selection.SetActive(false);
+            if (selectedUI)
+            {
+                selectedUI.GetComponent<AnimatedSprites>().animate = false;
+            }
+            selectedUI = null;
         }
         foreach (Transform child in inventory.First().transform)
         {

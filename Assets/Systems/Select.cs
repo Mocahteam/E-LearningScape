@@ -155,7 +155,7 @@ public class Select : FSystem {
                 Selectable.selected = true;
             }
             //if the object isn't the plank, the box, the bag or the lock room 2 selected or the mirror taken, show the mouse over overlay
-            if (!((focused.tag == "Plank" || focused.tag == "Box" || focused.tag == "Bag" || focused.tag == "LockRoom2" || focused.tag == "Board") && focused.GetComponent<Selectable>().isSelected) && !(Takable.mirrorOnPlank && focused.GetComponent<MirrorScript>()))
+            if (!((focused.tag == "Plank" || focused.tag == "Box" || focused.tag == "Bag" || focused.tag == "LockIntro" || focused.tag == "LockRoom2" || focused.tag == "Board") && focused.GetComponent<Selectable>().isSelected) && !(Takable.mirrorOnPlank && focused.GetComponent<MirrorScript>()))
             {
                 for (int i = 0; i < nb; i++)
                 {

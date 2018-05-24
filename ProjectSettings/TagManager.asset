@@ -50,6 +50,9 @@ TagManager:
   - ScrollUI
   - Scroll
   - PuzzleButton
+  - LockIntro
+  - LockIntroWheel
+  - WallIntro
   layers:
   - Default
   - TransparentFX

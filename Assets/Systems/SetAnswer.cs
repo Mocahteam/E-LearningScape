@@ -23,6 +23,7 @@ public class SetAnswer : FSystem
     private Family qRoom3 = FamilyManager.getFamily(new AnyOfTags("Q-R3")); //questions of the room 3 (tablet)
     private Family aRoom3 = FamilyManager.getFamily(new AnyOfTags("A-R3")); //answers of the room 3 (tablet)
     private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ENABLED));
+    private Family glassesBackgrounds = FamilyManager.getFamily(new AnyOfTags("GlassesBG"));
 
 
     //elements used for visual and audio feedback when answering
@@ -1091,6 +1092,13 @@ public class SetAnswer : FSystem
                             forGO2.SetActive(false);
                         }
                     }
+                    nb = glassesBackgrounds.Count;
+                    for(int j = 0; j < nb; j++)
+                    {
+                        glassesBackgrounds.getAt(j).SetActive(false);
+                    }
+                    CollectableGO.usingGlasses1 = false;
+                    CollectableGO.usingGlasses2 = false;
                     forGO.SetActive(false); //hide the question
                     bool solved = true;
                     int nbARoom2 = aRoom2.Count;

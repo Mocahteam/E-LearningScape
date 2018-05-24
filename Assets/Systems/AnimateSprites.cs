@@ -33,12 +33,15 @@ public class AnimateSprites : FSystem {
         for(int i = 0; i < nb; i++)
         {
             tmpAS = animatedSprites.getAt(i).GetComponent<AnimatedSprites>();
-            tmpAS.usedSpriteID++;
-            if(tmpAS.usedSpriteID == tmpAS.sprites.Length)
+            if (tmpAS.gameObject.activeSelf && tmpAS.animate)
             {
-                tmpAS.usedSpriteID = 0;
+                tmpAS.usedSpriteID++;
+                if (tmpAS.usedSpriteID == tmpAS.sprites.Length)
+                {
+                    tmpAS.usedSpriteID = 0;
+                }
+                tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[tmpAS.usedSpriteID];
             }
-            tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[tmpAS.usedSpriteID];
         }
 	}
 }

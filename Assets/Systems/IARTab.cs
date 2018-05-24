@@ -13,14 +13,18 @@ public class IARTab : FSystem {
     private Family audioSourceFamily = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)));
     private Family door = FamilyManager.getFamily(new AllOfComponents(typeof(Door)));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
+    private Family wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"));
     private Family fences = FamilyManager.getFamily(new AnyOfTags("Fence"));
     private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
+    private Family lockIntro = FamilyManager.getFamily(new AnyOfTags("LockIntro"));
     private Family fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
 
     private GameObject tabsGO;
     public static bool onIAR = false;
+    public static bool room1Unlocked = false;
     public static bool room2Unlocked = false;
     public static bool room3Unlocked = false;
+    private bool listenerAddedRoom1 = false;
     private bool listenerAddedRoom2 = false;
     private bool listenerAddedRoom3 = false;
 
@@ -50,7 +54,7 @@ public class IARTab : FSystem {
     private GameObject fence1;
     private GameObject fence2;
 
-    private bool playerLookingToDoor = false;
+    private bool playerLookingAtDoor = false;
     private Vector3 tmpTarget;
     private int angleCount = 0;
 
@@ -104,9 +108,6 @@ public class IARTab : FSystem {
 
                 case "ScreenR1Tab":
                     screen1ButtonImage = tabs.getAt(i).GetComponent<Image>();
-                    tabs.getAt(i).GetComponent<Button>().onClick.AddListener(delegate {
-                        SwitchTab(screenR1, screen1ButtonImage);
-                    });
                     break;
 
                 case "ScreenR2Tab":
@@ -248,13 +249,49 @@ public class IARTab : FSystem {
                 }
             }
         }
-        if(room2Unlocked && !listenerAddedRoom2)
+        if (room1Unlocked && !listenerAddedRoom1)
+        {
+            player.First().GetComponent<FirstPersonController>().enabled = false;
+            Cursor.visible = false;
+            if (!playerLookingAtDoor)
+            {
+                tmpTarget = wallIntro.First().transform.position + Vector3.up - Camera.main.transform.position;
+                Vector3 newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, Mathf.PI / 180, 0);
+                Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
+                if (Vector3.Angle(tmpTarget, Camera.main.transform.forward) < 1)
+                {
+                    Camera.main.transform.forward = tmpTarget;
+                    gameAudioSource.clip = lockIntro.First().GetComponent<Selectable>().right;
+                    gameAudioSource.PlayDelayed(0);
+                    gameAudioSource.loop = true;
+                    playerLookingAtDoor = true;
+                    tmpTarget = wallIntro.First().transform.position + Vector3.up * (-4f - wallIntro.First().transform.position.y);
+                }
+            }
+            else
+            {
+                wallIntro.First().transform.position = Vector3.MoveTowards(wallIntro.First().transform.position, tmpTarget, 0.1f);
+                if (wallIntro.First().transform.position == tmpTarget)
+                {
+                    wallIntro.First().SetActive(false);
+                    playerLookingAtDoor = false;
+                    gameAudioSource.loop = false;
+                    screen1ButtonImage.GetComponent<Button>().onClick.AddListener(delegate {
+                        SwitchTab(screenR1, screen1ButtonImage);
+                    });
+                    screen1ButtonImage.GetComponentInChildren<Text>().text = "Rêve 1";
+                    listenerAddedRoom1 = true;
+                    player.First().GetComponent<FirstPersonController>().enabled = true;
+                }
+            }
+        }
+        if (room2Unlocked && !listenerAddedRoom2)
         {
             if (!activeUI)
             {
                 player.First().GetComponent<FirstPersonController>().enabled = false;
                 Cursor.visible = false;
-                if (!playerLookingToDoor)
+                if (!playerLookingAtDoor)
                 {
                     tmpTarget = door.First().transform.position - Camera.main.transform.position;
                     Vector3 newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, Mathf.PI / 180, 0);
@@ -265,7 +302,7 @@ public class IARTab : FSystem {
                         gameAudioSource.clip = door.First().GetComponent<Door>().openAudio;
                         gameAudioSource.PlayDelayed(0);
                         gameAudioSource.loop = true;
-                        playerLookingToDoor = true;
+                        playerLookingAtDoor = true;
                         tmpTarget = door.First().transform.position + Vector3.up * (5.73f - door.First().transform.position.y);
                     }
                 }
@@ -274,7 +311,7 @@ public class IARTab : FSystem {
                     door.First().transform.position = Vector3.MoveTowards(door.First().transform.position, tmpTarget, 0.1f);
                     if (door.First().transform.position == tmpTarget)
                     {
-                        playerLookingToDoor = false;
+                        playerLookingAtDoor = false;
                         gameAudioSource.loop = false;
                         screen2ButtonImage.GetComponent<Button>().onClick.AddListener(delegate {
                             SwitchTab(screenR2, screen2ButtonImage);
@@ -294,7 +331,7 @@ public class IARTab : FSystem {
         {
             player.First().GetComponent<FirstPersonController>().enabled = false;
             Cursor.visible = false;
-            if (!playerLookingToDoor)
+            if (!playerLookingAtDoor)
             {
                 tmpTarget = (fence1.transform.position + fence2.transform.position)/2 - Camera.main.transform.position;
                 Vector3 newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, Mathf.PI / 180, 0);
@@ -303,7 +340,7 @@ public class IARTab : FSystem {
                 {
                     Camera.main.transform.forward = tmpTarget;
                     gameAudioSource.PlayOneShot(lockR2.First().GetComponent<Selectable>().right);
-                    playerLookingToDoor = true;
+                    playerLookingAtDoor = true;
                 }
             }
             else
@@ -314,7 +351,7 @@ public class IARTab : FSystem {
                 if (angleCount == 103)
                 {
                     angleCount = 0;
-                    playerLookingToDoor = false;
+                    playerLookingAtDoor = false;
                     screen3ButtonImage.GetComponent<Button>().onClick.AddListener(delegate {
                         SwitchTab(screenR3, screen3ButtonImage);
                     });
