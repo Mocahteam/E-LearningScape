@@ -9,7 +9,9 @@ public class Pause : FSystem {
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
 
     private bool gamePaused = false;
-    private bool playerEnabled = true;
+    public static bool playerEnabled = true;
+    private GameObject menuGO;
+    public static bool askResume = false;
 
 	private GameObject forGO;
 
@@ -22,6 +24,7 @@ public class Pause : FSystem {
 			forGO = canvas.getAt (i);
 			if(forGO.name == "PauseMenu")
             {
+                menuGO = forGO;
 				foreach(Button b in forGO.GetComponentsInChildren<Button>())
                 {
                     switch (b.name)
@@ -59,7 +62,8 @@ public class Pause : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        if (Input.GetKeyDown(KeyCode.Escape)) //when escape key is pressed
+        gamePaused = menuGO.activeSelf;
+        if (Input.GetKeyDown(KeyCode.Escape) && ((menuGO.activeSelf && IARTab.onIAR) || !IARTab.onIAR)) //when escape key is pressed
         {
             if (gamePaused)
             {
@@ -76,14 +80,14 @@ public class Pause : FSystem {
 						forGO.SetActive(true); //show pause menu
                     }
                 }
-                foreach(FSystem s in FSystemManager.updateSystems())
+                /*foreach(FSystem s in FSystemManager.updateSystems())
                 {
                     //stop all FYFY systems but "Pause" and the timer
-                    if (s.ToString() != "Pause" && s.ToString() != "TimerSystem")
+                    if (s.ToString() != "Pause" && s.ToString() != "TimerSystem" && s.ToString() != "IARTab")
                     {
                         s.Pause = true;
                     }
-                }
+                }*/
                 playerEnabled = player.First().GetComponent<FirstPersonController>().enabled; //save the playing state of the player (moving or object selected/using cursor)
                 //disable player moves
                 player.First().GetComponent<FirstPersonController>().enabled = false;
@@ -93,24 +97,20 @@ public class Pause : FSystem {
                 gamePaused = true;
             }
         }
+        if (askResume)
+        {
+            Resume();
+        }
 	}
 
     void Resume()   //resume game
 	{
-		int nbCanvas = canvas.Count;
-		for(int i = 0; i < nbCanvas; i++)
-		{
-			forGO = canvas.getAt (i);
-			if (forGO.name == "PauseMenu")
-			{
-				forGO.SetActive(false); //hide pause menu
-			}
-		}
+		menuGO.SetActive(false); //hide pause menu
         //unpause all FYFY systems
-        foreach (FSystem s in FSystemManager.updateSystems())
+        /*foreach (FSystem s in FSystemManager.updateSystems())
         {
             s.Pause = false;
-        }
+        }*/
         if (playerEnabled)
         {
             //enable player moves
@@ -120,6 +120,7 @@ public class Pause : FSystem {
             Cursor.visible = false;
         }
         gamePaused = false;
+        askResume = false;
     }
 
     void Restart() //restart game from beginning

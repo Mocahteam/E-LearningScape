@@ -23,22 +23,26 @@ public class TextureFromCamera : MonoBehaviour
         int newCameraX=0, newCameraY=0;
         if ((float)myCamera.pixelWidth/myCamera.pixelHeight > correctRatio)
         {
-            Debug.Log(string.Concat(myCamera.pixelWidth, "/", myCamera.pixelHeight, " > ", 1375, "/", 955));
+            //Debug.Log(string.Concat(myCamera.pixelWidth, "/", myCamera.pixelHeight, " > ", 1375, "/", 955));
             newCameraX = (int) ((float)myCamera.pixelHeight * correctRatio);
             newCameraY = myCamera.pixelHeight;
         }
         else
         {
-            Debug.Log(string.Concat(myCamera.pixelWidth, "/", myCamera.pixelHeight, " < ", 1375, "/", 955));
+            //Debug.Log(string.Concat(myCamera.pixelWidth, "/", myCamera.pixelHeight, " < ", 1375, "/", 955));
             newCameraX = myCamera.pixelWidth;
             newCameraY = (int)((float)myCamera.pixelWidth / correctRatio);
         }
-        Debug.Log(string.Concat(newCameraX, " ", newCameraY));
+        float a1 = (0.7829f - 0.89632f) / (1403 - 1375);
+        float b1 = 0.89632f - a1 * 1375;
+        float y1 = a1 * newCameraX + b1;
+        float a2 = (1.0625f - 1.0847f) / (975 - 955);
+        float b2 = 1.0847f - a2 * 955;
+        float y2 = a2 * newCameraY + b2;
+        m_Display.GetComponent<RectTransform>().localScale = new Vector3(y1, y2, m_Display.GetComponent<RectTransform>().localScale.z);
         int x = (myCamera.pixelWidth - newCameraX) / 2;
         int y = (myCamera.pixelHeight - newCameraY) / 2;
         myCamera.pixelRect = new Rect(x, y, newCameraX, newCameraY);
-        //changer en fonction de width mais aussi de height
-        //m_Display.GetComponent<RectTransform>().localScale += Vector3.right * (0.89632f*(float)newCameraX/1375- m_Display.GetComponent<RectTransform>().localScale.x);
 
         m_Display.transform.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(myCamera.pixelWidth, myCamera.pixelHeight);
         m_Display.color = new Color(1, 1, 1, 0);

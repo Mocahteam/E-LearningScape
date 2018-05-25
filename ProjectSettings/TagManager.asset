@@ -45,7 +45,23 @@ TagManager:
   - BoardRemovableWords
   - Board
   - Eraser
-  - test3DMask
+  - ScreenIAR
+  - IARTab
+  - StoryDisplayer
+  - DreamFragmentUI
+  - LockR2Wheel
+  - Fence
+  - DreamFragmentLight
+  - GlassesBG
+  - ScrollUI
+  - Scroll
+  - PuzzleButton
+  - LockIntro
+  - LockIntroWheel
+  - WallIntro
+  - ChestLid
+  - GameRooms
+  - EndRoom
   layers:
   - Default
   - TransparentFX

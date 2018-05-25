@@ -71,19 +71,11 @@ MonoBehaviour:
   depthOfField:
     m_Enabled: 1
     m_Settings:
-<<<<<<< HEAD
-      focusDistance: 2.3
-      aperture: 3
-      focalLength: 35
-      useCameraFov: 0
-      kernelSize: 1
-=======
       focusDistance: 1.5
-      aperture: 4.8
+      aperture: 5
       focalLength: 35
       useCameraFov: 0
       kernelSize: 2
->>>>>>> graph
   motionBlur:
     m_Enabled: 1
     m_Settings:
@@ -289,7 +281,7 @@ MonoBehaviour:
       lut: {fileID: 0}
       contribution: 1
   chromaticAberration:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       spectralTexture: {fileID: 0}
       intensity: 0.197
