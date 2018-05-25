@@ -42,6 +42,7 @@ public class IARTab : FSystem {
     private Sprite selectedTabSprite;
     private Sprite initialTabSprite;
 
+    public static bool askCloseIAR;
     private bool onInventory = false;
     private bool onMenu = false;
     private GameObject activeUI = null;
@@ -63,7 +64,7 @@ public class IARTab : FSystem {
     public IARTab()
     {
         door.First().transform.position += Vector3.up * (5.73f - door.First().transform.position.y); //opened
-        //door.First().transform.position += Vector3.up * (2.13f - door.First().transform.position.y); //closed
+        door.First().transform.position += Vector3.up * (2.13f - door.First().transform.position.y); //closed
 
         tabsGO = tabs.First().transform.parent.gameObject;
         inventory = inventoryFamily.First();
@@ -170,6 +171,15 @@ public class IARTab : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
     {
+        if (askCloseIAR)
+        {
+            if (activeUI)
+            {
+                activeUI.SetActive(false);
+            }
+            askCloseIAR = false;
+        }
+
         if (inventory.activeSelf && !onInventory)
         {
             onIAR = true;

@@ -60,9 +60,10 @@ public class StoryDisplaying : FSystem {
         transitionText = new string[1];
         transitionText[0] = "Camille est tombée en sommeil paradoxal, et elle se met à rêver. L’université se transforme en jungle pleine de dangers. Les marchands de sable restent avec elle pour la protéger.";
 
-        endingText = new string[2];
+        endingText = new string[3];
         endingText[0] = "Camille se réveille. Elle est en pleine forme, et tout est clair dans sa tête pour son premier enseignement. Elle a hâte de commencer.";
         endingText[1] = "Les marchands de sable ont bien travaillé et se retrouvent pour un débriefing sur tout leur travail";
+        endingText[2] = "Fin";
 
         if (storyDisplayer.First().activeSelf)
         {
@@ -181,8 +182,10 @@ public class StoryDisplaying : FSystem {
                 }
                 else
                 {
-                    fadingImage.color = Color.black;
-                    background.color = Color.black;
+                    Color c = fadingImage.color;
+                    fadingImage.color = new Color(c.r, c.g, c.b, 1);
+                    c = background.color;
+                    background.color = new Color(c.r, c.g, c.b, 1);
                     fadingToReadingMode = false;
                     if (textCount < readTexts.Length)
                     {

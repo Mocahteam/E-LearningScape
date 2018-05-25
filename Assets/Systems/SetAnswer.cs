@@ -3,6 +3,7 @@ using FYFY;
 using UnityEngine.UI;
 using FYFY_plugins.PointerManager;
 using TMPro;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class SetAnswer : FSystem
 {
@@ -24,6 +25,9 @@ public class SetAnswer : FSystem
     private Family aRoom3 = FamilyManager.getFamily(new AnyOfTags("A-R3")); //answers of the room 3 (tablet)
     private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ENABLED));
     private Family glassesBackgrounds = FamilyManager.getFamily(new AnyOfTags("GlassesBG"));
+    private Family game = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
+    private Family endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"));
+    private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
 
 
     //elements used for visual and audio feedback when answering
@@ -80,10 +84,12 @@ public class SetAnswer : FSystem
     private bool answer2R3Given = false;
     private bool answer3R3Given = false;
     private bool answer4R3Given = false;
-    private bool fadingToPasswordRoom3 = false;
+    private bool fadingToEndRoom = false;
 
     private bool usingLamp = false;
     private string symbolLetter;
+
+    public static bool credits = true;
 
     //tmp gameobjects used to loop in famillies
     private GameObject forGO;
@@ -697,49 +703,57 @@ public class SetAnswer : FSystem
                 fadingToAnswersRoom2 = false;
             }
         }
-        if (screen3.GetComponent<Selectable>().solved && fadingToPasswordRoom3)
+        if (screen3.GetComponent<Selectable>().solved && fadingToEndRoom)
         {
-            //wait the end of the "Right answer" animation before fading to password
+            //wait the end of the "Right answer" animation before fading to end room
             if (rightBG.activeSelf)
             {
                 timerWhite = Time.time;
             }
             else //when the "Right answer" animation is finished
             {
-                //from time: 0 to 1.5, screen: answers to white
-                if (Time.time - timerWhite < 1.5f && Time.time - timerWhite >= 0f)
+                //from time: 0 to 2, screen: answers to white
+                if (Time.time - timerWhite < 2f && Time.time - timerWhite >= 0f)
                 {
-                    whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, (Time.time - timerWhite) / 1.5f);
-                    if (Time.time - timerWhite > 1.45f)
+                    whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, (Time.time - timerWhite) / 2f);
+                    if (Time.time - timerWhite > 1.95f)
                     {
-                        answersRoom3.SetActive(false);
-                        foreach (Transform child in screen3.transform)
+                        player.First().transform.position = new Vector3(74, 0.33f, -3);
+                        player.First().transform.localRotation = Quaternion.Euler(0, -90, 0);
+                        Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                        game.First().SetActive(false);
+                        endRoom.First().SetActive(true);
+                        if (player.First().GetComponentInChildren<Light>())
                         {
-                            if (child.gameObject.name == "Background")
-                            {
-                                child.gameObject.SetActive(false);
-                            }
-                            else if (child.gameObject.name == "Background2")
-                            {
-                                child.gameObject.SetActive(true);
-                            }
-                            else if (child.gameObject.name == "Password")
-                            {
-                                child.gameObject.SetActive(true);
-                            }
+                            player.First().GetComponentInChildren<Light>().gameObject.SetActive(false);
                         }
+                        IARTab.askCloseIAR = true;
+                        RenderSettings.fogDensity = 0;
+                        Camera.main.farClipPlane = 300;
                     }
                 }
-                //from time: 1.5 to 3, screen: white to password
-                else if (Time.time - timerWhite < 3f && Time.time - timerWhite > 1.5f)
+                //from time: 2 to 4, screen: white to end room
+                else if (Time.time - timerWhite < 4f && Time.time - timerWhite > 2f)
                 {
-                    whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, 1 - (Time.time - timerWhite - 1.5f) / 1.5f);
+                    whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, 1 - (Time.time - timerWhite - 2) / 2f);
                 }
-                else //if time not between 0 and 3
+                else //if time not between 0 and 4
                 {
+                    foreach (FSystem s in FSystemManager.updateSystems())
+                    {
+                        //stop all FYFY systems but "SetAnswer" and "StoryDisplaying"
+                        if (s.ToString() != "SetAnswer" && s.ToString() != "StoryDisplaying" && !(s.ToString() == "DreamFragmentCollect" && credits))
+                        {
+                            s.Pause = true;
+                        }
+                    }
+                    player.First().GetComponent<FirstPersonController>().enabled = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
                     //stop fading
                     whiteBG.SetActive(false);
-                    fadingToPasswordRoom3 = false;
+                    fadingToEndRoom = false;
                 }
             }
         }
@@ -1467,7 +1481,7 @@ public class SetAnswer : FSystem
                     if (answer2R3Given && answer3R3Given && answer4R3Given)
                     {
                         screen3.GetComponent<Selectable>().solved = true;
-                        fadingToPasswordRoom3 = true;
+                        fadingToEndRoom = true;
                         //start fading to password
                         timerWhite = Time.time;
                         whiteBG.SetActive(true);
@@ -1508,7 +1522,7 @@ public class SetAnswer : FSystem
                     if (answer1R3Given && answer3R3Given && answer4R3Given)
                     {
                         screen3.GetComponent<Selectable>().solved = true;
-                        fadingToPasswordRoom3 = true;
+                        fadingToEndRoom = true;
                         //start fading to password
                         timerWhite = Time.time;
                         whiteBG.SetActive(true);
@@ -1539,7 +1553,7 @@ public class SetAnswer : FSystem
                     if (answer2R3Given && answer1R3Given && answer4R3Given)
                     {
                         screen3.GetComponent<Selectable>().solved = true;
-                        fadingToPasswordRoom3 = true;
+                        fadingToEndRoom = true;
                         //start fading to password
                         timerWhite = Time.time;
                         whiteBG.SetActive(true);
@@ -1570,7 +1584,7 @@ public class SetAnswer : FSystem
                     if (answer2R3Given && answer3R3Given && answer1R3Given)
                     {
                         screen3.GetComponent<Selectable>().solved = true;
-                        fadingToPasswordRoom3 = true;
+                        fadingToEndRoom = true;
                         //start fading to password
                         timerWhite = Time.time;
                         whiteBG.SetActive(true);

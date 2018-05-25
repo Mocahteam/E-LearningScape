@@ -532,6 +532,7 @@ public class ShowUI : FSystem {
                     boxPadlock.SetActive(false);
                     unlockBox = false;
                     CollectableGO.usingKeyE03 = false;
+                    SetAnswer.credits = false;
                     //hide inventory's displayed elements
                     foreach (Transform child in inventory.First().transform)
                     {
@@ -717,6 +718,7 @@ public class ShowUI : FSystem {
                     bagPadlock.SetActive(false);
                     unlockBag = false;
                     CollectableGO.usingKeyE08 = false;
+                    SetAnswer.credits = false;
                     //hide inventory's displayed elements
                     foreach (Transform child in inventory.First().transform)
                     {
@@ -792,7 +794,6 @@ public class ShowUI : FSystem {
                     else
                     {
                         objectPos += Vector3.up * (1.78f + 0.4f - objectPos.y);
-                        Debug.Log(objectPos);
                         if (CollectableGO.usingKeyE08)
                         {
                             //unlock if key used

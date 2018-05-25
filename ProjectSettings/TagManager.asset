@@ -54,6 +54,8 @@ TagManager:
   - LockIntroWheel
   - WallIntro
   - ChestLid
+  - GameRooms
+  - EndRoom
   layers:
   - Default
   - TransparentFX

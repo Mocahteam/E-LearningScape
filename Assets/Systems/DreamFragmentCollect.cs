@@ -55,7 +55,7 @@ public class DreamFragmentCollect : FSystem {
                         {
                             dfUI.GetComponentInChildren<TextMeshProUGUI>().text = string.Concat("Ouvrez l'enveloppe numéro ", tmpDFComponent.id, " et récupérez l'item \"", tmpDFComponent.itemName, "\"");
                         }
-                        else if (tmpDFComponent.type == 1)
+                        else if (tmpDFComponent.type == 1 || tmpDFComponent.type == 2)
                         {
                             dfUI.GetComponentInChildren<TextMeshProUGUI>().text = string.Concat("\"", tmpDFComponent.itemName, "\"");
                         }
@@ -70,16 +70,19 @@ public class DreamFragmentCollect : FSystem {
 
     private void CloseWindow()
     {
-        if (selectedFragment.GetComponentInChildren<ParticleSystem>())
+        if (selectedFragment.GetComponent<DreamFragment>().type != 2)
         {
-            selectedFragment.GetComponentInChildren<ParticleSystem>().gameObject.SetActive(false);
-        }
-        foreach (Transform child in selectedFragment.transform)
-        {
-            if (child.gameObject.tag == "DreamFragmentLight")
+            if (selectedFragment.GetComponentInChildren<ParticleSystem>())
             {
-                child.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-                break;
+                selectedFragment.GetComponentInChildren<ParticleSystem>().gameObject.SetActive(false);
+            }
+            foreach (Transform child in selectedFragment.transform)
+            {
+                if (child.gameObject.tag == "DreamFragmentLight")
+                {
+                    child.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                    break;
+                }
             }
         }
         selectedFragment = null;
