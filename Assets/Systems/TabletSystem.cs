@@ -46,14 +46,15 @@ public class TabletSystem : FSystem {
         foreach(Question q in t.questions) allAnswered &= q.isAnswered;
         if(allAnswered)
         {
-          Door d = t.opens;
-          d.isOpened = true;
-          d.loadsOnOpen.SetActive(true);
-          d.gameObject.transform.position += d.translateOnOpen;
+          foreach(Door d in t.opens) {
+            d.isOpened = true;
+            d.loadsOnOpen.SetActive(true);
+            d.gameObject.transform.position += d.translateOnOpen;
 
-          AudioSource audio = go.GetComponent<AudioSource>();
-          audio.clip = d.openAudio;
-          audio.Play();
+            AudioSource audio = go.GetComponent<AudioSource>();
+            audio.clip = d.openAudio;
+            audio.Play();
+          }
 
           t.isAnswered = true;
         }
@@ -73,7 +74,6 @@ public class TabletSystem : FSystem {
       if(current.tag == "Q-R3") // Questions on the third tablet are handled differently
       {
         TabletR3 t = current.transform.parent.parent.parent.gameObject.GetComponent<TabletR3>();
-        Debug.Log(t);
         if(t.answers.Contains(text))
         {
           t.answers = t.answers.Where(ans => ans != text).ToArray();
