@@ -64,7 +64,7 @@ public class IARTab : FSystem {
     public IARTab()
     {
         door.First().transform.position += Vector3.up * (5.73f - door.First().transform.position.y); //opened
-        door.First().transform.position += Vector3.up * (2.13f - door.First().transform.position.y); //closed
+        //door.First().transform.position += Vector3.up * (2.13f - door.First().transform.position.y); //closed
 
         tabsGO = tabs.First().transform.parent.gameObject;
         inventory = inventoryFamily.First();

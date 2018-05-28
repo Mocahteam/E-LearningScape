@@ -28,6 +28,7 @@ public class SetAnswer : FSystem
     private Family game = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
+    private Family waterFloor = FamilyManager.getFamily(new AnyOfTags("WaterFloor"));
 
 
     //elements used for visual and audio feedback when answering
@@ -98,7 +99,7 @@ public class SetAnswer : FSystem
 
     public SetAnswer()
     {
-
+        credits = false;
         timeR = -Mathf.Infinity;
         timeW = -Mathf.Infinity;
         timerWhite = -Mathf.Infinity;
@@ -591,7 +592,7 @@ public class SetAnswer : FSystem
         }
         else if (wrongAnswerE04) //true when the wrong gear is dragged in the center
         {
-            if (5 + wTimerE04 - Time.time < 0)
+            if (wTimerE04 - Time.time < 0)
             {
                 //when the timer if finished, the player can drag a gear again
                 wrongAnswerE04 = false;
@@ -730,6 +731,20 @@ public class SetAnswer : FSystem
                         IARTab.askCloseIAR = true;
                         RenderSettings.fogDensity = 0;
                         Camera.main.farClipPlane = 300;
+                        foreach(Transform child in endRoom.First().transform)
+                        {
+                            if (child.gameObject.GetComponent<MeshRenderer>())
+                            {
+                                child.gameObject.GetComponent<MeshRenderer>().allowOcclusionWhenDynamic = false;
+                            }
+                        }
+                        foreach (Transform child in waterFloor.First().transform)
+                        {
+                            if (child.gameObject.GetComponent<MeshRenderer>())
+                            {
+                                child.gameObject.GetComponent<MeshRenderer>().allowOcclusionWhenDynamic = false;
+                            }
+                        }
                     }
                 }
                 //from time: 2 to 4, screen: white to end room

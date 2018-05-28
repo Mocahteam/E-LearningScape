@@ -54,7 +54,7 @@ public class StoryDisplaying : FSystem {
 
         introText = new string[3];
         introText[0] = "Il est déjà tard le soir, Camille reste inquiète pour son premier enseignement à Sorbonne Université. Ce n’est pas la première fois qu’elle enseigne, mais maintenant elle est Maître de Conférences, son premier poste permanent.";
-        introText[1] = "Quand elle brosse ses dents, elle révise une fois de plus le cours du prof qu’elle connaît déjà par coeur. Puis elle se couche, et plein de questions tournent dans sa tête : et si j’ai un blanc ? et si les étudiants ne sont pas motivés ? et s’il n’y a pas de craie ?";
+        introText[1] = "En se brossant les dents, elle révise une fois de plus le cours du prof qu’elle connaît déjà par coeur. Puis elle se couche, et plein de questions tournent dans sa tête : et si j’ai un blanc ? et si les étudiants ne sont pas motivés ? et s’il n’y a pas de craie ?";
         introText[2] = "Camille fini par s'endormir... C'est alors que les marchands de sable entrent en action pour aider Camille à structurer sa pensée pendant son sommeil.";
 
         transitionText = new string[1];
@@ -150,6 +150,10 @@ public class StoryDisplaying : FSystem {
                 {
                     Color c = fadingImage.color;
                     fadingImage.color = new Color(c.r, c.g, c.b, (Time.time - readingTimer) / 2);
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        readingTimer = Time.time - 3;
+                    }
                 }
                 else
                 {
