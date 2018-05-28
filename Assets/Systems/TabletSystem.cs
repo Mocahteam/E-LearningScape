@@ -41,17 +41,17 @@ public class TabletSystem : FSystem {
     // Checking answered tablets
     foreach(GameObject go in tablets) {
       Tablet t = go.GetComponent<Tablet>();
-      if(!t.isAnswered) {
+      if(t && !t.isAnswered) {
         bool allAnswered = true;
         foreach(Question q in t.questions) allAnswered &= q.isAnswered;
         if(allAnswered)
         {
           foreach(Door d in t.opens) {
             d.isOpened = true;
-            d.loadsOnOpen.SetActive(true);
-            d.gameObject.transform.position += d.translateOnOpen;
 
-            AudioSource audio = go.GetComponent<AudioSource>();
+            if(d.loadsOnOpen) d.loadsOnOpen.SetActive(true);
+
+            AudioSource audio = d.gameObject.GetComponent<AudioSource>();
             audio.clip = d.openAudio;
             audio.Play();
           }
