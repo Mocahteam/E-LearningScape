@@ -56,6 +56,7 @@ TagManager:
   - ChestLid
   - GameRooms
   - EndRoom
+  - WaterFloor
   layers:
   - Default
   - TransparentFX

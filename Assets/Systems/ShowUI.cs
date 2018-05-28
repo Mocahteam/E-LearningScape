@@ -215,13 +215,9 @@ public class ShowUI : FSystem {
             //init text and number
             foreach(Transform child in forGO.transform)
             {
-                if(child.gameObject.name == "Text")
+                if (child.gameObject.name == "Number")
                 {
-                    b.text = child.gameObject.GetComponent<TextMeshPro>().text.Replace("\n", " ");
-                }
-                else if(child.gameObject.name == "Number")
-                {
-                    int.TryParse(child.gameObject.GetComponent<TextMeshPro>().text, out b.number);
+                    child.gameObject.GetComponent<TextMeshPro>().text = b.number.ToString();
                 }
             }
         }
@@ -509,7 +505,7 @@ public class ShowUI : FSystem {
                         {
                             //animation to move the ball to box's aperture
 							forGO.transform.localPosition = Vector3.MoveTowards(forGO.transform.localPosition, Vector3.up, speed);
-							forGO.transform.localRotation = Quaternion.Euler(Vector3.up*-90);
+							forGO.transform.localRotation = Quaternion.Euler(Vector3.up*-90 + Vector3.right * 90);
                             //when the ball arrives
 							if(forGO.transform.localPosition == Vector3.up)
                             {
@@ -596,19 +592,11 @@ public class ShowUI : FSystem {
             {
                 //if the ball is selected, move it in front of the camera and rotate it to make its back visible
                 focusedBall.transform.position = Vector3.MoveTowards(focusedBall.transform.position, ballToCamera, speed);
-                focusedBall.transform.localRotation = Quaternion.RotateTowards(focusedBall.transform.localRotation, Quaternion.Euler(0, 90, 0), speedRotation);
+                focusedBall.transform.localRotation = Quaternion.RotateTowards(focusedBall.transform.localRotation, Quaternion.Euler(90, 90, 0), speedRotation);
                 //when the ball arrives
                 if (focusedBall.transform.position == ballToCamera)
                 {
                     moveBall = false;
-                    //hide the text behind
-                    foreach (Transform child in focusedBall.transform)
-                    {
-                        if (child.gameObject.name == "Text")
-                        {
-                            child.gameObject.SetActive(false);
-                        }
-                    }
                 }
             }
             else
@@ -616,7 +604,7 @@ public class ShowUI : FSystem {
                 //if the ball is not selected, move it back with the other balls and rotate it back
                 ballPos = Vector3.up * ((float)balls.Count / 10 - (float)(focusedBall.GetComponent<Ball>().id / 5) / 3) + Vector3.right * ((float)(focusedBall.GetComponent<Ball>().id % 5) * -2f / 4 + 1f) * 2 / 3 + Vector3.forward * 0.3f;
                 focusedBall.transform.localPosition = Vector3.MoveTowards(focusedBall.transform.localPosition, ballPos, speed);
-                focusedBall.transform.localRotation = Quaternion.RotateTowards(focusedBall.transform.localRotation, Quaternion.Euler(0, -90, 0), speedRotation * 2);
+                focusedBall.transform.localRotation = Quaternion.RotateTowards(focusedBall.transform.localRotation, Quaternion.Euler(90, -90, 0), speedRotation * 2);
                 //when the ball arrives
                 if (focusedBall.transform.localPosition == ballPos)
                 {
@@ -1209,11 +1197,6 @@ public class ShowUI : FSystem {
 							//onclick if the ball isn't moving, move it back to its position with other balls
 							ballFocused = false;
 							moveBall = true;
-							foreach (Transform child in focusedBall.transform) {
-								if (child.gameObject.name == "Text") {
-									child.gameObject.SetActive (true);
-								}
-							}
 							//calculate position and speeds for the animation
 							ballPos = Vector3.up * ((float)balls.Count / 10 - (float)(focusedBall.GetComponent<Ball> ().id / 5) / 3) + Vector3.right * ((float)(focusedBall.GetComponent<Ball> ().id % 5) * -2f / 4 + 1f) * 2 / 3 + Vector3.forward * 0.3f;
 							dist = (box.First ().transform.TransformPoint (ballPos) - ballToCamera).magnitude;
