@@ -7,6 +7,8 @@ public class ToggleObject : FSystem {
 	private Family toggleable = FamilyManager.getFamily(new AllOfComponents(typeof(ToggleableGO)));
     private Family lid = FamilyManager.getFamily(new AnyOfTags("ChestLid"));
 
+    private float speed;
+
     //variables used to toggle chairs in the first room
 	private GameObject[] togglingChairsDown;
 	private int togglingChairsDownCount = 0;
@@ -29,7 +31,7 @@ public class ToggleObject : FSystem {
     //temporary variables
     private GameObject forGO;
 	private ToggleableGO tmpTGO;
-    private int tmpRotationCount = 0;
+    private float tmpRotationCount = 0;
     private bool onInventory = false;
 
 	public ToggleObject(){
@@ -57,6 +59,8 @@ public class ToggleObject : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
+        speed = 50 * Time.deltaTime;
+
         if (!onInventory)
         {
             int nbToggleable = toggleable.Count;
@@ -126,7 +130,7 @@ public class ToggleObject : FSystem {
         //down
 		for (int i = 0; i < togglingChairsDownCount; i++) {
             //rotate the chair
-			togglingChairsDown[i].transform.rotation = Quaternion.RotateTowards(togglingChairsDown[i].transform.rotation, Quaternion.Euler(90,togglingChairsDown[i].transform.rotation.eulerAngles.y,togglingChairsDown[i].transform.rotation.eulerAngles.z), 10);
+			togglingChairsDown[i].transform.rotation = Quaternion.RotateTowards(togglingChairsDown[i].transform.rotation, Quaternion.Euler(90,togglingChairsDown[i].transform.rotation.eulerAngles.y,togglingChairsDown[i].transform.rotation.eulerAngles.z), 10 * speed);
 			if (togglingChairsDown[i].transform.rotation.eulerAngles.x > 89.9999f)
             {
                 //stop animation when the final position is reached
@@ -138,7 +142,7 @@ public class ToggleObject : FSystem {
         //up
 		for (int i = 0; i < togglingChairsUpCount; i++) {
             //rotate the chair
-            togglingChairsUp[i].transform.rotation = Quaternion.RotateTowards(togglingChairsUp[i].transform.rotation, Quaternion.Euler(0,togglingChairsUp[i].transform.rotation.eulerAngles.y,togglingChairsUp[i].transform.rotation.eulerAngles.z), 10);
+            togglingChairsUp[i].transform.rotation = Quaternion.RotateTowards(togglingChairsUp[i].transform.rotation, Quaternion.Euler(0,togglingChairsUp[i].transform.rotation.eulerAngles.y,togglingChairsUp[i].transform.rotation.eulerAngles.z), 10 * speed);
             if (togglingChairsUp[i].transform.rotation.eulerAngles.x < 0.0001f)
             {
                 //stop animation when the final position is reached
@@ -157,7 +161,7 @@ public class ToggleObject : FSystem {
             {
                 //move slower when close to top
 				float dist = (tableTarget - table.transform.position).magnitude;
-				table.transform.position = Vector3.MoveTowards (table.transform.position, tableTarget, 0.01f+dist/10);
+				table.transform.position = Vector3.MoveTowards (table.transform.position, tableTarget, (0.01f+dist/10) * speed);
 				if (table.transform.position == tableTarget)
                 {
                     //start going down when table reaches top
@@ -170,7 +174,7 @@ public class ToggleObject : FSystem {
             {
                 //move slower when close to top
                 float dist = (tableTarget - table.transform.position).magnitude;
-				table.transform.position = Vector3.MoveTowards (table.transform.position, tableTarget, 0.01f+(1-dist)/10);
+				table.transform.position = Vector3.MoveTowards (table.transform.position, tableTarget, (0.01f+(1-dist)/10) * speed);
 				if (table.transform.position == tableTarget)
                 {
                     //stop animation when table comes back to initial position
@@ -179,7 +183,7 @@ public class ToggleObject : FSystem {
 				}
 			}
             //rotate table
-			table.transform.rotation = Quaternion.RotateTowards (table.transform.rotation, Quaternion.Euler (table.transform.rotation.eulerAngles.x, table.transform.rotation.eulerAngles.y, 180), 5);
+			table.transform.rotation = Quaternion.RotateTowards (table.transform.rotation, Quaternion.Euler (table.transform.rotation.eulerAngles.x, table.transform.rotation.eulerAngles.y, 180), 5 * speed);
 		}
         //up
         else if (toggleTableUp)
@@ -189,7 +193,7 @@ public class ToggleObject : FSystem {
             {
                 //move slower when close to top
                 float dist = (tableTarget - table.transform.position).magnitude;
-				table.transform.position = Vector3.MoveTowards (table.transform.position, tableTarget, 0.01f+dist/10);
+				table.transform.position = Vector3.MoveTowards (table.transform.position, tableTarget, (0.01f+dist/10) * speed);
 				if (table.transform.position == tableTarget)
                 {
                     //start going down when table reaches top
@@ -202,7 +206,7 @@ public class ToggleObject : FSystem {
             {
                 //move slower when close to top
                 float dist = (tableTarget - table.transform.position).magnitude;
-				table.transform.position = Vector3.MoveTowards (table.transform.position, tableTarget, 0.01f+(1-dist)/10);
+				table.transform.position = Vector3.MoveTowards (table.transform.position, tableTarget, (0.01f+(1-dist)/10) * speed);
 				if (table.transform.position == tableTarget)
                 {
                     //stop animation when table comes back to initial position
@@ -211,17 +215,18 @@ public class ToggleObject : FSystem {
 				}
             }
             //rotate table
-            table.transform.rotation = Quaternion.RotateTowards (table.transform.rotation, Quaternion.Euler (table.transform.rotation.eulerAngles.x, table.transform.rotation.eulerAngles.y, 0), 5);
+            table.transform.rotation = Quaternion.RotateTowards (table.transform.rotation, Quaternion.Euler (table.transform.rotation.eulerAngles.x, table.transform.rotation.eulerAngles.y, 0), 5 * speed);
 		}
 
         //toggle chest room3
         //open
         if (openingChest)
         {
-            chestLid.transform.Rotate(4 - (float)tmpRotationCount/40*2, 0, 0);
-            tmpRotationCount++;
-            if(tmpRotationCount == 40)
+            chestLid.transform.Rotate((4 - (float)tmpRotationCount / 40 * 2) * 100 * Time.deltaTime, 0, 0);
+            tmpRotationCount+= (4 - (float)tmpRotationCount / 40 * 2) * 100 * Time.deltaTime;
+            if(tmpRotationCount > 120)
             {
+                chestLid.transform.Rotate(120 - tmpRotationCount, 0, 0);
                 tmpRotationCount = 0;
                 openingChest = false;
                 chestLid.transform.parent.gameObject.GetComponent<ToggleableGO>().toggled = false;
@@ -230,11 +235,11 @@ public class ToggleObject : FSystem {
         //close
         else if (closingChest)
         {
-            chestLid.transform.Rotate(-4 + (float)tmpRotationCount/40*2, 0, 0);
-            tmpRotationCount++;
-            if (tmpRotationCount == 40)
+            chestLid.transform.Rotate(-(4 - (float)tmpRotationCount / 40 * 2) * 100 * Time.deltaTime, 0, 0);
+            tmpRotationCount += (4 - (float)tmpRotationCount / 40 * 2) * 100 * Time.deltaTime;
+            if (tmpRotationCount > 120)
             {
-                chestLid.transform.localRotation = Quaternion.Euler(0, chestLid.transform.localRotation.eulerAngles.y, chestLid.transform.localRotation.eulerAngles.z);
+                chestLid.transform.Rotate(-(120 - tmpRotationCount), 0, 0);
                 tmpRotationCount = 0;
                 closingChest = false;
                 chestLid.transform.parent.gameObject.GetComponent<ToggleableGO>().toggled = false;

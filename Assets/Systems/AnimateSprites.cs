@@ -7,6 +7,7 @@ public class AnimateSprites : FSystem {
     private Family animatedSprites = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites)));
 
     private AnimatedSprites tmpAS;
+    private float lastChangeTime = -Mathf.Infinity;
 
     public AnimateSprites()
     {
@@ -29,18 +30,22 @@ public class AnimateSprites : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        int nb = animatedSprites.Count;
-        for(int i = 0; i < nb; i++)
+        if(Time.time - lastChangeTime > 1 / 30)
         {
-            tmpAS = animatedSprites.getAt(i).GetComponent<AnimatedSprites>();
-            if (tmpAS.gameObject.activeSelf && tmpAS.animate)
+            lastChangeTime = Time.time;
+            int nb = animatedSprites.Count;
+            for (int i = 0; i < nb; i++)
             {
-                tmpAS.usedSpriteID++;
-                if (tmpAS.usedSpriteID == tmpAS.sprites.Length)
+                tmpAS = animatedSprites.getAt(i).GetComponent<AnimatedSprites>();
+                if (tmpAS.gameObject.activeSelf && tmpAS.animate)
                 {
-                    tmpAS.usedSpriteID = 0;
+                    tmpAS.usedSpriteID++;
+                    if (tmpAS.usedSpriteID == tmpAS.sprites.Length)
+                    {
+                        tmpAS.usedSpriteID = 0;
+                    }
+                    tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[tmpAS.usedSpriteID];
                 }
-                tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[tmpAS.usedSpriteID];
             }
         }
 	}

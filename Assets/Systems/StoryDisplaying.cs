@@ -180,7 +180,18 @@ public class StoryDisplaying : FSystem {
                 if (Time.time - readingTimer < 4)
                 {
                     Color c = fadingImage.color;
-                    fadingImage.color = new Color(c.r, c.g, c.b, (Time.time - readingTimer) / 4);
+                    if (readingEnding)
+                    {
+                        fadingImage.color = Color.white;
+                        if(Time.time - readingTimer < 2)
+                        {
+                            readingTimer = Time.time - 2;
+                        }
+                    }
+                    else
+                    {
+                        fadingImage.color = new Color(c.r, c.g, c.b, (Time.time - readingTimer) / 4);
+                    }
                     c = background.color;
                     background.color = new Color(c.r, c.g, c.b, (Time.time - readingTimer) / 4);
                 }

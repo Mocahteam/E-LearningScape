@@ -23,12 +23,13 @@ public class SetAnswer : FSystem
     private Family removableBoardWords = FamilyManager.getFamily(new AnyOfTags("BoardWords"));
     private Family qRoom3 = FamilyManager.getFamily(new AnyOfTags("Q-R3")); //questions of the room 3 (tablet)
     private Family aRoom3 = FamilyManager.getFamily(new AnyOfTags("A-R3")); //answers of the room 3 (tablet)
-    private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ENABLED));
+    private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family glassesBackgrounds = FamilyManager.getFamily(new AnyOfTags("GlassesBG"));
     private Family game = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family waterFloor = FamilyManager.getFamily(new AnyOfTags("WaterFloor"));
+    private Family collectableGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)));
 
 
     //elements used for visual and audio feedback when answering
@@ -43,7 +44,7 @@ public class SetAnswer : FSystem
     private GameObject screen1;
     private int aq1r1 = 128;    //answer question 1 room 1
     private int aq2r1 = 459;    //answer question 2 room 1
-    private string aq3r1 = "il faut savoir changer de posture"; //answer question 3 room 1
+    private string aq3r1 = "1623810149"; //answer question 3 room 1
     private GameObject answersRoom1; //ui empty containing inputfields to answer
     private GameObject enigma4; //ui empty containing enigma04
     private GameObject whiteBG; // white ui image used for transition between answers and enigma04 on tablet
@@ -65,14 +66,14 @@ public class SetAnswer : FSystem
     private Color cacGreen;
     private Color cacOrange;
     private Color cacRed;
-    private int connectionPassword = 789;
+    private int connectionPassword = 345;
     private bool fadingToAnswersRoom2 = false;
     private GameObject answersRoom2; //ui empty containing inputfields to answer
     private string aq1r2 = "contrat pedagogique";
     private int aq2r2 = 914;
     private string aq3r2 = "smart";
     private int aq4r2 = 1956;
-    private string aq5r2 = "grille criteriee";
+    private string aq5r2 = "312";
     private string aq6r2 = "collaboration";
     
     private GameObject screen3;
@@ -147,8 +148,15 @@ public class SetAnswer : FSystem
             if (child.gameObject.name == "ConnectionScreen")
             {
                 connectionR2 = child.gameObject;
-                ifConnectionR2 = connectionR2.GetComponentInChildren<InputField>();
-                foreach (Transform c in child)
+                foreach(InputField inputField in connectionR2.GetComponentsInChildren<InputField>())
+                {
+                    if(inputField.gameObject.name == "Password")
+                    {
+                        ifConnectionR2 = inputField;
+                        break;
+                    }
+                }
+                foreach (Transform c in ifConnectionR2.gameObject.transform)
                 {
                     if (c.gameObject.name == "AnswerCheck")
                     {
@@ -303,12 +311,19 @@ public class SetAnswer : FSystem
             }
         }
         connectionR2.GetComponentInChildren<Button>().onClick.AddListener(CheckConnection);
-        connectionR2.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        foreach (InputField inputField in connectionR2.GetComponentsInChildren<InputField>())
+        {
+            if (inputField.gameObject.name == "Password")
             {
-                CheckConnection();
+                inputField.onEndEdit.AddListener(delegate {
+                    if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                    {
+                        CheckConnection();
+                    }
+                }); ;
+                break;
             }
-        });
+        }
         nb = qRoom3.Count;
         for (int i = 0; i < nb; i++)
         {
@@ -497,7 +512,7 @@ public class SetAnswer : FSystem
         else if (screen1.GetComponent<Selectable>().solved && enigma4.activeSelf && !fadingToEnigma4 && !IARTab.room2Unlocked)
         {
             //enigma 4 solved, open door to room 2
-            if(dr > 0.4f)
+            if(dr > 2f)
             {
                 IARTab.room2Unlocked = true;
             }
@@ -840,10 +855,10 @@ public class SetAnswer : FSystem
                     source.PlayOneShot(screen1.GetComponent<Selectable>().right);
                     timeR = Time.time;
 
-                    int nb = cGO.Count;
+                    int nb = collectableGO.Count;
                     for (int j = 0; j < nb; j++)
                     {
-                        forGO2 = cGO.getAt(j);
+                        forGO2 = collectableGO.getAt(j);
                         if (forGO2.name.Contains("KeyE03"))
                         {
                             forGO2.SetActive(false);
@@ -908,11 +923,11 @@ public class SetAnswer : FSystem
                     //feedback right answer
                     source.PlayOneShot(screen1.GetComponent<Selectable>().right);
                     timeR = Time.time;
-
-                    int nb = cGO.Count;
-                    for(int j = 0; j < nb; j++)
+                    
+                    int nb = collectableGO.Count;
+                    for (int j = 0; j < nb; j++)
                     {
-                        forGO2 = cGO.getAt(j);
+                        forGO2 = collectableGO.getAt(j);
                         if (forGO2.name.Contains("Syllabus") || forGO2.name.Contains("Wire"))
                         {
                             forGO2.SetActive(false);
@@ -971,7 +986,6 @@ public class SetAnswer : FSystem
             if (forGO.name.Contains(3.ToString()))
             {
                 answer = forGO.GetComponentInChildren<InputField>().text; //player's answer
-                answer = answer.ToLower();  //minimize the answer
                 if (answer == aq3r1) //if answer is correct
                 {
                     //feedback right answer
@@ -1021,7 +1035,7 @@ public class SetAnswer : FSystem
     private void CheckConnection() //mastermind
     {
         int answer;
-        int.TryParse(connectionR2.GetComponentInChildren<InputField>().text, out answer);
+        int.TryParse(ifConnectionR2.text, out answer);
 
         if (answer == connectionPassword) //if the answer is correct
         {
@@ -1041,6 +1055,7 @@ public class SetAnswer : FSystem
         }
         else
         {
+            ifConnectionR2.ActivateInputField();
             //else, feedback following the rules of mastermind ('O' correct, '?' right number but wrong place, 'X' wrong number)
             connectionR2.GetComponentInChildren<InputField>().ActivateInputField();
             if (answer / 100 == connectionPassword / 100)
@@ -1111,11 +1126,11 @@ public class SetAnswer : FSystem
                     //feedback right answer
                     source.PlayOneShot(screen2.GetComponent<Selectable>().right);
                     timeR = Time.time;
-
-                    int nb = cGO.Count;
+                    
+                    int nb = collectableGO.Count;
                     for (int j = 0; j < nb; j++)
                     {
-                        forGO2 = cGO.getAt(j);
+                        forGO2 = collectableGO.getAt(j);
                         if (forGO2.name.Contains("Glasses") || forGO2.name.Contains("KeyE08"))
                         {
                             forGO2.SetActive(false);
@@ -1352,9 +1367,6 @@ public class SetAnswer : FSystem
             if (forGO.name.Contains(5.ToString()))
             {
                 answer = forGO.GetComponentInChildren<InputField>().text;
-                answer = answer.ToLower();
-                answer = answer.Replace('é', 'e');
-                answer = answer.Replace('è', 'e');
 
                 if (answer == aq5r2) //if answer is correct
                 {
@@ -1483,10 +1495,10 @@ public class SetAnswer : FSystem
                     source.PlayOneShot(screen3.GetComponent<Selectable>().right);
                     timeR = Time.time;
                     //disable inventory elements used to answer to this question
-                    int nb = cGO.Count;
+                    int nb = collectableGO.Count;
                     for (int j = 0; j < nb; j++)
                     {
-                        forGO2 = cGO.getAt(j);
+                        forGO2 = collectableGO.getAt(j);
                         if (forGO2.name.Contains("Puzzle"))
                         {
                             forGO2.SetActive(false);
@@ -1524,10 +1536,10 @@ public class SetAnswer : FSystem
                     source.PlayOneShot(screen3.GetComponent<Selectable>().right);
                     timeR = Time.time;
                     //disable inventory elements used to answer to this question
-                    int nb = cGO.Count;
+                    int nb = collectableGO.Count;
                     for (int j = 0; j < nb; j++)
                     {
-                        forGO2 = cGO.getAt(j);
+                        forGO2 = collectableGO.getAt(j);
                         if (forGO2.name.Contains("Lamp"))
                         {
                             forGO2.SetActive(false);

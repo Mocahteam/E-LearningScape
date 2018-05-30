@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using FYFY;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.UI;
 
 public class TakeObject : FSystem {
 
@@ -11,11 +12,13 @@ public class TakeObject : FSystem {
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family plankE09 = FamilyManager.getFamily(new AnyOfTags("PlankE09"));
     private Family mirror = FamilyManager.getFamily(new AllOfComponents(typeof(MirrorScript)));
+    private Family focusedMatFamily = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
 
     private float onTableHeight;
     private GameObject tmpGO;
     private bool moveMirrorToPlank = false;
     private Vector3 objPos;
+    private Sprite plankInitialSprite;
 
     private bool initialiseView = false;
 
@@ -32,6 +35,7 @@ public class TakeObject : FSystem {
                 tObjects.getAt(i).GetComponent<Rigidbody>().isKinematic = false;
             }
         }
+        plankInitialSprite = plankE09.First().GetComponentInChildren<Image>().sprite;
     }
 
     // Use this to update member variables when system pause. 
@@ -139,6 +143,7 @@ public class TakeObject : FSystem {
                                     objPos = plankE09.First().transform.position + Vector3.up * (0.1f + mirror.First().GetComponentInChildren<MirrorReflectionScript>().gameObject.transform.localScale.y/2 + tmpGO.transform.localScale.y / 2);
                                     mirror.First().GetComponent<Rigidbody>().isKinematic = true;
                                     moveMirrorToPlank = true;
+                                    plankE09.First().GetComponentInChildren<Image>().sprite = focusedMatFamily.First().GetComponent<FocusedGOMaterial>().plankSolvedSprite;
                                 }
                             }
                         }
@@ -157,7 +162,8 @@ public class TakeObject : FSystem {
 						forGO.GetComponent<Takable>().taken = true;
 						forGO.GetComponent<Rigidbody>().isKinematic = true;
                         Takable.objectTaken = true;
-						/*if (forGO.tag == "Box")
+                        plankE09.First().GetComponentInChildren<Image>().sprite = plankInitialSprite;
+                        /*if (forGO.tag == "Box")
                         {
 							int nbBalls = balls.Count;
 							for(int j = 0; j < nbBalls; j++)

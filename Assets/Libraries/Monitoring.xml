@@ -62,21 +62,24 @@
             <param name="label">The label of the transition to find.</param>
             <return> If a transition with appropriate label exists, returns this transition and links. Returns null otherwise. </return>
         </member>
-        <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.initState(System.String,System.UInt32)">
-            <summary>
-            This function enables you to match Petri Net initial marking with families content on start. Use this function only into systems' constructor.
-            </summary>
-            <param name="stateName">State name you want to initialize, this name has to match with a place defined into associated Petri Net <see cref="F:FYFY_plugins.Monitoring.ComponentMonitoring.PnmlFile"/>.</param>
-            <param name="initialValue">The initial positive or null value.</param>
-        </member>
         <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.trace(System.String,System.String,System.Boolean,System.String[])">
             <summary>
             	Trace game action.
             </summary>
             <param name="actionName">Action name you want to trace, this name has to match with a transition defined into associated Petri Net <see cref="F:FYFY_plugins.Monitoring.ComponentMonitoring.PnmlFile"/>.</param>
             <param name="performedBy">Specify who perform this action, the player or the system. <see cref="T:FYFY_plugins.Monitoring.MonitoringManager.Source"/></param>
-            <param name="processLinks">Set to false if the logic expression associated to the action include "+" operators and the action performed by the player is not allowed by the system. In this case fourth parameters will not be processed. True (default) means fourth parameter will be analysed.</param>
-            <param name="linksConcerned">links label concerned by this action. Very important if logic expression associated to the action include "+" operators. For instance, if logic expression is "(l0+l1)*l3" you have to indicate which links to use to build the trace: l0 and l3 OR l1 and l3 =&gt; <code>this.trace(..., "l0", "l3");</code> OR <code>this.trace(..., "l1", "l3");</code></param>
+            <param name="processLinks">Set to false if the logic expression associated to the action include "+" operators AND the action performed by the player is not allowed by the system. In this case fourth parameters will not be processed. True (default) means fourth parameter will be analysed.</param>
+            <param name="linksConcerned">links label concerned by this action. You can leave empty if only "*" operators are used in logic expression. Must be defined if logic expression associated to the action include "+" operators. For instance, if logic expression is "(l0+l1)*l3" you have to indicate which links to use to build the trace: l0 and l3 OR l1 and l3 =&gt; <code>this.trace(..., "l0", "l3");</code> OR <code>this.trace(..., "l1", "l3");</code></param>
+            <return> labels found for this game action if in game analysis is enabled (see: MonitoringManager). return empty Array else </return>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.getNextActionsToReach(System.String,System.Int32,System.String[])">
+            <summary>
+            	Get next actions to perform in order to reach targeted game action.
+            </summary>
+            <param name="targetedActionName">Action name you want to reach, this name has to match with a transition defined into associated Petri Net <see cref="F:FYFY_plugins.Monitoring.ComponentMonitoring.PnmlFile"/>.</param>
+            <param name="maxActions">Maximum number of actions returned.</param>
+            <param name="linksConcerned">links label concerned by this action. You can leave empty if only "*" operators are used in logic expression. Must be defined if logic expression associated to the action include "+" operators. For instance, if logic expression is "(l0+l1)*l3" you have to indicate which links to use to look for the trace: l0 and l3 OR l1 and l3 =&gt; <code>this.getNextActionToReach(..., "l0", "l3");</code> OR <code>this.getNextActionToReach(..., "l1", "l3");</code></param>
+            <return>List of Pairs including a ComponentMonitoring and its associated game action useful to reach the targeted action, the number of actions returned is less or equal to maxActions parameters.</return>
         </member>
         <member name="P:FYFY_plugins.Monitoring.ComponentMonitoring.PetriNet">
             <summary> PetriNet getter and setter. Set the PetriNet implies reset transitionLinks. </summary>
@@ -126,8 +129,32 @@
             	This component trigger the building of PetriNets and Specification on Start and write traces when the game is over.
             </summary>
         </member>
-        <member name="F:FYFY_plugins.Monitoring.MonitoringManager.filename">
+        <member name="F:FYFY_plugins.Monitoring.MonitoringManager.fileName">
             <summary>The file name to save PetriNet, Specifications and logs.</summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.MonitoringManager.inGameAnalysis">
+            <summary>Is analysis run in game?</summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.MonitoringManager.fullPetriNetPath">
+            <summary>Full Petri net to use if in game analysis is enabled</summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.MonitoringManager.filteredPetriNetPath">
+            <summary>Filtered Petri net to use if in game analysis is enabled</summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.MonitoringManager.featuresPath">
+            <summary>Specification to use if in game analysis is enabled</summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.MonitoringManager.laalysPath">
+            <summary>Path to the jar file of Laalys</summary>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.MonitoringManager.getNextActionsToReachEnd(System.Int32)">
+            <summary>Ask to Laalys to provide the next actions to perform in order to reach one of the expert end actions</summary>
+            <param name="maxActions">Maximum number of actions returned.</param>
+            <return>List of Pairs including a ComponentMonitoring and its associated game action useful to reach one of the expert end actions, the number of actions returned is less or equal to maxActions parameters.</return>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.MonitoringManager.getTriggerableActions">
+            <summary>Ask to Laalys to provide all triggerable actions</summary>
+            <return>List of Pairs including a ComponentMonitoring and its associated game action that may be triggered.</return>
         </member>
         <member name="T:FYFY_plugins.Monitoring.MonitoringManager.Source">
             <summary>Define the different source that can trigger a game action.</summary>

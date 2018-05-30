@@ -21,12 +21,14 @@ public class ShowUI : FSystem {
     private Family boxTop = FamilyManager.getFamily(new AnyOfTags("BoxTop"));   //box lid
     private Family balls = FamilyManager.getFamily(new AnyOfTags("Ball"));
     private Family inventory = FamilyManager.getFamily(new AnyOfTags("Inventory"));
-    private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ENABLED));
+    private Family cGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family bag = FamilyManager.getFamily(new AnyOfTags("Bag"));
     private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
     private Family lockIntro = FamilyManager.getFamily(new AnyOfTags("LockIntro"));
     private Family lockR2Wheels = FamilyManager.getFamily(new AnyOfTags("LockR2Wheel"));
     private Family lockIntroWheels = FamilyManager.getFamily(new AnyOfTags("LockIntroWheel"));
+    private Family closeLockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2", "LockR2Wheel", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
+    private Family closeLockIntro = FamilyManager.getFamily(new AnyOfTags("LockIntro", "LockIntroWheel", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PlankText", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family closeBox = FamilyManager.getFamily (new AnyOfTags ("Box", "Ball", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family overInventoryElem = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(PointerOver)));
@@ -35,6 +37,7 @@ public class ShowUI : FSystem {
     private Family boardFamilly = FamilyManager.getFamily(new AnyOfTags("Board"));
     private Family closeBoard = FamilyManager.getFamily(new AnyOfTags("Board", "Eraser"), new AllOfComponents(typeof(PointerOver)));
     private Family boardRemovableWords = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
+    private Family collectableGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)));
 
     private bool noSelection = true;    //true if all objects are unselected
     private GameObject uiGO;
@@ -42,9 +45,10 @@ public class ShowUI : FSystem {
     public static bool askCloseWindow = false;
 
     //information for animations
-    private float speed = 0.1f;
-    private float speedRotation = 0;
-    private float speedRotation2 = 0;
+    private float speed;
+    private float speedRotation;
+    private float speedRotation2;
+    private float oldDT;
     private float dist = -1;
     private Vector3 objectPos = Vector3.zero;
     private int tmpCount = -1;
@@ -65,7 +69,7 @@ public class ShowUI : FSystem {
     private bool lockIntroRotationDown = false;
     private Color lockIntroWheelColor;
     private Vector3 lockIntroNumbers = Vector3.zero;
-    private int wheelIntroRotationCount = 0;
+    private float wheelIntroRotationCount = 0;
 
     //plank
     private bool onPlank = false;           //true when the player is using the plank
@@ -146,7 +150,7 @@ public class ShowUI : FSystem {
     private bool lockRotationDown = false;
     private Color lockWheelColor;
     private Vector3 lockNumbers = Vector3.zero;
-    private int wheelRotationCount = 0;
+    private float wheelRotationCount = 0;
 
     //carillon
     private bool onCarillon = false;
@@ -166,226 +170,234 @@ public class ShowUI : FSystem {
 
     public ShowUI()
     {
-        //initialise vairables
-        ballToCamera = Camera.main.transform.position + Camera.main.transform.forward;
-        boxTopIniPos = boxTop.First().transform.localPosition;
-        boxTopPos = boxTop.First().transform.localPosition + boxTop.First().transform.right - boxTop.First().transform.up/2; //set lid position
-        lr = plank.First().GetComponent<LineRenderer>();
-        lrPositions = new List<Vector3>();
-        ballSubTitles = box.First().GetComponentInChildren<Canvas>().gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        bagPaperInitialPos = bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition;
-        board = boardFamilly.First();
+        if (Application.isPlaying)
+        {
+            //initialise vairables
+            ballToCamera = Camera.main.transform.position + Camera.main.transform.forward;
+            boxTopIniPos = boxTop.First().transform.localPosition;
+            boxTopPos = boxTop.First().transform.localPosition + boxTop.First().transform.right - boxTop.First().transform.up / 2; //set lid position
+            lr = plank.First().GetComponent<LineRenderer>();
+            lrPositions = new List<Vector3>();
+            ballSubTitles = box.First().GetComponentInChildren<Canvas>().gameObject.GetComponentInChildren<TextMeshProUGUI>();
+            bagPaperInitialPos = bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition;
+            board = boardFamilly.First();
+            Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = true;
 
-		int nb = ui.Count;
-		for(int i = 0; i < nb; i++)
-        {
-			forGO = ui.getAt (i);
-			if (forGO.name == "UI")
+            int nb = ui.Count;
+            for (int i = 0; i < nb; i++)
             {
-				uiGO = forGO;
-				foreach (Transform child in uiGO.transform) {
-					if (child.gameObject.name == "E05") {
-						tableUI = child.gameObject;
-						break;
-					}
-				}
-            }
-			else if (forGO.name == "Cursor")
-            {
-				forGO.SetActive(true);  //display cursor
-				cursorUI = forGO;
-            }
-			else if (forGO.name == "Timer")
-            {
-				forGO.SetActive(true);  //display timer
-            }
-        }
-        Ball b = null;
-        int j = 0;
-		nb = balls.Count;
-		for(int i = 0; i < nb; i++)
-        {
-			forGO = balls.getAt (i);
-			b = forGO.GetComponent<Ball>();
-			b.initialPosition = forGO.transform.localPosition; //set initial position to current local position
-            b.id = j;   //set ball id
-            j++;
-			forGO.GetComponent<Renderer>().material.color = Random.ColorHSV() + Color.white*0.6f;  //set color to random color
-			b.color = forGO.GetComponent<Renderer>().material.color;
-            //init text and number
-            foreach(Transform child in forGO.transform)
-            {
-                if (child.gameObject.name == "Number")
+                forGO = ui.getAt(i);
+                if (forGO.name == "UI")
                 {
-                    child.gameObject.GetComponent<TextMeshPro>().text = b.number.ToString();
+                    uiGO = forGO;
+                    foreach (Transform child in uiGO.transform)
+                    {
+                        if (child.gameObject.name == "E05")
+                        {
+                            tableUI = child.gameObject;
+                            break;
+                        }
+                    }
+                }
+                else if (forGO.name == "Cursor")
+                {
+                    forGO.SetActive(true);  //display cursor
+                    cursorUI = forGO;
+                }
+                else if (forGO.name == "Timer")
+                {
+                    forGO.SetActive(true);  //display timer
                 }
             }
-        }
-
-        nb = lockR2Wheels.Count;
-        for(int i = 0; i <nb; i++)
-        {
-            forGO = lockR2Wheels.getAt(i);
-            if (forGO.name.Contains(1.ToString()))
+            Ball b = null;
+            int j = 0;
+            nb = balls.Count;
+            for (int i = 0; i < nb; i++)
             {
-                lockWheel1 = forGO;
-            }
-            else if (forGO.name.Contains(2.ToString()))
-            {
-                lockWheel2 = forGO;
-            }
-            else if (forGO.name.Contains(3.ToString()))
-            {
-                lockWheel3 = forGO;
-            }
-        }
-        lockWheelColor = lockWheel1.GetComponent<Renderer>().material.color;
-
-        nb = lockIntroWheels.Count;
-        for (int i = 0; i < nb; i++)
-        {
-            forGO = lockIntroWheels.getAt(i);
-            if (forGO.name.Contains(1.ToString()))
-            {
-                lockIntroWheel1 = forGO;
-            }
-            else if (forGO.name.Contains(2.ToString()))
-            {
-                lockIntroWheel2 = forGO;
-            }
-            else if (forGO.name.Contains(3.ToString()))
-            {
-                lockIntroWheel3 = forGO;
-            }
-        }
-        lockIntroWheelColor = lockIntroWheel1.GetComponent<Renderer>().material.color;
-
-        foreach (Transform child in plank.First().transform)
-        {
-            if(child.gameObject.name == "SubTitles")
-            {
-                plankSubtitle = child.gameObject;
-            }
-        }
-
-        foreach(Transform child in box.First().transform)
-        {
-            if(child.gameObject.name == "Padlock")
-            {
-                boxPadlock = child.gameObject;
-            }
-        }
-        foreach (Transform child in bag.First().transform)
-        {
-            if (child.gameObject.name == "Padlock")
-            {
-                bagPadlock = child.gameObject;
-            }
-        }
-
-		foreach (Transform child in carillon.First().transform) {
-			if (child.gameObject.GetComponent<Canvas> ()) {
-				carillonImage = child.gameObject;
-				break;
-			}
-        }
-
-        foreach(Transform child in lockR2.First().transform)
-        {
-            if(child.gameObject.name == "LeftRight")
-            {
-                lockLR = child.gameObject;
-                foreach(Transform c in child)
+                forGO = balls.getAt(i);
+                b = forGO.GetComponent<Ball>();
+                b.initialPosition = forGO.transform.localPosition; //set initial position to current local position
+                b.id = j;   //set ball id
+                j++;
+                forGO.GetComponent<Renderer>().material.color = Random.ColorHSV() + Color.white * 0.6f;  //set color to random color
+                b.color = forGO.GetComponent<Renderer>().material.color;
+                //init text and number
+                foreach (Transform child in forGO.transform)
                 {
-                    if(c.gameObject.name == "Left")
+                    if (child.gameObject.name == "Number")
                     {
-                        c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                            LockR2Left(ref selectedWheel, lockWheel1, lockWheel2, lockWheel3, lockUD, lockRotationUp, lockRotationDown);
-                        });
-                    }
-                    else if (c.gameObject.name == "Right")
-                    {
-                        c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                            LockR2Right(ref selectedWheel, lockWheel1, lockWheel2, lockWheel3, lockUD, lockRotationUp, lockRotationDown);
-                        });
+                        child.gameObject.GetComponent<TextMeshPro>().text = b.number.ToString();
                     }
                 }
             }
-            else if (child.gameObject.name == "UpDown")
+
+            nb = lockR2Wheels.Count;
+            for (int i = 0; i < nb; i++)
             {
-                lockUD = child.gameObject;
-                foreach (Transform c in child)
+                forGO = lockR2Wheels.getAt(i);
+                if (forGO.name.Contains(1.ToString()))
                 {
-                    if (c.gameObject.name == "Up")
+                    lockWheel1 = forGO;
+                }
+                else if (forGO.name.Contains(2.ToString()))
+                {
+                    lockWheel2 = forGO;
+                }
+                else if (forGO.name.Contains(3.ToString()))
+                {
+                    lockWheel3 = forGO;
+                }
+            }
+            lockWheelColor = lockWheel1.GetComponent<Renderer>().material.color;
+
+            nb = lockIntroWheels.Count;
+            for (int i = 0; i < nb; i++)
+            {
+                forGO = lockIntroWheels.getAt(i);
+                if (forGO.name.Contains(1.ToString()))
+                {
+                    lockIntroWheel1 = forGO;
+                }
+                else if (forGO.name.Contains(2.ToString()))
+                {
+                    lockIntroWheel2 = forGO;
+                }
+                else if (forGO.name.Contains(3.ToString()))
+                {
+                    lockIntroWheel3 = forGO;
+                }
+            }
+            lockIntroWheelColor = lockIntroWheel1.GetComponent<Renderer>().material.color;
+
+            foreach (Transform child in plank.First().transform)
+            {
+                if (child.gameObject.name == "SubTitles")
+                {
+                    plankSubtitle = child.gameObject;
+                }
+            }
+
+            foreach (Transform child in box.First().transform)
+            {
+                if (child.gameObject.name == "Padlock")
+                {
+                    boxPadlock = child.gameObject;
+                }
+            }
+            foreach (Transform child in bag.First().transform)
+            {
+                if (child.gameObject.name == "Padlock")
+                {
+                    bagPadlock = child.gameObject;
+                }
+            }
+
+            foreach (Transform child in carillon.First().transform)
+            {
+                if (child.gameObject.GetComponent<Canvas>())
+                {
+                    carillonImage = child.gameObject;
+                    break;
+                }
+            }
+
+            foreach (Transform child in lockR2.First().transform)
+            {
+                if (child.gameObject.name == "LeftRight")
+                {
+                    lockLR = child.gameObject;
+                    foreach (Transform c in child)
                     {
-                        c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                            LockR2Up(selectedWheel, ref lockNumbers, lockWheel1, lockWheel2, lockWheel3, ref lockRotationUp, ref lockRotationDown);
-                        });
+                        if (c.gameObject.name == "Left")
+                        {
+                            c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
+                                LockR2Left(ref selectedWheel, lockWheel1, lockWheel2, lockWheel3, lockUD, lockRotationUp, lockRotationDown);
+                            });
+                        }
+                        else if (c.gameObject.name == "Right")
+                        {
+                            c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
+                                LockR2Right(ref selectedWheel, lockWheel1, lockWheel2, lockWheel3, lockUD, lockRotationUp, lockRotationDown);
+                            });
+                        }
                     }
-                    else if (c.gameObject.name == "Down")
+                }
+                else if (child.gameObject.name == "UpDown")
+                {
+                    lockUD = child.gameObject;
+                    foreach (Transform c in child)
                     {
-                        c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                            LockR2Down(selectedWheel, ref lockNumbers, lockWheel1, lockWheel2, lockWheel3, ref lockRotationUp, ref lockRotationDown);
-                        });
+                        if (c.gameObject.name == "Up")
+                        {
+                            c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
+                                LockR2Up(selectedWheel, ref lockNumbers, lockWheel1, lockWheel2, lockWheel3, ref lockRotationUp, ref lockRotationDown);
+                            });
+                        }
+                        else if (c.gameObject.name == "Down")
+                        {
+                            c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
+                                LockR2Down(selectedWheel, ref lockNumbers, lockWheel1, lockWheel2, lockWheel3, ref lockRotationUp, ref lockRotationDown);
+                            });
+                        }
                     }
                 }
             }
-        }
 
-        foreach (Transform child in lockIntro.First().transform)
-        {
-            if (child.gameObject.name == "LeftRight")
+            foreach (Transform child in lockIntro.First().transform)
             {
-                lockIntroLR = child.gameObject;
-                foreach (Transform c in child)
+                if (child.gameObject.name == "LeftRight")
                 {
-                    if (c.gameObject.name == "Left")
+                    lockIntroLR = child.gameObject;
+                    foreach (Transform c in child)
                     {
-                        c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                            LockR2Left(ref selectedWheelIntro, lockIntroWheel1, lockIntroWheel2, lockIntroWheel3, lockIntroUD, lockIntroRotationUp, lockIntroRotationDown);
-                        });
+                        if (c.gameObject.name == "Left")
+                        {
+                            c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
+                                LockR2Left(ref selectedWheelIntro, lockIntroWheel1, lockIntroWheel2, lockIntroWheel3, lockIntroUD, lockIntroRotationUp, lockIntroRotationDown);
+                            });
+                        }
+                        else if (c.gameObject.name == "Right")
+                        {
+                            c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
+                                LockR2Right(ref selectedWheelIntro, lockIntroWheel1, lockIntroWheel2, lockIntroWheel3, lockIntroUD, lockIntroRotationUp, lockIntroRotationDown);
+                            });
+                        }
                     }
-                    else if (c.gameObject.name == "Right")
+                }
+                else if (child.gameObject.name == "UpDown")
+                {
+                    lockIntroUD = child.gameObject;
+                    foreach (Transform c in child)
                     {
-                        c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                            LockR2Right(ref selectedWheelIntro, lockIntroWheel1, lockIntroWheel2, lockIntroWheel3, lockIntroUD, lockIntroRotationUp, lockIntroRotationDown);
-                        });
+                        if (c.gameObject.name == "Up")
+                        {
+                            c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
+                                LockR2Up(selectedWheelIntro, ref lockIntroNumbers, lockIntroWheel1, lockIntroWheel2, lockIntroWheel3, ref lockIntroRotationUp, ref lockIntroRotationDown);
+                            });
+                        }
+                        else if (c.gameObject.name == "Down")
+                        {
+                            c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
+                                LockR2Down(selectedWheelIntro, ref lockIntroNumbers, lockIntroWheel1, lockIntroWheel2, lockIntroWheel3, ref lockIntroRotationUp, ref lockIntroRotationDown);
+                            });
+                        }
                     }
                 }
             }
-            else if (child.gameObject.name == "UpDown")
+
+            foreach (Transform child in board.transform)
             {
-                lockIntroUD = child.gameObject;
-                foreach (Transform c in child)
+                if (child.gameObject.name == "Eraser")
                 {
-                    if (c.gameObject.name == "Up")
-                    {
-                        c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                            LockR2Up(selectedWheelIntro, ref lockIntroNumbers, lockIntroWheel1, lockIntroWheel2, lockIntroWheel3, ref lockIntroRotationUp, ref lockIntroRotationDown);
-                        });
-                    }
-                    else if (c.gameObject.name == "Down")
-                    {
-                        c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                            LockR2Down(selectedWheelIntro, ref lockIntroNumbers, lockIntroWheel1, lockIntroWheel2, lockIntroWheel3, ref lockIntroRotationUp, ref lockIntroRotationDown);
-                        });
-                    }
+                    eraser = child.gameObject;
                 }
             }
-        }
 
-        foreach (Transform child in board.transform)
-        {
-            if (child.gameObject.name == "Eraser")
+            nb = boardRemovableWords.Count;
+            for (int i = 0; i < nb; i++)
             {
-                eraser = child.gameObject;
+                boardRemovableWords.getAt(i).GetComponent<Renderer>().material.renderQueue = 2001;
             }
-        }
-
-        nb = boardRemovableWords.Count;
-        for (int i = 0; i < nb; i++)
-        {
-            boardRemovableWords.getAt(i).GetComponent<Renderer>().material.renderQueue = 2001;
         }
     }
 
@@ -402,6 +414,11 @@ public class ShowUI : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
     {
+        speed = 8f * Time.deltaTime;
+        speedRotation *= Time.deltaTime / oldDT;
+        speedRotation2 *= Time.deltaTime / oldDT;
+        oldDT = Time.deltaTime;
+
         if (askCloseWindow)
         {
             CloseWindow();
@@ -491,7 +508,7 @@ public class ShowUI : FSystem {
                         {
                             //move the ball to the position corresponding to its id
                             ballPos = Vector3.up * ((float)balls.Count/10 - (float)(b.id/5)/3) + Vector3.right * ((float)(b.id%5) * -2f / 4+1f)*2/3+Vector3.forward* 0.3f;
-							forGO.transform.localPosition = Vector3.MoveTowards(forGO.transform.localPosition, ballPos, speed);
+							forGO.transform.localPosition = Vector3.MoveTowards(forGO.transform.localPosition, ballPos, speed/2);
                             //when the last ball arrives to its position
 							if (forGO.transform.localPosition == ballPos && b.id == balls.Count - 1)
                             {
@@ -504,7 +521,7 @@ public class ShowUI : FSystem {
                         else //if the ball is still in the box
                         {
                             //animation to move the ball to box's aperture
-							forGO.transform.localPosition = Vector3.MoveTowards(forGO.transform.localPosition, Vector3.up, speed);
+							forGO.transform.localPosition = Vector3.MoveTowards(forGO.transform.localPosition, Vector3.up, speed/2);
 							forGO.transform.localRotation = Quaternion.Euler(Vector3.up*-90 + Vector3.right * 90);
                             //when the ball arrives
 							if(forGO.transform.localPosition == Vector3.up)
@@ -520,8 +537,8 @@ public class ShowUI : FSystem {
             {
                 //move up and rotate the padlock
                 dist = 1.5f - boxPadlock.transform.localPosition.y;
-                boxPadlock.transform.localPosition = Vector3.MoveTowards(boxPadlock.transform.localPosition, boxPadlock.transform.localPosition + Vector3.up * dist, (dist + 1)/100);
-                boxPadlock.transform.localRotation = Quaternion.Euler(boxPadlock.transform.localRotation.eulerAngles+Vector3.up* (boxPadlock.transform.localPosition.y - 0.2f) *35);
+                boxPadlock.transform.localPosition = Vector3.MoveTowards(boxPadlock.transform.localPosition, boxPadlock.transform.localPosition + Vector3.up * dist, (dist + 1) / 2 * Time.deltaTime);
+                boxPadlock.transform.localRotation = Quaternion.Euler(boxPadlock.transform.localRotation.eulerAngles+Vector3.up* (boxPadlock.transform.localPosition.y - 0.2f) * 350 * 5 * Time.deltaTime);
                 if(boxPadlock.transform.localPosition.y > 1.4f)
                 {
                     //stop animation when the padlock reaches a certain height
@@ -579,6 +596,7 @@ public class ShowUI : FSystem {
                         if (CollectableGO.usingKeyE03)
                         {
                             unlockBox = true;
+                            CollectableGO.askCloseInventory = true;
                         }
                     }
                     ballToCamera = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0.5f));  //set position of balls when in front of the screen
@@ -695,8 +713,8 @@ public class ShowUI : FSystem {
             {
                 //move up and rotate padlock
                 dist = objectPos.y - boxPadlock.transform.position.y;
-                bagPadlock.transform.position = Vector3.MoveTowards(bagPadlock.transform.position, bagPadlock.transform.position + Vector3.up * dist, (dist + 1) / 500);
-                bagPadlock.transform.localRotation = Quaternion.Euler(bagPadlock.transform.localRotation.eulerAngles + Vector3.up * (bagPadlock.transform.localPosition.y - 0.3f) * 500);
+                bagPadlock.transform.position = Vector3.MoveTowards(bagPadlock.transform.position, bagPadlock.transform.position + Vector3.up * dist, (dist + 1) / 5 * Time.deltaTime);
+                bagPadlock.transform.localRotation = Quaternion.Euler(bagPadlock.transform.localRotation.eulerAngles + Vector3.up * (bagPadlock.transform.localPosition.y - 0.3f) * 50000 * Time.deltaTime);
                 if (bagPadlock.transform.position.y > objectPos.y - 0.05f)
                 {
                     Vector3 v = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
@@ -740,6 +758,7 @@ public class ShowUI : FSystem {
                         moveBag = false;
                         bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition += Vector3.up * (bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.InverseTransformPoint(Camera.main.transform.position).y - bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition.y);
                         bag.First().GetComponentInChildren<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+                        Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = false;
                     }
                 }
                 else
@@ -787,6 +806,7 @@ public class ShowUI : FSystem {
                             //unlock if key used
                             unlockBag = true;
                             objectPos = bagPadlock.transform.position + Vector3.up * 0.3f;
+                            CollectableGO.askCloseInventory = true;
                         }
                     }
                 }
@@ -860,10 +880,11 @@ public class ShowUI : FSystem {
 
         if (lockRotationUp)
         {
-            selectedWheel.transform.Rotate(1,0,0);
-            wheelRotationCount++;
-            if (wheelRotationCount == 36)
+            selectedWheel.transform.Rotate(Time.deltaTime * 100,0,0);
+            wheelRotationCount += Time.deltaTime * 100;
+            if (wheelRotationCount > 36)
             {
+                selectedWheel.transform.Rotate(36 - wheelRotationCount, 0, 0);
                 lockRotationUp = false;
                 wheelRotationCount = 0;
                 if (lockNumbers.x == 7 && lockNumbers.y == 0 && lockNumbers.z == 3 && !IARTab.room3Unlocked)
@@ -875,10 +896,11 @@ public class ShowUI : FSystem {
         }
         else if (lockRotationDown)
         {
-            selectedWheel.transform.Rotate(-1, 0, 0);
-            wheelRotationCount++;
-            if (wheelRotationCount == 36)
+            selectedWheel.transform.Rotate(-Time.deltaTime * 100, 0, 0);
+            wheelRotationCount += Time.deltaTime * 100;
+            if (wheelRotationCount > 36)
             {
+                selectedWheel.transform.Rotate(-(36 - wheelRotationCount), 0, 0);
                 lockRotationDown = false;
                 wheelRotationCount = 0;
                 if (lockNumbers.x == 7 && lockNumbers.y == 0 && lockNumbers.z == 3 && !IARTab.room3Unlocked)
@@ -890,20 +912,21 @@ public class ShowUI : FSystem {
         }
         if (lockIntroRotationUp)
         {
-            selectedWheelIntro.transform.Rotate(1, 0, 0);
-            wheelIntroRotationCount++;
-            if (wheelIntroRotationCount == 36)
+            selectedWheelIntro.transform.Rotate(Time.deltaTime * 100, 0, 0);
+            wheelIntroRotationCount += Time.deltaTime * 100;
+            if (wheelIntroRotationCount > 36)
             {
+                selectedWheelIntro.transform.Rotate(36 - wheelIntroRotationCount, 0, 0);
                 lockIntroRotationUp = false;
                 wheelIntroRotationCount = 0;
                 if (lockIntroNumbers.x == 2 && lockIntroNumbers.y == 6 && lockIntroNumbers.z == 7 && !IARTab.room1Unlocked)
                 {
                     lockIntro.First().GetComponent<Selectable>().solved = true;
                     IARTab.room1Unlocked = true;
-                    int nb = cGO.Count;
+                    int nb = collectableGO.Count;
                     for(int i = 0; i < nb; i++)
                     {
-                        forGO = cGO.getAt(i);
+                        forGO = collectableGO.getAt(i);
                         if (forGO.name.Contains("Intro"))
                         {
                             forGO.SetActive(false);
@@ -914,16 +937,26 @@ public class ShowUI : FSystem {
         }
         else if (lockIntroRotationDown)
         {
-            selectedWheelIntro.transform.Rotate(-1, 0, 0);
-            wheelIntroRotationCount++;
-            if (wheelIntroRotationCount == 36)
+            selectedWheelIntro.transform.Rotate(-Time.deltaTime * 100, 0, 0);
+            wheelIntroRotationCount += Time.deltaTime * 100;
+            if (wheelIntroRotationCount > 36)
             {
+                selectedWheelIntro.transform.Rotate(-(36 - wheelIntroRotationCount), 0, 0);
                 lockIntroRotationDown = false;
                 wheelIntroRotationCount = 0;
                 if (lockIntroNumbers.x == 2 && lockIntroNumbers.y == 6 && lockIntroNumbers.z == 7 && !IARTab.room1Unlocked)
                 {
                     lockIntro.First().GetComponent<Selectable>().solved = true;
                     IARTab.room1Unlocked = true;
+                    int nb = collectableGO.Count;
+                    for (int i = 0; i < nb; i++)
+                    {
+                        forGO = collectableGO.getAt(i);
+                        if (forGO.name.Contains("Intro"))
+                        {
+                            forGO.SetActive(false);
+                        }
+                    }
                 }
             }
         }
@@ -1244,16 +1277,78 @@ public class ShowUI : FSystem {
 				}
 			} else if (onLockR2) {
                 //"close" ui (give back control to the player) when the correct password is entered or when clicking on nothing
-				if (lockR2.First ().GetComponent<Selectable> ().solved || (!lockR2.First ().GetComponent<PointerOver> () && overInventoryElem.Count == 0 && Input.GetMouseButtonDown (0))) {
+				if (lockR2.First ().GetComponent<Selectable> ().solved || (closeLockR2.Count == 0 && Input.GetMouseButtonDown (0))) {
 					CloseWindow ();
 				}
+                else if (Input.GetMouseButtonDown(0))
+                {
+                    int nb = lockR2Wheels.Count;
+                    for(int i = 0; i < nb; i++)
+                    {
+                        forGO = lockR2Wheels.getAt(i);
+                        if (forGO.GetComponent<PointerOver>())
+                        {
+                            selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
+                            selectedWheel = forGO;
+                            selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
+                            lockUD.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - lockUD.transform.localPosition.x);
+                        }
+                    }
+                }
+                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z))
+                {
+                    LockR2Up(selectedWheel, ref lockNumbers, lockWheel1, lockWheel2, lockWheel3, ref lockRotationUp, ref lockRotationDown);
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+                {
+                    LockR2Down(selectedWheel, ref lockNumbers, lockWheel1, lockWheel2, lockWheel3, ref lockRotationUp, ref lockRotationDown);
+                }
+                else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Q))
+                {
+                    LockR2Left(ref selectedWheel, lockWheel1, lockWheel2, lockWheel3, lockUD, lockRotationUp, lockRotationDown);
+                }
+                else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+                {
+                    LockR2Right(ref selectedWheel, lockWheel1, lockWheel2, lockWheel3, lockUD, lockRotationUp, lockRotationDown);
+                }
             }
             else if (onLockIntro)
             {
                 //"close" ui (give back control to the player) when the correct password is entered or when clicking on nothing
-                if (lockIntro.First().GetComponent<Selectable>().solved || (!lockIntro.First().GetComponent<PointerOver>() && overInventoryElem.Count == 0 && Input.GetMouseButtonDown(0)))
+                if (lockIntro.First().GetComponent<Selectable>().solved || (closeLockIntro.Count == 0 && Input.GetMouseButtonDown(0)))
                 {
                     CloseWindow();
+                }
+                else if (Input.GetMouseButtonDown(0))
+                {
+                    int nb = lockIntroWheels.Count;
+                    for (int i = 0; i < nb; i++)
+                    {
+                        forGO = lockIntroWheels.getAt(i);
+                        if (forGO.GetComponent<PointerOver>())
+                        {
+                            selectedWheelIntro.GetComponent<Renderer>().material.color = selectedWheelIntro.GetComponent<Renderer>().material.color - Color.white * 0.2f;
+                            selectedWheelIntro = forGO;
+                            selectedWheelIntro.GetComponent<Renderer>().material.color = selectedWheelIntro.GetComponent<Renderer>().material.color + Color.white * 0.2f;
+                            lockIntroUD.transform.localPosition += Vector3.right * (selectedWheelIntro.transform.localPosition.x - lockIntroUD.transform.localPosition.x);
+                        }
+                    }
+                }
+                if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z))
+                {
+                    LockR2Up(selectedWheelIntro, ref lockIntroNumbers, lockIntroWheel1, lockIntroWheel2, lockIntroWheel3, ref lockIntroRotationUp, ref lockIntroRotationDown);
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+                {
+                    LockR2Down(selectedWheelIntro, ref lockIntroNumbers, lockIntroWheel1, lockIntroWheel2, lockIntroWheel3, ref lockIntroRotationUp, ref lockIntroRotationDown);
+                }
+                else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Q))
+                {
+                    LockR2Left(ref selectedWheelIntro, lockIntroWheel1, lockIntroWheel2, lockIntroWheel3, lockIntroUD, lockIntroRotationUp, lockIntroRotationDown);
+                }
+                else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+                {
+                    LockR2Right(ref selectedWheelIntro, lockIntroWheel1, lockIntroWheel2, lockIntroWheel3, lockIntroUD, lockIntroRotationUp, lockIntroRotationDown);
                 }
             }
             else if ((onSheet || onCarillon || onBag) && Input.GetMouseButtonDown (0) && overInventoryElem.Count == 0) {
@@ -1417,7 +1512,8 @@ public class ShowUI : FSystem {
 				bag.First ().GetComponentInChildren<Canvas> ().renderMode = RenderMode.WorldSpace;
 				bag.First ().GetComponentInChildren<Canvas> ().gameObject.GetComponent<RectTransform> ().localPosition = Vector3.forward * (-0.51f - bag.First ().GetComponentInChildren<Canvas> ().gameObject.transform.parent.localPosition.z);
 				bag.First ().GetComponentInChildren<Canvas> ().gameObject.GetComponent<RectTransform> ().localScale = Vector3.one * 0.000535786f;
-			} else {
+                Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = true;
+            } else {
 				//enable player
 				player.First ().GetComponent<FirstPersonController> ().enabled = true;
 				Cursor.lockState = CursorLockMode.None;

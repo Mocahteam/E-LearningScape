@@ -98,41 +98,44 @@ public class Select : FSystem {
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
                 {
-                    if (hit.transform.gameObject.GetComponent<Takable>())
+                    if ((hit.transform.gameObject.transform.position - Camera.main.transform.position).magnitude < 7)
                     {
-                        hit.transform.gameObject.GetComponent<Takable>().focused = true;
-                        focused = hit.transform.gameObject;
-                    }
-                    else if (hit.transform.parent)
-                    {
-                        if (hit.transform.parent.gameObject.GetComponent<Takable>())
+                        if (hit.transform.gameObject.GetComponent<Takable>())
                         {
-                            hit.transform.parent.gameObject.GetComponent<Takable>().focused = true;
-                            focused = hit.transform.parent.gameObject;
+                            hit.transform.gameObject.GetComponent<Takable>().focused = true;
+                            focused = hit.transform.gameObject;
                         }
-					}
-					if (hit.transform.gameObject.GetComponent<ToggleableGO>())
-					{
-						hit.transform.gameObject.GetComponent<ToggleableGO>().focused = true;
-						focused = hit.transform.gameObject;
-					}
-					else if (hit.transform.parent)
-					{
-                        if (hit.transform.parent.gameObject.GetComponent<ToggleableGO>() && !hit.transform.gameObject.GetComponent<DreamFragment>())
+                        else if (hit.transform.parent)
                         {
-                            hit.transform.parent.gameObject.GetComponent<ToggleableGO>().focused = true;
-                            focused = hit.transform.parent.gameObject;
+                            if (hit.transform.parent.gameObject.GetComponent<Takable>())
+                            {
+                                hit.transform.parent.gameObject.GetComponent<Takable>().focused = true;
+                                focused = hit.transform.parent.gameObject;
+                            }
                         }
-					}
-                    if (hit.transform.gameObject.GetComponent<Selectable>() || hit.transform.gameObject.GetComponent<CollectableGO>())
-                    {
-                        focused = hit.transform.gameObject;
-                    }
-                    else if (hit.transform.parent)
-                    {
-                        if (hit.transform.parent.gameObject.GetComponent<Selectable>() || hit.transform.parent.gameObject.GetComponent<CollectableGO>())
+                        if (hit.transform.gameObject.GetComponent<ToggleableGO>())
                         {
-                            focused = hit.transform.parent.gameObject;
+                            hit.transform.gameObject.GetComponent<ToggleableGO>().focused = true;
+                            focused = hit.transform.gameObject;
+                        }
+                        else if (hit.transform.parent)
+                        {
+                            if (hit.transform.parent.gameObject.GetComponent<ToggleableGO>() && !hit.transform.gameObject.GetComponent<DreamFragment>())
+                            {
+                                hit.transform.parent.gameObject.GetComponent<ToggleableGO>().focused = true;
+                                focused = hit.transform.parent.gameObject;
+                            }
+                        }
+                        if (hit.transform.gameObject.GetComponent<Selectable>() || hit.transform.gameObject.GetComponent<CollectableGO>())
+                        {
+                            focused = hit.transform.gameObject;
+                        }
+                        else if (hit.transform.parent)
+                        {
+                            if (hit.transform.parent.gameObject.GetComponent<Selectable>() || hit.transform.parent.gameObject.GetComponent<CollectableGO>())
+                            {
+                                focused = hit.transform.parent.gameObject;
+                            }
                         }
                     }
                 }

@@ -57,6 +57,7 @@ TagManager:
   - GameRooms
   - EndRoom
   - WaterFloor
+  - TabletBackground
   layers:
   - Default
   - TransparentFX

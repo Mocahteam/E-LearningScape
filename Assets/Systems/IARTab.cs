@@ -3,6 +3,7 @@ using FYFY;
 using UnityEngine.UI;
 using PauseSystem = Pause;
 using UnityStandardAssets.Characters.FirstPerson;
+using FYFY_plugins.PointerManager;
 
 public class IARTab : FSystem {
 
@@ -18,6 +19,7 @@ public class IARTab : FSystem {
     private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
     private Family lockIntro = FamilyManager.getFamily(new AnyOfTags("LockIntro"));
     private Family fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
+    private Family tabletBG = FamilyManager.getFamily(new AnyOfTags("TabletBackground"));
 
     private GameObject tabsGO;
     public static bool onIAR = false;
@@ -57,14 +59,15 @@ public class IARTab : FSystem {
 
     private bool playerLookingAtDoor = false;
     private Vector3 tmpTarget;
-    private int angleCount = 0;
+    private float angleCount = 0;
+    private float speed;
 
     private AudioSource gameAudioSource;
 
     public IARTab()
     {
         door.First().transform.position += Vector3.up * (5.73f - door.First().transform.position.y); //opened
-        //door.First().transform.position += Vector3.up * (2.13f - door.First().transform.position.y); //closed
+        door.First().transform.position += Vector3.up * (2.13f - door.First().transform.position.y); //closed
 
         tabsGO = tabs.First().transform.parent.gameObject;
         inventory = inventoryFamily.First();
@@ -171,6 +174,8 @@ public class IARTab : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
     {
+        speed = 50 * Time.deltaTime;
+
         if (askCloseIAR)
         {
             if (activeUI)
@@ -205,6 +210,19 @@ public class IARTab : FSystem {
             if(!onInventory && !onMenu && onIAR)
             {
                 activeUI.SetActive(false);
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            int nb = tabletBG.Count;
+            for(int i = 0; i < nb; i++)
+            {
+                if (tabletBG.getAt(i).GetComponent<PointerOver>())
+                {
+                    activeUI.SetActive(false);
+                    break;
+                }
             }
         }
 
@@ -266,7 +284,7 @@ public class IARTab : FSystem {
             if (!playerLookingAtDoor)
             {
                 tmpTarget = wallIntro.First().transform.position + Vector3.up - Camera.main.transform.position;
-                Vector3 newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, Mathf.PI / 180, 0);
+                Vector3 newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, Mathf.PI / 180 * speed, 0);
                 Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
                 if (Vector3.Angle(tmpTarget, Camera.main.transform.forward) < 1)
                 {
@@ -280,7 +298,7 @@ public class IARTab : FSystem {
             }
             else
             {
-                wallIntro.First().transform.position = Vector3.MoveTowards(wallIntro.First().transform.position, tmpTarget, 0.1f);
+                wallIntro.First().transform.position = Vector3.MoveTowards(wallIntro.First().transform.position, tmpTarget, 0.1f * speed);
                 if (wallIntro.First().transform.position == tmpTarget)
                 {
                     wallIntro.First().SetActive(false);
@@ -289,7 +307,11 @@ public class IARTab : FSystem {
                     screen1ButtonImage.GetComponent<Button>().onClick.AddListener(delegate {
                         SwitchTab(screenR1, screen1ButtonImage);
                     });
+                    Color c = screen1ButtonImage.GetComponent<Image>().color;
+                    screen1ButtonImage.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 1);
                     screen1ButtonImage.GetComponentInChildren<Text>().text = "Rêve 1";
+                    c = screen1ButtonImage.GetComponentInChildren<Text>().color;
+                    screen1ButtonImage.GetComponentInChildren<Text>().color = new Color(c.r, c.g, c.b, 1);
                     listenerAddedRoom1 = true;
                     player.First().GetComponent<FirstPersonController>().enabled = true;
                 }
@@ -304,7 +326,7 @@ public class IARTab : FSystem {
                 if (!playerLookingAtDoor)
                 {
                     tmpTarget = door.First().transform.position - Camera.main.transform.position;
-                    Vector3 newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, Mathf.PI / 180, 0);
+                    Vector3 newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, Mathf.PI / 180 * speed, 0);
                     Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
                     if (Vector3.Angle(tmpTarget, Camera.main.transform.forward) < 1)
                     {
@@ -318,7 +340,7 @@ public class IARTab : FSystem {
                 }
                 else
                 {
-                    door.First().transform.position = Vector3.MoveTowards(door.First().transform.position, tmpTarget, 0.1f);
+                    door.First().transform.position = Vector3.MoveTowards(door.First().transform.position, tmpTarget, 0.1f * speed);
                     if (door.First().transform.position == tmpTarget)
                     {
                         playerLookingAtDoor = false;
@@ -326,7 +348,11 @@ public class IARTab : FSystem {
                         screen2ButtonImage.GetComponent<Button>().onClick.AddListener(delegate {
                             SwitchTab(screenR2, screen2ButtonImage);
                         });
+                        Color c = screen2ButtonImage.GetComponent<Image>().color;
+                        screen2ButtonImage.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 1);
                         screen2ButtonImage.GetComponentInChildren<Text>().text = "Rêve 2";
+                        c = screen2ButtonImage.GetComponentInChildren<Text>().color;
+                        screen2ButtonImage.GetComponentInChildren<Text>().color = new Color(c.r, c.g, c.b, 1);
                         listenerAddedRoom2 = true;
                         StoryDisplaying.readingTransition = true;
                     }
@@ -344,7 +370,7 @@ public class IARTab : FSystem {
             if (!playerLookingAtDoor)
             {
                 tmpTarget = (fence1.transform.position + fence2.transform.position)/2 - Camera.main.transform.position;
-                Vector3 newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, Mathf.PI / 180, 0);
+                Vector3 newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, Mathf.PI / 180 * speed, 0);
                 Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
                 if (Vector3.Angle(tmpTarget, Camera.main.transform.forward) < 1)
                 {
@@ -355,17 +381,23 @@ public class IARTab : FSystem {
             }
             else
             {
-                fence1.transform.Rotate(0, 0, -1);
-                fence2.transform.Rotate(0, 0, 1);
-                angleCount++;
-                if (angleCount == 103)
+                fence1.transform.Rotate(0, 0, -Time.deltaTime * 100);
+                fence2.transform.Rotate(0, 0, Time.deltaTime * 100);
+                angleCount+= Time.deltaTime * 100;
+                if (angleCount > 103)
                 {
+                    fence1.transform.Rotate(0, 0, -(103 - angleCount));
+                    fence2.transform.Rotate(0, 0, 103 - angleCount);
                     angleCount = 0;
                     playerLookingAtDoor = false;
                     screen3ButtonImage.GetComponent<Button>().onClick.AddListener(delegate {
                         SwitchTab(screenR3, screen3ButtonImage);
                     });
+                    Color c = screen3ButtonImage.GetComponent<Image>().color;
+                    screen3ButtonImage.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 1);
                     screen3ButtonImage.GetComponentInChildren<Text>().text = "Rêve 3";
+                    c = screen3ButtonImage.GetComponentInChildren<Text>().color;
+                    screen3ButtonImage.GetComponentInChildren<Text>().color = new Color(c.r, c.g, c.b, 1);
                     listenerAddedRoom3 = true;
                     player.First().GetComponent<FirstPersonController>().enabled = true;
                 }

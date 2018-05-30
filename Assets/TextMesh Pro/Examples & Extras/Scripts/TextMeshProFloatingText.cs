@@ -55,6 +55,7 @@ namespace TMPro.Examples
                 m_textMeshPro.fontSize = 24;
                 //m_textMeshPro.enableExtraPadding = true;
                 //m_textMeshPro.enableShadows = false;
+                m_textMeshPro.enableKerning = false;
                 m_textMeshPro.text = string.Empty;
 
                 StartCoroutine(DisplayTextMeshProFloatingText());
@@ -67,7 +68,7 @@ namespace TMPro.Examples
                 m_floatingText_Transform.position = m_transform.position + new Vector3(0, 15f, 0);
 
                 m_textMesh = m_floatingText.AddComponent<TextMesh>();
-                m_textMesh.font = Resources.Load("Fonts/ARIAL", typeof(Font)) as Font;
+                m_textMesh.font = Resources.Load<Font>("Fonts/ARIAL");
                 m_textMesh.GetComponent<Renderer>().sharedMaterial = m_textMesh.font.material;
                 m_textMesh.color = new Color32((byte)Random.Range(0, 255), (byte)Random.Range(0, 255), (byte)Random.Range(0, 255), 255);
                 m_textMesh.anchor = TextAnchor.LowerCenter;
@@ -107,7 +108,7 @@ namespace TMPro.Examples
             Vector3 start_pos = m_floatingText_Transform.position;
             Color32 start_color = m_textMeshPro.color;
             float alpha = 255;
-            //int int_counter = 0;
+            int int_counter = 0;
 
 
             float fadeDuration = 3 / starting_Count * CountDuration;
@@ -122,8 +123,9 @@ namespace TMPro.Examples
                     alpha = Mathf.Clamp(alpha - (Time.deltaTime / fadeDuration) * 255, 0, 255);
                 }
 
-                //int_counter = (int)current_Count;                 
-                m_textMeshPro.SetText("{0}", (int)current_Count);
+                int_counter = (int)current_Count;
+                m_textMeshPro.text = int_counter.ToString();
+                //m_textMeshPro.SetText("{0}", (int)current_Count);
 
                 m_textMeshPro.color = new Color32(start_color.r, start_color.g, start_color.b, (byte)alpha);
 
