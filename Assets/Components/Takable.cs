@@ -6,6 +6,8 @@ public class Takable : MonoBehaviour {//objects that can be taken by the player 
     public static bool mirrorOnPlank = false;
 
     [HideInInspector]
+    public Vector3 spawnPos;
+    [HideInInspector]
     public bool taken = false;              //true when this component's gameobject is taken
     [HideInInspector]
     public bool focused = false;    //true when there is no selection and the mouse is over the gameobject

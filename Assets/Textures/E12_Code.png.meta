@@ -3,7 +3,8 @@ guid: b2a4b4f0ceb40904ba518017f2a06add
 timeCreated: 1522919240
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: E12_Code_0
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -41,11 +42,11 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 1
-  spriteExtrude: 1
+  spriteExtrude: 0
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 155, y: 68, z: 149, w: 97}
   spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -78,9 +79,31 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
-    outline: []
-    physicsShape: []
+    sprites:
+    - serializedVersion: 2
+      name: E12_Code_0
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 0
+        width: 140
+        height: 721
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 95}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline:
+    - - {x: -255, y: 360.5}
+      - {x: -255, y: -360.5}
+      - {x: 255, y: -360.5}
+      - {x: 255, y: 360.5}
+    physicsShape:
+    - - {x: -255, y: 360.5}
+      - {x: -255, y: -360.5}
+      - {x: 255, y: -360.5}
+      - {x: 255, y: 360.5}
   spritePackingTag: 
   userData: 
   assetBundleName: 
