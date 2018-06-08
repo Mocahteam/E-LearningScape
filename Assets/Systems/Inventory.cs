@@ -5,6 +5,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
 using TMPro;
+using FYFY_plugins.Monitoring;
 
 public class Inventory : FSystem {
 
@@ -21,6 +22,10 @@ public class Inventory : FSystem {
     private Family glassesBackgrounds = FamilyManager.getFamily(new AnyOfTags("GlassesBG"));
     private Family sUI = FamilyManager.getFamily(new AnyOfTags("ScrollUI"));
     private Family animatedSprites = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites)));
+    private Family backgrounds = FamilyManager.getFamily(new AnyOfTags("UIBackground"));
+    private Family displayedBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family focusedMatFamily = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
+    private Family pointerSensitive = FamilyManager.getFamily(new AllOfComponents(typeof(PointerSensitive)));
 
     public static bool playerEnabled = true;
     private GameObject displayer;
@@ -48,11 +53,17 @@ public class Inventory : FSystem {
     private Vector3 posFromMouse;
     private List<int> idTable;
     private GameObject puzzleRotationButtons;
+    private GameObject wireUI;
+    public static bool wireOn = true;
+    private bool localWireOn = true;
 
     private Dictionary<string, GameObject> scrollUI;
     private GameObject scroll;
 
 	private GameObject blackLight;
+    
+    private Material displayedBGMaterial;
+    private bool backgroundTextureSet = false;
 
 	//tmp variables used to loop in famillies
 	private GameObject forGO;
@@ -60,115 +71,119 @@ public class Inventory : FSystem {
 
     public Inventory()
     {
-        foreach (Transform child in inventory.First().transform)
+        if (Application.isPlaying)
         {
-            if(child.gameObject.name == "Enabled")
+            foreach (Transform child in inventory.First().transform)
             {
-                child.gameObject.SetActive(false);
-            }
-            else if(child.gameObject.name == "Display")
-            {
-                displayer = child.gameObject;
-            }
-            else if (child.gameObject.name == "Description")
-            {
-                foreach(Transform c in child)
+                if (child.gameObject.name == "Enabled")
                 {
-                    if(c.gameObject.name == "Title")
+                    child.gameObject.SetActive(false);
+                }
+                else if (child.gameObject.name == "Display")
+                {
+                    displayer = child.gameObject;
+                }
+                else if (child.gameObject.name == "Description")
+                {
+                    foreach (Transform c in child)
                     {
-                        descriptionTitle = c.gameObject.GetComponent<TextMeshProUGUI>();
-                    }
-                    else if (c.gameObject.name == "Description")
-                    {
-                        descriptionText = c.gameObject.GetComponent<TextMeshProUGUI>();
+                        if (c.gameObject.name == "Title")
+                        {
+                            descriptionTitle = c.gameObject.GetComponent<TextMeshProUGUI>();
+                        }
+                        else if (c.gameObject.name == "Description")
+                        {
+                            descriptionText = c.gameObject.GetComponent<TextMeshProUGUI>();
+                        }
                     }
                 }
             }
-        }
 
-        foreach (Transform child in elemsInventory.First().transform.parent)
-        {
-            if (child.gameObject.name == "Glasses1")
+            foreach (Transform child in elemsInventory.First().transform.parent)
             {
-                glassesUI1 = child.gameObject;
-            }
-            else if (child.gameObject.name == "Glasses2")
-            {
-                glassesUI2 = child.gameObject;
-            }
-        }
-
-        int nb = glassesBackgrounds.Count;
-        for(int i = 0; i < nb; i++)
-        {
-            forGO = glassesBackgrounds.getAt(i);
-            if (forGO.name.Contains(1.ToString()))
-            {
-                glassesBG1 = forGO;
-            }
-            else if (forGO.name.Contains(2.ToString()))
-            {
-                glassesBG2 = forGO;
-            }
-        }
-
-        scrollUI = new Dictionary<string, GameObject>();
-        nb = sUI.Count;
-        for(int i = 0; i < nb; i++)
-        {
-            forGO = sUI.getAt(i);
-            scrollUI.Add(forGO.name, forGO);
-        }
-
-        puzzleUI = new Dictionary<int, GameObject>();
-        int id;
-		nb = pui.Count;
-		for(int i = 0; i < nb; i++)
-        {
-			forGO = pui.getAt (i);
-			int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out id);
-			puzzleUI.Add(id, forGO);
-        }
-
-        foreach(Transform child in pui.getAt(0).transform.parent)
-        {
-            if(child.gameObject.name == "RotationButtons")
-            {
-                puzzleRotationButtons = child.gameObject;
-                foreach(Transform c in child)
+                if (child.gameObject.name == "Glasses1")
                 {
-                    if (c.name.Contains("Counter"))
+                    glassesUI1 = child.gameObject;
+                }
+                else if (child.gameObject.name == "Glasses2")
+                {
+                    glassesUI2 = child.gameObject;
+                }
+                else if(child.gameObject.name == "Wire")
+                {
+                    wireUI = child.gameObject;
+                }
+            }
+
+            int nb = glassesBackgrounds.Count;
+            for (int i = 0; i < nb; i++)
+            {
+                forGO = glassesBackgrounds.getAt(i);
+                if (forGO.name.Contains(1.ToString()))
+                {
+                    glassesBG1 = forGO;
+                }
+                else if (forGO.name.Contains(2.ToString()))
+                {
+                    glassesBG2 = forGO;
+                }
+            }
+
+            scrollUI = new Dictionary<string, GameObject>();
+            nb = sUI.Count;
+            for (int i = 0; i < nb; i++)
+            {
+                forGO = sUI.getAt(i);
+                scrollUI.Add(forGO.name, forGO);
+            }
+
+            puzzleUI = new Dictionary<int, GameObject>();
+            int id;
+            nb = pui.Count;
+            for (int i = 0; i < nb; i++)
+            {
+                forGO = pui.getAt(i);
+                int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out id);
+                puzzleUI.Add(id, forGO);
+            }
+
+            foreach (Transform child in pui.getAt(0).transform.parent)
+            {
+                if (child.gameObject.name == "RotationButtons")
+                {
+                    puzzleRotationButtons = child.gameObject;
+                    foreach (Transform c in child)
                     {
-                        c.gameObject.GetComponent<Button>().onClick.AddListener(delegate
+                        if (c.name.Contains("Counter"))
                         {
-                            RotatePuzzleCounterClockWise(selectedPuzzle);
-                        });
-                    }
-                    else
-                    {
-                        c.gameObject.GetComponent<Button>().onClick.AddListener(delegate
+                            c.gameObject.GetComponent<Button>().onClick.AddListener(delegate
+                            {
+                                RotatePuzzleCounterClockWise(selectedPuzzle);
+                            });
+                        }
+                        else
                         {
-                            RotatePuzzleClockWise(selectedPuzzle);
-                        });
+                            c.gameObject.GetComponent<Button>().onClick.AddListener(delegate
+                            {
+                                RotatePuzzleClockWise(selectedPuzzle);
+                            });
+                        }
                     }
                 }
             }
+
+            foreach (Transform child in player.First().GetComponentInChildren<Camera>().gameObject.transform)
+            {
+                if (child.gameObject.GetComponent<Light>())
+                {
+                    blackLight = child.gameObject;
+                }
+            }
+
+            inventoryElemGO = elemsInventory.First().transform.parent.gameObject;
+
+            displayedBGMaterial = focusedMatFamily.First().GetComponent<FocusedGOMaterial>().displayedBGMaterial;
         }
-
-		foreach (Transform child in player.First().GetComponentInChildren<Camera>().gameObject.transform) {
-			if (child.gameObject.GetComponent<Light> ()) {
-				blackLight = child.gameObject;
-			}
-		}
-
-        inventoryElemGO = elemsInventory.First().transform.parent.gameObject;
-        /*nb = elemsInventory.Count;
-        for (int i = 0; i < nb; i++)
-        {
-            forGO = elemsInventory.getAt(i);
-            forGO.GetComponent<CollectableGO>().positionDown = forGO.GetComponent<RectTransform>().localPosition - Vector3.left * (Camera.main.pixelWidth / 2 - 50) - Vector3.up * (Camera.main.pixelHeight / 2 - 50);
-            forGO.GetComponent<CollectableGO>().positionMiddle = forGO.GetComponent<RectTransform>().localPosition - Vector3.left * 200 - Vector3.up * 50;
-        }*/
     }
 
 	// Use this to update member variables when system pause. 
@@ -185,6 +200,17 @@ public class Inventory : FSystem {
 	protected override void onProcess(int familiesUpdateCount) {
         bool tryRaycast = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit);
 		int nbCGO = cGO.Count;
+
+        if(wireOn && !localWireOn)
+        {
+            wireUI.SetActive(true);
+        }
+        else if(!wireOn && localWireOn)
+        {
+            wireUI.SetActive(false);
+        }
+        localWireOn = wireOn;
+
 		for(int i = 0; i < nbCGO; i++)
         {
 			forGO = cGO.getAt (i);
@@ -239,7 +265,6 @@ public class Inventory : FSystem {
                         }
                         else if(forGO.name == "Wire")
                         {
-
                             foreach (Transform child in plank.First().transform)
                             {
                                 if (child.gameObject.name == "SubTitles")
@@ -247,6 +272,10 @@ public class Inventory : FSystem {
                                     child.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Maintenant je dois utiliser la corde";
                                     break;
                                 }
+                            }
+                            if (forGO.GetComponent<ComponentMonitoring>())
+                            {
+                                MonitoringManager.trace(forGO.GetComponent<ComponentMonitoring>(), "perform", MonitoringManager.Source.PLAYER);
                             }
                         }
                         else if(forGO.name == "Intro_Scroll")
@@ -395,14 +424,26 @@ public class Inventory : FSystem {
                                     descriptionText.text = string.Empty;
                                 }
                             }
+                            if(forGO.GetComponent<ComponentMonitoring>())
+                            {
+                                MonitoringManager.trace(forGO.GetComponent<ComponentMonitoring>(), "turnOff", MonitoringManager.Source.PLAYER);
+                            }
                         }
                         else
                         {
                             if (selectedUI)
                             {
                                 selectedUI.GetComponent<AnimatedSprites>().animate = false;
+                                if (selectedUI.GetComponent<ComponentMonitoring>())
+                                {
+                                    MonitoringManager.trace(selectedUI.GetComponent<ComponentMonitoring>(), "turnOff", MonitoringManager.Source.SYSTEM);
+                                }
                             }
-							selectedUI = forGO;
+                            if (forGO.GetComponent<ComponentMonitoring>())
+                            {
+                                MonitoringManager.trace(forGO.GetComponent<ComponentMonitoring>(), "turnOn", MonitoringManager.Source.PLAYER);
+                            }
+                            selectedUI = forGO;
                             selectedUI.GetComponent<AnimatedSprites>().animate = true;
                             displayedDescriptionGO = forGO;
                             descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
@@ -585,6 +626,21 @@ public class Inventory : FSystem {
             }
         }
 
+        if(displayedBackground.Count > 0 && !backgroundTextureSet)
+        {
+            //pause shader
+            displayedBGMaterial.mainTexture = displayedBackground.First().GetComponent<RenderTexture>();
+            int nb = backgrounds.Count;
+            for(int i = 0; i < nb; i++)
+            {
+                //backgrounds.getAt(i).GetComponent<Image>().material = displayedBGMaterial;
+            }
+        }
+        else if(displayedBackground.Count == 0 && backgroundTextureSet)
+        {
+            backgroundTextureSet = false;
+        }
+
 		if (Input.GetKeyDown (KeyCode.A) || CollectableGO.askOpenInventory) {
             if (!CollectableGO.askOpenInventory)
             {
@@ -607,7 +663,7 @@ public class Inventory : FSystem {
 					CloseInventory ();
 				} else
                 {
-                    inventory.First().SetActive(true);
+                    GameObjectManager.setGameObjectState(inventory.First(), true);
                     foreach (Transform child in inventory.First().transform) {
 						if (child.gameObject.name == "Enabled") {
 							child.gameObject.SetActive (true);
@@ -660,10 +716,6 @@ public class Inventory : FSystem {
                     onPuzzle = false;
 					CollectableGO.onInventory = true;
 				}
-			}
-		} else if (CollectableGO.onInventory) {
-			if ((onElem.Count == 0 && Input.GetMouseButtonDown (0) && inventory.First().activeSelf) || Input.GetKeyDown(KeyCode.Escape)) {
-				CloseInventory ();
 			}
 		}
         if (onPuzzle)
@@ -732,6 +784,10 @@ public class Inventory : FSystem {
         inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(-340, -20, 0);
         if (displayedElement)
         {
+            if (onPuzzle && draggedPuzzle) {
+                draggedPuzzle.GetComponent<RectTransform>().position = posBeforeDrag;
+                draggedPuzzle = null;
+            }
             displayedElement.SetActive(false);
             displayer.SetActive(false);
             if (selectedUI)
@@ -773,7 +829,7 @@ public class Inventory : FSystem {
         descriptionText.text = string.Empty;
         CollectableGO.onInventory = false;
         CollectableGO.askCloseInventory = false;
-        inventory.First().SetActive(false);
+        GameObjectManager.setGameObjectState(inventory.First(), false);
     }
 
     private void RotatePuzzleClockWise(GameObject puzzle)

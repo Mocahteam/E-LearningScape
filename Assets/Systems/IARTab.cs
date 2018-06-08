@@ -19,7 +19,8 @@ public class IARTab : FSystem {
     private Family lockR2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"));
     private Family lockIntro = FamilyManager.getFamily(new AnyOfTags("LockIntro"));
     private Family fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
-    private Family tabletBG = FamilyManager.getFamily(new AnyOfTags("TabletBackground"));
+    private Family backgrounds = FamilyManager.getFamily(new AnyOfTags("UIBackground"));
+    private Family displayedBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private GameObject tabsGO;
     public static bool onIAR = false;
@@ -49,6 +50,7 @@ public class IARTab : FSystem {
     private bool onMenu = false;
     private GameObject activeUI = null;
     private bool playerEnabled = true;
+    private Material initialBGMaterial;
 
     private bool wasOnInventory = false;
     private bool wasOnMenu = false;
@@ -64,99 +66,108 @@ public class IARTab : FSystem {
 
     private AudioSource gameAudioSource;
 
+    private bool hideMouse = false;
+    private bool canHideMouse = false;
+
     public IARTab()
     {
-        door.First().transform.position += Vector3.up * (5.73f - door.First().transform.position.y); //opened
-        door.First().transform.position += Vector3.up * (2.13f - door.First().transform.position.y); //closed
-
-        tabsGO = tabs.First().transform.parent.gameObject;
-        inventory = inventoryFamily.First();
-        int nb = screens.Count;
-        for(int i = 0; i < nb; i++)
+        if (Application.isPlaying)
         {
-            if (screens.getAt(i).name.Contains(1.ToString()))
-            {
-                screenR1 = screens.getAt(i);
-            }
-            else if (screens.getAt(i).name.Contains(2.ToString()))
-            {
-                screenR2 = screens.getAt(i);
-            }
-            else if (screens.getAt(i).name.Contains(3.ToString()))
-            {
-                screenR3 = screens.getAt(i);
-            }
-        }
-        nb = canvas.Count;
-        for(int i = 0; i < nb; i++)
-        {
-            if(canvas.getAt(i).name == "PauseMenu")
-            {
-                menu = canvas.getAt(i);
-                break;
-            }
-        }
+            door.First().transform.position += Vector3.up * (5.73f - door.First().transform.position.y); //opened
+            door.First().transform.position += Vector3.up * (2.13f - door.First().transform.position.y); //closed
 
-        nb = tabs.Count;
-        for(int i = 0; i < nb; i++)
-        {
-            switch (tabs.getAt(i).name)
+            tabsGO = tabs.First().transform.parent.gameObject;
+            inventory = inventoryFamily.First();
+            initialBGMaterial = backgrounds.First().GetComponent<Image>().material;
+
+            int nb = screens.Count;
+            for (int i = 0; i < nb; i++)
             {
-                case "InventoryTab":
-                    inventoryButtonImage = tabs.getAt(i).GetComponent<Image>();
-                    tabs.getAt(i).GetComponent<Button>().onClick.AddListener(delegate {
-                        SwitchTab(inventory, inventoryButtonImage);
-                        onInventory = true;
-                    });
+                if (screens.getAt(i).name.Contains(1.ToString()))
+                {
+                    screenR1 = screens.getAt(i);
+                }
+                else if (screens.getAt(i).name.Contains(2.ToString()))
+                {
+                    screenR2 = screens.getAt(i);
+                }
+                else if (screens.getAt(i).name.Contains(3.ToString()))
+                {
+                    screenR3 = screens.getAt(i);
+                }
+            }
+
+            nb = canvas.Count;
+            for (int i = 0; i < nb; i++)
+            {
+                if (canvas.getAt(i).name == "PauseMenu")
+                {
+                    menu = canvas.getAt(i);
                     break;
-
-                case "ScreenR1Tab":
-                    screen1ButtonImage = tabs.getAt(i).GetComponent<Image>();
-                    break;
-
-                case "ScreenR2Tab":
-                    screen2ButtonImage = tabs.getAt(i).GetComponent<Image>();
-                    break;
-
-                case "ScreenR3Tab":
-                    screen3ButtonImage = tabs.getAt(i).GetComponent<Image>();
-                    break;
-
-                case "MenuTab":
-                    menuButtonImage = tabs.getAt(i).GetComponent<Image>();
-                    tabs.getAt(i).GetComponent<Button>().onClick.AddListener(delegate {
-                        SwitchTab(menu, menuButtonImage);
-                        onMenu = true;
-                    });
-                    break;
-
-                default:
-                    break;
+                }
             }
-        }
 
-        selectedTabSprite = fgm.First().GetComponent<FocusedGOMaterial>().selectedTabSprite;
-        initialTabSprite = inventoryButtonImage.sprite;
-
-        nb = audioSourceFamily.Count;
-        for(int i = 0; i < nb; i++)
-        {
-            if (audioSourceFamily.getAt(i).name == "Game")
+            nb = tabs.Count;
+            for (int i = 0; i < nb; i++)
             {
-                gameAudioSource = audioSourceFamily.getAt(i).GetComponent<AudioSource>();
+                switch (tabs.getAt(i).name)
+                {
+                    case "InventoryTab":
+                        inventoryButtonImage = tabs.getAt(i).GetComponent<Image>();
+                        tabs.getAt(i).GetComponent<Button>().onClick.AddListener(delegate {
+                            SwitchTab(inventory, inventoryButtonImage);
+                            onInventory = true;
+                        });
+                        break;
+
+                    case "ScreenR1Tab":
+                        screen1ButtonImage = tabs.getAt(i).GetComponent<Image>();
+                        break;
+
+                    case "ScreenR2Tab":
+                        screen2ButtonImage = tabs.getAt(i).GetComponent<Image>();
+                        break;
+
+                    case "ScreenR3Tab":
+                        screen3ButtonImage = tabs.getAt(i).GetComponent<Image>();
+                        break;
+
+                    case "MenuTab":
+                        menuButtonImage = tabs.getAt(i).GetComponent<Image>();
+                        tabs.getAt(i).GetComponent<Button>().onClick.AddListener(delegate {
+                            SwitchTab(menu, menuButtonImage);
+                            onMenu = true;
+                        });
+                        break;
+
+                    default:
+                        break;
+                }
             }
-        }
 
-        nb = fences.Count;
-        for (int i = 0; i < nb; i++)
-        {
-            if (fences.getAt(i).name.Contains(1.ToString()))
+            selectedTabSprite = fgm.First().GetComponent<FocusedGOMaterial>().selectedTabSprite;
+            initialTabSprite = inventoryButtonImage.sprite;
+
+            nb = audioSourceFamily.Count;
+            for (int i = 0; i < nb; i++)
             {
-                fence1 = fences.getAt(i);
+                if (audioSourceFamily.getAt(i).name == "Game")
+                {
+                    gameAudioSource = audioSourceFamily.getAt(i).GetComponent<AudioSource>();
+                }
             }
-            else if (fences.getAt(i).name.Contains(2.ToString()))
+
+            nb = fences.Count;
+            for (int i = 0; i < nb; i++)
             {
-                fence2 = fences.getAt(i);
+                if (fences.getAt(i).name.Contains(1.ToString()))
+                {
+                    fence1 = fences.getAt(i);
+                }
+                else if (fences.getAt(i).name.Contains(2.ToString()))
+                {
+                    fence2 = fences.getAt(i);
+                }
             }
         }
     }
@@ -176,11 +187,17 @@ public class IARTab : FSystem {
     {
         speed = 50 * Time.deltaTime;
 
+        if (hideMouse)
+        {
+            Cursor.visible = false;
+            hideMouse = false;
+        }
+
         if (askCloseIAR)
         {
             if (activeUI)
             {
-                activeUI.SetActive(false);
+                GameObjectManager.setGameObjectState(activeUI, false);
             }
             askCloseIAR = false;
         }
@@ -202,25 +219,32 @@ public class IARTab : FSystem {
         onMenu = menu.activeSelf;
         onInventory = inventory.activeSelf;
 
-        wasOnInventory = (onInventory && !wasOnInventory) || wasOnInventory;
-        wasOnMenu = (onMenu && !wasOnMenu) || wasOnMenu;
+        wasOnInventory = onInventory || wasOnInventory;
+        wasOnMenu = onMenu || wasOnMenu;
 
+        if (canHideMouse)
+        {
+            canHideMouse = false;
+            hideMouse = !activeUI.activeSelf;
+
+            if (onIAR)
+            {
+                GameObjectManager.setGameObjectState(activeUI, false);
+            }
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(!onInventory && !onMenu && onIAR)
-            {
-                activeUI.SetActive(false);
-            }
+            canHideMouse = true;
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-            int nb = tabletBG.Count;
+            int nb = backgrounds.Count;
             for(int i = 0; i < nb; i++)
             {
-                if (tabletBG.getAt(i).GetComponent<PointerOver>())
+                if (backgrounds.getAt(i).GetComponent<PointerOver>())
                 {
-                    activeUI.SetActive(false);
+                    GameObjectManager.setGameObjectState(activeUI, false);
                     break;
                 }
             }
@@ -230,7 +254,12 @@ public class IARTab : FSystem {
         {
             if (!activeUI.activeSelf)
             {
-                if(room2Unlocked && !listenerAddedRoom2)
+                int nb = backgrounds.Count;
+                for (int i = 0; i < nb; i++)
+                {
+                    backgrounds.getAt(i).GetComponent<Image>().material = initialBGMaterial;
+                }
+                if (room2Unlocked && !listenerAddedRoom2)
                 {
                     if (windowClosed)
                     {
@@ -360,7 +389,7 @@ public class IARTab : FSystem {
             }
             else
             {
-                activeUI.SetActive(false);
+                GameObjectManager.setGameObjectState(activeUI, false);
             }
         }
         if (room3Unlocked && !listenerAddedRoom3)
@@ -411,11 +440,11 @@ public class IARTab : FSystem {
         {
             CollectableGO.askOpenInventory = true;
         }
-        inventory.SetActive(false);
-        screenR1.SetActive(false);
-        screenR2.SetActive(false);
-        screenR3.SetActive(false);
-        menu.SetActive(false);
+        GameObjectManager.setGameObjectState(inventory, false);
+        GameObjectManager.setGameObjectState(screenR1, false);
+        GameObjectManager.setGameObjectState(screenR2, false);
+        GameObjectManager.setGameObjectState(screenR3, false);
+        GameObjectManager.setGameObjectState(menu, false);
         int nb = tabs.Count;
         for(int i = 0; i < nb; i++)
         {
@@ -423,7 +452,7 @@ public class IARTab : FSystem {
             tabs.getAt(i).GetComponentInChildren<Text>().fontStyle = FontStyle.Normal;
         }
 
-        tabContent.SetActive(true);
+        GameObjectManager.setGameObjectState(tabContent, true);
         button.sprite = selectedTabSprite;
         button.GetComponentInChildren<Text>().fontStyle = FontStyle.Bold;
         activeUI = tabContent;

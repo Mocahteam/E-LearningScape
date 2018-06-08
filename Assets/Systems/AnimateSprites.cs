@@ -5,16 +5,20 @@ using UnityEngine.UI;
 public class AnimateSprites : FSystem {
 
     private Family animatedSprites = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites)));
+    private Family test = FamilyManager.getFamily(new AllOfComponents(typeof(PointerEnterName)));
 
     private AnimatedSprites tmpAS;
     private float lastChangeTime = -Mathf.Infinity;
 
     public AnimateSprites()
     {
-        int nb = animatedSprites.Count;
-        for (int i = 0; i < nb; i++)
+        if (Application.isPlaying)
         {
-            animatedSprites.getAt(i).GetComponent<AnimatedSprites>().usedSpriteID = 0;
+            int nb = animatedSprites.Count;
+            for (int i = 0; i < nb; i++)
+            {
+                animatedSprites.getAt(i).GetComponent<AnimatedSprites>().usedSpriteID = 0;
+            }
         }
     }
 
@@ -30,7 +34,7 @@ public class AnimateSprites : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        if(Time.time - lastChangeTime > 1 / 30)
+        if(Time.time - lastChangeTime > 1f / 10)
         {
             lastChangeTime = Time.time;
             int nb = animatedSprites.Count;
@@ -46,6 +50,15 @@ public class AnimateSprites : FSystem {
                     }
                     tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[tmpAS.usedSpriteID];
                 }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            int nb = test.Count;
+            for(int i = 0; i < nb; i++)
+            {
+                test.getAt(i).GetComponent<PointerEnterName>().enabled = !test.getAt(i).GetComponent<PointerEnterName>().enabled;
             }
         }
 	}

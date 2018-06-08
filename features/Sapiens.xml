@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Plank_perform_7" label="perform Plank" system="True" end="True" />
+  <transition id="Evaluation_turnOff_6" label="turnOff Evaluation" system="False" end="False" />
+  <transition id="Evaluation_turnOn_6" label="turnOn Evaluation" system="False" end="False" />
+  <transition id="Methodes_turnOff_5" label="turnOff Methodes" system="False" end="False" />
+  <transition id="Methodes_turnOn_5" label="turnOn Methodes" system="False" end="False" />
+  <transition id="Motivation_turnOff_4" label="turnOff Motivation" system="False" end="False" />
+  <transition id="Motivation_turnOn_4" label="turnOn Motivation" system="False" end="False" />
+  <transition id="Objectifs_turnOff_3" label="turnOff Objectifs" system="False" end="False" />
+  <transition id="Objectifs_turnOn_3" label="turnOn Objectifs" system="False" end="False" />
+  <transition id="Wire_turnOff_2" label="turnOff Wire" system="False" end="False" />
+  <transition id="Wire_turnOn_2" label="turnOn Wire" system="False" end="False" />
+  <transition id="Wire_perform_1" label="perform Wire" system="False" end="False" />
+  <transition id="Plank_turnOff_0" label="turnOff Plank" system="False" end="False" />
+  <transition id="Plank_turnOn_0" label="turnOn Plank" system="False" end="False" />
+</transitions>

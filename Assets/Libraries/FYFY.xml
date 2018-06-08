@@ -187,6 +187,16 @@
             	Check if two families are equals.
             </summary>
         </member>
+        <member name="M:FYFY.Family.Equals(System.String[])">
+            <summary>
+            	Check if this is equal with descriptor
+            </summary>
+        </member>
+        <member name="M:FYFY.Family.getDescriptor">
+            <summary>
+            	Return a descriptor of this family
+            </summary>
+        </member>
         <member name="M:FYFY.Family.First">
             <summary>
             	Get the first Game Object included into the family
@@ -645,14 +655,14 @@
             	List of properties of GameObject which can be used by the PropertyMatcher.
             </summary>
         </member>
-        <member name="F:FYFY.PropertyMatcher.PROPERTY.ENABLED">
+        <member name="F:FYFY.PropertyMatcher.PROPERTY.ACTIVE_SELF">
             <summary>
-            	The GameObject has the variables <c>activeInHierarchy</c> and <c>activeSelf</c> true.
+            	The GameObject has the variables <c>activeSelf</c> true.
             </summary>
         </member>
-        <member name="F:FYFY.PropertyMatcher.PROPERTY.DISABLED">
+        <member name="F:FYFY.PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY">
             <summary>
-            	The GameObject has at least one of the variables <c>activeInHierarchy</c> or <c>activeSelf</c> false.
+            	The GameObject has the variables <c>activeInHierarchy</c> true.
             </summary>
         </member>
         <member name="F:FYFY.PropertyMatcher.PROPERTY.HAS_PARENT">

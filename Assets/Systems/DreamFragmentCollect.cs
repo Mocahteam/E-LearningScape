@@ -19,8 +19,11 @@ public class DreamFragmentCollect : FSystem {
 
     public DreamFragmentCollect()
     {
-        dfUI = dfUIFamily.First();
-        dfUI.GetComponentInChildren<Button>().onClick.AddListener(CloseWindow);
+        if (Application.isPlaying)
+        {
+            dfUI = dfUIFamily.First();
+            dfUI.GetComponentInChildren<Button>().onClick.AddListener(CloseWindow);
+        }
     }
 
 	// Use this to update member variables when system pause. 
@@ -53,7 +56,7 @@ public class DreamFragmentCollect : FSystem {
                         tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
                         if(tmpDFComponent.type == 0)
                         {
-                            dfUI.GetComponentInChildren<TextMeshProUGUI>().text = string.Concat("Ouvrez l'enveloppe numéro ", tmpDFComponent.id, " et récupérez l'item \"", tmpDFComponent.itemName, "\"");
+                            dfUI.GetComponentInChildren<TextMeshProUGUI>().text = string.Concat("Cherchez le numéro ", tmpDFComponent.id, " et récupérez l'item \"", tmpDFComponent.itemName, "\"");
                         }
                         else if (tmpDFComponent.type == 1 || tmpDFComponent.type == 2)
                         {

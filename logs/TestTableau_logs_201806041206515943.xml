@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <map id="TestTableau_201806041206515943">
+    <transition time="201806041204248355" action="Wire_perform_0" origin="player" />
+    <transition time="201806041204305447" action="Wire_turnOn_2" origin="player" />
+    <transition time="201806041204355075" action="Wire_turnOff_2" origin="player" />
+    <transition time="201806041204404169" action="Wire_turnOn_2" origin="player" />
+    <transition time="201806041204547449" action="Plank_turnOn_1" origin="player" />
+    <transition time="201806041205070611" action="Wire_turnOff_2" origin="player" />
+    <transition time="201806041205114094" action="Wire_turnOn_2" origin="player" />
+    <transition time="201806041205122540" action="Wire_turnOff_2" origin="player" />
+  </map>
+</data>

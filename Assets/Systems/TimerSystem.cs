@@ -14,15 +14,18 @@ public class TimerSystem : FSystem {
 
     public TimerSystem()
     {
-        initialTime = Time.time;
-        timer = null;
-		int nbText = texts.Count;
-		for(int i = 0; i < nbText; i++)
+        if (Application.isPlaying)
         {
-			forGO = texts.getAt (i);
-			if(forGO.name == "CurrentTime")
+            initialTime = Time.time;
+            timer = null;
+            int nbText = texts.Count;
+            for (int i = 0; i < nbText; i++)
             {
-				timer = forGO.GetComponent<Text>();
+                forGO = texts.getAt(i);
+                if (forGO.name == "CurrentTime")
+                {
+                    timer = forGO.GetComponent<Text>();
+                }
             }
         }
     }

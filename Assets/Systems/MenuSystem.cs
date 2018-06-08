@@ -9,40 +9,43 @@ public class MenuSystem : FSystem {
 
     public MenuSystem()
     {
-        //initialise menu's buttons with listeners
-        foreach (GameObject b in buttons)
+        if (Application.isPlaying)
         {
-            switch (b.name)
+            //initialise menu's buttons with listeners
+            foreach (GameObject b in buttons)
             {
-                case "Play":
-                    b.GetComponent<Button>().onClick.AddListener(Play);
-                    break;
+                switch (b.name)
+                {
+                    case "Play":
+                        b.GetComponent<Button>().onClick.AddListener(Play);
+                        break;
 
-                case "Option":
-                    b.GetComponent<Button>().onClick.AddListener(OpenOption);
-                    break;
+                    case "Option":
+                        b.GetComponent<Button>().onClick.AddListener(OpenOption);
+                        break;
 
-                case "Quit":
-                    b.GetComponent<Button>().onClick.AddListener(QuitGame);
-                    break;
+                    case "Quit":
+                        b.GetComponent<Button>().onClick.AddListener(QuitGame);
+                        break;
 
-                case "Back":
-                    b.GetComponent<Button>().onClick.AddListener(BackFromOption);
-                    break;
+                    case "Back":
+                        b.GetComponent<Button>().onClick.AddListener(BackFromOption);
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
-        }
-        foreach (Transform child in menu.First().transform)
-        {
-            if(child.gameObject.name == "Main") //show main menu
+            foreach (Transform child in menu.First().transform)
             {
-                child.gameObject.SetActive(true);
-            }
-            else if (child.gameObject.name == "Option") //hide option menu
-            {
-                child.gameObject.SetActive(false);
+                if (child.gameObject.name == "Main") //show main menu
+                {
+                    child.gameObject.SetActive(true);
+                }
+                else if (child.gameObject.name == "Option") //hide option menu
+                {
+                    child.gameObject.SetActive(false);
+                }
             }
         }
     }

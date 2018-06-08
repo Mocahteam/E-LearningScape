@@ -32,47 +32,50 @@ public class StoryDisplaying : FSystem {
     
     public StoryDisplaying()
     {
-        foreach(Transform child in storyDisplayer.First().transform)
+        if (Application.isPlaying)
         {
-            if(child.gameObject.name == "Background")
+            foreach (Transform child in storyDisplayer.First().transform)
             {
-                background = child.gameObject.GetComponent<Image>();
+                if (child.gameObject.name == "Background")
+                {
+                    background = child.gameObject.GetComponent<Image>();
+                }
+                else if (child.gameObject.name == "Text")
+                {
+                    sdText = child.gameObject.GetComponent<TextMeshProUGUI>();
+                }
+                else if (child.gameObject.name == "FadingImage")
+                {
+                    fadingImage = child.gameObject.GetComponent<Image>();
+                }
+                else if (child.gameObject.name == "Click")
+                {
+                    clickFeedback = child.gameObject;
+                }
             }
-            else if (child.gameObject.name == "Text")
+            
+            introText = new string[3];
+            introText[0] = "Il est déjà tard le soir, Camille reste inquiète pour son premier enseignement à Sorbonne Université. Ce n’est pas la première fois qu’elle enseigne, mais maintenant elle est Maître de Conférences, son premier poste permanent.";
+            introText[1] = "En se brossant les dents, elle révise une fois de plus le cours du prof qu’elle connaît déjà par coeur. Puis elle se couche, et plein de questions tournent dans sa tête : et si j’ai un blanc ? et si les étudiants ne sont pas motivés ? et s’il n’y a pas de craie ?";
+            introText[2] = "Camille fini par s'endormir... C'est alors que les marchands de sable entrent en action pour aider Camille à structurer sa pensée pendant son sommeil.";
+
+            transitionText = new string[1];
+            transitionText[0] = "Camille est tombée en sommeil paradoxal, et elle se met à rêver. L’université se transforme en jungle pleine de dangers. Les marchands de sable restent avec elle pour la protéger.";
+
+            endingText = new string[3];
+            endingText[0] = "Camille se réveille. Elle est en pleine forme, et tout est clair dans sa tête pour son premier enseignement. Elle a hâte de commencer.";
+            endingText[1] = "Les marchands de sable ont bien travaillé et se retrouvent pour un débriefing sur tout leur travail";
+            endingText[2] = "Fin";
+
+            if (storyDisplayer.First().activeSelf)
             {
-                sdText = child.gameObject.GetComponent<TextMeshProUGUI>();
+                readTexts = introText;
+                player.First().GetComponent<FirstPersonController>().enabled = false;
+                Cursor.visible = false;
+                readingTimer = Time.time;
+                fadingIn = true;
+                readingIntro = true;
             }
-            else if (child.gameObject.name == "FadingImage")
-            {
-                fadingImage = child.gameObject.GetComponent<Image>();
-            }
-            else if (child.gameObject.name == "Click")
-            {
-                clickFeedback = child.gameObject;
-            }
-        }
-
-        introText = new string[3];
-        introText[0] = "Il est déjà tard le soir, Camille reste inquiète pour son premier enseignement à Sorbonne Université. Ce n’est pas la première fois qu’elle enseigne, mais maintenant elle est Maître de Conférences, son premier poste permanent.";
-        introText[1] = "En se brossant les dents, elle révise une fois de plus le cours du prof qu’elle connaît déjà par coeur. Puis elle se couche, et plein de questions tournent dans sa tête : et si j’ai un blanc ? et si les étudiants ne sont pas motivés ? et s’il n’y a pas de craie ?";
-        introText[2] = "Camille fini par s'endormir... C'est alors que les marchands de sable entrent en action pour aider Camille à structurer sa pensée pendant son sommeil.";
-
-        transitionText = new string[1];
-        transitionText[0] = "Camille est tombée en sommeil paradoxal, et elle se met à rêver. L’université se transforme en jungle pleine de dangers. Les marchands de sable restent avec elle pour la protéger.";
-
-        endingText = new string[3];
-        endingText[0] = "Camille se réveille. Elle est en pleine forme, et tout est clair dans sa tête pour son premier enseignement. Elle a hâte de commencer.";
-        endingText[1] = "Les marchands de sable ont bien travaillé et se retrouvent pour un débriefing sur tout leur travail";
-        endingText[2] = "Fin";
-
-        if (storyDisplayer.First().activeSelf)
-        {
-            readTexts = introText;
-            player.First().GetComponent<FirstPersonController>().enabled = false;
-            Cursor.visible = false;
-            readingTimer = Time.time;
-            fadingIn = true;
-            readingIntro = true;
         }
     }
 

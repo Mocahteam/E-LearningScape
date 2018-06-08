@@ -44,7 +44,7 @@ public class SetAnswer : FSystem
     private GameObject screen1;
     private int aq1r1 = 128;    //answer question 1 room 1
     private int aq2r1 = 459;    //answer question 2 room 1
-    private string aq3r1 = "1623810149"; //answer question 3 room 1
+    private string aq3r1 = "1023810149"; //answer question 3 room 1
     private GameObject answersRoom1; //ui empty containing inputfields to answer
     private GameObject enigma4; //ui empty containing enigma04
     private GameObject whiteBG; // white ui image used for transition between answers and enigma04 on tablet
@@ -100,328 +100,331 @@ public class SetAnswer : FSystem
 
     public SetAnswer()
     {
-        credits = false;
-        timeR = -Mathf.Infinity;
-        timeW = -Mathf.Infinity;
-        timerWhite = -Mathf.Infinity;
+        if (Application.isPlaying)
+        {
+            credits = false;
+            timeR = -Mathf.Infinity;
+            timeW = -Mathf.Infinity;
+            timerWhite = -Mathf.Infinity;
 
-        int nbScreen = screenIAR.Count;
-        for (int i = 0; i < nbScreen; i++)
-        {
-            forGO = screenIAR.getAt(i);
-            if (forGO.name.Contains(1.ToString()))
+            int nbScreen = screenIAR.Count;
+            for (int i = 0; i < nbScreen; i++)
             {
-                screen1 = forGO;
-            }
-            else if (forGO.name.Contains(2.ToString()))
-            {
-                screen2 = forGO;
-            }
-            else if (forGO.name.Contains(3.ToString()))
-            {
-                screen3 = forGO;
-            }
-        }
-
-        foreach (Transform child in screen1.transform)
-        {
-            if (child.gameObject.name == "AnswersInput")
-            {
-                answersRoom1 = child.gameObject;
-            }
-            else if (child.gameObject.name == "Enigma4")
-            {
-                enigma4 = child.gameObject;
-            }
-        }
-        wtt = wTimerText.First().GetComponent<TextMeshProUGUI>();
-        int nbGears = gears.Count;
-        for (int i = 0; i < nbGears; i++)
-        {
-            forGO = gears.getAt(i);
-            //set the initial position of each gear to their local position at the beginning of the game
-            forGO.GetComponent<Gear>().initialPosition = forGO.transform.localPosition;
-        }
-
-        foreach (Transform child in screen2.transform)
-        {
-            if (child.gameObject.name == "ConnectionScreen")
-            {
-                connectionR2 = child.gameObject;
-                foreach(InputField inputField in connectionR2.GetComponentsInChildren<InputField>())
+                forGO = screenIAR.getAt(i);
+                if (forGO.name.Contains(1.ToString()))
                 {
-                    if(inputField.gameObject.name == "Password")
-                    {
-                        ifConnectionR2 = inputField;
-                        break;
-                    }
+                    screen1 = forGO;
                 }
-                foreach (Transform c in ifConnectionR2.gameObject.transform)
+                else if (forGO.name.Contains(2.ToString()))
                 {
-                    if (c.gameObject.name == "AnswerCheck")
-                    {
-                        foreach (Transform cac in c)
-                        {
-                            if (cac.gameObject.name.Contains(1.ToString()))
-                            {
-                                connectionAnswerCheck1 = cac.gameObject.GetComponent<TextMeshProUGUI>();
-                                cacGreen = connectionAnswerCheck1.color;
-                            }
-                            else if (cac.gameObject.name.Contains(2.ToString()))
-                            {
-                                connectionAnswerCheck2 = cac.gameObject.GetComponent<TextMeshProUGUI>();
-                                cacOrange = connectionAnswerCheck2.color;
-                            }
-                            else if (cac.gameObject.name.Contains(3.ToString()))
-                            {
-                                connectionAnswerCheck3 = cac.gameObject.GetComponent<TextMeshProUGUI>();
-                                cacRed = connectionAnswerCheck3.color;
-                            }
-                        }
-                        break;
-                    }
+                    screen2 = forGO;
+                }
+                else if (forGO.name.Contains(3.ToString()))
+                {
+                    screen3 = forGO;
                 }
             }
-            else if (child.gameObject.name == "AnswersInput")
-            {
-                answersRoom2 = child.gameObject;
-            }
-        }
-        foreach (Transform child in screen3.transform)
-        {
-            if (child.gameObject.name == "AnswersInput")
-            {
-                answersRoom3 = child.gameObject;
-            }
-        }
 
-        int nbSymbols = symbolsE12Component.Count;
-        for (int i = 0; i < nbSymbols; i++)
-        {
-            forGO = symbolsE12Component.getAt(i);
-            forGO.GetComponent<E12_Symbol>().position = forGO.transform.position;
-        }
-
-        //initialise buttons with listener
-        int nb = qRoom1.Count;
-        for (int i = 0; i < nb; i++)
-        {
-            forGO = qRoom1.getAt(i);
-            if (forGO.name.Contains(1.ToString()))
+            foreach (Transform child in screen1.transform)
             {
-                forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer1);
-                forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-                    if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                if (child.gameObject.name == "AnswersInput")
+                {
+                    answersRoom1 = child.gameObject;
+                }
+                else if (child.gameObject.name == "Enigma4")
+                {
+                    enigma4 = child.gameObject;
+                }
+            }
+            wtt = wTimerText.First().GetComponent<TextMeshProUGUI>();
+            int nbGears = gears.Count;
+            for (int i = 0; i < nbGears; i++)
+            {
+                forGO = gears.getAt(i);
+                //set the initial position of each gear to their local position at the beginning of the game
+                forGO.GetComponent<Gear>().initialPosition = forGO.transform.localPosition;
+            }
+
+            foreach (Transform child in screen2.transform)
+            {
+                if (child.gameObject.name == "ConnectionScreen")
+                {
+                    connectionR2 = child.gameObject;
+                    foreach (InputField inputField in connectionR2.GetComponentsInChildren<InputField>())
                     {
-                        CheckT1Answer1();
+                        if (inputField.gameObject.name == "Password")
+                        {
+                            ifConnectionR2 = inputField;
+                            break;
+                        }
                     }
-                });
-            }
-            else if (forGO.name.Contains(2.ToString()))
-            {
-                forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer2);
-                forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-                    if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                    foreach (Transform c in ifConnectionR2.gameObject.transform)
                     {
-                        CheckT1Answer2();
+                        if (c.gameObject.name == "AnswerCheck")
+                        {
+                            foreach (Transform cac in c)
+                            {
+                                if (cac.gameObject.name.Contains(1.ToString()))
+                                {
+                                    connectionAnswerCheck1 = cac.gameObject.GetComponent<TextMeshProUGUI>();
+                                    cacGreen = connectionAnswerCheck1.color;
+                                }
+                                else if (cac.gameObject.name.Contains(2.ToString()))
+                                {
+                                    connectionAnswerCheck2 = cac.gameObject.GetComponent<TextMeshProUGUI>();
+                                    cacOrange = connectionAnswerCheck2.color;
+                                }
+                                else if (cac.gameObject.name.Contains(3.ToString()))
+                                {
+                                    connectionAnswerCheck3 = cac.gameObject.GetComponent<TextMeshProUGUI>();
+                                    cacRed = connectionAnswerCheck3.color;
+                                }
+                            }
+                            break;
+                        }
                     }
-                });
+                }
+                else if (child.gameObject.name == "AnswersInput")
+                {
+                    answersRoom2 = child.gameObject;
+                }
             }
-            else if (forGO.name.Contains(3.ToString()))
+            foreach (Transform child in screen3.transform)
             {
-                forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer3);
-                forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-                    if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                    {
-                        CheckT1Answer3();
-                    }
-                });
+                if (child.gameObject.name == "AnswersInput")
+                {
+                    answersRoom3 = child.gameObject;
+                }
             }
-        }
-        int id;
-        nb = qRoom2.Count;
-        for (int i = 0; i < nb; i++)
-        {
-            forGO = qRoom2.getAt(i);
-            int.TryParse(forGO.name.Substring(forGO.name.Length - 1, 1), out id);
-            switch (id)
+
+            int nbSymbols = symbolsE12Component.Count;
+            for (int i = 0; i < nbSymbols; i++)
             {
-                case 1:
-                    forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer1);
-                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                        {
-                            CheckT2Answer1();
-                        }
-                    });
-                    break;
-
-                case 2:
-                    forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer2);
-                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                        {
-                            CheckT2Answer2();
-                        }
-                    });
-                    break;
-
-                case 3:
-                    forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer3);
-                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                        {
-                            CheckT2Answer3();
-                        }
-                    });
-                    break;
-
-                case 4:
-                    forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer4);
-                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                        {
-                            CheckT2Answer4();
-                        }
-                    });
-                    break;
-
-                case 5:
-                    forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer5);
-                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                        {
-                            CheckT2Answer5();
-                        }
-                    });
-                    break;
-
-                case 6:
-                    forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer6);
-                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                        {
-                            CheckT2Answer6();
-                        }
-                    });
-                    break;
-
-                default:
-                    break;
+                forGO = symbolsE12Component.getAt(i);
+                forGO.GetComponent<E12_Symbol>().position = forGO.transform.position;
             }
-        }
-        connectionR2.GetComponentInChildren<Button>().onClick.AddListener(CheckConnection);
-        foreach (InputField inputField in connectionR2.GetComponentsInChildren<InputField>())
-        {
-            if (inputField.gameObject.name == "Password")
+
+            //initialise buttons with listener
+            int nb = qRoom1.Count;
+            for (int i = 0; i < nb; i++)
             {
-                inputField.onEndEdit.AddListener(delegate {
-                    if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                    {
-                        CheckConnection();
-                    }
-                }); ;
-                break;
-            }
-        }
-        nb = qRoom3.Count;
-        for (int i = 0; i < nb; i++)
-        {
-            forGO = qRoom3.getAt(i);
-            switch (i)
-            {
-                case 0:
-                    forGO.GetComponentInChildren<Button>().onClick.AddListener(delegate {
-                        CheckT3Answer(qRoom3.getAt(0));
-                    });
+                forGO = qRoom1.getAt(i);
+                if (forGO.name.Contains(1.ToString()))
+                {
+                    forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer1);
                     forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
                         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                         {
+                            CheckT1Answer1();
+                        }
+                    });
+                }
+                else if (forGO.name.Contains(2.ToString()))
+                {
+                    forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer2);
+                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                        {
+                            CheckT1Answer2();
+                        }
+                    });
+                }
+                else if (forGO.name.Contains(3.ToString()))
+                {
+                    forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT1Answer3);
+                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                        {
+                            CheckT1Answer3();
+                        }
+                    });
+                }
+            }
+            int id;
+            nb = qRoom2.Count;
+            for (int i = 0; i < nb; i++)
+            {
+                forGO = qRoom2.getAt(i);
+                int.TryParse(forGO.name.Substring(forGO.name.Length - 1, 1), out id);
+                switch (id)
+                {
+                    case 1:
+                        forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer1);
+                        forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                            {
+                                CheckT2Answer1();
+                            }
+                        });
+                        break;
+
+                    case 2:
+                        forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer2);
+                        forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                            {
+                                CheckT2Answer2();
+                            }
+                        });
+                        break;
+
+                    case 3:
+                        forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer3);
+                        forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                            {
+                                CheckT2Answer3();
+                            }
+                        });
+                        break;
+
+                    case 4:
+                        forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer4);
+                        forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                            {
+                                CheckT2Answer4();
+                            }
+                        });
+                        break;
+
+                    case 5:
+                        forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer5);
+                        forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                            {
+                                CheckT2Answer5();
+                            }
+                        });
+                        break;
+
+                    case 6:
+                        forGO.GetComponentInChildren<Button>().onClick.AddListener(CheckT2Answer6);
+                        forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                            {
+                                CheckT2Answer6();
+                            }
+                        });
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            connectionR2.GetComponentInChildren<Button>().onClick.AddListener(CheckConnection);
+            foreach (InputField inputField in connectionR2.GetComponentsInChildren<InputField>())
+            {
+                if (inputField.gameObject.name == "Password")
+                {
+                    inputField.onEndEdit.AddListener(delegate {
+                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                        {
+                            CheckConnection();
+                        }
+                    }); ;
+                    break;
+                }
+            }
+            nb = qRoom3.Count;
+            for (int i = 0; i < nb; i++)
+            {
+                forGO = qRoom3.getAt(i);
+                switch (i)
+                {
+                    case 0:
+                        forGO.GetComponentInChildren<Button>().onClick.AddListener(delegate {
                             CheckT3Answer(qRoom3.getAt(0));
-                        }
-                    });
-                    break;
+                        });
+                        forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                            {
+                                CheckT3Answer(qRoom3.getAt(0));
+                            }
+                        });
+                        break;
 
-                case 1:
-                    forGO.GetComponentInChildren<Button>().onClick.AddListener(delegate {
-                        CheckT3Answer(qRoom3.getAt(1));
-                    });
-                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                        {
+                    case 1:
+                        forGO.GetComponentInChildren<Button>().onClick.AddListener(delegate {
                             CheckT3Answer(qRoom3.getAt(1));
-                        }
-                    });
-                    break;
+                        });
+                        forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                            {
+                                CheckT3Answer(qRoom3.getAt(1));
+                            }
+                        });
+                        break;
 
-                case 2:
-                    forGO.GetComponentInChildren<Button>().onClick.AddListener(delegate {
-                        CheckT3Answer(qRoom3.getAt(2));
-                    });
-                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                        {
+                    case 2:
+                        forGO.GetComponentInChildren<Button>().onClick.AddListener(delegate {
                             CheckT3Answer(qRoom3.getAt(2));
-                        }
-                    });
-                    break;
+                        });
+                        forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                            {
+                                CheckT3Answer(qRoom3.getAt(2));
+                            }
+                        });
+                        break;
 
-                case 3:
-                    forGO.GetComponentInChildren<Button>().onClick.AddListener(delegate {
-                        CheckT3Answer(qRoom3.getAt(3));
-                    });
-                    forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                        {
+                    case 3:
+                        forGO.GetComponentInChildren<Button>().onClick.AddListener(delegate {
                             CheckT3Answer(qRoom3.getAt(3));
-                        }
-                    });
-                    break;
+                        });
+                        forGO.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
+                            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                            {
+                                CheckT3Answer(qRoom3.getAt(3));
+                            }
+                        });
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
-        }
 
 
-        //setting audio and visual elements for feedback when the player answers
-        nb = audioSource.Count;
-        for (int i = 0; i < nb; i++)
-        {
-            forGO = audioSource.getAt(i);
-            if (forGO.name == "Game")
+            //setting audio and visual elements for feedback when the player answers
+            nb = audioSource.Count;
+            for (int i = 0; i < nb; i++)
             {
-                source = forGO.GetComponent<AudioSource>(); //setting audio source playing "Right" and "Wrong" audios
+                forGO = audioSource.getAt(i);
+                if (forGO.name == "Game")
+                {
+                    source = forGO.GetComponent<AudioSource>(); //setting audio source playing "Right" and "Wrong" audios
+                }
             }
-        }
-        nb = images.Count;
-        for (int i = 0; i < nb; i++)
-        {
-            forGO = images.getAt(i);
-            if (forGO.name == "Right")
+            nb = images.Count;
+            for (int i = 0; i < nb; i++)
             {
-                rightBG = forGO;
+                forGO = images.getAt(i);
+                if (forGO.name == "Right")
+                {
+                    rightBG = forGO;
+                }
+                else if (forGO.name == "Wrong")
+                {
+                    wrongBG = forGO;
+                }
+                else if (forGO.name == "White")
+                {
+                    whiteBG = forGO;
+                }
             }
-            else if (forGO.name == "Wrong")
+            /* set all board's removable words to "occludable"
+             * the occlusion is then made by an invisible material that hides all objects behind it having this setting
+             */
+            nb = removableBoardWords.Count;
+            Renderer[] renderers;
+            for (int i = 0; i < nb; i++)
             {
-                wrongBG = forGO;
-            }
-            else if (forGO.name == "White")
-            {
-                whiteBG = forGO;
-            }
-        }
-        /* set all board's removable words to "occludable"
-         * the occlusion is then made by an invisible material that hides all objects behind it having this setting
-         */
-        nb = removableBoardWords.Count;
-        Renderer[] renderers;
-        for (int i = 0; i < nb; i++)
-        {
-            renderers = removableBoardWords.getAt(i).GetComponentsInChildren<Renderer>();
-            foreach (Renderer r in renderers)
-            {
-                r.material.renderQueue = 3002;
+                renderers = removableBoardWords.getAt(i).GetComponentsInChildren<Renderer>();
+                foreach (Renderer r in renderers)
+                {
+                    r.material.renderQueue = 3002;
+                }
             }
         }
     }

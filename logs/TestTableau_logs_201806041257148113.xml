@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <map id="TestTableau_201806041257148113">
+    <transition time="201806041255274879" action="Wire_perform_0" origin="player" />
+    <transition time="201806041255310726" action="Plank_turnOn_1" origin="player" />
+    <transition time="201806041255335790" action="Wire_turnOn_2" origin="player" />
+    <transition time="201806041255350446" action="Objectifs_turnOn_3" origin="player" />
+    <transition time="201806041255360793" action="Methodes_turnOn_5" origin="player" />
+    <transition time="201806041255373919" action="Evaluation_turnOn_6" origin="player" />
+  </map>
+</data>

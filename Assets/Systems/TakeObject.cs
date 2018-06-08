@@ -26,16 +26,19 @@ public class TakeObject : FSystem {
 
     public TakeObject()
     {
-        //at the beginning of the game, all takable object are not kinematic
-		int nbTakable = tObjects.Count;
-		for(int i = 0; i < nbTakable; i++)
+        if (Application.isPlaying)
         {
-            if(tObjects.getAt(i).tag != "TableE05")
+            //at the beginning of the game, all takable object are not kinematic
+            int nbTakable = tObjects.Count;
+            for (int i = 0; i < nbTakable; i++)
             {
-                tObjects.getAt(i).GetComponent<Rigidbody>().isKinematic = false;
+                if (tObjects.getAt(i).tag != "TableE05")
+                {
+                    tObjects.getAt(i).GetComponent<Rigidbody>().isKinematic = false;
+                }
             }
+            plankInitialSprite = plankE09.First().GetComponentInChildren<Image>().sprite;
         }
-        plankInitialSprite = plankE09.First().GetComponentInChildren<Image>().sprite;
     }
 
     // Use this to update member variables when system pause. 

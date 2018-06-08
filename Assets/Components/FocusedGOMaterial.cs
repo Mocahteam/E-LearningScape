@@ -5,4 +5,5 @@ public class FocusedGOMaterial : MonoBehaviour {
     public Material material;
     public Sprite selectedTabSprite;
     public Sprite plankSolvedSprite;
+    public Material displayedBGMaterial;
 }

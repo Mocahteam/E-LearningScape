@@ -6,6 +6,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.PostProcessing;
+using FYFY_plugins.Monitoring;
 
 public class ShowUI : FSystem {
     
@@ -35,7 +36,7 @@ public class ShowUI : FSystem {
 	private Family e05Pieces = FamilyManager.getFamily(new AnyOfTags("E05UI"));
 	private Family carillon = FamilyManager.getFamily(new AnyOfTags("Carillon"));
     private Family boardFamilly = FamilyManager.getFamily(new AnyOfTags("Board"));
-    private Family closeBoard = FamilyManager.getFamily(new AnyOfTags("Board", "Eraser"), new AllOfComponents(typeof(PointerOver)));
+    private Family closeBoard = FamilyManager.getFamily(new AnyOfTags("Board", "Eraser", "BoardTexture"), new AllOfComponents(typeof(PointerOver)));
     private Family boardRemovableWords = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
     private Family collectableGO = FamilyManager.getFamily(new AllOfComponents(typeof(CollectableGO)));
 
@@ -162,7 +163,7 @@ public class ShowUI : FSystem {
     private bool moveToBoard = false;
     private Vector3 boardPos;
     private GameObject eraser;
-    private bool eraserDragged = false;
+    public static bool eraserDragged = false;
     private float distToBoard;
 
 	private GameObject forGO;
@@ -862,7 +863,7 @@ public class ShowUI : FSystem {
         {
             //animation to move the player in front of the board
             player.First().transform.position = Vector3.MoveTowards(player.First().transform.position, boardPos, speed);
-            camNewDir = -board.transform.up + Vector3.up * 0.05f;
+            camNewDir = board.transform.up;
             newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, Mathf.Deg2Rad * speedRotation, 0);
             Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
             //when the animation is finished
@@ -987,7 +988,11 @@ public class ShowUI : FSystem {
 						}
 						moveToPlank = true; //start animation to move the player in front of the plank
 						onPlank = true;
-					} else if (forGO.tag == "Box") {    //set box
+                        if (forGO.GetComponent<ComponentMonitoring>())
+                        {
+                            MonitoringManager.trace(MonitoringManager.getMonitorById(0), "turnOn", MonitoringManager.Source.PLAYER);
+                        }
+                    } else if (forGO.tag == "Box") {    //set box
 						forGO.GetComponent<Rigidbody> ().isKinematic = true;
 						//calculate the position in front of the player
 						Vector3 v = new Vector3 (Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
@@ -1125,15 +1130,15 @@ public class ShowUI : FSystem {
                        //the position in front of the board is not the same depending on the scale of the player
                         if (player.First().transform.localScale.x < 0.9f)
                         {
-                            boardPos = new Vector3(board.transform.position.x, 1.6f, board.transform.position.z) + board.transform.up * 3.5f;
+                            boardPos = new Vector3(board.transform.position.x, 2f, board.transform.position.z) - board.transform.up * 3.5f;
                         }
                         else
                         {
-                            boardPos = new Vector3(board.transform.position.x, 0.98f, board.transform.position.z) + board.transform.up * 3.5f;
+                            boardPos = new Vector3(board.transform.position.x, 1.38f, board.transform.position.z) - board.transform.up * 3.5f;
                         }
                         //calculate the correct speed so that the translation and the rotation finish at the same time
                         dist = (boardPos - player.First().transform.position).magnitude;
-                        speedRotation = Vector3.Angle(Camera.main.transform.forward, -board.transform.up + Vector3.up * 0.05f) * speed / dist;
+                        speedRotation = Vector3.Angle(Camera.main.transform.forward, board.transform.up) * speed / dist;
                         moveToBoard = true; //start animation to move the player in front of the board
                         onBoard = true;
                     }
@@ -1152,14 +1157,15 @@ public class ShowUI : FSystem {
 			if (onPlank) {
 				if (closePlank.Count == 0 && Input.GetMouseButtonDown (0)) {
 					CloseWindow ();
-				} else if (CollectableGO.usingWire) {
+				} else{
 					pointerOverWord = false;
 					int nbPlankWords = plankWords.Count;
 					for (int i = 0; i < nbPlankWords; i++) {
 						forGO = plankWords.getAt (i);
 						if (forGO.GetComponent<PointerOver> ()) {
 							pointerOverWord = true;
-							if (Input.GetMouseButtonDown (0)) {    //if a selectable word is clicked
+							if (Input.GetMouseButtonDown (0) && CollectableGO.usingWire) {    //if a selectable word is clicked
+                                Inventory.wireOn = false;
 								//if the word is selected (color red)
 								if (forGO.GetComponent<TextMeshPro> ().color == Color.red) {
 									//unselect it
@@ -1169,12 +1175,24 @@ public class ShowUI : FSystem {
                                     lr.positionCount--;
                                     //set the new positions
                                     lr.SetPositions (lrPositions.ToArray ());
-								} else {    //if the word wasn't selected
+                                    if (forGO.GetComponent<ComponentMonitoring>())
+                                    {
+                                        MonitoringManager.trace(forGO.GetComponent<ComponentMonitoring>(), "turnOff", MonitoringManager.Source.PLAYER);
+                                    }
+                                } else {    //if the word wasn't selected
 									if (lr.positionCount > 2) {
-										//if there is already 3 selected words, unselect them and select the new one
-										foreach (GameObject w in plankWords) {
-											w.GetComponent<TextMeshPro> ().color = Color.black;
-										}
+                                        //if there is already 3 selected words, unselect them and select the new one
+                                        foreach (GameObject w in plankWords)
+                                        {
+                                            if (w.GetComponent<TextMeshPro>().color == Color.red)
+                                            {
+                                                if (w.GetComponent<ComponentMonitoring>())
+                                                {
+                                                    MonitoringManager.trace(w.GetComponent<ComponentMonitoring>(), "turnOff", MonitoringManager.Source.SYSTEM);
+                                                }
+                                            }
+                                            w.GetComponent<TextMeshPro>().color = Color.black;
+                                        }
 										lr.positionCount = 0;
 										lrPositions.Clear ();
 									}
@@ -1189,37 +1207,56 @@ public class ShowUI : FSystem {
 										if ((forGO2.name == "Objectifs" || forGO2.name == "Methodes" || forGO2.name == "Evaluation") && forGO2.GetComponent<TextMeshPro> ().color != Color.red) {
 											correct = false;
 										}
-									}
-									if (correct) {
+                                    }
+                                    if (forGO.GetComponent<ComponentMonitoring>())
+                                    {
+                                        MonitoringManager.trace(forGO.GetComponent<ComponentMonitoring>(), "turnOn", MonitoringManager.Source.PLAYER);
+                                    }
+                                    if (correct) {
 										Selectable.askRight = true;
-									}
-								}
+                                        MonitoringManager.trace(MonitoringManager.getMonitorById(7), "perform", MonitoringManager.Source.SYSTEM);
+                                    }
+                                }
 							} else {    //if mouse over a word without click
 								if (forGO.GetComponent<TextMeshPro> ().color != Color.red) {
 									//if the word isn't selected change its color to yellow
 									forGO.GetComponent<TextMeshPro> ().color = Color.yellow;
+                                    if (Input.GetMouseButtonDown(0))
+                                    {
+                                        if (forGO.GetComponent<ComponentMonitoring>())
+                                        {
+                                            MonitoringManager.trace(forGO.GetComponent<ComponentMonitoring>(), "turnOn", MonitoringManager.Source.PLAYER);
+                                        }
+                                    }
 								}
 							}
-						} else {    //if mouse isn't over a word
+						}
+                        else {    //if mouse isn't over a word
 							if (forGO.GetComponent<TextMeshPro> ().color != Color.red) {
 								//if the word isn't selected change its color to black (initial)
 								forGO.GetComponent<TextMeshPro> ().color = Color.black;
 							}
 						}
 					}
-					if (!pointerOverWord && Input.GetMouseButtonDown (0)) {
-						//if click over nothing unselect all
-						for (int i = 0; i < nbPlankWords; i++) {
-							plankWords.getAt (i).GetComponent<TextMeshPro> ().color = Color.black;
+					if (!pointerOverWord && Input.GetMouseButtonDown (0) && CollectableGO.usingWire)
+                    {
+                        Inventory.wireOn = true;
+                        //if click over nothing unselect all
+                        for (int i = 0; i < nbPlankWords; i++)
+                        {
+                            if (plankWords.getAt(i).GetComponent<TextMeshPro>().color == Color.red)
+                            {
+                                if (plankWords.getAt(i).GetComponent<ComponentMonitoring>())
+                                {
+                                    MonitoringManager.trace(plankWords.getAt(i).GetComponent<ComponentMonitoring>(), "turnOff", MonitoringManager.Source.SYSTEM);
+                                }
+                            }
+                            plankWords.getAt (i).GetComponent<TextMeshPro> ().color = Color.black;
 							lr.positionCount = 0;
 							lrPositions.Clear ();
-						}
+                        }
 					}
 				}
-                else if(Input.GetMouseButtonDown(0))
-                {
-                    plankSubtitlesTimer = Time.time;
-                }
 			} else if (onBox) {
 				if (closeBox.Count == 0 && Input.GetMouseButtonDown (0) && !ballFocused) {
 					CloseWindow ();
@@ -1423,23 +1460,22 @@ public class ShowUI : FSystem {
                             Vector3 mousePos = board.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distToBoard)));
                             eraser.transform.localPosition = new Vector3(mousePos.x, eraser.transform.localPosition.y, mousePos.z);
                             //prevent eraser from going out of the board
-                            if (eraser.transform.localPosition.x > 0.5f)
+                            if (eraser.transform.localPosition.x > 0.021f)
                             {
-                                eraser.transform.localPosition += Vector3.right * (0.5f - eraser.transform.localPosition.x);
+                                eraser.transform.localPosition += Vector3.right * (0.021f - eraser.transform.localPosition.x);
                             }
-                            else if (eraser.transform.localPosition.x < -0.5f)
+                            else if (eraser.transform.localPosition.x < -0.021f)
                             {
-                                eraser.transform.localPosition += Vector3.right * (-0.5f - eraser.transform.localPosition.x);
+                                eraser.transform.localPosition += Vector3.right * (-0.021f - eraser.transform.localPosition.x);
                             }
-                            if (eraser.transform.localPosition.z > 0.5f)
+                            if (eraser.transform.localPosition.z > 0.016f)
                             {
-                                eraser.transform.localPosition += Vector3.forward * (0.5f - eraser.transform.localPosition.z);
+                                eraser.transform.localPosition += Vector3.forward * (0.016f - eraser.transform.localPosition.z);
                             }
-                            else if (eraser.transform.localPosition.z < -0.5f)
+                            else if (eraser.transform.localPosition.z < -0.016f)
                             {
-                                eraser.transform.localPosition += Vector3.forward * (-0.5f - eraser.transform.localPosition.z);
+                                eraser.transform.localPosition += Vector3.forward * (-0.016f - eraser.transform.localPosition.z);
                             }
-                            TextureFromCamera.draw = true; //draw on the texture to erase words on board
                         }
                     }
                 }
@@ -1461,7 +1497,8 @@ public class ShowUI : FSystem {
 		if (onPlank) {
 			player.First ().transform.forward = -plank.First ().transform.right;
 			Camera.main.transform.localRotation = Quaternion.Euler (Vector3.zero);
-		} else if (onBox) {
+            MonitoringManager.trace(MonitoringManager.getMonitorById(0), "turnOff", MonitoringManager.Source.PLAYER);
+        } else if (onBox) {
 			//close box, set balls to initial position and everything to not kinematic
 			boxTop.First ().transform.localPosition = boxTopIniPos;
 			box.First ().GetComponent<Rigidbody> ().isKinematic = false;

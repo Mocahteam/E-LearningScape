@@ -35,16 +35,21 @@ public class ToggleObject : FSystem {
     private bool onInventory = false;
 
 	public ToggleObject(){
-		togglingChairsDown = new GameObject[6];
-		togglingChairsUp = new GameObject[6];
-		int nb = toggleable.Count;
-		for(int i = 0; i < nb; i++){
-			if (toggleable.getAt (i).name == "Table") {
-				table = toggleable.getAt (i);
-			}
-		}
+        if (Application.isPlaying)
+        {
+            togglingChairsDown = new GameObject[6];
+            togglingChairsUp = new GameObject[6];
+            int nb = toggleable.Count;
+            for (int i = 0; i < nb; i++)
+            {
+                if (toggleable.getAt(i).name == "Table")
+                {
+                    table = toggleable.getAt(i);
+                }
+            }
 
-        chestLid = lid.First();
+            chestLid = lid.First();
+        }
 	}
 
 	// Use this to update member variables when system pause. 
@@ -111,7 +116,7 @@ public class ToggleObject : FSystem {
                     }
                     else if(forGO.name == "boite")
                     {
-                        if(chestLid.transform.localRotation.eulerAngles.x == 0)
+                        if(chestLid.transform.localRotation.eulerAngles.x < 1)
                         {
                             openingChest = true;
                         }
@@ -222,8 +227,8 @@ public class ToggleObject : FSystem {
         //open
         if (openingChest)
         {
-            chestLid.transform.Rotate((4 - (float)tmpRotationCount / 40 * 2) * 100 * Time.deltaTime, 0, 0);
-            tmpRotationCount+= (4 - (float)tmpRotationCount / 40 * 2) * 100 * Time.deltaTime;
+            chestLid.transform.Rotate((4 - (float)tmpRotationCount / 120 * 2) * 100 * Time.deltaTime, 0, 0);
+            tmpRotationCount+= (4 - (float)tmpRotationCount / 120 * 2) * 100 * Time.deltaTime;
             if(tmpRotationCount > 120)
             {
                 chestLid.transform.Rotate(120 - tmpRotationCount, 0, 0);
@@ -235,8 +240,8 @@ public class ToggleObject : FSystem {
         //close
         else if (closingChest)
         {
-            chestLid.transform.Rotate(-(4 - (float)tmpRotationCount / 40 * 2) * 100 * Time.deltaTime, 0, 0);
-            tmpRotationCount += (4 - (float)tmpRotationCount / 40 * 2) * 100 * Time.deltaTime;
+            chestLid.transform.Rotate(-(4 - (float)tmpRotationCount / 120 * 2) * 100 * Time.deltaTime, 0, 0);
+            tmpRotationCount += (4 - (float)tmpRotationCount / 120 * 2) * 100 * Time.deltaTime;
             if (tmpRotationCount > 120)
             {
                 chestLid.transform.Rotate(-(120 - tmpRotationCount), 0, 0);

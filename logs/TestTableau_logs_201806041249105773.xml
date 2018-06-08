@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <map id="TestTableau_201806041249105773">
+    <transition time="201806041239537638" action="Wire_perform_0" origin="player" />
+    <transition time="201806041239584187" action="Plank_turnOn_1" origin="player" />
+    <transition time="201806041239595004" action="Wire_turnOn_2" origin="player" />
+    <transition time="201806041240011554" action="Objectifs_turnOn_3" origin="player" />
+    <transition time="201806041240020359" action="Methodes_turnOn_5" origin="player" />
+    <transition time="201806041240030117" action="Evaluation_turnOn_6" origin="player" />
+    <transition time="201806041240051864" action="Objectifs_turnOff_3" origin="system" />
+    <transition time="201806041240052326" action="Methodes_turnOff_5" origin="system" />
+    <transition time="201806041240052771" action="Evaluation_turnOff_6" origin="system" />
+    <transition time="201806041240262295" action="Objectifs_turnOn_3" origin="player" />
+    <transition time="201806041240321485" action="Motivation_turnOn_4" origin="player" />
+    <transition time="201806041240366192" action="Objectifs_turnOff_3" origin="system" />
+    <transition time="201806041240366643" action="Motivation_turnOff_4" origin="system" />
+    <transition time="201806041240507773" action="Methodes_turnOn_5" origin="player" />
+    <transition time="201806041241115261" action="Evaluation_turnOn_6" origin="player" />
+    <transition time="201806041241134437" action="Objectifs_turnOn_3" origin="player" />
+    <transition time="201806041241440338" action="Objectifs_turnOff_3" origin="system" />
+    <transition time="201806041241440809" action="Methodes_turnOff_5" origin="system" />
+    <transition time="201806041241441307" action="Evaluation_turnOff_6" origin="system" />
+    <transition time="201806041241502510" action="Objectifs_turnOn_3" origin="player" />
+    <transition time="201806041241515853" action="Methodes_turnOn_5" origin="player" />
+    <transition time="201806041241548151" action="Objectifs_turnOff_3" origin="system" />
+    <transition time="201806041241548622" action="Methodes_turnOff_5" origin="system" />
+    <transition time="201806041241549083" action="Motivation_turnOn_4" origin="player" />
+    <transition time="201806041242101511" action="Objectifs_turnOn_3" origin="player" />
+    <transition time="201806041242127929" action="Methodes_turnOn_5" origin="player" />
+    <transition time="201806041242198188" action="Objectifs_turnOff_3" origin="system" />
+    <transition time="201806041242198634" action="Motivation_turnOff_4" origin="system" />
+    <transition time="201806041242199115" action="Methodes_turnOff_5" origin="system" />
+    <transition time="201806041242199582" action="Evaluation_turnOn_6" origin="player" />
+    <transition time="201806041242363725" action="Evaluation_turnOff_6" origin="system" />
+    <transition time="201806041249081620" action="Objectifs_turnOn_3" origin="player" />
+  </map>
+</data>

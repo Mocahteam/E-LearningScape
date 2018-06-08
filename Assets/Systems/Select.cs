@@ -22,8 +22,11 @@ public class Select : FSystem {
 
     public Select()
     {
-        focusedMaterial = focusedMatFamily.First().GetComponent<FocusedGOMaterial>().material;
-        previousMaterial = new Queue<Material>();
+        if (Application.isPlaying)
+        {
+            focusedMaterial = focusedMatFamily.First().GetComponent<FocusedGOMaterial>().material;
+            previousMaterial = new Queue<Material>();
+        }
     }
 
     // Use this to update member variables when system pause. 
