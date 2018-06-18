@@ -160,7 +160,7 @@ public class TakeObject : FSystem {
                 {
 					forGO = tObjects.getAt (i);
                     //if left click on a focused (but not selected) object, take it
-					if (forGO.GetComponent<Takable>().focused && Input.GetMouseButtonDown(0))
+					if (forGO.GetComponent<Takable>().focused && Input.GetMouseButtonDown(0) && !StoryDisplaying.reading)
                     {
 						forGO.GetComponent<Takable>().taken = true;
 						forGO.GetComponent<Rigidbody>().isKinematic = true;

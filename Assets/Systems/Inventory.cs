@@ -25,7 +25,8 @@ public class Inventory : FSystem {
     private Family backgrounds = FamilyManager.getFamily(new AnyOfTags("UIBackground"));
     private Family displayedBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family focusedMatFamily = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
-    private Family pointerSensitive = FamilyManager.getFamily(new AllOfComponents(typeof(PointerSensitive)));
+    private Family hud = FamilyManager.getFamily(new AnyOfTags("HUDInputs"));
+    private Family newFeedback = FamilyManager.getFamily(new AnyOfTags("NewItemFeedback"));
 
     public static bool playerEnabled = true;
     private GameObject displayer;
@@ -34,6 +35,8 @@ public class Inventory : FSystem {
     private GameObject inventoryElemGO;
     private TextMeshProUGUI descriptionTitle;
     private TextMeshProUGUI descriptionText;
+    private string previousDescriptionTitle = "";
+    private string previousDescriptionText = "";
     private GameObject displayedDescriptionGO;
 
     private GameObject glassesBG1;
@@ -64,6 +67,11 @@ public class Inventory : FSystem {
     
     private Material displayedBGMaterial;
     private bool backgroundTextureSet = false;
+    private Camera backgroundTextureCamera;
+
+    private bool pointerOverUIItem = false;
+    private GameObject pointerOverGO = null;
+    private bool previousDescriptionTextState = true;
 
 	//tmp variables used to loop in famillies
 	private GameObject forGO;
@@ -77,7 +85,7 @@ public class Inventory : FSystem {
             {
                 if (child.gameObject.name == "Enabled")
                 {
-                    child.gameObject.SetActive(false);
+                    GameObjectManager.setGameObjectState(child.gameObject,false);
                 }
                 else if (child.gameObject.name == "Display")
                 {
@@ -183,6 +191,14 @@ public class Inventory : FSystem {
             inventoryElemGO = elemsInventory.First().transform.parent.gameObject;
 
             displayedBGMaterial = focusedMatFamily.First().GetComponent<FocusedGOMaterial>().displayedBGMaterial;
+            foreach(Camera c in Camera.main.gameObject.GetComponentsInChildren<Camera>())
+            {
+                if(c.name == "BGCamera")
+                {
+                    backgroundTextureCamera = c;
+                    break;
+                }
+            }
         }
     }
 
@@ -203,11 +219,11 @@ public class Inventory : FSystem {
 
         if(wireOn && !localWireOn)
         {
-            wireUI.SetActive(true);
+            GameObjectManager.setGameObjectState(wireUI,true);
         }
         else if(!wireOn && localWireOn)
         {
-            wireUI.SetActive(false);
+            GameObjectManager.setGameObjectState(wireUI,false);
         }
         localWireOn = wireOn;
 
@@ -223,13 +239,66 @@ public class Inventory : FSystem {
             {
                 tryGO = forGO.GetComponent<RectTransform>() && forGO.GetComponent<PointerOver>();
             }
+            if (pointerOverUIItem)
+            {
+                if (!pointerOverGO.GetComponent<PointerOver>())
+                {
+                    pointerOverGO = null;
+                    pointerOverUIItem = false;
+                    descriptionTitle.text = previousDescriptionTitle;
+                    descriptionText.text = previousDescriptionText;
+                    GameObjectManager.setGameObjectState(descriptionText.gameObject, previousDescriptionTextState);
+                    if (displayedElement)
+                    {
+                        GameObjectManager.setGameObjectState(displayedElement, true);
+                        GameObjectManager.setGameObjectState(descriptionText.gameObject, false);
+                    }
+                }
+            }
+            if(forGO.GetComponent<RectTransform>() && forGO.GetComponent<PointerOver>())
+            {
+                if(!Object.ReferenceEquals(forGO, selectedUI))
+                {
+                    if (displayedElement)
+                    {
+                        GameObjectManager.setGameObjectState(displayedElement, false);
+                        GameObjectManager.setGameObjectState(descriptionText.gameObject, true);
+                    }
+                    pointerOverUIItem = true;
+                    pointerOverGO = forGO;
+                    previousDescriptionTextState = descriptionText.gameObject.activeSelf;
+                    descriptionTitle.text = forGO.GetComponent<CollectableGO>().itemName;
+                    descriptionText.text = forGO.GetComponent<CollectableGO>().description;
+                }
+                int nb = newFeedback.Count;
+                for(int j = 0; j < nb; j++)
+                {
+                    forGO2 = newFeedback.getAt(j);
+                    if (Object.ReferenceEquals(forGO, forGO2.transform.parent.gameObject))
+                    {
+                        GameObjectManager.setGameObjectState(forGO2,false);
+                        break;
+                    }
+                }
+            }
 			if (Input.GetMouseButtonDown(0) && tryGO)
             {
+                pointerOverUIItem = false;
 				if (forGO.GetComponent<CollectableGO>().goui)
                 {
                     if (!CollectableGO.onInventory)
                     {
                         GameObjectManager.setGameObjectState(forGO.GetComponent<CollectableGO>().goui, true);
+                        int nbNewFeedback = newFeedback.Count;
+                        for(int j = 0; j < nbNewFeedback; j++)
+                        {
+                            forGO2 = newFeedback.getAt(j);
+                            if(Object.ReferenceEquals(forGO.GetComponent<CollectableGO>().goui, forGO2.transform.parent.gameObject))
+                            {
+                                GameObjectManager.setGameObjectState(forGO2,true);
+                                break;
+                            }
+                        }
                         if (forGO.tag == "Puzzle")
                         {
                             int nb, id;
@@ -242,7 +311,7 @@ public class Inventory : FSystem {
                                 puzzleUI.TryGetValue(id, out puzzlePiece);
                                 if (puzzlePiece)
                                 {
-                                    puzzlePiece.SetActive(true);
+                                    GameObjectManager.setGameObjectState(puzzlePiece,true);
                                     puzzleUI.Remove(id);
                                 }
                                 else
@@ -256,7 +325,7 @@ public class Inventory : FSystem {
                             scrollUI.TryGetValue(forGO.name[0].ToString(), out scroll);
                             if (scroll)
                             {
-                                scroll.SetActive(true);
+                                GameObjectManager.setGameObjectState(scroll,true);
                             }
                             else
                             {
@@ -285,8 +354,15 @@ public class Inventory : FSystem {
                             {
                                 if(animatedSprites.getAt(j).name == "AppuisA")
                                 {
-                                    animatedSprites.getAt(j).SetActive(true);
+                                    GameObjectManager.setGameObjectState(animatedSprites.getAt(j),true);
                                     break;
+                                }
+                            }
+                            foreach (Transform child in hud.First().transform)
+                            {
+                                if (child.gameObject.name == "Inventory")
+                                {
+                                    GameObjectManager.setGameObjectState(child.gameObject,true);
                                 }
                             }
                         }
@@ -301,7 +377,7 @@ public class Inventory : FSystem {
                         {
                             forGO.GetComponent<AnimatedSprites>().animate = false;
                             CollectableGO.usingGlasses1 = false;
-                            glassesBG1.SetActive(false);
+                            GameObjectManager.setGameObjectState(glassesBG1,false);
                             if(Object.ReferenceEquals(forGO, displayedDescriptionGO))
                             {
                                 if (selectedUI)
@@ -328,7 +404,7 @@ public class Inventory : FSystem {
                         {
                             forGO.GetComponent<AnimatedSprites>().animate = true;
                             CollectableGO.usingGlasses1 = true;
-                            glassesBG1.SetActive(true);
+                            GameObjectManager.setGameObjectState(glassesBG1,true);
                             displayedDescriptionGO = forGO;
                             descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
                             descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
@@ -340,7 +416,7 @@ public class Inventory : FSystem {
                         {
                             forGO.GetComponent<AnimatedSprites>().animate = false;
                             CollectableGO.usingGlasses2 = false;
-                            glassesBG2.SetActive(false);
+                            GameObjectManager.setGameObjectState(glassesBG2,false);
                             if (Object.ReferenceEquals(forGO, displayedDescriptionGO))
                             {
                                 if (selectedUI)
@@ -367,7 +443,7 @@ public class Inventory : FSystem {
                         {
                             forGO.GetComponent<AnimatedSprites>().animate = true;
                             CollectableGO.usingGlasses2 = true;
-                            glassesBG2.SetActive(true);
+                            GameObjectManager.setGameObjectState(glassesBG2,true);
                             displayedDescriptionGO = forGO;
                             descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
                             descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
@@ -379,13 +455,13 @@ public class Inventory : FSystem {
                         CollectableGO.usingKeyE03 = false;
 						CollectableGO.usingKeyE08 = false;
 						CollectableGO.usingLamp = false;
-						blackLight.SetActive (false);
+                        GameObjectManager.setGameObjectState(blackLight,false);
                         
 						if (displayer.activeSelf && Object.ReferenceEquals(forGO, selectedUI))
                         {
                             if (displayedElement)
                             {
-                                displayedElement.SetActive(false);
+                                GameObjectManager.setGameObjectState(displayedElement,false);
                                 if (CollectableGO.onInventory)
                                 {
                                     int nbElems = elemsInventory.Count;
@@ -396,13 +472,14 @@ public class Inventory : FSystem {
                                     inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(-340, -20, 0);
                                 }
                             }
-                            displayer.SetActive(false);
+                            displayedElement = null;
+                            GameObjectManager.setGameObjectState(displayer,false);
                             if (selectedUI)
                             {
                                 selectedUI.GetComponent<AnimatedSprites>().animate = false;
                             }
                             selectedUI = null;
-                            descriptionTitle.transform.parent.gameObject.SetActive(true);
+                            GameObjectManager.setGameObjectState(descriptionTitle.transform.parent.gameObject,true);
                             if (Object.ReferenceEquals(forGO, displayedDescriptionGO))
                             {
                                 if (CollectableGO.usingGlasses1)
@@ -450,9 +527,9 @@ public class Inventory : FSystem {
                             descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
                             if (displayedElement)
                             {
-                                displayedElement.SetActive(false);
+                                GameObjectManager.setGameObjectState(displayedElement,false);
                             }
-                            displayer.SetActive(true);
+                            GameObjectManager.setGameObjectState(displayer,true);
 							switch (forGO.name)
                             {
 							    case "Syllabus":
@@ -478,7 +555,7 @@ public class Inventory : FSystem {
                                             if (child.gameObject.name == "Syllabus_Complete")
                                             {
                                                 displayedElement = child.gameObject;
-                                                displayedElement.SetActive(true);
+                                                GameObjectManager.setGameObjectState(displayedElement,true);
                                             }
                                         }
                                     }
@@ -489,7 +566,7 @@ public class Inventory : FSystem {
                                             if (child.gameObject.name == "Syllabus_Half1")
                                             {
                                                 displayedElement = child.gameObject;
-                                                displayedElement.SetActive(true);
+                                                GameObjectManager.setGameObjectState(displayedElement,true);
                                             }
                                         }
                                     }
@@ -500,7 +577,7 @@ public class Inventory : FSystem {
                                             if (child.gameObject.name == "Syllabus_Half2")
                                             {
                                                 displayedElement = child.gameObject;
-                                                displayedElement.SetActive(true);
+                                                GameObjectManager.setGameObjectState(displayedElement,true);
                                             }
                                         }
                                     }
@@ -512,7 +589,7 @@ public class Inventory : FSystem {
                                         if (child.gameObject.name == "ScrollIntro")
                                         {
                                             displayedElement = child.gameObject;
-                                            displayedElement.SetActive(true);
+                                            GameObjectManager.setGameObjectState(displayedElement,true);
                                         }
                                     }
                                     break;
@@ -538,7 +615,7 @@ public class Inventory : FSystem {
                                         if (child.gameObject.name == "Tip_E07")
                                         {
                                             displayedElement = child.gameObject;
-                                            displayedElement.SetActive(true);
+                                            GameObjectManager.setGameObjectState(displayedElement,true);
                                         }
                                     }
                                     break;
@@ -549,7 +626,7 @@ public class Inventory : FSystem {
                                         if (child.gameObject.name == "SMART")
                                         {
                                             displayedElement = child.gameObject;
-                                            displayedElement.SetActive(true);
+                                            GameObjectManager.setGameObjectState(displayedElement,true);
                                         }
                                     }
                                     break;
@@ -560,7 +637,7 @@ public class Inventory : FSystem {
                                         if (child.gameObject.name == "Puzzles")
                                         {
                                             displayedElement = child.gameObject;
-                                            displayedElement.SetActive(true);
+                                            GameObjectManager.setGameObjectState(displayedElement,true);
                                             onPuzzle = true;
                                         }
                                     }
@@ -569,7 +646,7 @@ public class Inventory : FSystem {
                                 case "Lamp":
 									displayedElement = null;
 									CollectableGO.usingLamp = true;
-									blackLight.SetActive (true);
+                                    GameObjectManager.setGameObjectState(blackLight,true);
 									break;
 
 								case "CodeE12":
@@ -578,7 +655,7 @@ public class Inventory : FSystem {
 										if (child.gameObject.name == "Code_E12")
 										{
 											displayedElement = child.gameObject;
-											displayedElement.SetActive(true);
+                                            GameObjectManager.setGameObjectState(displayedElement,true);
 										}
 									}
 								break;
@@ -589,7 +666,7 @@ public class Inventory : FSystem {
 									if (child.gameObject.name == "Alphabet_E13")
 										{
 											displayedElement = child.gameObject;
-											displayedElement.SetActive(true);
+                                            GameObjectManager.setGameObjectState(displayedElement,true);
 										}
 									}
 									break;
@@ -599,7 +676,7 @@ public class Inventory : FSystem {
                             }
                             if (CollectableGO.onInventory)
                             {
-                                if (displayedElement)
+                                if (displayedElement && onPuzzle)
                                 {
                                     int nbElems = elemsInventory.Count;
                                     for (int j = 0; j < nbElems; j++)
@@ -607,7 +684,7 @@ public class Inventory : FSystem {
                                         elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition = elemsInventory.getAt(j).GetComponent<CollectableGO>().positionDown;
                                     }
                                     inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(572, -335, 0);
-                                    descriptionTitle.transform.parent.gameObject.SetActive(false);
+                                    GameObjectManager.setGameObjectState(descriptionTitle.transform.parent.gameObject,false);
                                 }
                                 else
                                 {
@@ -617,31 +694,36 @@ public class Inventory : FSystem {
                                         elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition = elemsInventory.getAt(j).GetComponent<CollectableGO>().positionMiddle;
                                     }
                                     inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(-340, -20, 0);
-                                    descriptionTitle.transform.parent.gameObject.SetActive(true);
+                                    GameObjectManager.setGameObjectState(descriptionTitle.transform.parent.gameObject,true);
                                 }
                             }
                         }
                     }
+                    previousDescriptionTitle = descriptionTitle.text;
+                    previousDescriptionText = descriptionText.text;
                 }
+                GameObjectManager.setGameObjectState(descriptionText.gameObject, displayedElement == null);
             }
         }
-
-        if(displayedBackground.Count > 0 && !backgroundTextureSet)
+        
+        if (displayedBackground.Count > 0 && /*!*/backgroundTextureSet)
         {
-            //pause shader
-            displayedBGMaterial.mainTexture = displayedBackground.First().GetComponent<RenderTexture>();
+            backgroundTextureSet = true;
+            backgroundTextureCamera.enabled = false;
+            displayedBGMaterial.mainTexture = backgroundTextureCamera.targetTexture;
             int nb = backgrounds.Count;
             for(int i = 0; i < nb; i++)
             {
-                //backgrounds.getAt(i).GetComponent<Image>().material = displayedBGMaterial;
+                backgrounds.getAt(i).GetComponent<Image>().material = displayedBGMaterial;
             }
         }
         else if(displayedBackground.Count == 0 && backgroundTextureSet)
         {
+            backgroundTextureCamera.enabled = true;
             backgroundTextureSet = false;
         }
 
-		if (Input.GetKeyDown (KeyCode.A) || CollectableGO.askOpenInventory) {
+		if ((Input.GetKeyDown (KeyCode.A) || CollectableGO.askOpenInventory) && !StoryDisplaying.reading && !DreamFragmentCollect.onFragment) {
             if (!CollectableGO.askOpenInventory)
             {
                 inputfieldFocused = false;
@@ -659,15 +741,14 @@ public class Inventory : FSystem {
 			if (!inputfieldFocused || CollectableGO.askOpenInventory)
             {
                 CollectableGO.askOpenInventory = false;
-				if (CollectableGO.onInventory) {
-					CloseInventory ();
-				} else
+				if (!CollectableGO.onInventory)
                 {
                     GameObjectManager.setGameObjectState(inventory.First(), true);
                     foreach (Transform child in inventory.First().transform) {
-						if (child.gameObject.name == "Enabled") {
-							child.gameObject.SetActive (true);
-						}
+						if (child.gameObject.name == "Enabled")
+                        {
+                            GameObjectManager.setGameObjectState(child.gameObject, true);
+                        }
 					}
 					playerEnabled = player.First ().GetComponent<FirstPersonController> ().enabled;
 					player.First ().GetComponent<FirstPersonController> ().enabled = false;
@@ -678,7 +759,7 @@ public class Inventory : FSystem {
 					for (int i = 0; i < nb; i++) {
 						forGO = ui.getAt (i);
 						if (forGO.name == "Cursor") {
-							forGO.SetActive (false);
+                            GameObjectManager.setGameObjectState(forGO,false);
 						}
 					}
 					nb = elemsInventory.Count;
@@ -687,10 +768,19 @@ public class Inventory : FSystem {
                         elemsInventory.getAt(j).GetComponent<RectTransform>().localPosition = elemsInventory.getAt(j).GetComponent<CollectableGO>().positionMiddle;
                     }
                     inventoryElemGO.GetComponent<RectTransform>().localPosition = new Vector3(-340, -20, 0);
-                    descriptionTitle.transform.parent.gameObject.SetActive(true);
+                    GameObjectManager.setGameObjectState(descriptionTitle.transform.parent.gameObject,true);
                     if (selectedUI) {
-                        descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
-                        descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
+                        if (selectedUI.activeSelf)
+                        {
+                            descriptionTitle.text = displayedDescriptionGO.GetComponent<CollectableGO>().itemName;
+                            descriptionText.text = displayedDescriptionGO.GetComponent<CollectableGO>().description;
+                        }
+                        else
+                        {
+                            displayedDescriptionGO = null;
+                            descriptionTitle.text = string.Empty;
+                            descriptionText.text = string.Empty;
+                        }
                     }
                     else
                     {
@@ -713,6 +803,9 @@ public class Inventory : FSystem {
                             descriptionText.text = string.Empty;
                         }
                     }
+                    previousDescriptionTitle = descriptionTitle.text;
+                    previousDescriptionText = descriptionText.text;
+                    GameObjectManager.setGameObjectState(descriptionText.gameObject, true);
                     onPuzzle = false;
 					CollectableGO.onInventory = true;
 				}
@@ -729,7 +822,7 @@ public class Inventory : FSystem {
                         draggedPuzzle.GetComponent<RectTransform>().position = posBeforeDrag;
                     }
                     draggedPuzzle = null;
-                    //puzzleRotationButtons.SetActive(true);
+                    //GameObjectManager.setGameObjectState(puzzleRotationButtons,true);
                     puzzleRotationButtons.GetComponent<RectTransform>().localPosition = selectedPuzzle.GetComponent<RectTransform>().localPosition;
                 }
                 else
@@ -753,7 +846,7 @@ public class Inventory : FSystem {
 					forGO = pui.getAt (i);
 					if (forGO.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
                     {
-                        puzzleRotationButtons.SetActive(false);
+                        GameObjectManager.setGameObjectState(puzzleRotationButtons,false);
                         if (selectedPuzzle)
                         {
                             selectedPuzzle.GetComponent<Image>().color = Color.white;
@@ -766,7 +859,7 @@ public class Inventory : FSystem {
                         if (Input.GetMouseButtonUp(0))
                         {
                             draggedPuzzle = null;
-                            //puzzleRotationButtons.SetActive(true);
+                            //GameObjectManager.setGameObjectState(puzzleRotationButtons,true);
                             puzzleRotationButtons.GetComponent<RectTransform>().localPosition = selectedPuzzle.GetComponent<RectTransform>().localPosition;
                         }
                     }
@@ -777,7 +870,7 @@ public class Inventory : FSystem {
         {
             CloseInventory();
         }
-	}
+    }
 
     private void CloseInventory()
     {
@@ -788,8 +881,8 @@ public class Inventory : FSystem {
                 draggedPuzzle.GetComponent<RectTransform>().position = posBeforeDrag;
                 draggedPuzzle = null;
             }
-            displayedElement.SetActive(false);
-            displayer.SetActive(false);
+            GameObjectManager.setGameObjectState(displayedElement,false);
+            GameObjectManager.setGameObjectState(displayer,false);
             if (selectedUI)
             {
                 selectedUI.GetComponent<AnimatedSprites>().animate = false;
@@ -800,7 +893,7 @@ public class Inventory : FSystem {
         {
             if (child.gameObject.name == "Enabled")
             {
-                child.gameObject.SetActive(false);
+                GameObjectManager.setGameObjectState(child.gameObject, false);
             }
         }
         if (playerEnabled)
@@ -815,18 +908,20 @@ public class Inventory : FSystem {
 				forGO = ui.getAt (i);
 				if (forGO.name == "Cursor")
                 {
-					forGO.SetActive(true);
+                    GameObjectManager.setGameObjectState(forGO,true);
                 }
             }
         }
         if (selectedPuzzle)
         {
             selectedPuzzle.GetComponent<Image>().color = Color.white;
-            puzzleRotationButtons.SetActive(false);
+            GameObjectManager.setGameObjectState(puzzleRotationButtons,false);
         }
         selectedPuzzle = null;
         descriptionTitle.text = string.Empty;
         descriptionText.text = string.Empty;
+        previousDescriptionTitle = descriptionTitle.text;
+        previousDescriptionText = descriptionText.text;
         CollectableGO.onInventory = false;
         CollectableGO.askCloseInventory = false;
         GameObjectManager.setGameObjectState(inventory.First(), false);

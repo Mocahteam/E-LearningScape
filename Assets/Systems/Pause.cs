@@ -7,7 +7,8 @@ public class Pause : FSystem {
 
     private Family canvas = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
-    
+    private Family storyDisplayer = FamilyManager.getFamily(new AnyOfTags("StoryDisplayer"));
+
     public static bool playerEnabled = true;
     private GameObject menuGO;
     public static bool askResume = false;
@@ -18,6 +19,7 @@ public class Pause : FSystem {
     {
         if (Application.isPlaying)
         {
+            ResetStaticVariables();
             int nbCanvas = canvas.Count;
             //initialise pause menu's buttons with listeners
             for (int i = 0; i < nbCanvas; i++)
@@ -47,6 +49,23 @@ public class Pause : FSystem {
                         }
                     }
                     GameObjectManager.setGameObjectState(menuGO, false);    //hide pause menu at the beginning
+                }
+            }
+            foreach(Transform child in storyDisplayer.First().transform)
+            {
+                if(child.gameObject.name == "EndScreen")
+                {
+                    foreach(Transform c in child)
+                    {
+                        if(c.gameObject.name == "Restart")
+                        {
+                            c.gameObject.GetComponent<Button>().onClick.AddListener(Restart);
+                        }
+                        else if (c.gameObject.name == "Menu")
+                        {
+                            c.gameObject.GetComponent<Button>().onClick.AddListener(GoToMenu);
+                        }
+                    }
                 }
             }
         }
@@ -86,11 +105,47 @@ public class Pause : FSystem {
 
     void Restart() //restart game from beginning
     {
+        ResetStaticVariables();
         GameObjectManager.loadScene("Sapiens");
     }
 
     void GoToMenu() //open menu scene
     {
         GameObjectManager.loadScene("Menu");
+    }
+
+    public static void ResetStaticVariables()
+    {
+        ShowUI.askCloseWindow = false;
+        ShowUI.eraserDragged = false;
+        SetAnswer.credits = false;
+        IARTab.onIAR = false;
+        IARTab.room1Unlocked = false;
+        IARTab.room2Unlocked = false;
+        IARTab.room3Unlocked = false;
+        IARTab.askCloseIAR = false;
+        Inventory.playerEnabled = true;
+        Inventory.wireOn = true;
+        CollectableGO.onInventory = false;
+        CollectableGO.usingWire = false;
+        CollectableGO.usingKeyE03 = false;
+        CollectableGO.usingKeyE08 = false;
+        CollectableGO.usingGlasses1 = false;
+        CollectableGO.usingGlasses2 = false;
+        CollectableGO.usingLamp = false;
+        CollectableGO.askCloseInventory = false;
+        CollectableGO.askOpenInventory = false;
+        DreamFragmentCollect.onFragment = false;
+        Selectable.selected = false;
+        Selectable.askRight = false;
+        Selectable.askWrong = false;
+        Takable.objectTaken = false;
+        Takable.mirrorOnPlank = false;
+        StoryDisplaying.readingTransition = false;
+        StoryDisplaying.readingEnding = false;
+        StoryDisplaying.reading = false;
+        playerEnabled = true;
+        askResume = false;
+        Timer.addTimer = false;
     }
 }

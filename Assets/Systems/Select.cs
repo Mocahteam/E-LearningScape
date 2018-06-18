@@ -155,7 +155,7 @@ public class Select : FSystem {
                 previousMaterial.Enqueue(tmpRendererList[i].material);
             }
             //if the player clicks on the object while it is not taken and inventory isn't opened, select it
-            if (Input.GetMouseButtonDown(0) && !Takable.objectTaken && !CollectableGO.onInventory && focused.GetComponent<Selectable>())
+            if (Input.GetMouseButtonDown(0) && !Takable.objectTaken && !CollectableGO.onInventory && focused.GetComponent<Selectable>() && !StoryDisplaying.reading)
             {
                 focused.GetComponent<Selectable>().isSelected = true;
                 Selectable.selected = true;

@@ -74,7 +74,7 @@ public class ToggleObject : FSystem {
                 forGO = toggleable.getAt(i);
                 tmpTGO = forGO.GetComponent<ToggleableGO>();
                 //if an untoggled object is clicked
-                if (tmpTGO.focused && Input.GetMouseButtonDown(0) && !tmpTGO.toggled)
+                if (tmpTGO.focused && Input.GetMouseButtonDown(0) && !tmpTGO.toggled && !StoryDisplaying.reading && !DreamFragmentCollect.onFragment)
                 {
                     tmpTGO.toggled = true;
                     if (forGO.name.Contains("Chair"))

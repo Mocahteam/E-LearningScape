@@ -38,6 +38,7 @@ public class SetAnswer : FSystem
     private GameObject wrongBG;
     private float timeW = 0;
     private AudioSource source;
+    private AnimatedSprites solvedAnimation;
 
     string answer;
     
@@ -55,6 +56,8 @@ public class SetAnswer : FSystem
     private float wTimerE04 = Mathf.Infinity;   //timer used when the player gives a wrong answer to enigma04
     private TextMeshProUGUI wtt;    //text displaying wTimerE04
     private bool wrongAnswerE04 = false;
+    private GameObject questionE4;
+    private GameObject transparentGear;
     
     private GameObject screen2;
     private GameObject connectionR2;
@@ -91,7 +94,7 @@ public class SetAnswer : FSystem
     private bool usingLamp = false;
     private string symbolLetter;
 
-    public static bool credits = true;
+    public static bool credits = false;
 
     //tmp gameobjects used to loop in famillies
     private GameObject forGO;
@@ -134,6 +137,17 @@ public class SetAnswer : FSystem
                 else if (child.gameObject.name == "Enigma4")
                 {
                     enigma4 = child.gameObject;
+                    foreach(Transform c in enigma4.transform)
+                    {
+                        if(c.gameObject.name == "Q4")
+                        {
+                            questionE4 = c.gameObject;
+                        }
+                        else if(c.gameObject.name == "TransparentGear")
+                        {
+                            transparentGear = c.gameObject;
+                        }
+                    }
                 }
             }
             wtt = wTimerText.First().GetComponent<TextMeshProUGUI>();
@@ -412,6 +426,10 @@ public class SetAnswer : FSystem
                 {
                     whiteBG = forGO;
                 }
+                else if(forGO.name == "Solved")
+                {
+                    solvedAnimation = forGO.GetComponent<AnimatedSprites>();
+                }
             }
             /* set all board's removable words to "occludable"
              * the occlusion is then made by an invisible material that hides all objects behind it having this setting
@@ -450,7 +468,9 @@ public class SetAnswer : FSystem
             Selectable.askRight = false;
             //feedback right answer
             source.PlayOneShot(screen1.GetComponent<Selectable>().right);
-            timeR = Time.time;
+            //timeR = Time.time;
+            GameObjectManager.setGameObjectState(solvedAnimation.gameObject, true);
+            solvedAnimation.animate = true;
         }
         if (Selectable.askWrong)
         {
@@ -463,19 +483,19 @@ public class SetAnswer : FSystem
         float dw = Time.time - timeW;
         if (dr < 0.1 || (dr < 0.4 && dr > 0.3))
         {
-            rightBG.SetActive(true);
+            GameObjectManager.setGameObjectState(rightBG,true);
         }
         else
         {
-            rightBG.SetActive(false);
+            GameObjectManager.setGameObjectState(rightBG,false);
         }
         if (dw < 0.1 || (dw < 0.4 && dw > 0.3))
         {
-            wrongBG.SetActive(true);
+            GameObjectManager.setGameObjectState(wrongBG,true);
         }
         else
         {
-            wrongBG.SetActive(false);
+            GameObjectManager.setGameObjectState(wrongBG,false);
         }
 
         //tablet room 1 animation and interaction//
@@ -483,7 +503,7 @@ public class SetAnswer : FSystem
         if (screen1.GetComponent<Selectable>().solved && (!enigma4.activeSelf || fadingToEnigma4))
         {
             //wait the end of the "Right answer" animation before fading to enigma04
-            if (rightBG.activeSelf)
+            if (solvedAnimation.animate)
             {
                 timerWhite = Time.time;
             }
@@ -498,14 +518,14 @@ public class SetAnswer : FSystem
                 //from time: 1.5 to 3, screen: white to enigma04
                 else if (Time.time - timerWhite < 3f && Time.time - timerWhite > 1.5f)
                 {
-                    answersRoom1.SetActive(false);
-                    enigma4.SetActive(true);
+                    GameObjectManager.setGameObjectState(answersRoom1,false);
+                    GameObjectManager.setGameObjectState(enigma4,true);
                     whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, 1 - (Time.time - timerWhite - 1.5f) / 1.5f);
                 }
                 else //if time not between 0 and 3
                 {
                     //stop fading and set tablet to unsolved
-                    whiteBG.SetActive(false);
+                    GameObjectManager.setGameObjectState(whiteBG,false);
                     screen1.GetComponent<Selectable>().solved = false;
                     fadingToEnigma4 = false;
                 }
@@ -515,7 +535,7 @@ public class SetAnswer : FSystem
         else if (screen1.GetComponent<Selectable>().solved && enigma4.activeSelf && !fadingToEnigma4 && !IARTab.room2Unlocked)
         {
             //enigma 4 solved, open door to room 2
-            if(dr > 2f)
+            if(!solvedAnimation.animate)
             {
                 IARTab.room2Unlocked = true;
             }
@@ -531,6 +551,8 @@ public class SetAnswer : FSystem
                 if (forGO.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
                 {
                     gearDragged = forGO; //save the dragged gear
+                    GameObjectManager.setGameObjectState(questionE4,false);
+                    GameObjectManager.setGameObjectState(transparentGear,true);
                 }
             }
             if (gearDragged != null) //if a gear is dragged
@@ -538,6 +560,7 @@ public class SetAnswer : FSystem
                 rotateGear = false; //initial value
                 if (Input.GetMouseButtonUp(0))  //when the gear is released
                 {
+                    GameObjectManager.setGameObjectState(transparentGear,false);
                     //if the gear is released in the center of the tablet (player answering)
                     if (gearDragged.transform.localPosition.x < 125 && gearDragged.transform.localPosition.x > -125 && gearDragged.transform.localPosition.y < 125f / 2 && gearDragged.transform.localPosition.x > -125f / 2)
                     {
@@ -545,8 +568,7 @@ public class SetAnswer : FSystem
                         if (gearDragged.GetComponent<Gear>().isSolution) //if answer is correct
                         {
                             //start audio and animation for "Right answer"
-                            source.PlayOneShot(screen1.GetComponent<Selectable>().right);
-                            timeR = Time.time;
+                            Selectable.askRight = true;
 
                             rotateGear = true;  //rotate gears in the middle
                             screen1.GetComponent<Selectable>().solved = true; //set tablet to solved
@@ -557,12 +579,13 @@ public class SetAnswer : FSystem
                                 //hide the question text of enigma04
                                 if (forGO.name.Contains(4.ToString()))
                                 {
-                                    forGO.SetActive(false);
+                                    GameObjectManager.setGameObjectState(forGO,false);
                                 }
                             }
                         }
                         else //if answer is wrong
                         {
+                            GameObjectManager.setGameObjectState(questionE4,true);
                             //start audio and animation for "Wrong answer"
                             source.PlayOneShot(screen1.GetComponent<Selectable>().wrong);
                             timeW = Time.time;
@@ -573,12 +596,12 @@ public class SetAnswer : FSystem
                                 forGO = qRoom1.getAt(i);
                                 if (forGO.name.Contains(4.ToString()))
                                 {
-                                    forGO.SetActive(true);
+                                    GameObjectManager.setGameObjectState(forGO,true);
                                 }
                             }
                             //start the timer for wrong answer
                             wTimerE04 = Time.time;
-                            wtt.gameObject.SetActive(true);
+                            GameObjectManager.setGameObjectState(wtt.gameObject,true);
                             wtt.text = (5 + wTimerE04 - Time.time).ToString("n2");
                             wrongAnswerE04 = true;
 
@@ -586,8 +609,9 @@ public class SetAnswer : FSystem
                         }
                         gearDragged = null; //initial value
                     }
-                    else //if the gear is not released in the center
+                    else //if the gear is not released at the center
                     {
+                        GameObjectManager.setGameObjectState(questionE4,true);
                         gearDragged.transform.localPosition = gearDragged.GetComponent<Gear>().initialPosition; //set gear position to initial position
                         int nbQRoom1 = qRoom1.Count;
                         for (int i = 0; i < nbQRoom1; i++)
@@ -595,7 +619,7 @@ public class SetAnswer : FSystem
                             forGO = qRoom1.getAt(i);
                             if (forGO.name.Contains(4.ToString()))
                             {
-                                forGO.SetActive(true);
+                                GameObjectManager.setGameObjectState(forGO,true);
                             }
                         }
                     }
@@ -614,7 +638,7 @@ public class SetAnswer : FSystem
             {
                 //when the timer if finished, the player can drag a gear again
                 wrongAnswerE04 = false;
-                wtt.gameObject.SetActive(false);
+                GameObjectManager.setGameObjectState(wtt.gameObject,false);
             }
             else
             {
@@ -658,7 +682,7 @@ public class SetAnswer : FSystem
         if (screen2.GetComponent<Selectable>().solved && fadingToAnswersRoom2)
         {
             //wait the end of the "Right answer" animation before fading to password
-            if (rightBG.activeSelf)
+            if (solvedAnimation.animate)
             {
                 timerWhite = Time.time;
             }
@@ -670,20 +694,20 @@ public class SetAnswer : FSystem
                     whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, (Time.time - timerWhite) / 1.5f);
                     if (Time.time - timerWhite > 1.45f)
                     {
-                        answersRoom2.SetActive(false);
+                        GameObjectManager.setGameObjectState(answersRoom2,false);
                         foreach (Transform child in screen2.transform)
                         {
                             if (child.gameObject.name == "Background")
                             {
-                                child.gameObject.SetActive(false);
+                                GameObjectManager.setGameObjectState(child.gameObject,false);
                             }
                             else if (child.gameObject.name == "Background2")
                             {
-                                child.gameObject.SetActive(true);
+                                GameObjectManager.setGameObjectState(child.gameObject,true);
                             }
                             else if (child.gameObject.name == "Password")
                             {
-                                child.gameObject.SetActive(true);
+                                GameObjectManager.setGameObjectState(child.gameObject,true);
                             }
                         }
                     }
@@ -696,7 +720,7 @@ public class SetAnswer : FSystem
                 else //if time not between 0 and 3
                 {
                     //stop fading
-                    whiteBG.SetActive(false);
+                    GameObjectManager.setGameObjectState(whiteBG,false);
                     fadingToAnswersRoom2 = false;
                 }
             }
@@ -711,21 +735,21 @@ public class SetAnswer : FSystem
             //from time: 1.5 to 3, screen: white to answers
             else if (Time.time - timerWhite < 3f && Time.time - timerWhite > 1.5f)
             {
-                connectionR2.SetActive(false);
-                answersRoom2.SetActive(true);
+                GameObjectManager.setGameObjectState(connectionR2,false);
+                GameObjectManager.setGameObjectState(answersRoom2,true);
                 whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, 1 - (Time.time - timerWhite - 1.5f) / 1.5f);
             }
             else //if time not between 0 and 3
             {
                 //stop fading
-                whiteBG.SetActive(false);
+                GameObjectManager.setGameObjectState(whiteBG,false);
                 fadingToAnswersRoom2 = false;
             }
         }
         if (screen3.GetComponent<Selectable>().solved && fadingToEndRoom)
         {
             //wait the end of the "Right answer" animation before fading to end room
-            if (rightBG.activeSelf)
+            if (solvedAnimation.animate)
             {
                 timerWhite = Time.time;
             }
@@ -735,21 +759,25 @@ public class SetAnswer : FSystem
                 if (Time.time - timerWhite < 2f && Time.time - timerWhite >= 0f)
                 {
                     whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, (Time.time - timerWhite) / 2f);
-                    if (Time.time - timerWhite > 1.95f)
+                }
+                //from time: 2 to 4, screen: white to end room
+                else if (Time.time - timerWhite < 4f && Time.time - timerWhite > 2f)
+                {
+                    if (!endRoom.First().activeSelf)
                     {
                         player.First().transform.position = new Vector3(74, 0.33f, -3);
                         player.First().transform.localRotation = Quaternion.Euler(0, -90, 0);
                         Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
-                        game.First().SetActive(false);
-                        endRoom.First().SetActive(true);
+                        GameObjectManager.setGameObjectState(game.First(), false);
+                        GameObjectManager.setGameObjectState(endRoom.First(), true);
                         if (player.First().GetComponentInChildren<Light>())
                         {
-                            player.First().GetComponentInChildren<Light>().gameObject.SetActive(false);
+                            GameObjectManager.setGameObjectState(player.First().GetComponentInChildren<Light>().gameObject, false);
                         }
                         IARTab.askCloseIAR = true;
                         RenderSettings.fogDensity = 0;
                         Camera.main.farClipPlane = 300;
-                        foreach(Transform child in endRoom.First().transform)
+                        foreach (Transform child in endRoom.First().transform)
                         {
                             if (child.gameObject.GetComponent<MeshRenderer>())
                             {
@@ -763,11 +791,8 @@ public class SetAnswer : FSystem
                                 child.gameObject.GetComponent<MeshRenderer>().allowOcclusionWhenDynamic = false;
                             }
                         }
+                        timerWhite = Time.time - 2;
                     }
-                }
-                //from time: 2 to 4, screen: white to end room
-                else if (Time.time - timerWhite < 4f && Time.time - timerWhite > 2f)
-                {
                     whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, 1 - (Time.time - timerWhite - 2) / 2f);
                 }
                 else //if time not between 0 and 4
@@ -785,7 +810,7 @@ public class SetAnswer : FSystem
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                     //stop fading
-                    whiteBG.SetActive(false);
+                    GameObjectManager.setGameObjectState(whiteBG,false);
                     fadingToEndRoom = false;
                 }
             }
@@ -801,7 +826,7 @@ public class SetAnswer : FSystem
                 //if the symbol is illuminated by the lamp
                 if (Vector3.Angle(position - Camera.main.transform.position, Camera.main.transform.forward) < 22)
                 {
-                    forGO.SetActive(true);
+                    GameObjectManager.setGameObjectState(forGO,true);
                     //calculate the intersection between player direction and the wall
                     float d = Vector3.Dot((position - Camera.main.transform.position), forGO.transform.forward) / Vector3.Dot(Camera.main.transform.forward, forGO.transform.forward);
                     //move the mask to the calculated position
@@ -821,7 +846,7 @@ public class SetAnswer : FSystem
                     //disable the mask and the symbol
                     forGO.transform.position = position;
                     forGO.GetComponentInChildren<E12_Symbol>().gameObject.transform.position = position;
-                    forGO.SetActive(false);
+                    GameObjectManager.setGameObjectState(forGO,false);
                 }
             }
         }
@@ -832,7 +857,7 @@ public class SetAnswer : FSystem
             int nbSymbols = symbolsE12Tag.Count;
             for (int i = 0; i < nbSymbols; i++)
             {
-                symbolsE12Tag.getAt(i).SetActive(false);
+                GameObjectManager.setGameObjectState(symbolsE12Tag.getAt(i),false);
             }
         }
         usingLamp = CollectableGO.usingLamp;
@@ -855,8 +880,7 @@ public class SetAnswer : FSystem
                 if (answer.Length == 3 && answer.Contains((aq1r1 / 100).ToString()) && answer.Contains(((aq1r1 / 10) % 10).ToString()) && answer.Contains((aq1r1 % 10).ToString()))
                 {
                     //feedback right answer
-                    source.PlayOneShot(screen1.GetComponent<Selectable>().right);
-                    timeR = Time.time;
+                    Selectable.askRight = true;
 
                     int nb = collectableGO.Count;
                     for (int j = 0; j < nb; j++)
@@ -864,10 +888,10 @@ public class SetAnswer : FSystem
                         forGO2 = collectableGO.getAt(j);
                         if (forGO2.name.Contains("KeyE03"))
                         {
-                            forGO2.SetActive(false);
+                            GameObjectManager.setGameObjectState(forGO2,false);
                         }
                     }
-                    forGO.SetActive(false); //hide the question
+                    GameObjectManager.setGameObjectState(forGO,false); //hide the question
                     bool solved = true;
                     int nbARoom1 = aRoom1.Count;
                     for (int j = 0; j < nbARoom1; j++)
@@ -876,7 +900,7 @@ public class SetAnswer : FSystem
                         if (forGO2.name.Contains(1.ToString()))
                         {
                             //show the solution of question 1
-                            forGO2.SetActive(true);
+                            GameObjectManager.setGameObjectState(forGO2,true);
                         }
                         else
                         {
@@ -893,7 +917,7 @@ public class SetAnswer : FSystem
                         screen1.GetComponent<Selectable>().solved = true;    //set tablet to solved
                         //start fading to enigma04
                         timerWhite = Time.time;
-                        whiteBG.SetActive(true);
+                        GameObjectManager.setGameObjectState(whiteBG,true);
                         Color c = whiteBG.GetComponent<Image>().color;
                         whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
                     }
@@ -924,19 +948,18 @@ public class SetAnswer : FSystem
                 if (answer.Length == 3 && answer.Contains((aq2r1 / 100).ToString()) && answer.Contains(((aq2r1 / 10) % 10).ToString()) && answer.Contains((aq2r1 % 10).ToString()))
                 {
                     //feedback right answer
-                    source.PlayOneShot(screen1.GetComponent<Selectable>().right);
-                    timeR = Time.time;
-                    
+                    Selectable.askRight = true;
+
                     int nb = collectableGO.Count;
                     for (int j = 0; j < nb; j++)
                     {
                         forGO2 = collectableGO.getAt(j);
                         if (forGO2.name.Contains("Syllabus") || forGO2.name.Contains("Wire"))
                         {
-                            forGO2.SetActive(false);
+                            GameObjectManager.setGameObjectState(forGO2,false);
                         }
                     }
-                    forGO.SetActive(false); //hide the question
+                    GameObjectManager.setGameObjectState(forGO,false); //hide the question
                     bool solved = true;
                     int nbARoom1 = aRoom1.Count;
                     for (int j = 0; j < nbARoom1; j++)
@@ -945,7 +968,7 @@ public class SetAnswer : FSystem
                         if (forGO2.name.Contains(2.ToString()))
                         {
                             //show the solution of question 2
-                            forGO2.SetActive(true);
+                            GameObjectManager.setGameObjectState(forGO2,true);
                         }
                         else
                         {
@@ -961,7 +984,7 @@ public class SetAnswer : FSystem
                         screen1.GetComponent<Selectable>().solved = true;    //set tablet to solved
                         //start fading to enigma04
                         timerWhite = Time.time;
-                        whiteBG.SetActive(true);
+                        GameObjectManager.setGameObjectState(whiteBG,true);
                         Color c = whiteBG.GetComponent<Image>().color;
                         whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
                     }
@@ -992,10 +1015,9 @@ public class SetAnswer : FSystem
                 if (answer == aq3r1) //if answer is correct
                 {
                     //feedback right answer
-                    source.PlayOneShot(screen1.GetComponent<Selectable>().right);
-                    timeR = Time.time;
+                    Selectable.askRight = true;
 
-                    forGO.SetActive(false); //hide the question
+                    GameObjectManager.setGameObjectState(forGO,false); //hide the question
                     bool solved = true;
                     int nbARoom1 = aRoom1.Count;
                     for (int j = 0; j < nbARoom1; j++)
@@ -1004,7 +1026,7 @@ public class SetAnswer : FSystem
                         if (forGO2.name.Contains(3.ToString()))
                         {
                             //show the solution of question 3
-                            forGO2.SetActive(true);
+                            GameObjectManager.setGameObjectState(forGO2,true);
                         }
                         else
                         {
@@ -1020,7 +1042,7 @@ public class SetAnswer : FSystem
                         screen1.GetComponent<Selectable>().solved = true;    //set tablet to solved
                         //start fading to enigma04
                         timerWhite = Time.time;
-                        whiteBG.SetActive(true);
+                        GameObjectManager.setGameObjectState(whiteBG,true);
                         Color c = whiteBG.GetComponent<Image>().color;
                         whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
                     }
@@ -1053,7 +1075,7 @@ public class SetAnswer : FSystem
             //start fading to the next step of the tablet (questions and inpufields)
             fadingToAnswersRoom2 = true;
             timerWhite = Time.time;
-            whiteBG.SetActive(true);
+            GameObjectManager.setGameObjectState(whiteBG,true);
             whiteBG.GetComponent<Image>().color = new Color(whiteBG.GetComponent<Image>().color.r, whiteBG.GetComponent<Image>().color.g, whiteBG.GetComponent<Image>().color.b, 0);
         }
         else
@@ -1127,26 +1149,25 @@ public class SetAnswer : FSystem
                 if (answer == aq1r2) //if answer is correct
                 {
                     //feedback right answer
-                    source.PlayOneShot(screen2.GetComponent<Selectable>().right);
-                    timeR = Time.time;
-                    
+                    Selectable.askRight = true;
+
                     int nb = collectableGO.Count;
                     for (int j = 0; j < nb; j++)
                     {
                         forGO2 = collectableGO.getAt(j);
                         if (forGO2.name.Contains("Glasses") || forGO2.name.Contains("KeyE08"))
                         {
-                            forGO2.SetActive(false);
+                            GameObjectManager.setGameObjectState(forGO2,false);
                         }
                     }
                     nb = glassesBackgrounds.Count;
                     for(int j = 0; j < nb; j++)
                     {
-                        glassesBackgrounds.getAt(j).SetActive(false);
+                        GameObjectManager.setGameObjectState(glassesBackgrounds.getAt(j),false);
                     }
                     CollectableGO.usingGlasses1 = false;
                     CollectableGO.usingGlasses2 = false;
-                    forGO.SetActive(false); //hide the question
+                    GameObjectManager.setGameObjectState(forGO,false); //hide the question
                     bool solved = true;
                     int nbARoom2 = aRoom2.Count;
                     for (int j = 0; j < nbARoom2; j++)
@@ -1155,7 +1176,7 @@ public class SetAnswer : FSystem
                         if (forGO2.name.Contains(1.ToString()))
                         {
                             //show the solution of question 1
-                            forGO2.SetActive(true);
+                            GameObjectManager.setGameObjectState(forGO2,true);
                         }
                         else
                         {
@@ -1172,7 +1193,7 @@ public class SetAnswer : FSystem
                         fadingToAnswersRoom2 = true;
                         //start fading to password
                         timerWhite = Time.time;
-                        whiteBG.SetActive(true);
+                        GameObjectManager.setGameObjectState(whiteBG,true);
                         Color c = whiteBG.GetComponent<Image>().color;
                         whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
                     }
@@ -1201,10 +1222,9 @@ public class SetAnswer : FSystem
                 if (answer.Length == 3 && answer.Contains((aq2r2 / 100).ToString()) && answer.Contains(((aq2r2 / 10) % 10).ToString()) && answer.Contains((aq2r2 % 10).ToString()))
                 {
                     //feedback right answer
-                    source.PlayOneShot(screen2.GetComponent<Selectable>().right);
-                    timeR = Time.time;
-                    
-                    forGO.SetActive(false); //hide the question
+                    Selectable.askRight = true;
+
+                    GameObjectManager.setGameObjectState(forGO,false); //hide the question
                     bool solved = true;
                     int nbARoom2 = aRoom2.Count;
                     for (int j = 0; j < nbARoom2; j++)
@@ -1213,7 +1233,7 @@ public class SetAnswer : FSystem
                         if (forGO2.name.Contains(2.ToString()))
                         {
                             //show the solution of question 2
-                            forGO2.SetActive(true);
+                            GameObjectManager.setGameObjectState(forGO2,true);
                         }
                         else
                         {
@@ -1230,7 +1250,7 @@ public class SetAnswer : FSystem
                         fadingToAnswersRoom2 = true;
                         //start fading to password
                         timerWhite = Time.time;
-                        whiteBG.SetActive(true);
+                        GameObjectManager.setGameObjectState(whiteBG,true);
                         Color c = whiteBG.GetComponent<Image>().color;
                         whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
                     }
@@ -1259,10 +1279,18 @@ public class SetAnswer : FSystem
                 if (answer == aq3r2) //if answer is correct
                 {
                     //feedback right answer
-                    source.PlayOneShot(screen2.GetComponent<Selectable>().right);
-                    timeR = Time.time;
+                    Selectable.askRight = true;
 
-                    forGO.SetActive(false); //hide the question
+                    int nb = collectableGO.Count;
+                    for (int j = 0; j < nb; j++)
+                    {
+                        forGO2 = collectableGO.getAt(j);
+                        if (forGO2.name.Contains("Scroll"))
+                        {
+                            GameObjectManager.setGameObjectState(forGO2,false);
+                        }
+                    }
+                    GameObjectManager.setGameObjectState(forGO,false); //hide the question
                     bool solved = true;
                     int nbARoom2 = aRoom2.Count;
                     for (int j = 0; j < nbARoom2; j++)
@@ -1271,7 +1299,7 @@ public class SetAnswer : FSystem
                         if (forGO2.name.Contains(3.ToString()))
                         {
                             //show the solution of question 3
-                            forGO2.SetActive(true);
+                            GameObjectManager.setGameObjectState(forGO2,true);
                         }
                         else
                         {
@@ -1288,7 +1316,7 @@ public class SetAnswer : FSystem
                         fadingToAnswersRoom2 = true;
                         //start fading to password
                         timerWhite = Time.time;
-                        whiteBG.SetActive(true);
+                        GameObjectManager.setGameObjectState(whiteBG,true);
                         Color c = whiteBG.GetComponent<Image>().color;
                         whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
                     }
@@ -1317,10 +1345,9 @@ public class SetAnswer : FSystem
                 if (answer == aq4r2) //if answer is correct
                 {
                     //feedback right answer
-                    source.PlayOneShot(screen2.GetComponent<Selectable>().right);
-                    timeR = Time.time;
+                    Selectable.askRight = true;
 
-                    forGO.SetActive(false); //hide the question
+                    GameObjectManager.setGameObjectState(forGO,false); //hide the question
                     bool solved = true;
                     int nbARoom2 = aRoom2.Count;
                     for (int j = 0; j < nbARoom2; j++)
@@ -1329,7 +1356,7 @@ public class SetAnswer : FSystem
                         if (forGO2.name.Contains(4.ToString()))
                         {
                             //show the solution of question 4
-                            forGO2.SetActive(true);
+                            GameObjectManager.setGameObjectState(forGO2,true);
                         }
                         else
                         {
@@ -1346,7 +1373,7 @@ public class SetAnswer : FSystem
                         fadingToAnswersRoom2 = true;
                         //start fading to password
                         timerWhite = Time.time;
-                        whiteBG.SetActive(true);
+                        GameObjectManager.setGameObjectState(whiteBG,true);
                         Color c = whiteBG.GetComponent<Image>().color;
                         whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
                     }
@@ -1374,10 +1401,9 @@ public class SetAnswer : FSystem
                 if (answer == aq5r2) //if answer is correct
                 {
                     //feedback right answer
-                    source.PlayOneShot(screen2.GetComponent<Selectable>().right);
-                    timeR = Time.time;
+                    Selectable.askRight = true;
 
-                    forGO.SetActive(false); //hide the question
+                    GameObjectManager.setGameObjectState(forGO,false); //hide the question
                     bool solved = true;
                     int nbARoom2 = aRoom2.Count;
                     for (int j = 0; j < nbARoom2; j++)
@@ -1386,7 +1412,7 @@ public class SetAnswer : FSystem
                         if (forGO2.name.Contains(5.ToString()))
                         {
                             //show the solution of question 5
-                            forGO2.SetActive(true);
+                            GameObjectManager.setGameObjectState(forGO2,true);
                         }
                         else
                         {
@@ -1403,7 +1429,7 @@ public class SetAnswer : FSystem
                         fadingToAnswersRoom2 = true;
                         //start fading to password
                         timerWhite = Time.time;
-                        whiteBG.SetActive(true);
+                        GameObjectManager.setGameObjectState(whiteBG,true);
                         Color c = whiteBG.GetComponent<Image>().color;
                         whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
                     }
@@ -1432,10 +1458,9 @@ public class SetAnswer : FSystem
                 if (answer == aq6r2) //if answer is correct
                 {
                     //feedback right answer
-                    source.PlayOneShot(screen2.GetComponent<Selectable>().right);
-                    timeR = Time.time;
+                    Selectable.askRight = true;
 
-                    forGO.SetActive(false); //hide the question
+                    GameObjectManager.setGameObjectState(forGO,false); //hide the question
                     bool solved = true;
                     int nbARoom2 = aRoom2.Count;
                     for (int j = 0; j < nbARoom2; j++)
@@ -1444,7 +1469,7 @@ public class SetAnswer : FSystem
                         if (forGO2.name.Contains(6.ToString()))
                         {
                             //show the solution of question 6
-                            forGO2.SetActive(true);
+                            GameObjectManager.setGameObjectState(forGO2,true);
                         }
                         else
                         {
@@ -1461,7 +1486,7 @@ public class SetAnswer : FSystem
                         fadingToAnswersRoom2 = true;
                         //start fading to password
                         timerWhite = Time.time;
-                        whiteBG.SetActive(true);
+                        GameObjectManager.setGameObjectState(whiteBG,true);
                         Color c = whiteBG.GetComponent<Image>().color;
                         whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
                     }
@@ -1490,13 +1515,12 @@ public class SetAnswer : FSystem
                 if (forGO.name.Contains(1.ToString()))
                 {
                     //find the corresponding answer UI and display it
-                    forGO.SetActive(true);
+                    GameObjectManager.setGameObjectState(forGO,true);
                     forGO.transform.position = question.transform.position;
-                    question.SetActive(false);
+                    GameObjectManager.setGameObjectState(question,false);
                     answer1R3Given = true; //set this answer to "given"
                     //feedback right answer
-                    source.PlayOneShot(screen3.GetComponent<Selectable>().right);
-                    timeR = Time.time;
+                    Selectable.askRight = true;
                     //disable inventory elements used to answer to this question
                     int nb = collectableGO.Count;
                     for (int j = 0; j < nb; j++)
@@ -1504,7 +1528,7 @@ public class SetAnswer : FSystem
                         forGO2 = collectableGO.getAt(j);
                         if (forGO2.name.Contains("Puzzle"))
                         {
-                            forGO2.SetActive(false);
+                            GameObjectManager.setGameObjectState(forGO2,false);
                         }
                     }
                     //check if all anwer were given
@@ -1514,7 +1538,7 @@ public class SetAnswer : FSystem
                         fadingToEndRoom = true;
                         //start fading to password
                         timerWhite = Time.time;
-                        whiteBG.SetActive(true);
+                        GameObjectManager.setGameObjectState(whiteBG,true);
                         Color c = whiteBG.GetComponent<Image>().color;
                         whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
                     }
@@ -1531,13 +1555,12 @@ public class SetAnswer : FSystem
                 if (forGO.name.Contains(2.ToString()))
                 {
                     //find the corresponding answer UI and display it
-                    forGO.SetActive(true);
+                    GameObjectManager.setGameObjectState(forGO,true);
                     forGO.transform.position = question.transform.position;
-                    question.SetActive(false);
+                    GameObjectManager.setGameObjectState(question,false);
                     answer2R3Given = true; //set this answer to "given"
                     //feedback right answer
-                    source.PlayOneShot(screen3.GetComponent<Selectable>().right);
-                    timeR = Time.time;
+                    Selectable.askRight = true;
                     //disable inventory elements used to answer to this question
                     int nb = collectableGO.Count;
                     for (int j = 0; j < nb; j++)
@@ -1545,7 +1568,7 @@ public class SetAnswer : FSystem
                         forGO2 = collectableGO.getAt(j);
                         if (forGO2.name.Contains("Lamp"))
                         {
-                            forGO2.SetActive(false);
+                            GameObjectManager.setGameObjectState(forGO2,false);
                         }
                     }
                     //check if all anwer were given
@@ -1555,7 +1578,7 @@ public class SetAnswer : FSystem
                         fadingToEndRoom = true;
                         //start fading to password
                         timerWhite = Time.time;
-                        whiteBG.SetActive(true);
+                        GameObjectManager.setGameObjectState(whiteBG,true);
                         Color c = whiteBG.GetComponent<Image>().color;
                         whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
                     }
@@ -1572,13 +1595,12 @@ public class SetAnswer : FSystem
                 if (forGO.name.Contains(3.ToString()))
                 {
                     //find the corresponding answer UI and display it
-                    forGO.SetActive(true);
+                    GameObjectManager.setGameObjectState(forGO,true);
                     forGO.transform.position = question.transform.position;
-                    question.SetActive(false);
+                    GameObjectManager.setGameObjectState(question,false);
                     answer3R3Given = true; //set this answer to "given"
                     //feedback right answer
-                    source.PlayOneShot(screen3.GetComponent<Selectable>().right);
-                    timeR = Time.time;
+                    Selectable.askRight = true;
                     //check if all anwer were given
                     if (answer2R3Given && answer1R3Given && answer4R3Given)
                     {
@@ -1586,7 +1608,7 @@ public class SetAnswer : FSystem
                         fadingToEndRoom = true;
                         //start fading to password
                         timerWhite = Time.time;
-                        whiteBG.SetActive(true);
+                        GameObjectManager.setGameObjectState(whiteBG,true);
                         Color c = whiteBG.GetComponent<Image>().color;
                         whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
                     }
@@ -1603,13 +1625,12 @@ public class SetAnswer : FSystem
                 if (forGO.name.Contains(4.ToString()))
                 {
                     //find the corresponding answer UI and display it
-                    forGO.SetActive(true);
+                    GameObjectManager.setGameObjectState(forGO,true);
                     forGO.transform.position = question.transform.position;
-                    question.SetActive(false);
+                    GameObjectManager.setGameObjectState(question,false);
                     answer4R3Given = true; //set this answer to "given"
                     //feedback right answer
-                    source.PlayOneShot(screen3.GetComponent<Selectable>().right);
-                    timeR = Time.time;
+                    Selectable.askRight = true;
                     //check if all anwer were given
                     if (answer2R3Given && answer3R3Given && answer1R3Given)
                     {
@@ -1617,7 +1638,7 @@ public class SetAnswer : FSystem
                         fadingToEndRoom = true;
                         //start fading to password
                         timerWhite = Time.time;
-                        whiteBG.SetActive(true);
+                        GameObjectManager.setGameObjectState(whiteBG,true);
                         Color c = whiteBG.GetComponent<Image>().color;
                         whiteBG.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0);
                     }

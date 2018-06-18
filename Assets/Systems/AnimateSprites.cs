@@ -47,6 +47,11 @@ public class AnimateSprites : FSystem {
                     if (tmpAS.usedSpriteID == tmpAS.sprites.Length)
                     {
                         tmpAS.usedSpriteID = 0;
+                        if (!tmpAS.loop)
+                        {
+                            tmpAS.animate = false;
+                            GameObjectManager.setGameObjectState(tmpAS.gameObject, !tmpAS.disableWhenFinished);
+                        }
                     }
                     tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[tmpAS.usedSpriteID];
                 }

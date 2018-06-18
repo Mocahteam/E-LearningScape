@@ -59,6 +59,8 @@ TagManager:
   - WaterFloor
   - BoardTexture
   - UIBackground
+  - HUDInputs
+  - NewItemFeedback
   layers:
   - Default
   - TransparentFX

@@ -56,7 +56,7 @@ public class TimerSystem : FSystem {
 				forGO = timings.getAt (i);
 				if (!forGO.activeSelf) //find an unused timing ui text
                 {
-					forGO.SetActive(true);
+                    GameObjectManager.setGameObjectState(forGO,true);
 					forGO.GetComponent<Text>().text = t;
                     break;
                 }

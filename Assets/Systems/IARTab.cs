@@ -21,6 +21,9 @@ public class IARTab : FSystem {
     private Family fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
     private Family backgrounds = FamilyManager.getFamily(new AnyOfTags("UIBackground"));
     private Family displayedBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family newFeedback = FamilyManager.getFamily(new AnyOfTags("NewItemFeedback"));
+    private Family hud = FamilyManager.getFamily(new AnyOfTags("HUDInputs"));
+    private Family inputfields = FamilyManager.getFamily(new AllOfComponents(typeof(InputField)));
 
     private GameObject tabsGO;
     public static bool onIAR = false;
@@ -51,6 +54,7 @@ public class IARTab : FSystem {
     private GameObject activeUI = null;
     private bool playerEnabled = true;
     private Material initialBGMaterial;
+    private bool inputfieldFocused = false;
 
     private bool wasOnInventory = false;
     private bool wasOnMenu = false;
@@ -68,6 +72,11 @@ public class IARTab : FSystem {
 
     private bool hideMouse = false;
     private bool canHideMouse = false;
+
+    private bool warningNewItem = false;
+    private bool newElement = false;
+    private GameObject inventoryWarning;
+    private int enabledNewFeedBackCount;
 
     public IARTab()
     {
@@ -169,6 +178,14 @@ public class IARTab : FSystem {
                     fence2 = fences.getAt(i);
                 }
             }
+
+            foreach(Transform child in hud.First().transform)
+            {
+                if (child.gameObject.name.Contains("Warning"))
+                {
+                    inventoryWarning = child.gameObject;
+                }
+            }
         }
     }
 
@@ -187,10 +204,14 @@ public class IARTab : FSystem {
     {
         speed = 50 * Time.deltaTime;
 
-        if (hideMouse)
+        enabledNewFeedBackCount = 0;
+        int nbNewFeedback = newFeedback.Count;
+        for(int i = 0; i < nbNewFeedback; i++)
         {
-            Cursor.visible = false;
-            hideMouse = false;
+            if (newFeedback.getAt(i).activeSelf)
+            {
+                enabledNewFeedBackCount++;
+            }
         }
 
         if (askCloseIAR)
@@ -207,14 +228,14 @@ public class IARTab : FSystem {
             onIAR = true;
             playerEnabled = Inventory.playerEnabled;
             SwitchTab(inventory, inventoryButtonImage);
-            tabsGO.SetActive(true);
+            GameObjectManager.setGameObjectState(tabsGO,true);
         }
         else if (menu.activeSelf && !onMenu)
         {
             onIAR = true;
             playerEnabled = PauseSystem.playerEnabled;
             SwitchTab(menu, menuButtonImage);
-            tabsGO.SetActive(true);
+            GameObjectManager.setGameObjectState(tabsGO,true);
         }
         onMenu = menu.activeSelf;
         onInventory = inventory.activeSelf;
@@ -222,19 +243,29 @@ public class IARTab : FSystem {
         wasOnInventory = onInventory || wasOnInventory;
         wasOnMenu = onMenu || wasOnMenu;
 
-        if (canHideMouse)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            canHideMouse = false;
-            hideMouse = !activeUI.activeSelf;
-
-            if (onIAR)
+            if (activeUI)
             {
                 GameObjectManager.setGameObjectState(activeUI, false);
             }
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
+        else if (Input.GetKeyDown(KeyCode.A))
         {
-            canHideMouse = true;
+            inputfieldFocused = false;
+            int nbInputFields = inputfields.Count;
+            for (int i = 0; i < nbInputFields; i++)
+            {
+                if (inputfields.getAt(i).GetComponent<InputField>().isFocused)
+                {
+                    inputfieldFocused = true;
+                    break;
+                }
+            }
+            if (activeUI && !inputfieldFocused)
+            {
+                GameObjectManager.setGameObjectState(activeUI, false);
+            }
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -259,13 +290,18 @@ public class IARTab : FSystem {
                 {
                     backgrounds.getAt(i).GetComponent<Image>().material = initialBGMaterial;
                 }
+                nb = newFeedback.Count;
+                for(int i = 0; i < nb; i++)
+                {
+                    GameObjectManager.setGameObjectState(newFeedback.getAt(i),false);
+                }
                 if (room2Unlocked && !listenerAddedRoom2)
                 {
                     if (windowClosed)
                     {
                         onIAR = false;
                         activeUI = null;
-                        tabsGO.SetActive(false);
+                        GameObjectManager.setGameObjectState(tabsGO,false);
                         if (wasOnInventory)
                         {
                             CollectableGO.askCloseInventory = true;
@@ -290,7 +326,7 @@ public class IARTab : FSystem {
                 {
                     onIAR = false;
                     activeUI = null;
-                    tabsGO.SetActive(false);
+                    GameObjectManager.setGameObjectState(tabsGO,false);
                     if (wasOnInventory)
                     {
                         CollectableGO.askCloseInventory = true;
@@ -330,12 +366,21 @@ public class IARTab : FSystem {
                 wallIntro.First().transform.position = Vector3.MoveTowards(wallIntro.First().transform.position, tmpTarget, 0.1f * speed);
                 if (wallIntro.First().transform.position == tmpTarget)
                 {
-                    wallIntro.First().SetActive(false);
+                    GameObjectManager.setGameObjectState(wallIntro.First(),false);
                     playerLookingAtDoor = false;
                     gameAudioSource.loop = false;
                     screen1ButtonImage.GetComponent<Button>().onClick.AddListener(delegate {
                         SwitchTab(screenR1, screen1ButtonImage);
                     });
+                    int nb = newFeedback.Count;
+                    for(int i = 0; i < nb; i++)
+                    {
+                        if(Object.ReferenceEquals(newFeedback.getAt(i).transform.parent.gameObject, screen1ButtonImage.gameObject))
+                        {
+                            GameObjectManager.setGameObjectState(newFeedback.getAt(i),true);
+                            break;
+                        }
+                    }
                     Color c = screen1ButtonImage.GetComponent<Image>().color;
                     screen1ButtonImage.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 1);
                     screen1ButtonImage.GetComponentInChildren<Text>().text = "Rêve 1";
@@ -377,6 +422,15 @@ public class IARTab : FSystem {
                         screen2ButtonImage.GetComponent<Button>().onClick.AddListener(delegate {
                             SwitchTab(screenR2, screen2ButtonImage);
                         });
+                        int nb = newFeedback.Count;
+                        for (int i = 0; i < nb; i++)
+                        {
+                            if (Object.ReferenceEquals(newFeedback.getAt(i).transform.parent.gameObject, screen2ButtonImage.gameObject))
+                            {
+                                GameObjectManager.setGameObjectState(newFeedback.getAt(i),true);
+                                break;
+                            }
+                        }
                         Color c = screen2ButtonImage.GetComponent<Image>().color;
                         screen2ButtonImage.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 1);
                         screen2ButtonImage.GetComponentInChildren<Text>().text = "Rêve 2";
@@ -422,6 +476,15 @@ public class IARTab : FSystem {
                     screen3ButtonImage.GetComponent<Button>().onClick.AddListener(delegate {
                         SwitchTab(screenR3, screen3ButtonImage);
                     });
+                    int nb = newFeedback.Count;
+                    for (int i = 0; i < nb; i++)
+                    {
+                        if (Object.ReferenceEquals(newFeedback.getAt(i).transform.parent.gameObject, screen3ButtonImage.gameObject))
+                        {
+                            GameObjectManager.setGameObjectState(newFeedback.getAt(i),true);
+                            break;
+                        }
+                    }
                     Color c = screen3ButtonImage.GetComponent<Image>().color;
                     screen3ButtonImage.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 1);
                     screen3ButtonImage.GetComponentInChildren<Text>().text = "Rêve 3";
@@ -432,6 +495,26 @@ public class IARTab : FSystem {
                 }
             }
         }
+
+        if(enabledNewFeedBackCount != 0)
+        {
+            if(Time.time - (int)Time.time > 0.5f && warningNewItem)
+            {
+                warningNewItem = false;
+                GameObjectManager.setGameObjectState(inventoryWarning,true);
+            }
+            else if(Time.time - (int)Time.time < 0.5f && !warningNewItem)
+            {
+                warningNewItem = true;
+                GameObjectManager.setGameObjectState(inventoryWarning,false);
+            }
+            newElement = true;
+        }
+        else if(enabledNewFeedBackCount == 0 && newElement)
+        {
+            GameObjectManager.setGameObjectState(inventoryWarning,false);
+        }
+        newElement = enabledNewFeedBackCount != 0;
     }
 
     private void SwitchTab(GameObject tabContent, Image button)
@@ -455,6 +538,18 @@ public class IARTab : FSystem {
         GameObjectManager.setGameObjectState(tabContent, true);
         button.sprite = selectedTabSprite;
         button.GetComponentInChildren<Text>().fontStyle = FontStyle.Bold;
+        if(enabledNewFeedBackCount != 0)
+        {
+            nb = newFeedback.Count;
+            for (int i = 0; i < nb; i++)
+            {
+                if (Object.ReferenceEquals(newFeedback.getAt(i).transform.parent.gameObject, button.gameObject))
+                {
+                    GameObjectManager.setGameObjectState(newFeedback.getAt(i), false);
+                    break;
+                }
+            }
+        }
         activeUI = tabContent;
         Inventory.playerEnabled = playerEnabled;
         PauseSystem.playerEnabled = playerEnabled;

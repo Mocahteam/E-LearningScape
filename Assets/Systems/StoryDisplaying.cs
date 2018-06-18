@@ -13,10 +13,12 @@ public class StoryDisplaying : FSystem {
     private TextMeshProUGUI sdText;
     private Image fadingImage;
     private GameObject clickFeedback;
+    private GameObject endScreen;
 
     private bool readingIntro = false;
     public static bool readingTransition = false;
     public static bool readingEnding = false;
+    public static bool reading = false;
 
     private string[] readTexts;
     private float readingTimer = -Mathf.Infinity;
@@ -25,6 +27,7 @@ public class StoryDisplaying : FSystem {
     private bool fadingOut = false;
     private bool fadingToReadingMode = false;
     private bool fadingOutOfReadingMode = false;
+    private bool end = false;
 
     private string[] introText;
     private string[] transitionText;
@@ -52,6 +55,10 @@ public class StoryDisplaying : FSystem {
                 {
                     clickFeedback = child.gameObject;
                 }
+                else if(child.gameObject.name == "EndScreen")
+                {
+                    endScreen = child.gameObject;
+                }
             }
             
             introText = new string[3];
@@ -62,10 +69,11 @@ public class StoryDisplaying : FSystem {
             transitionText = new string[1];
             transitionText[0] = "Camille est tombée en sommeil paradoxal, et elle se met à rêver. L’université se transforme en jungle pleine de dangers. Les marchands de sable restent avec elle pour la protéger.";
 
-            endingText = new string[3];
+            endingText = new string[4];
             endingText[0] = "Camille se réveille. Elle est en pleine forme, et tout est clair dans sa tête pour son premier enseignement. Elle a hâte de commencer.";
-            endingText[1] = "Les marchands de sable ont bien travaillé et se retrouvent pour un débriefing sur tout leur travail";
-            endingText[2] = "Fin";
+            endingText[1] = "Les marchands de sable ont bien travaillé et se retrouvent pour un débriefing sur tout leur travail.";
+            endingText[2] = "Adaptation de l'escape game \"LearningScape\" de Sapiens";
+            endingText[3] = "Mounswif Darkaoui\nSimon Giraud\nBasile Pesin\nThomas Planques\nMathieu Muratet\nBerni Hasenknopf";
 
             if (storyDisplayer.First().activeSelf)
             {
@@ -93,9 +101,10 @@ public class StoryDisplaying : FSystem {
 	protected override void onProcess(int familiesUpdateCount) {
         if(readingIntro || readingTransition || readingEnding)
         {
+            reading = true;
             if(readTexts == null)
             {
-                storyDisplayer.First().SetActive(true);
+                GameObjectManager.setGameObjectState(storyDisplayer.First(),true);
                 player.First().GetComponent<FirstPersonController>().enabled = false;
                 Cursor.visible = false;
                 if (readingIntro)
@@ -144,7 +153,7 @@ public class StoryDisplaying : FSystem {
                     Color c = fadingImage.color;
                     fadingImage.color = new Color(c.r, c.g, c.b, 0);
                     fadingIn = false;
-                    clickFeedback.SetActive(true);
+                    GameObjectManager.setGameObjectState(clickFeedback,true);
                 }
             }
             else if (fadingOut)
@@ -172,9 +181,23 @@ public class StoryDisplaying : FSystem {
                     }
                     else
                     {
-                        sdText.text = "";
-                        fadingOutOfReadingMode = true;
-                        readingTimer = Time.time;
+                        if (readingEnding)
+                        {
+                            GameObjectManager.setGameObjectState(sdText.gameObject, false);
+                            fadingIn = true;
+                            readingTimer = Time.time;
+                            end = true;
+                            GameObjectManager.setGameObjectState(endScreen, true);
+                            Cursor.lockState = CursorLockMode.None;
+                            Cursor.lockState = CursorLockMode.Confined;
+                            Cursor.visible = true;
+                        }
+                        else
+                        {
+                            sdText.text = "";
+                            fadingOutOfReadingMode = true;
+                            readingTimer = Time.time;
+                        }
                     }
                 }
             }
@@ -234,7 +257,7 @@ public class StoryDisplaying : FSystem {
                     fadingImage.color = new Color(c.r, c.g, c.b, 1);
                     c = background.color;
                     background.color = new Color(c.r, c.g, c.b, 1);
-                    storyDisplayer.First().SetActive(false);
+                    GameObjectManager.setGameObjectState(storyDisplayer.First(),false);
                     fadingOutOfReadingMode = false;
                     textCount = 0;
                     readTexts = null;
@@ -246,13 +269,17 @@ public class StoryDisplaying : FSystem {
             }
             else
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && !end)
                 {
                     fadingOut = true;
                     readingTimer = Time.time;
-                    clickFeedback.SetActive(false);
+                    GameObjectManager.setGameObjectState(clickFeedback,false);
                 }
             }
+        }
+        else
+        {
+            reading = false;
         }
 	}
 }

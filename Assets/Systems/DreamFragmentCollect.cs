@@ -15,6 +15,7 @@ public class DreamFragmentCollect : FSystem {
     private RaycastHit hit;
     private GameObject selectedFragment;
     private DreamFragment tmpDFComponent;
+    public static bool onFragment = false;
     private bool onIAR = false;
 
     public DreamFragmentCollect()
@@ -45,14 +46,15 @@ public class DreamFragmentCollect : FSystem {
             {
                 if (Object.ReferenceEquals(hit.transform.gameObject, dfFamily.getAt(i)))
                 {
-                    if (Input.GetMouseButtonDown(0) && !onIAR)
+                    if (Input.GetMouseButtonDown(0) && !onIAR && !StoryDisplaying.reading)
                     {
+                        onFragment = true;
                         player.First().GetComponent<FirstPersonController>().enabled = false;
                         Cursor.lockState = CursorLockMode.None;
                         Cursor.lockState = CursorLockMode.Confined;
                         Cursor.visible = true;
                         selectedFragment = dfFamily.getAt(i);
-                        dfUI.SetActive(true);
+                        GameObjectManager.setGameObjectState(dfUI,true);
                         tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
                         if(tmpDFComponent.type == 0)
                         {
@@ -73,11 +75,12 @@ public class DreamFragmentCollect : FSystem {
 
     private void CloseWindow()
     {
+        onFragment = false;
         if (selectedFragment.GetComponent<DreamFragment>().type != 2)
         {
             if (selectedFragment.GetComponentInChildren<ParticleSystem>())
             {
-                selectedFragment.GetComponentInChildren<ParticleSystem>().gameObject.SetActive(false);
+                GameObjectManager.setGameObjectState(selectedFragment.GetComponentInChildren<ParticleSystem>().gameObject,false);
             }
             foreach (Transform child in selectedFragment.transform)
             {
@@ -89,7 +92,7 @@ public class DreamFragmentCollect : FSystem {
             }
         }
         selectedFragment = null;
-        dfUI.SetActive(false);
+        GameObjectManager.setGameObjectState(dfUI,false);
         player.First().GetComponent<FirstPersonController>().enabled = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Locked;
