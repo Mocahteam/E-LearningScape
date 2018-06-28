@@ -315,6 +315,20 @@ namespace UnityStandardAssets.Water
 
         private WaterMode GetWaterMode()
         {
+            switch (QualitySettings.GetQualityLevel())
+            {
+                case 0:
+                    return WaterMode.Simple;
+
+                case 1:
+                    return WaterMode.Reflective;
+
+                case 2:
+                    return WaterMode.Refractive;
+
+                default:
+                    return WaterMode.Simple;
+            }
             if (m_HardwareWaterSupport < m_WaterMode)
                 return m_HardwareWaterSupport;
             else

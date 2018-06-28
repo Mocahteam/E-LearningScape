@@ -24,6 +24,7 @@ public class IARTab : FSystem {
     private Family newFeedback = FamilyManager.getFamily(new AnyOfTags("NewItemFeedback"));
     private Family hud = FamilyManager.getFamily(new AnyOfTags("HUDInputs"));
     private Family inputfields = FamilyManager.getFamily(new AllOfComponents(typeof(InputField)));
+    private Family game = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
 
     private GameObject tabsGO;
     public static bool onIAR = false;
@@ -184,6 +185,14 @@ public class IARTab : FSystem {
                 if (child.gameObject.name.Contains("Warning"))
                 {
                     inventoryWarning = child.gameObject;
+                }
+            }
+
+            foreach(Transform room in game.First().transform)
+            {
+                if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
+                {
+                    GameObjectManager.setGameObjectState(room.gameObject, false);
                 }
             }
         }
@@ -410,6 +419,14 @@ public class IARTab : FSystem {
                         gameAudioSource.loop = true;
                         playerLookingAtDoor = true;
                         tmpTarget = door.First().transform.position + Vector3.up * (5.73f - door.First().transform.position.y);
+
+                        foreach (Transform room in game.First().transform)
+                        {
+                            if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
+                            {
+                                GameObjectManager.setGameObjectState(room.gameObject, true);
+                            }
+                        }
                     }
                 }
                 else
