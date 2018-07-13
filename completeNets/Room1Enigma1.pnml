@@ -1,0 +1,1187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
+    <name>
+      <text>gen0</text>
+    </name>
+    <page id="A-A-1">
+      <transition id="Sphere_activate_44">
+        <name>
+          <text>Sphere_activate_44</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="40" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_38">
+        <name>
+          <text>Sphere_activate_38</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="245" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_36">
+        <name>
+          <text>Sphere_activate_36</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="450" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_40">
+        <name>
+          <text>Sphere_activate_40</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="655" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_43">
+        <name>
+          <text>Sphere_activate_43</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="860" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_11">
+        <name>
+          <text>Sphere_activate_11</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1065" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_45">
+        <name>
+          <text>Sphere_activate_45</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1270" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_35">
+        <name>
+          <text>Sphere_activate_35</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1475" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_12">
+        <name>
+          <text>Sphere_activate_12</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1680" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_41">
+        <name>
+          <text>Sphere_activate_41</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1885" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_27">
+        <name>
+          <text>Sphere_activate_27</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2090" y="55" />
+        </graphics>
+      </transition>
+      <transition id="KeyE03_turnOff_30">
+        <name>
+          <text>KeyE03_turnOff_30</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2370" y="50" />
+        </graphics>
+      </transition>
+      <transition id="KeyE03_turnOn_30">
+        <name>
+          <text>KeyE03_turnOn_30</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2370" y="145" />
+        </graphics>
+      </transition>
+      <transition id="BallBox_turnOff_28">
+        <name>
+          <text>BallBox_turnOff_28</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2620" y="50" />
+        </graphics>
+      </transition>
+      <transition id="BallBox_turnOn_28">
+        <name>
+          <text>BallBox_turnOn_28</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2620" y="145" />
+        </graphics>
+      </transition>
+      <transition id="BallBox_perform_32">
+        <name>
+          <text>BallBox_perform_32</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2865" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_42">
+        <name>
+          <text>Sphere_activate_42</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="3030" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_37">
+        <name>
+          <text>Sphere_activate_37</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="3235" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_46">
+        <name>
+          <text>Sphere_activate_46</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="3440" y="55" />
+        </graphics>
+      </transition>
+      <transition id="KeyE03_perform_31">
+        <name>
+          <text>KeyE03_perform_31</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="3715" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Padlock_perform_29">
+        <name>
+          <text>Padlock_perform_29</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="3950" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Sphere_activate_34">
+        <name>
+          <text>Sphere_activate_34</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="4115" y="55" />
+        </graphics>
+      </transition>
+      <place id="Sphere_ActivationCount_44">
+        <name>
+          <text>Sphere_ActivationCount_44</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="155" y="55" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_38">
+        <name>
+          <text>Sphere_ActivationCount_38</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="360" y="55" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_36">
+        <name>
+          <text>Sphere_ActivationCount_36</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="565" y="55" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_40">
+        <name>
+          <text>Sphere_ActivationCount_40</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="770" y="55" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_43">
+        <name>
+          <text>Sphere_ActivationCount_43</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="975" y="55" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_11">
+        <name>
+          <text>Sphere_ActivationCount_11</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1180" y="55" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_45">
+        <name>
+          <text>Sphere_ActivationCount_45</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1385" y="55" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_35">
+        <name>
+          <text>Sphere_ActivationCount_35</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1590" y="55" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_12">
+        <name>
+          <text>Sphere_ActivationCount_12</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1795" y="55" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_41">
+        <name>
+          <text>Sphere_ActivationCount_41</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2000" y="55" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_27">
+        <name>
+          <text>Sphere_ActivationCount_27</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2205" y="55" />
+        </graphics>
+      </place>
+      <place id="KeyE03_off_30">
+        <name>
+          <text>KeyE03_off_30</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="2455" y="80" />
+        </graphics>
+      </place>
+      <place id="KeyE03_on_30">
+        <name>
+          <text>KeyE03_on_30</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2285" y="85" />
+        </graphics>
+      </place>
+      <place id="BallBox_off_28">
+        <name>
+          <text>BallBox_off_28</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="2705" y="80" />
+        </graphics>
+      </place>
+      <place id="BallBox_on_28">
+        <name>
+          <text>BallBox_on_28</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2535" y="85" />
+        </graphics>
+      </place>
+      <place id="BallBox_end_32">
+        <name>
+          <text>BallBox_end_32</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2940" y="50" />
+        </graphics>
+      </place>
+      <place id="BallBox_start_32">
+        <name>
+          <text>BallBox_start_32</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="2785" y="50" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_42">
+        <name>
+          <text>Sphere_ActivationCount_42</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="3145" y="55" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_37">
+        <name>
+          <text>Sphere_ActivationCount_37</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="3350" y="55" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_46">
+        <name>
+          <text>Sphere_ActivationCount_46</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="3555" y="55" />
+        </graphics>
+      </place>
+      <place id="KeyE03_end_31">
+        <name>
+          <text>KeyE03_end_31</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="3790" y="50" />
+        </graphics>
+      </place>
+      <place id="KeyE03_start_31">
+        <name>
+          <text>KeyE03_start_31</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="3635" y="50" />
+        </graphics>
+      </place>
+      <place id="Padlock_end_29">
+        <name>
+          <text>Padlock_end_29</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="4025" y="50" />
+        </graphics>
+      </place>
+      <place id="Padlock_start_29">
+        <name>
+          <text>Padlock_start_29</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="3870" y="50" />
+        </graphics>
+      </place>
+      <place id="Sphere_ActivationCount_34">
+        <name>
+          <text>Sphere_ActivationCount_34</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="4230" y="55" />
+        </graphics>
+      </place>
+      <arc id="48" source="Sphere_activate_44" target="Sphere_ActivationCount_44">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="49" source="BallBox_on_28" target="Sphere_activate_44">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="50" source="Padlock_end_29" target="Sphere_activate_44">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="51" source="Sphere_activate_38" target="Sphere_ActivationCount_38">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="52" source="BallBox_on_28" target="Sphere_activate_38">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="53" source="Padlock_end_29" target="Sphere_activate_38">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="54" source="Sphere_activate_36" target="Sphere_ActivationCount_36">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="55" source="BallBox_on_28" target="Sphere_activate_36">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="56" source="Padlock_end_29" target="Sphere_activate_36">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="57" source="Sphere_activate_40" target="Sphere_ActivationCount_40">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="58" source="BallBox_on_28" target="Sphere_activate_40">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="59" source="Padlock_end_29" target="Sphere_activate_40">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="60" source="Sphere_activate_43" target="Sphere_ActivationCount_43">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="61" source="BallBox_on_28" target="Sphere_activate_43">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="62" source="Padlock_end_29" target="Sphere_activate_43">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="63" source="Sphere_activate_11" target="Sphere_ActivationCount_11">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="64" source="BallBox_on_28" target="Sphere_activate_11">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="65" source="Padlock_end_29" target="Sphere_activate_11">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="66" source="Sphere_activate_45" target="Sphere_ActivationCount_45">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="67" source="BallBox_on_28" target="Sphere_activate_45">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="68" source="Padlock_end_29" target="Sphere_activate_45">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="69" source="Sphere_activate_35" target="Sphere_ActivationCount_35">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="70" source="BallBox_on_28" target="Sphere_activate_35">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="71" source="Padlock_end_29" target="Sphere_activate_35">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="72" source="Sphere_activate_12" target="Sphere_ActivationCount_12">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="73" source="BallBox_on_28" target="Sphere_activate_12">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="74" source="Padlock_end_29" target="Sphere_activate_12">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="75" source="Sphere_activate_41" target="Sphere_ActivationCount_41">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="76" source="BallBox_on_28" target="Sphere_activate_41">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="77" source="Padlock_end_29" target="Sphere_activate_41">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="78" source="Sphere_activate_27" target="Sphere_ActivationCount_27">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="79" source="BallBox_on_28" target="Sphere_activate_27">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="80" source="Padlock_end_29" target="Sphere_activate_27">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="81" source="KeyE03_turnOff_30" target="KeyE03_off_30">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="82" source="KeyE03_turnOn_30" target="KeyE03_on_30">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="83" source="KeyE03_off_30" target="KeyE03_turnOn_30">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="84" source="KeyE03_on_30" target="KeyE03_turnOff_30">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="85" source="KeyE03_end_31" target="KeyE03_turnOn_30">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="86" source="BallBox_turnOff_28" target="BallBox_off_28">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="87" source="BallBox_turnOn_28" target="BallBox_on_28">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="88" source="BallBox_off_28" target="BallBox_turnOn_28">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="89" source="BallBox_on_28" target="BallBox_turnOff_28">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="90" source="BallBox_perform_32" target="BallBox_end_32">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="91" source="BallBox_start_32" target="BallBox_perform_32">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="92" source="Sphere_ActivationCount_11" target="BallBox_perform_32">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="93" source="Sphere_ActivationCount_12" target="BallBox_perform_32">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="94" source="Sphere_ActivationCount_27" target="BallBox_perform_32">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="95" source="Sphere_activate_42" target="Sphere_ActivationCount_42">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="96" source="BallBox_on_28" target="Sphere_activate_42">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="97" source="Padlock_end_29" target="Sphere_activate_42">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="98" source="Sphere_activate_37" target="Sphere_ActivationCount_37">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="99" source="BallBox_on_28" target="Sphere_activate_37">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="100" source="Padlock_end_29" target="Sphere_activate_37">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="101" source="Sphere_activate_46" target="Sphere_ActivationCount_46">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="102" source="BallBox_on_28" target="Sphere_activate_46">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="103" source="Padlock_end_29" target="Sphere_activate_46">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="104" source="KeyE03_perform_31" target="KeyE03_end_31">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="105" source="KeyE03_start_31" target="KeyE03_perform_31">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="106" source="Padlock_perform_29" target="Padlock_end_29">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="107" source="Padlock_start_29" target="Padlock_perform_29">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="108" source="BallBox_on_28" target="Padlock_perform_29">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="109" source="KeyE03_on_30" target="Padlock_perform_29">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="110" source="Sphere_activate_34" target="Sphere_ActivationCount_34">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="111" source="BallBox_on_28" target="Sphere_activate_34">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="112" source="Padlock_end_29" target="Sphere_activate_34">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+    </page>
+  </net>
+</pnml>

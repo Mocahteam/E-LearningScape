@@ -61,6 +61,8 @@ TagManager:
   - UIBackground
   - HUDInputs
   - NewItemFeedback
+  - HelpSubtitles
+  - MainMenuButton
   layers:
   - Default
   - TransparentFX
@@ -73,7 +75,7 @@ TagManager:
   - MirrorGO
   - Eraser
   - EraserLinerenderer
-  - 
+  - BlurredBackgrounds
   - 
   - 
   - 

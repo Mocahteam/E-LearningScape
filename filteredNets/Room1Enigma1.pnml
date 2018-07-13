@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-33FC-6DE2D-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Room1Enigma1</text>
+  </name>
+ <page id="g-33FC-6DE37-1">
+  <place id="p-33FC-6DE3A-2">
+  <name>
+   <text>BallBox_end_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="835" y="195"/>
+   </graphics>
+  </place>
+  <place id="p-33FC-6DE46-3">
+  <name>
+   <text>BallBox_off_28</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="77" y="195"/>
+   </graphics>
+  </place>
+  <place id="p-33FC-6DE49-4">
+  <name>
+   <text>BallBox_on_28</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="237" y="195"/>
+   </graphics>
+  </place>
+  <transition id="t-33FC-6DE4C-5">
+  <name>
+   <text>BallBox_perform_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="755" y="195"/>
+   </graphics>
+  </transition>
+  <place id="p-33FC-6DE4F-6">
+  <name>
+   <text>BallBox_start_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="675" y="195"/>
+   </graphics>
+  </place>
+  <transition id="t-33FC-6DE53-7">
+  <name>
+   <text>BallBox_turnOn_28</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="157" y="255"/>
+   </graphics>
+  </transition>
+  <place id="p-33FC-6DE55-8">
+  <name>
+   <text>KeyE03_end_31</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="215" y="355"/>
+   </graphics>
+  </place>
+  <place id="p-33FC-6DE5A-9">
+  <name>
+   <text>KeyE03_off_30</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="535" y="355"/>
+   </graphics>
+  </place>
+  <place id="p-33FC-6DE5C-10">
+  <name>
+   <text>KeyE03_on_30</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="355" y="355"/>
+   </graphics>
+  </place>
+  <transition id="t-33FC-6DE5F-11">
+  <name>
+   <text>KeyE03_perform_31</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="155" y="355"/>
+   </graphics>
+  </transition>
+  <place id="p-33FC-6DE63-12">
+  <name>
+   <text>KeyE03_start_31</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="75" y="355"/>
+   </graphics>
+  </place>
+  <transition id="t-33FC-6DE65-13">
+  <name>
+   <text>KeyE03_turnOn_30</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="445" y="415"/>
+   </graphics>
+  </transition>
+  <place id="p-33FC-6DE69-14">
+  <name>
+   <text>Padlock_end_29</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="515" y="195"/>
+   </graphics>
+  </place>
+  <transition id="t-33FC-6DE6B-15">
+  <name>
+   <text>Padlock_perform_29</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="445" y="195"/>
+   </graphics>
+  </transition>
+  <place id="p-33FC-6DE6E-16">
+  <name>
+   <text>Padlock_start_29</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="365" y="195"/>
+   </graphics>
+  </place>
+  <place id="p-33FC-6DE72-17">
+  <name>
+   <text>Sphere_ActivationCount_11</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="215" y="55"/>
+   </graphics>
+  </place>
+  <place id="p-33FC-6DE74-18">
+  <name>
+   <text>Sphere_ActivationCount_12</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="495" y="55"/>
+   </graphics>
+  </place>
+  <place id="p-33FC-6DEFF-19">
+  <name>
+   <text>Sphere_ActivationCount_27</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="815" y="55"/>
+   </graphics>
+  </place>
+  <transition id="t-33FC-6DF04-20">
+  <name>
+   <text>Sphere_activate_11</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="95" y="55"/>
+   </graphics>
+  </transition>
+  <transition id="t-33FC-6DF08-21">
+  <name>
+   <text>Sphere_activate_12</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="375" y="55"/>
+   </graphics>
+  </transition>
+  <transition id="t-33FC-6DF0A-22">
+  <name>
+   <text>Sphere_activate_27</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="695" y="55"/>
+   </graphics>
+  </transition>
+  <arc id="e-33FC-6DF11-23" source="p-33FC-6DE4F-6" target="t-33FC-6DE4C-5">
+  </arc>
+  <arc id="e-33FC-6DF13-24" source="p-33FC-6DE5C-10" target="t-33FC-6DE6B-15">
+   <type value="test"/>
+  </arc>
+  <arc id="e-33FC-6DF16-25" source="t-33FC-6DF04-20" target="p-33FC-6DE72-17">
+  </arc>
+  <arc id="e-33FC-6DF17-26" source="p-33FC-6DE49-4" target="t-33FC-6DF04-20">
+   <type value="test"/>
+  </arc>
+  <arc id="e-33FC-6DF18-27" source="p-33FC-6DE69-14" target="t-33FC-6DF04-20">
+   <type value="test"/>
+  </arc>
+  <arc id="e-33FC-6DF19-28" source="t-33FC-6DF08-21" target="p-33FC-6DE74-18">
+  </arc>
+  <arc id="e-33FC-6DF28-29" source="p-33FC-6DE49-4" target="t-33FC-6DF08-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-33FC-6DF2A-30" source="p-33FC-6DE69-14" target="t-33FC-6DF08-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-33FC-6DF2B-31" source="t-33FC-6DF0A-22" target="p-33FC-6DEFF-19">
+  </arc>
+  <arc id="e-33FC-6DF2C-32" source="p-33FC-6DE49-4" target="t-33FC-6DF0A-22">
+   <type value="test"/>
+  </arc>
+  <arc id="e-33FC-6DF2D-33" source="p-33FC-6DE69-14" target="t-33FC-6DF0A-22">
+   <type value="test"/>
+  </arc>
+  <arc id="e-33FC-6DF2E-34" source="p-33FC-6DE72-17" target="t-33FC-6DE4C-5">
+   <type value="test"/>
+  </arc>
+  <arc id="e-33FC-6DF2F-35" source="t-33FC-6DE65-13" target="p-33FC-6DE5C-10">
+  </arc>
+  <arc id="e-33FC-6DF30-36" source="p-33FC-6DE5A-9" target="t-33FC-6DE65-13">
+  </arc>
+  <arc id="e-33FC-6DF31-37" source="p-33FC-6DE55-8" target="t-33FC-6DE65-13">
+   <type value="test"/>
+  </arc>
+  <arc id="e-33FC-6DF32-38" source="t-33FC-6DE53-7" target="p-33FC-6DE49-4">
+  </arc>
+  <arc id="e-33FC-6DF34-39" source="p-33FC-6DE46-3" target="t-33FC-6DE53-7">
+  </arc>
+  <arc id="e-33FC-6DF35-40" source="t-33FC-6DE4C-5" target="p-33FC-6DE3A-2">
+  </arc>
+  <arc id="e-33FC-6DF36-41" source="p-33FC-6DE74-18" target="t-33FC-6DE4C-5">
+   <type value="test"/>
+  </arc>
+  <arc id="e-33FC-6DF37-42" source="t-33FC-6DE5F-11" target="p-33FC-6DE55-8">
+  </arc>
+  <arc id="e-33FC-6DF38-43" source="p-33FC-6DE63-12" target="t-33FC-6DE5F-11">
+  </arc>
+  <arc id="e-33FC-6DF39-44" source="p-33FC-6DEFF-19" target="t-33FC-6DE4C-5">
+   <type value="test"/>
+  </arc>
+  <arc id="e-33FC-6DF3A-45" source="t-33FC-6DE6B-15" target="p-33FC-6DE69-14">
+  </arc>
+  <arc id="e-33FC-6DF3B-46" source="p-33FC-6DE6E-16" target="t-33FC-6DE6B-15">
+  </arc>
+  <arc id="e-33FC-6DF3C-47" source="p-33FC-6DE49-4" target="t-33FC-6DE6B-15">
+   <type value="test"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

@@ -106,12 +106,15 @@ public class Pause : FSystem {
     void Restart() //restart game from beginning
     {
         ResetStaticVariables();
+        MenuSystem.onGame = true;
         GameObjectManager.loadScene("Sapiens");
     }
 
     void GoToMenu() //open menu scene
     {
-        GameObjectManager.loadScene("Menu");
+        ResetStaticVariables();
+        MenuSystem.onGame = false;
+        GameObjectManager.loadScene("Sapiens");
     }
 
     public static void ResetStaticVariables()
@@ -146,6 +149,5 @@ public class Pause : FSystem {
         StoryDisplaying.reading = false;
         playerEnabled = true;
         askResume = false;
-        Timer.addTimer = false;
     }
 }

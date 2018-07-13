@@ -8,6 +8,11 @@ public class StoryDisplaying : FSystem {
 
     private Family storyDisplayer = FamilyManager.getFamily(new AnyOfTags("StoryDisplayer"));
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
+    private Family storyText = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
+    private Family game = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
+    private Family ui = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
+    private Family buttons = FamilyManager.getFamily(new AnyOfTags("MainMenuButton"));
+    private Family cameras = FamilyManager.getFamily(new AllOfComponents(typeof(Camera)));
 
     private Image background;
     private TextMeshProUGUI sdText;
@@ -15,7 +20,7 @@ public class StoryDisplaying : FSystem {
     private GameObject clickFeedback;
     private GameObject endScreen;
 
-    private bool readingIntro = false;
+    public static bool readingIntro = false;
     public static bool readingTransition = false;
     public static bool readingEnding = false;
     public static bool reading = false;
@@ -32,7 +37,9 @@ public class StoryDisplaying : FSystem {
     private string[] introText;
     private string[] transitionText;
     private string[] endingText;
-    
+
+    private GameObject menuCamera;
+
     public StoryDisplaying()
     {
         if (Application.isPlaying)
@@ -60,29 +67,17 @@ public class StoryDisplaying : FSystem {
                     endScreen = child.gameObject;
                 }
             }
-            
-            introText = new string[3];
-            introText[0] = "Il est déjà tard le soir, Camille reste inquiète pour son premier enseignement à Sorbonne Université. Ce n’est pas la première fois qu’elle enseigne, mais maintenant elle est Maître de Conférences, son premier poste permanent.";
-            introText[1] = "En se brossant les dents, elle révise une fois de plus le cours du prof qu’elle connaît déjà par coeur. Puis elle se couche, et plein de questions tournent dans sa tête : et si j’ai un blanc ? et si les étudiants ne sont pas motivés ? et s’il n’y a pas de craie ?";
-            introText[2] = "Camille fini par s'endormir... C'est alors que les marchands de sable entrent en action pour aider Camille à structurer sa pensée pendant son sommeil.";
-
-            transitionText = new string[1];
-            transitionText[0] = "Camille est tombée en sommeil paradoxal, et elle se met à rêver. L’université se transforme en jungle pleine de dangers. Les marchands de sable restent avec elle pour la protéger.";
-
-            endingText = new string[4];
-            endingText[0] = "Camille se réveille. Elle est en pleine forme, et tout est clair dans sa tête pour son premier enseignement. Elle a hâte de commencer.";
-            endingText[1] = "Les marchands de sable ont bien travaillé et se retrouvent pour un débriefing sur tout leur travail.";
-            endingText[2] = "Adaptation de l'escape game \"LearningScape\" de Sapiens";
-            endingText[3] = "Mounswif Darkaoui\nSimon Giraud\nBasile Pesin\nThomas Planques\nMathieu Muratet\nBerni Hasenknopf";
-
-            if (storyDisplayer.First().activeSelf)
+            introText = storyText.First().GetComponent<StoryText>().intro;
+            transitionText = storyText.First().GetComponent<StoryText>().transition;
+            endingText = storyText.First().GetComponent<StoryText>().end;
+            int nb = cameras.Count;
+            for(int i = 0; i < nb; i++)
             {
-                readTexts = introText;
-                player.First().GetComponent<FirstPersonController>().enabled = false;
-                Cursor.visible = false;
-                readingTimer = Time.time;
-                fadingIn = true;
-                readingIntro = true;
+                if(cameras.getAt(i).name == "MenuCamera")
+                {
+                    menuCamera = cameras.getAt(i);
+                    break;
+                }
             }
         }
     }
@@ -111,10 +106,10 @@ public class StoryDisplaying : FSystem {
                 {
                     readTexts = introText;
                     readingTimer = Time.time;
-                    fadingIn = true;
+                    fadingToReadingMode = true;
                     fadingImage.color = Color.black;
                     background.color = Color.black;
-                    sdText.text = readTexts[0];
+                    sdText.text = "";
                 }
                 else if (readingTransition)
                 {
@@ -203,6 +198,13 @@ public class StoryDisplaying : FSystem {
             }
             else if (fadingToReadingMode)
             {
+                if (readingIntro)
+                {
+                    if (MenuSystem.onGame)
+                    {
+                        readingTimer = Time.time - 4;
+                    }
+                }
                 if (Time.time - readingTimer < 4)
                 {
                     Color c = fadingImage.color;
@@ -228,6 +230,55 @@ public class StoryDisplaying : FSystem {
                     c = background.color;
                     background.color = new Color(c.r, c.g, c.b, 1);
                     fadingToReadingMode = false;
+                    if (readingIntro)
+                    {
+                        RenderSettings.fogDensity = 0.03f;
+                        foreach (FSystem s in FSystemManager.fixedUpdateSystems())
+                        {
+                            s.Pause = s.ToString() == "MenuSystem";
+                        }
+                        foreach (FSystem s in FSystemManager.updateSystems())
+                        {
+                            s.Pause = s.ToString() == "MenuSystem";
+                        }
+                        foreach (FSystem s in FSystemManager.lateUpdateSystems())
+                        {
+                            s.Pause = s.ToString() == "MenuSystem";
+                        }
+                        foreach (Transform room in game.First().transform)
+                        {
+                            if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
+                            {
+                                GameObjectManager.setGameObjectState(room.gameObject, false);
+                            }
+                        }
+                        foreach (GameObject go in ui)
+                        {
+                            if (go.name == "Cursor")
+                            {
+                                GameObjectManager.setGameObjectState(go, true);
+                                break;
+                            }
+                        }
+                        GameObjectManager.setGameObjectState(menuCamera, false);
+                        foreach (Camera camera in player.First().GetComponentsInChildren<Camera>())
+                        {
+                            if (camera.gameObject.name == "FirstPersonCharacter")
+                            {
+                                camera.gameObject.tag = "MainCamera";
+                                break;
+                            }
+                        }
+                        GameObjectManager.setGameObjectState(buttons.First().transform.parent.gameObject, false);
+                        foreach (Transform child in buttons.First().transform.parent.parent)
+                        {
+                            if (child.gameObject.name == "MenuFadingBackground")
+                            {
+                                GameObjectManager.setGameObjectState(child.gameObject, false);
+                                break;
+                            }
+                        }
+                    }
                     if (textCount < readTexts.Length)
                     {
                         sdText.text = readTexts[textCount];

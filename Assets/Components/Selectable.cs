@@ -12,7 +12,7 @@ public class Selectable : MonoBehaviour {//objects that can be selected by the p
     public bool isSelected = false; //true when this component's gameobject is selected
     public bool solved = false;     //true if the enigma associated to this gameobject is solved
 
-    //audios played when the player gives an answer
+    //audios played when the player gives an answer to the enigma linked to this object
     public AudioClip right;
     public AudioClip wrong;
 }

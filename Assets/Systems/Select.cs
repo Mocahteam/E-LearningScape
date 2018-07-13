@@ -9,6 +9,7 @@ public class Select : FSystem {
     //all takable objects
     private Family tObjects = FamilyManager.getFamily(new AllOfComponents(typeof(Takable)));
     private Family focusedMatFamily = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
+    private Family cameras = FamilyManager.getFamily(new AllOfComponents(typeof(Camera)));
 
     private GameObject focused;
     private bool selected = false;
@@ -20,12 +21,23 @@ public class Select : FSystem {
 	private GameObject forGO;
     private Renderer[]tmpRendererList;
 
+    private GameObject playerCamera;
+
     public Select()
     {
         if (Application.isPlaying)
         {
             focusedMaterial = focusedMatFamily.First().GetComponent<FocusedGOMaterial>().material;
             previousMaterial = new Queue<Material>();
+            int nb = cameras.Count;
+            for (int i = 0; i < nb; i++)
+            {
+                if (cameras.getAt(i).name == "FirstPersonCharacter")
+                {
+                    playerCamera = cameras.getAt(i);
+                    break;
+                }
+            }
         }
     }
 
@@ -99,9 +111,9 @@ public class Select : FSystem {
                  * and save it as focused object
                  */
                 RaycastHit hit;
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
+                if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit))
                 {
-                    if ((hit.transform.gameObject.transform.position - Camera.main.transform.position).magnitude < 7)
+                    if ((hit.transform.gameObject.transform.position - playerCamera.transform.position).magnitude < 7)
                     {
                         if (hit.transform.gameObject.GetComponent<Takable>())
                         {

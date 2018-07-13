@@ -7,4 +7,6 @@ public class Takable : MonoBehaviour {//objects that can be taken by the player 
 
     public bool taken = false;              //true when this component's gameobject is taken
     public bool focused = false;    //true when there is no selection and the mouse is over the gameobject
+    public Vector3 initialPosition;
+    public Quaternion initialRotation;
 }

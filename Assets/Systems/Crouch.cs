@@ -2,6 +2,7 @@
 using FYFY;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
+using FYFY_plugins.Monitoring;
 
 public class Crouch : FSystem
 {
@@ -27,7 +28,7 @@ public class Crouch : FSystem
     public Crouch()
     {
         //when crouching, the scale of the player is changed (rather than its position)
-        crouchingScale = new Vector3(0.2f, 0.2f, 0.2f);
+        crouchingScale = Vector3.one * 0.2f;
     }
 
     // Use this to update member variables when system pause. 
@@ -53,6 +54,12 @@ public class Crouch : FSystem
                 {
                     player.First().GetComponent<FirstPersonController>().m_WalkSpeed = 5;
                     player.First().GetComponent<FirstPersonController>().m_RunSpeed = 5;
+                    if (player.First().GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                    {
+                        MonitoringTrace trace = new MonitoringTrace(player.First().GetComponent<ComponentMonitoring>(), "turnOff");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                        HelpSystem.traces.Enqueue(trace);
+                    }
                 }
                 else
                 {
@@ -69,6 +76,12 @@ public class Crouch : FSystem
                     }
                     player.First().GetComponent<FirstPersonController>().m_WalkSpeed = 1;
                     player.First().GetComponent<FirstPersonController>().m_RunSpeed = 1;
+                    if (player.First().GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                    {
+                        MonitoringTrace trace = new MonitoringTrace(player.First().GetComponent<ComponentMonitoring>(), "turnOn");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                        HelpSystem.traces.Enqueue(trace);
+                    }
                 }
             }
         }

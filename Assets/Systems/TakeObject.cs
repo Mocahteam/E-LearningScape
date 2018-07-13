@@ -32,9 +32,12 @@ public class TakeObject : FSystem {
             int nbTakable = tObjects.Count;
             for (int i = 0; i < nbTakable; i++)
             {
-                if (tObjects.getAt(i).tag != "TableE05")
+                forGO = tObjects.getAt(i);
+                forGO.GetComponent<Takable>().initialPosition = forGO.transform.position;
+                forGO.GetComponent<Takable>().initialRotation = forGO.transform.rotation;
+                if (forGO.tag != "TableE05")
                 {
-                    tObjects.getAt(i).GetComponent<Rigidbody>().isKinematic = false;
+                    forGO.GetComponent<Rigidbody>().isKinematic = false;
                 }
             }
             plankInitialSprite = plankE09.First().GetComponentInChildren<Image>().sprite;
@@ -84,9 +87,10 @@ public class TakeObject : FSystem {
 		for(int i = 0; i < nbTakable; i++)
         {
 			forGO = tObjects.getAt (i);
-			if(forGO.transform.position.y < forGO.transform.parent.transform.position.y-1)
+			if(forGO.transform.position.y < -0.5f)
             {
-				forGO.transform.position = forGO.transform.parent.transform.position + Vector3.up*3;
+                forGO.transform.position = forGO.GetComponent<Takable>().initialPosition + Vector3.up;
+                forGO.transform.rotation = forGO.GetComponent<Takable>().initialRotation;
             }
         }
 

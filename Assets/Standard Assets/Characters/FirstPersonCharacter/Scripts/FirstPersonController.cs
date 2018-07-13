@@ -46,7 +46,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Start()
         {
             m_CharacterController = GetComponent<CharacterController>();
-            m_Camera = Camera.main;
+            foreach (Camera camera in this.gameObject.GetComponentsInChildren<Camera>())
+            {
+                if (camera.gameObject.name == "FirstPersonCharacter")
+                {
+                    m_Camera = camera;
+                    break;
+                }
+            }
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
             m_FovKick.Setup(m_Camera);
             m_HeadBob.Setup(m_Camera, m_StepInterval);

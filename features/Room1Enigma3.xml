@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Chair (3)_turnOff_7" label="turnOff Chair (3)" system="False" end="False" />
+  <transition id="Chair (3)_turnOn_7" label="turnOn Chair (3)" system="False" end="False" />
+  <transition id="Chair (2)_turnOff_6" label="turnOff Chair (2)" system="False" end="False" />
+  <transition id="Chair (2)_turnOn_6" label="turnOn Chair (2)" system="False" end="False" />
+  <transition id="Fragment_souvenir 1_activate_15" label="activate Fragment_souvenir 1" system="False" end="False" />
+  <transition id="or0_Fragment_souvenir 1_activate_15" label="activate Fragment_souvenir 1" system="False" end="False" />
+  <transition id="Fragment_souvenir 1 (1)_activate_18" label="activate Fragment_souvenir 1 (1)" system="False" end="False" />
+  <transition id="Chair (1)_turnOff_5" label="turnOff Chair (1)" system="False" end="False" />
+  <transition id="Chair (1)_turnOn_5" label="turnOn Chair (1)" system="False" end="False" />
+  <transition id="Table_turnOff_17" label="turnOff Table" system="False" end="False" />
+  <transition id="Table_turnOn_17" label="turnOn Table" system="False" end="False" />
+  <transition id="Fragment_souvenir 1_activate_14" label="activate Fragment_souvenir 1" system="False" end="False" />
+  <transition id="or0_Fragment_souvenir 1_activate_14" label="activate Fragment_souvenir 1" system="False" end="False" />
+  <transition id="Fragment_souvenir 1_activate_16" label="activate Fragment_souvenir 1" system="False" end="False" />
+  <transition id="Chair_turnOff_9" label="turnOff Chair" system="False" end="False" />
+  <transition id="Chair_turnOn_9" label="turnOn Chair" system="False" end="False" />
+  <transition id="FPSController_turnOff_13" label="turnOff FPSController" system="False" end="False" />
+  <transition id="FPSController_turnOn_13" label="turnOn FPSController" system="False" end="False" />
+  <transition id="Fragment_souvenir 1 (2)_activate_19" label="activate Fragment_souvenir 1 (2)" system="False" end="False" />
+  <transition id="Chair (5)_turnOff_10" label="turnOff Chair (5)" system="False" end="False" />
+  <transition id="Chair (5)_turnOn_10" label="turnOn Chair (5)" system="False" end="False" />
+  <transition id="Q3_perform_26" label="perform Q3" system="True" end="True" />
+  <transition id="Fragment_souvenir 1_activate_20" label="activate Fragment_souvenir 1" system="False" end="False" />
+  <transition id="Chair (4)_turnOff_8" label="turnOff Chair (4)" system="False" end="False" />
+  <transition id="Chair (4)_turnOn_8" label="turnOn Chair (4)" system="False" end="False" />
+</transitions>

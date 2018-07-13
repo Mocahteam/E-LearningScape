@@ -57,7 +57,7 @@
         <member name="F:FYFY_plugins.Monitoring.ComponentMonitoring.id">
             <summary> Component id </summary>
         </member>
-        <member name="F:FYFY_plugins.Monitoring.ComponentMonitoring.fullPn">
+        <member name="F:FYFY_plugins.Monitoring.ComponentMonitoring.fullPnSelected">
             <summary> Name of the parent Petri net to include this monitor</summary>
         </member>
         <member name="F:FYFY_plugins.Monitoring.ComponentMonitoring.transitionLinks">
@@ -118,6 +118,9 @@
             <summary>
             	This component trigger the building of PetriNets and Features and write traces when the game is over.
             </summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.MonitoringManager.PetriNetsName">
+            <summary>List of Petri Nets name</summary>
         </member>
         <member name="F:FYFY_plugins.Monitoring.MonitoringManager.inGameAnalysis">
             <summary>Is analysis run in game?</summary>

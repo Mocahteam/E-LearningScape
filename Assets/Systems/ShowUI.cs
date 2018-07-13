@@ -88,6 +88,7 @@ public class ShowUI : FSystem {
     private bool moveBox = false;               //true during the animation to move the box in front of the player
     private bool openBox = false;               //true during the animation to open the box
     private bool takingBalls = false;           //true during the animation to take out balls from the box
+    private bool wasTakingballs = false;
     private Vector3 boxTopPos = Vector3.zero;   //position of the box lid when opened
     private Vector3 boxTopIniPos;               //position of the box lid when closed
     private bool ballsout = false;              //true when all balss are out
@@ -100,6 +101,9 @@ public class ShowUI : FSystem {
     private GameObject focusedBall = null;  //store the focused ball
     private Vector3 ballToCamera;           //position of the ball when selected
     private TextMeshProUGUI ballSubTitles;
+    private bool ball1Seen = false;
+    private bool ball2Seen = false;
+    private bool ball8Seen = false;
 
     //tablet
     private GameObject selectedTablet;
@@ -183,7 +187,10 @@ public class ShowUI : FSystem {
             ballSubTitles = box.First().GetComponentInChildren<Canvas>().gameObject.GetComponentInChildren<TextMeshProUGUI>();
             bagPaperInitialPos = bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition;
             board = boardFamilly.First();
-            Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = true;
+            if (Camera.main.GetComponent<PostProcessingBehaviour>())
+            {
+                Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = true;
+            }
 
             int nb = ui.Count;
             for (int i = 0; i < nb; i++)
@@ -420,6 +427,7 @@ public class ShowUI : FSystem {
         speedRotation *= Time.deltaTime / oldDT;
         speedRotation2 *= Time.deltaTime / oldDT;
         oldDT = Time.deltaTime;
+        wasTakingballs = false;
 
         if (askCloseWindow)
         {
@@ -519,6 +527,23 @@ public class ShowUI : FSystem {
                                 moveBox = false;
                                 ballsout = true;
                             }
+                            else if (Input.GetMouseButtonDown(0))
+                            {
+                                //stop animations
+                                takingBalls = false;
+                                wasTakingballs = true;
+                                moveBox = false;
+                                ballsout = true;
+                                for(int j = 0; j < nbBalls; j++)
+                                {
+                                    forGO = balls.getAt(j);
+                                    b = forGO.GetComponent<Ball>();
+                                    ballPos = Vector3.up * ((float)balls.Count / 10 - (float)(b.id / 5) / 3) + Vector3.right * ((float)(b.id % 5) * -2f / 4 + 1f) * 2 / 3 + Vector3.forward * 0.3f;
+                                    forGO.transform.localPosition = ballPos;
+                                    forGO.transform.localRotation = Quaternion.Euler(Vector3.up * -90 + Vector3.right * 90);
+                                }
+                                break;
+                            }
                         }
                         else //if the ball is still in the box
                         {
@@ -548,6 +573,12 @@ public class ShowUI : FSystem {
                     unlockBox = false;
                     CollectableGO.usingKeyE03 = false;
                     SetAnswer.credits = false;
+                    if(boxPadlock.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                    {
+                        MonitoringTrace trace = new MonitoringTrace(boxPadlock.GetComponent<ComponentMonitoring>(), "perform");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
+                        HelpSystem.traces.Enqueue(trace);
+                    }
                     //hide inventory's displayed elements
                     foreach (Transform child in inventory.First().transform)
                     {
@@ -619,6 +650,46 @@ public class ShowUI : FSystem {
                 //when the ball arrives
                 if (focusedBall.transform.position == ballToCamera)
                 {
+                    if (focusedBall.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                    {
+                        MonitoringTrace trace = new MonitoringTrace(focusedBall.GetComponent<ComponentMonitoring>(),"activate");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                        HelpSystem.traces.Enqueue(trace);
+                    }
+                    int id = focusedBall.GetComponent<Ball>().id;
+                    switch (id)
+                    {
+                        case 0:
+                            ball1Seen = true;
+                            break;
+
+                        case 1:
+                            ball2Seen = true;
+                            break;
+
+                        case 7:
+                            ball8Seen = true;
+                            break;
+
+                        default:
+                            break;
+                    }
+                    if (!box.First().GetComponent<Selectable>().solved)
+                    {
+                        if(ball1Seen && ball2Seen && ball8Seen)
+                        {
+                            box.First().GetComponent<Selectable>().solved = true;
+                            if (HelpSystem.monitoring)
+                            {
+                                MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(22), "perform");
+                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
+                                HelpSystem.traces.Enqueue(trace);
+                                trace = new MonitoringTrace(MonitoringManager.getMonitorById(32), "perform");
+                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
+                                HelpSystem.traces.Enqueue(trace);
+                            }
+                        }
+                    }
                     moveBall = false;
                 }
             }
@@ -947,6 +1018,15 @@ public class ShowUI : FSystem {
                             GameObjectManager.setGameObjectState(child.gameObject,true);
                         }
                     }
+                    if (HelpSystem.monitoring)
+                    {
+                        MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(4),"perform");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                        HelpSystem.traces.Enqueue(trace);
+                        trace = new MonitoringTrace(MonitoringManager.getMonitorById(21),"perform");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
+                        HelpSystem.traces.Enqueue(trace);
+                    }
                 }
             }
         }
@@ -979,6 +1059,15 @@ public class ShowUI : FSystem {
                             GameObjectManager.setGameObjectState(child.gameObject,true);
                         }
                     }
+                    if (HelpSystem.monitoring)
+                    {
+                        MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(4), "perform");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                        HelpSystem.traces.Enqueue(trace);
+                        trace = new MonitoringTrace(MonitoringManager.getMonitorById(21), "perform");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
+                        HelpSystem.traces.Enqueue(trace);
+                    }
                 }
             }
         }
@@ -1009,9 +1098,11 @@ public class ShowUI : FSystem {
 						}
 						moveToPlank = true; //start animation to move the player in front of the plank
 						onPlank = true;
-                        if (forGO.GetComponent<ComponentMonitoring>())
+                        if (HelpSystem.monitoring)
                         {
-                            MonitoringManager.trace(MonitoringManager.getMonitorById(0), "turnOn", MonitoringManager.Source.PLAYER);
+                            MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(53), "turnOn");
+                            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                            HelpSystem.traces.Enqueue(trace);
                         }
                     } else if (forGO.tag == "Box") {    //set box
 						forGO.GetComponent<Rigidbody> ().isKinematic = true;
@@ -1025,7 +1116,13 @@ public class ShowUI : FSystem {
 						speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
 						moveBox = true; //start animation to move the box in front of the player
 						onBox = true;
-					} else if (forGO.tag == "Tablet") { //set tablet
+                        if (HelpSystem.monitoring)
+                        {
+                            MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(28), "turnOn");
+                            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                            HelpSystem.traces.Enqueue(trace);
+                        }
+                    } else if (forGO.tag == "Tablet") { //set tablet
 						selectedTablet = forGO;
 						tabletScreen = selectedTablet.GetComponentInChildren<Canvas> ().gameObject;
 						selectedTablet.GetComponent<Rigidbody> ().isKinematic = true;
@@ -1102,7 +1199,23 @@ public class ShowUI : FSystem {
 						speedRotation2 = Camera.main.transform.localRotation.eulerAngles.magnitude * speed / dist;
 						moveBag = true; //start animation to move the bag in front of the player
 						onBag = true;
-					} else if (forGO.tag == "LockRoom2") {  //set lock room 2
+                        if (CollectableGO.usingGlasses1 && CollectableGO.usingGlasses2)
+                        {
+                            bag.First().GetComponentInChildren<Image>().sprite = bag.First().GetComponentInChildren<BagImage>().image4;
+                        }
+                        else if (CollectableGO.usingGlasses1)
+                        {
+                            bag.First().GetComponentInChildren<Image>().sprite = bag.First().GetComponentInChildren<BagImage>().image3;
+                        }
+                        else if (CollectableGO.usingGlasses2)
+                        {
+                            bag.First().GetComponentInChildren<Image>().sprite = bag.First().GetComponentInChildren<BagImage>().image2;
+                        }
+                        else
+                        {
+                            bag.First().GetComponentInChildren<Image>().sprite = bag.First().GetComponentInChildren<BagImage>().image1;
+                        }
+                    } else if (forGO.tag == "LockRoom2") {  //set lock room 2
 						//the position in front of the lock is not the same depending on the scale of the player
 						if (player.First ().transform.localScale.x < 0.9f) {
 							lockR2Pos = new Vector3 (lockWheel2.transform.position.x - 2.5f, 2.68f, lockWheel2.transform.position.z);
@@ -1141,6 +1254,12 @@ public class ShowUI : FSystem {
                         }
                         moveToLockIntro = true; //start animation to move the player in front of the lock
                         onLockIntro = true;
+                        if(HelpSystem.monitoring)
+                        {
+                            MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(3), "turnOn");
+                            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                            HelpSystem.traces.Enqueue(trace);
+                        }
                     }
                     else if (forGO.name == "Carillon") {
                         GameObjectManager.setGameObjectState(carillonImage,true);
@@ -1176,7 +1295,7 @@ public class ShowUI : FSystem {
 		else if(!IARTab.onIAR)    //if "noselection" is false
         {
 			if (onPlank) {
-				if (closePlank.Count == 0 && (Input.GetMouseButtonDown (0) || Input.GetKeyDown(KeyCode.Escape)) && !moveToPlank) {
+				if (((closePlank.Count == 0 && Input.GetMouseButtonDown (0)) || Input.GetKeyDown(KeyCode.Escape)) && !moveToPlank) {
 					CloseWindow ();
 				} else{
 					pointerOverWord = false;
@@ -1196,9 +1315,11 @@ public class ShowUI : FSystem {
                                     lr.positionCount--;
                                     //set the new positions
                                     lr.SetPositions (lrPositions.ToArray ());
-                                    if (forGO.GetComponent<ComponentMonitoring>())
+                                    if (HelpSystem.monitoring && forGO.GetComponent<ComponentMonitoring>())
                                     {
-                                        MonitoringManager.trace(forGO.GetComponent<ComponentMonitoring>(), "turnOff", MonitoringManager.Source.PLAYER);
+                                        MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "turnOff");
+                                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                        HelpSystem.traces.Enqueue(trace);
                                     }
                                 } else {    //if the word wasn't selected
 									if (lr.positionCount > 2) {
@@ -1207,9 +1328,11 @@ public class ShowUI : FSystem {
                                         {
                                             if (w.GetComponent<TextMeshPro>().color == Color.red)
                                             {
-                                                if (w.GetComponent<ComponentMonitoring>())
+                                                if (HelpSystem.monitoring && w.GetComponent<ComponentMonitoring>())
                                                 {
-                                                    MonitoringManager.trace(w.GetComponent<ComponentMonitoring>(), "turnOff", MonitoringManager.Source.SYSTEM);
+                                                    MonitoringTrace trace = new MonitoringTrace(w.GetComponent<ComponentMonitoring>(), "turnOff");
+                                                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
+                                                    HelpSystem.traces.Enqueue(trace);
                                                 }
                                             }
                                             w.GetComponent<TextMeshPro>().color = Color.black;
@@ -1229,13 +1352,24 @@ public class ShowUI : FSystem {
 											correct = false;
 										}
                                     }
-                                    if (forGO.GetComponent<ComponentMonitoring>())
+                                    if (HelpSystem.monitoring && forGO.GetComponent<ComponentMonitoring>())
                                     {
-                                        MonitoringManager.trace(forGO.GetComponent<ComponentMonitoring>(), "turnOn", MonitoringManager.Source.PLAYER);
+                                        MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "turnOn");
+                                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                        HelpSystem.traces.Enqueue(trace);
                                     }
                                     if (correct) {
 										Selectable.askRight = true;
-                                        //MonitoringManager.trace(MonitoringManager.getMonitorById(7), "perform", MonitoringManager.Source.SYSTEM);
+                                        CollectableGO.usingWire = false;
+                                        if (HelpSystem.monitoring)
+                                        {
+                                            MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(23), "perform");
+                                            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
+                                            HelpSystem.traces.Enqueue(trace);
+                                            trace = new MonitoringTrace(MonitoringManager.getMonitorById(54), "perform");
+                                            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
+                                            HelpSystem.traces.Enqueue(trace);
+                                        }
                                     }
                                 }
 							} else {    //if mouse over a word without click
@@ -1244,9 +1378,11 @@ public class ShowUI : FSystem {
 									forGO.GetComponent<TextMeshPro> ().color = Color.yellow;
                                     if (Input.GetMouseButtonDown(0))
                                     {
-                                        if (forGO.GetComponent<ComponentMonitoring>())
+                                        if (HelpSystem.monitoring && forGO.GetComponent<ComponentMonitoring>())
                                         {
-                                            MonitoringManager.trace(forGO.GetComponent<ComponentMonitoring>(), "turnOn", MonitoringManager.Source.PLAYER);
+                                            MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "turnOn");
+                                            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                            HelpSystem.traces.Enqueue(trace);
                                         }
                                     }
 								}
@@ -1267,9 +1403,11 @@ public class ShowUI : FSystem {
                         {
                             if (plankWords.getAt(i).GetComponent<TextMeshPro>().color == Color.red)
                             {
-                                if (plankWords.getAt(i).GetComponent<ComponentMonitoring>())
+                                if (HelpSystem.monitoring && plankWords.getAt(i).GetComponent<ComponentMonitoring>())
                                 {
-                                    MonitoringManager.trace(plankWords.getAt(i).GetComponent<ComponentMonitoring>(), "turnOff", MonitoringManager.Source.SYSTEM);
+                                    MonitoringTrace trace = new MonitoringTrace(plankWords.getAt(i).GetComponent<ComponentMonitoring>(), "turnOff");
+                                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                    HelpSystem.traces.Enqueue(trace);
                                 }
                             }
                             plankWords.getAt (i).GetComponent<TextMeshPro> ().color = Color.black;
@@ -1278,8 +1416,8 @@ public class ShowUI : FSystem {
                         }
 					}
 				}
-			} else if (onBox && !moveBox) {
-				if (closeBox.Count == 0 && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape)) && !ballFocused) {
+			} else if (onBox && (!moveBox || boxPadlock.activeSelf)) {
+				if (((closeBox.Count == 0 && Input.GetMouseButtonDown(0) && !wasTakingballs) || Input.GetKeyDown(KeyCode.Escape)) && !ballFocused) {
 					CloseWindow ();
 				} else if (ballsout) {   //if all balls are out of the box
 					Ball b = null;
@@ -1335,7 +1473,7 @@ public class ShowUI : FSystem {
 				}
 			} else if (onLockR2 && !moveToLockR2) {
                 //"close" ui (give back control to the player) when the correct password is entered or when clicking on nothing
-				if (lockR2.First ().GetComponent<Selectable> ().solved || (closeLockR2.Count == 0 && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape)))) {
+				if (lockR2.First ().GetComponent<Selectable> ().solved || ((closeLockR2.Count == 0 && Input.GetMouseButtonDown(0)) || Input.GetKeyDown(KeyCode.Escape))) {
 					CloseWindow ();
 				}
                 else if (Input.GetMouseButtonDown(0))
@@ -1373,7 +1511,7 @@ public class ShowUI : FSystem {
             else if (onLockIntro && !moveToLockIntro)
             {
                 //"close" ui (give back control to the player) when the correct password is entered or when clicking on nothing
-                if (lockIntro.First().GetComponent<Selectable>().solved || (closeLockIntro.Count == 0 && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))))
+                if (lockIntro.First().GetComponent<Selectable>().solved || ((closeLockIntro.Count == 0 && Input.GetMouseButtonDown(0)) || Input.GetKeyDown(KeyCode.Escape)))
                 {
                     CloseWindow();
                 }
@@ -1409,7 +1547,7 @@ public class ShowUI : FSystem {
                     LockR2Right(ref selectedWheelIntro, lockIntroWheel1, lockIntroWheel2, lockIntroWheel3, lockIntroUD, lockIntroRotationUp, lockIntroRotationDown);
                 }
             }
-            else if (onBag && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape)) && overInventoryElem.Count == 0 && !moveBag) {
+            else if (onBag && ((Input.GetMouseButtonDown(0) && overInventoryElem.Count == 0) || Input.GetKeyDown(KeyCode.Escape)) && !moveBag) {
                 //close ui on click 
 				CloseWindow ();
 			} else if (onTable) {
@@ -1456,7 +1594,7 @@ public class ShowUI : FSystem {
 			}
             else if (onBoard && !moveToBoard)
             {
-                if (closeBoard.Count == 0 && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape)))
+                if ((closeBoard.Count == 0 && Input.GetMouseButtonDown(0)) || Input.GetKeyDown(KeyCode.Escape))
                 {
                     //close ui when clicking on nothing
                     CloseWindow();
@@ -1518,7 +1656,12 @@ public class ShowUI : FSystem {
 		if (onPlank) {
 			player.First ().transform.forward = -plank.First ().transform.right;
 			Camera.main.transform.localRotation = Quaternion.Euler (Vector3.zero);
-            //MonitoringManager.trace(MonitoringManager.getMonitorById(0), "turnOff", MonitoringManager.Source.PLAYER);
+            if (HelpSystem.monitoring)
+            {
+                MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(53), "turnOff");
+                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                HelpSystem.traces.Enqueue(trace);
+            }
         } else if (onBox) {
 			//close box, set balls to initial position and everything to not kinematic
 			boxTop.First ().transform.localPosition = boxTopIniPos;
@@ -1531,8 +1674,15 @@ public class ShowUI : FSystem {
 				//forGO.GetComponent<Rigidbody> ().isKinematic = false;
 			}
 			tmpCount = 1;
-			moveBox = false;
-		} else if (onTablet) {
+            ballSubTitles.text = "";
+            moveBox = false;
+            if (HelpSystem.monitoring)
+            {
+                MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(28), "turnOff");
+                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                HelpSystem.traces.Enqueue(trace);
+            }
+        } else if (onTablet) {
 			selectedTablet.GetComponent<Rigidbody> ().isKinematic = false;
 			//put the screen on the tablet
 			tabletScreen.GetComponent<Canvas> ().renderMode = RenderMode.WorldSpace;
@@ -1598,6 +1748,12 @@ public class ShowUI : FSystem {
             lockIntroWheel2.GetComponent<Renderer>().material.color = lockIntroWheelColor;
             lockIntroWheel3.GetComponent<Renderer>().material.color = lockIntroWheelColor;
             lockIntro.First().GetComponent<Selectable>().solved = false;
+            if (HelpSystem.monitoring)
+            {
+                MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(3), "turnOff");
+                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                HelpSystem.traces.Enqueue(trace);
+            }
         }
         //show cursor
         GameObjectManager.setGameObjectState(cursorUI,true);

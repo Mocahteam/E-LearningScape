@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<data>
-  <map id="TestTableau_201806061115165790">
-    <transition time="201806061115050325" action="Wire_turnOn_2" origin="player" />
-    <transition time="201806061115060200" action="Wire_turnOff_2" origin="player" />
-  </map>
-</data>

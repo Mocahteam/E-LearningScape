@@ -2,7 +2,10 @@
 
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Custom/BlurEffectUI" {
+    
     Properties
     {
         _Radius("Radius", Range(1, 255)) = 1

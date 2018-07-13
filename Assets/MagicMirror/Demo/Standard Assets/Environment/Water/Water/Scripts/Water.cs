@@ -329,10 +329,6 @@ namespace UnityStandardAssets.Water
                 default:
                     return WaterMode.Simple;
             }
-            if (m_HardwareWaterSupport < m_WaterMode)
-                return m_HardwareWaterSupport;
-            else
-                return m_WaterMode;
         }
 
         private WaterMode FindHardwareWaterSupport()

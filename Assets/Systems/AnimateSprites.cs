@@ -6,9 +6,11 @@ public class AnimateSprites : FSystem {
 
     private Family animatedSprites = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites)));
     private Family test = FamilyManager.getFamily(new AllOfComponents(typeof(PointerEnterName)));
+    private Family images = FamilyManager.getFamily(new AllOfComponents(typeof(Image)));
 
     private AnimatedSprites tmpAS;
     private float lastChangeTime = -Mathf.Infinity;
+    private AnimatedSprites solvedAnimation;
 
     public AnimateSprites()
     {
@@ -18,6 +20,14 @@ public class AnimateSprites : FSystem {
             for (int i = 0; i < nb; i++)
             {
                 animatedSprites.getAt(i).GetComponent<AnimatedSprites>().usedSpriteID = 0;
+            }
+            nb = images.Count;
+            for (int i = 0; i < nb; i++)
+            {
+                if (images.getAt(i).name == "Solved")
+                {
+                    solvedAnimation = images.getAt(i).GetComponent<AnimatedSprites>();
+                }
             }
         }
     }
@@ -57,14 +67,12 @@ public class AnimateSprites : FSystem {
                 }
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.T))
+        if (solvedAnimation.gameObject.activeSelf && Input.GetMouseButtonDown(0))
         {
-            int nb = test.Count;
-            for(int i = 0; i < nb; i++)
-            {
-                test.getAt(i).GetComponent<PointerEnterName>().enabled = !test.getAt(i).GetComponent<PointerEnterName>().enabled;
-            }
+            solvedAnimation.animate = false;
+            solvedAnimation.usedSpriteID = 0;
+            solvedAnimation.GetComponent<Image>().sprite = solvedAnimation.sprites[0];
+            GameObjectManager.setGameObjectState(solvedAnimation.gameObject, false);
         }
 	}
 }

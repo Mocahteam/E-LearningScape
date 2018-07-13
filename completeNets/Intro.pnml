@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
+    <name>
+      <text>gen0</text>
+    </name>
+    <page id="A-A-1">
+      <transition id="Verrou Mur_perform_4">
+        <name>
+          <text>Verrou Mur_perform_4</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="110" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Verrou Mur_turnOff_3">
+        <name>
+          <text>Verrou Mur_turnOff_3</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="350" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Verrou Mur_turnOn_3">
+        <name>
+          <text>Verrou Mur_turnOn_3</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="350" y="145" />
+        </graphics>
+      </transition>
+      <transition id="Intro_Scroll_perform_0">
+        <name>
+          <text>Intro_Scroll_perform_0</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="595" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Fragment_souvenir_activate_2">
+        <name>
+          <text>Fragment_souvenir_activate_2</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="760" y="55" />
+        </graphics>
+      </transition>
+      <transition id="ScrollIntro_activate_1">
+        <name>
+          <text>ScrollIntro_activate_1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="965" y="55" />
+        </graphics>
+      </transition>
+      <place id="Verrou Mur_end_4">
+        <name>
+          <text>Verrou Mur_end_4</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="185" y="50" />
+        </graphics>
+      </place>
+      <place id="Verrou Mur_start_4">
+        <name>
+          <text>Verrou Mur_start_4</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="30" y="50" />
+        </graphics>
+      </place>
+      <place id="Verrou Mur_off_3">
+        <name>
+          <text>Verrou Mur_off_3</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="435" y="80" />
+        </graphics>
+      </place>
+      <place id="Verrou Mur_on_3">
+        <name>
+          <text>Verrou Mur_on_3</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="265" y="85" />
+        </graphics>
+      </place>
+      <place id="Intro_Scroll_end_0">
+        <name>
+          <text>Intro_Scroll_end_0</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="670" y="50" />
+        </graphics>
+      </place>
+      <place id="Intro_Scroll_start_0">
+        <name>
+          <text>Intro_Scroll_start_0</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="515" y="50" />
+        </graphics>
+      </place>
+      <place id="Fragment_souvenir_ActivationCount_2">
+        <name>
+          <text>Fragment_souvenir_ActivationCount_2</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="875" y="55" />
+        </graphics>
+      </place>
+      <place id="ScrollIntro_ActivationCount_1">
+        <name>
+          <text>ScrollIntro_ActivationCount_1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1080" y="55" />
+        </graphics>
+      </place>
+      <arc id="15" source="Verrou Mur_perform_4" target="Verrou Mur_end_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="16" source="Verrou Mur_start_4" target="Verrou Mur_perform_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="17" source="ScrollIntro_ActivationCount_1" target="Verrou Mur_perform_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="18" source="Fragment_souvenir_ActivationCount_2" target="Verrou Mur_perform_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="19" source="Verrou Mur_on_3" target="Verrou Mur_perform_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="20" source="Verrou Mur_turnOff_3" target="Verrou Mur_off_3">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="21" source="Verrou Mur_turnOn_3" target="Verrou Mur_on_3">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="22" source="Verrou Mur_off_3" target="Verrou Mur_turnOn_3">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="23" source="Verrou Mur_on_3" target="Verrou Mur_turnOff_3">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="24" source="Intro_Scroll_perform_0" target="Intro_Scroll_end_0">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="25" source="Intro_Scroll_start_0" target="Intro_Scroll_perform_0">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="26" source="Fragment_souvenir_activate_2" target="Fragment_souvenir_ActivationCount_2">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="27" source="ScrollIntro_activate_1" target="ScrollIntro_ActivationCount_1">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="28" source="Intro_Scroll_end_0" target="ScrollIntro_activate_1">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+    </page>
+  </net>
+</pnml>

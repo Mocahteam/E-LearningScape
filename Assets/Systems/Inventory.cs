@@ -67,7 +67,11 @@ public class Inventory : FSystem {
     
     private Material displayedBGMaterial;
     private bool backgroundTextureSet = false;
+    private bool backgroundTextureWasSet = false;
     private Camera backgroundTextureCamera;
+
+    private Material blurredMaterial;
+    private Texture blurredTexture;
 
     private bool pointerOverUIItem = false;
     private GameObject pointerOverGO = null;
@@ -155,6 +159,26 @@ public class Inventory : FSystem {
                 puzzleUI.Add(id, forGO);
             }
 
+            nb = backgrounds.Count;
+            if (nb > 0)
+            {
+                blurredMaterial = backgrounds.First().GetComponent<RawImage>().material;
+                blurredTexture = backgrounds.First().GetComponent<RawImage>().mainTexture;
+                //foreach(Camera c in player.First().GetComponentsInChildren<Camera>())
+                //{
+                //    if(c.name == "BGCamera")
+                //    {
+                //        blurredTexture.width = c.pixelWidth;
+                //        blurredTexture.height = c.pixelHeight;
+                //        break;
+                //    }
+                //}
+            }
+            for(int i = 0; i < nb; i++)
+            {
+                //backgrounds.getAt(i).GetComponent<RawImage>().texture = null;
+            }
+
             foreach (Transform child in pui.getAt(0).transform.parent)
             {
                 if (child.gameObject.name == "RotationButtons")
@@ -191,7 +215,7 @@ public class Inventory : FSystem {
             inventoryElemGO = elemsInventory.First().transform.parent.gameObject;
 
             displayedBGMaterial = focusedMatFamily.First().GetComponent<FocusedGOMaterial>().displayedBGMaterial;
-            foreach(Camera c in Camera.main.gameObject.GetComponentsInChildren<Camera>())
+            foreach(Camera c in player.First().GetComponentsInChildren<Camera>())
             {
                 if(c.name == "BGCamera")
                 {
@@ -304,14 +328,14 @@ public class Inventory : FSystem {
                             int nb, id;
                             int.TryParse(forGO.name.Substring(forGO.name.Length - 2, 2), out nb);
                             nb++;
-                            for(int j = 0; j < nb; j++)
+                            for (int j = 0; j < nb; j++)
                             {
                                 idTable = new List<int>(puzzleUI.Keys);
                                 id = idTable[(int)(Random.value * idTable.Count)];
                                 puzzleUI.TryGetValue(id, out puzzlePiece);
                                 if (puzzlePiece)
                                 {
-                                    GameObjectManager.setGameObjectState(puzzlePiece,true);
+                                    GameObjectManager.setGameObjectState(puzzlePiece, true);
                                     puzzleUI.Remove(id);
                                 }
                                 else
@@ -325,14 +349,14 @@ public class Inventory : FSystem {
                             scrollUI.TryGetValue(forGO.name[0].ToString(), out scroll);
                             if (scroll)
                             {
-                                GameObjectManager.setGameObjectState(scroll,true);
+                                GameObjectManager.setGameObjectState(scroll, true);
                             }
                             else
                             {
                                 Debug.Log(string.Concat("Scroll ", forGO.name.Substring(0, 1), " doesn't exist."));
                             }
                         }
-                        else if(forGO.name == "Wire")
+                        else if (forGO.name == "Wire")
                         {
                             foreach (Transform child in plank.First().transform)
                             {
@@ -342,19 +366,27 @@ public class Inventory : FSystem {
                                     break;
                                 }
                             }
-                            if (forGO.GetComponent<ComponentMonitoring>())
+                            if (HelpSystem.monitoring && forGO.GetComponent<ComponentMonitoring>())
                             {
-                                MonitoringManager.trace(forGO.GetComponent<ComponentMonitoring>(), "perform", MonitoringManager.Source.PLAYER);
+                                MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "perform");
+                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                HelpSystem.traces.Enqueue(trace);
                             }
                         }
-                        else if(forGO.name == "Intro_Scroll")
+                        else if (forGO.name == "Intro_Scroll")
                         {
-                            int nb = animatedSprites.Count;
-                            for(int j = 0; j < nb; j++)
+                            if (HelpSystem.monitoring && forGO.GetComponent<ComponentMonitoring>())
                             {
-                                if(animatedSprites.getAt(j).name == "AppuisA")
+                                MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "perform");
+                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                HelpSystem.traces.Enqueue(trace);
+                            }
+                            int nb = animatedSprites.Count;
+                            for (int j = 0; j < nb; j++)
+                            {
+                                if (animatedSprites.getAt(j).name == "AppuisA")
                                 {
-                                    GameObjectManager.setGameObjectState(animatedSprites.getAt(j),true);
+                                    GameObjectManager.setGameObjectState(animatedSprites.getAt(j), true);
                                     break;
                                 }
                             }
@@ -362,8 +394,17 @@ public class Inventory : FSystem {
                             {
                                 if (child.gameObject.name == "Inventory")
                                 {
-                                    GameObjectManager.setGameObjectState(child.gameObject,true);
+                                    GameObjectManager.setGameObjectState(child.gameObject, true);
                                 }
+                            }
+                        }
+                        else if (forGO.name == "KeyE03")
+                        {
+                            if (HelpSystem.monitoring && forGO.GetComponent<ComponentMonitoring>())
+                            {
+                                MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "perform");
+                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                HelpSystem.traces.Enqueue(trace);
                             }
                         }
                         GameObjectManager.setGameObjectState(forGO, false);
@@ -501,9 +542,18 @@ public class Inventory : FSystem {
                                     descriptionText.text = string.Empty;
                                 }
                             }
-                            if(forGO.GetComponent<ComponentMonitoring>())
+                            if(HelpSystem.monitoring && forGO.GetComponent<ComponentMonitoring>())
                             {
-                                MonitoringManager.trace(forGO.GetComponent<ComponentMonitoring>(), "turnOff", MonitoringManager.Source.PLAYER);
+                                try
+                                {
+                                    MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "turnOff");
+                                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                    HelpSystem.traces.Enqueue(trace);
+                                }
+                                catch
+                                {
+
+                                }
                             }
                         }
                         else
@@ -511,14 +561,34 @@ public class Inventory : FSystem {
                             if (selectedUI)
                             {
                                 selectedUI.GetComponent<AnimatedSprites>().animate = false;
-                                if (selectedUI.GetComponent<ComponentMonitoring>())
+                                if (HelpSystem.monitoring && selectedUI.GetComponent<ComponentMonitoring>())
                                 {
-                                    MonitoringManager.trace(selectedUI.GetComponent<ComponentMonitoring>(), "turnOff", MonitoringManager.Source.SYSTEM);
+                                    try
+                                    {
+                                        MonitoringTrace trace = new MonitoringTrace(selectedUI.GetComponent<ComponentMonitoring>(), "turnOff");
+                                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
+                                        HelpSystem.traces.Enqueue(trace);
+                                    }
+                                    catch
+                                    {
+
+                                    }
                                 }
                             }
-                            if (forGO.GetComponent<ComponentMonitoring>())
+                            if (HelpSystem.monitoring && forGO.GetComponent<ComponentMonitoring>())
                             {
-                                MonitoringManager.trace(forGO.GetComponent<ComponentMonitoring>(), "turnOn", MonitoringManager.Source.PLAYER);
+                                if (forGO.name.Contains("Intro"))
+                                {
+                                    MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "activate");
+                                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                    HelpSystem.traces.Enqueue(trace);
+                                }
+                                else
+                                {
+                                    MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "turnOn");
+                                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                    HelpSystem.traces.Enqueue(trace);
+                                }
                             }
                             selectedUI = forGO;
                             selectedUI.GetComponent<AnimatedSprites>().animate = true;
@@ -705,25 +775,34 @@ public class Inventory : FSystem {
                 GameObjectManager.setGameObjectState(descriptionText.gameObject, displayedElement == null);
             }
         }
-        
-        if (displayedBackground.Count > 0 && /*!*/backgroundTextureSet)
-        {
-            backgroundTextureSet = true;
-            backgroundTextureCamera.enabled = false;
-            displayedBGMaterial.mainTexture = backgroundTextureCamera.targetTexture;
-            int nb = backgrounds.Count;
-            for(int i = 0; i < nb; i++)
-            {
-                backgrounds.getAt(i).GetComponent<Image>().material = displayedBGMaterial;
-            }
-        }
-        else if(displayedBackground.Count == 0 && backgroundTextureSet)
-        {
-            backgroundTextureCamera.enabled = true;
-            backgroundTextureSet = false;
-        }
 
-		if ((Input.GetKeyDown (KeyCode.A) || CollectableGO.askOpenInventory) && !StoryDisplaying.reading && !DreamFragmentCollect.onFragment) {
+        //if (displayedBackground.Count > 0 && !backgroundTextureWasSet)
+        //{
+        //    backgroundTextureSet = true;
+        //    backgroundTextureWasSet = true;
+        //}
+        //else if (displayedBackground.Count > 0 && backgroundTextureSet)
+        //{
+        //    backgroundTextureSet = false;
+        //    backgroundTextureCamera.enabled = false;
+        //    int nb = backgrounds.Count;
+        //    for (int i = 0; i < nb; i++)
+        //    {
+        //        backgrounds.getAt(i).GetComponent<RawImage>().material = null;
+        //    }
+        //}
+        //else if (displayedBackground.Count == 0 && backgroundTextureWasSet)
+        //{
+        //    int nb = backgrounds.Count;
+        //    for (int i = 0; i < nb; i++)
+        //    {
+        //        backgrounds.getAt(i).GetComponent<RawImage>().material = blurredMaterial;
+        //    }
+        //    backgroundTextureCamera.enabled = true;
+        //    backgroundTextureWasSet = false;
+        //}
+
+        if ((Input.GetKeyDown (KeyCode.A) || CollectableGO.askOpenInventory) && !StoryDisplaying.reading && !DreamFragmentCollect.onFragment) {
             if (!CollectableGO.askOpenInventory)
             {
                 inputfieldFocused = false;

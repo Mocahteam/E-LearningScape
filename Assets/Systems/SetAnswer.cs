@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using FYFY_plugins.PointerManager;
 using TMPro;
 using UnityStandardAssets.Characters.FirstPerson;
+using FYFY_plugins.Monitoring;
 
 public class SetAnswer : FSystem
 {
@@ -569,6 +570,12 @@ public class SetAnswer : FSystem
                         {
                             //start audio and animation for "Right answer"
                             Selectable.askRight = true;
+                            if (HelpSystem.monitoring)
+                            {
+                                MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(69), "Correct");
+                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                HelpSystem.traces.Enqueue(trace);
+                            }
 
                             rotateGear = true;  //rotate gears in the middle
                             screen1.GetComponent<Selectable>().solved = true; //set tablet to solved
@@ -589,6 +596,12 @@ public class SetAnswer : FSystem
                             //start audio and animation for "Wrong answer"
                             source.PlayOneShot(screen1.GetComponent<Selectable>().wrong);
                             timeW = Time.time;
+                            if (HelpSystem.monitoring)
+                            {
+                                MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(69), "Wrong");
+                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                HelpSystem.traces.Enqueue(trace);
+                            }
 
                             int nbQRoom1 = qRoom1.Count;
                             for (int i = 0; i < nbQRoom1; i++)
@@ -601,7 +614,7 @@ public class SetAnswer : FSystem
                             }
                             //start the timer for wrong answer
                             wTimerE04 = Time.time;
-                            GameObjectManager.setGameObjectState(wtt.gameObject,true);
+                            //GameObjectManager.setGameObjectState(wtt.gameObject,true);
                             wtt.text = (5 + wTimerE04 - Time.time).ToString("n2");
                             wrongAnswerE04 = true;
 
@@ -881,6 +894,12 @@ public class SetAnswer : FSystem
                 {
                     //feedback right answer
                     Selectable.askRight = true;
+                    if (HelpSystem.monitoring)
+                    {
+                        MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(50), "Correct");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                        HelpSystem.traces.Enqueue(trace);
+                    }
 
                     int nb = collectableGO.Count;
                     for (int j = 0; j < nb; j++)
@@ -927,6 +946,12 @@ public class SetAnswer : FSystem
                     //feedback wrong answer
                     source.PlayOneShot(screen1.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
+                    if (HelpSystem.monitoring)
+                    {
+                        MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(50), "Wrong");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                        HelpSystem.traces.Enqueue(trace);
+                    }
                 }
             }
         }
@@ -949,6 +974,12 @@ public class SetAnswer : FSystem
                 {
                     //feedback right answer
                     Selectable.askRight = true;
+                    if (HelpSystem.monitoring)
+                    {
+                        MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(68), "Correct");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                        HelpSystem.traces.Enqueue(trace);
+                    }
 
                     int nb = collectableGO.Count;
                     for (int j = 0; j < nb; j++)
@@ -994,6 +1025,12 @@ public class SetAnswer : FSystem
                     //feedback wrong answer
                     source.PlayOneShot(screen1.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
+                    if (HelpSystem.monitoring)
+                    {
+                        MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(68), "Wrong");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                        HelpSystem.traces.Enqueue(trace);
+                    }
                 }
             }
         }
@@ -1016,6 +1053,12 @@ public class SetAnswer : FSystem
                 {
                     //feedback right answer
                     Selectable.askRight = true;
+                    if (HelpSystem.monitoring)
+                    {
+                        MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(24), "Correct");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                        HelpSystem.traces.Enqueue(trace);
+                    }
 
                     GameObjectManager.setGameObjectState(forGO,false); //hide the question
                     bool solved = true;
@@ -1052,6 +1095,12 @@ public class SetAnswer : FSystem
                     //feedback wrong answer
                     source.PlayOneShot(screen1.GetComponent<Selectable>().wrong);
                     timeW = Time.time;
+                    if (HelpSystem.monitoring)
+                    {
+                        MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(24), "Wrong");
+                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                        HelpSystem.traces.Enqueue(trace);
+                    }
                 }
             }
         }

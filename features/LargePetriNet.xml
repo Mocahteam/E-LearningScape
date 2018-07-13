@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Q2_Correct_68" label="Correct Q2" system="False" end="False" />
+  <transition id="Q2_Wrong_68" label="Wrong Q2" system="False" end="False" />
+  <transition id="Verrou Mur_perform_21" label="perform Verrou Mur" system="True" end="False" />
+  <transition id="Plank_perform_23" label="perform Plank" system="True" end="False" />
+  <transition id="BallBox_perform_22" label="perform BallBox" system="True" end="False" />
+  <transition id="Q1_Correct_50" label="Correct Q1" system="False" end="False" />
+  <transition id="Q1_Wrong_50" label="Wrong Q1" system="False" end="False" />
+  <transition id="Q3_Correct_24" label="Correct Q3" system="False" end="False" />
+  <transition id="Q3_Wrong_24" label="Wrong Q3" system="False" end="False" />
+  <transition id="Q3_perform_25" label="perform Q3" system="True" end="False" />
+  <transition id="Enigma4_Correct_69" label="Correct Enigma4" system="False" end="True" />
+  <transition id="Enigma4_Wrong_69" label="Wrong Enigma4" system="False" end="False" />
+</transitions>

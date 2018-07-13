@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using FYFY;
 using System.Collections.Generic;
+using FYFY_plugins.Monitoring;
 
 public class ToggleObject : FSystem {
 
@@ -85,6 +86,12 @@ public class ToggleObject : FSystem {
                             //all objects in this list will be toggled down
                             togglingChairsDown[togglingChairsDownCount] = forGO;
                             togglingChairsDownCount++;
+                            if(forGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                            {
+                                MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "turnOn");
+                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                HelpSystem.traces.Enqueue(trace);
+                            }
                         }
                         else if (forGO.transform.rotation.eulerAngles.x > 89.9999f) //if chair down
                         {
@@ -92,6 +99,12 @@ public class ToggleObject : FSystem {
                             //all objects in this list will be toggled up
                             togglingChairsUp[togglingChairsUpCount] = forGO;
                             togglingChairsUpCount++;
+                            if (forGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                            {
+                                MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "turnOff");
+                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                HelpSystem.traces.Enqueue(trace);
+                            }
                         }
                         else
                         {
@@ -107,15 +120,28 @@ public class ToggleObject : FSystem {
                         //start toggling table up/down depending on its current state (0 or 180)
                         if (forGO.transform.rotation.eulerAngles.z > 90)
                         {
+                            if (forGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                            {
+                                MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "turnOff");
+                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                HelpSystem.traces.Enqueue(trace);
+                            }
                             toggleTableUp = true;
                         }
                         else
                         {
+                            if (forGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                            {
+                                MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "turnOn");
+                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                HelpSystem.traces.Enqueue(trace);
+                            }
                             toggleTableDown = true;
                         }
                     }
                     else if(forGO.name == "boite")
                     {
+                        //start toggling the chest opened/cloesed depending on its current state
                         if(chestLid.transform.localRotation.eulerAngles.x < 1)
                         {
                             openingChest = true;

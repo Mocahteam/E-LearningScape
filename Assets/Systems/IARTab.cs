@@ -88,7 +88,7 @@ public class IARTab : FSystem {
 
             tabsGO = tabs.First().transform.parent.gameObject;
             inventory = inventoryFamily.First();
-            initialBGMaterial = backgrounds.First().GetComponent<Image>().material;
+            //initialBGMaterial = backgrounds.First().GetComponent<Image>().material;
 
             int nb = screens.Count;
             for (int i = 0; i < nb; i++)
@@ -185,14 +185,6 @@ public class IARTab : FSystem {
                 if (child.gameObject.name.Contains("Warning"))
                 {
                     inventoryWarning = child.gameObject;
-                }
-            }
-
-            foreach(Transform room in game.First().transform)
-            {
-                if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
-                {
-                    GameObjectManager.setGameObjectState(room.gameObject, false);
                 }
             }
         }
@@ -294,12 +286,12 @@ public class IARTab : FSystem {
         {
             if (!activeUI.activeSelf)
             {
-                int nb = backgrounds.Count;
-                for (int i = 0; i < nb; i++)
-                {
-                    backgrounds.getAt(i).GetComponent<Image>().material = initialBGMaterial;
-                }
-                nb = newFeedback.Count;
+                //int nb = backgrounds.Count;
+                //for (int i = 0; i < nb; i++)
+                //{
+                //    backgrounds.getAt(i).GetComponent<Image>().material = initialBGMaterial;
+                //}
+                int nb = newFeedback.Count;
                 for(int i = 0; i < nb; i++)
                 {
                     GameObjectManager.setGameObjectState(newFeedback.getAt(i),false);
