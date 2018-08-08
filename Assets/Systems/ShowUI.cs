@@ -959,8 +959,8 @@ public class ShowUI : FSystem {
 
         if (lockRotationUp)
         {
-            selectedWheel.transform.Rotate(Time.deltaTime * 100,0,0);
-            wheelRotationCount += Time.deltaTime * 100;
+            selectedWheel.transform.Rotate(Time.deltaTime * 200,0,0);
+            wheelRotationCount += Time.deltaTime * 200;
             if (wheelRotationCount > 36)
             {
                 selectedWheel.transform.Rotate(36 - wheelRotationCount, 0, 0);
@@ -975,8 +975,8 @@ public class ShowUI : FSystem {
         }
         else if (lockRotationDown)
         {
-            selectedWheel.transform.Rotate(-Time.deltaTime * 100, 0, 0);
-            wheelRotationCount += Time.deltaTime * 100;
+            selectedWheel.transform.Rotate(-Time.deltaTime * 200, 0, 0);
+            wheelRotationCount += Time.deltaTime * 200;
             if (wheelRotationCount > 36)
             {
                 selectedWheel.transform.Rotate(-(36 - wheelRotationCount), 0, 0);
@@ -991,8 +991,8 @@ public class ShowUI : FSystem {
         }
         if (lockIntroRotationUp)
         {
-            selectedWheelIntro.transform.Rotate(Time.deltaTime * 100, 0, 0);
-            wheelIntroRotationCount += Time.deltaTime * 100;
+            selectedWheelIntro.transform.Rotate(Time.deltaTime * 200, 0, 0);
+            wheelIntroRotationCount += Time.deltaTime * 200;
             if (wheelIntroRotationCount > 36)
             {
                 selectedWheelIntro.transform.Rotate(36 - wheelIntroRotationCount, 0, 0);
@@ -1032,8 +1032,8 @@ public class ShowUI : FSystem {
         }
         else if (lockIntroRotationDown)
         {
-            selectedWheelIntro.transform.Rotate(-Time.deltaTime * 100, 0, 0);
-            wheelIntroRotationCount += Time.deltaTime * 100;
+            selectedWheelIntro.transform.Rotate(-Time.deltaTime * 200, 0, 0);
+            wheelIntroRotationCount += Time.deltaTime * 200;
             if (wheelIntroRotationCount > 36)
             {
                 selectedWheelIntro.transform.Rotate(-(36 - wheelIntroRotationCount), 0, 0);
@@ -1083,12 +1083,13 @@ public class ShowUI : FSystem {
                     noSelection = false;
                     //set and show ui
 					if (forGO.tag == "Plank") {  //set plank
-						//the position in front of the plank is not the same depending on the scale of the player
-						if (player.First ().transform.localScale.x < 0.9f) {
+                        plankPos = new Vector3(plank.First().transform.position.x, 1.1f, plank.First().transform.position.z) - plank.First().transform.up * 1.7f;
+                        /*//the position in front of the plank is not the same depending on the scale of the player
+                        if (player.First ().transform.localScale.x < 0.9f) {
 							plankPos = new Vector3 (plank.First ().transform.position.x, 1.6f, plank.First ().transform.position.z) - plank.First().transform.up * 1.7f;
 						} else {
 							plankPos = new Vector3 (plank.First ().transform.position.x, 0.98f, plank.First ().transform.position.z) - plank.First().transform.up * 1.7f;
-						}
+						}*/
 						//calculate the correct speed so that the translation and the rotation finish at the same time
 						dist = (plankPos - player.First ().transform.position).magnitude;
 						foreach (Transform t in player.First().transform) {
@@ -1216,12 +1217,13 @@ public class ShowUI : FSystem {
                             bag.First().GetComponentInChildren<Image>().sprite = bag.First().GetComponentInChildren<BagImage>().image1;
                         }
                     } else if (forGO.tag == "LockRoom2") {  //set lock room 2
-						//the position in front of the lock is not the same depending on the scale of the player
-						if (player.First ().transform.localScale.x < 0.9f) {
+                        lockR2Pos = new Vector3(lockWheel2.transform.position.x - 2.5f, 1.6f, lockWheel2.transform.position.z);
+                        /*//the position in front of the lock is not the same depending on the scale of the player
+                        if (player.First ().transform.localScale.x < 0.9f) {
 							lockR2Pos = new Vector3 (lockWheel2.transform.position.x - 2.5f, 2.68f, lockWheel2.transform.position.z);
 						} else {
 							lockR2Pos = new Vector3 (lockWheel2.transform.position.x - 2.5f, 2f, lockWheel2.transform.position.z);
-						}
+						}*/
 						//calculate the correct speed so that the translation and the rotation finish at the same time
 						dist = (lockR2Pos - player.First ().transform.position).magnitude;
 						foreach (Transform t in player.First().transform) {
@@ -1234,7 +1236,8 @@ public class ShowUI : FSystem {
 					}
                     else if (forGO.tag == "LockIntro")
                     {  //set lock intro
-                       //the position in front of the lock is not the same depending on the scale of the player
+                        lockIntroPos = new Vector3(lockIntroWheel2.transform.position.x - 2.5f, -0.7f, lockIntroWheel2.transform.position.z);
+                        /*//the position in front of the lock is not the same depending on the scale of the player
                         if (player.First().transform.localScale.x < 0.9f)
                         {
                             lockIntroPos = new Vector3(lockIntroWheel2.transform.position.x - 2.5f, 0.37f, lockIntroWheel2.transform.position.z);
@@ -1242,7 +1245,7 @@ public class ShowUI : FSystem {
                         else
                         {
                             lockIntroPos = new Vector3(lockIntroWheel2.transform.position.x - 2.5f, -0.31f, lockIntroWheel2.transform.position.z);
-                        }
+                        }*/
                         //calculate the correct speed so that the translation and the rotation finish at the same time
                         dist = (lockIntroPos - player.First().transform.position).magnitude;
                         foreach (Transform t in player.First().transform)

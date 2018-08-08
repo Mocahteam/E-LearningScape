@@ -116,8 +116,8 @@ public class StoryDisplaying : FSystem {
                     readTexts = transitionText;
                     readingTimer = Time.time;
                     fadingToReadingMode = true;
-                    fadingImage.color = Color.black*0;
-                    background.color = Color.black*0;
+                    fadingImage.color = Color.black;
+                    background.color = Color.black;
                     sdText.text = "";
                 }
                 else if (readingEnding)

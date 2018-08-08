@@ -71,27 +71,27 @@ public class DreamFragmentCollect : FSystem {
                             {
                                 switch (tmpDFComponent.itemName)
                                 {
-                                    case "Il":
+                                    case "il":
                                         fragmentsSeen[0] = true;
                                         break;
 
-                                    case "Faut":
+                                    case "faut":
                                         fragmentsSeen[1] = true;
                                         break;
 
-                                    case "Savoir":
+                                    case "savoir":
                                         fragmentsSeen[2] = true;
                                         break;
 
-                                    case "Changer":
+                                    case "changer":
                                         fragmentsSeen[3] = true;
                                         break;
 
-                                    case "De":
+                                    case "de":
                                         fragmentsSeen[4] = true;
                                         break;
 
-                                    case "Posture":
+                                    case "posture":
                                         fragmentsSeen[5] = true;
                                         break;
 
@@ -141,7 +141,7 @@ public class DreamFragmentCollect : FSystem {
                         }
                         if (tmpDFComponent.type == 0)
                         {
-                            dfUI.GetComponentInChildren<TextMeshProUGUI>().text = string.Concat("Cherchez le numéro ", tmpDFComponent.id, " et récupérez l'item \"", tmpDFComponent.itemName, "\"");
+                            dfUI.GetComponentInChildren<TextMeshProUGUI>().text = string.Concat("Ouvrez le fragment de rêve numéro ", tmpDFComponent.id);
                         }
                         else if (tmpDFComponent.type == 1 || tmpDFComponent.type == 2)
                         {

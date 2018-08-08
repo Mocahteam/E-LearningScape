@@ -15,8 +15,7 @@ public class Select : FSystem {
     private bool selected = false;
 
     private GameObject changedMaterialGO;
-    private Queue<Material> previousMaterial;
-    private Material focusedMaterial;
+    private Queue<Color> previousColor;
 
 	private GameObject forGO;
     private Renderer[]tmpRendererList;
@@ -27,8 +26,7 @@ public class Select : FSystem {
     {
         if (Application.isPlaying)
         {
-            focusedMaterial = focusedMatFamily.First().GetComponent<FocusedGOMaterial>().material;
-            previousMaterial = new Queue<Material>();
+            previousColor = new Queue<Color>();
             int nb = cameras.Count;
             for (int i = 0; i < nb; i++)
             {
@@ -85,7 +83,7 @@ public class Select : FSystem {
             int nb = tmpRendererList.Length;
             for(int i = 0; i < nb; i++)
             {
-                tmpRendererList[i].material = previousMaterial.Dequeue();
+                tmpRendererList[i].material.SetColor("_EmissionColor", previousColor.Dequeue());
             }
         }
 
@@ -164,7 +162,7 @@ public class Select : FSystem {
             int nb = tmpRendererList.Length;
             for (int i = 0; i < nb; i++)
             {
-                previousMaterial.Enqueue(tmpRendererList[i].material);
+                previousColor.Enqueue(tmpRendererList[i].material.GetColor("_EmissionColor"));
             }
             //if the player clicks on the object while it is not taken and inventory isn't opened, select it
             if (Input.GetMouseButtonDown(0) && !Takable.objectTaken && !CollectableGO.onInventory && focused.GetComponent<Selectable>() && !StoryDisplaying.reading)
@@ -177,13 +175,14 @@ public class Select : FSystem {
             {
                 for (int i = 0; i < nb; i++)
                 {
-                    tmpRendererList[i].material = focusedMaterial;
+                    tmpRendererList[i].material.EnableKeyword("_EMISSION");
+                    tmpRendererList[i].material.SetColor("_EmissionColor", Color.yellow * Mathf.LinearToGammaSpace(0.8f));
                 }
             }
             else
             {
                 changedMaterialGO = null;
-                previousMaterial.Clear();
+                previousColor.Clear();
             }
         }
     }
