@@ -63,6 +63,7 @@ TagManager:
   - NewItemFeedback
   - HelpSubtitles
   - MainMenuButton
+  - EnableOnFirstCrouch
   layers:
   - Default
   - TransparentFX

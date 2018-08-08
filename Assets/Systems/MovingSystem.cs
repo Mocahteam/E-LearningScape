@@ -4,7 +4,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 using FYFY_plugins.Monitoring;
 
-public class Crouch : FSystem
+public class MovingSystem : FSystem
 {
 
     private Family player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
@@ -29,7 +29,7 @@ public class Crouch : FSystem
     private float hudHidingSpeed;
     private bool previousHUDState;
 
-    public Crouch()
+    public MovingSystem()
     {
         //when crouching, the scale of the player is changed (rather than its position)
         crouchingScale = Vector3.one * 0.2f;
