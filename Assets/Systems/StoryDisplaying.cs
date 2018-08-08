@@ -19,6 +19,7 @@ public class StoryDisplaying : FSystem {
     private Image fadingImage;
     private GameObject clickFeedback;
     private GameObject endScreen;
+    private int fadeSpeed = 1;
 
     public static bool readingIntro = false;
     public static bool readingTransition = false;
@@ -103,125 +104,38 @@ public class StoryDisplaying : FSystem {
                 player.First().GetComponent<FirstPersonController>().enabled = false;
                 Cursor.visible = false;
                 if (readingIntro)
-                {
                     readTexts = introText;
-                    readingTimer = Time.time;
-                    fadingToReadingMode = true;
-                    fadingImage.color = Color.black;
-                    background.color = Color.black;
-                    sdText.text = "";
-                }
                 else if (readingTransition)
-                {
                     readTexts = transitionText;
-                    readingTimer = Time.time;
-                    fadingToReadingMode = true;
-                    fadingImage.color = Color.black;
-                    background.color = Color.black;
-                    sdText.text = "";
-                }
                 else if (readingEnding)
-                {
                     readTexts = endingText;
-                    readingTimer = Time.time;
-                    fadingToReadingMode = true;
-                    fadingImage.color = Color.white - Color.black;
-                    background.color = Color.white - Color.black;
-                    sdText.color = Color.black;
-                    sdText.text = "";
-                }
+                readingTimer = Time.time;
+                fadingToReadingMode = true;
+                fadingImage.color = Color.black;
+                background.color = Color.black;
+                sdText.text = "";
             }
-            
-            if (fadingIn)
-            {
-                if (Time.time - readingTimer < 2)
-                {
-                    Color c = fadingImage.color;
-                    fadingImage.color = new Color(c.r, c.g, c.b, 1 - (Time.time - readingTimer) / 2);
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        readingTimer = Time.time - 3;
-                    }
-                }
-                else
-                {
-                    Color c = fadingImage.color;
-                    fadingImage.color = new Color(c.r, c.g, c.b, 0);
-                    fadingIn = false;
-                    GameObjectManager.setGameObjectState(clickFeedback,true);
-                }
-            }
-            else if (fadingOut)
-            {
-                if (Time.time - readingTimer < 2)
-                {
-                    Color c = fadingImage.color;
-                    fadingImage.color = new Color(c.r, c.g, c.b, (Time.time - readingTimer) / 2);
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        readingTimer = Time.time - 3;
-                    }
-                }
-                else
-                {
-                    Color c = fadingImage.color;
-                    fadingImage.color = new Color(c.r, c.g, c.b, 1);
-                    textCount++;
-                    fadingOut = false;
-                    if(textCount < readTexts.Length)
-                    {
-                        sdText.text = readTexts[textCount];
-                        fadingIn = true;
-                        readingTimer = Time.time;
-                    }
-                    else
-                    {
-                        if (readingEnding)
-                        {
-                            GameObjectManager.setGameObjectState(sdText.gameObject, false);
-                            fadingIn = true;
-                            readingTimer = Time.time;
-                            end = true;
-                            GameObjectManager.setGameObjectState(endScreen, true);
-                            Cursor.lockState = CursorLockMode.None;
-                            Cursor.lockState = CursorLockMode.Confined;
-                            Cursor.visible = true;
-                        }
-                        else
-                        {
-                            sdText.text = "";
-                            fadingOutOfReadingMode = true;
-                            readingTimer = Time.time;
-                        }
-                    }
-                }
-            }
-            else if (fadingToReadingMode)
+
+            if (fadingToReadingMode)
             {
                 if (readingIntro)
                 {
                     if (MenuSystem.onGame)
-                    {
-                        readingTimer = Time.time - 4;
-                    }
+                        readingTimer = Time.time - fadeSpeed; // will launch fadeIn (switch off first fading)
                 }
-                if (Time.time - readingTimer < 4)
+                if (Time.time - readingTimer < fadeSpeed)
                 {
                     Color c = fadingImage.color;
                     if (readingEnding)
                     {
                         fadingImage.color = Color.white;
-                        if(Time.time - readingTimer < 2)
-                        {
-                            readingTimer = Time.time - 2;
-                        }
+                        if (Time.time - readingTimer < fadeSpeed)
+                            readingTimer = Time.time - fadeSpeed;
                     }
                     else
-                    {
-                        fadingImage.color = new Color(c.r, c.g, c.b, (Time.time - readingTimer) / 4);
-                    }
+                        fadingImage.color = new Color(c.r, c.g, c.b, (Time.time - readingTimer) / fadeSpeed);
                     c = background.color;
-                    background.color = new Color(c.r, c.g, c.b, (Time.time - readingTimer) / 4);
+                    background.color = new Color(c.r, c.g, c.b, (Time.time - readingTimer) / fadeSpeed);
                 }
                 else
                 {
@@ -289,18 +203,84 @@ public class StoryDisplaying : FSystem {
                     {
                         sdText.text = "";
                         fadingOutOfReadingMode = true;
+                        player.First().GetComponent<FirstPersonController>().enabled = true;
                         readingTimer = Time.time;
+                    }
+                }
+            }
+            else if(fadingIn)
+            {
+                if (Time.time - readingTimer < fadeSpeed)
+                {
+                    Color c = fadingImage.color;
+                    fadingImage.color = new Color(c.r, c.g, c.b, 1 - (Time.time - readingTimer) / fadeSpeed);
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        readingTimer = Time.time - (fadeSpeed+1);
+                    }
+                }
+                else
+                {
+                    Color c = fadingImage.color;
+                    fadingImage.color = new Color(c.r, c.g, c.b, 0);
+                    fadingIn = false;
+                    GameObjectManager.setGameObjectState(clickFeedback,true);
+                }
+            }
+            else if (fadingOut)
+            {
+                if (Time.time - readingTimer < fadeSpeed)
+                {
+                    Color c = fadingImage.color;
+                    fadingImage.color = new Color(c.r, c.g, c.b, (Time.time - readingTimer) / fadeSpeed);
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        readingTimer = Time.time - (fadeSpeed+1);
+                    }
+                }
+                else
+                {
+                    Color c = fadingImage.color;
+                    fadingImage.color = new Color(c.r, c.g, c.b, 1);
+                    textCount++;
+                    fadingOut = false;
+                    if(textCount < readTexts.Length)
+                    {
+                        sdText.text = readTexts[textCount];
+                        fadingIn = true;
+                        readingTimer = Time.time;
+                    }
+                    else
+                    {
+                        if (readingEnding)
+                        {
+                            GameObjectManager.setGameObjectState(sdText.gameObject, false);
+                            fadingIn = true;
+                            readingTimer = Time.time;
+                            end = true;
+                            GameObjectManager.setGameObjectState(endScreen, true);
+                            Cursor.lockState = CursorLockMode.None;
+                            Cursor.lockState = CursorLockMode.Confined;
+                            Cursor.visible = true;
+                        }
+                        else
+                        {
+                            sdText.text = "";
+                            fadingOutOfReadingMode = true;
+                            player.First().GetComponent<FirstPersonController>().enabled = true;
+                            readingTimer = Time.time;
+                        }
                     }
                 }
             }
             else if (fadingOutOfReadingMode)
             {
-                if(Time.time - readingTimer < 4)
+                if (Time.time - readingTimer < fadeSpeed)
                 {
                     Color c = fadingImage.color;
-                    fadingImage.color = new Color(c.r, c.g, c.b, 1 - (Time.time - readingTimer) / 4);
+                    fadingImage.color = new Color(c.r, c.g, c.b, 1 - (Time.time - readingTimer) / fadeSpeed);
                     c = background.color;
-                    background.color = new Color(c.r, c.g, c.b, 1 - (Time.time - readingTimer) / 4);
+                    background.color = new Color(c.r, c.g, c.b, 1 - (Time.time - readingTimer) / fadeSpeed);
                 }
                 else
                 {
@@ -315,7 +295,6 @@ public class StoryDisplaying : FSystem {
                     readingIntro = false;
                     readingTransition = false;
                     readingEnding = false;
-                    player.First().GetComponent<FirstPersonController>().enabled = true;
                 }
             }
             else
