@@ -7,16 +7,19 @@ using FYFY_plugins.Monitoring;
 public class Crouch : FSystem
 {
 
-    private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
-    private Family hud = FamilyManager.getFamily(new AnyOfTags("HUDInputs"));
-    private Family endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"));
+    private Family player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
+    private Family linkedHud = FamilyManager.getFamily(new AnyOfTags("EnableOnFirstCrouch"), new AllOfComponents(typeof(Image)));
+    private Family endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
-    private bool crouching = false;
+    private bool crouching = false; // true when the player is crouching
     private bool changingPose = false;
     private float crouchingSpeed;
+    private Vector3 targetScale;
     private Vector3 crouchingScale;
     private Vector3 standingScale = Vector3.one;
-    private bool firstCrouch = true;
+    private bool firstCrouchOccurs = false;
+    private FirstPersonController playerController;
+    private Image tmpImage;
 
     private bool playerIsWalking = false;
     private bool playerWasWalking = false;
@@ -24,145 +27,138 @@ public class Crouch : FSystem
     private bool hideHUD;
     private float hudShowingSpeed;
     private float hudHidingSpeed;
+    private bool previousHUDState;
 
     public Crouch()
     {
         //when crouching, the scale of the player is changed (rather than its position)
         crouchingScale = Vector3.one * 0.2f;
+        if (Application.isPlaying)
+        {
+            playerController = player.First().GetComponent<FirstPersonController>();
+        }
     }
 
-    // Use this to update member variables when system pause. 
-    // Advice: avoid to update your families inside this function.
-    protected override void onPause(int currentFrame) {
-	}
-
-	// Use this to update member variables when system resume.
-	// Advice: avoid to update your families inside this function.
-	protected override void onResume(int currentFrame){
-	}
-
-	// Use to process your families.
-	protected override void onProcess(int familiesUpdateCount) {
-        crouchingSpeed = 70f * Time.deltaTime;
-        if (!Selectable.selected && !CollectableGO.onInventory)   //if nothing is selected and inventory isn't opened (the player can't move)
+    private void SetHUD(bool state)
+    {
+        if (firstCrouchOccurs && previousHUDState != state)
         {
-            if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetMouseButtonDown(1)) && !StoryDisplaying.reading && !DreamFragmentCollect.onFragment)    //when control button or right click is pressed
+            foreach (GameObject hud in linkedHud)
+                GameObjectManager.setGameObjectState(hud, state);
+            previousHUDState = state;
+        }
+    }
+
+    // Use to process your families.
+    protected override void onProcess(int familiesUpdateCount)
+    {
+        SetHUD(playerController.enabled && endRoom.Count == 0);
+
+        if (playerController.enabled)
+        {
+            crouchingSpeed = 70f * Time.deltaTime;
+            // when control button or right click is pressed and nothing is selected and inventory isn't opened and story is not displing and no fragment is swhown then the player can crouch and standing
+            if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetMouseButtonDown(1)) && playerController.enabled && !Selectable.selected && !CollectableGO.onInventory && !StoryDisplaying.reading && !DreamFragmentCollect.onFragment)
             {
                 changingPose = true; //true when the player is crouching or standing
                 //change moving speed according to the stance
                 if (crouching)
                 {
-                    player.First().GetComponent<FirstPersonController>().m_WalkSpeed = 5;
-                    player.First().GetComponent<FirstPersonController>().m_RunSpeed = 5;
-                    if (player.First().GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                    playerController.m_WalkSpeed = 5;
+                    playerController.m_RunSpeed = 5;
+                    if (playerController.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
                     {
-                        MonitoringTrace trace = new MonitoringTrace(player.First().GetComponent<ComponentMonitoring>(), "turnOff");
+                        MonitoringTrace trace = new MonitoringTrace(playerController.GetComponent<ComponentMonitoring>(), "turnOff");
                         trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
                         HelpSystem.traces.Enqueue(trace);
                     }
                 }
                 else
-                {
-                    if (firstCrouch)
+                { // standing and want to crouch
+                    if (!firstCrouchOccurs)
+                        firstCrouchOccurs = true;
+                    playerController.m_WalkSpeed = 1;
+                    playerController.m_RunSpeed = 1;
+                    if (playerController.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
                     {
-                        firstCrouch = false;
-                        foreach (Transform child in hud.First().transform)
-                        {
-                            if(child.gameObject.name == "Crouch" || child.gameObject.name == "Move")
-                            {
-                                GameObjectManager.setGameObjectState(child.gameObject,true);
-                            }
-                        }
-                    }
-                    player.First().GetComponent<FirstPersonController>().m_WalkSpeed = 1;
-                    player.First().GetComponent<FirstPersonController>().m_RunSpeed = 1;
-                    if (player.First().GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
-                    {
-                        MonitoringTrace trace = new MonitoringTrace(player.First().GetComponent<ComponentMonitoring>(), "turnOn");
+                        MonitoringTrace trace = new MonitoringTrace(playerController.GetComponent<ComponentMonitoring>(), "turnOn");
                         trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
                         HelpSystem.traces.Enqueue(trace);
                     }
                 }
             }
-        }
 
-        //if the player is changing stance
-        if (changingPose)
-        {
-            if (crouching)
+            //if the player is changing stance
+            if (changingPose)
             {
-                player.First().transform.localScale = Vector3.MoveTowards(player.First().transform.localScale, standingScale, crouchingSpeed/10); //change stance gradually
-                if(player.First().transform.localScale == standingScale) //when standing scale is reached
+                if (crouching)
+                    targetScale = standingScale;
+                else
+                    targetScale = crouchingScale;
+
+                playerController.transform.localScale = Vector3.MoveTowards(playerController.transform.localScale, targetScale, crouchingSpeed / 10); //change stance gradually
+
+                if (playerController.transform.localScale == targetScale) //when standing scale is reached
                 {
                     changingPose = false;
                     crouching = !crouching; //true when the player is crouching
                 }
-            }
-            else
-            {
-                player.First().transform.localScale = Vector3.MoveTowards(player.First().transform.localScale, crouchingScale, crouchingSpeed/10); //change stance gradually
-                if (player.First().transform.localScale == crouchingScale) //when crouching scale is reached
-                {
-                    changingPose = false;
-                    crouching = !crouching; //true when the player is crouching
-                }
-            }
-        }
 
-        GameObjectManager.setGameObjectState(hud.First(),player.First().GetComponent<FirstPersonController>().enabled && !endRoom.First().activeSelf);
-        hudHidingSpeed = -3f * Time.deltaTime;
-        hudShowingSpeed = 3f * Time.deltaTime;
-        if (hideHUD)
-        {
-            Color c;
-            float aCount = 1;
-            foreach(Transform child in hud.First().transform)
-            {
-                c = child.gameObject.GetComponent<Image>().color;
-                child.gameObject.GetComponent<Image>().color = new Color(c.r, c.g, c.b, c.a + hudHidingSpeed);
-                aCount = child.gameObject.GetComponent<Image>().color.a;
             }
-            if(aCount < 0.3f)
+
+            // make HUD transparent on moving
+            hudHidingSpeed = -3f * Time.deltaTime;
+            hudShowingSpeed = 3f * Time.deltaTime;
+            if (hideHUD)
             {
-                foreach (Transform child in hud.First().transform)
+                float aCount = 1;
+                foreach (GameObject hud in linkedHud)
                 {
-                    c = child.gameObject.GetComponent<Image>().color;
-                    child.gameObject.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 0.3f);
+                    tmpImage = hud.GetComponent<Image>();
+                    tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, tmpImage.color.a + hudHidingSpeed);
+                    aCount = tmpImage.color.a;
                 }
-                hideHUD = false;
-            }
-        }
-        else if (showHUD)
-        {
-            Color c;
-            float aCount = 0;
-            foreach (Transform child in hud.First().transform)
-            {
-                c = child.gameObject.GetComponent<Image>().color;
-                child.gameObject.GetComponent<Image>().color = new Color(c.r, c.g, c.b, c.a + hudShowingSpeed);
-                aCount = child.gameObject.GetComponent<Image>().color.a;
-            }
-            if (aCount >= 1f)
-            {
-                foreach (Transform child in hud.First().transform)
+                if (aCount < 0.3f)
                 {
-                    c = child.gameObject.GetComponent<Image>().color;
-                    child.gameObject.GetComponent<Image>().color = new Color(c.r, c.g, c.b, 1f);
+                    foreach (GameObject hud in linkedHud)
+                    {
+                        tmpImage = hud.GetComponent<Image>();
+                        tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, 0.3f);
+                    }
+                    hideHUD = false;
                 }
+            }
+            else if (showHUD)
+            {
+                float aCount = 0;
+                foreach (GameObject hud in linkedHud)
+                {
+                    tmpImage = hud.GetComponent<Image>();
+                    tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, tmpImage.color.a + hudShowingSpeed);
+                    aCount = tmpImage.color.a;
+                }
+                if (aCount >= 1f)
+                {
+                    foreach (GameObject hud in linkedHud)
+                    {
+                        tmpImage = hud.GetComponent<Image>();
+                        tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, 1f);
+                    }
+                    showHUD = false;
+                }
+            }
+            playerIsWalking = playerController.m_Input.x != 0 || playerController.m_Input.y != 0;
+            if (playerIsWalking && !playerWasWalking)
+            {
+                hideHUD = true;
                 showHUD = false;
             }
+            else if (!playerIsWalking && playerWasWalking)
+            {
+                showHUD = true;
+                hideHUD = false;
+            }
+            playerWasWalking = playerIsWalking;
         }
-        playerIsWalking = player.First().GetComponent<FirstPersonController>().m_Input.x != 0 || player.First().GetComponent<FirstPersonController>().m_Input.y != 0;
-        if (playerIsWalking && !playerWasWalking)
-        {
-            hideHUD = true;
-            showHUD = false;
-        }
-        else if(!playerIsWalking && playerWasWalking)
-        {
-            showHUD = true;
-            hideHUD = false;
-        }
-        playerWasWalking = playerIsWalking;
     }
 }

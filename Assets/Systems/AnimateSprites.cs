@@ -51,7 +51,7 @@ public class AnimateSprites : FSystem {
                         }
                     }
                     tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[tmpAS.usedSpriteID];
-                    if (tmpAS.stopable && Input.GetMouseButtonDown(0))
+                    if (tmpAS.stopable && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return)))
                     {
                         tmpAS.animate = false;
                         tmpAS.usedSpriteID = 0;
