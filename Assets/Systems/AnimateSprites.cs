@@ -4,11 +4,10 @@ using UnityEngine.UI;
 
 public class AnimateSprites : FSystem {
 
-    private Family animatedSprites = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites)));
-    private Family test = FamilyManager.getFamily(new AllOfComponents(typeof(PointerEnterName)));
-    private Family images = FamilyManager.getFamily(new AllOfComponents(typeof(Image)));
+    private Family animatedSprites = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(Image)));
 
     private AnimatedSprites tmpAS;
+    private GameObject tmpGo;
     private float lastChangeTime = -Mathf.Infinity;
     private AnimatedSprites solvedAnimation;
 
@@ -19,28 +18,15 @@ public class AnimateSprites : FSystem {
             int nb = animatedSprites.Count;
             for (int i = 0; i < nb; i++)
             {
-                animatedSprites.getAt(i).GetComponent<AnimatedSprites>().usedSpriteID = 0;
-            }
-            nb = images.Count;
-            for (int i = 0; i < nb; i++)
-            {
-                if (images.getAt(i).name == "Solved")
+                tmpGo = animatedSprites.getAt(i);
+                tmpGo.GetComponent<AnimatedSprites>().usedSpriteID = 0;
+                if (tmpGo.name == "Solved")
                 {
-                    solvedAnimation = images.getAt(i).GetComponent<AnimatedSprites>();
+                    solvedAnimation = tmpGo.GetComponent<AnimatedSprites>();
                 }
             }
         }
     }
-
-	// Use this to update member variables when system pause. 
-	// Advice: avoid to update your families inside this function.
-	protected override void onPause(int currentFrame) {
-	}
-
-	// Use this to update member variables when system resume.
-	// Advice: avoid to update your families inside this function.
-	protected override void onResume(int currentFrame){
-	}
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
@@ -60,19 +46,20 @@ public class AnimateSprites : FSystem {
                         if (!tmpAS.loop)
                         {
                             tmpAS.animate = false;
-                            GameObjectManager.setGameObjectState(tmpAS.gameObject, !tmpAS.disableWhenFinished);
+                            if (tmpAS.disableWhenFinished)
+                                GameObjectManager.setGameObjectState(tmpAS.gameObject, false);
                         }
                     }
                     tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[tmpAS.usedSpriteID];
+                    if (tmpAS.stopable && Input.GetMouseButtonDown(0))
+                    {
+                        tmpAS.animate = false;
+                        tmpAS.usedSpriteID = 0;
+                        tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[0];
+                        GameObjectManager.setGameObjectState(tmpAS.gameObject, false);
+                    }
                 }
             }
-        }
-        if (solvedAnimation.gameObject.activeSelf && Input.GetMouseButtonDown(0))
-        {
-            solvedAnimation.animate = false;
-            solvedAnimation.usedSpriteID = 0;
-            solvedAnimation.GetComponent<Image>().sprite = solvedAnimation.sprites[0];
-            GameObjectManager.setGameObjectState(solvedAnimation.gameObject, false);
         }
 	}
 }

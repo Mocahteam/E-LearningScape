@@ -150,19 +150,7 @@ public class SetAnswer : FSystem
                         }
                     }
                 }
-            }
-            wtt = wTimerText.First().GetComponent<TextMeshProUGUI>();
-            int nbGears = gears.Count;
-            for (int i = 0; i < nbGears; i++)
-            {
-                forGO = gears.getAt(i);
-                //set the initial position of each gear to their local position at the beginning of the game
-                forGO.GetComponent<Gear>().initialPosition = forGO.transform.localPosition;
-            }
-
-            foreach (Transform child in screen2.transform)
-            {
-                if (child.gameObject.name == "ConnectionScreen")
+                else if (child.gameObject.name == "ConnectionScreen")
                 {
                     connectionR2 = child.gameObject;
                     foreach (InputField inputField in connectionR2.GetComponentsInChildren<InputField>())
@@ -199,7 +187,19 @@ public class SetAnswer : FSystem
                         }
                     }
                 }
-                else if (child.gameObject.name == "AnswersInput")
+            }
+            wtt = wTimerText.First().GetComponent<TextMeshProUGUI>();
+            int nbGears = gears.Count;
+            for (int i = 0; i < nbGears; i++)
+            {
+                forGO = gears.getAt(i);
+                //set the initial position of each gear to their local position at the beginning of the game
+                forGO.GetComponent<Gear>().initialPosition = forGO.transform.localPosition;
+            }
+
+            foreach (Transform child in screen2.transform)
+            {
+                if (child.gameObject.name == "AnswersInput")
                 {
                     answersRoom2 = child.gameObject;
                 }

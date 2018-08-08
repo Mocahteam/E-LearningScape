@@ -6,5 +6,6 @@ public class AnimatedSprites : MonoBehaviour {
     public bool animate = true;
     public bool loop = true;
     public bool disableWhenFinished = false;
+    public bool stopable = false;
     public int usedSpriteID;
 }
