@@ -8,8 +8,8 @@ using FYFY_plugins.Monitoring;
 public class DreamFragmentCollect : FSystem {
 
     private Family dfFamily = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
-    private Family dfUIFamily = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"));
-    private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
+    private Family dfUIFamily = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AnyOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD));
+    private Family player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
 
     private GameObject dfUI;
 
@@ -35,16 +35,6 @@ public class DreamFragmentCollect : FSystem {
             }
         }
     }
-
-	// Use this to update member variables when system pause. 
-	// Advice: avoid to update your families inside this function.
-	protected override void onPause(int currentFrame) {
-	}
-
-	// Use this to update member variables when system resume.
-	// Advice: avoid to update your families inside this function.
-	protected override void onResume(int currentFrame){
-	}
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
