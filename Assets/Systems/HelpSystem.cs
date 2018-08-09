@@ -7,7 +7,7 @@ using TMPro;
 
 public class HelpSystem : FSystem {
 
-    private Family subtitlesFamily = FamilyManager.getFamily(new AnyOfTags("HelpSubtitles"));
+    private Family subtitlesFamily = FamilyManager.getFamily(new AnyOfTags("HelpSubtitles"), new AllOfComponents(typeof(TextMeshProUGUI)));
     private Family monitoringComponents = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
 
     public static bool monitoring = false;
@@ -60,16 +60,6 @@ public class HelpSystem : FSystem {
             }
         }
     }
-
-	// Use this to update member variables when system pause. 
-	// Advice: avoid to update your families inside this function.
-	protected override void onPause(int currentFrame) {
-	}
-
-	// Use this to update member variables when system resume.
-	// Advice: avoid to update your families inside this function.
-	protected override void onResume(int currentFrame){
-	}
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
