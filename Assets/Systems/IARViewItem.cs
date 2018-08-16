@@ -45,18 +45,32 @@ public class IARViewItem : FSystem {
     private void onEnterItem(GameObject go)
     {
         currentView = go;
+        // show description of the new focused Game Object
+        showDescription(go);
     }
 
-    // because f_viewed contains only one gameobject (thanks to PointerOver), if it exits family no game object ar viewed
+    // because f_viewed contains only one gameobject (thanks to PointerOver), if it exits family no game object are focused
     private void onExitItem(int instanceId)
     {
+        // if we exit a selected and linked game object which is not the last selected we hide its linked game object (exception for glasses)
+        if (currentView && currentView != lastSelection && currentView.GetComponent<LinkedWith>() && currentView.GetComponent<SelectedInInventory>() && !currentView.name.Contains("Glasses"))
+            GameObjectManager.setGameObjectState(currentView.GetComponent<LinkedWith>().link, false); // switch off the linked game object
+
         currentView = null;
+
+        // if at least one game object was selected => we display its description
+        if (lastSelection)
+            showDescription(lastSelection);
+        else
+            GameObjectManager.setGameObjectState(descriptionUI, false);
     }
 
     // a new game object enter f_selected family => we consider this game object as the last game object selected
     private void onNewSelection(GameObject go)
     {
         lastSelection = go;
+        // display description of this new selection
+        showDescription(go);
     }
 
     // when a selected game object leaves f_selected family, we update the last game object selected to the last game object of the family
@@ -66,15 +80,35 @@ public class IARViewItem : FSystem {
             lastSelection = f_selected.getAt(f_selected.Count - 1);
         else
             lastSelection = null;
+
+        // Update the current view in order to take in consideration the new last selection
+        if (currentView)
+            showDescription(currentView);
     }
 
+    // Show title and description of a game object
+    // if this gameobject is linked with another one and is selected, the description area is replaced by its linked game object (except for glasses)
     private void showDescription(GameObject item)
     {
+        // Shows title and description
         GameObjectManager.setGameObjectState(descriptionUI, true);
-        GameObjectManager.setGameObjectState(descriptionTitle, true); // switch on the title
-        GameObjectManager.setGameObjectState(descriptionContent, true); // switch off the description
         descriptionTitle.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().itemName;
+        GameObjectManager.setGameObjectState(descriptionContent, true); // switch on the description
         descriptionContent.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().description;
+
+        // Check if the item is linked and selected
+        if (item.GetComponent<LinkedWith>() && item.GetComponent<SelectedInInventory>())
+        {
+            // replace description UI by linked game Object (exceptiuon for glasses)
+            if (!item.name.Contains("Glasses"))
+                GameObjectManager.setGameObjectState(descriptionContent, false); // switch off the description
+            GameObjectManager.setGameObjectState(item.GetComponent<LinkedWith>().link, true); // switch on the linked game object
+        }
+
+        // if item to display is not the last selection but this last selection is linked with antoher game object => we hide linked game object
+        // of the last selection to avoid superpositions (except for glasses)
+        if (item != lastSelection && lastSelection && lastSelection.GetComponent<LinkedWith>() && !lastSelection.name.Contains("Glasses"))
+            GameObjectManager.setGameObjectState(lastSelection.GetComponent<LinkedWith>().link, false); // switch off the linked game object
     }
 
     // Use this to update member variables when system pause. 
@@ -87,41 +121,14 @@ public class IARViewItem : FSystem {
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
     {
+        // display last selection if it exists
+        if (lastSelection)
+            showDescription(lastSelection);
     }
 
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
-        // reset default UI game object states
-        GameObjectManager.setGameObjectState(descriptionTitle, true);
-        GameObjectManager.setGameObjectState(descriptionContent, true);
-        GameObjectManager.setGameObjectState(descriptionUI, false);
-
-        // if at least one game object is selected
-        if (lastSelection)
-        {
-            // if it contains a linked game object => we display it in the right panel
-            if (lastSelection.GetComponent<LinkedWith>())
-            {
-                GameObjectManager.setGameObjectState(descriptionUI, true);
-                GameObjectManager.setGameObjectState(descriptionTitle, true); // switch on the title
-                GameObjectManager.setGameObjectState(descriptionContent, false); // switch off the description
-                descriptionTitle.GetComponent<TextMeshProUGUI>().text = lastSelection.GetComponent<Collected>().itemName;
-                descriptionContent.GetComponent<TextMeshProUGUI>().text = "";
-                GameObjectManager.setGameObjectState(lastSelection.GetComponent<LinkedWith>().link, true); // switch on the view linked in remplacement of the description
-            }
-            else // if not we simply display description in the right panel
-                showDescription(lastSelection);
-        }
-
-        // in case the player view another game object than the last selected, we override right panel with its description
-        if (currentView && currentView != lastSelection)
-        {
-            if (lastSelection && lastSelection.GetComponent<LinkedWith>())
-                GameObjectManager.setGameObjectState(lastSelection.GetComponent<LinkedWith>().link, false); // switch off the view of the last selection
-            showDescription(currentView);
-        }
-
         // mouse click management
         if (Input.GetMouseButtonDown(0))
         {
@@ -135,9 +142,9 @@ public class IARViewItem : FSystem {
                 if (go.GetComponent<SelectedInInventory>())
                 {
                     GameObjectManager.removeComponent<SelectedInInventory>(go);
-                    // this game object is unselected and it is the last one selected with a linked game object => we hide the linked game object in the right panel
-                    if (go == lastSelection && lastSelection.GetComponent<LinkedWith>())
-                        GameObjectManager.setGameObjectState(lastSelection.GetComponent<LinkedWith>().link, false); // switch off the view of the last selection
+                    // this game object is unselected and it contains a linked game object => we hide the linked game object
+                    if (go.GetComponent<LinkedWith>())
+                        GameObjectManager.setGameObjectState(go.GetComponent<LinkedWith>().link, false); // switch off the view of the last selection
                 }
                 else
                     GameObjectManager.addComponent<SelectedInInventory>(go);

@@ -22,8 +22,6 @@ public class LockResolver : FSystem {
     private float speedRotation;
     private float oldDT;
     private float dist = -1;
-    private Vector3 objectPos = Vector3.zero;
-    private int tmpCount = -1;
     private Vector3 camNewDir;
     private Vector3 newDir;
     private Vector3 playerLocalScale;
@@ -48,8 +46,6 @@ public class LockResolver : FSystem {
     private bool IARScreenRoom3Unlocked = false;
     private bool playerLookingAtDoor = false;
     private AudioSource gameAudioSource;
-
-    private bool noSelection = true;    //true if all objects are unselected
 
     private int nb;
     private GameObject lockerGO;
