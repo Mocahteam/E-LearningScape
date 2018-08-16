@@ -966,10 +966,10 @@ public class ShowUI : FSystem {
                 selectedWheel.transform.Rotate(36 - wheelRotationCount, 0, 0);
                 lockRotationUp = false;
                 wheelRotationCount = 0;
-                if (lockNumbers.x == 7 && lockNumbers.y == 0 && lockNumbers.z == 3 && !IARTab.room3Unlocked)
+                if (lockNumbers.x == 7 && lockNumbers.y == 0 && lockNumbers.z == 3 && !IARTab_old.room3Unlocked)
                 {
                     lockR2.First().GetComponent<Selectable>().solved = true;
-                    IARTab.room3Unlocked = true;
+                    IARTab_old.room3Unlocked = true;
                 }
             }
         }
@@ -982,10 +982,10 @@ public class ShowUI : FSystem {
                 selectedWheel.transform.Rotate(-(36 - wheelRotationCount), 0, 0);
                 lockRotationDown = false;
                 wheelRotationCount = 0;
-                if (lockNumbers.x == 7 && lockNumbers.y == 0 && lockNumbers.z == 3 && !IARTab.room3Unlocked)
+                if (lockNumbers.x == 7 && lockNumbers.y == 0 && lockNumbers.z == 3 && !IARTab_old.room3Unlocked)
                 {
                     lockR2.First().GetComponent<Selectable>().solved = true;
-                    IARTab.room3Unlocked = true;
+                    IARTab_old.room3Unlocked = true;
                 }
             }
         }
@@ -998,10 +998,10 @@ public class ShowUI : FSystem {
                 selectedWheelIntro.transform.Rotate(36 - wheelIntroRotationCount, 0, 0);
                 lockIntroRotationUp = false;
                 wheelIntroRotationCount = 0;
-                if (lockIntroNumbers.x == 2 && lockIntroNumbers.y == 6 && lockIntroNumbers.z == 7 && !IARTab.room1Unlocked)
+                if (lockIntroNumbers.x == 2 && lockIntroNumbers.y == 6 && lockIntroNumbers.z == 7 && !IARTab_old.room1Unlocked)
                 {
                     lockIntro.First().GetComponent<Selectable>().solved = true;
-                    IARTab.room1Unlocked = true;
+                    IARTab_old.room1Unlocked = true;
                     int nb = collectableGO.Count;
                     for(int i = 0; i < nb; i++)
                     {
@@ -1039,10 +1039,10 @@ public class ShowUI : FSystem {
                 selectedWheelIntro.transform.Rotate(-(36 - wheelIntroRotationCount), 0, 0);
                 lockIntroRotationDown = false;
                 wheelIntroRotationCount = 0;
-                if (lockIntroNumbers.x == 2 && lockIntroNumbers.y == 6 && lockIntroNumbers.z == 7 && !IARTab.room1Unlocked)
+                if (lockIntroNumbers.x == 2 && lockIntroNumbers.y == 6 && lockIntroNumbers.z == 7 && !IARTab_old.room1Unlocked)
                 {
                     lockIntro.First().GetComponent<Selectable>().solved = true;
-                    IARTab.room1Unlocked = true;
+                    IARTab_old.room1Unlocked = true;
                     int nb = collectableGO.Count;
                     for (int i = 0; i < nb; i++)
                     {
@@ -1295,7 +1295,7 @@ public class ShowUI : FSystem {
                 }
             }
         }
-		else if(!IARTab.onIAR)    //if "noselection" is false
+		else if(!IARTab_old.onIAR)    //if "noselection" is false
         {
 			if (onPlank) {
 				if (((closePlank.Count == 0 && Input.GetMouseButtonDown (0)) || Input.GetKeyDown(KeyCode.Escape)) && !moveToPlank) {
@@ -1790,7 +1790,7 @@ public class ShowUI : FSystem {
         if (!rotationUp && !rotationDown)
         {
             rotationUp = true;
-            if (Object.ReferenceEquals(wheel, wheel1))
+            if (wheel.GetInstanceID() == wheel1.GetInstanceID())
             {
                 if(numbers.x == 9)
                 {
@@ -1801,7 +1801,7 @@ public class ShowUI : FSystem {
                     numbers += Vector3.right;
                 }
             }
-            else if (Object.ReferenceEquals(wheel, wheel2))
+            else if (wheel.GetInstanceID() == wheel2.GetInstanceID())
             {
                 if (numbers.y == 9)
                 {
@@ -1812,7 +1812,7 @@ public class ShowUI : FSystem {
                     numbers += Vector3.up;
                 }
             }
-            else if (Object.ReferenceEquals(wheel, wheel3))
+            else if (wheel.GetInstanceID() == wheel3.GetInstanceID())
             {
                 if (numbers.z == 9)
                 {
@@ -1831,7 +1831,7 @@ public class ShowUI : FSystem {
         if (!rotationUp && !rotationDown)
         {
             rotationDown = true;
-            if (Object.ReferenceEquals(wheel, wheel1))
+            if (wheel.GetInstanceID() == wheel1.GetInstanceID())
             {
                 if (numbers.x == 0)
                 {
@@ -1842,7 +1842,7 @@ public class ShowUI : FSystem {
                     numbers += Vector3.left;
                 }
             }
-            else if (Object.ReferenceEquals(wheel, wheel2))
+            else if (wheel.GetInstanceID() == wheel2.GetInstanceID())
             {
                 if (numbers.y == 0)
                 {
@@ -1853,7 +1853,7 @@ public class ShowUI : FSystem {
                     numbers += Vector3.down;
                 }
             }
-            else if (Object.ReferenceEquals(wheel, wheel3))
+            else if (wheel.GetInstanceID() == wheel3.GetInstanceID())
             {
                 if (numbers.z == 0)
                 {
@@ -1871,14 +1871,14 @@ public class ShowUI : FSystem {
     {
         if (!rotationUp && !rotationDown)
         {
-            if (Object.ReferenceEquals(wheel, wheel2))
+            if (wheel.GetInstanceID() == wheel2.GetInstanceID())
             {
                 wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
                 wheel = wheel1;
                 wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
                 lockUDUI.transform.localPosition += Vector3.right * (wheel.transform.localPosition.x - lockUDUI.transform.localPosition.x);
             }
-            else if (Object.ReferenceEquals(wheel, wheel3))
+            else if (wheel.GetInstanceID() == wheel3.GetInstanceID())
             {
                 wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
                 wheel = wheel2;
@@ -1892,14 +1892,14 @@ public class ShowUI : FSystem {
     {
         if (!rotationUp && !rotationDown)
         {
-            if (Object.ReferenceEquals(wheel, wheel1))
+            if (wheel.GetInstanceID() == wheel1.GetInstanceID())
             {
                 wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
                 wheel = wheel2;
                 wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
                 lockUDUI.transform.localPosition += Vector3.right * (wheel.transform.localPosition.x - lockUDUI.transform.localPosition.x);
             }
-            else if (Object.ReferenceEquals(wheel, wheel2))
+            else if (wheel.GetInstanceID() == wheel2.GetInstanceID())
             {
                 wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
                 wheel = wheel3;

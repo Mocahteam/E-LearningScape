@@ -64,6 +64,12 @@ TagManager:
   - HelpSubtitles
   - MainMenuButton
   - EnableOnFirstCrouch
+  - InventoryWarning
+  - Cursor
+  - IARMenuButton
+  - HUD_A
+  - DescriptionUI
+  - PressA
   layers:
   - Default
   - TransparentFX

@@ -257,7 +257,7 @@ public class Inventory : FSystem {
             bool tryGO;
             if (tryRaycast)
             {
-                tryGO = (Object.ReferenceEquals(forGO, hit.transform.gameObject) && (forGO.transform.position - Camera.main.transform.position).magnitude < 7) || (forGO.GetComponent<RectTransform>() && forGO.GetComponent<PointerOver>());
+                tryGO = (forGO.GetInstanceID() == hit.transform.gameObject.GetInstanceID() && (forGO.transform.position - Camera.main.transform.position).magnitude < 7) || (forGO.GetComponent<RectTransform>() && forGO.GetComponent<PointerOver>());
             }
             else
             {
@@ -281,7 +281,7 @@ public class Inventory : FSystem {
             }
             if(forGO.GetComponent<RectTransform>() && forGO.GetComponent<PointerOver>())
             {
-                if(!Object.ReferenceEquals(forGO, selectedUI))
+                if(forGO.GetInstanceID() != selectedUI.GetInstanceID())
                 {
                     if (displayedElement)
                     {
@@ -298,7 +298,7 @@ public class Inventory : FSystem {
                 for(int j = 0; j < nb; j++)
                 {
                     forGO2 = newFeedback.getAt(j);
-                    if (Object.ReferenceEquals(forGO, forGO2.transform.parent.gameObject))
+                    if (forGO.GetInstanceID() == forGO2.transform.parent.gameObject.GetInstanceID())
                     {
                         GameObjectManager.setGameObjectState(forGO2,false);
                         break;
@@ -317,7 +317,7 @@ public class Inventory : FSystem {
                         for(int j = 0; j < nbNewFeedback; j++)
                         {
                             forGO2 = newFeedback.getAt(j);
-                            if(Object.ReferenceEquals(forGO.GetComponent<CollectableGO>().goui, forGO2.transform.parent.gameObject))
+                            if(forGO.GetComponent<CollectableGO>().goui.GetInstanceID() == forGO2.transform.parent.gameObject.GetInstanceID())
                             {
                                 GameObjectManager.setGameObjectState(forGO2,true);
                                 break;
@@ -419,7 +419,7 @@ public class Inventory : FSystem {
                             forGO.GetComponent<AnimatedSprites>().animate = false;
                             CollectableGO.usingGlasses1 = false;
                             GameObjectManager.setGameObjectState(glassesBG1,false);
-                            if(Object.ReferenceEquals(forGO, displayedDescriptionGO))
+                            if(forGO.GetInstanceID() == displayedDescriptionGO.GetInstanceID())
                             {
                                 if (selectedUI)
                                 {
@@ -458,7 +458,7 @@ public class Inventory : FSystem {
                             forGO.GetComponent<AnimatedSprites>().animate = false;
                             CollectableGO.usingGlasses2 = false;
                             GameObjectManager.setGameObjectState(glassesBG2,false);
-                            if (Object.ReferenceEquals(forGO, displayedDescriptionGO))
+                            if (forGO.GetInstanceID() == displayedDescriptionGO.GetInstanceID())
                             {
                                 if (selectedUI)
                                 {
@@ -498,7 +498,7 @@ public class Inventory : FSystem {
 						CollectableGO.usingLamp = false;
                         GameObjectManager.setGameObjectState(blackLight,false);
                         
-						if (displayer.activeSelf && Object.ReferenceEquals(forGO, selectedUI))
+						if (displayer.activeSelf && forGO.GetInstanceID() == selectedUI.GetInstanceID())
                         {
                             if (displayedElement)
                             {
@@ -521,7 +521,7 @@ public class Inventory : FSystem {
                             }
                             selectedUI = null;
                             GameObjectManager.setGameObjectState(descriptionTitle.transform.parent.gameObject,true);
-                            if (Object.ReferenceEquals(forGO, displayedDescriptionGO))
+                            if (forGO.GetInstanceID() == displayedDescriptionGO.GetInstanceID())
                             {
                                 if (CollectableGO.usingGlasses1)
                                 {
@@ -802,7 +802,7 @@ public class Inventory : FSystem {
         //    backgroundTextureWasSet = false;
         //}
 
-        if ((Input.GetKeyDown (KeyCode.A) || CollectableGO.askOpenInventory) && !StoryDisplaying.reading && !DreamFragmentCollect.onFragment) {
+        if ((Input.GetKeyDown (KeyCode.A) || CollectableGO.askOpenInventory) && !StoryDisplaying.reading) {
             if (!CollectableGO.askOpenInventory)
             {
                 inputfieldFocused = false;

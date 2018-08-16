@@ -533,12 +533,12 @@ public class SetAnswer : FSystem
             }
         }
         //if the tablet is "solved" and enigma04 is displayed
-        else if (screen1.GetComponent<Selectable>().solved && enigma4.activeSelf && !fadingToEnigma4 && !IARTab.room2Unlocked)
+        else if (screen1.GetComponent<Selectable>().solved && enigma4.activeSelf && !fadingToEnigma4 && !IARTab_old.room2Unlocked)
         {
             //enigma 4 solved, open door to room 2
             if(!solvedAnimation.animate)
             {
-                IARTab.room2Unlocked = true;
+                IARTab_old.room2Unlocked = true;
             }
         }
         //if the player is playing enigma04 and didn't answer
@@ -787,7 +787,7 @@ public class SetAnswer : FSystem
                         {
                             GameObjectManager.setGameObjectState(player.First().GetComponentInChildren<Light>().gameObject, false);
                         }
-                        IARTab.askCloseIAR = true;
+                        IARTab_old.askCloseIAR = true;
                         RenderSettings.fogDensity = 0;
                         Camera.main.farClipPlane = 300;
                         foreach (Transform child in endRoom.First().transform)

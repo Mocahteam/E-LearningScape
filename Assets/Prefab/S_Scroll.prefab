@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4625020260823508}
   - component: {fileID: 33699626935128594}
   - component: {fileID: 23827239671835804}
-  - component: {fileID: 114831753541567760}
+  - component: {fileID: 114680606877865334}
   m_Layer: 0
   m_Name: S_Scroll
   m_TagString: Untagged
@@ -83,7 +83,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1236751072338256}
   m_Mesh: {fileID: 4300000, guid: df5546382f30d9b4598e6ff4fec865c5, type: 3}
---- !u!114 &114831753541567760
+--- !u!114 &114680606877865334
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1236751072338256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87ae2ed9d11a5fe4a9e5db1e81401996, type: 3}
+  m_Script: {fileID: 11500000, guid: 363e04bd34c6c0545b128dba4b93981f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goui: {fileID: 0}
+  link: {fileID: 0}
