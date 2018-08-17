@@ -104,6 +104,7 @@ public class IARTabNavigation : FSystem {
         MoveInFrontOf.instance.Pause = true;
         LockResolver.instance.Pause = true;
         PlankManager.instance.Pause = true;
+        BallBoxManager.instance.Pause = true;
     }
 
     public void closeIar()

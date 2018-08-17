@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.PointerManager;
-using UnityEngine.UI;
-using UnityStandardAssets.Characters.FirstPerson;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine.PostProcessing;
 using FYFY_plugins.Monitoring;
 
 public class PlankManager : FSystem {
