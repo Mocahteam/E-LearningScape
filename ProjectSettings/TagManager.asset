@@ -70,6 +70,7 @@ TagManager:
   - HUD_A
   - DescriptionUI
   - PressA
+  - UIEffect
   layers:
   - Default
   - TransparentFX

@@ -156,7 +156,8 @@ public class StoryDisplaying : FSystem {
                     Highlighter.instance.Pause = false;
                     ToggleObject.instance.Pause = false;
                     CollectObject.instance.Pause = false;
-                    LockResolver.instance.Pause = false;
+                    MoveInFrontOf.instance.Pause = false;
+                    UIEffectPlayer.instance.Pause = false;
                 }
                 readingTimer = Time.time;
                 plainToAlpha = true;

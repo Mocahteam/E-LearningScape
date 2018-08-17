@@ -2,6 +2,7 @@
 using FYFY;
 using UnityEngine.UI;
 using FYFY_plugins.PointerManager;
+using System.Collections.Generic;
 
 public class IARTabNavigation : FSystem {
 
@@ -11,6 +12,7 @@ public class IARTabNavigation : FSystem {
     private Family fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)));
     private Family HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
+    private Family atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
 
     private Sprite selectedTabSprite;
     private Sprite defaultTabSprite;
@@ -19,6 +21,8 @@ public class IARTabNavigation : FSystem {
     private GameObject iarBackground;
 
     private bool openedAtLeastOnce = false;
+
+    private Dictionary<FSystem, bool> systemsStates;
 
     public static IARTabNavigation instance;
 
@@ -38,6 +42,8 @@ public class IARTabNavigation : FSystem {
 
             iarBackground = f_iarBackground.First();
             iar = iarBackground.transform.parent.gameObject;
+
+            systemsStates = new Dictionary<FSystem, bool>();
         }
         instance = this;
     }
@@ -68,7 +74,9 @@ public class IARTabNavigation : FSystem {
             if (Input.GetKeyDown(KeyCode.A))
                 openIar(0); // Open IAR on the first tab
             else
-                openIar(tabs.Count - 1); // Open IAR on the last tab
+                // Open IAR on the last tab only if player doesn't work on selectable enigm (Escape enables to exit the enigm)
+                if (atWork.Count == 0)
+                    openIar(tabs.Count - 1); // Open IAR on the last tab
         }
     }
 
@@ -78,25 +86,32 @@ public class IARTabNavigation : FSystem {
         GameObjectManager.setGameObjectState(HUD_A.First(), false); // hide HUD "A"
         GameObjectManager.setGameObjectState(iar, true); // open IAR
         SwitchTab(tabs.getAt(tabId)); // switch to the first tab
+        systemsStates.Clear();
+        // save systems states
+        foreach (FSystem sys in FSystemManager.fixedUpdateSystems())
+            systemsStates[sys] = sys.Pause;
+        foreach (FSystem sys in FSystemManager.updateSystems())
+            systemsStates[sys] = sys.Pause;
+        foreach (FSystem sys in FSystemManager.lateUpdateSystems())
+            systemsStates[sys] = sys.Pause;
+        // set required systems states
         MovingSystem.instance.Pause = true;
         DreamFragmentCollecting.instance.Pause = true;
         Highlighter.instance.Pause = true;
         ToggleObject.instance.Pause = true;
         CollectObject.instance.Pause = true;
         IARViewItem.instance.Pause = false;
+        MoveInFrontOf.instance.Pause = true;
         LockResolver.instance.Pause = true;
+        PlankManager.instance.Pause = true;
     }
 
     public void closeIar()
     {
         GameObjectManager.setGameObjectState(iar, false); // close IAR
-        MovingSystem.instance.Pause = false;
-        DreamFragmentCollecting.instance.Pause = false;
-        Highlighter.instance.Pause = false;
-        ToggleObject.instance.Pause = false;
-        CollectObject.instance.Pause = false;
-        IARViewItem.instance.Pause = true;
-        LockResolver.instance.Pause = false;
+        // Restaure systems state
+        foreach (FSystem sys in systemsStates.Keys)
+            sys.Pause = systemsStates[sys];
         // display HUD "A"
         GameObjectManager.setGameObjectState(HUD_A.First(), true);
     }

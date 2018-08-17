@@ -29,15 +29,14 @@ public class SpritesAnimator : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        if(Time.time - lastChangeTime > 1f / 10)
+        // parse each animated sprite
+        int nb = animatedSprites.Count;
+        for (int i = 0; i < nb; i++)
         {
-            lastChangeTime = Time.time;
-            // parse each animated sprite
-            int nb = animatedSprites.Count;
-            for (int i = 0; i < nb; i++)
+            tmpAS = animatedSprites.getAt(i).GetComponent<AnimatedSprites>();
+            if (tmpAS.animate)
             {
-                tmpAS = animatedSprites.getAt(i).GetComponent<AnimatedSprites>();
-                if (tmpAS.animate)
+                if (Time.time - lastChangeTime > 1f / 10)
                 {
                     tmpAS.usedSpriteID++;
                     // if last animation frame is reached
@@ -55,17 +54,19 @@ public class SpritesAnimator : FSystem {
                     }
                     // Swicth to the current frame
                     tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[tmpAS.usedSpriteID];
-                    
-                    // in case of animation is stoppable
-                    if (tmpAS.stopable && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return)))
-                    {
-                        tmpAS.animate = false;
-                        tmpAS.usedSpriteID = 0;
-                        tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[0];
-                        GameObjectManager.setGameObjectState(tmpAS.gameObject, false);
-                    }
+                }
+
+                // in case of animation is stoppable
+                if (tmpAS.stopable && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return)))
+                {
+                    tmpAS.animate = false;
+                    tmpAS.usedSpriteID = 0;
+                    tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[0];
+                    GameObjectManager.setGameObjectState(tmpAS.gameObject, false);
                 }
             }
         }
+        if (Time.time - lastChangeTime > 1f / 10)
+            lastChangeTime = Time.time;
 	}
 }

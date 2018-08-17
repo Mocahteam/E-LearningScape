@@ -15,4 +15,7 @@ public class Selectable : MonoBehaviour {//objects that can be selected by the p
     //audios played when the player gives an answer to the enigma linked to this object
     public AudioClip right;
     public AudioClip wrong;
+
+    public Vector3 standingPosDelta; // define delta position to move the player near from the selected Game Object
+    public Vector3 standingOrientation; // define which direction the camera as to look at
 }

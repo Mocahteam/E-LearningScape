@@ -2,6 +2,7 @@
 using FYFY;
 using UnityEngine.UI;
 using FYFY_plugins.PointerManager;
+using System.Collections.Generic;
 using TMPro;
 
 public class IARViewItem : FSystem {
@@ -13,10 +14,13 @@ public class IARViewItem : FSystem {
     // Contains all game objects selected inside inventory (SelectedInInventory is dynamically added by this system)
     private Family f_selected = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedInInventory), typeof(Collected), typeof(AnimatedSprites)), new AnyOfTags("InventoryElements"));
     private Family f_descriptionUI = FamilyManager.getFamily(new AnyOfTags("DescriptionUI"));
+    private Family f_viewable = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
 
     private GameObject descriptionUI;
     private GameObject descriptionTitle;
     private GameObject descriptionContent;
+
+    private Dictionary<int, GameObject> id2go;
 
     private GameObject currentView = null;
     private GameObject lastSelection = null;
@@ -37,8 +41,28 @@ public class IARViewItem : FSystem {
             f_viewed.addExitCallback(onExitItem);
             f_selected.addEntryCallback(onNewSelection);
             f_selected.addExitCallback(onSelectionRemoved);
+            f_viewable.addEntryCallback(onEnable);
+            f_viewable.addExitCallback(onDisable);
+
+            id2go = new Dictionary<int, GameObject>();
         }
         instance = this;
+    }
+
+    private void onEnable(GameObject go)
+    {
+        id2go.Add(go.GetInstanceID(), go);
+    }
+
+    private void onDisable(int instanceId)
+    {
+        GameObject go = id2go[instanceId];
+        if (go) {
+            if (go.GetComponent<SelectedInInventory>())
+                GameObjectManager.removeComponent<SelectedInInventory>(go);
+            if (go.GetComponent<LinkedWith>())
+                GameObjectManager.setGameObjectState(go.GetComponent<LinkedWith>().link, false); // switch off the linked game object
+        }
     }
 
     // if new gameobject enter inside f_viewed we store it as current game object viewed
@@ -84,6 +108,8 @@ public class IARViewItem : FSystem {
         // Update the current view in order to take in consideration the new last selection
         if (currentView)
             showDescription(currentView);
+        else
+            onExitItem(-1);
     }
 
     // Show title and description of a game object

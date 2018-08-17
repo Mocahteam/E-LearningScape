@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using FYFY;
 using UnityEngine.UI;
-using UnityStandardAssets.Characters.FirstPerson;
-using System.Collections.Generic;
 using UnityEngine.PostProcessing;
 
 public class MenuSystem : FSystem {
@@ -27,7 +25,7 @@ public class MenuSystem : FSystem {
     private Vector3 target;
     private Vector3 velocity = Vector3.zero;
 
-    GameObject ui;
+    GameObject mainMenu;
 
     public MenuSystem()
     {
@@ -53,8 +51,8 @@ public class MenuSystem : FSystem {
 
             // Get singleton fading screen
             fadingBackground = GameObject.Find("MenuFadingBackground").GetComponent<Image>();
-            // Get singleton Main UI
-            ui = GameObject.Find("UI");
+            // Get singleton MainMenu
+            mainMenu = GameObject.Find("MainMenu");
 
             // Set specific quality settings
             menuCamera = menuCameraFamily.First().GetComponent<Camera>();
@@ -109,8 +107,9 @@ public class MenuSystem : FSystem {
         RenderSettings.fogDensity = 0.005f;
         // Init timer
         switchTimer = Time.time;
-        // Enable UI
-        GameObjectManager.setGameObjectState(ui, true);
+        // Enable MainMenu
+        GameObjectManager.setGameObjectState(mainMenu, true);
+        GameObjectManager.setGameObjectState(fadingBackground.gameObject, true);
         // Enable camera
         GameObjectManager.setGameObjectState(menuCameraFamily.First(), true);
     }
@@ -163,7 +162,8 @@ public class MenuSystem : FSystem {
             if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
                 GameObjectManager.setGameObjectState(room.gameObject, false);
         // Disable UI
-        GameObjectManager.setGameObjectState(ui, false);
+        GameObjectManager.setGameObjectState(mainMenu, false);
+        GameObjectManager.setGameObjectState(fadingBackground.gameObject, false);
         // Play story
         StoryDisplaying.instance.Pause = false;
     }

@@ -8,7 +8,7 @@ public class LockResolver : FSystem {
 
     // all selectable locker
     private Family lockers = FamilyManager.getFamily(new AllOfComponents(typeof(Locker)));
-    private Family focusedLocker = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(Highlighted), typeof(Locker)));
+    private Family focusedLocker = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(ReadyToWork), typeof(Locker)));
 
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family closeLock = FamilyManager.getFamily(new AnyOfTags("LockIntro", "LockIntroWheel", "LockRoom2", "LockR2Wheel", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
@@ -16,6 +16,8 @@ public class LockResolver : FSystem {
     private Family audioSourceFamily = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("GameRooms"));
     private Family wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"));
     private Family fences = FamilyManager.getFamily(new AnyOfTags("Fence"));
+
+    private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     //information for animations
     private float speed;
@@ -29,7 +31,7 @@ public class LockResolver : FSystem {
     private float angleCount = 0;
 
     //locker
-    private Locker selectedLocker;
+    private Locker selectedLocker = null;
     private bool onLock = false;
     private bool moveToLock = false;
     private Vector3 lockPos;
@@ -102,8 +104,22 @@ public class LockResolver : FSystem {
                 }
             }
             gameAudioSource = audioSourceFamily.First().GetComponent<AudioSource>();
+
+            focusedLocker.addEntryCallback(onReadyToWorkOnLocker);
         }
         instance = this;
+    }
+
+    private void onReadyToWorkOnLocker(GameObject go)
+    {
+        selectedLocker = go.GetComponent<Locker>();
+        // Enable UI arrows
+        GameObjectManager.setGameObjectState(selectedLocker.LeftRightControl, true);
+        GameObjectManager.setGameObjectState(selectedLocker.UpDownControl, true);
+        // Change selected wheel color and move Up/Down UI over the selected wheel
+        selectedWheel = selectedLocker.Wheel2;
+        selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
+        selectedLocker.UpDownControl.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - selectedLocker.UpDownControl.transform.localPosition.x);
     }
 
     // Use this to update member variables when system pause. 
@@ -123,73 +139,11 @@ public class LockResolver : FSystem {
         speedRotation *= Time.deltaTime / oldDT;
         oldDT = Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0))
+        // Do we are in front of the locker
+        if (selectedLocker)
         {
-            lockerGO = focusedLocker.First();
-            if (lockerGO)
-            {
-                // pause unuse systems
-                MovingSystem.instance.Pause = true;
-                Highlighter.instance.Pause = true;
-                DreamFragmentCollecting.instance.Pause = true;
-                IARTabNavigation.instance.Pause = true;
-                IARNewItemAvailable.instance.Pause = true;
-                ToggleObject.instance.Pause = true;
-                CollectObject.instance.Pause = true;
-
-                // save player scale (crouch or not) in order to reset it when player exit the locker
-                playerLocalScale = player.First().transform.localScale;
-                // be sure the player standing in front of the locker
-                player.First().transform.localScale = Vector3.one;
-                // compute position in front of the second wheel
-                selectedLocker = lockerGO.GetComponent<Locker>();
-                lockPos = new Vector3(selectedLocker.Wheel2.transform.position.x - 2.5f, selectedLocker.Wheel2.transform.position.y - 0.9f, selectedLocker.Wheel2.transform.position.z);
-                // compute distance between the player and the locker and compute speed rotation
-                speedRotation = Vector3.Angle(Camera.main.transform.forward, Vector3.right) * speed / dist;
-                moveToLock = true; // start animation to move the player in front of the lock
-                onLock = true; // the player is captured by the lock
-                if (HelpSystem.monitoring)
-                {
-                    MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(3), "turnOn");
-                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                    HelpSystem.traces.Enqueue(trace);
-                }
-            }
-        }
-
-        // Do we have to process animation to move the player in front of the lock ?
-        if (moveToLock)
-        {
-            // move the player in front of the lock
-            player.First().transform.position = Vector3.MoveTowards(player.First().transform.position, lockPos, speed);
-            camNewDir = new Vector3(-1, 0, 0);// Vector3.right;
-            newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, Mathf.Deg2Rad * speedRotation, 0);
-            Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
-            // Check if the animation is finished
-            if (Vector3.Angle(Camera.main.transform.forward, newDir) < 0.5f && player.First().transform.position == lockPos)
-            {
-                // Correct the rotation
-                newDir = Vector3.RotateTowards(player.First().transform.forward, Vector3.right, 360, 0);
-                player.First().transform.rotation = Quaternion.LookRotation(newDir);
-                newDir = Vector3.RotateTowards(Camera.main.transform.forward, Vector3.right, 360, 0);
-                Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
-                // Enable UI arrows
-                GameObjectManager.setGameObjectState(selectedLocker.LeftRightControl, true);
-                GameObjectManager.setGameObjectState(selectedLocker.UpDownControl, true);
-                // Change selected wheel color and move Up/Down UI over the selected wheel
-                selectedWheel = selectedLocker.Wheel2;
-                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
-                selectedLocker.UpDownControl.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - selectedLocker.UpDownControl.transform.localPosition.x);
-                // animation is over
-                moveToLock = false;
-            }
-        }
-
-        // De we are in front of the locker
-        if (onLock && !moveToLock)
-        {
-            //"close" ui (give back control to the player) when the correct password is entered or when clicking on nothing
-            if ((closeLock.Count == 0 && Input.GetMouseButtonDown(0)) || Input.GetKeyDown(KeyCode.Escape))
+            // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed
+            if ((closeLock.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0))
                 ExitLocker();
             else if (Input.GetMouseButtonDown(0))
             {
@@ -227,7 +181,6 @@ public class LockResolver : FSystem {
             wheelRotationCount += Time.deltaTime * 200;
 
             // is rotation finished ?
-            Debug.Log("wheelRotationCount: " + wheelRotationCount);
             if (wheelRotationCount > 36)
             {
                 if (lockRotationUp)
@@ -241,15 +194,12 @@ public class LockResolver : FSystem {
                     lockRotationDown = false;
                 }
                 wheelRotationCount = 0;
-                Debug.Log(lockNumbers.x + " " + lockNumbers.y + " " + lockNumbers.z + " / " + selectedLocker.wheel1Solution + " " + selectedLocker.wheel2Solution + " " + selectedLocker.wheel3Solution);
                 // Check if the solution is found
                 if (lockNumbers.x == selectedLocker.wheel1Solution && lockNumbers.y == selectedLocker.wheel2Solution && lockNumbers.z == selectedLocker.wheel3Solution)
                 {
-                    selectedLocker.GetComponent<Selectable>().solved = true;
                     // depending of locker => unlock the right room
                     if (selectedLocker.tag == "LockIntro")
                     {
-                        Debug.Log("Unlock room 1");
                         room1Unlocked = true;
                         if (HelpSystem.monitoring)
                         {
@@ -262,10 +212,7 @@ public class LockResolver : FSystem {
                         }
                     }
                     else
-                    {
-                        Debug.Log("Unlock room 3");
                         room3Unlocked = true;
-                    }
                     lockNumbers = Vector3.zero;
                 }
             }
@@ -287,51 +234,16 @@ public class LockResolver : FSystem {
                 if (Vector3.Angle(tmpTarget, Camera.main.transform.forward) < 1)
                 {
                     // correct the rotation
-                    //++++
                     newDir = Vector3.RotateTowards(player.First().transform.forward, tmpTarget, 360, 0);
                     player.First().transform.rotation = Quaternion.LookRotation(newDir);
                     newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, 360, 0);
                     Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
-                    //++++
-                    //Camera.main.transform.forward = tmpTarget;
-                    //player.First().transform.rotation = Quaternion.LookRotation(newDir);
-                    // Play sound
                     gameAudioSource.clip = selectedLocker.GetComponent<Selectable>().right;
                     gameAudioSource.PlayDelayed(0);
                     gameAudioSource.loop = true;
                     playerLookingAtDoor = true;
                     tmpTarget = wallIntro.First().transform.position + Vector3.up * (-4f - wallIntro.First().transform.position.y);
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-                /*// move the player in front of the lock
-                player.First().transform.position = Vector3.MoveTowards(player.First().transform.position, lockPos, speed);
-                camNewDir = Vector3.right;
-                newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, Mathf.Deg2Rad * speedRotation, 0);
-                Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
-                // Check if the animation is finished
-                if (Vector3.Angle(Camera.main.transform.forward, camNewDir) < 0.5f && player.First().transform.position == lockPos)
-                {
-                    // Correct the rotation
-                    newDir = Vector3.RotateTowards(player.First().transform.forward, Vector3.right, 360, 0);
-                    player.First().transform.rotation = Quaternion.LookRotation(newDir);
-                    newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, 360, 0);
-                    Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
-
-
-
-                }*/
             }
             else
             {
@@ -349,6 +261,9 @@ public class LockResolver : FSystem {
                     // update flags
                     playerLookingAtDoor = false;
                     IARScreenRoom1Unlocked = true;
+                    // disable UI items usable for this enigm
+                    if (selectedLocker.GetComponent<LinkedWith>())
+                        GameObjectManager.setGameObjectState(selectedLocker.GetComponent<LinkedWith>().link, false);
                     // Exit the locker
                     ExitLocker();
                 }
@@ -395,33 +310,25 @@ public class LockResolver : FSystem {
 
     private void ExitLocker()
     {
-        CollectableGO.askCloseInventory = true;
-        if (onLock)
+        // Hide UI
+        GameObjectManager.setGameObjectState(selectedLocker.LeftRightControl, false);
+        GameObjectManager.setGameObjectState(selectedLocker.UpDownControl, false);
+        // Reset default wheel color
+        selectedLocker.Wheel1.GetComponent<Renderer>().material.color = lockWheelColor;
+        selectedLocker.Wheel2.GetComponent<Renderer>().material.color = lockWheelColor;
+        selectedLocker.Wheel3.GetComponent<Renderer>().material.color = lockWheelColor;
+
+        if (HelpSystem.monitoring)
         {
-            GameObjectManager.setGameObjectState(selectedLocker.LeftRightControl, false);
-            GameObjectManager.setGameObjectState(selectedLocker.UpDownControl, false);
-            selectedLocker.Wheel1.GetComponent<Renderer>().material.color = lockWheelColor;
-            selectedLocker.Wheel2.GetComponent<Renderer>().material.color = lockWheelColor;
-            selectedLocker.Wheel3.GetComponent<Renderer>().material.color = lockWheelColor;
-            selectedLocker.GetComponent<Selectable>().solved = false;
-            if (HelpSystem.monitoring)
-            {
-                MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(3), "turnOff");
-                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                HelpSystem.traces.Enqueue(trace);
-            }
+            MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(3), "turnOff");
+            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+            HelpSystem.traces.Enqueue(trace);
         }
-        onLock = false;
-        // reset intial player scale
-        player.First().transform.localScale = playerLocalScale;
-        // enable systems
-        MovingSystem.instance.Pause = false;
-        Highlighter.instance.Pause = false;
-        DreamFragmentCollecting.instance.Pause = false;
-        IARTabNavigation.instance.Pause = false;
-        IARNewItemAvailable.instance.Pause = false;
-        ToggleObject.instance.Pause = false;
-        CollectObject.instance.Pause = false;
+
+        // remove ReadyToWork component to release selected GameObject
+        GameObjectManager.removeComponent<ReadyToWork>(selectedLocker.gameObject);
+
+        selectedLocker = null;
     }
 
     private void moveWheelUp(GameObject wheel, ref Vector3 numbers, GameObject wheel1, GameObject wheel2, GameObject wheel3, ref bool rotationUp, ref bool rotationDown)
