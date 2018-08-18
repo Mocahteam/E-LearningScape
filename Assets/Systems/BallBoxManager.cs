@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.PostProcessing;
 using FYFY;
 using FYFY_plugins.PointerManager;
-using System.Collections.Generic;
 using TMPro;
 using FYFY_plugins.Monitoring;
 
@@ -21,6 +21,7 @@ public class BallBoxManager : FSystem {
     //information for animations
     private float speed;
     private float speedRotation = 200f;
+    private float coverSpeedRotation = 200f;
     private float oldDT;
     private float dist = -1;
     private Vector3 objectPos = Vector3.zero;
@@ -42,9 +43,12 @@ public class BallBoxManager : FSystem {
     private bool unlockBox = false;
     //used during the selection of a ball
     private Vector3 ballPos = Vector3.zero;
-    private bool ballFocused = false;       //true when a ball is focused
+    private Vector3 targetPos = Vector3.zero;
+    private Quaternion targetRotation;
+    private bool inFrontOfCamera = false;       //true when a ball is in front of camera
     private bool moveBall = false;          //true during the animation of selection of a ball
     private GameObject focusedBall = null;  //store the focused ball
+    private GameObject selectedBall = null;  //store the selected ball
     private Vector3 ballToCamera;           //position of the ball when selected
     private TextMeshProUGUI ballSubTitles;
     private bool ball1Seen = false;
@@ -93,13 +97,18 @@ public class BallBoxManager : FSystem {
         ballSubTitles.text = b.text;
 
         focusedBall = go;
+        Debug.Log((focusedBall != null) + " " + (selectedBall != null) + " " + moveBall + " " + inFrontOfCamera);
     }
 
     private void onExitBall(int instanceId)
     {
         ballSubTitles.text = "";
         if (focusedBall)
+        {
             focusedBall.GetComponent<Renderer>().material.color = focusedBall.GetComponent<Ball>().color;
+            focusedBall = null;
+        }
+        Debug.Log((focusedBall != null) + " " + (selectedBall != null) + " " + moveBall + " " + inFrontOfCamera);
     }
 
     // return true if key is selected into inventory
@@ -109,6 +118,11 @@ public class BallBoxManager : FSystem {
             if (go.name == "KeyE03")
                 return go;
         return null;
+    }
+
+    private Vector3 ballPosOnGrid (Ball ball)
+    {
+        return Vector3.up * ((float)f_balls.Count / 16 - (float)(ball.id / 5) / 3) + Vector3.right * ((float)(ball.id % 5) * -2f / 4 + 1f) * 2 / 3 + Vector3.forward * 0.6f;
     }
 
     // Use this to update member variables when system pause. 
@@ -128,8 +142,8 @@ public class BallBoxManager : FSystem {
 
         if (selectedBox)
         {
-            // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed (because Escape close IAR)
-            if (((f_closeBox.Count == 0 && Input.GetMouseButtonDown(0) && ballsout) || (Input.GetKeyDown(KeyCode.Escape) && !ballFocused && f_iarBackground.Count == 0 && ballsout)))
+            // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and balls are out of the box but none are in front of camera and IAR is closed (because Escape close IAR)
+            if (((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape)) && ballsout && !inFrontOfCamera && !selectedBall && !focusedBall && (f_closeBox.Count == 0 || f_iarBackground.Count == 0)))
             {
                 // set balls to initial position
                 foreach (GameObject ball in f_balls)
@@ -139,6 +153,7 @@ public class BallBoxManager : FSystem {
                 }
                 // ask to close box
                 closeBox = true;
+                Debug.Log((focusedBall != null) + " " + (selectedBall != null) + " " + moveBall + " " + inFrontOfCamera);
             }
 
             if (boxPadlock.activeSelf)
@@ -161,8 +176,6 @@ public class BallBoxManager : FSystem {
                         }
                         //remove key from inventory
                         GameObjectManager.setGameObjectState(keySelected(), false);
-
-                        ballToCamera = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0.5f));  //set position of balls when in front of the screen
                     }
                 }
             }
@@ -170,7 +183,7 @@ public class BallBoxManager : FSystem {
             if (!boxPadlock.activeSelf && !boxOpenned)
             {
                 // open the cover of the box
-                float step = speedRotation * Time.deltaTime;
+                float step = coverSpeedRotation * Time.deltaTime;
                 tmpRotationCount += step;
                 boxTop.transform.Rotate(-step, 0, 0);
                 if (tmpRotationCount > 120)
@@ -191,31 +204,35 @@ public class BallBoxManager : FSystem {
                 if (!b.outOfBox) //if the ball is still in the box
                 {
                     //move the ball to the position corresponding to its id
-                    ballPos = Vector3.up * ((float)f_balls.Count / 16 - (float)(b.id / 5) / 3) + Vector3.right * ((float)(b.id % 5) * -2f / 4 + 1f) * 2 / 3 + Vector3.forward * 0.6f;
+                    ballPos = ballPosOnGrid(b);
                     ballGo.transform.localPosition = Vector3.MoveTowards(ballGo.transform.localPosition, ballPos, speed / 2);
-                    //when the last ball arrives to its position
-                    if (ballGo.transform.localPosition == ballPos)
+                    
+                    // Check if we have to abort animation
+                    if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
                     {
-                        //stop animations
-                        b.outOfBox = true;
-                        ballCounter++; //with this the next ball will start moving
-                        if (ballCounter == f_balls.Count)
-                            ballsout = true;
-                    }
-                    else if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
-                    {
-                        //stop animations
+                        // abort animation
                         for (int i = 0; i < f_balls.Count; i++)
                         {
                             ballGo = f_balls.getAt(i);
                             b = ballGo.GetComponent<Ball>();
                             b.outOfBox = true;
-                            ballPos = Vector3.up * ((float)f_balls.Count / 16 - (float)(b.id / 5) / 3) + Vector3.right * ((float)(b.id % 5) * -2f / 4 + 1f) * 2 / 3 + Vector3.forward * 0.6f;
+                            ballPos = ballPosOnGrid(b);
                             ballGo.transform.localPosition = ballPos;
-                            ballGo.transform.localRotation = Quaternion.Euler(Vector3.up * -90 + Vector3.right * 90);
                         }
                         ballCounter = f_balls.Count;
-                        ballsout = true;
+                    }
+                    //when the last ball arrives to its position
+                    if (ballGo.transform.localPosition == ballPos)
+                    {
+                        //stop animations
+                        b.outOfBox = true;
+                        if (ballCounter < f_balls.Count - 1)
+                            ballCounter++; //with this the next ball will start moving
+                        else
+                        {
+                            ballsout = true;
+                            inFrontOfCamera = false;
+                        }
                     }
                 }
             }
@@ -224,12 +241,90 @@ public class BallBoxManager : FSystem {
             {
                 // balls interaction to see background digit
 
+                // Ask a ball to move in front of the camera
+                if (focusedBall && !selectedBall && Input.GetMouseButtonDown(0) && !moveBall && !inFrontOfCamera)
+                {
+                    //calculate position and speeds for the animation
+                    targetPos = new Vector3 (0f, 0.5f, 1.37f);
+                    targetRotation = Quaternion.Euler(90, 0, 270);
+                    moveBall = true;
+                    selectedBall = focusedBall;
+                }
+
+                // Ask ball to move back on grid with other balls
+                if (selectedBall && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape)) && inFrontOfCamera)
+                {
+                    //calculate position and speeds for the animation
+                    targetPos = ballPosOnGrid(selectedBall.GetComponent<Ball>());
+                    targetRotation = Quaternion.Euler(90, 0, 90);
+                    moveBall = true;
+                }
+
+                // Move the ball
+                if (moveBall)
+                {
+                    dist = (selectedBall.transform.localPosition - targetPos).magnitude;
+                    speedRotation = 180 * speed / dist;
+                    selectedBall.transform.localPosition = Vector3.MoveTowards(selectedBall.transform.localPosition, targetPos, speed);
+                    selectedBall.transform.localRotation = Quaternion.RotateTowards(selectedBall.transform.localRotation, targetRotation, speedRotation);
+                    //when the ball arrives
+                    if (selectedBall.transform.localPosition == targetPos)
+                    {
+                        moveBall = false;
+                        inFrontOfCamera = targetPos != ballPosOnGrid(selectedBall.GetComponent<Ball>());
+                        if (!inFrontOfCamera)
+                            selectedBall = null;
+                        /*else
+                        {
+                            if (selectedBall.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                            {
+                                MonitoringTrace trace = new MonitoringTrace(selectedBall.GetComponent<ComponentMonitoring>(), "activate");
+                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
+                                HelpSystem.traces.Enqueue(trace);
+                            }
+                            int id = selectedBall.GetComponent<Ball>().id;
+                            switch (id)
+                            {
+                                case 0:
+                                    ball1Seen = true;
+                                    break;
+
+                                case 1:
+                                    ball2Seen = true;
+                                    break;
+
+                                case 7:
+                                    ball8Seen = true;
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            if (!box.GetComponent<Selectable>().solved)
+                            {
+                                if (ball1Seen && ball2Seen && ball8Seen)
+                                {
+                                    box.GetComponent<Selectable>().solved = true;
+                                    if (HelpSystem.monitoring)
+                                    {
+                                        MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(22), "perform");
+                                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
+                                        HelpSystem.traces.Enqueue(trace);
+                                        trace = new MonitoringTrace(MonitoringManager.getMonitorById(32), "perform");
+                                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
+                                        HelpSystem.traces.Enqueue(trace);
+                                    }
+                                }
+                            }
+                        }*/
+                    }
+                }
             }
 
             if (closeBox)
             {
                 // close the cover of the box
-                float step = speedRotation * Time.deltaTime;
+                float step = coverSpeedRotation * Time.deltaTime;
                 boxTop.transform.Rotate(step, 0, 0);
                 tmpRotationCount += step;
                 if (tmpRotationCount > 120)
@@ -241,157 +336,6 @@ public class BallBoxManager : FSystem {
                     ExitBox();
                 }
             }
-
-            /*            else
-                        {
-                            else if (moveBall)
-                            {
-                                //animation to move the selected ball
-                                if (ballFocused)
-                                {
-                                    //if the ball is selected, move it in front of the camera and rotate it to make its back visible
-                                    focusedBall.transform.position = Vector3.MoveTowards(focusedBall.transform.position, ballToCamera, speed);
-                                    focusedBall.transform.localRotation = Quaternion.RotateTowards(focusedBall.transform.localRotation, Quaternion.Euler(90, 90, 0), speedRotation);
-                                    //when the ball arrives
-                                    if (focusedBall.transform.position == ballToCamera)
-                                    {
-                                        if (focusedBall.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
-                                        {
-                                            MonitoringTrace trace = new MonitoringTrace(focusedBall.GetComponent<ComponentMonitoring>(), "activate");
-                                            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                                            HelpSystem.traces.Enqueue(trace);
-                                        }
-                                        int id = focusedBall.GetComponent<Ball>().id;
-                                        switch (id)
-                                        {
-                                            case 0:
-                                                ball1Seen = true;
-                                                break;
-
-                                            case 1:
-                                                ball2Seen = true;
-                                                break;
-
-                                            case 7:
-                                                ball8Seen = true;
-                                                break;
-
-                                            default:
-                                                break;
-                                        }
-                                        if (!box.First().GetComponent<Selectable>().solved)
-                                        {
-                                            if (ball1Seen && ball2Seen && ball8Seen)
-                                            {
-                                                box.First().GetComponent<Selectable>().solved = true;
-                                                if (HelpSystem.monitoring)
-                                                {
-                                                    MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(22), "perform");
-                                                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
-                                                    HelpSystem.traces.Enqueue(trace);
-                                                    trace = new MonitoringTrace(MonitoringManager.getMonitorById(32), "perform");
-                                                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
-                                                    HelpSystem.traces.Enqueue(trace);
-                                                }
-                                            }
-                                        }
-                                        moveBall = false;
-                                    }
-                                }
-                                else
-                                {
-                                    //if the ball is not selected, move it back with the other balls and rotate it back
-                                    ballPos = Vector3.up * ((float)balls.Count / 10 - (float)(focusedBall.GetComponent<Ball>().id / 5) / 3) + Vector3.right * ((float)(focusedBall.GetComponent<Ball>().id % 5) * -2f / 4 + 1f) * 2 / 3 + Vector3.forward * 0.3f;
-                                    focusedBall.transform.localPosition = Vector3.MoveTowards(focusedBall.transform.localPosition, ballPos, speed);
-                                    focusedBall.transform.localRotation = Quaternion.RotateTowards(focusedBall.transform.localRotation, Quaternion.Euler(90, -90, 0), speedRotation * 2);
-                                    //when the ball arrives
-                                    if (focusedBall.transform.localPosition == ballPos)
-                                    {
-                                        moveBall = false;
-                                        Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = true;
-                                        //hide the number behind
-                                        foreach (Transform child in focusedBall.transform)
-                                        {
-                                            if (child.gameObject.name == "Number")
-                                            {
-                                                GameObjectManager.setGameObjectState(child.gameObject, false);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            else if (onBox && (!moveBox || boxPadlock.activeSelf))
-                            {
-                                if (((f_closeBox.Count == 0 && Input.GetMouseButtonDown(0) && !wasTakingballs) || Input.GetKeyDown(KeyCode.Escape)) && !ballFocused)
-                                {
-                                    CloseWindow();
-                                }
-                                else if (ballsout)
-                                {   //if all balls are out of the box
-                                    Ball b = null;
-                                    if (ballFocused)
-                                    {    //if there is a selected ball
-                                        if (Input.GetMouseButtonDown(0) && !moveBall)
-                                        {
-                                            //onclick if the ball isn't moving, move it back to its position with other balls
-                                            ballFocused = false;
-                                            moveBall = true;
-                                            //calculate position and speeds for the animation
-                                            ballPos = Vector3.up * ((float)balls.Count / 10 - (float)(focusedBall.GetComponent<Ball>().id / 5) / 3) + Vector3.right * ((float)(focusedBall.GetComponent<Ball>().id % 5) * -2f / 4 + 1f) * 2 / 3 + Vector3.forward * 0.3f;
-                                            dist = (box.First().transform.TransformPoint(ballPos) - ballToCamera).magnitude;
-                                            speedRotation = 180 * speed / dist / 2;
-                                        }
-                                    }
-                                    else if (!moveBall)
-                                    {  //if there isn't animations and selected ball
-                                        int nbBalls = balls.Count;
-                                        bool overNothing = true;
-                                        for (int i = 0; i < nbBalls; i++)
-                                        {
-                                            forGO = balls.getAt(i);
-                                            b = forGO.GetComponent<Ball>();
-                                            if (forGO.GetComponent<PointerOver>())
-                                            {
-                                                overNothing = false;
-                                                //if pointer over a ball change its color to yellow
-                                                forGO.GetComponent<Renderer>().material.color = Color.yellow + Color.white / 4;
-                                                ballSubTitles.text = b.text;
-                                                if (Input.GetMouseButtonDown(0))
-                                                {    //if a ball is clicked
-                                                     //move it in front of the camera
-                                                    ballFocused = true;
-                                                    moveBall = true;
-                                                    focusedBall = forGO;
-                                                    foreach (Transform child in focusedBall.transform)
-                                                    {
-                                                        if (child.gameObject.name == "Number")
-                                                        {
-                                                            GameObjectManager.setGameObjectState(child.gameObject, true);
-                                                        }
-                                                    }
-                                                    forGO.GetComponent<Renderer>().material.color = b.color; //initial color
-                                                    ballSubTitles.text = "";
-                                                    //calculate position and speeds for the animation
-                                                    ballPos = Vector3.up * ((float)balls.Count / 10 - (float)(focusedBall.GetComponent<Ball>().id / 5) / 3) + Vector3.right * ((float)(focusedBall.GetComponent<Ball>().id % 5) * -2f / 4 + 1f) * 2 / 3 + Vector3.forward * 0.3f;
-                                                    dist = (box.First().transform.TransformPoint(ballPos) - ballToCamera).magnitude;
-                                                    speedRotation = 180 * speed / dist;
-                                                    Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = false;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                //if there isn't animations, mouse over or click, set to initial color
-                                                forGO.GetComponent<Renderer>().material.color = b.color;
-                                            }
-                                        }
-                                        if (overNothing)
-                                        {
-                                            ballSubTitles.text = "";
-                                        }
-                                    }
-                                }
-                            }
-                        }*/
         }
 	}
 
