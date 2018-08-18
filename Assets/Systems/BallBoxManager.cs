@@ -97,7 +97,6 @@ public class BallBoxManager : FSystem {
         ballSubTitles.text = b.text;
 
         focusedBall = go;
-        Debug.Log((focusedBall != null) + " " + (selectedBall != null) + " " + moveBall + " " + inFrontOfCamera);
     }
 
     private void onExitBall(int instanceId)
@@ -108,7 +107,6 @@ public class BallBoxManager : FSystem {
             focusedBall.GetComponent<Renderer>().material.color = focusedBall.GetComponent<Ball>().color;
             focusedBall = null;
         }
-        Debug.Log((focusedBall != null) + " " + (selectedBall != null) + " " + moveBall + " " + inFrontOfCamera);
     }
 
     // return true if key is selected into inventory
@@ -153,7 +151,6 @@ public class BallBoxManager : FSystem {
                 }
                 // ask to close box
                 closeBox = true;
-                Debug.Log((focusedBall != null) + " " + (selectedBall != null) + " " + moveBall + " " + inFrontOfCamera);
             }
 
             if (boxPadlock.activeSelf)

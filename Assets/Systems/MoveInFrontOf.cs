@@ -16,6 +16,7 @@ public class MoveInFrontOf : FSystem {
     //information for animations
     private float speed;
     private float speedRotation;
+    private float angleRotation;
     private float oldDT;
     private float dist = -1;
     private Vector3 camNewDir;
@@ -91,8 +92,6 @@ public class MoveInFrontOf : FSystem {
 	protected override void onProcess(int familiesUpdateCount)
     {
         speed = 8f * Time.deltaTime;
-        speedRotation *= Time.deltaTime / oldDT;
-        oldDT = Time.deltaTime;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -120,7 +119,7 @@ public class MoveInFrontOf : FSystem {
                 // compute distance between the player and the focused GO and compute speed rotation
                 dist = (targetPos - player.First().transform.position).magnitude;
                 camNewDir = selectable.standingOrientation;
-                speedRotation = Vector3.Angle(Camera.main.transform.forward, camNewDir) * speed / dist;
+                angleRotation = Vector3.Angle(Camera.main.transform.forward, camNewDir);
                 moveInFrontOf = true; // start animation to move the player in front of the lock
                 if (HelpSystem.monitoring)
                 {
@@ -136,6 +135,7 @@ public class MoveInFrontOf : FSystem {
         {
             // move the player in front of the selected GO
             player.First().transform.position = Vector3.MoveTowards(player.First().transform.position, targetPos, speed);
+            speedRotation = angleRotation * speed / dist;
             newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, Mathf.Deg2Rad * speedRotation, 0);
             Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
             // Check if the animation is finished
