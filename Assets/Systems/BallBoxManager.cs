@@ -24,23 +24,14 @@ public class BallBoxManager : FSystem {
     private float coverSpeedRotation = 200f;
     private float oldDT;
     private float dist = -1;
-    private Vector3 objectPos = Vector3.zero;
     private int ballCounter = -1;
     private Vector3 camNewDir;
     private Vector3 newDir;
     private Vector3 playerLocalScale;
 
     //box
-    private bool onBox = false;                 //true when the player is using the box
-    private bool moveBox = false;               //true during the animation to move the box in front of the player
-    private bool openBox = false;               //true during the animation to open the box
-    private bool takingBalls = false;           //true during the animation to take out balls from the box
-    private bool wasTakingballs = false;
-    private Vector3 boxTopPos = Vector3.zero;   //position of the box lid when opened
-    private Vector3 boxTopIniPos;               //position of the box lid when closed
     private bool ballsout = false;              //true when all balss are out
     private GameObject boxPadlock;
-    private bool unlockBox = false;
     //used during the selection of a ball
     private Vector3 ballPos = Vector3.zero;
     private Vector3 targetPos = Vector3.zero;
@@ -49,11 +40,7 @@ public class BallBoxManager : FSystem {
     private bool moveBall = false;          //true during the animation of selection of a ball
     private GameObject focusedBall = null;  //store the focused ball
     private GameObject selectedBall = null;  //store the selected ball
-    private Vector3 ballToCamera;           //position of the ball when selected
     private TextMeshProUGUI ballSubTitles;
-    private bool ball1Seen = false;
-    private bool ball2Seen = false;
-    private bool ball8Seen = false;
     private GameObject box;
     private GameObject boxTop;
 
@@ -69,12 +56,9 @@ public class BallBoxManager : FSystem {
     {
         if (Application.isPlaying)
         {
-            ballToCamera = Camera.main.transform.position + Camera.main.transform.forward;
             box = f_box.First();
             boxPadlock = box.transform.GetChild(0).gameObject;
             boxTop = box.transform.GetChild(3).gameObject;
-            boxTopIniPos = boxTop.transform.localPosition;
-            boxTopPos = boxTop.transform.localPosition + boxTop.transform.right - boxTop.transform.up / 2; //set lid position
             ballSubTitles = box.transform.GetChild(4).gameObject.GetComponentInChildren<TextMeshProUGUI>();
 
             foreach (GameObject ball in f_balls)
@@ -154,10 +138,7 @@ public class BallBoxManager : FSystem {
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and balls are out of the box but none are in front of camera and IAR is closed (because Escape close IAR)
             if (((f_closeBox.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && (boxPadlock.activeSelf || (ballsout && !inFrontOfCamera && !selectedBall && !focusedBall)))
-
-            //if (((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape)) && (f_closeBox.Count == 0 || f_iarBackground.Count == 0) && (boxPadlock.activeSelf || (ballsout && !inFrontOfCamera && !selectedBall && !focusedBall))))
             {
-                Debug.Log("AskToCloseBox");
                 // set balls to initial position
                 foreach (GameObject ball in f_balls)
                 {
@@ -173,7 +154,6 @@ public class BallBoxManager : FSystem {
             {
                 if (keySelected())
                 {
-                    Debug.Log("UnlockBox");
                     //move up and rotate the padlock
                     dist = 1.5f - boxPadlock.transform.localPosition.y;
                     boxPadlock.transform.localPosition = Vector3.MoveTowards(boxPadlock.transform.localPosition, boxPadlock.transform.localPosition + Vector3.up * dist, (dist + 1) / 2 * Time.deltaTime);
@@ -196,7 +176,6 @@ public class BallBoxManager : FSystem {
 
             if (!boxPadlock.activeSelf && !boxOpenned)
             {
-                Debug.Log("OpenCover");
                 // open the cover of the box
                 float step = coverSpeedRotation * Time.deltaTime;
                 tmpRotationCount += step;
@@ -213,7 +192,6 @@ public class BallBoxManager : FSystem {
 
             if (boxOpenned && ballCounter < f_balls.Count)
             {
-                Debug.Log("MoveBallsOutOfTheBox");
                 //animation to take balls out of the box
                 GameObject ballGo = f_balls.getAt(ballCounter);
                 Ball b = ballGo.GetComponent<Ball>();
@@ -338,7 +316,6 @@ public class BallBoxManager : FSystem {
 
             if (closeBox)
             {
-                Debug.Log("closeBox");
                 // Check if padlock is enabled => means the box is already closed
                 if (!boxPadlock.activeSelf)
                 {

@@ -71,6 +71,7 @@ TagManager:
   - DescriptionUI
   - PressA
   - UIEffect
+  - Gears
   layers:
   - Default
   - TransparentFX

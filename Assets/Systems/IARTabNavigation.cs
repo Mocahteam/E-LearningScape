@@ -101,6 +101,7 @@ public class IARTabNavigation : FSystem {
         ToggleObject.instance.Pause = true;
         CollectObject.instance.Pause = true;
         IARViewItem.instance.Pause = false;
+        IARGearsEnigma.instance.Pause = false;
         MoveInFrontOf.instance.Pause = true;
         LockResolver.instance.Pause = true;
         PlankManager.instance.Pause = true;

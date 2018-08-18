@@ -23,7 +23,6 @@ public class LockResolver : FSystem {
     private float speed;
     private float speedRotation;
     private float oldDT;
-    private float dist = -1;
     private Vector3 camNewDir;
     private Vector3 newDir;
     private Vector3 playerLocalScale;
@@ -32,8 +31,6 @@ public class LockResolver : FSystem {
 
     //locker
     private Locker selectedLocker = null;
-    private bool onLock = false;
-    private bool moveToLock = false;
     private Vector3 lockPos;
     private GameObject selectedWheel;
     private bool lockRotationUp = false;

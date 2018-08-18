@@ -15,29 +15,19 @@ public class PlankManager : FSystem {
     private Family focusedWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerOver), typeof(TextMeshPro))); // focused words on the plank
     private Family allWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro))); // all clickable words on the plank
     private Family closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PlankText", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
-    private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     //information for animations
-    private float speed;
-    private float speedRotation;
-    private float oldDT;
-    private float dist = -1;
-    private Vector3 objectPos = Vector3.zero;
-    private int tmpCount = -1;
     private Vector3 camNewDir;
     private Vector3 newDir;
     private Vector3 playerLocalScale;
 
     //plank
     private GameObject selectedPlank = null;
-    private bool onPlank = false;           //true when the player is using the plank
-    private bool moveToPlank = false;       //true during the animation to move the player in front of the plank
     private Vector3 plankPos;               //position of the player when using the plank
     private LineRenderer lr;                //used to link words
     private List<Vector3> lrPositions;
-    private GameObject plankSubtitle;
 
     private GameObject currentFocusedWord;
 
@@ -52,14 +42,6 @@ public class PlankManager : FSystem {
             //initialise vairables
             lr = plank.First().GetComponent<LineRenderer>();
             lrPositions = new List<Vector3>();
-
-            foreach (Transform child in plank.First().transform)
-            {
-                if (child.gameObject.name == "SubTitles")
-                {
-                    plankSubtitle = child.gameObject;
-                }
-            }
 
             focusedPlank.addEntryCallback(onReadyToWorkOnPlank);
 
@@ -113,10 +95,6 @@ public class PlankManager : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
     {
-        speed = 8f * Time.deltaTime;
-        speedRotation *= Time.deltaTime / oldDT;
-        oldDT = Time.deltaTime;
-
         if (selectedPlank)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed (because Escape close IAR)

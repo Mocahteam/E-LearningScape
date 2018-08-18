@@ -23,25 +23,14 @@ public class MoveInFrontOf : FSystem {
     private Vector3 newDir;
     private Vector3 playerLocalScale;
     private Vector3 tmpTarget;
-    private float angleCount = 0;
 
     //locker
     private Locker selectedLocker;
-    private bool onLock = false;
     private bool moveInFrontOf = false;
     private Vector3 targetPos;
     private GameObject selectedWheel;
-    private bool lockRotationUp = false;
-    private bool lockRotationDown = false;
     private Color lockWheelColor;
-    private Vector3 lockNumbers = Vector3.zero;
-    private float wheelRotationCount = 0;
 
-    private bool room1Unlocked = false;
-    private bool room3Unlocked = false;
-    private bool IARScreenRoom1Unlocked = false;
-    private bool IARScreenRoom3Unlocked = false;
-    private bool playerLookingAtDoor = false;
     private AudioSource gameAudioSource;
 
     private int nb;
