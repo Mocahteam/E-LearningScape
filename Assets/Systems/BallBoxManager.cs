@@ -77,6 +77,9 @@ public class BallBoxManager : FSystem {
             boxTopPos = boxTop.transform.localPosition + boxTop.transform.right - boxTop.transform.up / 2; //set lid position
             ballSubTitles = box.transform.GetChild(4).gameObject.GetComponentInChildren<TextMeshProUGUI>();
 
+            foreach (GameObject ball in f_balls)
+                ball.GetComponent<Ball>().initialPosition = ball.transform.localPosition;
+
             f_selectedBox.addEntryCallback(onReadyToWorkOnPlank);
             f_focusedBalls.addEntryCallback(onEnterBall);
             f_focusedBalls.addExitCallback(onExitBall);
@@ -87,16 +90,25 @@ public class BallBoxManager : FSystem {
     private void onReadyToWorkOnPlank(GameObject go)
     {
         selectedBox = go;
+        // init flag for animations
         boxOpenned = false;
+        closeBox = false;
+        ballsout = false;
+        moveBall = false;
+        tmpRotationCount = 0;
+        ballCounter = 0;
     }
 
     private void onEnterBall(GameObject go)
     {
-        Ball b = go.GetComponent<Ball>();
-        go.GetComponent<Renderer>().material.color = Color.yellow + Color.white / 4;
-        ballSubTitles.text = b.text;
+        if (f_iarBackground.Count == 0)
+        {
+            Ball b = go.GetComponent<Ball>();
+            go.GetComponent<Renderer>().material.color = Color.yellow + Color.white / 4;
+            ballSubTitles.text = b.text;
 
-        focusedBall = go;
+            focusedBall = go;
+        }
     }
 
     private void onExitBall(int instanceId)
@@ -141,14 +153,18 @@ public class BallBoxManager : FSystem {
         if (selectedBox)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and balls are out of the box but none are in front of camera and IAR is closed (because Escape close IAR)
-            if (((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape)) && ballsout && !inFrontOfCamera && !selectedBall && !focusedBall && (f_closeBox.Count == 0 || f_iarBackground.Count == 0)))
+            if (((f_closeBox.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && (boxPadlock.activeSelf || (ballsout && !inFrontOfCamera && !selectedBall && !focusedBall)))
+
+            //if (((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape)) && (f_closeBox.Count == 0 || f_iarBackground.Count == 0) && (boxPadlock.activeSelf || (ballsout && !inFrontOfCamera && !selectedBall && !focusedBall))))
             {
+                Debug.Log("AskToCloseBox");
                 // set balls to initial position
                 foreach (GameObject ball in f_balls)
                 {
                     ball.transform.localPosition = ball.GetComponent<Ball>().initialPosition;
                     ball.GetComponent<Ball>().outOfBox = false;
                 }
+                ballsout = false;
                 // ask to close box
                 closeBox = true;
             }
@@ -157,6 +173,7 @@ public class BallBoxManager : FSystem {
             {
                 if (keySelected())
                 {
+                    Debug.Log("UnlockBox");
                     //move up and rotate the padlock
                     dist = 1.5f - boxPadlock.transform.localPosition.y;
                     boxPadlock.transform.localPosition = Vector3.MoveTowards(boxPadlock.transform.localPosition, boxPadlock.transform.localPosition + Vector3.up * dist, (dist + 1) / 2 * Time.deltaTime);
@@ -179,6 +196,7 @@ public class BallBoxManager : FSystem {
 
             if (!boxPadlock.activeSelf && !boxOpenned)
             {
+                Debug.Log("OpenCover");
                 // open the cover of the box
                 float step = coverSpeedRotation * Time.deltaTime;
                 tmpRotationCount += step;
@@ -195,6 +213,7 @@ public class BallBoxManager : FSystem {
 
             if (boxOpenned && ballCounter < f_balls.Count)
             {
+                Debug.Log("MoveBallsOutOfTheBox");
                 //animation to take balls out of the box
                 GameObject ballGo = f_balls.getAt(ballCounter);
                 Ball b = ballGo.GetComponent<Ball>();
@@ -223,9 +242,8 @@ public class BallBoxManager : FSystem {
                     {
                         //stop animations
                         b.outOfBox = true;
-                        if (ballCounter < f_balls.Count - 1)
-                            ballCounter++; //with this the next ball will start moving
-                        else
+                        ballCounter++; //with this the next ball will start moving
+                        if (ballCounter >= f_balls.Count)
                         {
                             ballsout = true;
                             inFrontOfCamera = false;
@@ -320,18 +338,23 @@ public class BallBoxManager : FSystem {
 
             if (closeBox)
             {
-                // close the cover of the box
-                float step = coverSpeedRotation * Time.deltaTime;
-                boxTop.transform.Rotate(step, 0, 0);
-                tmpRotationCount += step;
-                if (tmpRotationCount > 120)
+                Debug.Log("closeBox");
+                // Check if padlock is enabled => means the box is already closed
+                if (!boxPadlock.activeSelf)
                 {
-                    // correct rotation
-                    boxTop.transform.Rotate(120 - tmpRotationCount, 0, 0);
-                    tmpRotationCount = 0;
-                    closeBox = false;
-                    ExitBox();
+                    // close the cover of the box
+                    float step = coverSpeedRotation * Time.deltaTime;
+                    boxTop.transform.Rotate(step, 0, 0);
+                    tmpRotationCount += step;
+                    if (tmpRotationCount > 120)
+                    {
+                        // correct rotation
+                        boxTop.transform.Rotate(120 - tmpRotationCount, 0, 0);
+                        ExitBox();
+                    }
                 }
+                else
+                    ExitBox();
             }
         }
 	}
