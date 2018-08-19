@@ -10,6 +10,7 @@ public class MoveInFrontOf : FSystem {
     private Family f_focused = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(Highlighted)));
     // ReadyToWork component is added dynamically by this system and removed by systems interested by it (LockResolver, PlankManager...)
     private Family f_readyToWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
+    private Family f_forcedMove = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(ForceMove)));
 
     private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
 
@@ -31,6 +32,8 @@ public class MoveInFrontOf : FSystem {
     private GameObject selectedWheel;
     private Color lockWheelColor;
 
+    private GameObject emulateClickOn = null;
+
     private AudioSource gameAudioSource;
 
     private int nb;
@@ -42,9 +45,17 @@ public class MoveInFrontOf : FSystem {
     {
         if (Application.isPlaying)
         {
+            f_forcedMove.addEntryCallback(onForceMove);
+
             f_readyToWork.addExitCallback(onWorkFinished);
         }
         instance = this;
+    }
+
+    private void onForceMove(GameObject go)
+    {
+        GameObjectManager.removeComponent<ForceMove>(go);
+        emulateClickOn = go;
     }
 
     private void onWorkFinished(int instanceId)
@@ -64,6 +75,7 @@ public class MoveInFrontOf : FSystem {
             LockResolver.instance.Pause = true;
             PlankManager.instance.Pause = true;
             BallBoxManager.instance.Pause = true;
+            LoginManager.instance.Pause = true;
         }
     }
 
@@ -82,9 +94,16 @@ public class MoveInFrontOf : FSystem {
     {
         speed = 8f * Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || emulateClickOn != null)
         {
-            focusedGO = f_focused.First();
+            if (Input.GetMouseButtonDown(0))
+                focusedGO = f_focused.First();
+            else
+            {
+                focusedGO = emulateClickOn;
+                emulateClickOn = null;
+            }
+
             if (focusedGO)
             {
                 // pause unuse systems
@@ -97,6 +116,7 @@ public class MoveInFrontOf : FSystem {
                 LockResolver.instance.Pause = false;
                 PlankManager.instance.Pause = false;
                 BallBoxManager.instance.Pause = false;
+                LoginManager.instance.Pause = false;
 
                 // save player scale (crouch or not) in order to reset it when player exit the focused GameObject
                 playerLocalScale = player.First().transform.localScale;

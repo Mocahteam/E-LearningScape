@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using FYFY_plugins.Monitoring;
-using System.Collections.Generic;
-using TMPro;
 
-public class IARGearsEnigma : FSystem {
+public class IARGearsEnigma : FSystem
+{
 
     // Evaluate queries inside IAR
 
@@ -17,7 +15,13 @@ public class IARGearsEnigma : FSystem {
     private Family f_gears = FamilyManager.getFamily(new AllOfComponents(typeof(Gear)));
     private Family f_rotatingGears = FamilyManager.getFamily(new AnyOfTags("RotateGear")); //gears that can rotate (middle top, middle bot, and the solution gear)
 
+    // Will contain a game object when IAR is openned
+    private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+
+    private Family f_login = FamilyManager.getFamily(new AnyOfTags("Login"), new NoneOfComponents(typeof(PointerSensitive))); // to unlock login
+
     private bool switchToGears = false;
+    private bool unlockLogin = false;
     private bool rotateGear;
 
     private GameObject gearsEnigma;
@@ -41,6 +45,7 @@ public class IARGearsEnigma : FSystem {
             }
             f_answer.addExitCallback(onNewAnswerDisplayed);
             f_uiEffects.addEntryCallback(onUiEffectFinished);
+            f_iarBackground.addExitCallback(onIARClosed);
 
             gearsEnigma = f_gearsSet.First();
             question = gearsEnigma.transform.GetChild(0).gameObject; // first child is the question text
@@ -66,6 +71,19 @@ public class IARGearsEnigma : FSystem {
             GameObjectManager.setGameObjectState(gearsEnigma.GetComponent<LinkedWith>().link, false);
 
             switchToGears = false;
+        }
+    }
+
+    private void onIARClosed(int instanceId)
+    {
+        if (unlockLogin)
+        {
+            // Make login selectable
+            GameObjectManager.addComponent<Selectable>(f_login.First(), new { standingPosDelta = new Vector3(-0.8f, -0.76f, 0f), standingOrientation = new Vector3(1f, 0f, 0f) });
+            // And force to move on
+            GameObjectManager.addComponent<ForceMove>(f_login.First());
+            unlockLogin = false;
+            LoginManager.instance.Pause = false;
         }
     }
 
@@ -109,6 +127,7 @@ public class IARGearsEnigma : FSystem {
 
                             rotateGear = true;  //rotate gears in the middle
                             GameObjectManager.addComponent<PlayUIEffect>(gearDragged, new { effectCode = 3 });
+                            unlockLogin = true; // unlock login when UIEffect will be end
                         }
                         else //if answer is wrong
                         {
