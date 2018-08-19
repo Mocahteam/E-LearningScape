@@ -97,6 +97,7 @@ public class StoryDisplaying : FSystem {
         fadingBackground = true;
         // Set current text
         sdText.text = "";
+        textCount = -1;
         // define color fading
         if (st.storyProgression < storyTexts.Count - 1)
         {

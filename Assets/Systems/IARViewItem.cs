@@ -19,6 +19,7 @@ public class IARViewItem : FSystem {
     private GameObject descriptionUI;
     private GameObject descriptionTitle;
     private GameObject descriptionContent;
+    private GameObject descriptionInfo;
 
     private Dictionary<int, GameObject> id2go;
 
@@ -35,6 +36,7 @@ public class IARViewItem : FSystem {
             descriptionUI = f_descriptionUI.First();
             descriptionTitle = descriptionUI.transform.GetChild(0).gameObject; // the first child is the title
             descriptionContent = descriptionUI.transform.GetChild(1).gameObject; // the second child is the content of the description
+            descriptionInfo = descriptionUI.transform.GetChild(2).gameObject; // the third child is the usable info of the description
 
             // add callback on families
             f_viewed.addEntryCallback(onEnterItem);
@@ -121,13 +123,18 @@ public class IARViewItem : FSystem {
         descriptionTitle.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().itemName;
         GameObjectManager.setGameObjectState(descriptionContent, true); // switch on the description
         descriptionContent.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().description;
+        GameObjectManager.setGameObjectState(descriptionInfo, true); // switch on the info
+        descriptionInfo.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().info;
 
         // Check if the item is linked and selected
         if (item.GetComponent<LinkedWith>() && item.GetComponent<SelectedInInventory>())
         {
-            // replace description UI by linked game Object (exceptiuon for glasses)
+            // replace description UI by linked game Object (exception for glasses)
             if (!item.name.Contains("Glasses"))
+            {
                 GameObjectManager.setGameObjectState(descriptionContent, false); // switch off the description
+                GameObjectManager.setGameObjectState(descriptionInfo, false); // switch off the info
+            }
             GameObjectManager.setGameObjectState(item.GetComponent<LinkedWith>().link, true); // switch on the linked game object
         }
 
