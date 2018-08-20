@@ -20,6 +20,7 @@ public class MirrorCameraScript : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Mirror Start");
         mirrorScript = GetComponentInParent<MirrorScript>();
         cameraObject = GetComponent<Camera>();
         //cameraObject.enabled = true;
@@ -73,7 +74,7 @@ public class MirrorCameraScript : MonoBehaviour
 
     private void Update()
     {
-		if (VRMode && Camera.current == Camera.main) {
+        if (VRMode && Camera.current == Camera.main) {
 			return;
 		}
         CreateRenderTexture();
@@ -210,6 +211,7 @@ public class MirrorCameraScript : MonoBehaviour
     // Cleanup all the objects we possibly have created
     private void OnDisable()
     {
+        Debug.Log("Mirror OnDisable");
         if (reflectionTexture)
         {
             DestroyImmediate(reflectionTexture);

@@ -155,6 +155,7 @@ public class StoryDisplaying : FSystem {
                     IARNewItemAvailable.instance.Pause = false;
                     IARTabNavigation.instance.Pause = false;
                     Highlighter.instance.Pause = false;
+                    MirrorSystem.instance.Pause = false;
                     ToggleObject.instance.Pause = false;
                     CollectObject.instance.Pause = false;
                     MoveInFrontOf.instance.Pause = false;

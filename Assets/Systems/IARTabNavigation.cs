@@ -98,16 +98,18 @@ public class IARTabNavigation : FSystem {
         MovingSystem.instance.Pause = true;
         DreamFragmentCollecting.instance.Pause = true;
         Highlighter.instance.Pause = true;
+        MirrorSystem.instance.Pause = true;
         ToggleObject.instance.Pause = true;
         CollectObject.instance.Pause = true;
         IARViewItem.instance.Pause = false;
         IARGearsEnigma.instance.Pause = false;
         MoveInFrontOf.instance.Pause = true;
         LockResolver.instance.Pause = true;
-        PlankManager.instance.Pause = true;
+        PlankAndWireManager.instance.Pause = true;
         BallBoxManager.instance.Pause = true;
         LoginManager.instance.Pause = true;
         SatchelManager.instance.Pause = true;
+        PlankAndMirrorManager.instance.Pause = true;
     }
 
     public void closeIar()
