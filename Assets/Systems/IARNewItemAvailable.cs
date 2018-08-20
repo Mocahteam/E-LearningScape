@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
 
@@ -14,6 +15,8 @@ public class IARNewItemAvailable : FSystem {
     private bool warningNewItem = true;
     private bool HUD_neverDisplayed = true;
 
+    private Dictionary<int, GameObject> id2Go;
+
     public static IARNewItemAvailable instance;
 
     public IARNewItemAvailable()
@@ -21,7 +24,10 @@ public class IARNewItemAvailable : FSystem {
         if (Application.isPlaying)
         {
             itemsEnabled.addEntryCallback(OnNewItemEnabled);
+            itemsEnabled.addExitCallback(OnItemDisabled);
             newItemOver.addEntryCallback(OnMouseEnter);
+
+            id2Go = new Dictionary<int, GameObject>();
         }
         instance = this;
     }
@@ -43,6 +49,20 @@ public class IARNewItemAvailable : FSystem {
         GameObject child = getFeedbackChild(go);
         if (child)
             GameObjectManager.setGameObjectState(child, true);
+        if (!id2Go.ContainsKey(go.GetInstanceID()))
+            id2Go.Add(go.GetInstanceID(), go);
+    }
+
+    private void OnItemDisabled(int instanceId)
+    {
+        // if an item is disable => disable also its child tagged NewItemFeedback
+        GameObject go;
+        if (id2Go.TryGetValue(instanceId, out go))
+        {
+            GameObject child = getFeedbackChild(go);
+            if (child)
+                GameObjectManager.setGameObjectState(child, false);
+        }
     }
 
     private void OnMouseEnter(GameObject go)

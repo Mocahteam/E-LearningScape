@@ -53,13 +53,14 @@ public class IARViewItem : FSystem {
 
     private void onEnable(GameObject go)
     {
-        id2go.Add(go.GetInstanceID(), go);
+        if (!id2go.ContainsKey(go.GetInstanceID()))
+            id2go.Add(go.GetInstanceID(), go);
     }
 
     private void onDisable(int instanceId)
     {
-        GameObject go = id2go[instanceId];
-        if (go) {
+        GameObject go;
+        if (id2go.TryGetValue(instanceId, out go)) {
             if (go.GetComponent<SelectedInInventory>())
                 GameObjectManager.removeComponent<SelectedInInventory>(go);
             if (go.GetComponent<LinkedWith>())

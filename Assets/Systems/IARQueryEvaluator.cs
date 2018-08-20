@@ -88,6 +88,9 @@ public class IARQueryEvaluator : FSystem {
             // set final answer for third room
             if (query.tag == "Q-R3")
                 query.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = answer;
+            // if linked hide item in inventory
+            foreach (LinkedWith item in query.GetComponents<LinkedWith>())
+                GameObjectManager.setGameObjectState(item.link, false);
 
         }
     }
