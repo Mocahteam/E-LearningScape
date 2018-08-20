@@ -7,7 +7,7 @@ using TMPro;
 
 public class IARQueryEvaluator : FSystem {
 
-    // Evaluate queries inside IAR
+    // Evaluate queries answer input inside IAR input fields. This system has to be set inside MainLoop before IARTabNavigation in order to stop it if text is input, specialy in case of "a" caracter is enter.
 
     // Contains all query
     private Family f_queries = FamilyManager.getFamily(new AnyOfTags("Q-R1", "Q-R2", "Q-R3"), new AllOfComponents(typeof(QuerySolution)));
@@ -27,11 +27,14 @@ public class IARQueryEvaluator : FSystem {
                 query.GetComponentInChildren<Button>().onClick.AddListener(delegate {
                     CheckAnswer(query);
                 });
+                query.GetComponentInChildren<InputField>().onValidateInput += delegate (string input, int charIndex, char addedChar) {
+                    IARTabNavigation.instance.Pause = true;
+                    return addedChar;
+                };
                 query.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
                     if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                    {
                         CheckAnswer(query);
-                    }
+                    IARTabNavigation.instance.Pause = false;
                 });
                 foreach (string or in query.GetComponent<QuerySolution>().orSolutions)
                     availableOrSolutions.Add(or);
