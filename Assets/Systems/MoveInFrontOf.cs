@@ -76,6 +76,7 @@ public class MoveInFrontOf : FSystem {
             PlankManager.instance.Pause = true;
             BallBoxManager.instance.Pause = true;
             LoginManager.instance.Pause = true;
+            SatchelManager.instance.Pause = true;
         }
     }
 
@@ -117,6 +118,7 @@ public class MoveInFrontOf : FSystem {
                 PlankManager.instance.Pause = false;
                 BallBoxManager.instance.Pause = false;
                 LoginManager.instance.Pause = false;
+                SatchelManager.instance.Pause = false;
 
                 // save player scale (crouch or not) in order to reset it when player exit the focused GameObject
                 playerLocalScale = player.First().transform.localScale;
