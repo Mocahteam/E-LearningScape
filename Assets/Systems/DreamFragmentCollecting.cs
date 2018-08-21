@@ -20,6 +20,7 @@ public class DreamFragmentCollecting : FSystem {
     private DreamFragment tmpDFComponent;
     private bool[] fragmentsSeen;
     private bool enigmaSolved = false;
+    private bool backupIARNavigationState;
 
     public static DreamFragmentCollecting instance;
 
@@ -62,6 +63,7 @@ public class DreamFragmentCollecting : FSystem {
                     // Pause this system and dependant systems
                     this.Pause = true;
                     MovingSystem.instance.Pause = true;
+                    backupIARNavigationState = IARTabNavigation.instance.Pause;
                     IARTabNavigation.instance.Pause = true;
                     // TODO => Manage other dependant systems
 
@@ -160,7 +162,7 @@ public class DreamFragmentCollecting : FSystem {
         // Unpause this system and dependants systems
         this.Pause = false;
         MovingSystem.instance.Pause = false;
-        IARTabNavigation.instance.Pause = false;
+        IARTabNavigation.instance.Pause = backupIARNavigationState;
         // TODO => Manage other dependant systems
     }
 }

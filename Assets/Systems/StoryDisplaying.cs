@@ -144,22 +144,27 @@ public class StoryDisplaying : FSystem {
                     sdText.text = readTexts[textCount];
                 else
                 {
-                    sdText.text = "";
-                    fadingBackground = true;
-                    // Enable fps camera (=> disable menuCamera)
-                    GameObjectManager.setGameObjectState(menuCamera.First(), false);
-                    // Start all required systems
-                    MovingSystem.instance.Pause = false;
-                    SpritesAnimator.instance.Pause = false;
-                    DreamFragmentCollecting.instance.Pause = false;
-                    IARNewItemAvailable.instance.Pause = false;
-                    IARTabNavigation.instance.Pause = false;
-                    Highlighter.instance.Pause = false;
-                    MirrorSystem.instance.Pause = false;
-                    ToggleObject.instance.Pause = false;
-                    CollectObject.instance.Pause = false;
-                    MoveInFrontOf.instance.Pause = false;
-                    UIEffectPlayer.instance.Pause = false;
+                    if (st.storyProgression < storyTexts.Count - 1)
+                    {
+                        sdText.text = "";
+                        fadingBackground = true;
+                        // Enable fps camera (=> disable menuCamera)
+                        GameObjectManager.setGameObjectState(menuCamera.First(), false);
+                        // Start all required systems
+                        MovingSystem.instance.Pause = false;
+                        SpritesAnimator.instance.Pause = false;
+                        DreamFragmentCollecting.instance.Pause = false;
+                        IARNewItemAvailable.instance.Pause = false;
+                        IARTabNavigation.instance.Pause = false;
+                        Highlighter.instance.Pause = false;
+                        MirrorSystem.instance.Pause = false;
+                        ToggleObject.instance.Pause = false;
+                        CollectObject.instance.Pause = false;
+                        MoveInFrontOf.instance.Pause = false;
+                        UIEffectPlayer.instance.Pause = false;
+                    }
+                    else
+                        GameObjectManager.loadScene("Sapiens"); // reset game
                 }
                 readingTimer = Time.time;
                 plainToAlpha = true;

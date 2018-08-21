@@ -20,8 +20,6 @@ public class EndManager : FSystem {
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_waterFloor = FamilyManager.getFamily(new AnyOfTags("WaterFloor"));
 
-    private Family f_lastDoor = FamilyManager.getFamily(new AllOfComponents(typeof(Triggered3D)));
-
     private Image fadingBackground;
     private float fadingTimer = 2;
     private float fadingStart;
@@ -38,9 +36,6 @@ public class EndManager : FSystem {
         {
             f_answer.addExitCallback(onNewAnswerDisplayed);
             f_iarBackground.addExitCallback(onIARClosed);
-
-            f_lastDoor.addEntryCallback(onEnterDoor);
-            f_lastDoor.addExitCallback(onExitDoor);
 
             // Get singleton fading screen
             fadingBackground = GameObject.Find("MenuFadingBackground").GetComponent<Image>();
@@ -66,32 +61,6 @@ public class EndManager : FSystem {
             this.Pause = false;
             GameObjectManager.setGameObjectState(fadingBackground.gameObject, true);
         }
-    }
-
-    private void onEnterDoor(GameObject go)
-    {
-        foreach (GameObject target in go.GetComponent<Triggered3D>().Targets)
-        {
-            if (target == f_player.First())
-            {
-                if (target.transform.position.x - go.transform.position.x < 0 && canReadEnding)
-                {
-                    // show story
-                    f_storyDisplayer.First().GetComponent<StoryText>().storyProgression++;
-                    StoryDisplaying.instance.Pause = false;
-                }
-                else
-                {
-                    canReadEnding = false;
-                }
-            }
-        }
-    }
-
-    private void onExitDoor(int instanceId)
-    {
-        if (instanceId == f_player.First().GetInstanceID())
-            canReadEnding = true;
     }
 
     // Use to process your families.
