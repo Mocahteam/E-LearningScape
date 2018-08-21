@@ -105,6 +105,9 @@ public class LoginManager : FSystem {
     private void onReadyToWorkOnLogin(GameObject go)
     {
         selectedLoginPanel = go;
+
+        // Launch this system
+        instance.Pause = false;
     }
 
     // Use this to update member variables when system pause. 
@@ -178,6 +181,9 @@ public class LoginManager : FSystem {
         GameObjectManager.removeComponent<ReadyToWork>(selectedLoginPanel);
 
         selectedLoginPanel = null;
+
+        // Pause this system
+        instance.Pause = true;
     }
 
     private void CheckConnection() //mastermind

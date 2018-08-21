@@ -11,7 +11,8 @@ public class EndDoor : MonoBehaviour {
     {
         if (other.gameObject.GetComponent<FirstPersonController>())
         {
-            if(other.gameObject.transform.position.x - this.transform.position.x < 0 && canReadEnding)
+            Debug.Log("OnTriggerEnter");
+            if (other.gameObject.transform.position.x - this.transform.position.x < 0 && canReadEnding)
             {
                 StoryDisplaying.readingEnding = true;
                 other.gameObject.GetComponent<FirstPersonController>().enabled = false;
@@ -28,6 +29,7 @@ public class EndDoor : MonoBehaviour {
     {
         if (other.gameObject.GetComponent<FirstPersonController>())
         {
+            Debug.Log("OnTriggerExit");
             canReadEnding = true;
         }
     }

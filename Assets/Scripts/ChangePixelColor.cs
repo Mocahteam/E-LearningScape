@@ -11,17 +11,13 @@ public class ChangePixelColor : MonoBehaviour {
 	void Start () {
         eraseColor = this.transform.parent.gameObject.GetComponent<Renderer>().material.color;
         if (!this.GetComponent<Renderer>().material.mainTexture)
-        {
             this.GetComponent<Renderer>().material.mainTexture = new Texture2D(1480, 1070);
-        }
         this.GetComponent<Renderer>().material.renderQueue = 2002;
         Texture2D tex = (Texture2D) this.GetComponent<Renderer>().material.mainTexture;
         Color[] colors = tex.GetPixels();
         int nb = colors.Length;
         for(int i = 0; i < nb; i++)
-        {
             colors[i] = Color.white - Color.black;
-        }
         tex.SetPixels(colors);
         tex.Apply();
     }
@@ -34,7 +30,7 @@ public class ChangePixelColor : MonoBehaviour {
     private void OnGUI()
     {
         Event evt = Event.current;
-        if (evt.isMouse && Input.GetMouseButton(0) && ShowUI.eraserDragged)
+        if (evt.isMouse && Input.GetMouseButton(0) && WhiteBoardManager.eraserDragged)
         {
             // Send a ray to collide with the plane
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

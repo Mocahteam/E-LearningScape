@@ -79,6 +79,7 @@ public class MoveInFrontOf : FSystem {
             LoginManager.instance.Pause = true;
             SatchelManager.instance.Pause = true;
             PlankAndMirrorManager.instance.Pause = true;
+            WhiteBoardManager.instance.Pause = true;
         }
     }
 
@@ -97,7 +98,7 @@ public class MoveInFrontOf : FSystem {
     {
         speed = 8f * Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0) || emulateClickOn != null)
+        if (!moveInFrontOf && (Input.GetMouseButtonDown(0) || emulateClickOn != null))
         {
             if (Input.GetMouseButtonDown(0))
                 focusedGO = f_focused.First();
@@ -115,13 +116,6 @@ public class MoveInFrontOf : FSystem {
                 DreamFragmentCollecting.instance.Pause = true;
                 ToggleObject.instance.Pause = true;
                 CollectObject.instance.Pause = true;
-                // launch required systems
-                LockResolver.instance.Pause = false;
-                PlankAndWireManager.instance.Pause = false;
-                BallBoxManager.instance.Pause = false;
-                LoginManager.instance.Pause = false;
-                SatchelManager.instance.Pause = false;
-                PlankAndMirrorManager.instance.Pause = false;
 
                 // save player scale (crouch or not) in order to reset it when player exit the focused GameObject
                 playerLocalScale = player.First().transform.localScale;

@@ -117,6 +117,8 @@ public class LockResolver : FSystem {
         selectedWheel = selectedLocker.Wheel2;
         selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
         selectedLocker.UpDownControl.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - selectedLocker.UpDownControl.transform.localPosition.x);
+        // activate this system
+        instance.Pause = false;
     }
 
     // Use this to update member variables when system pause. 
@@ -326,6 +328,9 @@ public class LockResolver : FSystem {
         GameObjectManager.removeComponent<ReadyToWork>(selectedLocker.gameObject);
 
         selectedLocker = null;
+
+        // disable this system
+        instance.Pause = true;
     }
 
     private void moveWheelUp(GameObject wheel, ref Vector3 numbers, GameObject wheel1, GameObject wheel2, GameObject wheel3, ref bool rotationUp, ref bool rotationDown)

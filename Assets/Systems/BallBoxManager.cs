@@ -81,6 +81,9 @@ public class BallBoxManager : FSystem {
         moveBall = false;
         tmpRotationCount = 0;
         ballCounter = 0;
+
+        // Launch this system
+        instance.Pause = false;
     }
 
     private void onEnterBall(GameObject go)
@@ -359,5 +362,8 @@ public class BallBoxManager : FSystem {
             trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
             HelpSystem.traces.Enqueue(trace);
         }
+
+        // Pause this system
+        instance.Pause = true;
     }
 }

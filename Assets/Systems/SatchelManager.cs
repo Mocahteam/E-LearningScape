@@ -67,6 +67,9 @@ public class SatchelManager : FSystem {
         getOutPaper = false;
         paperOut = false;
         bagTargetPos = go.transform.position + Vector3.up*0.5f;
+
+        // Launch this system
+        instance.Pause = false;
     }
 
     private void onItemSelectedInInventory(GameObject go)
@@ -152,6 +155,9 @@ public class SatchelManager : FSystem {
                         GameObjectManager.removeComponent<ReadyToWork>(selectedBag);
 
                         selectedBag = null;
+
+                        // Pause this system
+                        instance.Pause = true;
                         return;
                     }
                 }

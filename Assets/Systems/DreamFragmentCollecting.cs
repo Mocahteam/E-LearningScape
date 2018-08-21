@@ -164,5 +164,3 @@ public class DreamFragmentCollecting : FSystem {
         // TODO => Manage other dependant systems
     }
 }
-
-//TESTER INTERDEPENDANCES ENTRE LES SYSTEMES SURTOUT DREAMFRAGMENTCOLLECT ET IARTABNAVIGATION ET MOVINGSYSTEM

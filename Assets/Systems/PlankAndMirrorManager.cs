@@ -61,6 +61,9 @@ public class PlankAndMirrorManager : FSystem {
         plankRotation = go.transform.GetChild(0).gameObject;
         mirror = go.transform.GetChild(1).gameObject;
         UI = go.transform.GetChild(2).gameObject;
+
+        // Launch this system
+        instance.Pause = false;
     }
 
     // return true if UI with name "name" is selected into inventory
@@ -171,5 +174,8 @@ public class PlankAndMirrorManager : FSystem {
         GameObjectManager.removeComponent<ReadyToWork>(selectedPlank);
 
         selectedPlank = null;
+
+        // Pause this system
+        instance.Pause = true;
     }
 }

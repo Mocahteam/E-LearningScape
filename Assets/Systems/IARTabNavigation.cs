@@ -110,6 +110,7 @@ public class IARTabNavigation : FSystem {
         LoginManager.instance.Pause = true;
         SatchelManager.instance.Pause = true;
         PlankAndMirrorManager.instance.Pause = true;
+        WhiteBoardManager.instance.Pause = true;
     }
 
     public void closeIar()

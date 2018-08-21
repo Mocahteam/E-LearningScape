@@ -54,6 +54,9 @@ public class PlankAndWireManager : FSystem {
     private void onReadyToWorkOnPlank(GameObject go)
     {
         selectedPlank = go;
+
+        // launch this system
+        instance.Pause = false;
     }
 
     private void onWordMouseEnter(GameObject go)
@@ -223,5 +226,8 @@ public class PlankAndWireManager : FSystem {
             trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
             HelpSystem.traces.Enqueue(trace);
         }
+
+        // pause this system
+        instance.Pause = true;
     }
 }
