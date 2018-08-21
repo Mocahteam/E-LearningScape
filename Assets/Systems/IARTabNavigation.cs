@@ -115,9 +115,11 @@ public class IARTabNavigation : FSystem {
     public void closeIar()
     {
         GameObjectManager.setGameObjectState(iar, false); // close IAR
-        // Restaure systems state
+        // Restaure systems state (exception for LampManager)
+        bool backLampManagerState = LampManager.instance.Pause;
         foreach (FSystem sys in systemsStates.Keys)
             sys.Pause = systemsStates[sys];
+        LampManager.instance.Pause = backLampManagerState;
         // display HUD "A"
         GameObjectManager.setGameObjectState(HUD_A.First(), true);
     }
