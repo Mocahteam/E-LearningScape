@@ -47,6 +47,7 @@ public class BallBoxManager : FSystem {
     private float tmpRotationCount = 0;
     private bool boxOpenned = false;
     private bool closeBox = false;
+    private bool depthOfFieldsEnabled = false;
 
     private GameObject selectedBox;
 
@@ -64,14 +65,14 @@ public class BallBoxManager : FSystem {
             foreach (GameObject ball in f_balls)
                 ball.GetComponent<Ball>().initialPosition = ball.transform.localPosition;
 
-            f_selectedBox.addEntryCallback(onReadyToWorkOnPlank);
+            f_selectedBox.addEntryCallback(onReadyToWorkOnBallBox);
             f_focusedBalls.addEntryCallback(onEnterBall);
             f_focusedBalls.addExitCallback(onExitBall);
         }
         instance = this;
     }
 
-    private void onReadyToWorkOnPlank(GameObject go)
+    private void onReadyToWorkOnBallBox(GameObject go)
     {
         selectedBox = go;
         // init flag for animations
@@ -84,6 +85,8 @@ public class BallBoxManager : FSystem {
 
         // Launch this system
         instance.Pause = false;
+
+        depthOfFieldsEnabled = Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled;
     }
 
     private void onEnterBall(GameObject go)
@@ -245,6 +248,7 @@ public class BallBoxManager : FSystem {
                     targetRotation = Quaternion.Euler(90, 0, 270);
                     moveBall = true;
                     selectedBall = focusedBall;
+                    Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = false;
                 }
 
                 // Ask ball to move back on grid with other balls
@@ -254,6 +258,7 @@ public class BallBoxManager : FSystem {
                     targetPos = ballPosOnGrid(selectedBall.GetComponent<Ball>());
                     targetRotation = Quaternion.Euler(90, 0, 90);
                     moveBall = true;
+                    Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = depthOfFieldsEnabled;
                 }
 
                 // Move the ball

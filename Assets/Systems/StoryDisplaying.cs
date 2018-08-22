@@ -111,6 +111,8 @@ public class StoryDisplaying : FSystem {
             background.color = Color.white;
             sdText.color = Color.black;
         }
+        // stop systems
+        MovingSystem.instance.Pause = false;
     }
 
 	// Use to process your families.
@@ -144,6 +146,7 @@ public class StoryDisplaying : FSystem {
                     sdText.text = readTexts[textCount];
                 else
                 {
+                    // end text reached
                     if (st.storyProgression < storyTexts.Count - 1)
                     {
                         sdText.text = "";

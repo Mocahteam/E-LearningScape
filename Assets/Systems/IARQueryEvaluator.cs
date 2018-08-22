@@ -12,9 +12,14 @@ public class IARQueryEvaluator : FSystem {
     // Contains all query
     private Family f_queries = FamilyManager.getFamily(new AnyOfTags("Q-R1", "Q-R2", "Q-R3"), new AllOfComponents(typeof(QuerySolution)));
 
+    private Family f_queriesRoom2 = FamilyManager.getFamily(new AnyOfTags("Q-R2"));
+    private Family f_answerRoom2 = FamilyManager.getFamily(new AnyOfTags("A-R2"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not displayed for the second room
+    private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
+
     public static IARQueryEvaluator instance;
 
     private HashSet<string> availableOrSolutions;
+    private bool showRoom2FinalCode = false;
 
     public IARQueryEvaluator()
     {
@@ -39,8 +44,31 @@ public class IARQueryEvaluator : FSystem {
                 foreach (string or in query.GetComponent<QuerySolution>().orSolutions)
                     availableOrSolutions.Add(or);
             }
+
+            f_answerRoom2.addExitCallback(onNewAnswerDisplayed);
+            f_uiEffects.addEntryCallback(onUIEffectEnd);
         }
         instance = this;
+    }
+
+    private void onNewAnswerDisplayed(int instanceId)
+    {
+        // When all answer was displayed => ask to display final code for second room
+        if (f_answerRoom2.Count == 0)
+            showRoom2FinalCode = true;
+    }
+
+    private void onUIEffectEnd (GameObject go)
+    {
+        if (showRoom2FinalCode)
+        {
+            showRoom2FinalCode = false;
+            GameObject queries = f_queriesRoom2.First().transform.parent.gameObject;
+            // disable queries
+            GameObjectManager.setGameObjectState(queries, false);
+            // enable final code
+            GameObjectManager.setGameObjectState(queries.transform.parent.GetChild(1).gameObject, true);
+        }
     }
 
     private void CheckAnswer(GameObject query)

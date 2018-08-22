@@ -56,7 +56,6 @@ public class LoginManager : FSystem {
     {
         if (Application.isPlaying)
         {
-
             f_mainWindow.First().GetComponentInChildren<Button>().onClick.AddListener(CheckConnection);
             foreach (InputField inputField in f_mainWindow.First().GetComponentsInChildren<InputField>())
             {
@@ -168,6 +167,10 @@ public class LoginManager : FSystem {
                     // show story
                     storyDisplayer.First().GetComponent<StoryText>().storyProgression++;
                     StoryDisplaying.instance.Pause = false;
+                    // Enable IAR second screen
+                    GameObject IARsecondScreen = f_mainWindow.First().GetComponentInChildren<LinkedWith>().link;
+                    GameObjectManager.setGameObjectState(IARsecondScreen.transform.GetChild(0).gameObject, false); // first child is locked tab
+                    GameObjectManager.setGameObjectState(IARsecondScreen.transform.GetChild(1).gameObject, true); // second child is unlocked tab
                     // exit login
                     ExitLogin();
                 }

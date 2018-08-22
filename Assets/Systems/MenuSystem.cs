@@ -158,9 +158,9 @@ public class MenuSystem : FSystem {
     {
         this.Pause = true;
         // Disable second and third room
-/*        foreach (Transform room in gameRooms.First().transform)
+        foreach (Transform room in gameRooms.First().transform)
             if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
-                GameObjectManager.setGameObjectState(room.gameObject, false);*/
+                GameObjectManager.setGameObjectState(room.gameObject, false);
         // Disable UI
         GameObjectManager.setGameObjectState(mainMenu, false);
         GameObjectManager.setGameObjectState(fadingBackground.gameObject, false);
