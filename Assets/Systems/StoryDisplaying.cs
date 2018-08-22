@@ -111,8 +111,6 @@ public class StoryDisplaying : FSystem {
             background.color = Color.white;
             sdText.color = Color.black;
         }
-        // stop systems
-        MovingSystem.instance.Pause = false;
     }
 
 	// Use to process your families.
@@ -138,6 +136,8 @@ public class StoryDisplaying : FSystem {
                 {
                     background.color = new Color(background.color.r, background.color.g, background.color.b, 1);
                     fadingBackground = false;
+                    // stop systems
+                    MovingSystem.instance.Pause = true;
                 }
                 alphaToPlain = false;
                 // pass to the next text
