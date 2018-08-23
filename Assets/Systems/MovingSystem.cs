@@ -6,11 +6,12 @@ using FYFY_plugins.Monitoring;
 
 public class MovingSystem : FSystem
 {
+    // This system manage HUD on moving, walking speed and state of the FirstPersonController
 
-    private Family player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
-    private Family linkedHud = FamilyManager.getFamily(new AnyOfTags("EnableOnFirstCrouch"), new AllOfComponents(typeof(Image)));
-    private Family endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family cursor = FamilyManager.getFamily(new AnyOfTags("Cursor"));
+    private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
+    private Family f_linkedHud = FamilyManager.getFamily(new AnyOfTags("EnableOnFirstCrouch"), new AllOfComponents(typeof(Image)));
+    private Family f_endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_cursor = FamilyManager.getFamily(new AnyOfTags("Cursor"));
 
     private bool crouching = false; // true when the player is crouching
     private bool changingPose = false;
@@ -37,7 +38,7 @@ public class MovingSystem : FSystem
         //when crouching, the scale of the player is changed (rather than its position)
         crouchingScale = Vector3.one * 0.2f;
         if (Application.isPlaying)
-            playerController = player.First().GetComponent<FirstPersonController>();
+            playerController = f_player.First().GetComponent<FirstPersonController>();
         instance = this;
     }
 
@@ -52,7 +53,7 @@ public class MovingSystem : FSystem
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
         // Hide fps cursor
-        GameObjectManager.setGameObjectState(cursor.First(), false);
+        GameObjectManager.setGameObjectState(f_cursor.First(), false);
     }
 
     // Use this to update member variables when system resume.
@@ -60,7 +61,7 @@ public class MovingSystem : FSystem
     protected override void onResume(int currentFrame)
     {
         playerController.m_MouseLook.m_CameraTargetRot = Camera.main.transform.localRotation;
-        playerController.m_MouseLook.m_CharacterTargetRot = player.First().transform.localRotation;
+        playerController.m_MouseLook.m_CharacterTargetRot = f_player.First().transform.localRotation;
         
         playerController.enabled = true;
         SetHUD(true);
@@ -69,14 +70,14 @@ public class MovingSystem : FSystem
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         // Show fps cursor
-        GameObjectManager.setGameObjectState(cursor.First(), true);
+        GameObjectManager.setGameObjectState(f_cursor.First(), true);
     }
 
     private void SetHUD(bool state)
     {
         if (firstCrouchOccurs && previousHUDState != state)
         {
-            foreach (GameObject hud in linkedHud)
+            foreach (GameObject hud in f_linkedHud)
                 GameObjectManager.setGameObjectState(hud, state);
             previousHUDState = state;
         }
@@ -85,11 +86,11 @@ public class MovingSystem : FSystem
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
-        SetHUD(endRoom.Count == 0);
+        SetHUD(f_endRoom.Count == 0);
 
         crouchingSpeed = 70f * Time.deltaTime;
         // when control button or right click is pressed then the player can alternatively crouch and standing
-        if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetMouseButtonDown(1)) && !Selectable.selected && !CollectableGO.onInventory && !StoryDisplaying.reading)
+        if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetMouseButtonDown(1)))
         {
             changingPose = true; //true when the player is crouching or standing
             //change moving speed according to the stance
@@ -143,7 +144,7 @@ public class MovingSystem : FSystem
         if (hideHUD)
         {
             float aCount = 1;
-            foreach (GameObject hud in linkedHud)
+            foreach (GameObject hud in f_linkedHud)
             {
                 tmpImage = hud.GetComponent<Image>();
                 tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, tmpImage.color.a + hudHidingSpeed);
@@ -151,7 +152,7 @@ public class MovingSystem : FSystem
             }
             if (aCount < 0.3f)
             {
-                foreach (GameObject hud in linkedHud)
+                foreach (GameObject hud in f_linkedHud)
                 {
                     tmpImage = hud.GetComponent<Image>();
                     tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, 0.3f);
@@ -162,7 +163,7 @@ public class MovingSystem : FSystem
         else if (showHUD)
         {
             float aCount = 0;
-            foreach (GameObject hud in linkedHud)
+            foreach (GameObject hud in f_linkedHud)
             {
                 tmpImage = hud.GetComponent<Image>();
                 tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, tmpImage.color.a + hudShowingSpeed);
@@ -170,7 +171,7 @@ public class MovingSystem : FSystem
             }
             if (aCount >= 1f)
             {
-                foreach (GameObject hud in linkedHud)
+                foreach (GameObject hud in f_linkedHud)
                 {
                     tmpImage = hud.GetComponent<Image>();
                     tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, 1f);

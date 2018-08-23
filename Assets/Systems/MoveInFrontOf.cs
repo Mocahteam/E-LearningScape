@@ -12,31 +12,22 @@ public class MoveInFrontOf : FSystem {
     private Family f_readyToWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
     private Family f_forcedMove = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(ForceMove)));
 
-    private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
+    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
 
     //information for animations
     private float speed;
     private float speedRotation;
     private float angleRotation;
-    private float oldDT;
     private float dist = -1;
     private Vector3 camNewDir;
     private Vector3 newDir;
     private Vector3 playerLocalScale;
-    private Vector3 tmpTarget;
 
-    //locker
-    private Locker selectedLocker;
     private bool moveInFrontOf = false;
     private Vector3 targetPos;
-    private GameObject selectedWheel;
-    private Color lockWheelColor;
 
     private GameObject emulateClickOn = null;
 
-    private AudioSource gameAudioSource;
-
-    private int nb;
     private GameObject focusedGO;
 
     public static MoveInFrontOf instance;
@@ -64,7 +55,7 @@ public class MoveInFrontOf : FSystem {
         if (f_readyToWork.Count == 0)
         {
             // reset intial player scale
-            player.First().transform.localScale = playerLocalScale;
+            f_player.First().transform.localScale = playerLocalScale;
             // enable systems
             MovingSystem.instance.Pause = false;
             Highlighter.instance.Pause = false;
@@ -118,17 +109,17 @@ public class MoveInFrontOf : FSystem {
                 CollectObject.instance.Pause = true;
 
                 // save player scale (crouch or not) in order to reset it when player exit the focused GameObject
-                playerLocalScale = player.First().transform.localScale;
-                // be sure the player standing in front of the locker
-                player.First().transform.localScale = Vector3.one;
+                playerLocalScale = f_player.First().transform.localScale;
+                // be sure the player standing in front of the selected game object
+                f_player.First().transform.localScale = Vector3.one;
                 // compute target position and orientation in front of the focused GameObject
                 Selectable selectable = focusedGO.GetComponent<Selectable>();
                 targetPos = new Vector3(focusedGO.transform.position.x + selectable.standingPosDelta.x, focusedGO.transform.position.y + selectable.standingPosDelta.y, focusedGO.transform.position.z + selectable.standingPosDelta.z);
                 // compute distance between the player and the focused GO and compute speed rotation
-                dist = (targetPos - player.First().transform.position).magnitude;
+                dist = (targetPos - f_player.First().transform.position).magnitude;
                 camNewDir = selectable.standingOrientation;
                 angleRotation = Vector3.Angle(Camera.main.transform.forward, camNewDir);
-                moveInFrontOf = true; // start animation to move the player in front of the lock
+                moveInFrontOf = true; // start animation to move the player in front of the selected GameObject
                 if (HelpSystem.monitoring)
                 {
                     MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(3), "turnOn");
@@ -142,18 +133,18 @@ public class MoveInFrontOf : FSystem {
         if (moveInFrontOf)
         {
             // move the player in front of the selected GO
-            player.First().transform.position = Vector3.MoveTowards(player.First().transform.position, targetPos, speed);
+            f_player.First().transform.position = Vector3.MoveTowards(f_player.First().transform.position, targetPos, speed);
             speedRotation = angleRotation * speed / dist;
             newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, Mathf.Deg2Rad * speedRotation, 0);
             Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
             // Check if the animation is finished
-            if (Vector3.Angle(Camera.main.transform.forward, newDir) < 0.5f && player.First().transform.position == targetPos)
+            if (Vector3.Angle(Camera.main.transform.forward, newDir) < 0.5f && f_player.First().transform.position == targetPos)
             {
                 // Correct position
-                player.First().transform.position = targetPos;
+                f_player.First().transform.position = targetPos;
                 // Correct the rotation
-                newDir = Vector3.RotateTowards(player.First().transform.forward, camNewDir, 360, 0);
-                player.First().transform.rotation = Quaternion.LookRotation(newDir);
+                newDir = Vector3.RotateTowards(f_player.First().transform.forward, camNewDir, 360, 0);
+                f_player.First().transform.rotation = Quaternion.LookRotation(newDir);
                 newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, 360, 0);
                 Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
                 // animation is over

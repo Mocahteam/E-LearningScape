@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class CollectObject : FSystem {
 
-    // This system enables objects in inventory when they are clicked in game
+    // This system shows objects in inventory when they are clicked in game
 
     //all collectable objects
     // 5 <=> UI layer. We want only in game linked game object so we exlude ones in UI
     // We process only Highlighted game objects (this component is dynamically added by Highlight system)
-    private Family collectableObjects = FamilyManager.getFamily(new AllOfComponents(typeof(LinkedWith), typeof(Highlighted)), new NoneOfLayers(5), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family pressA = FamilyManager.getFamily(new AnyOfTags("PressA"));
+    private Family f_collectableObjects = FamilyManager.getFamily(new AllOfComponents(typeof(LinkedWith), typeof(Highlighted)), new NoneOfLayers(5), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_pressA = FamilyManager.getFamily(new AnyOfTags("PressA"));
 
     public static CollectObject instance;
 
@@ -25,7 +25,7 @@ public class CollectObject : FSystem {
     {
         if (Input.GetMouseButtonDown(0))
         {
-            foreach (GameObject collect in collectableObjects)
+            foreach (GameObject collect in f_collectableObjects)
             {
                 // enable UI target
                 GameObjectManager.setGameObjectState(collect.GetComponent<LinkedWith>().link, true);
@@ -44,7 +44,7 @@ public class CollectObject : FSystem {
                 GameObjectManager.setGameObjectState(collect, false);
                 // particular case of collecting Intro_scroll game object => show HUD "A"
                 if (collect.name == "Intro_Scroll")
-                    GameObjectManager.setGameObjectState(pressA.First(), true);
+                    GameObjectManager.setGameObjectState(f_pressA.First(), true);
             }
         }
     }

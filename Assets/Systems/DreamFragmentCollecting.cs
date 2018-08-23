@@ -9,9 +9,9 @@ public class DreamFragmentCollecting : FSystem {
 
     // Display Fragment UI when player select a fragment in game
 
-    private Family dfFamily = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
-    private Family dfUIFamily = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AnyOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD));
-    private Family player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
+    private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
+    private Family f_dreamFragmentUI = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AnyOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD));
+    private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
 
     private GameObject dfUI;
     private TextMeshProUGUI FragmentText;
@@ -28,7 +28,7 @@ public class DreamFragmentCollecting : FSystem {
     {
         if (Application.isPlaying)
         {
-            dfUI = dfUIFamily.First();
+            dfUI = f_dreamFragmentUI.First();
             // Add listener on child button to close UI
             dfUI.GetComponentInChildren<Button>().onClick.AddListener(CloseWindow);
             // Get child text area
@@ -49,7 +49,7 @@ public class DreamFragmentCollecting : FSystem {
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
             {
                 // try to find a fragment touched by the raycast
-                if (dfFamily.contains(hit.transform.gameObject.GetInstanceID()))
+                if (f_dreamFragments.contains(hit.transform.gameObject.GetInstanceID()))
                 {
                     // Show fragment UI
                     selectedFragment = hit.transform.gameObject;
@@ -65,7 +65,6 @@ public class DreamFragmentCollecting : FSystem {
                     MovingSystem.instance.Pause = true;
                     backupIARNavigationState = IARTabNavigation.instance.Pause;
                     IARTabNavigation.instance.Pause = true;
-                    // TODO => Manage other dependant systems
 
                     // Manage help
                     if (HelpSystem.monitoring && selectedFragment.GetComponent<ComponentMonitoring>())
@@ -125,7 +124,7 @@ public class DreamFragmentCollecting : FSystem {
                         trace = new MonitoringTrace(selectedFragment.GetComponent<ComponentMonitoring>(), "activate");
                         if (selectedFragment.transform.parent.gameObject.name.Contains("Chair"))
                         {
-                            if (player.First().transform.localScale.x > 0.9f)
+                            if (f_player.First().transform.localScale.x > 0.9f)
                                 trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER, true, "l2");
                             else
                                 trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER, true, "l1");
@@ -163,6 +162,5 @@ public class DreamFragmentCollecting : FSystem {
         this.Pause = false;
         MovingSystem.instance.Pause = false;
         IARTabNavigation.instance.Pause = backupIARNavigationState;
-        // TODO => Manage other dependant systems
     }
 }

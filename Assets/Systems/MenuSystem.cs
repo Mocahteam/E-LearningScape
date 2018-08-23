@@ -5,12 +5,14 @@ using UnityEngine.PostProcessing;
 
 public class MenuSystem : FSystem {
 
-    private Family buttons = FamilyManager.getFamily(new AnyOfTags("MainMenuButton"));
-    private Family vlr = FamilyManager.getFamily(new AllOfComponents(typeof(VolumetricLightRenderer)));
-    private Family postprocess = FamilyManager.getFamily(new AllOfComponents(typeof(PostProcessingBehaviour)));
-    private Family menuCameraFamily = FamilyManager.getFamily(new AllOfComponents(typeof(MenuCamera), typeof(Camera)));
-    private Family particles = FamilyManager.getFamily(new AllOfComponents(typeof(ParticleSystem)));
-    private Family gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
+    // this system manage the first main menu
+
+    private Family f_buttons = FamilyManager.getFamily(new AnyOfTags("MainMenuButton"));
+    private Family f_vlr = FamilyManager.getFamily(new AllOfComponents(typeof(VolumetricLightRenderer)));
+    private Family f_postprocess = FamilyManager.getFamily(new AllOfComponents(typeof(PostProcessingBehaviour)));
+    private Family f_menuCameraFamily = FamilyManager.getFamily(new AllOfComponents(typeof(MenuCamera), typeof(Camera)));
+    private Family f_particles = FamilyManager.getFamily(new AllOfComponents(typeof(ParticleSystem)));
+    private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
 
     private Camera menuCamera;
     private float switchDelay = 12;
@@ -32,7 +34,7 @@ public class MenuSystem : FSystem {
         if (Application.isPlaying)
         {
             //initialise menu's buttons with listeners
-            foreach (GameObject b in buttons)
+            foreach (GameObject b in f_buttons)
             {
                 switch (b.name)
                 {
@@ -55,33 +57,33 @@ public class MenuSystem : FSystem {
             mainMenu = GameObject.Find("MainMenu");
 
             // Set specific quality settings
-            menuCamera = menuCameraFamily.First().GetComponent<Camera>();
+            menuCamera = f_menuCameraFamily.First().GetComponent<Camera>();
             if (QualitySettings.GetQualityLevel() == 0)
             {
                 Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier1;
-                foreach (GameObject vlrGo in vlr)
+                foreach (GameObject vlrGo in f_vlr)
                     vlrGo.GetComponent<VolumetricLightRenderer>().enabled = false;
-                foreach (GameObject ppGo in postprocess)
+                foreach (GameObject ppGo in f_postprocess)
                     ppGo.GetComponent<PostProcessingBehaviour>().enabled = false;
-                foreach (GameObject partGo in particles)
+                foreach (GameObject partGo in f_particles)
                     GameObjectManager.setGameObjectState(partGo, false);
             }
             else if(QualitySettings.GetQualityLevel() == 1)
             {
                 Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier2;
-                foreach (GameObject ppGo in postprocess)
+                foreach (GameObject ppGo in f_postprocess)
                     if(ppGo.name == "FirstPersonCharacter")
                         ppGo.GetComponent<PostProcessingBehaviour>().profile = menuCamera.GetComponent<PostProcessingBehaviour>().profile;
-                foreach (GameObject vlrGo in vlr)
+                foreach (GameObject vlrGo in f_vlr)
                     vlrGo.GetComponent<VolumetricLightRenderer>().enabled = false;
-                foreach (GameObject partGo in particles)
+                foreach (GameObject partGo in f_particles)
                     if(partGo.name == "Poussiere particule (1)")
                         GameObjectManager.setGameObjectState(partGo, false);
             }
             else if(QualitySettings.GetQualityLevel() == 2)
             {
                 Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier3;
-                foreach (GameObject ppGo in postprocess)
+                foreach (GameObject ppGo in f_postprocess)
                     if(ppGo.name == "FirstPersonCharacter")
                         menuCamera.GetComponent<PostProcessingBehaviour>().profile = ppGo.GetComponent<PostProcessingBehaviour>().profile;
             }
@@ -111,7 +113,7 @@ public class MenuSystem : FSystem {
         GameObjectManager.setGameObjectState(mainMenu, true);
         GameObjectManager.setGameObjectState(fadingBackground.gameObject, true);
         // Enable camera
-        GameObjectManager.setGameObjectState(menuCameraFamily.First(), true);
+        GameObjectManager.setGameObjectState(f_menuCameraFamily.First(), true);
     }
 
     // Use to process your families.
@@ -158,7 +160,7 @@ public class MenuSystem : FSystem {
     {
         this.Pause = true;
         // Disable second and third room
-        foreach (Transform room in gameRooms.First().transform)
+        foreach (Transform room in f_gameRooms.First().transform)
             if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
                 GameObjectManager.setGameObjectState(room.gameObject, false);
         // Disable UI

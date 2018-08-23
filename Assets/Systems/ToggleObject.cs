@@ -7,8 +7,8 @@ public class ToggleObject : FSystem {
 
     // This system enables to manage in game toggleable objects
 
-	private Family toggleable = FamilyManager.getFamily(new AllOfComponents(typeof(ToggleableGO), typeof(Highlighted))); // Highlighted is dynamically added by Highlither system
-    private Family lid = FamilyManager.getFamily(new AnyOfTags("ChestLid"));
+	private Family f_toggleable = FamilyManager.getFamily(new AllOfComponents(typeof(ToggleableGO), typeof(Highlighted))); // Highlighted is dynamically added by Highlither system
+    private Family f_lid = FamilyManager.getFamily(new AnyOfTags("ChestLid"));
 
     private float speed;
 
@@ -32,8 +32,8 @@ public class ToggleObject : FSystem {
     private bool closingChest = false;
 
     //temporary variables
-    private GameObject forGO;
-	private ToggleableGO tmpTGO;
+    private GameObject tmpGO;
+	private ToggleableGO tmpToggleableGO;
     private float tmpRotationCount = 0;
 
     public static ToggleObject instance;
@@ -45,7 +45,7 @@ public class ToggleObject : FSystem {
             togglingChairsUp = new GameObject[6];
             table = GameObject.Find("Table");
 
-            chestLid = lid.First();
+            chestLid = f_lid.First();
         }
         instance = this;
 	}
@@ -56,39 +56,39 @@ public class ToggleObject : FSystem {
 
         if (Input.GetMouseButtonDown(0))
         {
-            int nbToggleable = toggleable.Count;
+            int nbToggleable = f_toggleable.Count;
             for (int i = 0; i < nbToggleable; i++)
             {
-                forGO = toggleable.getAt(i);
-                tmpTGO = forGO.GetComponent<ToggleableGO>();
+                tmpGO = f_toggleable.getAt(i);
+                tmpToggleableGO = tmpGO.GetComponent<ToggleableGO>();
                 //if an untoggled object is clicked
-                if (!tmpTGO.toggled)
+                if (!tmpToggleableGO.toggled)
                 {
-                    tmpTGO.toggled = true;
-                    if (forGO.name.Contains("Chair"))
+                    tmpToggleableGO.toggled = true;
+                    if (tmpGO.name.Contains("Chair"))
                     {
-                        if (forGO.transform.rotation.eulerAngles.x < 0.0001f) //if chair up
+                        if (tmpGO.transform.rotation.eulerAngles.x < 0.0001f) //if chair up
                         {
                             //add the chair to toggling down list
                             //all objects in this list will be toggled down
-                            togglingChairsDown[togglingChairsDownCount] = forGO;
+                            togglingChairsDown[togglingChairsDownCount] = tmpGO;
                             togglingChairsDownCount++;
-                            if (forGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                            if (tmpGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
                             {
-                                MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "turnOn");
+                                MonitoringTrace trace = new MonitoringTrace(tmpGO.GetComponent<ComponentMonitoring>(), "turnOn");
                                 trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
                                 HelpSystem.traces.Enqueue(trace);
                             }
                         }
-                        else if (forGO.transform.rotation.eulerAngles.x > 89.9999f) //if chair down
+                        else if (tmpGO.transform.rotation.eulerAngles.x > 89.9999f) //if chair down
                         {
                             //add the chair to toggling up list
                             //all objects in this list will be toggled up
-                            togglingChairsUp[togglingChairsUpCount] = forGO;
+                            togglingChairsUp[togglingChairsUpCount] = tmpGO;
                             togglingChairsUpCount++;
-                            if (forGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                            if (tmpGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
                             {
-                                MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "turnOff");
+                                MonitoringTrace trace = new MonitoringTrace(tmpGO.GetComponent<ComponentMonitoring>(), "turnOff");
                                 trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
                                 HelpSystem.traces.Enqueue(trace);
                             }
@@ -96,20 +96,20 @@ public class ToggleObject : FSystem {
                         else
                         {
                             //if the chair is stuck in toggling position (angle between 0 and 90), set its position to up
-                            forGO.transform.rotation = Quaternion.Euler(0, forGO.transform.rotation.eulerAngles.y, forGO.transform.rotation.eulerAngles.z);
+                            tmpGO.transform.rotation = Quaternion.Euler(0, tmpGO.transform.rotation.eulerAngles.y, tmpGO.transform.rotation.eulerAngles.z);
                         }
                     }
-                    else if (forGO.name == "Table")
+                    else if (tmpGO.name == "Table")
                     {
                         heightBeforeTableToggle = table.transform.position.y;
                         tableGoinUp = true; //animation moving the table up while rotating it
                         tableTarget = new Vector3(table.transform.position.x, heightBeforeTableToggle + 1, table.transform.position.z); //a point above the table
                         //start toggling table up/down depending on its current state (0 or 180)
-                        if (forGO.transform.rotation.eulerAngles.z > 90)
+                        if (tmpGO.transform.rotation.eulerAngles.z > 90)
                         {
-                            if (forGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                            if (tmpGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
                             {
-                                MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "turnOff");
+                                MonitoringTrace trace = new MonitoringTrace(tmpGO.GetComponent<ComponentMonitoring>(), "turnOff");
                                 trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
                                 HelpSystem.traces.Enqueue(trace);
                             }
@@ -117,16 +117,16 @@ public class ToggleObject : FSystem {
                         }
                         else
                         {
-                            if (forGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
+                            if (tmpGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
                             {
-                                MonitoringTrace trace = new MonitoringTrace(forGO.GetComponent<ComponentMonitoring>(), "turnOn");
+                                MonitoringTrace trace = new MonitoringTrace(tmpGO.GetComponent<ComponentMonitoring>(), "turnOn");
                                 trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
                                 HelpSystem.traces.Enqueue(trace);
                             }
                             toggleTableDown = true;
                         }
                     }
-                    else if (forGO.name == "boite")
+                    else if (tmpGO.name == "boite")
                     {
                         //start toggling the chest opened/cloesed depending on its current state
                         if (chestLid.transform.localRotation.eulerAngles.x < 1)

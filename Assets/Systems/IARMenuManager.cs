@@ -7,15 +7,15 @@ public class IARMenuManager : FSystem {
 
     // manage IAR menu (last tab)
 
-    private Family buttons = FamilyManager.getFamily(new AnyOfTags("IARMenuButton"));
+    private Family f_buttons = FamilyManager.getFamily(new AnyOfTags("IARMenuButton"));
 
     public IARMenuManager()
     {
         if (Application.isPlaying)
         {
-            buttons.getAt(0).GetComponentInChildren<Button>().onClick.AddListener(Resume);
-            buttons.getAt(1).GetComponentInChildren<Button>().onClick.AddListener(Restart);
-            buttons.getAt(2).GetComponentInChildren<Button>().onClick.AddListener(ExitGame);
+            f_buttons.getAt(0).GetComponentInChildren<Button>().onClick.AddListener(Resume);
+            f_buttons.getAt(1).GetComponentInChildren<Button>().onClick.AddListener(Restart);
+            f_buttons.getAt(2).GetComponentInChildren<Button>().onClick.AddListener(ExitGame);
         }
     }
 

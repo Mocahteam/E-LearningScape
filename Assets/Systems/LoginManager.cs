@@ -14,18 +14,16 @@ public class LoginManager : FSystem {
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_door = FamilyManager.getFamily(new AllOfComponents(typeof(Door)));
 
-    private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
-    private Family gameRooms = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("GameRooms"));
+    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
+    private Family f_gameRooms = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("GameRooms"));
 
     // Selectable Component is dynamically added by IARGearsEnigma when this enigma is solved => this is a sure condition to know that login is unlocked
     private Family f_loginUnlocked = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(Selectable)));
 
-    private Family storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
+    private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
 
     private GameObject selectedLoginPanel;
     private GameObject loginCover;
-    private float bonnetSpeedRotation = 200f;
-    private float tmpRotationCount = 0;
     private Vector3 coverTargetPosition;
     private Vector3 playerGoBackPosition;
     private Vector3 doorOpennedPosition;
@@ -85,7 +83,7 @@ public class LoginManager : FSystem {
             f_loginUnlocked.addEntryCallback(onLoginUnlocked);
             f_focusedLogin.addEntryCallback(onReadyToWorkOnLogin);
 
-            gameAudioSource = gameRooms.First().GetComponent<AudioSource>();
+            gameAudioSource = f_gameRooms.First().GetComponent<AudioSource>();
         }
         instance = this;
     }
@@ -142,8 +140,8 @@ public class LoginManager : FSystem {
         {
             if (goBack)
             {
-                player.First().transform.position = Vector3.MoveTowards(player.First().transform.position, playerGoBackPosition, speed);
-                if (player.First().transform.position == playerGoBackPosition)
+                f_player.First().transform.position = Vector3.MoveTowards(f_player.First().transform.position, playerGoBackPosition, speed);
+                if (f_player.First().transform.position == playerGoBackPosition)
                 {
                     goBack = false;
                     gameAudioSource.clip = door.GetComponent<Door>().openAudio;
@@ -151,8 +149,8 @@ public class LoginManager : FSystem {
                     gameAudioSource.loop = true;
                     openDoor = true;
                     // enable rooms two and three
-                    GameObjectManager.setGameObjectState(gameRooms.First().transform.GetChild(2).gameObject, true);
-                    GameObjectManager.setGameObjectState(gameRooms.First().transform.GetChild(3).gameObject, true);
+                    GameObjectManager.setGameObjectState(f_gameRooms.First().transform.GetChild(2).gameObject, true);
+                    GameObjectManager.setGameObjectState(f_gameRooms.First().transform.GetChild(3).gameObject, true);
                 }
             }
 
@@ -165,7 +163,7 @@ public class LoginManager : FSystem {
                     gameAudioSource.loop = false;
                     processEndAnimation = false;
                     // show story
-                    storyDisplayer.First().GetComponent<StoryText>().storyProgression++;
+                    f_storyDisplayer.First().GetComponent<StoryText>().storyProgression++;
                     StoryDisplaying.instance.Pause = false;
                     // Enable IAR second screen
                     GameObject IARsecondScreen = f_mainWindow.First().GetComponentInChildren<LinkedWith>().link;

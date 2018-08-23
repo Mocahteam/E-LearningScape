@@ -7,7 +7,9 @@ using System.Collections.Generic;
 
 public class StoryDisplaying : FSystem {
 
-    private Family storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
+    // This system manage displaying of the story
+
+    private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
 
     // Camera is required in this system to switch menuCamera to fpsCamera during displaying story
     private Family menuCamera = FamilyManager.getFamily(new AllOfComponents(typeof(MenuCamera), typeof(Camera)));
@@ -27,20 +29,11 @@ public class StoryDisplaying : FSystem {
 
     private int fadeSpeed = 1;
 
-    public static bool readingIntro = false;
-    public static bool readingTransition = false;
-    public static bool readingEnding = false;
-    public static bool reading = false;
-
     private float readingTimer = -Mathf.Infinity;
     private int textCount = -1;
     private bool plainToAlpha = false;
     private bool alphaToPlain = false;
     private bool fadingBackground = false;
-
-    private string[] introText;
-    private string[] transitionText;
-    private string[] endingText;
 
     public static StoryDisplaying instance;
 
@@ -48,7 +41,7 @@ public class StoryDisplaying : FSystem {
     {
         if (Application.isPlaying)
         {
-            sdGo = storyDisplayer.First();
+            sdGo = f_storyDisplayer.First();
             foreach (Transform child in sdGo.transform)
             {
                 if (child.gameObject.name == "Background")
@@ -76,7 +69,7 @@ public class StoryDisplaying : FSystem {
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame) {
         // Disable UI story
-        GameObjectManager.setGameObjectState(storyDisplayer.First(), false);
+        GameObjectManager.setGameObjectState(f_storyDisplayer.First(), false);
     }
 
 	// Use this to update member variables when system resume.
@@ -88,7 +81,7 @@ public class StoryDisplaying : FSystem {
             if (syst != this)
                 syst.Pause = true;
         // Enable UI Story
-        GameObjectManager.setGameObjectState(storyDisplayer.First(), true);
+        GameObjectManager.setGameObjectState(f_storyDisplayer.First(), true);
         // Get current set of texts
         readTexts = storyTexts[st.storyProgression].ToArray();
         // Set first fading

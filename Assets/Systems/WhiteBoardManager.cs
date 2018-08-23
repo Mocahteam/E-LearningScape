@@ -7,34 +7,21 @@ using FYFY_plugins.Monitoring;
 
 public class WhiteBoardManager : FSystem {
     
-    // this system manage the plank and the wire
+    // this system manage the whiteboard and effacer
 
-    //all selectable objects
     private Family f_whiteBoard = FamilyManager.getFamily(new AnyOfTags("Board"));
     private Family f_focusedWhiteBoard = FamilyManager.getFamily(new AnyOfTags("Board"), new AllOfComponents(typeof(ReadyToWork)));
     private Family f_closeWhiteBoard = FamilyManager.getFamily (new AnyOfTags ("Board", "Eraser", "BoardTexture", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_boardRemovableWords = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
-    private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
 
-    //information for animations
-    private Vector3 camNewDir;
-    private Vector3 newDir;
-    private Vector3 playerLocalScale;
-
     //board
-    private GameObject board;
     private GameObject selectedBoard;
-    private bool onBoard = false;
-    private bool moveToBoard = false;
-    private Vector3 boardPos;
     private GameObject eraser;
     public static bool eraserDragged = false;
     private float distToBoard;
-
-    private GameObject currentFocusedBoard;
 
     public static WhiteBoardManager instance;
 

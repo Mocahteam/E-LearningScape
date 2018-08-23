@@ -7,7 +7,8 @@ using TMPro;
 
 public class IARQueryEvaluator : FSystem {
 
-    // Evaluate queries answer input inside IAR input fields. This system has to be set inside MainLoop before IARTabNavigation in order to stop it if text is input, specialy in case of "a" caracter is enter.
+    // Evaluate queries answer input inside IAR input fields.
+    // This system has to be set inside MainLoop before IARTabNavigation in order to stop it if text is input, specialy in case of "a" caracter is enter.
 
     // Contains all query
     private Family f_queries = FamilyManager.getFamily(new AnyOfTags("Q-R1", "Q-R2", "Q-R3"), new AllOfComponents(typeof(QuerySolution)));

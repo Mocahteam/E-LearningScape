@@ -7,7 +7,7 @@ using FYFY_plugins.Monitoring;
 
 public class BallBoxManager : FSystem {
 
-    // this system manage the plank and the wire
+    // this system manage the box and balls
 
     //all selectable objects
     private Family f_box = FamilyManager.getFamily(new AnyOfTags("Box"));
@@ -16,18 +16,14 @@ public class BallBoxManager : FSystem {
     private Family f_focusedBalls = FamilyManager.getFamily(new AnyOfTags("Ball"), new AllOfComponents(typeof(PointerOver), typeof(MeshRenderer)));
     private Family f_closeBox = FamilyManager.getFamily(new AnyOfTags("Box", "Ball", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
+    private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
 
     //information for animations
     private float speed;
     private float speedRotation = 200f;
     private float coverSpeedRotation = 200f;
-    private float oldDT;
     private float dist = -1;
     private int ballCounter = -1;
-    private Vector3 camNewDir;
-    private Vector3 newDir;
-    private Vector3 playerLocalScale;
 
     //box
     private bool ballsout = false;              //true when all balss are out
@@ -114,7 +110,7 @@ public class BallBoxManager : FSystem {
     // return true if key is selected into inventory
     private GameObject keySelected()
     {
-        foreach (GameObject go in itemSelected)
+        foreach (GameObject go in f_itemSelected)
             if (go.name == "KeyE03")
                 return go;
         return null;

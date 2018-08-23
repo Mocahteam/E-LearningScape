@@ -25,7 +25,7 @@ public class IARGearsEnigma : FSystem
     private bool rotateGear;
 
     private GameObject gearsEnigma;
-    private GameObject forGO;
+    private GameObject tmpGO;
     private GameObject gearDragged;
     private GameObject transparentGear;
     private GameObject question;
@@ -40,8 +40,8 @@ public class IARGearsEnigma : FSystem
             int nbGears = f_gears.Count;
             for (int i = 0; i < nbGears; i++)
             {
-                forGO = f_gears.getAt(i);
-                forGO.GetComponent<Gear>().initialPosition = forGO.transform.localPosition;
+                tmpGO = f_gears.getAt(i);
+                tmpGO.GetComponent<Gear>().initialPosition = tmpGO.transform.localPosition;
             }
             f_answer.addExitCallback(onNewAnswerDisplayed);
             f_uiEffects.addEntryCallback(onUiEffectFinished);
@@ -96,11 +96,11 @@ public class IARGearsEnigma : FSystem
             int nbGears = f_gears.Count;
             for (int i = 0; i < nbGears; i++)
             {
-                forGO = f_gears.getAt(i);
+                tmpGO = f_gears.getAt(i);
                 //if a gear is dragged
-                if (forGO.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
+                if (tmpGO.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
                 {
-                    gearDragged = forGO; //save the dragged gear
+                    gearDragged = tmpGO; //save the dragged gear
                     GameObjectManager.setGameObjectState(question, false);
                     GameObjectManager.setGameObjectState(transparentGear, true);
                 }
@@ -164,12 +164,12 @@ public class IARGearsEnigma : FSystem
             int nbRotGears = f_rotatingGears.Count;
             for (int i = 0; i < nbRotGears; i++)
             {
-                forGO = f_rotatingGears.getAt(i);
+                tmpGO = f_rotatingGears.getAt(i);
                 //rotate gears in the middle
-                if (forGO.GetComponent<Gear>())
-                    forGO.transform.rotation = Quaternion.Euler(forGO.transform.rotation.eulerAngles.x, forGO.transform.rotation.eulerAngles.y, forGO.transform.rotation.eulerAngles.z - 1);
+                if (tmpGO.GetComponent<Gear>())
+                    tmpGO.transform.rotation = Quaternion.Euler(tmpGO.transform.rotation.eulerAngles.x, tmpGO.transform.rotation.eulerAngles.y, tmpGO.transform.rotation.eulerAngles.z - 1);
                 else
-                    forGO.transform.rotation = Quaternion.Euler(forGO.transform.rotation.eulerAngles.x, forGO.transform.rotation.eulerAngles.y, forGO.transform.rotation.eulerAngles.z + 1);
+                    tmpGO.transform.rotation = Quaternion.Euler(tmpGO.transform.rotation.eulerAngles.x, tmpGO.transform.rotation.eulerAngles.y, tmpGO.transform.rotation.eulerAngles.z + 1);
             }
         }
     }

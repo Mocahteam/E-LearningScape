@@ -6,7 +6,7 @@ public class SpritesAnimator : FSystem {
 
     // This system play Sprites animation
 
-    private Family animatedSprites = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(Image)), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_animatedSprites = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(Image)), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private AnimatedSprites tmpAS;
     private float lastChangeTime = -Mathf.Infinity;
@@ -18,10 +18,10 @@ public class SpritesAnimator : FSystem {
         if (Application.isPlaying)
         {
             // Set each animated Sprite on its first frame
-            int nb = animatedSprites.Count;
+            int nb = f_animatedSprites.Count;
             for (int i = 0; i < nb; i++)
             {
-                animatedSprites.getAt(i).GetComponent<AnimatedSprites>().usedSpriteID = 0;
+                f_animatedSprites.getAt(i).GetComponent<AnimatedSprites>().usedSpriteID = 0;
             }
         }
         instance = this;
@@ -30,10 +30,10 @@ public class SpritesAnimator : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
         // parse each animated sprite
-        int nb = animatedSprites.Count;
+        int nb = f_animatedSprites.Count;
         for (int i = 0; i < nb; i++)
         {
-            tmpAS = animatedSprites.getAt(i).GetComponent<AnimatedSprites>();
+            tmpAS = f_animatedSprites.getAt(i).GetComponent<AnimatedSprites>();
             if (tmpAS.animate)
             {
                 if (Time.time - lastChangeTime > 1f / 10)

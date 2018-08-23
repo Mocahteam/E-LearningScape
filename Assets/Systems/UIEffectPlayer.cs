@@ -11,7 +11,6 @@ public class UIEffectPlayer : FSystem {
 
     private GameObject rightBG;
     private GameObject wrongBG;
-    private GameObject whiteBG;
     private AnimatedSprites solvedAnimation;
 
     private GameObject workingBG;
@@ -33,8 +32,6 @@ public class UIEffectPlayer : FSystem {
                     rightBG = go;
                 else if (go.name == "Wrong")
                     wrongBG = go;
-                else if (go.name == "White")
-                    whiteBG = go;
                 else if (go.name == "Solved")
                     solvedAnimation = go.GetComponent<AnimatedSprites>();
             }
@@ -49,7 +46,7 @@ public class UIEffectPlayer : FSystem {
     private void onNewEffect(GameObject go)
     {
         PlayUIEffect uiEffect = go.GetComponent<PlayUIEffect>();
-        if (uiEffect.effectCode == 0 || uiEffect.effectCode == 3)
+        if (uiEffect.effectCode == 0 || uiEffect.effectCode == 2)
         {
             // play right sound
             f_soundBank.First().GetComponent<AudioSource>().PlayOneShot(f_soundBank.First().GetComponent<AudioBank>().audioBank[0]);
@@ -58,7 +55,7 @@ public class UIEffectPlayer : FSystem {
                 blinkCorrect = true;
                 startTime = Time.time;
             }
-            if (uiEffect.effectCode == 3)
+            if (uiEffect.effectCode == 2)
             {
                 solvedAnimation.animate = true;
                 GameObjectManager.setGameObjectState(solvedAnimation.gameObject, true);

@@ -9,12 +9,11 @@ using FYFY_plugins.Monitoring;
 
 public class EndManager : FSystem {
 
-    // this system manage the plank and the wire
+    // this system manage the epilog
 
     private Family f_answer = FamilyManager.getFamily(new AnyOfTags("A-R3"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not already displayed of the third room
     // Will contain a game object when IAR is openned
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
 
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
@@ -25,8 +24,6 @@ public class EndManager : FSystem {
     private float fadingStart;
     private bool alphaToWhite = false;
     private bool whiteToAlpha = false;
-
-    private bool canReadEnding = true;
 
     private bool switchToEndRoom = false;
 
@@ -87,7 +84,6 @@ public class EndManager : FSystem {
             GameObjectManager.setGameObjectState(endRoom, true);
             if (f_player.First().GetComponentInChildren<Light>())
                 GameObjectManager.setGameObjectState(f_player.First().GetComponentInChildren<Light>().gameObject, false);
-            IARTab_old.askCloseIAR = true;
             RenderSettings.fogDensity = 0;
             Camera.main.farClipPlane = 300;
             foreach (Transform child in endRoom.transform)

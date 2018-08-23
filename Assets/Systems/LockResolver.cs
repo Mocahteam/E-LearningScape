@@ -6,16 +6,18 @@ using FYFY_plugins.Monitoring;
 
 public class LockResolver : FSystem {
 
+    // THis system manages lockers with three wheels
+
     // all selectable locker
-    private Family lockers = FamilyManager.getFamily(new AllOfComponents(typeof(Locker)));
-    private Family focusedLocker = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(ReadyToWork), typeof(Locker)));
+    private Family f_lockers = FamilyManager.getFamily(new AllOfComponents(typeof(Locker)));
+    private Family f_focusedLocker = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(ReadyToWork), typeof(Locker), typeof(AudioBank)));
 
-    private Family player = FamilyManager.getFamily(new AnyOfTags("Player"));
-    private Family closeLock = FamilyManager.getFamily(new AnyOfTags("LockIntro", "LockIntroWheel", "LockRoom2", "LockR2Wheel", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
+    private Family f_closeLock = FamilyManager.getFamily(new AnyOfTags("LockIntro", "LockIntroWheel", "LockRoom2", "LockR2Wheel", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
 
-    private Family audioSourceFamily = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("GameRooms"));
-    private Family wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"));
-    private Family fences = FamilyManager.getFamily(new AnyOfTags("Fence"));
+    private Family f_audioSourceFamily = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("GameRooms"));
+    private Family f_wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"));
+    private Family f_fences = FamilyManager.getFamily(new AnyOfTags("Fence"));
 
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
@@ -23,15 +25,11 @@ public class LockResolver : FSystem {
     private float speed;
     private float speedRotation;
     private float oldDT;
-    private Vector3 camNewDir;
-    private Vector3 newDir;
-    private Vector3 playerLocalScale;
     private Vector3 tmpTarget;
     private float angleCount = 0;
 
     //locker
     private Locker selectedLocker = null;
-    private Vector3 lockPos;
     private GameObject selectedWheel;
     private bool lockRotationUp = false;
     private bool lockRotationDown = false;
@@ -46,16 +44,13 @@ public class LockResolver : FSystem {
     private bool playerLookingAtDoor = false;
     private AudioSource gameAudioSource;
 
-    private int nb;
-    private GameObject lockerGO;
-
     public static LockResolver instance;
 
     public LockResolver()
     {
         if (Application.isPlaying)
         {
-            foreach (GameObject go in lockers)
+            foreach (GameObject go in f_lockers)
             {
                 Locker locker = go.GetComponent<Locker>();
                 lockWheelColor = locker.Wheel1.GetComponent<Renderer>().material.color;
@@ -100,9 +95,9 @@ public class LockResolver : FSystem {
                     }
                 }
             }
-            gameAudioSource = audioSourceFamily.First().GetComponent<AudioSource>();
+            gameAudioSource = f_audioSourceFamily.First().GetComponent<AudioSource>();
 
-            focusedLocker.addEntryCallback(onReadyToWorkOnLocker);
+            f_focusedLocker.addEntryCallback(onReadyToWorkOnLocker);
         }
         instance = this;
     }
@@ -142,7 +137,7 @@ public class LockResolver : FSystem {
         if (selectedLocker)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed
-            if ((closeLock.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0))
+            if ((f_closeLock.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0))
                 ExitLocker();
             else if (Input.GetMouseButtonDown(0))
             {
@@ -226,33 +221,33 @@ public class LockResolver : FSystem {
             if (!playerLookingAtDoor)
             {
                 // if not => process animation
-                tmpTarget = wallIntro.First().transform.position + Vector3.up - Camera.main.transform.position;
+                tmpTarget = f_wallIntro.First().transform.position + Vector3.up - Camera.main.transform.position;
                 Vector3 newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, Mathf.PI / 180 * speed, 0);
                 Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
                 // check if animation is over
                 if (Vector3.Angle(tmpTarget, Camera.main.transform.forward) < 1)
                 {
                     // correct the rotation
-                    newDir = Vector3.RotateTowards(player.First().transform.forward, tmpTarget, 360, 0);
-                    player.First().transform.rotation = Quaternion.LookRotation(newDir);
+                    newDir = Vector3.RotateTowards(f_player.First().transform.forward, tmpTarget, 360, 0);
+                    f_player.First().transform.rotation = Quaternion.LookRotation(newDir);
                     newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, 360, 0);
                     Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
-                    gameAudioSource.clip = selectedLocker.GetComponent<Selectable>().right;
+                    gameAudioSource.clip = selectedLocker.GetComponent<AudioBank>().audioBank[0];
                     gameAudioSource.PlayDelayed(0);
                     gameAudioSource.loop = true;
                     playerLookingAtDoor = true;
-                    tmpTarget = wallIntro.First().transform.position + Vector3.up * (-4f - wallIntro.First().transform.position.y);
+                    tmpTarget = f_wallIntro.First().transform.position + Vector3.up * (-4f - f_wallIntro.First().transform.position.y);
                 }
             }
             else
             {
                 // animate the wall
-                wallIntro.First().transform.position = Vector3.MoveTowards(wallIntro.First().transform.position, tmpTarget, 0.1f * speed);
+                f_wallIntro.First().transform.position = Vector3.MoveTowards(f_wallIntro.First().transform.position, tmpTarget, 0.1f * speed);
                 // Check if animation is over
-                if (wallIntro.First().transform.position == tmpTarget)
+                if (f_wallIntro.First().transform.position == tmpTarget)
                 {
                     // disable the wall
-                    GameObjectManager.setGameObjectState(wallIntro.First(), false);
+                    GameObjectManager.setGameObjectState(f_wallIntro.First(), false);
                     gameAudioSource.loop = false; // stop sound
                     // update IAR
                     GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(0).gameObject, false); // first child is locked tab
@@ -273,13 +268,13 @@ public class LockResolver : FSystem {
         {
             if (!playerLookingAtDoor)
             {
-                tmpTarget = (fences.getAt(0).transform.position + fences.getAt(1).transform.position) / 2 - Camera.main.transform.position;
+                tmpTarget = (f_fences.getAt(0).transform.position + f_fences.getAt(1).transform.position) / 2 - Camera.main.transform.position;
                 Vector3 newDir = Vector3.RotateTowards(Camera.main.transform.forward, tmpTarget, Mathf.PI / 180 * speed, 0);
                 Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
                 if (Vector3.Angle(tmpTarget, Camera.main.transform.forward) < 1)
                 {
                     Camera.main.transform.forward = tmpTarget;
-                    gameAudioSource.clip = selectedLocker.GetComponent<Selectable>().right;
+                    gameAudioSource.clip = selectedLocker.GetComponent<AudioBank>().audioBank[0];
                     gameAudioSource.PlayDelayed(0);
                     gameAudioSource.loop = true;
                     playerLookingAtDoor = true;
@@ -288,13 +283,13 @@ public class LockResolver : FSystem {
             }
             else
             {
-                fences.getAt(0).transform.Rotate(0, 0, -Time.deltaTime * 100);
-                fences.getAt(1).transform.Rotate(0, 0, Time.deltaTime * 100);
+                f_fences.getAt(0).transform.Rotate(0, 0, -Time.deltaTime * 100);
+                f_fences.getAt(1).transform.Rotate(0, 0, Time.deltaTime * 100);
                 angleCount += Time.deltaTime * 100;
                 if (angleCount > 103)
                 {
-                    fences.getAt(0).transform.Rotate(0, 0, -(103 - angleCount));
-                    fences.getAt(1).transform.Rotate(0, 0, 103 - angleCount);
+                    f_fences.getAt(0).transform.Rotate(0, 0, -(103 - angleCount));
+                    f_fences.getAt(1).transform.Rotate(0, 0, 103 - angleCount);
                     angleCount = 0;
                     playerLookingAtDoor = false;
                     gameAudioSource.loop = false;

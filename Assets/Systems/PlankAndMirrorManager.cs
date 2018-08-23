@@ -12,7 +12,6 @@ public class PlankAndMirrorManager : FSystem {
     // this system manage the plank and the wire
 
     //all selectable objects
-    private Family f_plank = FamilyManager.getFamily(new AnyOfTags("PlankE09"));
     private Family f_selectedPlank = FamilyManager.getFamily(new AnyOfTags("PlankE09"), new AllOfComponents(typeof(ReadyToWork)));
     private Family f_closePlank = FamilyManager.getFamily(new AnyOfTags("PlankE09", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_arrows = FamilyManager.getFamily(new AnyOfTags("PlankE09"), new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver)));
@@ -23,7 +22,6 @@ public class PlankAndMirrorManager : FSystem {
     private float dist = 1.5f;
 
     //plank
-    private bool onPlank = false;                   //true when the player selected a table
     private bool movePlank = false;               //true during the animation to move the player above the table
     private Vector3 plankTargetPos;
     private GameObject selectedPlank;
@@ -32,7 +30,6 @@ public class PlankAndMirrorManager : FSystem {
     private GameObject UI;
 
     private bool discovered = false; // true if the plank on the floor was discovered (selected at least once)
-    private bool openPlank = false;
     private bool prepareClosing = false;
 
     public static PlankAndMirrorManager instance;

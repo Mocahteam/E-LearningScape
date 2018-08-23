@@ -5,12 +5,12 @@ using FYFY_plugins.PointerManager;
 
 public class IARNewItemAvailable : FSystem {
 
-    // Disable feedback when parent item is clicked or under mouse pointer
+    // Disable feedback when parent item is clicked or under mouse pointer and blink HUD if a new item is available
 
-    private Family itemsEnabled = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
-    private Family notificationEnabled = FamilyManager.getFamily(new AnyOfTags("NewItemFeedback"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
-    private Family newItemOver = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(PointerOver)));
-    private Family inventoryWarning = FamilyManager.getFamily(new AnyOfTags("InventoryWarning"));
+    private Family f_itemsEnabled = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
+    private Family f_notificationEnabled = FamilyManager.getFamily(new AnyOfTags("NewItemFeedback"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
+    private Family f_newItemOver = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(PointerOver)));
+    private Family f_inventoryWarning = FamilyManager.getFamily(new AnyOfTags("InventoryWarning"));
 
     private bool warningNewItem = true;
     private bool HUD_neverDisplayed = true;
@@ -23,9 +23,9 @@ public class IARNewItemAvailable : FSystem {
     {
         if (Application.isPlaying)
         {
-            itemsEnabled.addEntryCallback(OnNewItemEnabled);
-            itemsEnabled.addExitCallback(OnItemDisabled);
-            newItemOver.addEntryCallback(OnMouseEnter);
+            f_itemsEnabled.addEntryCallback(OnNewItemEnabled);
+            f_itemsEnabled.addExitCallback(OnItemDisabled);
+            f_newItemOver.addEntryCallback(OnMouseEnter);
 
             id2Go = new Dictionary<int, GameObject>();
         }
@@ -81,28 +81,28 @@ public class IARNewItemAvailable : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         // manage click when mouse is over an item
-        foreach (GameObject go in newItemOver)
+        foreach (GameObject go in f_newItemOver)
             OnMouseEnter(go); // same process as OnMouseEnter callback
 
         // blink HUD "A" if at least one new item is available
-        if (notificationEnabled.Count > 0)
+        if (f_notificationEnabled.Count > 0)
         {
             if (Time.time - (int)Time.time > 0.5f && warningNewItem)
             {
                 if (HUD_neverDisplayed)
                 {
                     // enable parent
-                    GameObjectManager.setGameObjectState(inventoryWarning.First().transform.parent.gameObject, true);
+                    GameObjectManager.setGameObjectState(f_inventoryWarning.First().transform.parent.gameObject, true);
                     HUD_neverDisplayed = false;
                 }
                 // display warning
-                GameObjectManager.setGameObjectState(inventoryWarning.First(), true);
+                GameObjectManager.setGameObjectState(f_inventoryWarning.First(), true);
                 warningNewItem = false;
             }
             else if (Time.time - (int)Time.time < 0.5f && !warningNewItem)
             {
                 // disable warning
-                GameObjectManager.setGameObjectState(inventoryWarning.First(), false);
+                GameObjectManager.setGameObjectState(f_inventoryWarning.First(), false);
                 warningNewItem = true;
             }
         }
@@ -110,7 +110,7 @@ public class IARNewItemAvailable : FSystem {
         {
             if (!warningNewItem)
             {
-                GameObjectManager.setGameObjectState(inventoryWarning.First(), false);
+                GameObjectManager.setGameObjectState(f_inventoryWarning.First(), false);
                 warningNewItem = true;
             }
         }

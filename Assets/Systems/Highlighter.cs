@@ -7,9 +7,9 @@ public class Highlighter : FSystem {
 
     // Highlight all in game interactable GameObjects
 
-    //all in game interactive objects (exlude UI layer <=> layer 5)
+    //all in game interactive objects
     // in game element linked whith UI game object are collectable and so highlightable
-	private Family objects = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(Takable), typeof(ToggleableGO), typeof(LinkedWith)), new NoneOfLayers(5));
+	private Family f_highlitable = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(ToggleableGO), typeof(LinkedWith)));
 
     private Renderer[] tmpRendererList;
 
@@ -96,14 +96,14 @@ public class Highlighter : FSystem {
                 if (checkFamily)
                 {
                     // Check if this game object is included into family
-                    if (objects.contains(hit.transform.gameObject.GetInstanceID()))
+                    if (f_highlitable.contains(hit.transform.gameObject.GetInstanceID()))
                     {
                         // save this new highlight game object
                         currentHighlight = hit.transform.gameObject;
                         highlight(currentHighlight);
                     }
                     // Check if the parent of hited game object is an interactive game object and this game object doesn't contain a dream fragment
-                    else if (!hit.transform.gameObject.GetComponent<DreamFragment>() && hit.transform.parent && objects.contains(hit.transform.parent.gameObject.GetInstanceID()))
+                    else if (!hit.transform.gameObject.GetComponent<DreamFragment>() && hit.transform.parent && f_highlitable.contains(hit.transform.parent.gameObject.GetInstanceID()))
                     {
                         // save the parent of this game object as the new highlighted game object
                         currentHighlight = hit.transform.parent.gameObject;

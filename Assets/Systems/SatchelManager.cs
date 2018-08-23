@@ -8,7 +8,7 @@ using FYFY_plugins.Monitoring;
 
 public class SatchelManager : FSystem {
 
-    // this system manage the plank and the wire
+    // this system manage the satchel and its paper
 
     //all selectable objects
     private Family f_bag = FamilyManager.getFamily(new AnyOfTags("Bag"));
@@ -21,12 +21,8 @@ public class SatchelManager : FSystem {
     private float dist;
 
     //bag
-    private bool onBag = false;                   //true when the player selected a table
     private bool moveBag = false;               //true during the animation to move the player above the table
-    private bool unlockBag = false;
     private bool showBagPaper = false;
-    private bool usingGlassesTmp1 = false;
-    private bool usingGlassesTmp2 = false;
     private Vector3 bagTargetPos;
     private Vector3 bagPaperInitialPos;
     private GameObject selectedBag;

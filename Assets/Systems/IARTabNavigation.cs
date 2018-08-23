@@ -8,11 +8,11 @@ public class IARTabNavigation : FSystem {
 
     // Manage base IAR integration (Open/Close + tab switching)
 
-    private Family tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
-    private Family fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
+    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
+    private Family f_fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)));
-    private Family HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
-    private Family atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
+    private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
+    private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
 
     private Sprite selectedTabSprite;
     private Sprite defaultTabSprite;
@@ -30,15 +30,15 @@ public class IARTabNavigation : FSystem {
     {
         if (Application.isPlaying)
         {
-            foreach (GameObject tab in tabs)
+            foreach (GameObject tab in f_tabs)
             {
                 tab.GetComponent<Button>().onClick.AddListener(delegate {
                     SwitchTab(tab);
                 });
             }
 
-            selectedTabSprite = fgm.First().GetComponent<FocusedGOMaterial>().selectedTabSprite;
-            defaultTabSprite = fgm.First().GetComponent<FocusedGOMaterial>().defaultTabSprite;
+            selectedTabSprite = f_fgm.First().GetComponent<FocusedGOMaterial>().selectedTabSprite;
+            defaultTabSprite = f_fgm.First().GetComponent<FocusedGOMaterial>().defaultTabSprite;
 
             iarBackground = f_iarBackground.First();
             iar = iarBackground.transform.parent.gameObject;
@@ -52,7 +52,7 @@ public class IARTabNavigation : FSystem {
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame)
     {
-        GameObjectManager.setGameObjectState(HUD_A.First(), false); // hide HUD "A"
+        GameObjectManager.setGameObjectState(f_HUD_A.First(), false); // hide HUD "A"
     }
 
     // Use this to update member variables when system resume.
@@ -60,7 +60,7 @@ public class IARTabNavigation : FSystem {
     protected override void onResume(int currentFrame)
     {
         if (openedAtLeastOnce)
-            GameObjectManager.setGameObjectState(HUD_A.First(), true); // display HUD "A"
+            GameObjectManager.setGameObjectState(f_HUD_A.First(), true); // display HUD "A"
     }
 
     // Use to process your families.
@@ -75,17 +75,17 @@ public class IARTabNavigation : FSystem {
                 openIar(0); // Open IAR on the first tab
             else
                 // Open IAR on the last tab only if player doesn't work on selectable enigm (Escape enables to exit the enigm)
-                if (atWork.Count == 0)
-                    openIar(tabs.Count - 1); // Open IAR on the last tab
+                if (f_atWork.Count == 0)
+                    openIar(f_tabs.Count - 1); // Open IAR on the last tab
         }
     }
 
     private void openIar(int tabId)
     {
         openedAtLeastOnce = true;
-        GameObjectManager.setGameObjectState(HUD_A.First(), false); // hide HUD "A"
+        GameObjectManager.setGameObjectState(f_HUD_A.First(), false); // hide HUD "A"
         GameObjectManager.setGameObjectState(iar, true); // open IAR
-        SwitchTab(tabs.getAt(tabId)); // switch to the first tab
+        SwitchTab(f_tabs.getAt(tabId)); // switch to the first tab
         systemsStates.Clear();
         // save systems states
         foreach (FSystem sys in FSystemManager.fixedUpdateSystems())
@@ -122,13 +122,13 @@ public class IARTabNavigation : FSystem {
             sys.Pause = systemsStates[sys];
         LampManager.instance.Pause = backLampManagerState;
         // display HUD "A"
-        GameObjectManager.setGameObjectState(HUD_A.First(), true);
+        GameObjectManager.setGameObjectState(f_HUD_A.First(), true);
     }
 
     private void SwitchTab(GameObject newSelectedTab)
     {
         // reset all tabs (text and image) and disable all contents
-        foreach (GameObject oldTab in tabs)
+        foreach (GameObject oldTab in f_tabs)
         {
             oldTab.GetComponent<Image>().sprite = defaultTabSprite;
             oldTab.GetComponentInChildren<Text>().fontStyle = FontStyle.Normal;
