@@ -3,6 +3,7 @@ using FYFY;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 using FYFY_plugins.Monitoring;
+using FYFY_plugins.TriggerManager;
 
 public class MovingSystem : FSystem
 {
@@ -12,6 +13,8 @@ public class MovingSystem : FSystem
     private Family f_linkedHud = FamilyManager.getFamily(new AnyOfTags("EnableOnFirstCrouch"), new AllOfComponents(typeof(Image)));
     private Family f_endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_cursor = FamilyManager.getFamily(new AnyOfTags("Cursor"));
+    private Family f_waterWalking = FamilyManager.getFamily(new AnyOfLayers(12), new AllOfComponents(typeof(Triggered3D))); // Layer 12 <=> WaterCollider
+    private Family f_audioBank = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank)));
 
     private bool crouching = false; // true when the player is crouching
     private bool changingPose = false;
@@ -22,6 +25,7 @@ public class MovingSystem : FSystem
     private bool firstCrouchOccurs = false;
     private FirstPersonController playerController;
     private Image tmpImage;
+    private AudioBank audioBank;
 
     private bool playerIsWalking = false;
     private bool playerWasWalking = false;
@@ -30,6 +34,11 @@ public class MovingSystem : FSystem
     private float hudShowingSpeed;
     private float hudHidingSpeed;
     private bool previousHUDState;
+    private bool walkInWater = false;
+
+    private float walkInWaterSpeed = 2.5f;
+    private float crouchSpeed = 1;
+    private float standingSpeed = 5;
 
     public static MovingSystem instance;
 
@@ -38,8 +47,39 @@ public class MovingSystem : FSystem
         //when crouching, the scale of the player is changed (rather than its position)
         crouchingScale = Vector3.one * 0.2f;
         if (Application.isPlaying)
+        {
             playerController = f_player.First().GetComponent<FirstPersonController>();
+            audioBank = f_audioBank.First().GetComponent<AudioBank>();
+            f_waterWalking.addEntryCallback(onEnterWater);
+            f_waterWalking.addExitCallback(onExitWater);
+        }
         instance = this;
+    }
+
+    private void onEnterWater(GameObject go)
+    {
+        walkInWater = true;
+        playerController.m_FootstepSounds[0] = audioBank.audioBank[4];
+        playerController.m_FootstepSounds[1] = audioBank.audioBank[5];
+        playerController.m_WalkSpeed = walkInWaterSpeed;
+        playerController.m_RunSpeed = walkInWaterSpeed;
+    }
+
+    private void onExitWater(int instanceId)
+    {
+        walkInWater = false;
+        playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
+        playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
+        if (crouching)
+        {
+            playerController.m_WalkSpeed = crouchSpeed;
+            playerController.m_RunSpeed = crouchSpeed;
+        }
+        else
+        {
+            playerController.m_WalkSpeed = standingSpeed;
+            playerController.m_RunSpeed = standingSpeed;
+        }
     }
 
     // Use this to update member variables when system pause. 
@@ -96,8 +136,16 @@ public class MovingSystem : FSystem
             //change moving speed according to the stance
             if (crouching)
             {
-                playerController.m_WalkSpeed = 5;
-                playerController.m_RunSpeed = 5;
+                if (walkInWater)
+                {
+                    playerController.m_WalkSpeed = walkInWaterSpeed;
+                    playerController.m_RunSpeed = walkInWaterSpeed;
+                }
+                else
+                {
+                    playerController.m_WalkSpeed = standingSpeed;
+                    playerController.m_RunSpeed = standingSpeed;
+                }
                 if (playerController.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
                 {
                     MonitoringTrace trace = new MonitoringTrace(playerController.GetComponent<ComponentMonitoring>(), "turnOff");
@@ -109,8 +157,16 @@ public class MovingSystem : FSystem
             { // standing and want to crouch
                 if (!firstCrouchOccurs)
                     firstCrouchOccurs = true;
-                playerController.m_WalkSpeed = 1;
-                playerController.m_RunSpeed = 1;
+                if (walkInWater)
+                {
+                    playerController.m_WalkSpeed = walkInWaterSpeed;
+                    playerController.m_RunSpeed = walkInWaterSpeed;
+                }
+                else
+                {
+                    playerController.m_WalkSpeed = crouchSpeed;
+                    playerController.m_RunSpeed = crouchSpeed;
+                }
                 if (playerController.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
                 {
                     MonitoringTrace trace = new MonitoringTrace(playerController.GetComponent<ComponentMonitoring>(), "turnOn");
