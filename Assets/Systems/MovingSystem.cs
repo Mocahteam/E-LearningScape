@@ -74,11 +74,15 @@ public class MovingSystem : FSystem
         {
             playerController.m_WalkSpeed = crouchSpeed;
             playerController.m_RunSpeed = crouchSpeed;
+            playerController.m_FootstepSounds[0] = audioBank.audioBank[6];
+            playerController.m_FootstepSounds[1] = audioBank.audioBank[7];
         }
         else
         {
             playerController.m_WalkSpeed = standingSpeed;
             playerController.m_RunSpeed = standingSpeed;
+            playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
+            playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
         }
     }
 
@@ -145,6 +149,8 @@ public class MovingSystem : FSystem
                 {
                     playerController.m_WalkSpeed = standingSpeed;
                     playerController.m_RunSpeed = standingSpeed;
+                    playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
+                    playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
                 }
                 if (playerController.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
                 {
@@ -166,6 +172,8 @@ public class MovingSystem : FSystem
                 {
                     playerController.m_WalkSpeed = crouchSpeed;
                     playerController.m_RunSpeed = crouchSpeed;
+                    playerController.m_FootstepSounds[0] = audioBank.audioBank[6];
+                    playerController.m_FootstepSounds[1] = audioBank.audioBank[7];
                 }
                 if (playerController.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
                 {
