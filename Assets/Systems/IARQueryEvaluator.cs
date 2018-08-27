@@ -109,7 +109,7 @@ public class IARQueryEvaluator : FSystem {
         else
         {
             // notify player success
-            GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 3 });
+            GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 2 });
             // Toggle UI element (hide input text and button and show answer)
             for (int i = 1; i < query.transform.childCount; i++)
             {

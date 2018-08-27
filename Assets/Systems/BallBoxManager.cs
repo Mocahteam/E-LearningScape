@@ -139,7 +139,7 @@ public class BallBoxManager : FSystem {
         if (selectedBox)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and balls are out of the box but none are in front of camera and IAR is closed (because Escape close IAR)
-            if (((f_closeBox.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && (boxPadlock.activeSelf || (ballsout && !inFrontOfCamera && !selectedBall && !focusedBall)))
+            if (((f_closeBox.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && (boxPadlock.activeSelf || (ballsout && !inFrontOfCamera && !selectedBall)))
             {
                 // set balls to initial position
                 foreach (GameObject ball in f_balls)

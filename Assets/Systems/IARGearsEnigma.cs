@@ -19,6 +19,7 @@ public class IARGearsEnigma : FSystem
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private Family f_login = FamilyManager.getFamily(new AnyOfTags("Login"), new NoneOfComponents(typeof(PointerSensitive))); // to unlock login
+    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
 
     private bool switchToGears = false;
     private bool unlockLogin = false;
@@ -79,7 +80,7 @@ public class IARGearsEnigma : FSystem
         if (unlockLogin)
         {
             // Make login selectable
-            GameObjectManager.addComponent<Selectable>(f_login.First(), new { standingPosDelta = new Vector3(-0.8f, -0.76f, 0f), standingOrientation = new Vector3(1f, 0f, 0f) });
+            GameObjectManager.addComponent<Selectable>(f_login.First(), new { standingPosDelta = new Vector3(-0.9f, -0.8f, 0f), standingOrientation = new Vector3(1f, 0f, 0f) });
             // And force to move on
             GameObjectManager.addComponent<ForceMove>(f_login.First());
             unlockLogin = false;
@@ -126,8 +127,12 @@ public class IARGearsEnigma : FSystem
                             }
 
                             rotateGear = true;  //rotate gears in the middle
-                            GameObjectManager.addComponent<PlayUIEffect>(gearDragged, new { effectCode = 3 });
+                            GameObjectManager.addComponent<PlayUIEffect>(gearDragged, new { effectCode = 2 });
                             unlockLogin = true; // unlock login when UIEffect will be end
+                            // Look the panel
+                            Vector3 newDir = Vector3.forward;
+                            f_player.First().transform.rotation = Quaternion.LookRotation(f_login.First().transform.position - f_player.First().transform.position);
+                            Camera.main.transform.rotation = Quaternion.LookRotation(f_login.First().transform.position - f_player.First().transform.position);
                         }
                         else //if answer is wrong
                         {
@@ -152,10 +157,13 @@ public class IARGearsEnigma : FSystem
                     }
                     gearDragged = null; //initial value
                 }
-                else //when dragging a gear
+                else // when dragging a gear
                 {
-                    //move the gear to mouse position
-                    gearDragged.transform.localPosition = (Input.mousePosition - Vector3.right * (float)Camera.main.pixelWidth / 2 - Vector3.up * (float)Camera.main.pixelHeight / 2) / 0.45f;
+                    // move the gear to mouse position
+                    // compute mouse position from screen center
+                    Vector3 pos = Input.mousePosition - Vector3.right * (float)Camera.main.pixelWidth / 2 - Vector3.up * (float)Camera.main.pixelHeight / 2;
+                    // correct position depending on canvas scale (0.6) and screen size comparing to reference size (800:500 => 16:10 screen ratio)
+                    gearDragged.transform.localPosition = pos / ((float)Camera.main.pixelWidth*0.6f/800);
                 }
             }
         }

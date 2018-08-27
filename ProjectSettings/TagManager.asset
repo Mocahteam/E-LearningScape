@@ -73,6 +73,7 @@ TagManager:
   - UIEffect
   - Gears
   - Login
+  - QuitEnigma
   layers:
   - Default
   - TransparentFX

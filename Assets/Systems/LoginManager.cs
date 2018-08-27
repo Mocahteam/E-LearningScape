@@ -27,9 +27,10 @@ public class LoginManager : FSystem {
     private Vector3 coverTargetPosition;
     private Vector3 playerGoBackPosition;
     private Vector3 doorOpennedPosition;
+
     private float speed;
     private InputField ifConnectionR2;
-    private int passwordSolution = 345;
+    private int passwordSolution = 814;
     private GameObject door;
 
     private AudioSource gameAudioSource;
@@ -44,7 +45,6 @@ public class LoginManager : FSystem {
     private bool processEndAnimation = false;
     private bool goBack = false;
     private bool openDoor = false;
-
 
     private bool coverAnimate = false;
     
@@ -93,10 +93,10 @@ public class LoginManager : FSystem {
         // launch animation of login protection
         loginCover = go.transform.GetChild(0).gameObject; // the first child is the cover
         coverTargetPosition = go.transform.position - (Vector3.up); 
-        coverAnimate = true;
         playerGoBackPosition = go.transform.position + (Vector3.left*3f) - (Vector3.up);
         door = f_door.First();
         doorOpennedPosition = door.transform.position + (Vector3.up*4f);
+        coverAnimate = true;
     }
 
     private void onReadyToWorkOnLogin(GameObject go)
@@ -123,11 +123,12 @@ public class LoginManager : FSystem {
         if (selectedLoginPanel)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed (because Escape close IAR)
-            if (((f_closeLogin.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)))
+            if (((f_closeLogin.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && !coverAnimate && !processEndAnimation)
                 ExitLogin();
         }
 
         speed = Time.deltaTime;
+
         if (coverAnimate)
         {
             // open the cover of the box

@@ -60,31 +60,34 @@ public class MenuSystem : FSystem {
             menuCamera = f_menuCameraFamily.First().GetComponent<Camera>();
             if (QualitySettings.GetQualityLevel() == 0)
             {
-                Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier1;
+                //Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier1;
                 foreach (GameObject vlrGo in f_vlr)
                     vlrGo.GetComponent<VolumetricLightRenderer>().enabled = false;
                 foreach (GameObject ppGo in f_postprocess)
-                    ppGo.GetComponent<PostProcessingBehaviour>().enabled = false;
+                    //ppGo.GetComponent<PostProcessingBehaviour>().enabled = false;
+                    if (ppGo.name == "FirstPersonCharacter")
+                        ppGo.GetComponent<PostProcessingBehaviour>().profile = menuCamera.GetComponent<PostProcessingBehaviour>().profile;
                 foreach (GameObject partGo in f_particles)
-                    GameObjectManager.setGameObjectState(partGo, false);
+                    if (!partGo.GetComponentInParent<DreamFragment>())
+                        GameObjectManager.setGameObjectState(partGo, false);
             }
             else if(QualitySettings.GetQualityLevel() == 1)
             {
-                Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier2;
-                foreach (GameObject ppGo in f_postprocess)
-                    if(ppGo.name == "FirstPersonCharacter")
-                        ppGo.GetComponent<PostProcessingBehaviour>().profile = menuCamera.GetComponent<PostProcessingBehaviour>().profile;
+                //Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier2;
                 foreach (GameObject vlrGo in f_vlr)
                     vlrGo.GetComponent<VolumetricLightRenderer>().enabled = false;
+                foreach (GameObject ppGo in f_postprocess) // use for the First Person Character post process of the main Menu camera
+                    if(ppGo.name == "FirstPersonCharacter")
+                        ppGo.GetComponent<PostProcessingBehaviour>().profile = menuCamera.GetComponent<PostProcessingBehaviour>().profile;
                 foreach (GameObject partGo in f_particles)
-                    if(partGo.name == "Poussiere particule (1)")
+                    if(partGo.name.Contains("Poussiere particule")) // disable particles of the first room
                         GameObjectManager.setGameObjectState(partGo, false);
             }
             else if(QualitySettings.GetQualityLevel() == 2)
             {
-                Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier3;
+                //Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier3;
                 foreach (GameObject ppGo in f_postprocess)
-                    if(ppGo.name == "FirstPersonCharacter")
+                    if(ppGo.name == "FirstPersonCharacter") // use for the main Menu camera post process of the First Person Character
                         menuCamera.GetComponent<PostProcessingBehaviour>().profile = ppGo.GetComponent<PostProcessingBehaviour>().profile;
             }
             // set several camera positions for background animations on main menu
@@ -160,9 +163,9 @@ public class MenuSystem : FSystem {
     {
         this.Pause = true;
         // Disable second and third room
-        foreach (Transform room in f_gameRooms.First().transform)
+        /*foreach (Transform room in f_gameRooms.First().transform)
             if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
-                GameObjectManager.setGameObjectState(room.gameObject, false);
+                GameObjectManager.setGameObjectState(room.gameObject, false);*/
         // Disable UI
         GameObjectManager.setGameObjectState(mainMenu, false);
         GameObjectManager.setGameObjectState(fadingBackground.gameObject, false);

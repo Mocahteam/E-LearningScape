@@ -27,7 +27,11 @@ public class SatchelManager : FSystem {
     private Vector3 bagPaperInitialPos;
     private GameObject selectedBag;
     private GameObject bagPadlock;
+
+    // paper
     private GameObject paper;
+    private Image paperImg;
+    private BagImage paperImgRef;
 
     private bool openBag = false;
     private bool prepareclosing = false;
@@ -45,6 +49,8 @@ public class SatchelManager : FSystem {
             bagPaperInitialPos = f_bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition;
             paper = f_bag.First().transform.GetChild(1).gameObject;
             bagPadlock = f_bag.First().transform.GetChild(3).gameObject;
+            paperImg = f_bag.First().GetComponentInChildren<Image>();
+            paperImgRef = f_bag.First().GetComponentInChildren<BagImage>();
 
             f_selectedBag.addEntryCallback(onReadyToWorkOnSatchel);
             f_itemSelected.addEntryCallback(onItemSelectedInInventory);
@@ -70,31 +76,24 @@ public class SatchelManager : FSystem {
 
     private void onItemSelectedInInventory(GameObject go)
     {
-        Image img = f_bag.First().GetComponentInChildren<Image>();
-        BagImage imgBank = f_bag.First().GetComponentInChildren<BagImage>();
-
         // switch appropriate image depending on glasses worn
         if (isSelected("Glasses1") || isSelected("Glasses2"))
         {
             if (isSelected("Glasses1") && isSelected("Glasses2"))
-                img.sprite = imgBank.image4;
+                paperImg.sprite = paperImgRef.image4;
             else if (isSelected("Glasses1"))
-                img.sprite = imgBank.image3;
+                paperImg.sprite = paperImgRef.image3;
             else
-                img.sprite = imgBank.image2;
+                paperImg.sprite = paperImgRef.image2;
         }
+        else
+            paperImg.sprite = paperImgRef.image1;
     }
 
     private void onItemUnselectedInInventory(int instanceId)
     {
-        // switch appropriate image depending on glasses worn
-        if (!isSelected("Glasses1") && !isSelected("Glasses2"))
-        {
-            Image img = f_bag.First().GetComponentInChildren<Image>();
-            BagImage imgBank = f_bag.First().GetComponentInChildren<BagImage>();
-            img.sprite = imgBank.image1;
-        }
-
+        // same process as on item selected
+        onItemSelectedInInventory(null);
     }
 
     // return true if UI with name "name" is selected into inventory

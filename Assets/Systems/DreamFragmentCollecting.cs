@@ -21,6 +21,7 @@ public class DreamFragmentCollecting : FSystem {
     private bool[] fragmentsSeen;
     private bool enigmaSolved = false;
     private bool backupIARNavigationState;
+    private GameObject tmpGo;
 
     public static DreamFragmentCollecting instance;
 

@@ -12,6 +12,7 @@ public class WhiteBoardManager : FSystem {
     private Family f_whiteBoard = FamilyManager.getFamily(new AnyOfTags("Board"));
     private Family f_focusedWhiteBoard = FamilyManager.getFamily(new AnyOfTags("Board"), new AllOfComponents(typeof(ReadyToWork)));
     private Family f_closeWhiteBoard = FamilyManager.getFamily (new AnyOfTags ("Board", "Eraser", "BoardTexture", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_eraserFocused = FamilyManager.getFamily(new AnyOfTags("Eraser"), new AllOfComponents(typeof(PointerOver)));
     private Family f_boardRemovableWords = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
@@ -22,6 +23,7 @@ public class WhiteBoardManager : FSystem {
     private GameObject eraser;
     public static bool eraserDragged = false;
     private float distToBoard;
+    private Color prevColor;
 
     public static WhiteBoardManager instance;
 
@@ -41,6 +43,8 @@ public class WhiteBoardManager : FSystem {
             }
 
             f_focusedWhiteBoard.addEntryCallback(onReadyToWorkOnWhiteBoard);
+            f_eraserFocused.addEntryCallback(onEnterEraser);
+            f_eraserFocused.addExitCallback(onExitEraser);
         }
         instance = this;
     }
@@ -52,6 +56,19 @@ public class WhiteBoardManager : FSystem {
 
         // Launch this system
         instance.Pause = false;
+    }
+
+    private void onEnterEraser (GameObject go)
+    {
+        Renderer rend = eraser.GetComponent<Renderer>();
+        prevColor = rend.material.GetColor("_EmissionColor");
+        rend.material.EnableKeyword("_EMISSION");
+        rend.material.SetColor("_EmissionColor", Color.yellow * Mathf.LinearToGammaSpace(0.8f));
+    }
+
+    private void onExitEraser(int instanceId)
+    {
+        eraser.GetComponent<Renderer>().material.SetColor("_EmissionColor", prevColor);
     }
 
     // Use this to update member variables when system pause. 

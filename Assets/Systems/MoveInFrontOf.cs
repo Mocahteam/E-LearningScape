@@ -12,6 +12,8 @@ public class MoveInFrontOf : FSystem {
     private Family f_readyToWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
     private Family f_forcedMove = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(ForceMove)));
 
+    private Family f_quitEnigma = FamilyManager.getFamily(new AnyOfTags("QuitEnigma"));
+
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
 
     //information for animations
@@ -71,6 +73,8 @@ public class MoveInFrontOf : FSystem {
             SatchelManager.instance.Pause = true;
             PlankAndMirrorManager.instance.Pause = true;
             WhiteBoardManager.instance.Pause = true;
+            // hide help overlay
+            GameObjectManager.setGameObjectState(f_quitEnigma.First(), false);
         }
     }
 
@@ -138,7 +142,7 @@ public class MoveInFrontOf : FSystem {
             newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, Mathf.Deg2Rad * speedRotation, 0);
             Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
             // Check if the animation is finished
-            if (Vector3.Angle(Camera.main.transform.forward, newDir) < 0.5f && f_player.First().transform.position == targetPos)
+            if (Vector3.Angle(Camera.main.transform.forward, camNewDir) < 0.5f && f_player.First().transform.position == targetPos)
             {
                 // Correct position
                 f_player.First().transform.position = targetPos;
@@ -151,6 +155,8 @@ public class MoveInFrontOf : FSystem {
                 moveInFrontOf = false;
                 // Add ReadyToWork component
                 GameObjectManager.addComponent<ReadyToWork>(focusedGO);
+                // show help overlay
+                GameObjectManager.setGameObjectState(f_quitEnigma.First(), true);
             }
         }
     }

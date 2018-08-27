@@ -9,12 +9,11 @@ public class MovingSystem : FSystem
 {
     // This system manage HUD on moving, walking speed and state of the FirstPersonController
 
-    private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
+    private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController), typeof(AudioBank)));
     private Family f_linkedHud = FamilyManager.getFamily(new AnyOfTags("EnableOnFirstCrouch"), new AllOfComponents(typeof(Image)));
     private Family f_endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_cursor = FamilyManager.getFamily(new AnyOfTags("Cursor"));
     private Family f_waterWalking = FamilyManager.getFamily(new AnyOfLayers(12), new AllOfComponents(typeof(Triggered3D))); // Layer 12 <=> WaterCollider
-    private Family f_audioBank = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank)));
 
     private bool crouching = false; // true when the player is crouching
     private bool changingPose = false;
@@ -49,7 +48,7 @@ public class MovingSystem : FSystem
         if (Application.isPlaying)
         {
             playerController = f_player.First().GetComponent<FirstPersonController>();
-            audioBank = f_audioBank.First().GetComponent<AudioBank>();
+            audioBank = playerController.GetComponent<AudioBank>();
             f_waterWalking.addEntryCallback(onEnterWater);
             f_waterWalking.addExitCallback(onExitWater);
         }

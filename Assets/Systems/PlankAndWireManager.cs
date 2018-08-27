@@ -168,7 +168,7 @@ public class PlankAndWireManager : FSystem {
                                 LinkedWith lw = selectedPlank.GetComponent<LinkedWith>();
                                 GameObjectManager.setGameObjectState(lw.link, false);
                                 // notify player success
-                                GameObjectManager.addComponent<PlayUIEffect>(selectedPlank, new { effectCode = 3});
+                                GameObjectManager.addComponent<PlayUIEffect>(selectedPlank, new { effectCode = 2});
 
                                 if (HelpSystem.monitoring)
                                 {

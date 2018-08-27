@@ -56,7 +56,7 @@ public class Highlighter : FSystem {
             // Save current emission color
             previousColor.Enqueue(tmpRendererList[i].material.GetColor("_EmissionColor"));
             // Enable emission and hightlight target (avoid to change fragments color)
-            if (!tmpRendererList[i].GetComponentInParent<DreamFragment>())
+            if (!tmpRendererList[i].GetComponentInParent<DreamFragment>() && tmpRendererList[i].gameObject.name != ("BoardTexture"))
             {
                 tmpRendererList[i].material.EnableKeyword("_EMISSION");
                 tmpRendererList[i].material.SetColor("_EmissionColor", Color.yellow * Mathf.LinearToGammaSpace(0.8f));
