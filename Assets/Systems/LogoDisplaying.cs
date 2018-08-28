@@ -60,10 +60,13 @@ public class LogoDisplaying : FSystem {
             // make logo transparent (usefull in case of clicking)
             fadingImage.color = new Color(1, 1, 1, 0);
             // check if logo remaining
-            if (nextLogo >= logo.bank.Length && !closeLogo)
+            if (nextLogo >= logo.bank.Length)
             {
-                closeLogo = true;
-                readingTimer = Time.time;
+                if (!closeLogo)
+                {
+                    closeLogo = true;
+                    readingTimer = Time.time;
+                }
             }
             else
             {

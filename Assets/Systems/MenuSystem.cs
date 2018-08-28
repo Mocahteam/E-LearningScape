@@ -168,15 +168,6 @@ public class MenuSystem : FSystem {
         }
         menuCamera.transform.position = Vector3.SmoothDamp(menuCamera.transform.position, menuCamera.transform.position + target, ref velocity, 4);
         currentFrame++;
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            foreach (GameObject vlrGo in f_vlr)
-                vlrGo.GetComponent<VolumetricLightRenderer>().enabled = !vlrGo.GetComponent<VolumetricLightRenderer>().enabled;
-            foreach (GameObject ppGo in f_postProcessBehaviour)
-                ppGo.GetComponent<PostProcessingBehaviour>().enabled = !ppGo.GetComponent<PostProcessingBehaviour>().enabled;
-        }
-
     }
 
     void Play()
