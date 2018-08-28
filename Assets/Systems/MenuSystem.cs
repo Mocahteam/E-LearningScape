@@ -29,6 +29,8 @@ public class MenuSystem : FSystem {
 
     GameObject mainMenu;
 
+    public static MenuSystem instance;
+
     public MenuSystem()
     {
         if (Application.isPlaying)
@@ -98,6 +100,8 @@ public class MenuSystem : FSystem {
             // Init timer
             switchTimer = Time.time;
         }
+
+        instance = this;
     }
 
     // Use this to update member variables when system resume.
@@ -163,9 +167,9 @@ public class MenuSystem : FSystem {
     {
         this.Pause = true;
         // Disable second and third room
-        /*foreach (Transform room in f_gameRooms.First().transform)
+        foreach (Transform room in f_gameRooms.First().transform)
             if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
-                GameObjectManager.setGameObjectState(room.gameObject, false);*/
+                GameObjectManager.setGameObjectState(room.gameObject, false);
         // Disable UI
         GameObjectManager.setGameObjectState(mainMenu, false);
         GameObjectManager.setGameObjectState(fadingBackground.gameObject, false);

@@ -118,7 +118,7 @@ public class StoryDisplaying : FSystem {
                 if (fadingBackground)
                     background.color = new Color(background.color.r, background.color.g, background.color.b, (Time.time - readingTimer) / fadeSpeed);
                 // stop fading if mouse clicked
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
                     readingTimer = Time.time - (fadeSpeed + 1);
             }
             else
@@ -173,7 +173,7 @@ public class StoryDisplaying : FSystem {
                 fadingImage.color = new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, 1 - (Time.time - readingTimer) / fadeSpeed);
                 if (fadingBackground)
                     background.color = new Color(background.color.r, background.color.g, background.color.b, 1 - (Time.time - readingTimer) / fadeSpeed);
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
                     readingTimer = Time.time - (fadeSpeed + 1);
             }
             else
@@ -192,7 +192,8 @@ public class StoryDisplaying : FSystem {
         }
         else
         {
-            if (Input.GetMouseButton(0)){
+            if (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Escape))
+            {
                 alphaToPlain = true;
                 readingTimer = Time.time;
             }
