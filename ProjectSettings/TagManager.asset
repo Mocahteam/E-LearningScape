@@ -4,52 +4,29 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Object
-  - Answer
-  - Timings
   - Plank
-  - MouseOver
   - PlankText
   - Box
   - Ball
-  - BoxTop
-  - Tablet
-  - Q-R1
   - A-R1
   - RotateGear
-  - WrongTimerText
-  - TableE05
-  - Sheet
-  - Inventory
-  - Syllabus
-  - DisplayInventory
   - Bag
   - PlankE09
   - Q-R2
   - A-R2
   - LockRoom2
-  - Puzzle
-  - PuzzleUI
   - InventoryElements
-  - E05UI
   - E12_Symbol
-  - Carillon
   - Q-R3
   - A-R3
   - BoardRemovableWords
   - Board
   - Eraser
-  - ScreenIAR
   - IARTab
-  - StoryDisplayer
   - DreamFragmentUI
   - LockR2Wheel
   - Fence
   - DreamFragmentLight
-  - GlassesBG
-  - ScrollUI
-  - Scroll
-  - PuzzleButton
   - LockIntro
   - LockIntroWheel
   - WallIntro
@@ -59,7 +36,6 @@ TagManager:
   - WaterFloor
   - BoardTexture
   - UIBackground
-  - HUDInputs
   - NewItemFeedback
   - HelpSubtitles
   - MainMenuButton
@@ -74,6 +50,10 @@ TagManager:
   - Gears
   - Login
   - QuitEnigma
+  - Q-R1
+  - Sheet
+  - MouseOver
+  - Timings
   layers:
   - Default
   - TransparentFX

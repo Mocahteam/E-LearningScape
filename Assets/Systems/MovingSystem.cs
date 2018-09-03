@@ -25,6 +25,7 @@ public class MovingSystem : FSystem
     private FirstPersonController playerController;
     private Image tmpImage;
     private AudioBank audioBank;
+    private Camera playerCamera;
 
     private bool playerIsWalking = false;
     private bool playerWasWalking = false;
@@ -48,6 +49,7 @@ public class MovingSystem : FSystem
         if (Application.isPlaying)
         {
             playerController = f_player.First().GetComponent<FirstPersonController>();
+            playerCamera = playerController.transform.GetChild(0).GetComponent<Camera>();
             audioBank = playerController.GetComponent<AudioBank>();
             f_waterWalking.addEntryCallback(onEnterWater);
             f_waterWalking.addExitCallback(onExitWater);
@@ -103,7 +105,7 @@ public class MovingSystem : FSystem
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
     {
-        playerController.m_MouseLook.m_CameraTargetRot = Camera.main.transform.localRotation;
+        playerController.m_MouseLook.m_CameraTargetRot = playerCamera.transform.localRotation;
         playerController.m_MouseLook.m_CharacterTargetRot = f_player.First().transform.localRotation;
         
         playerController.enabled = true;
