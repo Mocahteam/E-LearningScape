@@ -15,6 +15,8 @@ public class MenuSystem : FSystem {
     private Family f_particles = FamilyManager.getFamily(new AllOfComponents(typeof(ParticleSystem)));
     private Family f_reflectionProbe = FamilyManager.getFamily(new AllOfComponents(typeof(ReflectionProbe)));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
+    private Family f_puzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)));
+    private Family f_puzzlesFragment = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new AllOfComponents(typeof(DreamFragment)));
 
     private Camera menuCamera;
     private float switchDelay = 12;
@@ -29,6 +31,7 @@ public class MenuSystem : FSystem {
     private Vector3 target;
     private Vector3 velocity = Vector3.zero;
 
+    Toggle togglePuzzle;
     GameObject mainMenu;
 
     public static MenuSystem instance;
@@ -59,6 +62,8 @@ public class MenuSystem : FSystem {
             fadingBackground = GameObject.Find("MenuFadingBackground").GetComponent<Image>();
             // Get singleton MainMenu
             mainMenu = GameObject.Find("MainMenu");
+            // Get singleton ToggleButton
+            togglePuzzle = GameObject.Find("TogglePuzzle").GetComponent<Toggle>();
 
             // Set specific quality settings
             menuCamera = f_menuCameraFamily.First().GetComponent<Camera>();
@@ -174,12 +179,17 @@ public class MenuSystem : FSystem {
     {
         this.Pause = true;
         // Disable second and third room
-        foreach (Transform room in f_gameRooms.First().transform)
-            if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
-                GameObjectManager.setGameObjectState(room.gameObject, false);
+        //foreach (Transform room in f_gameRooms.First().transform)
+        //    if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
+        //        GameObjectManager.setGameObjectState(room.gameObject, false);
         // Disable UI
         GameObjectManager.setGameObjectState(mainMenu, false);
         GameObjectManager.setGameObjectState(fadingBackground.gameObject, false);
+        // Switch on/off puzzle or fragments
+        foreach (GameObject go in f_puzzles)
+            GameObjectManager.setGameObjectState(go, togglePuzzle.isOn);
+        foreach (GameObject go in f_puzzlesFragment)
+            GameObjectManager.setGameObjectState(go, !togglePuzzle.isOn);
         // Play story
         StoryDisplaying.instance.Pause = false;
     }

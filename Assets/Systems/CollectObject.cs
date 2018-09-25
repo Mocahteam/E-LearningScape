@@ -40,6 +40,17 @@ public class CollectObject : FSystem {
                     // enable it
                     GameObjectManager.setGameObjectState(UIScroll, true);
                 }
+                // particular case of puzzle pieces
+                if (collect.name.Contains("PuzzleSet_") && collect.name.Length == 12)
+                {
+                    // find link into IAR left screen
+                    GameObject UI_metaScroll = collect.GetComponent<LinkedWith>().link;
+                    GameObjectManager.setGameObjectState(UI_metaScroll.transform.GetChild(0).gameObject, true); // force to enable new item notification
+                    // find link into IAR right screen
+                    GameObject UIScroll = UI_metaScroll.GetComponent<LinkedWith>().link.transform.Find(collect.name).gameObject;
+                    // enable it
+                    GameObjectManager.setGameObjectState(UIScroll, true);
+                }
                 // disable in-game source
                 GameObjectManager.setGameObjectState(collect, false);
                 // particular case of collecting Intro_scroll game object => show HUD "A"

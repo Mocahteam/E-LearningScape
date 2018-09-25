@@ -54,6 +54,10 @@ TagManager:
   - Sheet
   - MouseOver
   - Timings
+  - GlassesBG
+  - Puzzle
+  - PuzzleCanvas
+  - PuzzleUI
   layers:
   - Default
   - TransparentFX
