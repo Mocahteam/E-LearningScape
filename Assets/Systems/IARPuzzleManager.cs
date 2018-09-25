@@ -45,6 +45,7 @@ public class IARPuzzleManager : FSystem {
             float canvasHalfWidth = tmpGo.transform.parent.GetComponent<RectTransform>().rect.width / 2;
             float canvasHalfHeight = tmpGo.transform.parent.GetComponent<RectTransform>().rect.height / 2;
 
+            // avoid pieces to move outside the right panel
             if (tmpGo.transform.localPosition.x - puzzleHalfWidth < -canvasHalfWidth)
                 tmpGo.transform.localPosition = new Vector3(-canvasHalfWidth + puzzleHalfWidth, tmpGo.transform.localPosition.y, tmpGo.transform.localPosition.z);
 
