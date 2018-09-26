@@ -34,7 +34,6 @@ public class LockResolver : FSystem {
     private bool lockRotationUp = false;
     private bool lockRotationDown = false;
     private Color lockWheelColor;
-    private Vector3 lockNumbers = Vector3.zero;
     private float wheelRotationCount = 0;
 
     private bool room1Unlocked = false;
@@ -64,13 +63,13 @@ public class LockResolver : FSystem {
                             if (c.gameObject.name == "Left")
                             {
                                 c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                                    SelectLeftWheel(ref selectedWheel, locker.Wheel1, locker.Wheel2, locker.Wheel3, locker.UpDownControl, lockRotationUp, lockRotationDown);
+                                    SelectLeftWheel(ref selectedWheel, locker.Wheel1, locker.Wheel2, locker.Wheel3, locker.UpDownControl);
                                 });
                             }
                             else if (c.gameObject.name == "Right")
                             {
                                 c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                                    SelectRightWheel(ref selectedWheel, locker.Wheel1, locker.Wheel2, locker.Wheel3, locker.UpDownControl, lockRotationUp, lockRotationDown);
+                                    SelectRightWheel(ref selectedWheel, locker.Wheel1, locker.Wheel2, locker.Wheel3, locker.UpDownControl);
                                 });
                             }
                         }
@@ -82,13 +81,13 @@ public class LockResolver : FSystem {
                             if (c.gameObject.name == "Up")
                             {
                                 c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                                    moveWheelUp(selectedWheel, ref lockNumbers, locker.Wheel1, locker.Wheel2, locker.Wheel3, ref lockRotationUp, ref lockRotationDown);
+                                    moveWheelUp(selectedWheel);
                                 });
                             }
                             else if (c.gameObject.name == "Down")
                             {
                                 c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                                    moveWheelDown(selectedWheel, ref lockNumbers, locker.Wheel1, locker.Wheel2, locker.Wheel3, ref lockRotationUp, ref lockRotationDown);
+                                    moveWheelDown(selectedWheel);
                                 });
                             }
                         }
@@ -139,30 +138,37 @@ public class LockResolver : FSystem {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed
             if (((f_closeLock.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && (!room1Unlocked || IARScreenRoom1Unlocked) && (!room3Unlocked || IARScreenRoom3Unlocked))
                 ExitLocker();
-            else if (Input.GetMouseButtonDown(0))
+            else
             {
-                // Select the clicked wheel
-                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
-                if (selectedLocker.Wheel1.GetComponent<PointerOver>())
-                    selectedWheel = selectedLocker.Wheel1;
-                else if (selectedLocker.Wheel2.GetComponent<PointerOver>())
-                    selectedWheel = selectedLocker.Wheel2;
-                else if (selectedLocker.Wheel3.GetComponent<PointerOver>())
-                    selectedWheel = selectedLocker.Wheel3;
-                // Change selected wheel color and move Up/Down UI over the selected wheel
-                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
-                selectedLocker.UpDownControl.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - selectedLocker.UpDownControl.transform.localPosition.x);
-            }
+                // avoid to rotate wheel during unlock animation
+                if ((!room1Unlocked || IARScreenRoom1Unlocked) && (!room3Unlocked || IARScreenRoom3Unlocked))
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        // Select the clicked wheel
+                        selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
+                        if (selectedLocker.Wheel1.GetComponent<PointerOver>())
+                            selectedWheel = selectedLocker.Wheel1;
+                        else if (selectedLocker.Wheel2.GetComponent<PointerOver>())
+                            selectedWheel = selectedLocker.Wheel2;
+                        else if (selectedLocker.Wheel3.GetComponent<PointerOver>())
+                            selectedWheel = selectedLocker.Wheel3;
+                        // Change selected wheel color and move Up/Down UI over the selected wheel
+                        selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
+                        selectedLocker.UpDownControl.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - selectedLocker.UpDownControl.transform.localPosition.x);
+                    }
 
-            // process hotkeys to move the wheels
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z))
-                moveWheelUp(selectedWheel, ref lockNumbers, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, ref lockRotationUp, ref lockRotationDown);
-            else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-                moveWheelDown(selectedWheel, ref lockNumbers, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, ref lockRotationUp, ref lockRotationDown);
-            else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Q))
-                SelectLeftWheel(ref selectedWheel, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, selectedLocker.UpDownControl, lockRotationUp, lockRotationDown);
-            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-                SelectRightWheel(ref selectedWheel, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, selectedLocker.UpDownControl, lockRotationUp, lockRotationDown);
+                    // process hotkeys to move the wheels
+                    if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z))
+                        moveWheelUp(selectedWheel);
+                    else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+                        moveWheelDown(selectedWheel);
+                    else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Q))
+                        SelectLeftWheel(ref selectedWheel, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, selectedLocker.UpDownControl);
+                    else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+                        SelectRightWheel(ref selectedWheel, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, selectedLocker.UpDownControl);
+                }
+            }
         }
 
         // Do we have to rotate wheel up or down?
@@ -189,7 +195,7 @@ public class LockResolver : FSystem {
                 }
                 wheelRotationCount = 0;
                 // Check if the solution is found
-                if (lockNumbers.x == selectedLocker.wheel1Solution && lockNumbers.y == selectedLocker.wheel2Solution && lockNumbers.z == selectedLocker.wheel3Solution)
+                if (selectedLocker.Wheel1.GetComponent<WheelFrontFace>().faceNumber == selectedLocker.wheel1Solution && selectedLocker.Wheel2.GetComponent<WheelFrontFace>().faceNumber == selectedLocker.wheel2Solution && selectedLocker.Wheel3.GetComponent<WheelFrontFace>().faceNumber == selectedLocker.wheel3Solution)
                 {
                     tmpTargetPosition = f_player.First().transform.position + Vector3.back * 3;
                     // depending of locker => unlock the right room
@@ -208,7 +214,6 @@ public class LockResolver : FSystem {
                     }
                     else
                         room3Unlocked = true;
-                    lockNumbers = Vector3.zero;
                 }
             }
         }
@@ -318,91 +323,35 @@ public class LockResolver : FSystem {
         instance.Pause = true;
     }
 
-    private void moveWheelUp(GameObject wheel, ref Vector3 numbers, GameObject wheel1, GameObject wheel2, GameObject wheel3, ref bool rotationUp, ref bool rotationDown)
+    private void moveWheelUp(GameObject wheel)
     {
-        if (!rotationUp && !rotationDown)
+        if (!lockRotationUp && !lockRotationDown)
         {
-            rotationUp = true;
-            if (wheel.GetInstanceID() == wheel1.GetInstanceID())
-            {
-                if(numbers.x == 9)
-                {
-                    numbers = new Vector3(0, numbers.y, numbers.z);
-                }
-                else
-                {
-                    numbers += Vector3.right;
-                }
-            }
-            else if (wheel.GetInstanceID() == wheel2.GetInstanceID())
-            {
-                if (numbers.y == 9)
-                {
-                    numbers = new Vector3(numbers.x, 0, numbers.z);
-                }
-                else
-                {
-                    numbers += Vector3.up;
-                }
-            }
-            else if (wheel.GetInstanceID() == wheel3.GetInstanceID())
-            {
-                if (numbers.z == 9)
-                {
-                    numbers = new Vector3(numbers.x, numbers.y, 0);
-                }
-                else
-                {
-                    numbers += Vector3.forward;
-                }
-            }
+            lockRotationUp = true;
+            WheelFrontFace wff = wheel.GetComponent<WheelFrontFace>();
+            if(wff.faceNumber == 9)
+                wff.faceNumber = 0;
+            else
+                wff.faceNumber++;
         }
     }
 
-    private void moveWheelDown(GameObject wheel, ref Vector3 numbers, GameObject wheel1, GameObject wheel2, GameObject wheel3, ref bool rotationUp, ref bool rotationDown)
+    private void moveWheelDown(GameObject wheel)
     {
-        if (!rotationUp && !rotationDown)
+        if (!lockRotationUp && !lockRotationDown)
         {
-            rotationDown = true;
-            if (wheel.GetInstanceID() == wheel1.GetInstanceID())
-            {
-                if (numbers.x == 0)
-                {
-                    numbers = new Vector3(9, numbers.y, numbers.z);
-                }
-                else
-                {
-                    numbers += Vector3.left;
-                }
-            }
-            else if (wheel.GetInstanceID() == wheel2.GetInstanceID())
-            {
-                if (numbers.y == 0)
-                {
-                    numbers = new Vector3(numbers.x, 9, numbers.z);
-                }
-                else
-                {
-                    numbers += Vector3.down;
-                }
-            }
-            else if (wheel.GetInstanceID() == wheel3.GetInstanceID())
-            {
-                if (numbers.z == 0)
-                {
-                    numbers = new Vector3(numbers.x, numbers.y, 9);
-                }
-                else
-                {
-                    numbers += Vector3.back;
-                }
-            }
+            lockRotationDown = true;
+            WheelFrontFace wff = wheel.GetComponent<WheelFrontFace>();
+            if (wff.faceNumber == 0)
+                wff.faceNumber = 9;
+            else
+                wff.faceNumber--;
         }
     }
 
-    private void SelectLeftWheel(ref GameObject wheel, GameObject wheel1, GameObject wheel2, GameObject wheel3, GameObject lockUDUI, bool rotationUp, bool rotationDown)
+    private void SelectLeftWheel(ref GameObject wheel, GameObject wheel1, GameObject wheel2, GameObject wheel3, GameObject lockUDUI)
     {
-        if (!rotationUp && !rotationDown)
+        if (!lockRotationUp && !lockRotationDown)
         {
             if (wheel.GetInstanceID() == wheel2.GetInstanceID())
             {
@@ -421,9 +370,9 @@ public class LockResolver : FSystem {
         }
     }
 
-    private void SelectRightWheel(ref GameObject wheel, GameObject wheel1, GameObject wheel2, GameObject wheel3, GameObject lockUDUI, bool rotationUp, bool rotationDown)
+    private void SelectRightWheel(ref GameObject wheel, GameObject wheel1, GameObject wheel2, GameObject wheel3, GameObject lockUDUI)
     {
-        if (!rotationUp && !rotationDown)
+        if (!lockRotationUp && !lockRotationDown)
         {
             if (wheel.GetInstanceID() == wheel1.GetInstanceID())
             {

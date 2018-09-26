@@ -2,6 +2,7 @@
 using FYFY;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.SceneManagement;
 
 public class IARMenuManager : FSystem {
 
@@ -31,7 +32,7 @@ public class IARMenuManager : FSystem {
 
     void Restart() //restart game from beginning
     {
-        GameObjectManager.loadScene("Sapiens");
+        GameObjectManager.loadScene(SceneManager.GetActiveScene().name);
     }
 
     void ExitGame() //open menu scene

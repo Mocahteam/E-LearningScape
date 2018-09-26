@@ -122,7 +122,7 @@ public class MenuSystem : FSystem {
     {
         // Pause all systems except this
         foreach (FSystem syst in FSystemManager.updateSystems())
-            if (syst != this)
+            if (syst != this && syst != LogoDisplaying.instance)
                 syst.Pause = true;
         // Set particular effects
         RenderSettings.fogDensity = 0.005f;

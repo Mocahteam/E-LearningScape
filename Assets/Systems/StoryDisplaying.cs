@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityStandardAssets.Characters.FirstPerson;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class StoryDisplaying : FSystem {
 
@@ -160,7 +161,7 @@ public class StoryDisplaying : FSystem {
                         UIEffectPlayer.instance.Pause = false;
                     }
                     else
-                        GameObjectManager.loadScene("Sapiens"); // reset game
+                        GameObjectManager.loadScene(SceneManager.GetActiveScene().name); // reset game
                 }
                 readingTimer = Time.time;
                 plainToAlpha = true;

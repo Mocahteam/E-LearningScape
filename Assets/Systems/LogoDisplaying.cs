@@ -30,6 +30,8 @@ public class LogoDisplaying : FSystem {
     private bool showLogo = false;
     private bool closeLogo = false;
 
+    public static LogoDisplaying instance;
+
     public LogoDisplaying()
     {
         if (Application.isPlaying)
@@ -45,6 +47,7 @@ public class LogoDisplaying : FSystem {
 
             logo = logoGo.GetComponent<ImgBank>();
         }
+        instance = this;
     }
 
 	// Use to process your families.
@@ -66,6 +69,8 @@ public class LogoDisplaying : FSystem {
                 {
                     closeLogo = true;
                     readingTimer = Time.time;
+                    // Start main menu
+                    MenuSystem.instance.Pause = false;
                 }
             }
             else
@@ -115,8 +120,6 @@ public class LogoDisplaying : FSystem {
             }
             else // fade end
             {
-                // Start main menu
-                MenuSystem.instance.Pause = false;
                 // Pause this
                 this.Pause = true;
                 // Disable Logo
