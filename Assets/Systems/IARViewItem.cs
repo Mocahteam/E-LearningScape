@@ -15,6 +15,10 @@ public class IARViewItem : FSystem {
     private Family f_selected = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedInInventory), typeof(Collected), typeof(AnimatedSprites)), new AnyOfTags("InventoryElements"));
     private Family f_descriptionUI = FamilyManager.getFamily(new AnyOfTags("DescriptionUI"));
     private Family f_viewable = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
+    private Family f_mainloop = FamilyManager.getFamily(new AllOfComponents(typeof(MainLoop)));
+    private Family f_collectedScrolls = FamilyManager.getFamily(new AnyOfTags("ScrollRoom2"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
+    private Family f_collectedPuzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
+    private Family f_selectedBag = FamilyManager.getFamily(new AnyOfTags("Bag"), new AllOfComponents(typeof(ReadyToWork)));
 
     private GameObject descriptionUI;
     private GameObject descriptionTitle;
@@ -115,6 +119,15 @@ public class IARViewItem : FSystem {
             onExitItem(-1);
     }
 
+    // return true if UI with name "name" is selected into inventory
+    private GameObject isSelected(string name)
+    {
+        foreach (GameObject go in f_selected)
+            if (go.name == name)
+                return go;
+        return null;
+    }
+
     // Show title and description of a game object
     // if this gameobject is linked with another one and is selected, the description area is replaced by its linked game object (except for glasses)
     private void showDescription(GameObject item)
@@ -176,12 +189,57 @@ public class IARViewItem : FSystem {
                 if (go.GetComponent<SelectedInInventory>())
                 {
                     GameObjectManager.removeComponent<SelectedInInventory>(go);
+                    if (!(go.name.Contains("Scroll") || go.name == "Puzzle" || go.name == "Lamp"))
+                    {
+                        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOff", performedBy = "player" });
+
+                        if (go.name.Contains("Glasses"))
+                        {
+                            if (f_selectedBag.Count > 0)
+                            {
+                                if (isSelected("Glasses1"))
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate2", performedBy = "system" });
+                                else if (isSelected("Glasses2"))
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate3", performedBy = "system" });
+                                else
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate", performedBy = "system" });
+                            }
+                        }
+                    }
                     // this game object is unselected and it contains a linked game object => we hide the linked game object
                     if (go.GetComponent<LinkedWith>())
                         GameObjectManager.setGameObjectState(go.GetComponent<LinkedWith>().link, false); // switch off the view of the last selection
                 }
                 else
+                {
                     GameObjectManager.addComponent<SelectedInInventory>(go);
+                    
+                    if (go.name == "ScrollIntro" || go.name == "Lamp")
+                        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "activate", performedBy = "player" });
+                    else if(go.GetComponent<LinkLabel>())
+                    {
+                        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player", orLabels = new string[] { go.GetComponent<LinkLabel>().text } });
+                        if ((go.name == "Scroll" && f_collectedScrolls.Count == 5) || (go.name == "Puzzle" && f_collectedPuzzles.Count == 5))
+                            GameObjectManager.addComponent<ActionPerformed>(go, new { name = "activate", performedBy = "system" });
+                    }
+                    else
+                    {
+                        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
+
+                        if(go.name.Contains("Glasses"))
+                        {
+                            if(f_selectedBag.Count > 0)
+                            {
+                                if (isSelected("Glasses1") && isSelected("Glasses2"))
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate4", performedBy = "system" });
+                                else if (isSelected("Glasses1"))
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate2", performedBy = "system" });
+                                else if (isSelected("Glasses2"))
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate3", performedBy = "system" });
+                            }
+                        }
+                    }
+                }
             }
         }
     }

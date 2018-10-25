@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-D0-3923B-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma8</text>
+  </name>
+ <page id="g-D0-39242-1">
+  <place id="p-D0-39245-2">
+  <name>
+   <text>Mirror_end_82</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="50"/>
+   </graphics>
+  </place>
+  <place id="p-D0-3924F-3">
+  <name>
+   <text>Mirror_off_83</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="60" y="170"/>
+   </graphics>
+  </place>
+  <place id="p-D0-39253-4">
+  <name>
+   <text>Mirror_on_83</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="170"/>
+   </graphics>
+  </place>
+  <transition id="t-D0-39257-5">
+  <name>
+   <text>Mirror_perform_82</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="140" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-D0-3925B-6">
+  <name>
+   <text>Mirror_start_82</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="60" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-D0-3925E-7">
+  <name>
+   <text>Mirror_turnOn_83</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="140" y="230"/>
+   </graphics>
+  </transition>
+  <place id="p-D0-39262-8">
+  <name>
+   <text>Plank_end_84</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="560" y="260"/>
+   </graphics>
+  </place>
+  <place id="p-D0-39264-9">
+  <name>
+   <text>Plank_off_81</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="50" y="370"/>
+   </graphics>
+  </place>
+  <place id="p-D0-39268-10">
+  <name>
+   <text>Plank_on_81</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="370"/>
+   </graphics>
+  </place>
+  <transition id="t-D0-3926A-11">
+  <name>
+   <text>Plank_perform_84</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="480" y="260"/>
+   </graphics>
+  </transition>
+  <place id="p-D0-3926E-12">
+  <name>
+   <text>Plank_start_84</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="400" y="260"/>
+   </graphics>
+  </place>
+  <transition id="t-D0-39271-13">
+  <name>
+   <text>Plank_turnOff_81</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="140" y="340"/>
+   </graphics>
+  </transition>
+  <transition id="t-D0-39274-14">
+  <name>
+   <text>Plank_turnOn_81</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="140" y="430"/>
+   </graphics>
+  </transition>
+  <place id="p-D0-39276-15">
+  <name>
+   <text>Q4_Answered_85</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="940" y="260"/>
+   </graphics>
+  </place>
+  <place id="p-D0-39279-16">
+  <name>
+   <text>Q4_Answering_85</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="680" y="260"/>
+   </graphics>
+  </place>
+  <transition id="t-D0-3927D-17">
+  <name>
+   <text>Q4_Correct_85</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="820" y="200"/>
+   </graphics>
+  </transition>
+  <arc id="e-D0-39281-18" source="p-D0-3924F-3" target="t-D0-3925E-7">
+  </arc>
+  <arc id="e-D0-39283-19" source="p-D0-39262-8" target="t-D0-3927D-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-D0-392D6-20" source="t-D0-3926A-11" target="p-D0-39262-8">
+  </arc>
+  <arc id="e-D0-392D8-21" source="p-D0-3926E-12" target="t-D0-3926A-11">
+  </arc>
+  <arc id="e-D0-392D9-22" source="p-D0-39268-10" target="t-D0-3926A-11">
+   <type value="test"/>
+  </arc>
+  <arc id="e-D0-392DB-23" source="p-D0-39253-4" target="t-D0-3926A-11">
+   <type value="test"/>
+  </arc>
+  <arc id="e-D0-392DD-24" source="t-D0-3925E-7" target="p-D0-39253-4">
+  </arc>
+  <arc id="e-D0-392DE-25" source="p-D0-39268-10" target="t-D0-39271-13">
+  </arc>
+  <arc id="e-D0-392DF-26" source="p-D0-39245-2" target="t-D0-3925E-7">
+   <type value="test"/>
+  </arc>
+  <arc id="e-D0-392E1-27" source="t-D0-39257-5" target="p-D0-39245-2">
+  </arc>
+  <arc id="e-D0-392E2-28" source="p-D0-3925B-6" target="t-D0-39257-5">
+  </arc>
+  <arc id="e-D0-392E3-29" source="t-D0-39271-13" target="p-D0-39264-9">
+  </arc>
+  <arc id="e-D0-392E4-30" source="t-D0-39274-14" target="p-D0-39268-10">
+  </arc>
+  <arc id="e-D0-392E5-31" source="p-D0-39264-9" target="t-D0-39274-14">
+  </arc>
+  <arc id="e-D0-392E7-32" source="p-D0-39279-16" target="t-D0-3927D-17">
+  </arc>
+  <arc id="e-D0-392E8-33" source="t-D0-3927D-17" target="p-D0-39276-15">
+  </arc>
+ </page>
+ </net>
+</pnml>

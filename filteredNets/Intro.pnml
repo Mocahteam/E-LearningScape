@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-24E0-B82FD-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-2728-73DA5-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Intro</text>
   </name>
- <page id="g-24E0-B830C-1">
-  <place id="p-24E0-B8310-2">
+ <page id="g-2728-73DAD-1">
+  <place id="p-2728-73DAF-2">
   <name>
-   <text>Fragment_souvenir_ActivationCount_2</text>
+   <text>Fragment_souvenir_0_ActivationCount_2</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="500" y="55"/>
+    <position x="470" y="350"/>
    </graphics>
   </place>
-  <transition id="t-24E0-B8323-3">
+  <transition id="t-2728-73DBA-3">
   <name>
-   <text>Fragment_souvenir_activate_2</text>
+   <text>Fragment_souvenir_0_activate_2</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="380" y="55"/>
+    <position x="350" y="350"/>
    </graphics>
   </transition>
-  <place id="p-24E0-B832A-4">
+  <place id="p-2728-73DBF-4">
   <name>
    <text>Intro_Scroll_end_0</text>
     <graphics>
@@ -35,10 +35,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="230" y="355"/>
+    <position x="225" y="245"/>
    </graphics>
   </place>
-  <transition id="t-24E0-B832F-5">
+  <transition id="t-2728-73DC3-5">
   <name>
    <text>Intro_Scroll_perform_0</text>
     <graphics>
@@ -46,10 +46,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="160" y="355"/>
+    <position x="145" y="245"/>
    </graphics>
   </transition>
-  <place id="p-24E0-B8335-6">
+  <place id="p-2728-73DC6-6">
   <name>
    <text>Intro_Scroll_start_0</text>
     <graphics>
@@ -60,10 +60,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="80" y="355"/>
+    <position x="65" y="245"/>
    </graphics>
   </place>
-  <place id="p-24E0-B833A-7">
+  <place id="p-2728-73DCA-7">
   <name>
    <text>ScrollIntro_ActivationCount_1</text>
     <graphics>
@@ -71,10 +71,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="510" y="355"/>
+    <position x="470" y="245"/>
    </graphics>
   </place>
-  <transition id="t-24E0-B8340-8">
+  <transition id="t-2728-73DCE-8">
   <name>
    <text>ScrollIntro_activate_1</text>
     <graphics>
@@ -82,21 +82,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="390" y="355"/>
+    <position x="350" y="245"/>
    </graphics>
   </transition>
-  <place id="p-24E0-B8346-9">
-  <name>
-   <text>Verrou Mur_end_4</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="880" y="195"/>
-   </graphics>
-  </place>
-  <place id="p-24E0-B8349-10">
+  <place id="p-2728-73DD1-9">
   <name>
    <text>Verrou Mur_off_3</text>
     <graphics>
@@ -107,10 +96,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="356" y="195"/>
+    <position x="271" y="80"/>
    </graphics>
   </place>
-  <place id="p-24E0-B834F-11">
+  <place id="p-2728-73DD4-10">
   <name>
    <text>Verrou Mur_on_3</text>
     <graphics>
@@ -118,23 +107,56 @@
     </graphics>
   </name>
    <graphics>
-    <position x="536" y="195"/>
+    <position x="441" y="80"/>
    </graphics>
   </place>
-  <transition id="t-24E0-B8354-12">
+  <transition id="t-2728-73DD7-11">
   <name>
-   <text>Verrou Mur_perform_4</text>
+   <text>Verrou Mur_turnOff_3</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="820" y="195"/>
+    <position x="351" y="50"/>
    </graphics>
   </transition>
-  <place id="p-24E0-B8358-13">
+  <transition id="t-2728-73DDB-12">
   <name>
-   <text>Verrou Mur_start_4</text>
+   <text>Verrou Mur_turnOn_3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="351" y="140"/>
+   </graphics>
+  </transition>
+  <place id="p-2728-73DDF-13">
+  <name>
+   <text>WallIntro_end_4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="855" y="200"/>
+   </graphics>
+  </place>
+  <transition id="t-2728-73DE1-14">
+  <name>
+   <text>WallIntro_perform_4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="775" y="200"/>
+   </graphics>
+  </transition>
+  <place id="p-2728-73DE5-15">
+  <name>
+   <text>WallIntro_start_4</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -143,47 +165,40 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="740" y="195"/>
+    <position x="695" y="200"/>
    </graphics>
   </place>
-  <transition id="t-24E0-B835E-14">
-  <name>
-   <text>Verrou Mur_turnOn_3</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="446" y="255"/>
-   </graphics>
-  </transition>
-  <arc id="e-24E0-B8369-15" source="t-24E0-B835E-14" target="p-24E0-B834F-11">
-  </arc>
-  <arc id="e-24E0-B836C-16" source="p-24E0-B8310-2" target="t-24E0-B8354-12">
+  <arc id="e-2728-73DEA-16" source="p-2728-73DBF-4" target="t-2728-73DCE-8">
    <type value="test"/>
   </arc>
-  <arc id="e-24E0-B8370-17" source="p-24E0-B834F-11" target="t-24E0-B8354-12">
+  <arc id="e-2728-73DED-17" source="t-2728-73DC3-5" target="p-2728-73DBF-4">
+  </arc>
+  <arc id="e-2728-73DEE-18" source="p-2728-73DD4-10" target="t-2728-73DD7-11">
+  </arc>
+  <arc id="e-2728-73DF0-19" source="p-2728-73DD1-9" target="t-2728-73DDB-12">
+  </arc>
+  <arc id="e-2728-73DF1-20" source="t-2728-73DDB-12" target="p-2728-73DD4-10">
+  </arc>
+  <arc id="e-2728-73DF2-21" source="t-2728-73DD7-11" target="p-2728-73DD1-9">
+  </arc>
+  <arc id="e-2728-73E3D-22" source="t-2728-73DCE-8" target="p-2728-73DCA-7">
+  </arc>
+  <arc id="e-2728-73E40-23" source="p-2728-73DAF-2" target="t-2728-73DE1-14">
    <type value="test"/>
   </arc>
-  <arc id="e-24E0-B8372-18" source="p-24E0-B832A-4" target="t-24E0-B8340-8">
+  <arc id="e-2728-73E41-24" source="p-2728-73DCA-7" target="t-2728-73DE1-14">
    <type value="test"/>
   </arc>
-  <arc id="e-24E0-B8374-19" source="p-24E0-B8349-10" target="t-24E0-B835E-14">
-  </arc>
-  <arc id="e-24E0-B8376-20" source="t-24E0-B832F-5" target="p-24E0-B832A-4">
-  </arc>
-  <arc id="e-24E0-B8377-21" source="p-24E0-B8335-6" target="t-24E0-B832F-5">
-  </arc>
-  <arc id="e-24E0-B8379-22" source="t-24E0-B8323-3" target="p-24E0-B8310-2">
-  </arc>
-  <arc id="e-24E0-B8423-23" source="t-24E0-B8340-8" target="p-24E0-B833A-7">
-  </arc>
-  <arc id="e-24E0-B8427-24" source="t-24E0-B8354-12" target="p-24E0-B8346-9">
-  </arc>
-  <arc id="e-24E0-B8429-25" source="p-24E0-B8358-13" target="t-24E0-B8354-12">
-  </arc>
-  <arc id="e-24E0-B842B-26" source="p-24E0-B833A-7" target="t-24E0-B8354-12">
+  <arc id="e-2728-73E43-25" source="p-2728-73DD4-10" target="t-2728-73DE1-14">
    <type value="test"/>
+  </arc>
+  <arc id="e-2728-73E44-26" source="p-2728-73DE5-15" target="t-2728-73DE1-14">
+  </arc>
+  <arc id="e-2728-73E46-27" source="t-2728-73DE1-14" target="p-2728-73DDF-13">
+  </arc>
+  <arc id="e-2728-73E47-28" source="t-2728-73DBA-3" target="p-2728-73DAF-2">
+  </arc>
+  <arc id="e-2728-73E48-29" source="p-2728-73DC6-6" target="t-2728-73DC3-5">
   </arc>
  </page>
  </net>

@@ -5,7 +5,6 @@ using FYFY_plugins.TriggerManager;
 using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
 using TMPro;
-using FYFY_plugins.Monitoring;
 
 public class EndManager : FSystem {
 
@@ -45,6 +44,8 @@ public class EndManager : FSystem {
         if (f_answer.Count == 0)
         {
             switchToEndRoom = true;
+
+            GameObjectManager.addComponent<ActionPerformed>(f_player.First(), new { name = "perform", performedBy = "system" });
         }
     }
 

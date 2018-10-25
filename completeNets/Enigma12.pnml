@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-330-D5B4F-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma12</text>
+  </name>
+ <page id="g-330-D5B5B-1">
+  <place id="p-330-D5B5E-2">
+  <name>
+   <text>Fragment_souvenir_6_ActivationCount_112</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="450" y="480"/>
+   </graphics>
+  </place>
+  <transition id="t-330-D5B6F-3">
+  <name>
+   <text>Fragment_souvenir_6_activate_112</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="330" y="480"/>
+   </graphics>
+  </transition>
+  <place id="p-330-D5B8C-4">
+  <name>
+   <text>Lamp_ActivationCount_114</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="450" y="355"/>
+   </graphics>
+  </place>
+  <transition id="t-330-D5B91-5">
+  <name>
+   <text>Lamp_activate_114</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="330" y="355"/>
+   </graphics>
+  </transition>
+  <place id="p-330-D5B97-6">
+  <name>
+   <text>Lamp_end_113</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="205" y="355"/>
+   </graphics>
+  </place>
+  <transition id="t-330-D5B9A-7">
+  <name>
+   <text>Lamp_perform_113</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="135" y="355"/>
+   </graphics>
+  </transition>
+  <place id="p-330-D5B9E-8">
+  <name>
+   <text>Lamp_start_113</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="55" y="355"/>
+   </graphics>
+  </place>
+  <place id="p-330-D5BA3-9">
+  <name>
+   <text>Q1_Answered_115</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="910" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-330-D5BA6-10">
+  <name>
+   <text>Q1_Answering_115</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="660" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-330-D5BAB-11">
+  <name>
+   <text>Q1_Correct_115</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="790" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-330-D5BAE-12">
+  <name>
+   <text>Q1_Wrong_115</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="790" y="170"/>
+   </graphics>
+  </transition>
+  <place id="p-330-D5BB4-13">
+  <name>
+   <text>Q2_Answered_116</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="910" y="310"/>
+   </graphics>
+  </place>
+  <place id="p-330-D5BB7-14">
+  <name>
+   <text>Q2_Answering_116</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="660" y="310"/>
+   </graphics>
+  </place>
+  <transition id="t-330-D5BBB-15">
+  <name>
+   <text>Q2_Correct_116</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="790" y="250"/>
+   </graphics>
+  </transition>
+  <transition id="t-330-D5BBE-16">
+  <name>
+   <text>Q2_Wrong_116</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="790" y="370"/>
+   </graphics>
+  </transition>
+  <place id="p-330-D5BC2-17">
+  <name>
+   <text>Q3_Answered_117</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="910" y="505"/>
+   </graphics>
+  </place>
+  <place id="p-330-D5BC5-18">
+  <name>
+   <text>Q3_Answering_117</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="660" y="505"/>
+   </graphics>
+  </place>
+  <transition id="t-330-D5C2E-19">
+  <name>
+   <text>Q3_Correct_117</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="790" y="445"/>
+   </graphics>
+  </transition>
+  <transition id="t-330-D5C34-20">
+  <name>
+   <text>Q3_Wrong_117</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="790" y="565"/>
+   </graphics>
+  </transition>
+  <place id="p-330-D5C38-21">
+  <name>
+   <text>Q4_Answered_118</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="910" y="695"/>
+   </graphics>
+  </place>
+  <place id="p-330-D5C3F-22">
+  <name>
+   <text>Q4_Answering_118</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="660" y="695"/>
+   </graphics>
+  </place>
+  <transition id="t-330-D5C42-23">
+  <name>
+   <text>Q4_Correct_118</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="790" y="635"/>
+   </graphics>
+  </transition>
+  <transition id="t-330-D5C47-24">
+  <name>
+   <text>Q4_Wrong_118</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="790" y="755"/>
+   </graphics>
+  </transition>
+  <arc id="e-330-D5C4F-25" source="t-330-D5B6F-3" target="p-330-D5B5E-2">
+  </arc>
+  <arc id="e-330-D5C51-26" source="p-330-D5BA6-10" target="t-330-D5BAE-12">
+   <type value="test"/>
+  </arc>
+  <arc id="e-330-D5C56-27" source="p-330-D5B5E-2" target="t-330-D5BBB-15">
+   <type value="test"/>
+  </arc>
+  <arc id="e-330-D5C58-28" source="p-330-D5B8C-4" target="t-330-D5BBB-15">
+   <type value="test"/>
+  </arc>
+  <arc id="e-330-D5C59-29" source="t-330-D5BBB-15" target="p-330-D5BB4-13">
+  </arc>
+  <arc id="e-330-D5C5A-30" source="p-330-D5BB7-14" target="t-330-D5BBB-15">
+  </arc>
+  <arc id="e-330-D5C5B-31" source="p-330-D5BB7-14" target="t-330-D5BBE-16">
+   <type value="test"/>
+  </arc>
+  <arc id="e-330-D5C5D-32" source="p-330-D5B5E-2" target="t-330-D5C2E-19">
+   <type value="test"/>
+  </arc>
+  <arc id="e-330-D5C5E-33" source="p-330-D5B8C-4" target="t-330-D5C2E-19">
+   <type value="test"/>
+  </arc>
+  <arc id="e-330-D5C5F-34" source="t-330-D5C2E-19" target="p-330-D5BC2-17">
+  </arc>
+  <arc id="e-330-D5C61-35" source="p-330-D5BC5-18" target="t-330-D5C2E-19">
+  </arc>
+  <arc id="e-330-D5C64-36" source="p-330-D5B9E-8" target="t-330-D5B9A-7">
+  </arc>
+  <arc id="e-330-D5C65-37" source="p-330-D5BC5-18" target="t-330-D5C34-20">
+   <type value="test"/>
+  </arc>
+  <arc id="e-330-D5C66-38" source="p-330-D5B5E-2" target="t-330-D5C42-23">
+   <type value="test"/>
+  </arc>
+  <arc id="e-330-D5C68-39" source="p-330-D5B8C-4" target="t-330-D5C42-23">
+   <type value="test"/>
+  </arc>
+  <arc id="e-330-D5C69-40" source="t-330-D5C42-23" target="p-330-D5C38-21">
+  </arc>
+  <arc id="e-330-D5C6A-41" source="p-330-D5C3F-22" target="t-330-D5C42-23">
+  </arc>
+  <arc id="e-330-D5C6B-42" source="p-330-D5C3F-22" target="t-330-D5C47-24">
+   <type value="test"/>
+  </arc>
+  <arc id="e-330-D5C6C-43" source="t-330-D5B9A-7" target="p-330-D5B97-6">
+  </arc>
+  <arc id="e-330-D5C6E-44" source="p-330-D5B97-6" target="t-330-D5B91-5">
+   <type value="test"/>
+  </arc>
+  <arc id="e-330-D5C70-45" source="t-330-D5B91-5" target="p-330-D5B8C-4">
+  </arc>
+  <arc id="e-330-D5C72-46" source="p-330-D5B5E-2" target="t-330-D5BAB-11">
+   <type value="test"/>
+  </arc>
+  <arc id="e-330-D5C73-47" source="p-330-D5B8C-4" target="t-330-D5BAB-11">
+   <type value="test"/>
+  </arc>
+  <arc id="e-330-D5C74-48" source="t-330-D5BAB-11" target="p-330-D5BA3-9">
+  </arc>
+  <arc id="e-330-D5C75-49" source="p-330-D5BA6-10" target="t-330-D5BAB-11">
+  </arc>
+ </page>
+ </net>
+</pnml>

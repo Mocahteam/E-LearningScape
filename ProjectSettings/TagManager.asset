@@ -58,6 +58,7 @@ TagManager:
   - Puzzle
   - PuzzleCanvas
   - PuzzleUI
+  - ScrollRoom2
   layers:
   - Default
   - TransparentFX

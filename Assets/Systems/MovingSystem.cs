@@ -2,7 +2,6 @@
 using FYFY;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
-using FYFY_plugins.Monitoring;
 using FYFY_plugins.TriggerManager;
 
 public class MovingSystem : FSystem
@@ -153,12 +152,6 @@ public class MovingSystem : FSystem
                     playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
                     playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
                 }
-                if (playerController.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
-                {
-                    MonitoringTrace trace = new MonitoringTrace(playerController.GetComponent<ComponentMonitoring>(), "turnOff");
-                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                    HelpSystem.traces.Enqueue(trace);
-                }
             }
             else
             { // standing and want to crouch
@@ -175,12 +168,6 @@ public class MovingSystem : FSystem
                     playerController.m_RunSpeed = crouchSpeed;
                     playerController.m_FootstepSounds[0] = audioBank.audioBank[6];
                     playerController.m_FootstepSounds[1] = audioBank.audioBank[7];
-                }
-                if (playerController.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
-                {
-                    MonitoringTrace trace = new MonitoringTrace(playerController.GetComponent<ComponentMonitoring>(), "turnOn");
-                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                    HelpSystem.traces.Enqueue(trace);
                 }
             }
         }
@@ -199,6 +186,11 @@ public class MovingSystem : FSystem
             {
                 changingPose = false;
                 crouching = !crouching; //true when the player is crouching
+                
+                if(crouching)
+                    GameObjectManager.addComponent<ActionPerformed>(playerController.gameObject, new { name = "turnOn", performedBy = "player" });
+                else
+                    GameObjectManager.addComponent<ActionPerformed>(playerController.gameObject, new { name = "turnOff", performedBy = "player" });
             }
 
         }

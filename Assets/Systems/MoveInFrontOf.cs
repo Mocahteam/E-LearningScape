@@ -2,7 +2,6 @@
 using FYFY;
 using FYFY_plugins.PointerManager;
 using UnityEngine.UI;
-using FYFY_plugins.Monitoring;
 
 public class MoveInFrontOf : FSystem {
 
@@ -124,12 +123,6 @@ public class MoveInFrontOf : FSystem {
                 camNewDir = selectable.standingOrientation;
                 angleRotation = Vector3.Angle(Camera.main.transform.forward, camNewDir);
                 moveInFrontOf = true; // start animation to move the player in front of the selected GameObject
-                if (HelpSystem.monitoring)
-                {
-                    MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(3), "turnOn");
-                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                    HelpSystem.traces.Enqueue(trace);
-                }
             }
         }
 

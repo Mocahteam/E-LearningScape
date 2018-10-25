@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Q1_Correct_137" label="Correct Q1" system="False" end="True" />
+  <transition id="or0_Q1_Correct_137" label="Correct Q1" system="False" end="True" />
+  <transition id="Q1_Wrong_137" label="Wrong Q1" system="False" end="False" />
+  <transition id="Paper_activate4_136" label="activate4 Paper" system="True" end="False" />
+  <transition id="Paper_activate3_135" label="activate3 Paper" system="True" end="False" />
+  <transition id="Paper_activate2_134" label="activate2 Paper" system="True" end="False" />
+  <transition id="Paper_activate_133" label="activate Paper" system="True" end="False" />
+  <transition id="Satchel_turnOff_72" label="turnOff Satchel" system="False" end="False" />
+  <transition id="Satchel_turnOn_72" label="turnOn Satchel" system="False" end="False" />
+  <transition id="Glasses2_turnOff_71" label="turnOff Glasses2" system="False" end="False" />
+  <transition id="Glasses2_turnOn_71" label="turnOn Glasses2" system="False" end="False" />
+  <transition id="Padlock_perform_73" label="perform Padlock" system="False" end="False" />
+  <transition id="KeyE08_perform_66" label="perform KeyE08" system="False" end="False" />
+  <transition id="Glasses1_turnOff_69" label="turnOff Glasses1" system="False" end="False" />
+  <transition id="Glasses1_turnOn_69" label="turnOn Glasses1" system="False" end="False" />
+  <transition id="Glasses1_perform_68" label="perform Glasses1" system="False" end="False" />
+  <transition id="Glasses2_perform_70" label="perform Glasses2" system="False" end="False" />
+  <transition id="KeyE08_turnOff_67" label="turnOff KeyE08" system="False" end="False" />
+  <transition id="KeyE08_turnOn_67" label="turnOn KeyE08" system="False" end="False" />
+</transitions>

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.PointerManager;
+using FYFY_plugins.Monitoring;
 using System.Collections.Generic;
 using TMPro;
-using FYFY_plugins.Monitoring;
 
 public class PlankAndWireManager : FSystem {
     
@@ -14,9 +14,12 @@ public class PlankAndWireManager : FSystem {
     private Family f_focusedPlank = FamilyManager.getFamily(new AnyOfTags("Plank"), new AllOfComponents(typeof(ReadyToWork), typeof(LinkedWith)));
     private Family f_focusedWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerOver), typeof(TextMeshPro))); // focused words on the plank
     private Family f_allWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro))); // all clickable words on the plank
+    private Family f_wrongWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro)), new NoneOfComponents(typeof(SolutionWord)));
     private Family f_closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PlankText", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_syllabusSeen = FamilyManager.getFamily(new AllOfComponents(typeof(SyllabusSeen)));
+    private Family f_familyMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(FamilyMonitoring)));
 
     //plank
     private GameObject selectedPlank = null;
@@ -51,6 +54,8 @@ public class PlankAndWireManager : FSystem {
 
         // launch this system
         instance.Pause = false;
+
+        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
     }
 
     private void onWordMouseEnter(GameObject go)
@@ -117,12 +122,7 @@ public class PlankAndWireManager : FSystem {
                             lr.positionCount--;
                             //set the new positions
                             lr.SetPositions(lrPositions.ToArray());
-                            if (HelpSystem.monitoring && tmpGO.GetComponent<ComponentMonitoring>())
-                            {
-                                MonitoringTrace trace = new MonitoringTrace(tmpGO.GetComponent<ComponentMonitoring>(), "turnOff");
-                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                                HelpSystem.traces.Enqueue(trace);
-                            }
+                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player" });
                         }
                         else
                         {    //if the word wasn't selected
@@ -133,17 +133,38 @@ public class PlankAndWireManager : FSystem {
                                 {
                                     if (w.GetComponent<TextMeshPro>().color == Color.red)
                                     {
-                                        if (HelpSystem.monitoring && w.GetComponent<ComponentMonitoring>())
-                                        {
-                                            MonitoringTrace trace = new MonitoringTrace(w.GetComponent<ComponentMonitoring>(), "turnOff");
-                                            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
-                                            HelpSystem.traces.Enqueue(trace);
-                                        }
+                                        GameObjectManager.addComponent<ActionPerformed>(w, new { name = "turnOff", performedBy = "player" });
                                     }
                                     w.GetComponent<TextMeshPro>().color = Color.black;
                                 }
                                 lr.positionCount = 0;
                                 lrPositions.Clear();
+                            }
+                            if (tmpGO.GetComponent<SolutionWord>())
+                            {
+                                if(f_syllabusSeen.Count == 0)
+                                    GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12" } });
+                                else if(f_syllabusSeen.Count == 1)
+                                {
+                                    if(f_syllabusSeen.First().name[f_syllabusSeen.First().name.Length - 1] == '9')
+                                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l10" } });
+                                    else
+                                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l13" } });
+                                }
+                                else if(f_syllabusSeen.Count == 2)
+                                    GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l10", "l13" } });
+                            }
+                            else
+                            {
+                                int nbFamilyMonitoring = f_familyMonitoring.Count;
+                                for(int j = 0; j < nbFamilyMonitoring; j++)
+                                {
+                                    if(f_familyMonitoring.getAt(j).name == "equivWith_PlankAndWireManager_f_wrongWords")
+                                    {
+                                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", familyMonitoring = f_familyMonitoring.getAt(j).GetComponent<FamilyMonitoring>() });
+                                        break;
+                                    }
+                                }
                             }
                             tmpGO.GetComponent<TextMeshPro>().color = Color.red;
                             //update the linerenderer
@@ -153,15 +174,9 @@ public class PlankAndWireManager : FSystem {
 
                             bool correct = true;
                             foreach (GameObject word in f_allWords)
-                                if ((word.name == "Objectifs" || word.name == "Methodes" || word.name == "Evaluation") && word.GetComponent<TextMeshPro>().color != Color.red)
+                                if (word.GetComponent<SolutionWord>() && word.GetComponent<TextMeshPro>().color != Color.red)
                                     correct = false;
-
-                            if (HelpSystem.monitoring && tmpGO.GetComponent<ComponentMonitoring>())
-                            {
-                                MonitoringTrace trace = new MonitoringTrace(tmpGO.GetComponent<ComponentMonitoring>(), "turnOn");
-                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                                HelpSystem.traces.Enqueue(trace);
-                            }
+                            
                             if (correct)
                             {
                                 // remove the wire from inventory
@@ -169,15 +184,46 @@ public class PlankAndWireManager : FSystem {
                                 GameObjectManager.setGameObjectState(lw.link, false);
                                 // notify player success
                                 GameObjectManager.addComponent<PlayUIEffect>(selectedPlank, new { effectCode = 2});
-
-                                if (HelpSystem.monitoring)
+                                GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "perform", performedBy = "system" });
+                            }
+                        }
+                    }
+                }
+                else if (Input.GetMouseButtonDown(0))
+                {
+                    //if a word is clicked without using wire
+                    int nbPlankWords = f_focusedWords.Count;
+                    for (int i = 0; i < nbPlankWords; i++)
+                    {
+                        tmpGO = f_focusedWords.getAt(i);
+                        if (tmpGO.GetComponent<TextMeshPro>().color == Color.red)
+                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player" });
+                        else
+                        {
+                            if (tmpGO.GetComponent<SolutionWord>())
+                            {
+                                if (f_syllabusSeen.Count == 0)
+                                    GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12" } });
+                                else if (f_syllabusSeen.Count == 1)
                                 {
-                                    MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(23), "perform");
-                                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
-                                    HelpSystem.traces.Enqueue(trace);
-                                    trace = new MonitoringTrace(MonitoringManager.getMonitorById(54), "perform");
-                                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
-                                    HelpSystem.traces.Enqueue(trace);
+                                    if (f_syllabusSeen.First().name[f_syllabusSeen.First().name.Length - 1] == '9')
+                                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l10" } });
+                                    else
+                                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l13" } });
+                                }
+                                else if (f_syllabusSeen.Count == 2)
+                                    GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l10", "l13" } });
+                            }
+                            else
+                            {
+                                int nbFamilyMonitoring = f_familyMonitoring.Count;
+                                for (int j = 0; j < nbFamilyMonitoring; j++)
+                                {
+                                    if (f_familyMonitoring.getAt(j).name == "equivWith_PlankAndWireManager_f_wrongWords")
+                                    {
+                                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", familyMonitoring = f_familyMonitoring.getAt(j).GetComponent<FamilyMonitoring>() });
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -191,12 +237,7 @@ public class PlankAndWireManager : FSystem {
                     {
                         if (word.GetComponent<TextMeshPro>().color == Color.red)
                         {
-                            if (HelpSystem.monitoring && word.GetComponent<ComponentMonitoring>())
-                            {
-                                MonitoringTrace trace = new MonitoringTrace(word.GetComponent<ComponentMonitoring>(), "turnOff");
-                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                                HelpSystem.traces.Enqueue(trace);
-                            }
+                            GameObjectManager.addComponent<ActionPerformed>(word, new { name = "turnOff", performedBy = "player" });
                         }
                         word.GetComponent<TextMeshPro>().color = Color.black;
                         lr.positionCount = 0;
@@ -212,14 +253,9 @@ public class PlankAndWireManager : FSystem {
         // remove ReadyToWork component to release selected GameObject
         GameObjectManager.removeComponent<ReadyToWork>(selectedPlank);
 
-        selectedPlank = null;
+        GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "turnOff", performedBy = "player" });
 
-        if (HelpSystem.monitoring)
-        {
-            MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(53), "turnOff");
-            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-            HelpSystem.traces.Enqueue(trace);
-        }
+        selectedPlank = null;
 
         // pause this system
         instance.Pause = true;

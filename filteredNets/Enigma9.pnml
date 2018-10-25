@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-22A4-9C197-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma9</text>
+  </name>
+ <page id="g-22A4-9C19E-1">
+  <place id="p-22A4-9C1A1-2">
+  <name>
+   <text>Fragment_souvenir_2_ActivationCount_87</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-22A4-9C1B3-3">
+  <name>
+   <text>Fragment_souvenir_2_activate_87</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="110"/>
+   </graphics>
+  </transition>
+  <place id="p-22A4-9C1B8-4">
+  <name>
+   <text>Q5_Answered_88</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="610" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-22A4-9C1BC-5">
+  <name>
+   <text>Q5_Answering_88</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="360" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-22A4-9C1C6-6">
+  <name>
+   <text>Q5_Correct_88</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="490" y="50"/>
+   </graphics>
+  </transition>
+  <arc id="e-22A4-9C1CC-7" source="p-22A4-9C1A1-2" target="t-22A4-9C1C6-6">
+   <type value="test"/>
+  </arc>
+  <arc id="e-22A4-9C1CE-8" source="t-22A4-9C1B3-3" target="p-22A4-9C1A1-2">
+  </arc>
+  <arc id="e-22A4-9C1D0-9" source="p-22A4-9C1BC-5" target="t-22A4-9C1C6-6">
+  </arc>
+  <arc id="e-22A4-9C1D1-10" source="t-22A4-9C1C6-6" target="p-22A4-9C1B8-4">
+  </arc>
+ </page>
+ </net>
+</pnml>

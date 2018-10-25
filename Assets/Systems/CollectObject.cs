@@ -12,11 +12,33 @@ public class CollectObject : FSystem {
     // We process only Highlighted game objects (this component is dynamically added by Highlight system)
     private Family f_collectableObjects = FamilyManager.getFamily(new AllOfComponents(typeof(LinkedWith), typeof(Highlighted)), new NoneOfLayers(5), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_pressA = FamilyManager.getFamily(new AnyOfTags("PressA"));
+    private Family f_mainloop = FamilyManager.getFamily(new AllOfComponents(typeof(MainLoop)));
+    private Family f_inventoryElements = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
 
     public static CollectObject instance;
 
+    private GameObject seenScroll;
+    private GameObject seenPuzzle;
+
     public CollectObject()
     {
+        if (Application.isPlaying)
+        {
+            int nbElem = f_inventoryElements.Count;
+            for(int i = 0; i < nbElem; i++)
+            {
+                if(f_inventoryElements.getAt(i).name == "Scroll")
+                {
+                    seenScroll = f_inventoryElements.getAt(i);
+                    GameObjectManager.addComponent<LinkLabel>(f_inventoryElements.getAt(i));
+                }
+                else if (f_inventoryElements.getAt(i).name == "Puzzle")
+                {
+                    seenPuzzle = f_inventoryElements.getAt(i);
+                    GameObjectManager.addComponent<LinkLabel>(f_inventoryElements.getAt(i));
+                }
+            }
+        }
         instance = this;
     }
 
@@ -29,6 +51,7 @@ public class CollectObject : FSystem {
             {
                 // enable UI target
                 GameObjectManager.setGameObjectState(collect.GetComponent<LinkedWith>().link, true);
+                GameObjectManager.addComponent<ActionPerformed>(collect, new { name = "perform", performedBy = "player"});
                 // particular case of collecting room2 scrolls
                 if (collect.name.Contains("_Scroll") && collect.name.Length == 8)
                 {
@@ -39,6 +62,32 @@ public class CollectObject : FSystem {
                     GameObject UIScroll = UI_metaScroll.GetComponent<LinkedWith>().link.transform.Find(collect.name).gameObject;
                     // enable it
                     GameObjectManager.setGameObjectState(UIScroll, true);
+
+                    switch (collect.name[0])
+                    {
+                        case 'S':
+                            seenScroll.GetComponent<LinkLabel>().text = "l19";
+                            break;
+
+                        case 'M':
+                            seenScroll.GetComponent<LinkLabel>().text = "l20";
+                            break;
+
+                        case 'A':
+                            seenScroll.GetComponent<LinkLabel>().text = "l21";
+                            break;
+
+                        case 'R':
+                            seenScroll.GetComponent<LinkLabel>().text = "l22";
+                            break;
+
+                        case 'T':
+                            seenScroll.GetComponent<LinkLabel>().text = "l23";
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
                 // particular case of puzzle pieces
                 if (collect.name.Contains("PuzzleSet_") && collect.name.Length == 12)
@@ -50,12 +99,40 @@ public class CollectObject : FSystem {
                     GameObject UIScroll = UI_metaScroll.GetComponent<LinkedWith>().link.transform.Find(collect.name).gameObject;
                     // enable it
                     GameObjectManager.setGameObjectState(UIScroll, true);
+
+                    switch (collect.name[collect.name.Length -1])
+                    {
+                        case '1':
+                            seenPuzzle.GetComponent<LinkLabel>().text = "l5";
+                            break;
+
+                        case '2':
+                            seenPuzzle.GetComponent<LinkLabel>().text = "l6";
+                            break;
+
+                        case '3':
+                            seenPuzzle.GetComponent<LinkLabel>().text = "l7";
+                            break;
+
+                        case '4':
+                            seenPuzzle.GetComponent<LinkLabel>().text = "l8";
+                            break;
+
+                        case '5':
+                            seenPuzzle.GetComponent<LinkLabel>().text = "l9";
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
                 // disable in-game source
                 GameObjectManager.setGameObjectState(collect, false);
                 // particular case of collecting Intro_scroll game object => show HUD "A"
                 if (collect.name == "Intro_Scroll")
+                {
                     GameObjectManager.setGameObjectState(f_pressA.First(), true);
+                }
             }
         }
     }

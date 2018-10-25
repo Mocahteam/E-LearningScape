@@ -47,6 +47,8 @@ public class LoginManager : FSystem {
     private bool openDoor = false;
 
     private bool coverAnimate = false;
+
+    private string exitBy = "";
     
     public static LoginManager instance;
 
@@ -105,6 +107,8 @@ public class LoginManager : FSystem {
 
         // Launch this system
         instance.Pause = false;
+
+        GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "turnOn", performedBy = "player" });
     }
 
     // Use this to update member variables when system pause. 
@@ -124,7 +128,10 @@ public class LoginManager : FSystem {
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed (because Escape close IAR)
             if (((f_closeLogin.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && !coverAnimate && !processEndAnimation)
+            {
+                exitBy = "player";
                 ExitLogin();
+            }
         }
 
         speed = Time.deltaTime;
@@ -171,6 +178,7 @@ public class LoginManager : FSystem {
                     GameObjectManager.setGameObjectState(IARsecondScreen.transform.GetChild(0).gameObject, false); // first child is locked tab
                     GameObjectManager.setGameObjectState(IARsecondScreen.transform.GetChild(1).gameObject, true); // second child is unlocked tab
                     // exit login
+                    exitBy = "system";
                     ExitLogin();
                 }
             }
@@ -181,6 +189,8 @@ public class LoginManager : FSystem {
     {
         // remove ReadyToWork component to release selected GameObject
         GameObjectManager.removeComponent<ReadyToWork>(selectedLoginPanel);
+
+        GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "turnOff", performedBy = exitBy });
 
         selectedLoginPanel = null;
 
@@ -195,6 +205,8 @@ public class LoginManager : FSystem {
 
         if (answer == passwordSolution) //if the answer is correct
         {
+            GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "Correct", performedBy = "player" });
+
             //show correct answer feedback for the 3 numbers
             connectionAnswerCheck1.text = "O";
             connectionAnswerCheck1.color = cacGreen;
@@ -208,6 +220,8 @@ public class LoginManager : FSystem {
         }
         else
         {
+            GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "Wrong", performedBy = "player" });
+
             ifConnectionR2.ActivateInputField();
             //else, feedback following the rules of mastermind ('O' correct, '?' right number but wrong place, 'X' wrong number)
             f_mainWindow.First().GetComponentInChildren<InputField>().ActivateInputField();

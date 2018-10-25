@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-2F80-3ADD-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma13</text>
+  </name>
+ <page id="g-2F80-3AE9-1">
+  <place id="p-2F80-3AEC-2">
+  <name>
+   <text>Fragment_souvenir_10_ActivationCount_120</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="235" y="355"/>
+   </graphics>
+  </place>
+  <transition id="t-2F80-3AFE-3">
+  <name>
+   <text>Fragment_souvenir_10_activate_120</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="355"/>
+   </graphics>
+  </transition>
+  <place id="p-2F80-3B04-4">
+  <name>
+   <text>Fragment_souvenir_13_ActivationCount_119</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="235" y="480"/>
+   </graphics>
+  </place>
+  <transition id="t-2F80-3B09-5">
+  <name>
+   <text>Fragment_souvenir_13_activate_119</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="480"/>
+   </graphics>
+  </transition>
+  <place id="p-2F80-3B0E-6">
+  <name>
+   <text>Q1_Answered_121</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="725" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-2F80-3B12-7">
+  <name>
+   <text>Q1_Answering_121</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="475" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-2F80-3B15-8">
+  <name>
+   <text>Q1_Correct_121</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="605" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-2F80-3B19-9">
+  <name>
+   <text>Q1_Wrong_121</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="605" y="170"/>
+   </graphics>
+  </transition>
+  <place id="p-2F80-3B1B-10">
+  <name>
+   <text>Q2_Answered_122</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="725" y="305"/>
+   </graphics>
+  </place>
+  <place id="p-2F80-3B1F-11">
+  <name>
+   <text>Q2_Answering_122</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="475" y="305"/>
+   </graphics>
+  </place>
+  <transition id="t-2F80-3B23-12">
+  <name>
+   <text>Q2_Correct_122</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="605" y="245"/>
+   </graphics>
+  </transition>
+  <transition id="t-2F80-3B25-13">
+  <name>
+   <text>Q2_Wrong_122</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="605" y="365"/>
+   </graphics>
+  </transition>
+  <place id="p-2F80-3B29-14">
+  <name>
+   <text>Q3_Answered_123</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="725" y="495"/>
+   </graphics>
+  </place>
+  <place id="p-2F80-3B2B-15">
+  <name>
+   <text>Q3_Answering_123</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="475" y="495"/>
+   </graphics>
+  </place>
+  <transition id="t-2F80-3B2F-16">
+  <name>
+   <text>Q3_Correct_123</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="605" y="435"/>
+   </graphics>
+  </transition>
+  <transition id="t-2F80-3B32-17">
+  <name>
+   <text>Q3_Wrong_123</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="605" y="555"/>
+   </graphics>
+  </transition>
+  <place id="p-2F80-3B35-18">
+  <name>
+   <text>Q4_Answered_124</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="730" y="675"/>
+   </graphics>
+  </place>
+  <place id="p-2F80-3B83-19">
+  <name>
+   <text>Q4_Answering_124</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="480" y="675"/>
+   </graphics>
+  </place>
+  <transition id="t-2F80-3B88-20">
+  <name>
+   <text>Q4_Correct_124</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="610" y="615"/>
+   </graphics>
+  </transition>
+  <transition id="t-2F80-3B8B-21">
+  <name>
+   <text>Q4_Wrong_124</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="610" y="735"/>
+   </graphics>
+  </transition>
+  <arc id="e-2F80-3B94-22" source="t-2F80-3B09-5" target="p-2F80-3B04-4">
+  </arc>
+  <arc id="e-2F80-3B97-23" source="t-2F80-3B23-12" target="p-2F80-3B1B-10">
+  </arc>
+  <arc id="e-2F80-3B98-24" source="p-2F80-3B1F-11" target="t-2F80-3B23-12">
+  </arc>
+  <arc id="e-2F80-3B9A-25" source="p-2F80-3B1F-11" target="t-2F80-3B25-13">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2F80-3B9D-26" source="p-2F80-3AEC-2" target="t-2F80-3B2F-16">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2F80-3B9F-27" source="p-2F80-3B04-4" target="t-2F80-3B2F-16">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2F80-3BA2-28" source="t-2F80-3B2F-16" target="p-2F80-3B29-14">
+  </arc>
+  <arc id="e-2F80-3BA3-29" source="p-2F80-3B2B-15" target="t-2F80-3B2F-16">
+  </arc>
+  <arc id="e-2F80-3BA4-30" source="p-2F80-3B2B-15" target="t-2F80-3B32-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2F80-3BA6-31" source="p-2F80-3AEC-2" target="t-2F80-3B88-20">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2F80-3BA7-32" source="p-2F80-3B04-4" target="t-2F80-3B88-20">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2F80-3BA9-33" source="t-2F80-3AFE-3" target="p-2F80-3AEC-2">
+  </arc>
+  <arc id="e-2F80-3BAA-34" source="t-2F80-3B88-20" target="p-2F80-3B35-18">
+  </arc>
+  <arc id="e-2F80-3BAB-35" source="p-2F80-3B83-19" target="t-2F80-3B88-20">
+  </arc>
+  <arc id="e-2F80-3BAC-36" source="p-2F80-3B83-19" target="t-2F80-3B8B-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2F80-3BAF-37" source="p-2F80-3AEC-2" target="t-2F80-3B15-8">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2F80-3BB1-38" source="p-2F80-3B04-4" target="t-2F80-3B15-8">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2F80-3BB2-39" source="t-2F80-3B15-8" target="p-2F80-3B0E-6">
+  </arc>
+  <arc id="e-2F80-3BB3-40" source="p-2F80-3B12-7" target="t-2F80-3B15-8">
+  </arc>
+  <arc id="e-2F80-3BB5-41" source="p-2F80-3B12-7" target="t-2F80-3B19-9">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2F80-3BB6-42" source="p-2F80-3AEC-2" target="t-2F80-3B23-12">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2F80-3BB7-43" source="p-2F80-3B04-4" target="t-2F80-3B23-12">
+   <type value="test"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

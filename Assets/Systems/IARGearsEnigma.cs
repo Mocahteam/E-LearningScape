@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.PointerManager;
-using FYFY_plugins.Monitoring;
 
 public class IARGearsEnigma : FSystem
 {
@@ -14,6 +13,7 @@ public class IARGearsEnigma : FSystem
     private Family f_answer = FamilyManager.getFamily(new AnyOfTags("A-R1"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not displayed of the first room
     private Family f_gears = FamilyManager.getFamily(new AllOfComponents(typeof(Gear)));
     private Family f_rotatingGears = FamilyManager.getFamily(new AnyOfTags("RotateGear")); //gears that can rotate (middle top, middle bot, and the solution gear)
+    private Family f_canvas = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
 
     // Will contain a game object when IAR is openned
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
@@ -30,6 +30,8 @@ public class IARGearsEnigma : FSystem
     private GameObject gearDragged;
     private GameObject transparentGear;
     private GameObject question;
+
+    private RectTransform iarRectTransform;
 
     public static IARGearsEnigma instance;
 
@@ -51,6 +53,17 @@ public class IARGearsEnigma : FSystem
             gearsEnigma = f_gearsSet.First();
             question = gearsEnigma.transform.GetChild(0).gameObject; // first child is the question text
             transparentGear = gearsEnigma.transform.GetChild(7).gameObject; // eight child is the transparent gear
+
+            int nbCanvas = f_canvas.Count;
+            for(int i = 0; i < nbCanvas; i++)
+            {
+                tmpGO = f_canvas.getAt(i);
+                if(tmpGO.name == "IAR")
+                {
+                    iarRectTransform = tmpGO.GetComponent<RectTransform>();
+                    break;
+                }
+            }
         }
         instance = this;
     }
@@ -118,13 +131,9 @@ public class IARGearsEnigma : FSystem
                         gearDragged.transform.localPosition = Vector3.zero; //place the gear at the center
                         if (gearDragged.GetComponent<Gear>().isSolution) //if answer is correct
                         {
+                            GameObjectManager.addComponent<ActionPerformed>(gearsEnigma, new { name = "Correct", performedBy = "player" });
+
                             //start audio and animation for "Right answer"
-                            if (HelpSystem.monitoring)
-                            {
-                                MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(69), "Correct");
-                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                                HelpSystem.traces.Enqueue(trace);
-                            }
 
                             rotateGear = true;  //rotate gears in the middle
                             GameObjectManager.addComponent<PlayUIEffect>(gearDragged, new { effectCode = 2 });
@@ -136,15 +145,11 @@ public class IARGearsEnigma : FSystem
                         }
                         else //if answer is wrong
                         {
+                            GameObjectManager.addComponent<ActionPerformed>(gearsEnigma, new { name = "Wrong", performedBy = "player" });
+
                             GameObjectManager.setGameObjectState(question, true);
                             //start audio and animation for "Wrong answer"
                             GameObjectManager.addComponent<PlayUIEffect>(gearDragged, new { effectCode = 1 });
-                            if (HelpSystem.monitoring)
-                            {
-                                MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(69), "Wrong");
-                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                                HelpSystem.traces.Enqueue(trace);
-                            }
 
                             gearDragged.transform.localPosition = gearDragged.GetComponent<Gear>().initialPosition; //set gear position to initial position
                         }
@@ -161,9 +166,9 @@ public class IARGearsEnigma : FSystem
                 {
                     // move the gear to mouse position
                     // compute mouse position from screen center
-                    Vector3 pos = Input.mousePosition - Vector3.right * (float)Camera.main.pixelWidth / 2 - Vector3.up * (float)Camera.main.pixelHeight / 2;
+                    Vector3 pos = (Input.mousePosition.x / Screen.width -0.5f) * Vector3.right + (Input.mousePosition.y / Screen.height - 0.5f) * Vector3.up;
                     // correct position depending on canvas scale (0.6) and screen size comparing to reference size (800:500 => 16:10 screen ratio)
-                    gearDragged.transform.localPosition = pos / ((float)Camera.main.pixelWidth*0.6f/800);
+                    gearDragged.transform.localPosition = Vector3.Scale(pos, iarRectTransform.sizeDelta/0.6f);
                 }
             }
         }

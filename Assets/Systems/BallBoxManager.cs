@@ -3,7 +3,6 @@ using UnityEngine.PostProcessing;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using TMPro;
-using FYFY_plugins.Monitoring;
 
 public class BallBoxManager : FSystem {
 
@@ -17,6 +16,7 @@ public class BallBoxManager : FSystem {
     private Family f_closeBox = FamilyManager.getFamily(new AnyOfTags("Box", "Ball", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
+    private Family f_mainloop = FamilyManager.getFamily(new AllOfComponents(typeof(MainLoop)));
 
     //information for animations
     private float speed;
@@ -83,6 +83,8 @@ public class BallBoxManager : FSystem {
         instance.Pause = false;
 
         depthOfFieldsEnabled = Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled;
+
+        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
     }
 
     private void onEnterBall(GameObject go)
@@ -164,14 +166,10 @@ public class BallBoxManager : FSystem {
                     {
                         //stop animation when the padlock reaches a certain height
                         GameObjectManager.setGameObjectState(boxPadlock, false);
-                        if (boxPadlock.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
-                        {
-                            MonitoringTrace trace = new MonitoringTrace(boxPadlock.GetComponent<ComponentMonitoring>(), "perform");
-                            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
-                            HelpSystem.traces.Enqueue(trace);
-                        }
                         //remove key from inventory
                         GameObjectManager.setGameObjectState(keySelected(), false);
+
+                        GameObjectManager.addComponent<ActionPerformed>(boxPadlock, new { name = "perform", performedBy = "system" });
                     }
                 }
             }
@@ -245,6 +243,8 @@ public class BallBoxManager : FSystem {
                     moveBall = true;
                     selectedBall = focusedBall;
                     Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = false;
+
+                    GameObjectManager.addComponent<ActionPerformed>(selectedBall, new { name = "activate", performedBy = "player" });
                 }
 
                 // Ask ball to move back on grid with other balls
@@ -273,12 +273,6 @@ public class BallBoxManager : FSystem {
                             selectedBall = null;
                         /*else
                         {
-                            if (selectedBall.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
-                            {
-                                MonitoringTrace trace = new MonitoringTrace(selectedBall.GetComponent<ComponentMonitoring>(), "activate");
-                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                                HelpSystem.traces.Enqueue(trace);
-                            }
                             int id = selectedBall.GetComponent<Ball>().id;
                             switch (id)
                             {
@@ -302,15 +296,6 @@ public class BallBoxManager : FSystem {
                                 if (ball1Seen && ball2Seen && ball8Seen)
                                 {
                                     box.GetComponent<Selectable>().solved = true;
-                                    if (HelpSystem.monitoring)
-                                    {
-                                        MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(22), "perform");
-                                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
-                                        HelpSystem.traces.Enqueue(trace);
-                                        trace = new MonitoringTrace(MonitoringManager.getMonitorById(32), "perform");
-                                        trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
-                                        HelpSystem.traces.Enqueue(trace);
-                                    }
                                 }
                             }
                         }*/
@@ -348,21 +333,10 @@ public class BallBoxManager : FSystem {
         ballCounter = 0;
         ballSubTitles.text = "";
         boxOpenned = false;
-        if (HelpSystem.monitoring)
-        {
-            MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(28), "turnOff");
-            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-            HelpSystem.traces.Enqueue(trace);
-        }
+
+        GameObjectManager.addComponent<ActionPerformed>(selectedBox, new { name = "turnOff", performedBy = "player" });
 
         selectedBox = null;
-
-        if (HelpSystem.monitoring)
-        {
-            MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(28), "turnOff");
-            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-            HelpSystem.traces.Enqueue(trace);
-        }
 
         // Pause this system
         instance.Pause = true;

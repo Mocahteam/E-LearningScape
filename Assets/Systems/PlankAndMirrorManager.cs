@@ -4,7 +4,6 @@ using UnityEngine.PostProcessing;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using TMPro;
-using FYFY_plugins.Monitoring;
 using System;
 
 public class PlankAndMirrorManager : FSystem {
@@ -61,6 +60,8 @@ public class PlankAndMirrorManager : FSystem {
 
         // Launch this system
         instance.Pause = false;
+
+        GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "turnOn", performedBy = "player" });
     }
 
     // return true if UI with name "name" is selected into inventory
@@ -146,6 +147,8 @@ public class PlankAndMirrorManager : FSystem {
                 GameObjectManager.setGameObjectState(isSelected("Mirror"), false);
                 // show ingame mirror on plank
                 GameObjectManager.setGameObjectState(mirror, true);
+
+                GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "perform", performedBy = "system" });
             }
 
             if (!movePlank)
@@ -169,6 +172,8 @@ public class PlankAndMirrorManager : FSystem {
     {
         // remove ReadyToWork component to release selected GameObject
         GameObjectManager.removeComponent<ReadyToWork>(selectedPlank);
+
+        GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "turnOff", performedBy = "player" });
 
         selectedPlank = null;
 

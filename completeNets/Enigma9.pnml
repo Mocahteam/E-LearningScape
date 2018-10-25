@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-2318-878AB-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma9</text>
+  </name>
+ <page id="g-2318-878B3-1">
+  <place id="p-2318-878B5-2">
+  <name>
+   <text>Fragment_souvenir_2_ActivationCount_87</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-2318-878C1-3">
+  <name>
+   <text>Fragment_souvenir_2_activate_87</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="110"/>
+   </graphics>
+  </transition>
+  <place id="p-2318-878C6-4">
+  <name>
+   <text>Q5_Answered_88</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="610" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-2318-878CA-5">
+  <name>
+   <text>Q5_Answering_88</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="360" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-2318-878CD-6">
+  <name>
+   <text>Q5_Correct_88</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="490" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-2318-878D1-7">
+  <name>
+   <text>Q5_Wrong_88</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="490" y="170"/>
+   </graphics>
+  </transition>
+  <arc id="e-2318-878D5-8" source="t-2318-878CD-6" target="p-2318-878C6-4">
+  </arc>
+  <arc id="e-2318-878D7-9" source="p-2318-878CA-5" target="t-2318-878CD-6">
+  </arc>
+  <arc id="e-2318-878D8-10" source="p-2318-878CA-5" target="t-2318-878D1-7">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2318-878DA-11" source="t-2318-878C1-3" target="p-2318-878B5-2">
+  </arc>
+  <arc id="e-2318-878DC-12" source="p-2318-878B5-2" target="t-2318-878CD-6">
+   <type value="test"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

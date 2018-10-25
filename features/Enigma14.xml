@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Q2_Correct_128" label="contenu Q2" system="False" end="True" />
+  <transition id="Q2_Wrong_128" label="Wrong Q2" system="False" end="False" />
+  <transition id="Q1_Correct_127" label="contenu Q1" system="False" end="True" />
+  <transition id="Q1_Wrong_127" label="Wrong Q1" system="False" end="False" />
+  <transition id="Q4_Correct_130" label="contenu Q4" system="False" end="True" />
+  <transition id="Q4_Wrong_130" label="Wrong Q4" system="False" end="False" />
+  <transition id="Board_turnOff_125" label="turnOff Board" system="False" end="False" />
+  <transition id="Board_turnOn_125" label="turnOn Board" system="False" end="False" />
+  <transition id="Eraser_activate_126" label="activate Eraser" system="False" end="False" />
+  <transition id="Q3_Correct_129" label="contenu Q3" system="False" end="True" />
+  <transition id="Q3_Wrong_129" label="Wrong Q3" system="False" end="False" />
+</transitions>

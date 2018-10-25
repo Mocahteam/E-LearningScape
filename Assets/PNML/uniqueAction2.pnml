@@ -1,10 +1,10 @@
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-9A20-C920F-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+ <net id="n-180C-8CB65-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
   <name>
-   <text>uniqueAction</text>
+   <text>uniqueAction2</text>
   </name>
- <page id="g-9A20-C9221-1">
-  <place id="p-9A20-C9224-2">
+ <page id="g-180C-8CB6F-1">
+  <place id="p-180C-8CB74-2">
   <name>
    <text>end</text>
     <graphics>
@@ -12,12 +12,12 @@
     </graphics>
   </name>
    <graphics>
-    <position x="185" y="50"/>
+    <position x="180" y="50"/>
    </graphics>
   </place>
-  <transition id="t-9A20-C9239-3">
+  <transition id="t-180C-8CB84-3">
   <name>
-   <text>perform</text>
+   <text>perform2</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -26,7 +26,7 @@
     <position x="110" y="50"/>
    </graphics>
   </transition>
-  <place id="p-9A20-C9240-4">
+  <place id="p-180C-8CB88-4">
   <name>
    <text>start</text>
     <graphics>
@@ -40,9 +40,9 @@
     <position x="30" y="50"/>
    </graphics>
   </place>
-  <arc id="e-9A20-C9248-5" source="t-9A20-C9239-3" target="p-9A20-C9224-2">
+  <arc id="e-180C-8CB91-5" source="p-180C-8CB88-4" target="t-180C-8CB84-3">
   </arc>
-  <arc id="e-9A20-C924C-6" source="p-9A20-C9240-4" target="t-9A20-C9239-3">
+  <arc id="e-180C-8CB93-6" source="t-180C-8CB84-3" target="p-180C-8CB74-2">
   </arc>
  </page>
  </net>

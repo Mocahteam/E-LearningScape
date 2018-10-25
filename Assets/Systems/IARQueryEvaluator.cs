@@ -16,6 +16,10 @@ public class IARQueryEvaluator : FSystem {
     private Family f_queriesRoom2 = FamilyManager.getFamily(new AnyOfTags("Q-R2"));
     private Family f_answerRoom2 = FamilyManager.getFamily(new AnyOfTags("A-R2"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not displayed for the second room
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
+    private Family f_mainloop = FamilyManager.getFamily(new AllOfComponents(typeof(MainLoop)));
+    private Family f_berthiaumeClue = FamilyManager.getFamily(new AllOfComponents(typeof(BerthiaumeClueSeen)));
+    private Family f_toggles = FamilyManager.getFamily(new AllOfComponents(typeof(Toggle)));
+    private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
 
     public static IARQueryEvaluator instance;
 
@@ -50,6 +54,15 @@ public class IARQueryEvaluator : FSystem {
             f_uiEffects.addEntryCallback(onUIEffectEnd);
         }
         instance = this;
+    }
+
+    // return true if UI with name "name" is selected into inventory
+    private GameObject isSelected(string name)
+    {
+        foreach (GameObject go in f_itemSelected)
+            if (go.name == name)
+                return go;
+        return null;
     }
 
     private void onNewAnswerDisplayed(int instanceId)
@@ -105,11 +118,56 @@ public class IARQueryEvaluator : FSystem {
         {
             // notify player error
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 1 });
+
+            GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Wrong", performedBy = "player" });
         }
         else
         {
             // notify player success
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 2 });
+
+            if(query.tag == "Q-R2")
+            {
+                if(query.name == "Q1")
+                {
+                    if(isSelected("Glasses1") && isSelected("Glasses2"))
+                        GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player", orLabels = new string[] { "l20" } });
+                    else
+                        GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player", orLabels = new string[] { "l18", "l19" } });
+                }
+                else if(query.name == "Q2")
+                {
+                    if (f_berthiaumeClue.Count > 0)
+                        GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player", orLabels = new string[] { "l15", "l16", "l14" } });
+                    else
+                        GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player", orLabels = new string[] { "l15", "l16" } });
+                }
+            }
+            else if(query.tag == "Q-R3")
+            {
+                if(answer == "PLANIFICATION")
+                {
+                    int nbToggle = f_toggles.Count;
+                    for(int i = 0; i < nbToggle; i++)
+                    {
+                        if(f_toggles.getAt(i).name == "TogglePuzzle")
+                        {
+                            if(f_toggles.getAt(i).GetComponent<Toggle>().isOn)
+                                GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = answer.ToLower(), performedBy = "player", orLabels = new string[] { "l17" } });
+                            else
+                                GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = answer.ToLower(), performedBy = "player", orLabels = new string[] { "l16" } });
+                            break;
+                        }
+                    }
+                }
+                else
+                    GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = answer.ToLower(), performedBy = "player" });
+            }
+            else
+                GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });
+
+            GameObjectManager.addComponent<ActionPerformed>(query, new { name = "perform", performedBy = "system" });
+
             // Toggle UI element (hide input text and button and show answer)
             for (int i = 1; i < query.transform.childCount; i++)
             {

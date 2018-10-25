@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-6A8-999D5-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma1</text>
+  </name>
+ <page id="g-6A8-999DC-1">
+  <place id="p-6A8-999DF-2">
+  <name>
+   <text>BallBox_off_5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="295" y="70"/>
+   </graphics>
+  </place>
+  <place id="p-6A8-999EA-3">
+  <name>
+   <text>BallBox_on_5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="455" y="70"/>
+   </graphics>
+  </place>
+  <transition id="t-6A8-999ED-4">
+  <name>
+   <text>BallBox_turnOff_5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="375" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-6A8-999F1-5">
+  <name>
+   <text>BallBox_turnOn_5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="375" y="130"/>
+   </graphics>
+  </transition>
+  <place id="p-6A8-999F4-6">
+  <name>
+   <text>KeyE03_end_6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="215" y="430"/>
+   </graphics>
+  </place>
+  <place id="p-6A8-999F7-7">
+  <name>
+   <text>KeyE03_off_25</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="295" y="430"/>
+   </graphics>
+  </place>
+  <place id="p-6A8-999FA-8">
+  <name>
+   <text>KeyE03_on_25</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="465" y="430"/>
+   </graphics>
+  </place>
+  <transition id="t-6A8-999FD-9">
+  <name>
+   <text>KeyE03_perform_6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="135" y="430"/>
+   </graphics>
+  </transition>
+  <place id="p-6A8-99A00-10">
+  <name>
+   <text>KeyE03_start_6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="55" y="430"/>
+   </graphics>
+  </place>
+  <transition id="t-6A8-99A03-11">
+  <name>
+   <text>KeyE03_turnOn_25</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="385" y="490"/>
+   </graphics>
+  </transition>
+  <place id="p-6A8-99A06-12">
+  <name>
+   <text>Padlock_end_7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="475" y="250"/>
+   </graphics>
+  </place>
+  <transition id="t-6A8-99A09-13">
+  <name>
+   <text>Padlock_perform_7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="395" y="250"/>
+   </graphics>
+  </transition>
+  <place id="p-6A8-99A0C-14">
+  <name>
+   <text>Padlock_start_7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="315" y="250"/>
+   </graphics>
+  </place>
+  <place id="p-6A8-99A0F-15">
+  <name>
+   <text>Q1_Answered_54</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1305" y="340"/>
+   </graphics>
+  </place>
+  <place id="p-6A8-99A12-16">
+  <name>
+   <text>Q1_Answering_54</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1055" y="340"/>
+   </graphics>
+  </place>
+  <transition id="t-6A8-99A15-17">
+  <name>
+   <text>Q1_Correct_54</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1185" y="280"/>
+   </graphics>
+  </transition>
+  <place id="p-6A8-99A18-18">
+  <name>
+   <text>Sphere01_ActivationCount_8</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="815" y="240"/>
+   </graphics>
+  </place>
+  <transition id="t-6A8-99A6D-19">
+  <name>
+   <text>Sphere01_activate_8</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="705" y="240"/>
+   </graphics>
+  </transition>
+  <place id="p-6A8-99A71-20">
+  <name>
+   <text>Sphere02_ActivationCount_9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="825" y="350"/>
+   </graphics>
+  </place>
+  <transition id="t-6A8-99A75-21">
+  <name>
+   <text>Sphere02_activate_9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="705" y="350"/>
+   </graphics>
+  </transition>
+  <place id="p-6A8-99A78-22">
+  <name>
+   <text>Sphere08_ActivationCount_15</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="815" y="450"/>
+   </graphics>
+  </place>
+  <transition id="t-6A8-99A7C-23">
+  <name>
+   <text>Sphere08_activate_15</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="705" y="450"/>
+   </graphics>
+  </transition>
+  <arc id="e-6A8-99A81-24" source="p-6A8-999EA-3" target="t-6A8-99A75-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6A8-99A84-25" source="t-6A8-999FD-9" target="p-6A8-999F4-6">
+  </arc>
+  <arc id="e-6A8-99A85-26" source="p-6A8-99A00-10" target="t-6A8-999FD-9">
+  </arc>
+  <arc id="e-6A8-99A87-27" source="t-6A8-999ED-4" target="p-6A8-999DF-2">
+  </arc>
+  <arc id="e-6A8-99A88-28" source="t-6A8-999F1-5" target="p-6A8-999EA-3">
+  </arc>
+  <arc id="e-6A8-99A8A-29" source="p-6A8-999DF-2" target="t-6A8-999F1-5">
+  </arc>
+  <arc id="e-6A8-99A8B-30" source="p-6A8-999EA-3" target="t-6A8-999ED-4">
+  </arc>
+  <arc id="e-6A8-99A8C-31" source="p-6A8-99A12-16" target="t-6A8-99A15-17">
+  </arc>
+  <arc id="e-6A8-99A8D-32" source="t-6A8-99A15-17" target="p-6A8-99A0F-15">
+  </arc>
+  <arc id="e-6A8-99A8E-33" source="p-6A8-99A18-18" target="t-6A8-99A15-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6A8-99A90-34" source="p-6A8-99A71-20" target="t-6A8-99A15-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6A8-99A91-35" source="p-6A8-99A06-12" target="t-6A8-99A75-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6A8-99A92-36" source="p-6A8-99A78-22" target="t-6A8-99A15-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6A8-99A94-37" source="t-6A8-99A03-11" target="p-6A8-999FA-8">
+  </arc>
+  <arc id="e-6A8-99A95-38" source="p-6A8-999F7-7" target="t-6A8-99A03-11">
+  </arc>
+  <arc id="e-6A8-99A96-39" source="p-6A8-999F4-6" target="t-6A8-99A03-11">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6A8-99A98-40" source="t-6A8-99A7C-23" target="p-6A8-99A78-22">
+  </arc>
+  <arc id="e-6A8-99A99-41" source="p-6A8-999EA-3" target="t-6A8-99A7C-23">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6A8-99A9A-42" source="p-6A8-99A06-12" target="t-6A8-99A7C-23">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6A8-99A9B-43" source="t-6A8-99A75-21" target="p-6A8-99A71-20">
+  </arc>
+  <arc id="e-6A8-99A9D-44" source="t-6A8-99A6D-19" target="p-6A8-99A18-18">
+  </arc>
+  <arc id="e-6A8-99A9E-45" source="p-6A8-999EA-3" target="t-6A8-99A6D-19">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6A8-99AA0-46" source="p-6A8-99A06-12" target="t-6A8-99A6D-19">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6A8-99AA1-47" source="t-6A8-99A09-13" target="p-6A8-99A06-12">
+  </arc>
+  <arc id="e-6A8-99AA2-48" source="p-6A8-99A0C-14" target="t-6A8-99A09-13">
+  </arc>
+  <arc id="e-6A8-99AA3-49" source="p-6A8-999EA-3" target="t-6A8-99A09-13">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6A8-99AA5-50" source="p-6A8-999FA-8" target="t-6A8-99A09-13">
+   <type value="test"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

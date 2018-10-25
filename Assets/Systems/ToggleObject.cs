@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using FYFY;
 using System.Collections.Generic;
-using FYFY_plugins.Monitoring;
 
 public class ToggleObject : FSystem {
 
@@ -73,12 +72,7 @@ public class ToggleObject : FSystem {
                             //all objects in this list will be toggled down
                             togglingChairsDown[togglingChairsDownCount] = tmpGO;
                             togglingChairsDownCount++;
-                            if (tmpGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
-                            {
-                                MonitoringTrace trace = new MonitoringTrace(tmpGO.GetComponent<ComponentMonitoring>(), "turnOn");
-                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                                HelpSystem.traces.Enqueue(trace);
-                            }
+                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player" });
                         }
                         else if (tmpGO.transform.rotation.eulerAngles.x > 89.9999f) //if chair down
                         {
@@ -86,12 +80,6 @@ public class ToggleObject : FSystem {
                             //all objects in this list will be toggled up
                             togglingChairsUp[togglingChairsUpCount] = tmpGO;
                             togglingChairsUpCount++;
-                            if (tmpGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
-                            {
-                                MonitoringTrace trace = new MonitoringTrace(tmpGO.GetComponent<ComponentMonitoring>(), "turnOff");
-                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                                HelpSystem.traces.Enqueue(trace);
-                            }
                         }
                         else
                         {
@@ -107,23 +95,12 @@ public class ToggleObject : FSystem {
                         //start toggling table up/down depending on its current state (0 or 180)
                         if (tmpGO.transform.rotation.eulerAngles.z > 90)
                         {
-                            if (tmpGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
-                            {
-                                MonitoringTrace trace = new MonitoringTrace(tmpGO.GetComponent<ComponentMonitoring>(), "turnOff");
-                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                                HelpSystem.traces.Enqueue(trace);
-                            }
                             toggleTableUp = true;
                         }
                         else
                         {
-                            if (tmpGO.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
-                            {
-                                MonitoringTrace trace = new MonitoringTrace(tmpGO.GetComponent<ComponentMonitoring>(), "turnOn");
-                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                                HelpSystem.traces.Enqueue(trace);
-                            }
                             toggleTableDown = true;
+                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player" });
                         }
                     }
                     else if (tmpGO.name == "boite")
@@ -160,6 +137,7 @@ public class ToggleObject : FSystem {
             togglingChairsUp[i].transform.rotation = Quaternion.RotateTowards(togglingChairsUp[i].transform.rotation, Quaternion.Euler(0, togglingChairsUp[i].transform.rotation.eulerAngles.y, togglingChairsUp[i].transform.rotation.eulerAngles.z), 10 * speed);
             if (togglingChairsUp[i].transform.rotation.eulerAngles.x < 0.0001f)
             {
+                GameObjectManager.addComponent<ActionPerformed>(togglingChairsUp[i], new { name = "turnOff", performedBy = "player" });
                 //stop animation when the final position is reached
                 togglingChairsUp[i].GetComponent<ToggleableGO>().toggled = false;
                 togglingChairsUp[i] = togglingChairsUp[togglingChairsUpCount - 1];
@@ -224,6 +202,7 @@ public class ToggleObject : FSystem {
                 table.transform.position = Vector3.MoveTowards(table.transform.position, tableTarget, (0.01f + (1 - dist) / 10) * speed);
                 if (table.transform.position == tableTarget)
                 {
+                    GameObjectManager.addComponent<ActionPerformed>(table, new { name = "turnOff", performedBy = "player" });
                     //stop animation when table comes back to initial position
                     toggleTableUp = false;
                     table.GetComponent<ToggleableGO>().toggled = false;

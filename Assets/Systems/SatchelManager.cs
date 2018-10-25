@@ -4,7 +4,6 @@ using UnityEngine.PostProcessing;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using TMPro;
-using FYFY_plugins.Monitoring;
 
 public class SatchelManager : FSystem {
 
@@ -72,6 +71,8 @@ public class SatchelManager : FSystem {
 
         // Launch this system
         instance.Pause = false;
+
+        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
     }
 
     private void onItemSelectedInInventory(GameObject go)
@@ -149,6 +150,8 @@ public class SatchelManager : FSystem {
                         // remove ReadyToWork component to release selected GameObject
                         GameObjectManager.removeComponent<ReadyToWork>(selectedBag);
 
+                        GameObjectManager.addComponent<ActionPerformed>(selectedBag, new { name = "turnOff", performedBy = "player" });
+
                         selectedBag = null;
 
                         // Pause this system
@@ -172,17 +175,13 @@ public class SatchelManager : FSystem {
                         {
                             //stop animation when the padlock reaches a certain height
                             GameObjectManager.setGameObjectState(bagPadlock, false);
-                            if (bagPadlock.GetComponent<ComponentMonitoring>() && HelpSystem.monitoring)
-                            {
-                                MonitoringTrace trace = new MonitoringTrace(bagPadlock.GetComponent<ComponentMonitoring>(), "perform");
-                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
-                                HelpSystem.traces.Enqueue(trace);
-                            }
                             //remove key from inventory
                             GameObjectManager.setGameObjectState(isSelected("KeyE08"), false);
                             checkPadLock = false;
                             showBagPaper = true;
                             getOutPaper = true;
+
+                            GameObjectManager.addComponent<ActionPerformed>(bagPadlock, new { name = "perform", performedBy = "system" });
                         }
                     }
                 }
@@ -210,6 +209,15 @@ public class SatchelManager : FSystem {
                         paper.transform.position = selectedBag.transform.TransformPoint(bagPaperInitialPos) + Vector3.up * 0.8f;
                         
                         paperOut = true;
+
+                        if(isSelected("Glasses1") && isSelected("Glasses2"))
+                            GameObjectManager.addComponent<ActionPerformed>(paper, new { name = "activate4", performedBy = "system" });
+                        else if (isSelected("Glasses1"))
+                            GameObjectManager.addComponent<ActionPerformed>(paper, new { name = "activate2", performedBy = "system" });
+                        else if (isSelected("Glasses2"))
+                            GameObjectManager.addComponent<ActionPerformed>(paper, new { name = "activate3", performedBy = "system" });
+                        else
+                            GameObjectManager.addComponent<ActionPerformed>(paper, new { name = "activate", performedBy = "system" });
                     }
                 }
             }
@@ -219,6 +227,7 @@ public class SatchelManager : FSystem {
                 if (paperOut)
                 {
                     //put the paper back in the bag
+                    selectedBag.GetComponentInChildren<Canvas>().scaleFactor = 1;
                     selectedBag.GetComponentInChildren<Canvas>().renderMode = RenderMode.WorldSpace;
                     selectedBag.GetComponentInChildren<Canvas>().gameObject.GetComponent<RectTransform>().localPosition = Vector3.forward * (-0.51f - paper.transform.localPosition.z);
                     paper.transform.position = Vector3.MoveTowards(paper.transform.position, selectedBag.transform.TransformPoint(bagPaperInitialPos), speed / 5);

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Fragment_souvenir_4_activate_51" label="activate Fragment_souvenir_4" system="False" end="False" />
+  <transition id="Fragment_souvenir_de_activate_42" label="activate Fragment_souvenir_de" system="False" end="False" />
+  <transition id="or0_Fragment_souvenir_de_activate_42" label="activate Fragment_souvenir_de" system="False" end="False" />
+  <transition id="Fragment_souvenir_faut_activate_49" label="activate Fragment_souvenir_faut" system="False" end="False" />
+  <transition id="Table_turnOff_48" label="turnOff Table" system="False" end="False" />
+  <transition id="Table_turnOn_48" label="turnOn Table" system="False" end="False" />
+  <transition id="Fragment_souvenir_changer_activate_50" label="activate Fragment_souvenir_changer" system="False" end="False" />
+  <transition id="Fragment_souvenir_il_activate_47" label="activate Fragment_souvenir_il" system="False" end="False" />
+  <transition id="Chair_turnOff_43" label="turnOff Chair" system="False" end="False" />
+  <transition id="Chair_turnOn_43" label="turnOn Chair" system="False" end="False" />
+  <transition id="FPSController_turnOff_44" label="turnOff FPSController" system="False" end="False" />
+  <transition id="FPSController_turnOn_44" label="turnOn FPSController" system="False" end="False" />
+  <transition id="Fragment_souvenir_savoir_activate_46" label="activate Fragment_souvenir_savoir" system="False" end="False" />
+  <transition id="Q3_Correct_52" label="Correct Q3" system="False" end="True" />
+  <transition id="Q3_Wrong_52" label="Wrong Q3" system="False" end="False" />
+  <transition id="Fragment_souvenir_posture_activate_45" label="activate Fragment_souvenir_posture" system="False" end="False" />
+</transitions>

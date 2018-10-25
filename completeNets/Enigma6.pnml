@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-F7C-9B534-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma6</text>
+  </name>
+ <page id="g-F7C-9B53C-1">
+  <place id="p-F7C-9B53E-2">
+  <name>
+   <text>Fragment_souvenir_1_ActivationCount_31</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="505" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-F7C-9B549-3">
+  <name>
+   <text>Fragment_souvenir_1_activate_31</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="395" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-F7C-9B54E-4">
+  <name>
+   <text>Fragment_souvenir_5_ActivationCount_30</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="225" y="290"/>
+   </graphics>
+  </place>
+  <transition id="t-F7C-9B553-5">
+  <name>
+   <text>Fragment_souvenir_5_activate_30</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="290"/>
+   </graphics>
+  </transition>
+  <place id="p-F7C-9B557-6">
+  <name>
+   <text>Fragment_souvenir_8_ActivationCount_29</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="205"/>
+   </graphics>
+  </place>
+  <transition id="t-F7C-9B55B-7">
+  <name>
+   <text>Fragment_souvenir_8_activate_29</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="205"/>
+   </graphics>
+  </transition>
+  <place id="p-F7C-9B55F-8">
+  <name>
+   <text>Q2_Answered_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="725" y="245"/>
+   </graphics>
+  </place>
+  <place id="p-F7C-9B562-9">
+  <name>
+   <text>Q2_Answering_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="475" y="245"/>
+   </graphics>
+  </place>
+  <transition id="t-F7C-9B565-10">
+  <name>
+   <text>Q2_Correct_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="605" y="185"/>
+   </graphics>
+  </transition>
+  <transition id="t-F7C-9B568-11">
+  <name>
+   <text>Q2_Wrong_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="605" y="305"/>
+   </graphics>
+  </transition>
+  <transition id="t-F7C-9B56B-12">
+  <name>
+   <text>or0_Q2_Correct_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="605" y="225"/>
+   </graphics>
+  </transition>
+  <arc id="e-F7C-9B570-13" source="t-F7C-9B55B-7" target="p-F7C-9B557-6">
+  </arc>
+  <arc id="e-F7C-9B572-14" source="p-F7C-9B557-6" target="t-F7C-9B565-10">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F7C-9B575-15" source="t-F7C-9B565-10" target="p-F7C-9B55F-8">
+  </arc>
+  <arc id="e-F7C-9B576-16" source="p-F7C-9B562-9" target="t-F7C-9B565-10">
+  </arc>
+  <arc id="e-F7C-9B577-17" source="p-F7C-9B562-9" target="t-F7C-9B568-11">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F7C-9B578-18" source="t-F7C-9B553-5" target="p-F7C-9B54E-4">
+  </arc>
+  <arc id="e-F7C-9B57A-19" source="t-F7C-9B549-3" target="p-F7C-9B53E-2">
+  </arc>
+  <arc id="e-F7C-9B57B-20" source="p-F7C-9B53E-2" target="t-F7C-9B56B-12">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F7C-9B57D-21" source="p-F7C-9B54E-4" target="t-F7C-9B56B-12">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F7C-9B57E-22" source="p-F7C-9B557-6" target="t-F7C-9B56B-12">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F7C-9B580-23" source="t-F7C-9B56B-12" target="p-F7C-9B55F-8">
+  </arc>
+  <arc id="e-F7C-9B581-24" source="p-F7C-9B562-9" target="t-F7C-9B56B-12">
+  </arc>
+  <arc id="e-F7C-9B582-25" source="p-F7C-9B54E-4" target="t-F7C-9B565-10">
+   <type value="test"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

@@ -3,7 +3,6 @@ using FYFY;
 using TMPro;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
-using FYFY_plugins.Monitoring;
 
 public class DreamFragmentCollecting : FSystem {
 
@@ -12,6 +11,9 @@ public class DreamFragmentCollecting : FSystem {
     private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
     private Family f_dreamFragmentUI = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AnyOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD));
     private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
+    private Family f_mainloop = FamilyManager.getFamily(new AllOfComponents(typeof(MainLoop)));
+    private Family f_inventoryElements = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
+    private Family f_collectedPuzzleFragments = FamilyManager.getFamily(new AllOfComponents(typeof(PuzzleFragmentSeen)));
 
     private GameObject dfUI;
     private TextMeshProUGUI FragmentText;
@@ -21,6 +23,8 @@ public class DreamFragmentCollecting : FSystem {
     private bool[] fragmentsSeen;
     private bool enigmaSolved = false;
     private bool backupIARNavigationState;
+    private GameObject puzzleLeftUI;
+    private bool allPuzzleFragmentsCollected = false;
     private GameObject tmpGo;
 
     public static DreamFragmentCollecting instance;
@@ -38,6 +42,15 @@ public class DreamFragmentCollecting : FSystem {
             fragmentsSeen = new bool[6];
             for(int i = 0; i < fragmentsSeen.Length; i++)
                 fragmentsSeen[i] = false;
+            int nbInvetoryElems = f_inventoryElements.Count;
+            for(int i = 0; i < nbInvetoryElems; i++)
+            {
+                if(f_inventoryElements.getAt(i).name == "Puzzle")
+                {
+                    puzzleLeftUI = f_inventoryElements.getAt(i);
+                    break;
+                }
+            }
         }
         instance = this;
     }
@@ -67,73 +80,79 @@ public class DreamFragmentCollecting : FSystem {
                     backupIARNavigationState = IARTabNavigation.instance.Pause;
                     IARTabNavigation.instance.Pause = true;
 
-                    // Manage help
-                    if (HelpSystem.monitoring && selectedFragment.GetComponent<ComponentMonitoring>())
+                    switch (selectedFragment.name)
                     {
-                        MonitoringTrace trace;
-                        if (tmpDFComponent.type == 1 && !enigmaSolved)
-                        {
-                            switch (tmpDFComponent.itemName)
+                        case "Fragment_souvenir_9":
+                            GameObjectManager.addComponent<SyllabusSeen>(selectedFragment);
+                            break;
+
+                        case "Fragment_souvenir_17":
+                            GameObjectManager.addComponent<SyllabusSeen>(selectedFragment);
+                            break;
+
+                        case "Fragment_souvenir_1":
+                            GameObjectManager.addComponent<BerthiaumeClueSeen>(selectedFragment);
+                            break;
+
+                        case "Fragment_souvenir_7":
+                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
+                            if(!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
                             {
-                                case "il":
-                                    fragmentsSeen[0] = true;
-                                    break;
-
-                                case "faut":
-                                    fragmentsSeen[1] = true;
-                                    break;
-
-                                case "savoir":
-                                    fragmentsSeen[2] = true;
-                                    break;
-
-                                case "changer":
-                                    fragmentsSeen[3] = true;
-                                    break;
-
-                                case "de":
-                                    fragmentsSeen[4] = true;
-                                    break;
-
-                                case "posture":
-                                    fragmentsSeen[5] = true;
-                                    break;
-
-                                default:
-                                    break;
+                                allPuzzleFragmentsCollected = true;
+                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
                             }
-                            bool allSeen = true;
-                            for (int j = 0; j < fragmentsSeen.Length; j++)
+                            break;
+
+                        case "Fragment_souvenir_14":
+                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
+                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
                             {
-                                allSeen = fragmentsSeen[j] && allSeen;
+                                allPuzzleFragmentsCollected = true;
+                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
                             }
-                            if (allSeen)
-                            {
-                                enigmaSolved = true;
-                                if (HelpSystem.monitoring)
-                                {
-                                    trace = new MonitoringTrace(MonitoringManager.getMonitorById(25), "perform");
-                                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
-                                    HelpSystem.traces.Enqueue(trace);
-                                    trace = new MonitoringTrace(MonitoringManager.getMonitorById(26), "perform");
-                                    trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
-                                    HelpSystem.traces.Enqueue(trace);
-                                }
-                            }
-                        }
+                            break;
 
-                        trace = new MonitoringTrace(selectedFragment.GetComponent<ComponentMonitoring>(), "activate");
-                        if (selectedFragment.transform.parent.gameObject.name.Contains("Chair"))
-                        {
-                            if (f_player.First().transform.localScale.x > 0.9f)
-                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER, true, "l2");
-                            else
-                                trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER, true, "l1");
-                        }
-                        else
-                            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                        HelpSystem.traces.Enqueue(trace);
+                        case "Fragment_souvenir_15":
+                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
+                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
+                            {
+                                allPuzzleFragmentsCollected = true;
+                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
+                            }
+                            break;
+
+                        case "Fragment_souvenir_16":
+                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
+                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
+                            {
+                                allPuzzleFragmentsCollected = true;
+                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
+                            }
+                            break;
+
+                        case "Fragment_souvenir_18":
+                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
+                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
+                            {
+                                allPuzzleFragmentsCollected = true;
+                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
+                            }
+                            break;
+
+                        default:
+                            break;
                     }
+
+                    if (selectedFragment.name == "Fragment_souvenir_de")
+                    {
+                        if(f_player.First().transform.localScale.x < 0.9f)
+                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "l16"} });
+                        else
+                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "l17" } });
+
+                    }
+                    else
+                        GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player" });
                 }
             }
         }

@@ -2,7 +2,6 @@
 using FYFY;
 using FYFY_plugins.PointerManager;
 using UnityEngine.UI;
-using FYFY_plugins.Monitoring;
 
 public class LockResolver : FSystem {
 
@@ -20,6 +19,8 @@ public class LockResolver : FSystem {
     private Family f_fences = FamilyManager.getFamily(new AnyOfTags("Fence"));
 
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+
+    private Family f_mainloop = FamilyManager.getFamily(new AllOfComponents(typeof(MainLoop)));
 
     //information for animations
     private float speed;
@@ -42,6 +43,8 @@ public class LockResolver : FSystem {
     private bool IARScreenRoom3Unlocked = false;
     private bool playerLookingAtDoor = false;
     private AudioSource gameAudioSource;
+
+    private string closedBy = "";
 
     public static LockResolver instance;
 
@@ -113,6 +116,8 @@ public class LockResolver : FSystem {
         selectedLocker.UpDownControl.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - selectedLocker.UpDownControl.transform.localPosition.x);
         // activate this system
         instance.Pause = false;
+
+        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
     }
 
     // Use this to update member variables when system pause. 
@@ -132,12 +137,15 @@ public class LockResolver : FSystem {
         speedRotation *= Time.deltaTime / oldDT;
         oldDT = Time.deltaTime;
 
-        // Do we are in front of the locker
+        // Are we in front of the locker
         if (selectedLocker)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed
             if (((f_closeLock.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && (!room1Unlocked || IARScreenRoom1Unlocked) && (!room3Unlocked || IARScreenRoom3Unlocked))
+            {
+                closedBy = "player";
                 ExitLocker();
+            }
             else
             {
                 // avoid to rotate wheel during unlock animation
@@ -202,15 +210,6 @@ public class LockResolver : FSystem {
                     if (selectedLocker.tag == "LockIntro")
                     {
                         room1Unlocked = true;
-                        if (HelpSystem.monitoring)
-                        {
-                            MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(4), "perform");
-                            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-                            HelpSystem.traces.Enqueue(trace);
-                            trace = new MonitoringTrace(MonitoringManager.getMonitorById(21), "perform");
-                            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.SYSTEM);
-                            HelpSystem.traces.Enqueue(trace);
-                        }
                     }
                     else
                         room3Unlocked = true;
@@ -245,6 +244,10 @@ public class LockResolver : FSystem {
                 // Check if animation is over
                 if (f_wallIntro.First().transform.position == tmpTargetPosition)
                 {
+                    GameObjectManager.addComponent<ActionPerformed>(f_wallIntro.First(), new { name = "perform", performedBy = "player" });
+
+                    GameObjectManager.addComponent<ActionPerformed>(f_wallIntro.First(), new { name = "perform2", performedBy = "system" });
+
                     // disable the wall
                     GameObjectManager.setGameObjectState(f_wallIntro.First(), false);
                     gameAudioSource.loop = false; // stop sound
@@ -258,6 +261,7 @@ public class LockResolver : FSystem {
                     if (selectedLocker.GetComponent<LinkedWith>())
                         GameObjectManager.setGameObjectState(selectedLocker.GetComponent<LinkedWith>().link, false);
                     // Exit the locker
+                    closedBy = "system";
                     ExitLocker();
                 }
             }
@@ -291,6 +295,8 @@ public class LockResolver : FSystem {
                     GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(0).gameObject, false); // first child is locked tab
                     GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(1).gameObject, true); // second child is unlocked tab
                     IARScreenRoom3Unlocked = true;
+                    GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { name = "perform", performedBy = "player" });
+                    closedBy = "system";
                     ExitLocker();
                 }
             }
@@ -307,15 +313,10 @@ public class LockResolver : FSystem {
         selectedLocker.Wheel2.GetComponent<Renderer>().material.color = lockWheelColor;
         selectedLocker.Wheel3.GetComponent<Renderer>().material.color = lockWheelColor;
 
-        if (HelpSystem.monitoring)
-        {
-            MonitoringTrace trace = new MonitoringTrace(MonitoringManager.getMonitorById(3), "turnOff");
-            trace.result = MonitoringManager.trace(trace.component, trace.action, MonitoringManager.Source.PLAYER);
-            HelpSystem.traces.Enqueue(trace);
-        }
-
         // remove ReadyToWork component to release selected GameObject
         GameObjectManager.removeComponent<ReadyToWork>(selectedLocker.gameObject);
+
+        GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { name = "turnOff", performedBy = closedBy });
 
         selectedLocker = null;
 

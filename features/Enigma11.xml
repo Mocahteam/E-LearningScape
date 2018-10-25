@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="PuzzleSet_03_perform_97" label="perform PuzzleSet_03" system="False" end="False" />
+  <transition id="Q2_Correct_105" label="planification Q2" system="False" end="True" />
+  <transition id="or0_Q2_Correct_105" label="planification Q2" system="False" end="True" />
+  <transition id="Q2_Wrong_105" label="Wrong Q2" system="False" end="False" />
+  <transition id="Fragment_souvenir_16_perform_95" label="perform Fragment_souvenir_16" system="False" end="False" />
+  <transition id="Fragment_souvenir_15_perform_92" label="perform Fragment_souvenir_15" system="False" end="False" />
+  <transition id="PuzzleSet_04_perform_100" label="perform PuzzleSet_04" system="False" end="False" />
+  <transition id="PuzzleSet_02_perform_99" label="perform PuzzleSet_02" system="False" end="False" />
+  <transition id="Q1_Correct_104" label="planification Q1" system="False" end="True" />
+  <transition id="or0_Q1_Correct_104" label="planification Q1" system="False" end="True" />
+  <transition id="Q1_Wrong_104" label="Wrong Q1" system="False" end="False" />
+  <transition id="Q4_Correct_107" label="planification Q4" system="False" end="True" />
+  <transition id="or0_Q4_Correct_107" label="planification Q4" system="False" end="True" />
+  <transition id="Q4_Wrong_107" label="Wrong Q4" system="False" end="False" />
+  <transition id="Fragment_souvenir_14_perform_93" label="perform Fragment_souvenir_14" system="False" end="False" />
+  <transition id="PuzzleSet_05_perform_98" label="perform PuzzleSet_05" system="False" end="False" />
+  <transition id="Puzzle_turnOff_102" label="turnOff Puzzle" system="False" end="False" />
+  <transition id="Puzzle_turnOn_102" label="turnOn Puzzle" system="False" end="False" />
+  <transition id="or0_Puzzle_turnOn_102" label="turnOn Puzzle" system="False" end="False" />
+  <transition id="or1_Puzzle_turnOn_102" label="turnOn Puzzle" system="False" end="False" />
+  <transition id="or2_Puzzle_turnOn_102" label="turnOn Puzzle" system="False" end="False" />
+  <transition id="or3_Puzzle_turnOn_102" label="turnOn Puzzle" system="False" end="False" />
+  <transition id="Puzzle_perform_101" label="perform Puzzle" system="False" end="False" />
+  <transition id="Puzzle_activate_103" label="activate Puzzle" system="True" end="False" />
+  <transition id="PuzzleSet_01_perform_96" label="perform PuzzleSet_01" system="False" end="False" />
+  <transition id="Fragment_souvenir_7_perform_94" label="perform Fragment_souvenir_7" system="False" end="False" />
+  <transition id="Fragment_souvenir_18_perform_76" label="perform Fragment_souvenir_18" system="False" end="False" />
+  <transition id="Q3_Correct_106" label="planification Q3" system="False" end="True" />
+  <transition id="or0_Q3_Correct_106" label="planification Q3" system="False" end="True" />
+  <transition id="Q3_Wrong_106" label="Wrong Q3" system="False" end="False" />
+</transitions>

@@ -3,7 +3,6 @@ using FYFY;
 using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
 using TMPro;
-using FYFY_plugins.Monitoring;
 
 public class WhiteBoardManager : FSystem {
     
@@ -56,6 +55,8 @@ public class WhiteBoardManager : FSystem {
 
         // Launch this system
         instance.Pause = false;
+
+        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
     }
 
     private void onEnterEraser (GameObject go)
@@ -95,6 +96,8 @@ public class WhiteBoardManager : FSystem {
                 {
                     //start dragging eraser when it s clicked
                     eraserDragged = true;
+
+                    GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "activate", performedBy = "player" });
                 }
                 if (eraserDragged)
                 {
@@ -135,6 +138,8 @@ public class WhiteBoardManager : FSystem {
     {
         // remove ReadyToWork component to release selected GameObject
         GameObjectManager.removeComponent<ReadyToWork>(selectedBoard);
+
+        GameObjectManager.addComponent<ActionPerformed>(selectedBoard, new { name = "turnOff", performedBy = "player" });
 
         selectedBoard = null;
 
