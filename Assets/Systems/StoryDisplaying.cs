@@ -77,9 +77,9 @@ public class StoryDisplaying : FSystem {
 	// Advice: avoid to update your families inside this function.
 	protected override void onResume(int currentFrame)
     {
-        // Stop all systems except this
+        // Stop all systems except this and ActionManager
         foreach (FSystem syst in FSystemManager.updateSystems())
-            if (syst != this)
+            if (syst != this && syst != ActionsManager.instance)
                 syst.Pause = true;
         // Enable UI Story
         GameObjectManager.setGameObjectState(f_storyDisplayer.First(), true);

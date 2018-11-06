@@ -1,627 +1,1040 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-5720-4FE8B-0" type ="http://www.laas.fr/tina/tpn">
-  <name>
-   <text>Enigma5</text>
-  </name>
- <page id="g-5720-4FE94-1">
-  <place id="p-5720-4FE98-2">
-  <name>
-   <text>Glasses1_end_68</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="235" y="80"/>
-   </graphics>
-  </place>
-  <place id="p-5720-4FEA6-3">
-  <name>
-   <text>Glasses1_off_69</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="357" y="80"/>
-   </graphics>
-  </place>
-  <place id="p-5720-4FEA9-4">
-  <name>
-   <text>Glasses1_on_69</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="527" y="80"/>
-   </graphics>
-  </place>
-  <transition id="t-5720-4FEAC-5">
-  <name>
-   <text>Glasses1_perform_68</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="155" y="80"/>
-   </graphics>
-  </transition>
-  <place id="p-5720-4FEB0-6">
-  <name>
-   <text>Glasses1_start_68</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="75" y="80"/>
-   </graphics>
-  </place>
-  <transition id="t-5720-4FEB2-7">
-  <name>
-   <text>Glasses1_turnOff_69</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="437" y="50"/>
-   </graphics>
-  </transition>
-  <transition id="t-5720-4FEB6-8">
-  <name>
-   <text>Glasses1_turnOn_69</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="437" y="140"/>
-   </graphics>
-  </transition>
-  <place id="p-5720-4FEB9-9">
-  <name>
-   <text>Glasses2_end_70</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="225" y="250"/>
-   </graphics>
-  </place>
-  <place id="p-5720-4FEBC-10">
-  <name>
-   <text>Glasses2_off_71</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="357" y="250"/>
-   </graphics>
-  </place>
-  <place id="p-5720-4FEBF-11">
-  <name>
-   <text>Glasses2_on_71</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="527" y="250"/>
-   </graphics>
-  </place>
-  <transition id="t-5720-4FEC1-12">
-  <name>
-   <text>Glasses2_perform_70</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="155" y="250"/>
-   </graphics>
-  </transition>
-  <place id="p-5720-4FEC6-13">
-  <name>
-   <text>Glasses2_start_70</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="75" y="250"/>
-   </graphics>
-  </place>
-  <transition id="t-5720-4FEC9-14">
-  <name>
-   <text>Glasses2_turnOff_71</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="437" y="220"/>
-   </graphics>
-  </transition>
-  <transition id="t-5720-4FECE-15">
-  <name>
-   <text>Glasses2_turnOn_71</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="437" y="310"/>
-   </graphics>
-  </transition>
-  <place id="p-5720-4FED4-16">
-  <name>
-   <text>KeyE08_end_66</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="210" y="695"/>
-   </graphics>
-  </place>
-  <place id="p-5720-4FED9-17">
-  <name>
-   <text>KeyE08_off_67</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="313" y="695"/>
-   </graphics>
-  </place>
-  <place id="p-5720-4FEDE-18">
-  <name>
-   <text>KeyE08_on_67</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="483" y="695"/>
-   </graphics>
-  </place>
-  <transition id="t-5720-4FF23-19">
-  <name>
-   <text>KeyE08_perform_66</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="140" y="695"/>
-   </graphics>
-  </transition>
-  <place id="p-5720-4FF28-20">
-  <name>
-   <text>KeyE08_start_66</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="60" y="695"/>
-   </graphics>
-  </place>
-  <transition id="t-5720-4FF2A-21">
-  <name>
-   <text>KeyE08_turnOff_67</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="393" y="665"/>
-   </graphics>
-  </transition>
-  <transition id="t-5720-4FF2D-22">
-  <name>
-   <text>KeyE08_turnOn_67</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="393" y="755"/>
-   </graphics>
-  </transition>
-  <place id="p-5720-4FF3F-23">
-  <name>
-   <text>Padlock_end_73</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="660" y="570"/>
-   </graphics>
-  </place>
-  <transition id="t-5720-4FF41-24">
-  <name>
-   <text>Padlock_perform_73</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="580" y="570"/>
-   </graphics>
-  </transition>
-  <place id="p-5720-4FF44-25">
-  <name>
-   <text>Padlock_start_73</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="500" y="570"/>
-   </graphics>
-  </place>
-  <place id="p-5720-4FF46-26">
-  <name>
-   <text>Paper_ActivationCount_133</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="900" y="205"/>
-   </graphics>
-  </place>
-  <place id="p-5720-4FF58-27">
-  <name>
-   <text>Paper_ActivationCount_134</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="900" y="300"/>
-   </graphics>
-  </place>
-  <place id="p-5720-4FF5C-28">
-  <name>
-   <text>Paper_ActivationCount_135</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="900" y="370"/>
-   </graphics>
-  </place>
-  <place id="p-5720-4FF5F-29">
-  <name>
-   <text>Paper_ActivationCount_136</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="900" y="465"/>
-   </graphics>
-  </place>
-  <transition id="t-5720-4FF63-30">
-  <name>
-   <text>Paper_activate2_134</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="780" y="300"/>
-   </graphics>
-  </transition>
-  <transition id="t-5720-4FF65-31">
-  <name>
-   <text>Paper_activate3_135</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="780" y="370"/>
-   </graphics>
-  </transition>
-  <transition id="t-5720-4FF68-32">
-  <name>
-   <text>Paper_activate4_136</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="780" y="465"/>
-   </graphics>
-  </transition>
-  <transition id="t-5720-4FF6C-33">
-  <name>
-   <text>Paper_activate_133</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="780" y="205"/>
-   </graphics>
-  </transition>
-  <place id="p-5720-4FF6E-34">
-  <name>
-   <text>Q1_Answered_137</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1305" y="325"/>
-   </graphics>
-  </place>
-  <place id="p-5720-4FF71-35">
-  <name>
-   <text>Q1_Answering_137</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="1055" y="325"/>
-   </graphics>
-  </place>
-  <transition id="t-5720-4FFA4-36">
-  <name>
-   <text>Q1_Correct_137</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1185" y="265"/>
-   </graphics>
-  </transition>
-  <transition id="t-5720-4FFA7-37">
-  <name>
-   <text>Q1_Wrong_137</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1185" y="385"/>
-   </graphics>
-  </transition>
-  <place id="p-5720-4FFAA-38">
-  <name>
-   <text>Satchel_off_72</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="297" y="460"/>
-   </graphics>
-  </place>
-  <place id="p-5720-4FFAD-39">
-  <name>
-   <text>Satchel_on_72</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="467" y="460"/>
-   </graphics>
-  </place>
-  <transition id="t-5720-4FFB0-40">
-  <name>
-   <text>Satchel_turnOff_72</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="387" y="430"/>
-   </graphics>
-  </transition>
-  <transition id="t-5720-4FFB1-41">
-  <name>
-   <text>Satchel_turnOn_72</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="387" y="520"/>
-   </graphics>
-  </transition>
-  <transition id="t-5720-4FFB5-42">
-  <name>
-   <text>or0_Q1_Correct_137</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1185" y="305"/>
-   </graphics>
-  </transition>
-  <arc id="e-5720-4FFBB-43" source="p-5720-4FED4-16" target="t-5720-4FF2D-22">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFC0-44" source="p-5720-4FE98-2" target="t-5720-4FEB6-8">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFC1-45" source="p-5720-4FEA9-4" target="t-5720-4FEB2-7">
-  </arc>
-  <arc id="e-5720-4FFC2-46" source="p-5720-4FEA6-3" target="t-5720-4FEB6-8">
-  </arc>
-  <arc id="e-5720-4FFC3-47" source="t-5720-4FEB6-8" target="p-5720-4FEA9-4">
-  </arc>
-  <arc id="e-5720-4FFC4-48" source="t-5720-4FEB2-7" target="p-5720-4FEA6-3">
-  </arc>
-  <arc id="e-5720-4FFC5-49" source="p-5720-4FF28-20" target="t-5720-4FF23-19">
-  </arc>
-  <arc id="e-5720-4FFC6-50" source="t-5720-4FF23-19" target="p-5720-4FED4-16">
-  </arc>
-  <arc id="e-5720-4FFC7-51" source="p-5720-4FEDE-18" target="t-5720-4FF41-24">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFC8-52" source="p-5720-4FFAD-39" target="t-5720-4FF41-24">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFCB-53" source="p-5720-4FF44-25" target="t-5720-4FF41-24">
-  </arc>
-  <arc id="e-5720-4FFCB-54" source="p-5720-4FEDE-18" target="t-5720-4FF2A-21">
-  </arc>
-  <arc id="e-5720-4FFCC-55" source="t-5720-4FF41-24" target="p-5720-4FF3F-23">
-  </arc>
-  <arc id="e-5720-4FFCD-56" source="p-5720-4FEB9-9" target="t-5720-4FECE-15">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFCE-57" source="p-5720-4FEBF-11" target="t-5720-4FEC9-14">
-  </arc>
-  <arc id="e-5720-4FFCF-58" source="p-5720-4FEBC-10" target="t-5720-4FECE-15">
-  </arc>
-  <arc id="e-5720-4FFD0-59" source="t-5720-4FECE-15" target="p-5720-4FEBF-11">
-  </arc>
-  <arc id="e-5720-4FFD1-60" source="t-5720-4FEC9-14" target="p-5720-4FEBC-10">
-  </arc>
-  <arc id="e-5720-4FFD2-61" source="p-5720-4FFAD-39" target="t-5720-4FFB0-40">
-  </arc>
-  <arc id="e-5720-4FFD4-62" source="p-5720-4FFAA-38" target="t-5720-4FFB1-41">
-  </arc>
-  <arc id="e-5720-4FFD5-63" source="t-5720-4FFB1-41" target="p-5720-4FFAD-39">
-  </arc>
-  <arc id="e-5720-4FFD6-64" source="t-5720-4FFB0-40" target="p-5720-4FFAA-38">
-  </arc>
-  <arc id="e-5720-4FFD7-65" source="p-5720-4FED9-17" target="t-5720-4FF2D-22">
-  </arc>
-  <arc id="e-5720-4FFD8-66" source="p-5720-4FEBC-10" target="t-5720-4FF6C-33">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFD9-67" source="p-5720-4FEA6-3" target="t-5720-4FF6C-33">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFDA-68" source="p-5720-4FF3F-23" target="t-5720-4FF6C-33">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFEA-69" source="p-5720-4FFAD-39" target="t-5720-4FF6C-33">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFEB-70" source="t-5720-4FF6C-33" target="p-5720-4FF46-26">
-  </arc>
-  <arc id="e-5720-4FFEE-71" source="p-5720-4FEBC-10" target="t-5720-4FF63-30">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFEF-72" source="p-5720-4FEA9-4" target="t-5720-4FF63-30">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFF0-73" source="p-5720-4FF3F-23" target="t-5720-4FF63-30">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFF1-74" source="p-5720-4FFAD-39" target="t-5720-4FF63-30">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFF2-75" source="t-5720-4FF63-30" target="p-5720-4FF58-27">
-  </arc>
-  <arc id="e-5720-4FFF3-76" source="t-5720-4FF2D-22" target="p-5720-4FEDE-18">
-  </arc>
-  <arc id="e-5720-4FFF4-77" source="p-5720-4FEBF-11" target="t-5720-4FF65-31">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFF5-78" source="p-5720-4FEA6-3" target="t-5720-4FF65-31">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFF6-79" source="p-5720-4FF3F-23" target="t-5720-4FF65-31">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFF8-80" source="p-5720-4FFAD-39" target="t-5720-4FF65-31">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFF9-81" source="t-5720-4FF65-31" target="p-5720-4FF5C-28">
-  </arc>
-  <arc id="e-5720-4FFFA-82" source="p-5720-4FEBF-11" target="t-5720-4FF68-32">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFFB-83" source="p-5720-4FEA9-4" target="t-5720-4FF68-32">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFFC-84" source="p-5720-4FF3F-23" target="t-5720-4FF68-32">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFFD-85" source="p-5720-4FFAD-39" target="t-5720-4FF68-32">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-4FFFE-86" source="t-5720-4FF68-32" target="p-5720-4FF5F-29">
-  </arc>
-  <arc id="e-5720-4FFFF-87" source="t-5720-4FF2A-21" target="p-5720-4FED9-17">
-  </arc>
-  <arc id="e-5720-50000-88" source="p-5720-4FF5C-28" target="t-5720-4FFB5-42">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-50002-89" source="p-5720-4FF58-27" target="t-5720-4FFB5-42">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-50004-90" source="t-5720-4FFB5-42" target="p-5720-4FF6E-34">
-  </arc>
-  <arc id="e-5720-50005-91" source="p-5720-4FF71-35" target="t-5720-4FFB5-42">
-  </arc>
-  <arc id="e-5720-50005-92" source="p-5720-4FF5F-29" target="t-5720-4FFA4-36">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-50007-93" source="t-5720-4FFA4-36" target="p-5720-4FF6E-34">
-  </arc>
-  <arc id="e-5720-50008-94" source="p-5720-4FF71-35" target="t-5720-4FFA4-36">
-  </arc>
-  <arc id="e-5720-50008-95" source="p-5720-4FF71-35" target="t-5720-4FFA7-37">
-   <type value="test"/>
-  </arc>
-  <arc id="e-5720-50009-96" source="p-5720-4FEC6-13" target="t-5720-4FEC1-12">
-  </arc>
-  <arc id="e-5720-5000A-97" source="t-5720-4FEC1-12" target="p-5720-4FEB9-9">
-  </arc>
-  <arc id="e-5720-5000C-98" source="p-5720-4FEB0-6" target="t-5720-4FEAC-5">
-  </arc>
-  <arc id="e-5720-5000E-99" source="t-5720-4FEAC-5" target="p-5720-4FE98-2">
-  </arc>
- </page>
- </net>
+  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
+    <name>
+      <text>gen0</text>
+    </name>
+    <page id="A-A-1">
+      <transition id="Satchel_turnOff_72">
+        <name>
+          <text>Satchel_turnOff_72</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="115" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Satchel_turnOn_72">
+        <name>
+          <text>Satchel_turnOn_72</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="115" y="145" />
+        </graphics>
+      </transition>
+      <transition id="Glasses2_turnOff_71">
+        <name>
+          <text>Glasses2_turnOff_71</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="365" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Glasses2_turnOn_71">
+        <name>
+          <text>Glasses2_turnOn_71</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="365" y="145" />
+        </graphics>
+      </transition>
+      <transition id="Padlock_perform_73">
+        <name>
+          <text>Padlock_perform_73</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="610" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Paper_activate_133">
+        <name>
+          <text>Paper_activate_133</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="775" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Paper_activate_135">
+        <name>
+          <text>Paper_activate_135</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="980" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Paper_activate_136">
+        <name>
+          <text>Paper_activate_136</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1185" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Paper_activate_134">
+        <name>
+          <text>Paper_activate_134</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1390" y="55" />
+        </graphics>
+      </transition>
+      <transition id="KeyE08_perform_66">
+        <name>
+          <text>KeyE08_perform_66</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1665" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Glasses1_turnOff_69">
+        <name>
+          <text>Glasses1_turnOff_69</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1905" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Glasses1_turnOn_69">
+        <name>
+          <text>Glasses1_turnOn_69</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1905" y="145" />
+        </graphics>
+      </transition>
+      <transition id="Q1_Correct_137">
+        <name>
+          <text>Q1_Correct_137</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2220" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Q1_Wrong_137">
+        <name>
+          <text>Q1_Wrong_137</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2220" y="175" />
+        </graphics>
+      </transition>
+      <transition id="or0_Q1_Correct_137">
+        <name>
+          <text>or0_Q1_Correct_137</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2220" y="105" />
+        </graphics>
+      </transition>
+      <transition id="Glasses1_perform_68">
+        <name>
+          <text>Glasses1_perform_68</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2500" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Glasses2_perform_70">
+        <name>
+          <text>Glasses2_perform_70</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2735" y="50" />
+        </graphics>
+      </transition>
+      <transition id="KeyE08_turnOff_67">
+        <name>
+          <text>KeyE08_turnOff_67</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2975" y="50" />
+        </graphics>
+      </transition>
+      <transition id="KeyE08_turnOn_67">
+        <name>
+          <text>KeyE08_turnOn_67</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2975" y="145" />
+        </graphics>
+      </transition>
+      <place id="Satchel_off_72">
+        <name>
+          <text>Satchel_off_72</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="200" y="80" />
+        </graphics>
+      </place>
+      <place id="Satchel_on_72">
+        <name>
+          <text>Satchel_on_72</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="30" y="85" />
+        </graphics>
+      </place>
+      <place id="Glasses2_off_71">
+        <name>
+          <text>Glasses2_off_71</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="450" y="80" />
+        </graphics>
+      </place>
+      <place id="Glasses2_on_71">
+        <name>
+          <text>Glasses2_on_71</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="280" y="85" />
+        </graphics>
+      </place>
+      <place id="Padlock_end_73">
+        <name>
+          <text>Padlock_end_73</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="685" y="50" />
+        </graphics>
+      </place>
+      <place id="Padlock_start_73">
+        <name>
+          <text>Padlock_start_73</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="530" y="50" />
+        </graphics>
+      </place>
+      <place id="Paper_ActivationCount_133">
+        <name>
+          <text>Paper_ActivationCount_133</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="890" y="55" />
+        </graphics>
+      </place>
+      <place id="Paper_ActivationCount_135">
+        <name>
+          <text>Paper_ActivationCount_135</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1095" y="55" />
+        </graphics>
+      </place>
+      <place id="Paper_ActivationCount_136">
+        <name>
+          <text>Paper_ActivationCount_136</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1300" y="55" />
+        </graphics>
+      </place>
+      <place id="Paper_ActivationCount_134">
+        <name>
+          <text>Paper_ActivationCount_134</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1505" y="55" />
+        </graphics>
+      </place>
+      <place id="KeyE08_end_66">
+        <name>
+          <text>KeyE08_end_66</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1740" y="50" />
+        </graphics>
+      </place>
+      <place id="KeyE08_start_66">
+        <name>
+          <text>KeyE08_start_66</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="1585" y="50" />
+        </graphics>
+      </place>
+      <place id="Glasses1_off_69">
+        <name>
+          <text>Glasses1_off_69</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="1990" y="80" />
+        </graphics>
+      </place>
+      <place id="Glasses1_on_69">
+        <name>
+          <text>Glasses1_on_69</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1820" y="85" />
+        </graphics>
+      </place>
+      <place id="Q1_Answered_137">
+        <name>
+          <text>Q1_Answered_137</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2340" y="115" />
+        </graphics>
+      </place>
+      <place id="Q1_Answering_137">
+        <name>
+          <text>Q1_Answering_137</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="2090" y="115" />
+        </graphics>
+      </place>
+      <place id="Glasses1_end_68">
+        <name>
+          <text>Glasses1_end_68</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2575" y="50" />
+        </graphics>
+      </place>
+      <place id="Glasses1_start_68">
+        <name>
+          <text>Glasses1_start_68</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="2420" y="50" />
+        </graphics>
+      </place>
+      <place id="Glasses2_end_70">
+        <name>
+          <text>Glasses2_end_70</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2810" y="50" />
+        </graphics>
+      </place>
+      <place id="Glasses2_start_70">
+        <name>
+          <text>Glasses2_start_70</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="2655" y="50" />
+        </graphics>
+      </place>
+      <place id="KeyE08_off_67">
+        <name>
+          <text>KeyE08_off_67</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="3060" y="80" />
+        </graphics>
+      </place>
+      <place id="KeyE08_on_67">
+        <name>
+          <text>KeyE08_on_67</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2890" y="85" />
+        </graphics>
+      </place>
+      <arc id="42" source="Satchel_turnOff_72" target="Satchel_off_72">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="43" source="Satchel_turnOn_72" target="Satchel_on_72">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="44" source="Satchel_off_72" target="Satchel_turnOn_72">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="45" source="Satchel_on_72" target="Satchel_turnOff_72">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="46" source="Glasses2_turnOff_71" target="Glasses2_off_71">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="47" source="Glasses2_turnOn_71" target="Glasses2_on_71">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="48" source="Glasses2_off_71" target="Glasses2_turnOn_71">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="49" source="Glasses2_on_71" target="Glasses2_turnOff_71">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="50" source="Glasses2_end_70" target="Glasses2_turnOn_71">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="51" source="Padlock_perform_73" target="Padlock_end_73">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="52" source="Padlock_start_73" target="Padlock_perform_73">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="53" source="Satchel_on_72" target="Padlock_perform_73">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="54" source="KeyE08_on_67" target="Padlock_perform_73">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="55" source="Paper_activate_133" target="Paper_ActivationCount_133">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="56" source="Satchel_on_72" target="Paper_activate_133">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="57" source="Padlock_end_73" target="Paper_activate_133">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="58" source="Glasses1_off_69" target="Paper_activate_133">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="59" source="Glasses2_off_71" target="Paper_activate_133">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="60" source="Paper_activate_135" target="Paper_ActivationCount_135">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="61" source="Satchel_on_72" target="Paper_activate_135">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="62" source="Padlock_end_73" target="Paper_activate_135">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="63" source="Glasses1_off_69" target="Paper_activate_135">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="64" source="Glasses2_on_71" target="Paper_activate_135">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="65" source="Paper_activate_136" target="Paper_ActivationCount_136">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="66" source="Satchel_on_72" target="Paper_activate_136">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="67" source="Padlock_end_73" target="Paper_activate_136">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="68" source="Glasses1_on_69" target="Paper_activate_136">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="69" source="Glasses2_on_71" target="Paper_activate_136">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="70" source="Paper_activate_134" target="Paper_ActivationCount_134">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="71" source="Satchel_on_72" target="Paper_activate_134">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="72" source="Padlock_end_73" target="Paper_activate_134">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="73" source="Glasses1_on_69" target="Paper_activate_134">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="74" source="Glasses2_off_71" target="Paper_activate_134">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="75" source="KeyE08_perform_66" target="KeyE08_end_66">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="76" source="KeyE08_start_66" target="KeyE08_perform_66">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="77" source="Glasses1_turnOff_69" target="Glasses1_off_69">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="78" source="Glasses1_turnOn_69" target="Glasses1_on_69">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="79" source="Glasses1_off_69" target="Glasses1_turnOn_69">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="80" source="Glasses1_on_69" target="Glasses1_turnOff_69">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="81" source="Glasses1_end_68" target="Glasses1_turnOn_69">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="82" source="Q1_Answering_137" target="Q1_Wrong_137">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="83" source="Q1_Answering_137" target="Q1_Correct_137">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="84" source="Q1_Correct_137" target="Q1_Answered_137">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="85" source="Paper_ActivationCount_136" target="Q1_Correct_137">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="86" source="Q1_Answering_137" target="or0_Q1_Correct_137">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="87" source="or0_Q1_Correct_137" target="Q1_Answered_137">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="88" source="Paper_ActivationCount_134" target="or0_Q1_Correct_137">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="89" source="Paper_ActivationCount_135" target="or0_Q1_Correct_137">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="90" source="Glasses1_perform_68" target="Glasses1_end_68">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="91" source="Glasses1_start_68" target="Glasses1_perform_68">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="92" source="Glasses2_perform_70" target="Glasses2_end_70">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="93" source="Glasses2_start_70" target="Glasses2_perform_70">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="94" source="KeyE08_turnOff_67" target="KeyE08_off_67">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="95" source="KeyE08_turnOn_67" target="KeyE08_on_67">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="96" source="KeyE08_off_67" target="KeyE08_turnOn_67">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="97" source="KeyE08_on_67" target="KeyE08_turnOff_67">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="98" source="KeyE08_end_66" target="KeyE08_turnOn_67">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+    </page>
+  </net>
 </pnml>

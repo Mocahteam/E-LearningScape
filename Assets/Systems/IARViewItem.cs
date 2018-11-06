@@ -198,11 +198,11 @@ public class IARViewItem : FSystem {
                             if (f_selectedBag.Count > 0)
                             {
                                 if (isSelected("Glasses1"))
-                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate2", performedBy = "system" });
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate2", performedBy = "player" });
                                 else if (isSelected("Glasses2"))
-                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate3", performedBy = "system" });
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate3", performedBy = "player" });
                                 else
-                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate", performedBy = "system" });
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate", performedBy = "player" });
                             }
                         }
                     }
@@ -219,7 +219,7 @@ public class IARViewItem : FSystem {
                     else if(go.GetComponent<LinkLabel>())
                     {
                         GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player", orLabels = new string[] { go.GetComponent<LinkLabel>().text } });
-                        if ((go.name == "Scroll" && f_collectedScrolls.Count == 5) || (go.name == "Puzzle" && f_collectedPuzzles.Count == 5))
+                        if (go.name == "Puzzle" && f_collectedPuzzles.Count == 5)
                             GameObjectManager.addComponent<ActionPerformed>(go, new { name = "activate", performedBy = "system" });
                     }
                     else
@@ -231,13 +231,15 @@ public class IARViewItem : FSystem {
                             if(f_selectedBag.Count > 0)
                             {
                                 if (isSelected("Glasses1") && isSelected("Glasses2"))
-                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate4", performedBy = "system" });
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate4", performedBy = "player" });
                                 else if (isSelected("Glasses1"))
-                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate2", performedBy = "system" });
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate2", performedBy = "player" });
                                 else if (isSelected("Glasses2"))
-                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate3", performedBy = "system" });
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate3", performedBy = "player" });
                             }
                         }
+                        else if (go.name == "Scroll" && f_collectedScrolls.Count == 5)
+                            GameObjectManager.addComponent<ActionPerformed>(go, new { name = "activate", performedBy = "system" });
                     }
                 }
             }

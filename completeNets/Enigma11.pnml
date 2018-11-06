@@ -1,937 +1,1141 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-30AC-B2772-0" type ="http://www.laas.fr/tina/tpn">
-  <name>
-   <text>Enigma11</text>
-  </name>
- <page id="g-30AC-B277E-1">
-  <place id="p-30AC-B2783-2">
-  <name>
-   <text>Fragment_souvenir_14_end_93</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="261" y="655"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2BC1-3">
-  <name>
-   <text>Fragment_souvenir_14_perform_93</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="181" y="655"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2BC7-4">
-  <name>
-   <text>Fragment_souvenir_14_start_93</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="101" y="655"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2BCE-5">
-  <name>
-   <text>Fragment_souvenir_15_end_92</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="261" y="800"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2BD2-6">
-  <name>
-   <text>Fragment_souvenir_15_perform_92</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="181" y="800"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2BD8-7">
-  <name>
-   <text>Fragment_souvenir_15_start_92</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="101" y="800"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2BDD-8">
-  <name>
-   <text>Fragment_souvenir_16_end_95</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="251" y="510"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2BE2-9">
-  <name>
-   <text>Fragment_souvenir_16_perform_95</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="181" y="510"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2BE7-10">
-  <name>
-   <text>Fragment_souvenir_16_start_95</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="101" y="510"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2BED-11">
-  <name>
-   <text>Fragment_souvenir_18_end_76</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="253" y="730"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2BF0-12">
-  <name>
-   <text>Fragment_souvenir_18_perform_76</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="183" y="730"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2BF7-13">
-  <name>
-   <text>Fragment_souvenir_18_start_76</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="103" y="730"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2BFC-14">
-  <name>
-   <text>Fragment_souvenir_7_end_94</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="251" y="580"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2C01-15">
-  <name>
-   <text>Fragment_souvenir_7_perform_94</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="181" y="580"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2C06-16">
-  <name>
-   <text>Fragment_souvenir_7_start_94</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="101" y="580"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2C0B-17">
-  <name>
-   <text>PuzzleSet_01_end_96</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="245" y="320"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2C63-18">
-  <name>
-   <text>PuzzleSet_01_perform_96</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="165" y="320"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2C67-19">
-  <name>
-   <text>PuzzleSet_01_start_96</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="85" y="320"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2C6D-20">
-  <name>
-   <text>PuzzleSet_02_end_99</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="235" y="55"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2C72-21">
-  <name>
-   <text>PuzzleSet_02_perform_99</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="165" y="55"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2C76-22">
-  <name>
-   <text>PuzzleSet_02_start_99</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="85" y="55"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2C7B-23">
-  <name>
-   <text>PuzzleSet_03_end_97</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="245" y="185"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2C80-24">
-  <name>
-   <text>PuzzleSet_03_perform_97</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="165" y="185"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2C84-25">
-  <name>
-   <text>PuzzleSet_03_start_97</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="85" y="185"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2C88-26">
-  <name>
-   <text>PuzzleSet_04_end_100</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="245" y="250"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2C8D-27">
-  <name>
-   <text>PuzzleSet_04_perform_100</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="165" y="250"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2C92-28">
-  <name>
-   <text>PuzzleSet_04_start_100</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="85" y="250"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2C96-29">
-  <name>
-   <text>PuzzleSet_05_end_98</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="235" y="120"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2C9A-30">
-  <name>
-   <text>PuzzleSet_05_perform_98</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="165" y="120"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2CA0-31">
-  <name>
-   <text>PuzzleSet_05_start_98</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="85" y="120"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2CA4-32">
-  <name>
-   <text>Puzzle_ActivationCount_103</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="680" y="390"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2CA8-33">
-  <name>
-   <text>Puzzle_activate_103</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="560" y="390"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2CAD-34">
-  <name>
-   <text>Puzzle_end_101</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="704" y="615"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2CE1-35">
-  <name>
-   <text>Puzzle_off_102</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="660" y="140"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2CE4-36">
-  <name>
-   <text>Puzzle_on_102</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="820" y="140"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2CE9-37">
-  <name>
-   <text>Puzzle_perform_101</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="624" y="615"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2CEC-38">
-  <name>
-   <text>Puzzle_start_101</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="544" y="615"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2CF2-39">
-  <name>
-   <text>Puzzle_turnOff_102</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="740" y="110"/>
-   </graphics>
-  </transition>
-  <transition id="t-30AC-B2CF6-40">
-  <name>
-   <text>Puzzle_turnOn_102</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="740" y="200"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2CF9-41">
-  <name>
-   <text>Q1_Answered_104</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1005" y="110"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2CFE-42">
-  <name>
-   <text>Q1_Answering_104</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="1255" y="110"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2D01-43">
-  <name>
-   <text>Q1_Correct_104</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1125" y="50"/>
-   </graphics>
-  </transition>
-  <transition id="t-30AC-B2D06-44">
-  <name>
-   <text>Q1_Wrong_104</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1125" y="165"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2D09-45">
-  <name>
-   <text>Q2_Answered_105</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1005" y="330"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2D0D-46">
-  <name>
-   <text>Q2_Answering_105</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="1255" y="330"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2D12-47">
-  <name>
-   <text>Q2_Correct_105</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1125" y="270"/>
-   </graphics>
-  </transition>
-  <transition id="t-30AC-B2D15-48">
-  <name>
-   <text>Q2_Wrong_105</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1125" y="390"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2D1A-49">
-  <name>
-   <text>Q3_Answered_106</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1010" y="525"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2D1D-50">
-  <name>
-   <text>Q3_Answering_106</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="1260" y="525"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2D21-51">
-  <name>
-   <text>Q3_Correct_106</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1130" y="465"/>
-   </graphics>
-  </transition>
-  <transition id="t-30AC-B2D39-52">
-  <name>
-   <text>Q3_Wrong_106</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1130" y="585"/>
-   </graphics>
-  </transition>
-  <place id="p-30AC-B2D3E-53">
-  <name>
-   <text>Q4_Answered_107</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1010" y="715"/>
-   </graphics>
-  </place>
-  <place id="p-30AC-B2D41-54">
-  <name>
-   <text>Q4_Answering_107</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="1260" y="715"/>
-   </graphics>
-  </place>
-  <transition id="t-30AC-B2D45-55">
-  <name>
-   <text>Q4_Correct_107</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1130" y="655"/>
-   </graphics>
-  </transition>
-  <transition id="t-30AC-B2D4A-56">
-  <name>
-   <text>Q4_Wrong_107</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1130" y="775"/>
-   </graphics>
-  </transition>
-  <transition id="t-30AC-B2D4D-57">
-  <name>
-   <text>or0_Puzzle_turnOn_102</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="395" y="95"/>
-   </graphics>
-  </transition>
-  <transition id="t-30AC-B2D51-58">
-  <name>
-   <text>or0_Q1_Correct_104</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1125" y="90"/>
-   </graphics>
-  </transition>
-  <transition id="t-30AC-B2D54-59">
-  <name>
-   <text>or0_Q2_Correct_105</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1125" y="310"/>
-   </graphics>
-  </transition>
-  <transition id="t-30AC-B2D59-60">
-  <name>
-   <text>or0_Q3_Correct_106</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1130" y="505"/>
-   </graphics>
-  </transition>
-  <transition id="t-30AC-B2D5D-61">
-  <name>
-   <text>or0_Q4_Correct_107</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="1130" y="695"/>
-   </graphics>
-  </transition>
-  <transition id="t-30AC-B2D60-62">
-  <name>
-   <text>or1_Puzzle_turnOn_102</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="400" y="160"/>
-   </graphics>
-  </transition>
-  <transition id="t-30AC-B2D65-63">
-  <name>
-   <text>or2_Puzzle_turnOn_102</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="395" y="225"/>
-   </graphics>
-  </transition>
-  <transition id="t-30AC-B2D6B-64">
-  <name>
-   <text>or3_Puzzle_turnOn_102</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="395" y="285"/>
-   </graphics>
-  </transition>
-  <arc id="e-30AC-B2D75-65" source="p-30AC-B2CA4-32" target="t-30AC-B2D51-58">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2D79-66" source="t-30AC-B2D60-62" target="p-30AC-B2CE4-36">
-  </arc>
-  <arc id="e-30AC-B2D7B-67" source="p-30AC-B2CE1-35" target="t-30AC-B2D60-62">
-  </arc>
-  <arc id="e-30AC-B2D7D-68" source="p-30AC-B2C7B-23" target="t-30AC-B2D60-62">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2D7E-69" source="p-30AC-B2CE4-36" target="t-30AC-B2CA8-33">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2D80-70" source="t-30AC-B2D65-63" target="p-30AC-B2CE4-36">
-  </arc>
-  <arc id="e-30AC-B2D81-71" source="p-30AC-B2CE1-35" target="t-30AC-B2D65-63">
-  </arc>
-  <arc id="e-30AC-B2D83-72" source="p-30AC-B2C88-26" target="t-30AC-B2D65-63">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2D84-73" source="t-30AC-B2D6B-64" target="p-30AC-B2CE4-36">
-  </arc>
-  <arc id="e-30AC-B2D87-74" source="p-30AC-B2CE1-35" target="t-30AC-B2D6B-64">
-  </arc>
-  <arc id="e-30AC-B2D89-75" source="p-30AC-B2C96-29" target="t-30AC-B2D6B-64">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2DBA-76" source="t-30AC-B2CA8-33" target="p-30AC-B2CA4-32">
-  </arc>
-  <arc id="e-30AC-B2DBC-77" source="t-30AC-B2CE9-37" target="p-30AC-B2CAD-34">
-  </arc>
-  <arc id="e-30AC-B2DC0-78" source="p-30AC-B2CEC-38" target="t-30AC-B2CE9-37">
-  </arc>
-  <arc id="e-30AC-B2DC1-79" source="p-30AC-B2BFC-14" target="t-30AC-B2CE9-37">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2DC4-80" source="p-30AC-B2783-2" target="t-30AC-B2CE9-37">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2DC5-81" source="p-30AC-B2C0B-17" target="t-30AC-B2CA8-33">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2DC7-82" source="p-30AC-B2BCE-5" target="t-30AC-B2CE9-37">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2DCA-83" source="p-30AC-B2BDD-8" target="t-30AC-B2CE9-37">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2DCC-84" source="p-30AC-B2BED-11" target="t-30AC-B2CE9-37">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2DCE-85" source="t-30AC-B2C8D-27" target="p-30AC-B2C88-26">
-  </arc>
-  <arc id="e-30AC-B2DD0-86" source="p-30AC-B2C92-28" target="t-30AC-B2C8D-27">
-  </arc>
-  <arc id="e-30AC-B2DD2-87" source="t-30AC-B2CF6-40" target="p-30AC-B2CE4-36">
-  </arc>
-  <arc id="e-30AC-B2DD4-88" source="t-30AC-B2C72-21" target="p-30AC-B2C6D-20">
-  </arc>
-  <arc id="e-30AC-B2DD5-89" source="p-30AC-B2C76-22" target="t-30AC-B2C72-21">
-  </arc>
-  <arc id="e-30AC-B2DD7-90" source="t-30AC-B2C9A-30" target="p-30AC-B2C96-29">
-  </arc>
-  <arc id="e-30AC-B2DD9-91" source="p-30AC-B2CA0-31" target="t-30AC-B2C9A-30">
-  </arc>
-  <arc id="e-30AC-B2DDC-92" source="t-30AC-B2C80-24" target="p-30AC-B2C7B-23">
-  </arc>
-  <arc id="e-30AC-B2DDD-93" source="p-30AC-B2C6D-20" target="t-30AC-B2CA8-33">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2DDF-94" source="p-30AC-B2C84-25" target="t-30AC-B2C80-24">
-  </arc>
-  <arc id="e-30AC-B2DE1-95" source="t-30AC-B2C63-18" target="p-30AC-B2C0B-17">
-  </arc>
-  <arc id="e-30AC-B2DE2-96" source="p-30AC-B2C67-19" target="t-30AC-B2C63-18">
-  </arc>
-  <arc id="e-30AC-B2DE4-97" source="t-30AC-B2BE2-9" target="p-30AC-B2BDD-8">
-  </arc>
-  <arc id="e-30AC-B2DE6-98" source="p-30AC-B2CE1-35" target="t-30AC-B2CF6-40">
-  </arc>
-  <arc id="e-30AC-B2DE7-99" source="p-30AC-B2BE7-10" target="t-30AC-B2BE2-9">
-  </arc>
-  <arc id="e-30AC-B2DE9-100" source="t-30AC-B2C01-15" target="p-30AC-B2BFC-14">
-  </arc>
-  <arc id="e-30AC-B2DEB-101" source="p-30AC-B2C06-16" target="t-30AC-B2C01-15">
-  </arc>
-  <arc id="e-30AC-B2DEF-102" source="t-30AC-B2BC1-3" target="p-30AC-B2783-2">
-  </arc>
-  <arc id="e-30AC-B2DF0-103" source="p-30AC-B2BC7-4" target="t-30AC-B2BC1-3">
-  </arc>
-  <arc id="e-30AC-B2DF2-104" source="t-30AC-B2BD2-6" target="p-30AC-B2BCE-5">
-  </arc>
-  <arc id="e-30AC-B2DF4-105" source="p-30AC-B2C7B-23" target="t-30AC-B2CA8-33">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2DF5-106" source="p-30AC-B2BD8-7" target="t-30AC-B2BD2-6">
-  </arc>
-  <arc id="e-30AC-B2DF7-107" source="t-30AC-B2BF0-12" target="p-30AC-B2BED-11">
-  </arc>
-  <arc id="e-30AC-B2DF9-108" source="p-30AC-B2BF7-13" target="t-30AC-B2BF0-12">
-  </arc>
-  <arc id="e-30AC-B2DFB-109" source="p-30AC-B2CE4-36" target="t-30AC-B2CF2-39">
-  </arc>
-  <arc id="e-30AC-B2DFC-110" source="p-30AC-B2D41-54" target="t-30AC-B2D4A-56">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E00-111" source="p-30AC-B2D41-54" target="t-30AC-B2D45-55">
-  </arc>
-  <arc id="e-30AC-B2E01-112" source="t-30AC-B2D45-55" target="p-30AC-B2D3E-53">
-  </arc>
-  <arc id="e-30AC-B2E03-113" source="p-30AC-B2CAD-34" target="t-30AC-B2D45-55">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E04-114" source="p-30AC-B2D41-54" target="t-30AC-B2D5D-61">
-  </arc>
-  <arc id="e-30AC-B2E06-115" source="t-30AC-B2D5D-61" target="p-30AC-B2D3E-53">
-  </arc>
-  <arc id="e-30AC-B2E07-116" source="p-30AC-B2CA4-32" target="t-30AC-B2D5D-61">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E09-117" source="p-30AC-B2C88-26" target="t-30AC-B2CA8-33">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E0B-118" source="p-30AC-B2D1D-50" target="t-30AC-B2D39-52">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E22-119" source="p-30AC-B2D1D-50" target="t-30AC-B2D21-51">
-  </arc>
-  <arc id="e-30AC-B2E25-120" source="p-30AC-B2C0B-17" target="t-30AC-B2CF6-40">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E26-121" source="t-30AC-B2D21-51" target="p-30AC-B2D1A-49">
-  </arc>
-  <arc id="e-30AC-B2E28-122" source="p-30AC-B2CAD-34" target="t-30AC-B2D21-51">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E29-123" source="p-30AC-B2D1D-50" target="t-30AC-B2D59-60">
-  </arc>
-  <arc id="e-30AC-B2E2B-124" source="t-30AC-B2D59-60" target="p-30AC-B2D1A-49">
-  </arc>
-  <arc id="e-30AC-B2E2C-125" source="p-30AC-B2CA4-32" target="t-30AC-B2D59-60">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E2E-126" source="p-30AC-B2D0D-46" target="t-30AC-B2D15-48">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E30-127" source="p-30AC-B2D0D-46" target="t-30AC-B2D12-47">
-  </arc>
-  <arc id="e-30AC-B2E31-128" source="t-30AC-B2D12-47" target="p-30AC-B2D09-45">
-  </arc>
-  <arc id="e-30AC-B2E34-129" source="p-30AC-B2C96-29" target="t-30AC-B2CA8-33">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E36-130" source="p-30AC-B2CAD-34" target="t-30AC-B2D12-47">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E37-131" source="t-30AC-B2D4D-57" target="p-30AC-B2CE4-36">
-  </arc>
-  <arc id="e-30AC-B2E39-132" source="p-30AC-B2D0D-46" target="t-30AC-B2D54-59">
-  </arc>
-  <arc id="e-30AC-B2E3A-133" source="t-30AC-B2D54-59" target="p-30AC-B2D09-45">
-  </arc>
-  <arc id="e-30AC-B2E3C-134" source="p-30AC-B2CA4-32" target="t-30AC-B2D54-59">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E3D-135" source="p-30AC-B2CFE-42" target="t-30AC-B2D06-44">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E3F-136" source="p-30AC-B2CFE-42" target="t-30AC-B2D01-43">
-  </arc>
-  <arc id="e-30AC-B2E41-137" source="t-30AC-B2D01-43" target="p-30AC-B2CF9-41">
-  </arc>
-  <arc id="e-30AC-B2E44-138" source="p-30AC-B2CAD-34" target="t-30AC-B2D01-43">
-   <type value="test"/>
-  </arc>
-  <arc id="e-30AC-B2E45-139" source="p-30AC-B2CFE-42" target="t-30AC-B2D51-58">
-  </arc>
-  <arc id="e-30AC-B2E47-140" source="t-30AC-B2D51-58" target="p-30AC-B2CF9-41">
-  </arc>
-  <arc id="e-30AC-B2E48-141" source="t-30AC-B2CF2-39" target="p-30AC-B2CE1-35">
-  </arc>
-  <arc id="e-30AC-B2E4A-142" source="p-30AC-B2CE1-35" target="t-30AC-B2D4D-57">
-  </arc>
-  <arc id="e-30AC-B2E4B-143" source="p-30AC-B2C6D-20" target="t-30AC-B2D4D-57">
-   <type value="test"/>
-  </arc>
- </page>
- </net>
+  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
+    <name>
+      <text>gen0</text>
+    </name>
+    <page id="A-A-1">
+      <transition id="AnswersInput_Correct_139">
+        <name>
+          <text>AnswersInput_Correct_139</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="180" y="55" />
+        </graphics>
+      </transition>
+      <transition id="AnswersInput_Wrong_139">
+        <name>
+          <text>AnswersInput_Wrong_139</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="180" y="175" />
+        </graphics>
+      </transition>
+      <transition id="or0_AnswersInput_Correct_139">
+        <name>
+          <text>or0_AnswersInput_Correct_139</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="180" y="105" />
+        </graphics>
+      </transition>
+      <transition id="PuzzleSet_03_perform_97">
+        <name>
+          <text>PuzzleSet_03_perform_97</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="460" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Fragment_souvenir_16_perform_95">
+        <name>
+          <text>Fragment_souvenir_16_perform_95</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="695" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Fragment_souvenir_15_perform_92">
+        <name>
+          <text>Fragment_souvenir_15_perform_92</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="930" y="50" />
+        </graphics>
+      </transition>
+      <transition id="PuzzleSet_04_perform_100">
+        <name>
+          <text>PuzzleSet_04_perform_100</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1165" y="50" />
+        </graphics>
+      </transition>
+      <transition id="PuzzleSet_02_perform_99">
+        <name>
+          <text>PuzzleSet_02_perform_99</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1400" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Fragment_souvenir_14_perform_93">
+        <name>
+          <text>Fragment_souvenir_14_perform_93</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1635" y="50" />
+        </graphics>
+      </transition>
+      <transition id="PuzzleSet_05_perform_98">
+        <name>
+          <text>PuzzleSet_05_perform_98</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1870" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Puzzle_turnOff_102">
+        <name>
+          <text>Puzzle_turnOff_102</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2110" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Puzzle_turnOn_102">
+        <name>
+          <text>Puzzle_turnOn_102</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2110" y="145" />
+        </graphics>
+      </transition>
+      <transition id="or0_Puzzle_turnOn_102">
+        <name>
+          <text>or0_Puzzle_turnOn_102</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="4105" y="245" />
+        </graphics>
+      </transition>
+      <transition id="or1_Puzzle_turnOn_102">
+        <name>
+          <text>or1_Puzzle_turnOn_102</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="6100" y="295" />
+        </graphics>
+      </transition>
+      <transition id="or2_Puzzle_turnOn_102">
+        <name>
+          <text>or2_Puzzle_turnOn_102</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="8095" y="345" />
+        </graphics>
+      </transition>
+      <transition id="or3_Puzzle_turnOn_102">
+        <name>
+          <text>or3_Puzzle_turnOn_102</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="8095" y="345" />
+        </graphics>
+      </transition>
+      <transition id="Puzzle_perform_101">
+        <name>
+          <text>Puzzle_perform_101</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2355" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Puzzle_activate_103">
+        <name>
+          <text>Puzzle_activate_103</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2520" y="55" />
+        </graphics>
+      </transition>
+      <transition id="PuzzleSet_01_perform_96">
+        <name>
+          <text>PuzzleSet_01_perform_96</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2795" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Fragment_souvenir_7_perform_94">
+        <name>
+          <text>Fragment_souvenir_7_perform_94</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="3030" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Fragment_souvenir_18_perform_76">
+        <name>
+          <text>Fragment_souvenir_18_perform_76</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="3265" y="50" />
+        </graphics>
+      </transition>
+      <place id="AnswersInput_Answered_139">
+        <name>
+          <text>AnswersInput_Answered_139</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="300" y="115" />
+        </graphics>
+      </place>
+      <place id="AnswersInput_Answering_139">
+        <name>
+          <text>AnswersInput_Answering_139</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="50" y="115" />
+        </graphics>
+      </place>
+      <place id="PuzzleSet_03_end_97">
+        <name>
+          <text>PuzzleSet_03_end_97</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="535" y="50" />
+        </graphics>
+      </place>
+      <place id="PuzzleSet_03_start_97">
+        <name>
+          <text>PuzzleSet_03_start_97</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="380" y="50" />
+        </graphics>
+      </place>
+      <place id="Fragment_souvenir_16_end_95">
+        <name>
+          <text>Fragment_souvenir_16_end_95</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="770" y="50" />
+        </graphics>
+      </place>
+      <place id="Fragment_souvenir_16_start_95">
+        <name>
+          <text>Fragment_souvenir_16_start_95</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="615" y="50" />
+        </graphics>
+      </place>
+      <place id="Fragment_souvenir_15_end_92">
+        <name>
+          <text>Fragment_souvenir_15_end_92</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1005" y="50" />
+        </graphics>
+      </place>
+      <place id="Fragment_souvenir_15_start_92">
+        <name>
+          <text>Fragment_souvenir_15_start_92</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="850" y="50" />
+        </graphics>
+      </place>
+      <place id="PuzzleSet_04_end_100">
+        <name>
+          <text>PuzzleSet_04_end_100</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1240" y="50" />
+        </graphics>
+      </place>
+      <place id="PuzzleSet_04_start_100">
+        <name>
+          <text>PuzzleSet_04_start_100</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="1085" y="50" />
+        </graphics>
+      </place>
+      <place id="PuzzleSet_02_end_99">
+        <name>
+          <text>PuzzleSet_02_end_99</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1475" y="50" />
+        </graphics>
+      </place>
+      <place id="PuzzleSet_02_start_99">
+        <name>
+          <text>PuzzleSet_02_start_99</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="1320" y="50" />
+        </graphics>
+      </place>
+      <place id="Fragment_souvenir_14_end_93">
+        <name>
+          <text>Fragment_souvenir_14_end_93</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1710" y="50" />
+        </graphics>
+      </place>
+      <place id="Fragment_souvenir_14_start_93">
+        <name>
+          <text>Fragment_souvenir_14_start_93</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="1555" y="50" />
+        </graphics>
+      </place>
+      <place id="PuzzleSet_05_end_98">
+        <name>
+          <text>PuzzleSet_05_end_98</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1945" y="50" />
+        </graphics>
+      </place>
+      <place id="PuzzleSet_05_start_98">
+        <name>
+          <text>PuzzleSet_05_start_98</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="1790" y="50" />
+        </graphics>
+      </place>
+      <place id="Puzzle_off_102">
+        <name>
+          <text>Puzzle_off_102</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="2195" y="80" />
+        </graphics>
+      </place>
+      <place id="Puzzle_on_102">
+        <name>
+          <text>Puzzle_on_102</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2025" y="85" />
+        </graphics>
+      </place>
+      <place id="Puzzle_end_101">
+        <name>
+          <text>Puzzle_end_101</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2430" y="50" />
+        </graphics>
+      </place>
+      <place id="Puzzle_start_101">
+        <name>
+          <text>Puzzle_start_101</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="2275" y="50" />
+        </graphics>
+      </place>
+      <place id="Puzzle_ActivationCount_103">
+        <name>
+          <text>Puzzle_ActivationCount_103</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2635" y="55" />
+        </graphics>
+      </place>
+      <place id="PuzzleSet_01_end_96">
+        <name>
+          <text>PuzzleSet_01_end_96</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2870" y="50" />
+        </graphics>
+      </place>
+      <place id="PuzzleSet_01_start_96">
+        <name>
+          <text>PuzzleSet_01_start_96</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="2715" y="50" />
+        </graphics>
+      </place>
+      <place id="Fragment_souvenir_7_end_94">
+        <name>
+          <text>Fragment_souvenir_7_end_94</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="3105" y="50" />
+        </graphics>
+      </place>
+      <place id="Fragment_souvenir_7_start_94">
+        <name>
+          <text>Fragment_souvenir_7_start_94</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="2950" y="50" />
+        </graphics>
+      </place>
+      <place id="Fragment_souvenir_18_end_76">
+        <name>
+          <text>Fragment_souvenir_18_end_76</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="3340" y="50" />
+        </graphics>
+      </place>
+      <place id="Fragment_souvenir_18_start_76">
+        <name>
+          <text>Fragment_souvenir_18_start_76</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="3185" y="50" />
+        </graphics>
+      </place>
+      <arc id="49" source="AnswersInput_Answering_139" target="AnswersInput_Wrong_139">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="50" source="AnswersInput_Answering_139" target="AnswersInput_Correct_139">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="51" source="AnswersInput_Correct_139" target="AnswersInput_Answered_139">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="52" source="Puzzle_end_101" target="AnswersInput_Correct_139">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="53" source="AnswersInput_Answering_139" target="or0_AnswersInput_Correct_139">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="54" source="or0_AnswersInput_Correct_139" target="AnswersInput_Answered_139">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="55" source="Puzzle_ActivationCount_103" target="or0_AnswersInput_Correct_139">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="56" source="PuzzleSet_03_perform_97" target="PuzzleSet_03_end_97">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="57" source="PuzzleSet_03_start_97" target="PuzzleSet_03_perform_97">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="58" source="Fragment_souvenir_16_perform_95" target="Fragment_souvenir_16_end_95">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="59" source="Fragment_souvenir_16_start_95" target="Fragment_souvenir_16_perform_95">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="60" source="Fragment_souvenir_15_perform_92" target="Fragment_souvenir_15_end_92">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="61" source="Fragment_souvenir_15_start_92" target="Fragment_souvenir_15_perform_92">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="62" source="PuzzleSet_04_perform_100" target="PuzzleSet_04_end_100">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="63" source="PuzzleSet_04_start_100" target="PuzzleSet_04_perform_100">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="64" source="PuzzleSet_02_perform_99" target="PuzzleSet_02_end_99">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="65" source="PuzzleSet_02_start_99" target="PuzzleSet_02_perform_99">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="66" source="Fragment_souvenir_14_perform_93" target="Fragment_souvenir_14_end_93">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="67" source="Fragment_souvenir_14_start_93" target="Fragment_souvenir_14_perform_93">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="68" source="PuzzleSet_05_perform_98" target="PuzzleSet_05_end_98">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="69" source="PuzzleSet_05_start_98" target="PuzzleSet_05_perform_98">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="70" source="Puzzle_turnOff_102" target="Puzzle_off_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="71" source="Puzzle_turnOn_102" target="Puzzle_on_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="72" source="Puzzle_off_102" target="Puzzle_turnOn_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="73" source="Puzzle_on_102" target="Puzzle_turnOff_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="74" source="PuzzleSet_01_end_96" target="Puzzle_turnOn_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="75" source="or0_Puzzle_turnOn_102" target="Puzzle_on_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="76" source="Puzzle_off_102" target="or0_Puzzle_turnOn_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="77" source="PuzzleSet_02_end_99" target="or0_Puzzle_turnOn_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="78" source="or1_Puzzle_turnOn_102" target="Puzzle_on_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="79" source="Puzzle_off_102" target="or1_Puzzle_turnOn_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="80" source="PuzzleSet_03_end_97" target="or1_Puzzle_turnOn_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="81" source="or2_Puzzle_turnOn_102" target="Puzzle_on_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="82" source="Puzzle_off_102" target="or2_Puzzle_turnOn_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="83" source="PuzzleSet_04_end_100" target="or2_Puzzle_turnOn_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="84" source="or3_Puzzle_turnOn_102" target="Puzzle_on_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="85" source="Puzzle_off_102" target="or3_Puzzle_turnOn_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="86" source="PuzzleSet_05_end_98" target="or3_Puzzle_turnOn_102">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="87" source="Puzzle_perform_101" target="Puzzle_end_101">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="88" source="Puzzle_start_101" target="Puzzle_perform_101">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="89" source="Fragment_souvenir_7_end_94" target="Puzzle_perform_101">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="90" source="Fragment_souvenir_14_end_93" target="Puzzle_perform_101">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="91" source="Fragment_souvenir_15_end_92" target="Puzzle_perform_101">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="92" source="Fragment_souvenir_16_end_95" target="Puzzle_perform_101">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="93" source="Fragment_souvenir_18_end_76" target="Puzzle_perform_101">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="94" source="Puzzle_activate_103" target="Puzzle_ActivationCount_103">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="95" source="Puzzle_on_102" target="Puzzle_activate_103">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="96" source="PuzzleSet_01_end_96" target="Puzzle_activate_103">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="97" source="PuzzleSet_02_end_99" target="Puzzle_activate_103">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="98" source="PuzzleSet_03_end_97" target="Puzzle_activate_103">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="99" source="PuzzleSet_04_end_100" target="Puzzle_activate_103">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="100" source="PuzzleSet_05_end_98" target="Puzzle_activate_103">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="101" source="PuzzleSet_01_perform_96" target="PuzzleSet_01_end_96">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="102" source="PuzzleSet_01_start_96" target="PuzzleSet_01_perform_96">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="103" source="Fragment_souvenir_7_perform_94" target="Fragment_souvenir_7_end_94">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="104" source="Fragment_souvenir_7_start_94" target="Fragment_souvenir_7_perform_94">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="105" source="Fragment_souvenir_18_perform_76" target="Fragment_souvenir_18_end_76">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="106" source="Fragment_souvenir_18_start_76" target="Fragment_souvenir_18_perform_76">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+    </page>
+  </net>
 </pnml>

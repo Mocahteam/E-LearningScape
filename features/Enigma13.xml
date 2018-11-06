@@ -1,13 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
+  <transition id="AnswersInput_Correct_105" label="contraintes AnswersInput" system="False" end="True" />
+  <transition id="AnswersInput_Wrong_105" label="Wrong AnswersInput" system="False" end="False" />
   <transition id="Fragment_souvenir_13_activate_119" label="activate Fragment_souvenir_13" system="False" end="False" />
-  <transition id="Q2_Correct_122" label="contraintes Q2" system="False" end="True" />
-  <transition id="Q2_Wrong_122" label="Wrong Q2" system="False" end="False" />
-  <transition id="Q1_Correct_121" label="contraintes Q1" system="False" end="True" />
-  <transition id="Q1_Wrong_121" label="Wrong Q1" system="False" end="False" />
-  <transition id="Q4_Correct_124" label="contraintes Q4" system="False" end="True" />
-  <transition id="Q4_Wrong_124" label="Wrong Q4" system="False" end="False" />
+  <transition id="AnswersInput_Correct_105" label="contraintes AnswersInput" system="False" end="True" />
+  <transition id="AnswersInput_Wrong_105" label="Wrong AnswersInput" system="False" end="False" />
+  <transition id="Fragment_souvenir_13_activate_119" label="activate Fragment_souvenir_13" system="False" end="False" />
   <transition id="Fragment_souvenir_10_activate_120" label="activate Fragment_souvenir_10" system="False" end="False" />
-  <transition id="Q3_Correct_123" label="contraintes Q3" system="False" end="True" />
-  <transition id="Q3_Wrong_123" label="Wrong Q3" system="False" end="False" />
 </transitions>

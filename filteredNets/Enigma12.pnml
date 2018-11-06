@@ -1,285 +1,239 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-152C-6CFC7-0" type ="http://www.laas.fr/tina/tpn">
-  <name>
-   <text>Enigma12</text>
-  </name>
- <page id="g-152C-6CFCF-1">
-  <place id="p-152C-6CFD2-2">
-  <name>
-   <text>Fragment_souvenir_6_ActivationCount_112</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="445" y="480"/>
-   </graphics>
-  </place>
-  <transition id="t-152C-6CFDF-3">
-  <name>
-   <text>Fragment_souvenir_6_activate_112</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="325" y="480"/>
-   </graphics>
-  </transition>
-  <place id="p-152C-6CFE4-4">
-  <name>
-   <text>Lamp_ActivationCount_114</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="445" y="360"/>
-   </graphics>
-  </place>
-  <transition id="t-152C-6CFE8-5">
-  <name>
-   <text>Lamp_activate_114</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="325" y="360"/>
-   </graphics>
-  </transition>
-  <place id="p-152C-6CFEB-6">
-  <name>
-   <text>Lamp_end_113</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="195" y="360"/>
-   </graphics>
-  </place>
-  <transition id="t-152C-6CFED-7">
-  <name>
-   <text>Lamp_perform_113</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="135" y="360"/>
-   </graphics>
-  </transition>
-  <place id="p-152C-6CFF0-8">
-  <name>
-   <text>Lamp_start_113</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="55" y="360"/>
-   </graphics>
-  </place>
-  <place id="p-152C-6CFF2-9">
-  <name>
-   <text>Q1_Answered_115</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="905" y="110"/>
-   </graphics>
-  </place>
-  <place id="p-152C-6CFF5-10">
-  <name>
-   <text>Q1_Answering_115</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="655" y="110"/>
-   </graphics>
-  </place>
-  <transition id="t-152C-6CFF7-11">
-  <name>
-   <text>Q1_Correct_115</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="785" y="50"/>
-   </graphics>
-  </transition>
-  <place id="p-152C-6CFFB-12">
-  <name>
-   <text>Q2_Answered_116</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="905" y="310"/>
-   </graphics>
-  </place>
-  <place id="p-152C-6CFFE-13">
-  <name>
-   <text>Q2_Answering_116</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="655" y="310"/>
-   </graphics>
-  </place>
-  <transition id="t-152C-6D000-14">
-  <name>
-   <text>Q2_Correct_116</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="785" y="250"/>
-   </graphics>
-  </transition>
-  <place id="p-152C-6D003-15">
-  <name>
-   <text>Q3_Answered_117</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="905" y="500"/>
-   </graphics>
-  </place>
-  <place id="p-152C-6D005-16">
-  <name>
-   <text>Q3_Answering_117</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="655" y="500"/>
-   </graphics>
-  </place>
-  <transition id="t-152C-6D008-17">
-  <name>
-   <text>Q3_Correct_117</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="785" y="440"/>
-   </graphics>
-  </transition>
-  <place id="p-152C-6D00A-18">
-  <name>
-   <text>Q4_Answered_118</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="905" y="700"/>
-   </graphics>
-  </place>
-  <place id="p-152C-6D054-19">
-  <name>
-   <text>Q4_Answering_118</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="655" y="700"/>
-   </graphics>
-  </place>
-  <transition id="t-152C-6D058-20">
-  <name>
-   <text>Q4_Correct_118</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="785" y="640"/>
-   </graphics>
-  </transition>
-  <arc id="e-152C-6D05D-21" source="p-152C-6CFF5-10" target="t-152C-6CFF7-11">
-  </arc>
-  <arc id="e-152C-6D05F-22" source="p-152C-6CFE4-4" target="t-152C-6D058-20">
-   <type value="test"/>
-  </arc>
-  <arc id="e-152C-6D062-23" source="p-152C-6CFD2-2" target="t-152C-6D058-20">
-   <type value="test"/>
-  </arc>
-  <arc id="e-152C-6D063-24" source="p-152C-6CFF0-8" target="t-152C-6CFED-7">
-  </arc>
-  <arc id="e-152C-6D065-25" source="p-152C-6D005-16" target="t-152C-6D008-17">
-  </arc>
-  <arc id="e-152C-6D066-26" source="t-152C-6D008-17" target="p-152C-6D003-15">
-  </arc>
-  <arc id="e-152C-6D067-27" source="p-152C-6CFE4-4" target="t-152C-6D008-17">
-   <type value="test"/>
-  </arc>
-  <arc id="e-152C-6D068-28" source="p-152C-6CFD2-2" target="t-152C-6D008-17">
-   <type value="test"/>
-  </arc>
-  <arc id="e-152C-6D069-29" source="p-152C-6CFFE-13" target="t-152C-6D000-14">
-  </arc>
-  <arc id="e-152C-6D06A-30" source="t-152C-6D000-14" target="p-152C-6CFFB-12">
-  </arc>
-  <arc id="e-152C-6D06B-31" source="p-152C-6CFE4-4" target="t-152C-6D000-14">
-   <type value="test"/>
-  </arc>
-  <arc id="e-152C-6D06B-32" source="t-152C-6CFF7-11" target="p-152C-6CFF2-9">
-  </arc>
-  <arc id="e-152C-6D06C-33" source="p-152C-6CFD2-2" target="t-152C-6D000-14">
-   <type value="test"/>
-  </arc>
-  <arc id="e-152C-6D06F-34" source="t-152C-6CFDF-3" target="p-152C-6CFD2-2">
-  </arc>
-  <arc id="e-152C-6D070-35" source="p-152C-6CFE4-4" target="t-152C-6CFF7-11">
-   <type value="test"/>
-  </arc>
-  <arc id="e-152C-6D071-36" source="p-152C-6CFD2-2" target="t-152C-6CFF7-11">
-   <type value="test"/>
-  </arc>
-  <arc id="e-152C-6D071-37" source="t-152C-6CFE8-5" target="p-152C-6CFE4-4">
-  </arc>
-  <arc id="e-152C-6D072-38" source="p-152C-6CFEB-6" target="t-152C-6CFE8-5">
-   <type value="test"/>
-  </arc>
-  <arc id="e-152C-6D083-39" source="t-152C-6CFED-7" target="p-152C-6CFEB-6">
-  </arc>
-  <arc id="e-152C-6D083-40" source="p-152C-6D054-19" target="t-152C-6D058-20">
-  </arc>
-  <arc id="e-152C-6D085-41" source="t-152C-6D058-20" target="p-152C-6D00A-18">
-  </arc>
- </page>
- </net>
+  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
+    <name>
+      <text>gen0</text>
+    </name>
+    <page id="A-A-1">
+      <transition id="AnswersInput_Correct_104">
+        <name>
+          <text>AnswersInput_Correct_104</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="180" y="55" />
+        </graphics>
+      </transition>
+      <transition id="AnswersInput_Wrong_104">
+        <name>
+          <text>AnswersInput_Wrong_104</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="180" y="175" />
+        </graphics>
+      </transition>
+      <transition id="Lamp_activate_114">
+        <name>
+          <text>Lamp_activate_114</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="390" y="55" />
+        </graphics>
+      </transition>
+      <transition id="Lamp_perform_113">
+        <name>
+          <text>Lamp_perform_113</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="665" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Fragment_souvenir_6_activate_112">
+        <name>
+          <text>Fragment_souvenir_6_activate_112</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="830" y="55" />
+        </graphics>
+      </transition>
+      <place id="AnswersInput_Answered_104">
+        <name>
+          <text>AnswersInput_Answered_104</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="300" y="115" />
+        </graphics>
+      </place>
+      <place id="AnswersInput_Answering_104">
+        <name>
+          <text>AnswersInput_Answering_104</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="50" y="115" />
+        </graphics>
+      </place>
+      <place id="Lamp_ActivationCount_114">
+        <name>
+          <text>Lamp_ActivationCount_114</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="505" y="55" />
+        </graphics>
+      </place>
+      <place id="Lamp_end_113">
+        <name>
+          <text>Lamp_end_113</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="740" y="50" />
+        </graphics>
+      </place>
+      <place id="Lamp_start_113">
+        <name>
+          <text>Lamp_start_113</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="585" y="50" />
+        </graphics>
+      </place>
+      <place id="Fragment_souvenir_6_ActivationCount_112">
+        <name>
+          <text>Fragment_souvenir_6_ActivationCount_112</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="945" y="55" />
+        </graphics>
+      </place>
+      <arc id="12" source="AnswersInput_Answering_104" target="AnswersInput_Wrong_104">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="13" source="AnswersInput_Answering_104" target="AnswersInput_Correct_104">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="14" source="AnswersInput_Correct_104" target="AnswersInput_Answered_104">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="15" source="Lamp_ActivationCount_114" target="AnswersInput_Correct_104">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="16" source="Fragment_souvenir_6_ActivationCount_112" target="AnswersInput_Correct_104">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="17" source="Lamp_activate_114" target="Lamp_ActivationCount_114">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="18" source="Lamp_end_113" target="Lamp_activate_114">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="19" source="Lamp_perform_113" target="Lamp_end_113">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="20" source="Lamp_start_113" target="Lamp_perform_113">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="21" source="Fragment_souvenir_6_activate_112" target="Fragment_souvenir_6_ActivationCount_112">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+    </page>
+  </net>
 </pnml>

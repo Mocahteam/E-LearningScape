@@ -30,7 +30,7 @@ public class LoginManager : FSystem {
 
     private float speed;
     private InputField ifConnectionR2;
-    private int passwordSolution = 814;
+    public static int passwordSolution = 814;
     private GameObject door;
 
     private AudioSource gameAudioSource;

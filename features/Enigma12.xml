@@ -1,14 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
+  <transition id="AnswersInput_Correct_104" label="ressources AnswersInput" system="False" end="True" />
+  <transition id="AnswersInput_Wrong_104" label="Wrong AnswersInput" system="False" end="False" />
   <transition id="Lamp_activate_114" label="activate Lamp" system="False" end="False" />
-  <transition id="Q2_Correct_116" label="ressources Q2" system="False" end="True" />
-  <transition id="Q2_Wrong_116" label="Wrong Q2" system="False" end="False" />
-  <transition id="Q1_Correct_115" label="ressources Q1" system="False" end="True" />
-  <transition id="Q1_Wrong_115" label="Wrong Q1" system="False" end="False" />
-  <transition id="Q4_Correct_118" label="ressources Q4" system="False" end="True" />
-  <transition id="Q4_Wrong_118" label="Wrong Q4" system="False" end="False" />
+  <transition id="Lamp_perform_113" label="perform Lamp" system="False" end="False" />
+  <transition id="AnswersInput_Correct_104" label="ressources AnswersInput" system="False" end="True" />
+  <transition id="AnswersInput_Wrong_104" label="Wrong AnswersInput" system="False" end="False" />
+  <transition id="Lamp_activate_114" label="activate Lamp" system="False" end="False" />
   <transition id="Lamp_perform_113" label="perform Lamp" system="False" end="False" />
   <transition id="Fragment_souvenir_6_activate_112" label="activate Fragment_souvenir_6" system="False" end="False" />
-  <transition id="Q3_Correct_117" label="ressources Q3" system="False" end="True" />
-  <transition id="Q3_Wrong_117" label="Wrong Q3" system="False" end="False" />
 </transitions>

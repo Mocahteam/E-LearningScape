@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.Monitoring;
+using System;
 
 public class ActionsManager : FSystem {
 
@@ -44,14 +45,18 @@ public class ActionsManager : FSystem {
     {
         if (/*go.GetComponent<ComponentMonitoring>() &&*/ !this.Pause)
         {
-            foreach(ActionPerformed ap in go.GetComponents<ActionPerformed>())
+            ActionPerformed[] listAP = go.GetComponents<ActionPerformed>();
+            int nb = listAP.Length;
+            ActionPerformed ap;
+            for(int j = nb -1; j > -1; j--)
             {
+                ap = listAP[j];
                 ComponentMonitoring cMonitoring = null;
                 string tmpActionName = "";
                 if (ap.name != "" && ap.overrideName != "")
                 {
                     //look for the ComponentMonitoring corresponding to name and overridename
-                    bool matched = false;
+                    int matched = 0;
                     foreach (ComponentMonitoring cm in go.GetComponents<ComponentMonitoring>())
                     {
                         foreach (TransitionLink tl in cm.transitionLinks)
@@ -60,16 +65,16 @@ public class ActionsManager : FSystem {
                             {
                                 cMonitoring = cm;
                                 tmpActionName = ap.name;
-                                matched = true;
-                                break;
+                                matched++;
                             }
                         }
-                        if (matched)
+                        if (matched > 1)
                         {
+                            Debug.LogWarning(string.Concat("Several ComponentMonitoring on ", go.name, " are matching the name \"", ap.name, "\" and the overrideName \"", ap.overrideName, "\". By default, the second one found is used to trace."));
                             break;
                         }
                     }
-                    if (!matched)
+                    if (matched == 0 && ap.family == null)
                     {
                         Debug.LogError(string.Concat("Unable to trace action on \"", go.name, "\" because \"", ap.name, "\" and \"", ap.overrideName, "\" in its ActionPerformed don't correspond to any ComponentMonitoring."));
                     }
@@ -77,7 +82,7 @@ public class ActionsManager : FSystem {
                 else if (ap.name != "")
                 {
                     //look for the ComponentMonitoring corresponding to the name
-                    bool matched = false;
+                    int matched = 0;
                     foreach (ComponentMonitoring cm in go.GetComponents<ComponentMonitoring>())
                     {
                         foreach (TransitionLink tl in cm.transitionLinks)
@@ -86,16 +91,16 @@ public class ActionsManager : FSystem {
                             {
                                 cMonitoring = cm;
                                 tmpActionName = ap.name;
-                                matched = true;
-                                break;
+                                matched++;
                             }
                         }
-                        if (matched)
+                        if( matched > 1)
                         {
+                            Debug.LogWarning(string.Concat("Several ComponentMonitoring on ", go.name, " are matching the name \"", ap.name, "\". By default, the second one found is used to trace."));
                             break;
                         }
                     }
-                    if (!matched)
+                    if (matched == 0 && ap.family == null)
                     {
                         Debug.LogError(string.Concat("Unable to trace action on \"", go.name, "\" because \"", ap.name, "\" in its ActionPerformed doesn't correspond to any ComponentMonitoring."));
                     }
@@ -103,7 +108,7 @@ public class ActionsManager : FSystem {
                 else if (ap.overrideName != "")
                 {
                     //look for the ComponentMonitoring corresponding to the overridename
-                    bool matched = false;
+                    int matched = 0;
                     foreach (ComponentMonitoring cm in go.GetComponents<ComponentMonitoring>())
                     {
                         foreach (TransitionLink tl in cm.transitionLinks)
@@ -112,16 +117,16 @@ public class ActionsManager : FSystem {
                             {
                                 cMonitoring = cm;
                                 tmpActionName = tl.transition.label;
-                                matched = true;
-                                break;
+                                matched++;
                             }
                         }
-                        if (matched)
+                        if (matched > 1)
                         {
+                            Debug.LogWarning(string.Concat("Several ComponentMonitoring on ", go.name, " are matching the overrideName \"", ap.overrideName, "\". By default, the second one found is used to trace."));
                             break;
                         }
                     }
-                    if (!matched)
+                    if (matched == 0 && ap.family == null)
                     {
                         Debug.LogError(string.Concat("Unable to trace action on \"", go.name, "\" because \"", ap.overrideName, "\" in its ActionPerformed don't correspond to any ComponentMonitoring."));
                     }
@@ -130,6 +135,7 @@ public class ActionsManager : FSystem {
                 {
                     Debug.LogError(string.Concat("Unable to trace action on \"", go.name, "\" because no name given in its ActionPerformed component."));
                 }
+                
                 if (cMonitoring)
                 {
                     if (ap.performedBy == "system")
@@ -144,8 +150,9 @@ public class ActionsManager : FSystem {
                         tmpLabels = MonitoringManager.trace(cMonitoring, tmpActionName, tmpPerformer);
                     else
                         tmpLabels = MonitoringManager.trace(cMonitoring, tmpActionName, tmpPerformer, true, ap.orLabels);
-                    tmpString = tmpLabels[0];
-                    for(int i = 1; i < tmpLabels.Length; i++)
+                    if(tmpLabels.Length != 0)
+                        tmpString = tmpLabels[0];
+                    for (int i = 1; i < tmpLabels.Length; i++)
                     {
                         tmpString = string.Concat(tmpString, " ", tmpLabels[i]);
                     }
@@ -153,8 +160,9 @@ public class ActionsManager : FSystem {
                         performedBy = tmpPerformer, time = Time.time, orLabels = ap.orLabels, labels = tmpLabels });
                     Debug.Log(string.Concat(tmpPerformer, " ", tmpActionName, " ", go.name, System.Environment.NewLine , tmpString));
                 }
-                else if (ap.familyMonitoring)
+                else if (ap.family != null)
                 {
+                    tmpActionName = ap.name;
                     if (ap.performedBy == "system")
                     {
                         tmpPerformer = ap.performedBy;
@@ -164,9 +172,9 @@ public class ActionsManager : FSystem {
                         tmpPerformer = "player";
                     }
                     if (ap.orLabels == null)
-                        tmpLabels = MonitoringManager.trace(ap.familyMonitoring, tmpActionName, tmpPerformer);
+                        tmpLabels = MonitoringManager.trace(ap.family, tmpActionName, tmpPerformer);
                     else
-                        tmpLabels = MonitoringManager.trace(ap.familyMonitoring, tmpActionName, tmpPerformer, true, ap.orLabels);
+                        tmpLabels = MonitoringManager.trace(ap.family, tmpActionName, tmpPerformer, true, ap.orLabels);
                     tmpString = tmpLabels[0];
                     for (int i = 1; i < tmpLabels.Length; i++)
                     {
@@ -175,7 +183,7 @@ public class ActionsManager : FSystem {
                     GameObjectManager.addComponent<Trace>(traces, new
                     {
                         actionName = tmpActionName,
-                        componentMonitoring = ap.familyMonitoring,
+                        family = ap.family,
                         performedBy = tmpPerformer,
                         time = Time.time,
                         orLabels = ap.orLabels,

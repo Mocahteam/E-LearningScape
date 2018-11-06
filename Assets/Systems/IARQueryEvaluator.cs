@@ -126,24 +126,7 @@ public class IARQueryEvaluator : FSystem {
             // notify player success
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 2 });
 
-            if(query.tag == "Q-R2")
-            {
-                if(query.name == "Q1")
-                {
-                    if(isSelected("Glasses1") && isSelected("Glasses2"))
-                        GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player", orLabels = new string[] { "l20" } });
-                    else
-                        GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player", orLabels = new string[] { "l18", "l19" } });
-                }
-                else if(query.name == "Q2")
-                {
-                    if (f_berthiaumeClue.Count > 0)
-                        GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player", orLabels = new string[] { "l15", "l16", "l14" } });
-                    else
-                        GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player", orLabels = new string[] { "l15", "l16" } });
-                }
-            }
-            else if(query.tag == "Q-R3")
+            if(query.tag == "Q-R3")
             {
                 if(answer == "PLANIFICATION")
                 {
@@ -152,16 +135,16 @@ public class IARQueryEvaluator : FSystem {
                     {
                         if(f_toggles.getAt(i).name == "TogglePuzzle")
                         {
-                            if(f_toggles.getAt(i).GetComponent<Toggle>().isOn)
-                                GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = answer.ToLower(), performedBy = "player", orLabels = new string[] { "l17" } });
+                            if (f_toggles.getAt(i).GetComponent<Toggle>().isOn)
+                                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = answer.ToLower(), performedBy = "player", orLabels = new string[] { "l17" } });
                             else
-                                GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = answer.ToLower(), performedBy = "player", orLabels = new string[] { "l16" } });
+                                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = answer.ToLower(), performedBy = "player", orLabels = new string[] { "l16" } });
                             break;
                         }
                     }
                 }
                 else
-                    GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = answer.ToLower(), performedBy = "player" });
+                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = answer.ToLower(), performedBy = "player" });
             }
             else
                 GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });

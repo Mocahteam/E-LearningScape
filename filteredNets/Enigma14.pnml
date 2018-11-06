@@ -1,264 +1,225 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-1108-2897E-0" type ="http://www.laas.fr/tina/tpn">
-  <name>
-   <text>Enigma14</text>
-  </name>
- <page id="g-1108-28988-1">
-  <place id="p-1108-2898B-2">
-  <name>
-   <text>Board_off_125</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="50" y="410"/>
-   </graphics>
-  </place>
-  <place id="p-1108-28999-3">
-  <name>
-   <text>Board_on_125</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="210" y="410"/>
-   </graphics>
-  </place>
-  <transition id="t-1108-2899B-4">
-  <name>
-   <text>Board_turnOff_125</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="130" y="380"/>
-   </graphics>
-  </transition>
-  <transition id="t-1108-2899F-5">
-  <name>
-   <text>Board_turnOn_125</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="130" y="470"/>
-   </graphics>
-  </transition>
-  <place id="p-1108-289A2-6">
-  <name>
-   <text>Eraser_ActivationCount_126</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="470" y="410"/>
-   </graphics>
-  </place>
-  <transition id="t-1108-289A6-7">
-  <name>
-   <text>Eraser_activate_126</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="350" y="410"/>
-   </graphics>
-  </transition>
-  <place id="p-1108-289AB-8">
-  <name>
-   <text>Q1_Answered_127</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="880" y="110"/>
-   </graphics>
-  </place>
-  <place id="p-1108-289AF-9">
-  <name>
-   <text>Q1_Answering_127</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="630" y="110"/>
-   </graphics>
-  </place>
-  <transition id="t-1108-289B3-10">
-  <name>
-   <text>Q1_Correct_127</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="760" y="50"/>
-   </graphics>
-  </transition>
-  <place id="p-1108-289B9-11">
-  <name>
-   <text>Q2_Answered_128</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="880" y="300"/>
-   </graphics>
-  </place>
-  <place id="p-1108-289BC-12">
-  <name>
-   <text>Q2_Answering_128</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="630" y="300"/>
-   </graphics>
-  </place>
-  <transition id="t-1108-289C2-13">
-  <name>
-   <text>Q2_Correct_128</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="760" y="240"/>
-   </graphics>
-  </transition>
-  <place id="p-1108-289C5-14">
-  <name>
-   <text>Q3_Answered_129</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="880" y="500"/>
-   </graphics>
-  </place>
-  <place id="p-1108-289CB-15">
-  <name>
-   <text>Q3_Answering_129</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="630" y="500"/>
-   </graphics>
-  </place>
-  <transition id="t-1108-289D0-16">
-  <name>
-   <text>Q3_Correct_129</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="760" y="440"/>
-   </graphics>
-  </transition>
-  <place id="p-1108-289D4-17">
-  <name>
-   <text>Q4_Answered_130</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="880" y="700"/>
-   </graphics>
-  </place>
-  <place id="p-1108-289D9-18">
-  <name>
-   <text>Q4_Answering_130</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="630" y="700"/>
-   </graphics>
-  </place>
-  <transition id="t-1108-28A28-19">
-  <name>
-   <text>Q4_Correct_130</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="760" y="640"/>
-   </graphics>
-  </transition>
-  <arc id="e-1108-28A34-20" source="p-1108-289AF-9" target="t-1108-289B3-10">
-  </arc>
-  <arc id="e-1108-28A36-21" source="p-1108-2898B-2" target="t-1108-2899F-5">
-  </arc>
-  <arc id="e-1108-28A38-22" source="p-1108-289A2-6" target="t-1108-28A28-19">
-   <type value="test"/>
-  </arc>
-  <arc id="e-1108-28A3C-23" source="p-1108-289CB-15" target="t-1108-289D0-16">
-  </arc>
-  <arc id="e-1108-28A3E-24" source="t-1108-289D0-16" target="p-1108-289C5-14">
-  </arc>
-  <arc id="e-1108-28A40-25" source="p-1108-289A2-6" target="t-1108-289D0-16">
-   <type value="test"/>
-  </arc>
-  <arc id="e-1108-28A42-26" source="p-1108-289BC-12" target="t-1108-289C2-13">
-  </arc>
-  <arc id="e-1108-28A45-27" source="t-1108-289C2-13" target="p-1108-289B9-11">
-  </arc>
-  <arc id="e-1108-28A47-28" source="p-1108-289A2-6" target="t-1108-289C2-13">
-   <type value="test"/>
-  </arc>
-  <arc id="e-1108-28A49-29" source="p-1108-28999-3" target="t-1108-2899B-4">
-  </arc>
-  <arc id="e-1108-28A4B-30" source="t-1108-289B3-10" target="p-1108-289AB-8">
-  </arc>
-  <arc id="e-1108-28A4C-31" source="p-1108-289A2-6" target="t-1108-289B3-10">
-   <type value="test"/>
-  </arc>
-  <arc id="e-1108-28A4E-32" source="t-1108-289A6-7" target="p-1108-289A2-6">
-  </arc>
-  <arc id="e-1108-28A50-33" source="p-1108-28999-3" target="t-1108-289A6-7">
-   <type value="test"/>
-  </arc>
-  <arc id="e-1108-28A52-34" source="t-1108-2899B-4" target="p-1108-2898B-2">
-  </arc>
-  <arc id="e-1108-28A54-35" source="t-1108-2899F-5" target="p-1108-28999-3">
-  </arc>
-  <arc id="e-1108-28A57-36" source="p-1108-289D9-18" target="t-1108-28A28-19">
-  </arc>
-  <arc id="e-1108-28A59-37" source="t-1108-28A28-19" target="p-1108-289D4-17">
-  </arc>
- </page>
- </net>
+  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
+    <name>
+      <text>gen0</text>
+    </name>
+    <page id="A-A-1">
+      <transition id="AnswersInput_Correct_106">
+        <name>
+          <text>AnswersInput_Correct_106</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="180" y="55" />
+        </graphics>
+      </transition>
+      <transition id="AnswersInput_Wrong_106">
+        <name>
+          <text>AnswersInput_Wrong_106</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="180" y="175" />
+        </graphics>
+      </transition>
+      <transition id="Board_turnOff_125">
+        <name>
+          <text>Board_turnOff_125</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="465" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Board_turnOn_125">
+        <name>
+          <text>Board_turnOn_125</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="465" y="145" />
+        </graphics>
+      </transition>
+      <transition id="Eraser_activate_126">
+        <name>
+          <text>Eraser_activate_126</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="640" y="55" />
+        </graphics>
+      </transition>
+      <place id="AnswersInput_Answered_106">
+        <name>
+          <text>AnswersInput_Answered_106</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="300" y="115" />
+        </graphics>
+      </place>
+      <place id="AnswersInput_Answering_106">
+        <name>
+          <text>AnswersInput_Answering_106</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="50" y="115" />
+        </graphics>
+      </place>
+      <place id="Board_off_125">
+        <name>
+          <text>Board_off_125</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="550" y="80" />
+        </graphics>
+      </place>
+      <place id="Board_on_125">
+        <name>
+          <text>Board_on_125</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="380" y="85" />
+        </graphics>
+      </place>
+      <place id="Eraser_ActivationCount_126">
+        <name>
+          <text>Eraser_ActivationCount_126</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="755" y="55" />
+        </graphics>
+      </place>
+      <arc id="11" source="AnswersInput_Answering_106" target="AnswersInput_Wrong_106">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="12" source="AnswersInput_Answering_106" target="AnswersInput_Correct_106">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="13" source="AnswersInput_Correct_106" target="AnswersInput_Answered_106">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="14" source="Eraser_ActivationCount_126" target="AnswersInput_Correct_106">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="15" source="Board_turnOff_125" target="Board_off_125">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="16" source="Board_turnOn_125" target="Board_on_125">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="17" source="Board_off_125" target="Board_turnOn_125">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="18" source="Board_on_125" target="Board_turnOff_125">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="19" source="Eraser_activate_126" target="Eraser_ActivationCount_126">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="20" source="Board_on_125" target="Eraser_activate_126">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+    </page>
+  </net>
 </pnml>

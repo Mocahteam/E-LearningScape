@@ -27,15 +27,11 @@ public class CollectObject : FSystem {
             int nbElem = f_inventoryElements.Count;
             for(int i = 0; i < nbElem; i++)
             {
-                if(f_inventoryElements.getAt(i).name == "Scroll")
-                {
-                    seenScroll = f_inventoryElements.getAt(i);
-                    GameObjectManager.addComponent<LinkLabel>(f_inventoryElements.getAt(i));
-                }
-                else if (f_inventoryElements.getAt(i).name == "Puzzle")
+                if (f_inventoryElements.getAt(i).name == "Puzzle")
                 {
                     seenPuzzle = f_inventoryElements.getAt(i);
                     GameObjectManager.addComponent<LinkLabel>(f_inventoryElements.getAt(i));
+                    break;
                 }
             }
         }
@@ -62,32 +58,6 @@ public class CollectObject : FSystem {
                     GameObject UIScroll = UI_metaScroll.GetComponent<LinkedWith>().link.transform.Find(collect.name).gameObject;
                     // enable it
                     GameObjectManager.setGameObjectState(UIScroll, true);
-
-                    switch (collect.name[0])
-                    {
-                        case 'S':
-                            seenScroll.GetComponent<LinkLabel>().text = "l19";
-                            break;
-
-                        case 'M':
-                            seenScroll.GetComponent<LinkLabel>().text = "l20";
-                            break;
-
-                        case 'A':
-                            seenScroll.GetComponent<LinkLabel>().text = "l21";
-                            break;
-
-                        case 'R':
-                            seenScroll.GetComponent<LinkLabel>().text = "l22";
-                            break;
-
-                        case 'T':
-                            seenScroll.GetComponent<LinkLabel>().text = "l23";
-                            break;
-
-                        default:
-                            break;
-                    }
                 }
                 // particular case of puzzle pieces
                 if (collect.name.Contains("PuzzleSet_") && collect.name.Length == 12)

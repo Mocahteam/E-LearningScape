@@ -142,29 +142,14 @@ public class PlankAndWireManager : FSystem {
                             }
                             if (tmpGO.GetComponent<SolutionWord>())
                             {
-                                if(f_syllabusSeen.Count == 0)
+                                if(f_syllabusSeen.Count < 2)
                                     GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12" } });
-                                else if(f_syllabusSeen.Count == 1)
-                                {
-                                    if(f_syllabusSeen.First().name[f_syllabusSeen.First().name.Length - 1] == '9')
-                                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l10" } });
-                                    else
-                                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l13" } });
-                                }
-                                else if(f_syllabusSeen.Count == 2)
+                                else
                                     GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l10", "l13" } });
                             }
                             else
                             {
-                                int nbFamilyMonitoring = f_familyMonitoring.Count;
-                                for(int j = 0; j < nbFamilyMonitoring; j++)
-                                {
-                                    if(f_familyMonitoring.getAt(j).name == "equivWith_PlankAndWireManager_f_wrongWords")
-                                    {
-                                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", familyMonitoring = f_familyMonitoring.getAt(j).GetComponent<FamilyMonitoring>() });
-                                        break;
-                                    }
-                                }
+                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", family = f_wrongWords });
                             }
                             tmpGO.GetComponent<TextMeshPro>().color = Color.red;
                             //update the linerenderer
@@ -202,29 +187,14 @@ public class PlankAndWireManager : FSystem {
                         {
                             if (tmpGO.GetComponent<SolutionWord>())
                             {
-                                if (f_syllabusSeen.Count == 0)
+                                if (f_syllabusSeen.Count < 2)
                                     GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12" } });
-                                else if (f_syllabusSeen.Count == 1)
-                                {
-                                    if (f_syllabusSeen.First().name[f_syllabusSeen.First().name.Length - 1] == '9')
-                                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l10" } });
-                                    else
-                                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l13" } });
-                                }
-                                else if (f_syllabusSeen.Count == 2)
+                                else
                                     GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l10", "l13" } });
                             }
                             else
                             {
-                                int nbFamilyMonitoring = f_familyMonitoring.Count;
-                                for (int j = 0; j < nbFamilyMonitoring; j++)
-                                {
-                                    if (f_familyMonitoring.getAt(j).name == "equivWith_PlankAndWireManager_f_wrongWords")
-                                    {
-                                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", familyMonitoring = f_familyMonitoring.getAt(j).GetComponent<FamilyMonitoring>() });
-                                        break;
-                                    }
-                                }
+                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", family = f_wrongWords });
                             }
                         }
                     }

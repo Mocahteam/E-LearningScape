@@ -59,6 +59,11 @@ TagManager:
   - PuzzleCanvas
   - PuzzleUI
   - ScrollRoom2
+  - BallBoxTop
+  - PlankAndWireRule
+  - ScrollUI
+  - MirrorPlankImage
+  - PasswordRoom2
   layers:
   - Default
   - TransparentFX

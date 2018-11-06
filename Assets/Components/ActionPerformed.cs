@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using FYFY_plugins.Monitoring;
+using FYFY;
 
 public class ActionPerformed : MonoBehaviour {
     // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
@@ -18,5 +18,5 @@ public class ActionPerformed : MonoBehaviour {
     /// l3 => orLabels = new string[] {..., "l0", "l3"}; OR orLabels = new string[] {..., "l1", "l3"};
     /// </summary>
     public string[] orLabels = null;
-    public FamilyMonitoring familyMonitoring = null;
+    public Family family = null;
 }
