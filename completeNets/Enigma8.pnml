@@ -1,409 +1,263 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
-  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
-    <name>
-      <text>gen0</text>
-    </name>
-    <page id="A-A-1">
-      <transition id="Plank_perform_84">
-        <name>
-          <text>Plank_perform_84</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="110" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Plank_turnOff_81">
-        <name>
-          <text>Plank_turnOff_81</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="350" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Plank_turnOn_81">
-        <name>
-          <text>Plank_turnOn_81</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="350" y="145" />
-        </graphics>
-      </transition>
-      <transition id="Mirror_turnOff_83">
-        <name>
-          <text>Mirror_turnOff_83</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="600" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Mirror_turnOn_83">
-        <name>
-          <text>Mirror_turnOn_83</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="600" y="145" />
-        </graphics>
-      </transition>
-      <transition id="Q4_Correct_85">
-        <name>
-          <text>Q4_Correct_85</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="915" y="55" />
-        </graphics>
-      </transition>
-      <transition id="Q4_Wrong_85">
-        <name>
-          <text>Q4_Wrong_85</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="915" y="175" />
-        </graphics>
-      </transition>
-      <transition id="Mirror_perform_82">
-        <name>
-          <text>Mirror_perform_82</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="1195" y="50" />
-        </graphics>
-      </transition>
-      <place id="Plank_end_84">
-        <name>
-          <text>Plank_end_84</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="185" y="50" />
-        </graphics>
-      </place>
-      <place id="Plank_start_84">
-        <name>
-          <text>Plank_start_84</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="30" y="50" />
-        </graphics>
-      </place>
-      <place id="Plank_off_81">
-        <name>
-          <text>Plank_off_81</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="435" y="80" />
-        </graphics>
-      </place>
-      <place id="Plank_on_81">
-        <name>
-          <text>Plank_on_81</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="265" y="85" />
-        </graphics>
-      </place>
-      <place id="Mirror_off_83">
-        <name>
-          <text>Mirror_off_83</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="685" y="80" />
-        </graphics>
-      </place>
-      <place id="Mirror_on_83">
-        <name>
-          <text>Mirror_on_83</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="515" y="85" />
-        </graphics>
-      </place>
-      <place id="Q4_Answered_85">
-        <name>
-          <text>Q4_Answered_85</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="1035" y="115" />
-        </graphics>
-      </place>
-      <place id="Q4_Answering_85">
-        <name>
-          <text>Q4_Answering_85</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="785" y="115" />
-        </graphics>
-      </place>
-      <place id="Mirror_end_82">
-        <name>
-          <text>Mirror_end_82</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="1270" y="50" />
-        </graphics>
-      </place>
-      <place id="Mirror_start_82">
-        <name>
-          <text>Mirror_start_82</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="1115" y="50" />
-        </graphics>
-      </place>
-      <arc id="19" source="Plank_perform_84" target="Plank_end_84">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="20" source="Plank_start_84" target="Plank_perform_84">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="21" source="Plank_on_81" target="Plank_perform_84">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="22" source="Mirror_on_83" target="Plank_perform_84">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="23" source="Plank_turnOff_81" target="Plank_off_81">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="24" source="Plank_turnOn_81" target="Plank_on_81">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="25" source="Plank_off_81" target="Plank_turnOn_81">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="26" source="Plank_on_81" target="Plank_turnOff_81">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="27" source="Mirror_turnOff_83" target="Mirror_off_83">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="28" source="Mirror_turnOn_83" target="Mirror_on_83">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="29" source="Mirror_off_83" target="Mirror_turnOn_83">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="30" source="Mirror_on_83" target="Mirror_turnOff_83">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="31" source="Mirror_end_82" target="Mirror_turnOn_83">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="32" source="Q4_Answering_85" target="Q4_Wrong_85">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="33" source="Q4_Answering_85" target="Q4_Correct_85">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="34" source="Q4_Correct_85" target="Q4_Answered_85">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="35" source="Plank_end_84" target="Q4_Correct_85">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="36" source="Mirror_perform_82" target="Mirror_end_82">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="37" source="Mirror_start_82" target="Mirror_perform_82">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-    </page>
-  </net>
+ <net id="n-119C-6BA0-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma8</text>
+  </name>
+ <page id="g-119C-6BA8-1">
+  <place id="p-119C-6BAC-2">
+  <name>
+   <text>Mirror_end_82</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="205" y="255"/>
+   </graphics>
+  </place>
+  <place id="p-119C-6BB7-3">
+  <name>
+   <text>Mirror_off_83</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="295" y="255"/>
+   </graphics>
+  </place>
+  <place id="p-119C-6BBB-4">
+  <name>
+   <text>Mirror_on_83</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="455" y="255"/>
+   </graphics>
+  </place>
+  <transition id="t-119C-6BBD-5">
+  <name>
+   <text>Mirror_perform_82</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="135" y="255"/>
+   </graphics>
+  </transition>
+  <place id="p-119C-6BC2-6">
+  <name>
+   <text>Mirror_start_82</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="55" y="255"/>
+   </graphics>
+  </place>
+  <transition id="t-119C-6BC4-7">
+  <name>
+   <text>Mirror_turnOff_83</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="375" y="225"/>
+   </graphics>
+  </transition>
+  <transition id="t-119C-6BC7-8">
+  <name>
+   <text>Mirror_turnOn_83</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="375" y="315"/>
+   </graphics>
+  </transition>
+  <place id="p-119C-6BC9-9">
+  <name>
+   <text>Plank_end_84</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="725" y="170"/>
+   </graphics>
+  </place>
+  <place id="p-119C-6BCC-10">
+  <name>
+   <text>Plank_off_81</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="285" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-119C-6BCE-11">
+  <name>
+   <text>Plank_on_81</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="465" y="80"/>
+   </graphics>
+  </place>
+  <transition id="t-119C-6BD1-12">
+  <name>
+   <text>Plank_perform_84</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="655" y="170"/>
+   </graphics>
+  </transition>
+  <place id="p-119C-6BD3-13">
+  <name>
+   <text>Plank_start_84</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="575" y="170"/>
+   </graphics>
+  </place>
+  <transition id="t-119C-6BD6-14">
+  <name>
+   <text>Plank_turnOff_81</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="375" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-119C-6BD9-15">
+  <name>
+   <text>Plank_turnOn_81</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="375" y="140"/>
+   </graphics>
+  </transition>
+  <place id="p-119C-6BDB-16">
+  <name>
+   <text>Q4_Answered_85</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1115" y="175"/>
+   </graphics>
+  </place>
+  <place id="p-119C-6BDE-17">
+  <name>
+   <text>Q4_Answering_85</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="855" y="175"/>
+   </graphics>
+  </place>
+  <transition id="t-119C-6BE0-18">
+  <name>
+   <text>Q4_Correct_85</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="995" y="115"/>
+   </graphics>
+  </transition>
+  <transition id="t-119C-6C1C-19">
+  <name>
+   <text>Q4_Wrong_85</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="995" y="235"/>
+   </graphics>
+  </transition>
+  <arc id="e-119C-6C22-20" source="p-119C-6BC2-6" target="t-119C-6BBD-5">
+  </arc>
+  <arc id="e-119C-6C24-21" source="t-119C-6BC4-7" target="p-119C-6BB7-3">
+  </arc>
+  <arc id="e-119C-6C25-22" source="p-119C-6BCE-11" target="t-119C-6BD6-14">
+  </arc>
+  <arc id="e-119C-6C27-23" source="p-119C-6BCC-10" target="t-119C-6BD9-15">
+  </arc>
+  <arc id="e-119C-6C28-24" source="t-119C-6BD9-15" target="p-119C-6BCE-11">
+  </arc>
+  <arc id="e-119C-6C29-25" source="t-119C-6BD6-14" target="p-119C-6BCC-10">
+  </arc>
+  <arc id="e-119C-6C2A-26" source="p-119C-6BBB-4" target="t-119C-6BD1-12">
+   <type value="test"/>
+  </arc>
+  <arc id="e-119C-6C2C-27" source="p-119C-6BCE-11" target="t-119C-6BD1-12">
+   <type value="test"/>
+  </arc>
+  <arc id="e-119C-6C2D-28" source="p-119C-6BD3-13" target="t-119C-6BD1-12">
+  </arc>
+  <arc id="e-119C-6C2E-29" source="t-119C-6BD1-12" target="p-119C-6BC9-9">
+  </arc>
+  <arc id="e-119C-6C2F-30" source="t-119C-6BBD-5" target="p-119C-6BAC-2">
+  </arc>
+  <arc id="e-119C-6C30-31" source="t-119C-6BE0-18" target="p-119C-6BDB-16">
+  </arc>
+  <arc id="e-119C-6C31-32" source="p-119C-6BDE-17" target="t-119C-6BE0-18">
+  </arc>
+  <arc id="e-119C-6C33-33" source="p-119C-6BDE-17" target="t-119C-6C1C-19">
+   <type value="test"/>
+  </arc>
+  <arc id="e-119C-6C34-34" source="p-119C-6BAC-2" target="t-119C-6BC7-8">
+   <type value="test"/>
+  </arc>
+  <arc id="e-119C-6C35-35" source="p-119C-6BBB-4" target="t-119C-6BC4-7">
+  </arc>
+  <arc id="e-119C-6C36-36" source="p-119C-6BB7-3" target="t-119C-6BC7-8">
+  </arc>
+  <arc id="e-119C-6C36-37" source="t-119C-6BC7-8" target="p-119C-6BBB-4">
+  </arc>
+ </page>
+ </net>
 </pnml>

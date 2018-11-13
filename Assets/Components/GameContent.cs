@@ -7,6 +7,7 @@ public class GameContent {
     // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
 
     public string theme;
+    public bool trace = true;
 
     //Texte intro, transition, fin
     public string[] storyTextIntro;
@@ -16,14 +17,16 @@ public class GameContent {
     //Ball Box
     public string ballBoxQuestion;
     public List<string> ballBoxAnswer;
-    public string[] ballTexts = new string[15];
+    public string[] ballCorrectTexts = new string[3];
+    public string[] ballWrongTexts = new string[12];
 
     //Plank And Wire
     public string plankAndWireQuestion;
     public string plankAndWireQuestionIAR;
-    public string[] plankAndWireAnswers = new string[3]; //words
+    public string[] plankAndWireCorrectWords = new string[3];
+    public int[] plankAndWireCorrectNumbers = new int[3];
     public string[] plankOtherWords = new string[10];
-    //chiffres sur le tableau + réponse dans l'iar + chiffres incorrectes
+    public int[] plankAndWireOtherNumbers = new int[6];
 
     //Green Fragments
     public string greenFragmentsQuestion;
@@ -54,9 +57,6 @@ public class GameContent {
     public string scrollsQuestion;
     public List<string> scrollsAnswer;
     public string[] scrollsWords = new string[5];
-    /*<color=red> to set the color to red. Several other colors are pre-defined.
-<#FF8000> or any other hexadecimal code to define a color.
-</color> to end the color tag.*/
 
     //Mirror
     public string mirrorQuestion;
@@ -81,11 +81,10 @@ public class GameContent {
     //Enigma 12 (2 dream fragments)
 
     //Lamp
-    public string lampWord;
+    public string[] lampPicturesPath = new string[6];
 
     //White Board
-    public string[] whiteBoardRemovable; //"AMENAGER L'ESPAC##E##"
-    public string[] whiteBoardUnremovable;
+    public string[] whiteBoardWords = new string [12]; //"AMENAGER L'ESPAC##E##"
 
     public string[] room3Answers = new string[4];
 }

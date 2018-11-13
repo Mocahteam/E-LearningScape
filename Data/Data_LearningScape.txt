@@ -1,5 +1,6 @@
 {
     "theme": "Pédagogie",
+    "trace": true,
     "storyTextIntro": [
         "Game data loaded from file",
         "Il est déjà tard le soir, Camille reste inquiète pour son premier enseignement à Sorbonne Université. Ce n’est pas la première fois qu’elle enseigne, mais maintenant elle est Maître de Conférences, son premier poste permanent.",
@@ -21,15 +22,17 @@
         "2",
         "8"
     ],
-    "ballTexts": [
+    "ballCorrectTexts": [
         "CLASSE INVERSEE",
         "INTERACTIVITE",
+        "APPROCHE PROJET"
+    ],
+    "ballWrongTexts": [
         "COPINAGE AVEC LES ETUDIANTS",
         "ECRIRE AU TABLEAU",
         "BEAUCOUP DE DEVOIRS A LA MAISON",
         "INTERROGATIONS SURPRISES",
         "BONUS DE PARTICIPATION",
-        "APPROCHE PROJET",
         "INTERROGER UN ETUDIANT AU HASARD",
         "SEVERITE AVEC LES ETUDIANTS",
         "DEPLACEMENT DANS LA SALLE",
@@ -38,12 +41,17 @@
         "ENSEIGNER TOT LE MATIN",
         "AUGMENTER LE NIVEAU D'EXIGENCE"
     ],
-    "plankAndWireQuestion": "Relier avec la corde les 3\néléments qui assurent\nla cohérence d'un cours",
-    "plankAndWireQuestionIAR": "Comment construire une séquence\ncohérente ?",
-    "plankAndWireAnswers": [
+    "plankAndWireQuestion": "Relier avec la corde les 3 éléments qui assurent la cohérence d'un cours",
+    "plankAndWireQuestionIAR": "Comment construire une séquence cohérente ?",
+    "plankAndWireCorrectWords": [
         "Objectifs",
         "Méthodes Pédagogiques",
         "Evaluation"
+    ],
+    "plankAndWireCorrectNumbers": [
+        4,
+        5,
+        9
     ],
     "plankOtherWords": [
         "Motivation",
@@ -57,6 +65,14 @@
         "Bibliographie",
         "Participation"
     ],
+    "plankAndWireOtherNumbers": [
+        1,
+        2,
+        3,
+        6,
+        7,
+        8
+    ],
     "greenFragmentsQuestion": "Comment favoriser mon innovation pédagogique ?",
     "greenFragmentsWords": [
         "il",
@@ -68,15 +84,15 @@
     ],
     "greenFragmentAnswer": "1023810149",
     "gearsQuestion": "Sur quels facteurs est-ce que je peux agir pour motiver mes étudiants ?",
-    "gearTextUp": "",
-    "gearTextDown": "",
+    "gearTextUp": "Etudiants",
+    "gearTextDown": "Motivation",
     "gearMovableTexts": [
-        "Facteurs\nrelatifs à la\nclasse",
-        "Facteurs\nrelatifs à\nl'école",
-        "Facteurs\nrelatifs à la\nvie de l'élève",
-        "Facteurs\nrelatifs à la\nsociété"
+        "Facteurs relatifs à la classe",
+        "Facteurs relatifs à l'université",
+        "Facteurs relatifs à la vie de l'élève",
+        "Facteurs relatifs à la société"
     ],
-    "gearAnswer": "Facteurs\nrelatifs à la\nclasse",
+    "gearAnswer": "Facteurs relatifs à la classe",
     "mdpLogin": 814,
     "glassesPicturesPath": [
         "Data/contrat01.jpg",
@@ -85,13 +101,13 @@
         "Data/contrat04.jpg"
     ],
     "glassesAnswer": "Contrat Pédagogique",
-    "enigma6Question": "A quoi Berthiaume nous\nconseille-t-il de faire attention ?",
+    "enigma6Question": "A quoi Berthiaume nous conseille-t-il de faire attention ?",
     "enigma6Answer": [
         "9",
         "14"
     ],
     "enigma6AnswerDescription": "Feedbacks constructifs",
-    "scrollsQuestion": "Cet acronyme anglais décrit\ndes objectifs clairs",
+    "scrollsQuestion": "Cet acronyme anglais décrit des objectifs clairs",
     "scrollsAnswer": [
         "SMART"
     ],
@@ -102,27 +118,46 @@
         "<color=red>R</color>éaliste",
         "<color=red>T</color>emporalisé"
     ],
-    "mirrorQuestion": "L'année de création de la\ntaxonomie de Bloom est...",
+    "mirrorQuestion": "L'année de création de la taxonomie de Bloom est...",
     "mirrorAnswer": [
         "1956"
     ],
     "mirrorPicturePath": "Data/Plank.png",
-    "enigma9Question": "L'utilisation d'une grille\ncritériée est la solution",
+    "enigma9Question": "L'utilisation d'une grille critériée est la solution",
     "enigma9Answer": [
         "3",
         "1",
         "2"
     ],
-    "enigma10Question": "Seul, vous ne sortirez\npas de ce labyrinthe",
+    "enigma10Question": "Seul, vous ne sortirez pas de ce labyrinthe",
     "enigma10Answer": [
         "Collaboration"
     ],
     "lockRoom2Password": 703,
     "puzzle": true,
     "puzzlePicturePath": "Data/Puzzle_Complet.png",
-    "lampWord": "",
-    "whiteBoardRemovable": [],
-    "whiteBoardUnremovable": [],
+    "lampPicturesPath": [
+        "Data/E12_C.png",
+        "Data/E12_S.png",
+        "Data/E12_O.png",
+        "Data/E12_E.png",
+        "Data/E12_U.png",
+        "Data/E12_R.png"
+    ],
+    "whiteBoardWords": [
+        "##RIEN N'EST## IMPORTANT",
+        "TOUT EST ##INDISPENSABLE##",
+        "AME##N##AGER L'ESPACE",
+        "S##C##ENARISATION",
+        "ENCO##U##RAGER",
+        "M##O##TIVATION",
+        "FEEDBACK CONSTRUCTIF",
+        "##N##OTER LES APPRENANTS",
+        "P##E##DAGOGIE",
+        "RECOMPENSE",
+        "ME##T##HODE",
+        "APPROCHE PROGRAMME"
+    ],
     "room3Answers": [
         "Contenu",
         "Contraintes",

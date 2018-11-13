@@ -1,1563 +1,933 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
-  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
-    <name>
-      <text>gen0</text>
-    </name>
-    <page id="A-A-1">
-      <transition id="Q2_perform_56">
-        <name>
-          <text>Q2_perform_56</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="110" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Q2_perform_33">
-        <name>
-          <text>Q2_perform_33</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="345" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Q2_perform_109">
-        <name>
-          <text>Q2_perform_109</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="580" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Verrou Porte_turnOff_90">
-        <name>
-          <text>Verrou Porte_turnOff_90</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="820" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Verrou Porte_turnOn_90">
-        <name>
-          <text>Verrou Porte_turnOn_90</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="820" y="145" />
-        </graphics>
-      </transition>
-      <transition id="Verrou Porte_perform_91">
-        <name>
-          <text>Verrou Porte_perform_91</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="1065" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Q1_perform_138">
-        <name>
-          <text>Q1_perform_138</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="1300" y="50" />
-        </graphics>
-      </transition>
-      <transition id="LoginPanel_Correct_59">
-        <name>
-          <text>LoginPanel_Correct_59</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="1605" y="55" />
-        </graphics>
-      </transition>
-      <transition id="LoginPanel_Wrong_59">
-        <name>
-          <text>LoginPanel_Wrong_59</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="1605" y="175" />
-        </graphics>
-      </transition>
-      <transition id="LoginPanel_turnOff_60">
-        <name>
-          <text>LoginPanel_turnOff_60</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="1890" y="50" />
-        </graphics>
-      </transition>
-      <transition id="LoginPanel_turnOn_60">
-        <name>
-          <text>LoginPanel_turnOn_60</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="1890" y="145" />
-        </graphics>
-      </transition>
-      <transition id="Q6_perform_65">
-        <name>
-          <text>Q6_perform_65</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="2135" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Q1_perform_108">
-        <name>
-          <text>Q1_perform_108</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="2370" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Q4_perform_111">
-        <name>
-          <text>Q4_perform_111</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="2605" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Q3_perform_80">
-        <name>
-          <text>Q3_perform_80</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="2840" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Q1_perform_23">
-        <name>
-          <text>Q1_perform_23</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="3075" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Q5_perform_89">
-        <name>
-          <text>Q5_perform_89</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="3310" y="50" />
-        </graphics>
-      </transition>
-      <transition id="WallIntro_perform2_53">
-        <name>
-          <text>WallIntro_perform2_53</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="3545" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Q4_perform_86">
-        <name>
-          <text>Q4_perform_86</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="3775" y="50" />
-        </graphics>
-      </transition>
-      <transition id="FPSController_perform_131">
-        <name>
-          <text>FPSController_perform_131</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="4010" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Q3_perform_57">
-        <name>
-          <text>Q3_perform_57</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="4245" y="50" />
-        </graphics>
-      </transition>
-      <transition id="GearsEnigma_Correct_58">
-        <name>
-          <text>GearsEnigma_Correct_58</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="4550" y="55" />
-        </graphics>
-      </transition>
-      <transition id="GearsEnigma_Wrong_58">
-        <name>
-          <text>GearsEnigma_Wrong_58</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="4550" y="175" />
-        </graphics>
-      </transition>
-      <transition id="Q3_perform_110">
-        <name>
-          <text>Q3_perform_110</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="4830" y="50" />
-        </graphics>
-      </transition>
-      <place id="Q2_end_56">
-        <name>
-          <text>Q2_end_56</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="185" y="50" />
-        </graphics>
-      </place>
-      <place id="Q2_start_56">
-        <name>
-          <text>Q2_start_56</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="30" y="50" />
-        </graphics>
-      </place>
-      <place id="Q2_end_33">
-        <name>
-          <text>Q2_end_33</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="420" y="50" />
-        </graphics>
-      </place>
-      <place id="Q2_start_33">
-        <name>
-          <text>Q2_start_33</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="265" y="50" />
-        </graphics>
-      </place>
-      <place id="Q2_end_109">
-        <name>
-          <text>Q2_end_109</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="655" y="50" />
-        </graphics>
-      </place>
-      <place id="Q2_start_109">
-        <name>
-          <text>Q2_start_109</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="500" y="50" />
-        </graphics>
-      </place>
-      <place id="Verrou Porte_off_90">
-        <name>
-          <text>Verrou Porte_off_90</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="905" y="80" />
-        </graphics>
-      </place>
-      <place id="Verrou Porte_on_90">
-        <name>
-          <text>Verrou Porte_on_90</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="735" y="85" />
-        </graphics>
-      </place>
-      <place id="Verrou Porte_end_91">
-        <name>
-          <text>Verrou Porte_end_91</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="1140" y="50" />
-        </graphics>
-      </place>
-      <place id="Verrou Porte_start_91">
-        <name>
-          <text>Verrou Porte_start_91</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="985" y="50" />
-        </graphics>
-      </place>
-      <place id="Q1_end_138">
-        <name>
-          <text>Q1_end_138</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="1375" y="50" />
-        </graphics>
-      </place>
-      <place id="Q1_start_138">
-        <name>
-          <text>Q1_start_138</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="1220" y="50" />
-        </graphics>
-      </place>
-      <place id="LoginPanel_Answered_59">
-        <name>
-          <text>LoginPanel_Answered_59</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="1725" y="115" />
-        </graphics>
-      </place>
-      <place id="LoginPanel_Answering_59">
-        <name>
-          <text>LoginPanel_Answering_59</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="1475" y="115" />
-        </graphics>
-      </place>
-      <place id="LoginPanel_off_60">
-        <name>
-          <text>LoginPanel_off_60</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="1975" y="80" />
-        </graphics>
-      </place>
-      <place id="LoginPanel_on_60">
-        <name>
-          <text>LoginPanel_on_60</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="1805" y="85" />
-        </graphics>
-      </place>
-      <place id="Q6_end_65">
-        <name>
-          <text>Q6_end_65</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="2210" y="50" />
-        </graphics>
-      </place>
-      <place id="Q6_start_65">
-        <name>
-          <text>Q6_start_65</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="2055" y="50" />
-        </graphics>
-      </place>
-      <place id="Q1_end_108">
-        <name>
-          <text>Q1_end_108</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="2445" y="50" />
-        </graphics>
-      </place>
-      <place id="Q1_start_108">
-        <name>
-          <text>Q1_start_108</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="2290" y="50" />
-        </graphics>
-      </place>
-      <place id="Q4_end_111">
-        <name>
-          <text>Q4_end_111</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="2680" y="50" />
-        </graphics>
-      </place>
-      <place id="Q4_start_111">
-        <name>
-          <text>Q4_start_111</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="2525" y="50" />
-        </graphics>
-      </place>
-      <place id="Q3_end_80">
-        <name>
-          <text>Q3_end_80</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="2915" y="50" />
-        </graphics>
-      </place>
-      <place id="Q3_start_80">
-        <name>
-          <text>Q3_start_80</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="2760" y="50" />
-        </graphics>
-      </place>
-      <place id="Q1_end_23">
-        <name>
-          <text>Q1_end_23</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="3150" y="50" />
-        </graphics>
-      </place>
-      <place id="Q1_start_23">
-        <name>
-          <text>Q1_start_23</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="2995" y="50" />
-        </graphics>
-      </place>
-      <place id="Q5_end_89">
-        <name>
-          <text>Q5_end_89</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="3385" y="50" />
-        </graphics>
-      </place>
-      <place id="Q5_start_89">
-        <name>
-          <text>Q5_start_89</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="3230" y="50" />
-        </graphics>
-      </place>
-      <place id="WallIntro_end_53">
-        <name>
-          <text>WallIntro_end_53</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="3615" y="50" />
-        </graphics>
-      </place>
-      <place id="WallIntro_start_53">
-        <name>
-          <text>WallIntro_start_53</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="3465" y="50" />
-        </graphics>
-      </place>
-      <place id="Q4_end_86">
-        <name>
-          <text>Q4_end_86</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="3850" y="50" />
-        </graphics>
-      </place>
-      <place id="Q4_start_86">
-        <name>
-          <text>Q4_start_86</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="3695" y="50" />
-        </graphics>
-      </place>
-      <place id="FPSController_end_131">
-        <name>
-          <text>FPSController_end_131</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="4085" y="50" />
-        </graphics>
-      </place>
-      <place id="FPSController_start_131">
-        <name>
-          <text>FPSController_start_131</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="3930" y="50" />
-        </graphics>
-      </place>
-      <place id="Q3_end_57">
-        <name>
-          <text>Q3_end_57</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="4320" y="50" />
-        </graphics>
-      </place>
-      <place id="Q3_start_57">
-        <name>
-          <text>Q3_start_57</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="4165" y="50" />
-        </graphics>
-      </place>
-      <place id="GearsEnigma_Answered_58">
-        <name>
-          <text>GearsEnigma_Answered_58</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="4670" y="115" />
-        </graphics>
-      </place>
-      <place id="GearsEnigma_Answering_58">
-        <name>
-          <text>GearsEnigma_Answering_58</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="4420" y="115" />
-        </graphics>
-      </place>
-      <place id="Q3_end_110">
-        <name>
-          <text>Q3_end_110</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="4905" y="50" />
-        </graphics>
-      </place>
-      <place id="Q3_start_110">
-        <name>
-          <text>Q3_start_110</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="4750" y="50" />
-        </graphics>
-      </place>
-      <arc id="65" source="Q2_perform_56" target="Q2_end_56">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="66" source="Q2_start_56" target="Q2_perform_56">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="67" source="WallIntro_end_53" target="Q2_perform_56">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="68" source="Q2_perform_33" target="Q2_end_33">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="69" source="Q2_start_33" target="Q2_perform_33">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="70" source="LoginPanel_Answered_59" target="Q2_perform_33">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="71" source="Q2_perform_109" target="Q2_end_109">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="72" source="Q2_start_109" target="Q2_perform_109">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="73" source="Verrou Porte_end_91" target="Q2_perform_109">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="74" source="Verrou Porte_turnOff_90" target="Verrou Porte_off_90">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="75" source="Verrou Porte_turnOn_90" target="Verrou Porte_on_90">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="76" source="Verrou Porte_off_90" target="Verrou Porte_turnOn_90">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="77" source="Verrou Porte_on_90" target="Verrou Porte_turnOff_90">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="78" source="LoginPanel_Answered_59" target="Verrou Porte_turnOff_90">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="79" source="LoginPanel_Answered_59" target="Verrou Porte_turnOn_90">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="80" source="Verrou Porte_perform_91" target="Verrou Porte_end_91">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="81" source="Verrou Porte_start_91" target="Verrou Porte_perform_91">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="82" source="Q2_end_33" target="Verrou Porte_perform_91">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="83" source="Q5_end_89" target="Verrou Porte_perform_91">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="84" source="Q3_end_80" target="Verrou Porte_perform_91">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="85" source="Q4_end_86" target="Verrou Porte_perform_91">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="86" source="Q6_end_65" target="Verrou Porte_perform_91">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="87" source="Verrou Porte_on_90" target="Verrou Porte_perform_91">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="88" source="Q1_end_138" target="Verrou Porte_perform_91">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="89" source="Q1_perform_138" target="Q1_end_138">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="90" source="Q1_start_138" target="Q1_perform_138">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="91" source="LoginPanel_Answered_59" target="Q1_perform_138">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="92" source="LoginPanel_Answering_59" target="LoginPanel_Wrong_59">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="93" source="LoginPanel_Answering_59" target="LoginPanel_Correct_59">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="94" source="LoginPanel_Correct_59" target="LoginPanel_Answered_59">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="95" source="LoginPanel_on_60" target="LoginPanel_Correct_59">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="96" source="LoginPanel_on_60" target="LoginPanel_Wrong_59">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="97" source="LoginPanel_turnOff_60" target="LoginPanel_off_60">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="98" source="LoginPanel_turnOn_60" target="LoginPanel_on_60">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="99" source="LoginPanel_off_60" target="LoginPanel_turnOn_60">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="100" source="LoginPanel_on_60" target="LoginPanel_turnOff_60">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="101" source="GearsEnigma_Answered_58" target="LoginPanel_turnOn_60">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="102" source="Q6_perform_65" target="Q6_end_65">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="103" source="Q6_start_65" target="Q6_perform_65">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="104" source="LoginPanel_Answered_59" target="Q6_perform_65">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="105" source="Q1_perform_108" target="Q1_end_108">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="106" source="Q1_start_108" target="Q1_perform_108">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="107" source="Verrou Porte_end_91" target="Q1_perform_108">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="108" source="Q4_perform_111" target="Q4_end_111">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="109" source="Q4_start_111" target="Q4_perform_111">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="110" source="Verrou Porte_end_91" target="Q4_perform_111">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="111" source="Q3_perform_80" target="Q3_end_80">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="112" source="Q3_start_80" target="Q3_perform_80">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="113" source="LoginPanel_Answered_59" target="Q3_perform_80">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="114" source="Q1_perform_23" target="Q1_end_23">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="115" source="Q1_start_23" target="Q1_perform_23">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="116" source="WallIntro_end_53" target="Q1_perform_23">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="117" source="Q5_perform_89" target="Q5_end_89">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="118" source="Q5_start_89" target="Q5_perform_89">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="119" source="LoginPanel_Answered_59" target="Q5_perform_89">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="120" source="WallIntro_start_53" target="WallIntro_perform2_53">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="121" source="WallIntro_perform2_53" target="WallIntro_end_53">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="122" source="Q4_perform_86" target="Q4_end_86">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="123" source="Q4_start_86" target="Q4_perform_86">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="124" source="LoginPanel_Answered_59" target="Q4_perform_86">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="125" source="FPSController_perform_131" target="FPSController_end_131">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="126" source="FPSController_start_131" target="FPSController_perform_131">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="127" source="Q1_end_108" target="FPSController_perform_131">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="128" source="Q2_end_109" target="FPSController_perform_131">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="129" source="Q3_end_110" target="FPSController_perform_131">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="130" source="Q4_end_111" target="FPSController_perform_131">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="131" source="Q3_perform_57" target="Q3_end_57">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="132" source="Q3_start_57" target="Q3_perform_57">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="133" source="WallIntro_end_53" target="Q3_perform_57">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="134" source="GearsEnigma_Answering_58" target="GearsEnigma_Wrong_58">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="135" source="GearsEnigma_Answering_58" target="GearsEnigma_Correct_58">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="136" source="GearsEnigma_Correct_58" target="GearsEnigma_Answered_58">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="137" source="Q1_end_23" target="GearsEnigma_Correct_58">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="138" source="Q2_end_56" target="GearsEnigma_Correct_58">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="139" source="Q3_end_57" target="GearsEnigma_Correct_58">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="140" source="Q1_end_23" target="GearsEnigma_Wrong_58">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="141" source="Q2_end_56" target="GearsEnigma_Wrong_58">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="142" source="Q3_end_57" target="GearsEnigma_Wrong_58">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="143" source="Q3_perform_110" target="Q3_end_110">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="144" source="Q3_start_110" target="Q3_perform_110">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="145" source="Verrou Porte_end_91" target="Q3_perform_110">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-    </page>
-  </net>
+ <net id="n-50CC-BD02F-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>E-LearningScape</text>
+  </name>
+ <page id="g-50CC-BD03A-1">
+  <place id="p-50CC-BD03D-2">
+  <name>
+   <text>FPSController_end_131</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="80" y="560"/>
+   </graphics>
+  </place>
+  <transition id="t-50CC-BD04A-3">
+  <name>
+   <text>FPSController_perform_131</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="150" y="560"/>
+   </graphics>
+  </transition>
+  <place id="p-50CC-BD04E-4">
+  <name>
+   <text>FPSController_start_131</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="230" y="560"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD052-5">
+  <name>
+   <text>GearsEnigma_Answered_58</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="920" y="120"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD055-6">
+  <name>
+   <text>GearsEnigma_Answering_58</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="660" y="120"/>
+   </graphics>
+  </place>
+  <transition id="t-50CC-BD059-7">
+  <name>
+   <text>GearsEnigma_Correct_58</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="800" y="60"/>
+   </graphics>
+  </transition>
+  <place id="p-50CC-BD05B-8">
+  <name>
+   <text>LoginPanel_Answered_59</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1230" y="260"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD05E-9">
+  <name>
+   <text>LoginPanel_Answering_59</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1470" y="260"/>
+   </graphics>
+  </place>
+  <transition id="t-50CC-BD062-10">
+  <name>
+   <text>LoginPanel_Correct_59</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1350" y="200"/>
+   </graphics>
+  </transition>
+  <place id="p-50CC-BD065-11">
+  <name>
+   <text>LoginPanel_off_60</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1070" y="120"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD068-12">
+  <name>
+   <text>LoginPanel_on_60</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1250" y="120"/>
+   </graphics>
+  </place>
+  <transition id="t-50CC-BD06B-13">
+  <name>
+   <text>LoginPanel_turnOff_60</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1160" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-50CC-BD06D-14">
+  <name>
+   <text>LoginPanel_turnOn_60</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1160" y="180"/>
+   </graphics>
+  </transition>
+  <place id="p-50CC-BD071-15">
+  <name>
+   <text>Q1_end_108</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="350" y="460"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD072-16">
+  <name>
+   <text>Q1_end_138</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1030" y="400"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD075-17">
+  <name>
+   <text>Q1_end_23</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="530" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-50CC-BD077-18">
+  <name>
+   <text>Q1_perform_108</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="420" y="460"/>
+   </graphics>
+  </transition>
+  <transition id="t-50CC-BD0B7-19">
+  <name>
+   <text>Q1_perform_138</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1110" y="400"/>
+   </graphics>
+  </transition>
+  <transition id="t-50CC-BD0BA-20">
+  <name>
+   <text>Q1_perform_23</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="460" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-50CC-BD0BD-21">
+  <name>
+   <text>Q1_start_108</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="500" y="460"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD0BF-22">
+  <name>
+   <text>Q1_start_138</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1190" y="400"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD0C3-23">
+  <name>
+   <text>Q1_start_23</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="380" y="50"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD0C4-24">
+  <name>
+   <text>Q2_end_109</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="340" y="530"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD0C7-25">
+  <name>
+   <text>Q2_end_33</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1030" y="460"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD0C9-26">
+  <name>
+   <text>Q2_end_56</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="530" y="120"/>
+   </graphics>
+  </place>
+  <transition id="t-50CC-BD0CC-27">
+  <name>
+   <text>Q2_perform_109</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="420" y="530"/>
+   </graphics>
+  </transition>
+  <transition id="t-50CC-BD0CE-28">
+  <name>
+   <text>Q2_perform_33</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1110" y="460"/>
+   </graphics>
+  </transition>
+  <transition id="t-50CC-BD0D1-29">
+  <name>
+   <text>Q2_perform_56</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="460" y="120"/>
+   </graphics>
+  </transition>
+  <place id="p-50CC-BD0D3-30">
+  <name>
+   <text>Q2_start_109</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="500" y="530"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD0D6-31">
+  <name>
+   <text>Q2_start_33</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1190" y="460"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD0D8-32">
+  <name>
+   <text>Q2_start_56</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="380" y="120"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD0DB-33">
+  <name>
+   <text>Q3_end_110</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="350" y="600"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD0DC-34">
+  <name>
+   <text>Q3_end_57</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="540" y="180"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD0DF-35">
+  <name>
+   <text>Q3_end_80</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1030" y="530"/>
+   </graphics>
+  </place>
+  <transition id="t-50CC-BD100-36">
+  <name>
+   <text>Q3_perform_110</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="420" y="600"/>
+   </graphics>
+  </transition>
+  <transition id="t-50CC-BD103-37">
+  <name>
+   <text>Q3_perform_57</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="460" y="180"/>
+   </graphics>
+  </transition>
+  <transition id="t-50CC-BD105-38">
+  <name>
+   <text>Q3_perform_80</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1110" y="530"/>
+   </graphics>
+  </transition>
+  <place id="p-50CC-BD108-39">
+  <name>
+   <text>Q3_start_110</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="500" y="600"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD10A-40">
+  <name>
+   <text>Q3_start_57</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="380" y="180"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD10D-41">
+  <name>
+   <text>Q3_start_80</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1190" y="530"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD10F-42">
+  <name>
+   <text>Q4_end_111</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="340" y="660"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD112-43">
+  <name>
+   <text>Q4_end_86</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1040" y="600"/>
+   </graphics>
+  </place>
+  <transition id="t-50CC-BD113-44">
+  <name>
+   <text>Q4_perform_111</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="420" y="660"/>
+   </graphics>
+  </transition>
+  <transition id="t-50CC-BD117-45">
+  <name>
+   <text>Q4_perform_86</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1110" y="600"/>
+   </graphics>
+  </transition>
+  <place id="p-50CC-BD119-46">
+  <name>
+   <text>Q4_start_111</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="500" y="660"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD11C-47">
+  <name>
+   <text>Q4_start_86</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1190" y="600"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD11E-48">
+  <name>
+   <text>Q5_end_89</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1040" y="660"/>
+   </graphics>
+  </place>
+  <transition id="t-50CC-BD121-49">
+  <name>
+   <text>Q5_perform_89</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1110" y="660"/>
+   </graphics>
+  </transition>
+  <place id="p-50CC-BD123-50">
+  <name>
+   <text>Q5_start_89</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1190" y="660"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD126-51">
+  <name>
+   <text>Q6_end_65</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1040" y="720"/>
+   </graphics>
+  </place>
+  <transition id="t-50CC-BD127-52">
+  <name>
+   <text>Q6_perform_65</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1110" y="720"/>
+   </graphics>
+  </transition>
+  <place id="p-50CC-BD139-53">
+  <name>
+   <text>Q6_start_65</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1190" y="720"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD13B-54">
+  <name>
+   <text>Verrou Porte_end_91</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="620" y="560"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD13E-55">
+  <name>
+   <text>Verrou Porte_off_90</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="900" y="320"/>
+   </graphics>
+  </place>
+  <place id="p-50CC-BD142-56">
+  <name>
+   <text>Verrou Porte_on_90</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="740" y="320"/>
+   </graphics>
+  </place>
+  <transition id="t-50CC-BD143-57">
+  <name>
+   <text>Verrou Porte_perform_91</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="700" y="560"/>
+   </graphics>
+  </transition>
+  <place id="p-50CC-BD147-58">
+  <name>
+   <text>Verrou Porte_start_91</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="780" y="560"/>
+   </graphics>
+  </place>
+  <transition id="t-50CC-BD14B-59">
+  <name>
+   <text>Verrou Porte_turnOff_90</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="820" y="290"/>
+   </graphics>
+  </transition>
+  <transition id="t-50CC-BD14D-60">
+  <name>
+   <text>Verrou Porte_turnOn_90</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="820" y="380"/>
+   </graphics>
+  </transition>
+  <place id="p-50CC-BD152-61">
+  <name>
+   <text>WallIntro_end_53</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="240" y="120"/>
+   </graphics>
+  </place>
+  <transition id="t-50CC-BD156-62">
+  <name>
+   <text>WallIntro_perform2_53</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="160" y="120"/>
+   </graphics>
+  </transition>
+  <place id="p-50CC-BD159-63">
+  <name>
+   <text>WallIntro_start_53</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="80" y="120"/>
+   </graphics>
+  </place>
+  <arc id="e-50CC-BD15F-64" source="p-50CC-BD05B-8" target="t-50CC-BD0B7-19">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD163-65" source="t-50CC-BD113-44" target="p-50CC-BD10F-42">
+  </arc>
+  <arc id="e-50CC-BD164-66" source="p-50CC-BD119-46" target="t-50CC-BD113-44">
+  </arc>
+  <arc id="e-50CC-BD166-67" source="p-50CC-BD13B-54" target="t-50CC-BD113-44">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD168-68" source="t-50CC-BD105-38" target="p-50CC-BD0DF-35">
+  </arc>
+  <arc id="e-50CC-BD168-69" source="p-50CC-BD05E-9" target="t-50CC-BD062-10">
+  </arc>
+  <arc id="e-50CC-BD16A-70" source="p-50CC-BD10D-41" target="t-50CC-BD105-38">
+  </arc>
+  <arc id="e-50CC-BD16B-71" source="p-50CC-BD05B-8" target="t-50CC-BD105-38">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD16B-72" source="t-50CC-BD0BA-20" target="p-50CC-BD075-17">
+  </arc>
+  <arc id="e-50CC-BD16D-73" source="p-50CC-BD0C3-23" target="t-50CC-BD0BA-20">
+  </arc>
+  <arc id="e-50CC-BD16E-74" source="p-50CC-BD152-61" target="t-50CC-BD0BA-20">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD16E-75" source="p-50CC-BD068-12" target="t-50CC-BD06B-13">
+  </arc>
+  <arc id="e-50CC-BD16F-76" source="t-50CC-BD121-49" target="p-50CC-BD11E-48">
+  </arc>
+  <arc id="e-50CC-BD171-77" source="p-50CC-BD123-50" target="t-50CC-BD121-49">
+  </arc>
+  <arc id="e-50CC-BD172-78" source="p-50CC-BD05B-8" target="t-50CC-BD121-49">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD191-79" source="p-50CC-BD159-63" target="t-50CC-BD156-62">
+  </arc>
+  <arc id="e-50CC-BD192-80" source="t-50CC-BD156-62" target="p-50CC-BD152-61">
+  </arc>
+  <arc id="e-50CC-BD193-81" source="t-50CC-BD062-10" target="p-50CC-BD05B-8">
+  </arc>
+  <arc id="e-50CC-BD194-82" source="t-50CC-BD117-45" target="p-50CC-BD112-43">
+  </arc>
+  <arc id="e-50CC-BD195-83" source="p-50CC-BD11C-47" target="t-50CC-BD117-45">
+  </arc>
+  <arc id="e-50CC-BD196-84" source="p-50CC-BD05B-8" target="t-50CC-BD117-45">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD197-85" source="t-50CC-BD04A-3" target="p-50CC-BD03D-2">
+  </arc>
+  <arc id="e-50CC-BD199-86" source="p-50CC-BD052-5" target="t-50CC-BD06D-14">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD19A-87" source="p-50CC-BD04E-4" target="t-50CC-BD04A-3">
+  </arc>
+  <arc id="e-50CC-BD19B-88" source="p-50CC-BD071-15" target="t-50CC-BD04A-3">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD19C-89" source="p-50CC-BD0C4-24" target="t-50CC-BD04A-3">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD19D-90" source="p-50CC-BD0DB-33" target="t-50CC-BD04A-3">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD19E-91" source="p-50CC-BD10F-42" target="t-50CC-BD04A-3">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD19F-92" source="t-50CC-BD103-37" target="p-50CC-BD0DC-34">
+  </arc>
+  <arc id="e-50CC-BD1A0-93" source="p-50CC-BD068-12" target="t-50CC-BD062-10">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1A1-94" source="p-50CC-BD10A-40" target="t-50CC-BD103-37">
+  </arc>
+  <arc id="e-50CC-BD1A3-95" source="p-50CC-BD152-61" target="t-50CC-BD103-37">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1A4-96" source="p-50CC-BD055-6" target="t-50CC-BD059-7">
+  </arc>
+  <arc id="e-50CC-BD1A5-97" source="t-50CC-BD127-52" target="p-50CC-BD126-51">
+  </arc>
+  <arc id="e-50CC-BD1A6-98" source="t-50CC-BD059-7" target="p-50CC-BD052-5">
+  </arc>
+  <arc id="e-50CC-BD1A7-99" source="p-50CC-BD075-17" target="t-50CC-BD059-7">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1A8-100" source="p-50CC-BD0C9-26" target="t-50CC-BD059-7">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1A9-101" source="p-50CC-BD0DC-34" target="t-50CC-BD059-7">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1AA-102" source="t-50CC-BD100-36" target="p-50CC-BD0DB-33">
+  </arc>
+  <arc id="e-50CC-BD1AB-103" source="p-50CC-BD108-39" target="t-50CC-BD100-36">
+  </arc>
+  <arc id="e-50CC-BD1AD-104" source="p-50CC-BD13B-54" target="t-50CC-BD100-36">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1AE-105" source="t-50CC-BD0D1-29" target="p-50CC-BD0C9-26">
+  </arc>
+  <arc id="e-50CC-BD1AF-106" source="p-50CC-BD0D8-32" target="t-50CC-BD0D1-29">
+  </arc>
+  <arc id="e-50CC-BD1B0-107" source="p-50CC-BD152-61" target="t-50CC-BD0D1-29">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1B1-108" source="p-50CC-BD139-53" target="t-50CC-BD127-52">
+  </arc>
+  <arc id="e-50CC-BD1B1-109" source="t-50CC-BD0CE-28" target="p-50CC-BD0C7-25">
+  </arc>
+  <arc id="e-50CC-BD1B2-110" source="p-50CC-BD0D6-31" target="t-50CC-BD0CE-28">
+  </arc>
+  <arc id="e-50CC-BD1B3-111" source="p-50CC-BD05B-8" target="t-50CC-BD0CE-28">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1B4-112" source="t-50CC-BD06B-13" target="p-50CC-BD065-11">
+  </arc>
+  <arc id="e-50CC-BD1B7-113" source="t-50CC-BD0CC-27" target="p-50CC-BD0C4-24">
+  </arc>
+  <arc id="e-50CC-BD1B7-114" source="p-50CC-BD0D3-30" target="t-50CC-BD0CC-27">
+  </arc>
+  <arc id="e-50CC-BD1B8-115" source="p-50CC-BD13B-54" target="t-50CC-BD0CC-27">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1B9-116" source="t-50CC-BD14B-59" target="p-50CC-BD13E-55">
+  </arc>
+  <arc id="e-50CC-BD1BA-117" source="t-50CC-BD14D-60" target="p-50CC-BD142-56">
+  </arc>
+  <arc id="e-50CC-BD1BB-118" source="p-50CC-BD13E-55" target="t-50CC-BD14D-60">
+  </arc>
+  <arc id="e-50CC-BD1BC-119" source="p-50CC-BD05B-8" target="t-50CC-BD127-52">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1BD-120" source="p-50CC-BD142-56" target="t-50CC-BD14B-59">
+  </arc>
+  <arc id="e-50CC-BD1CC-121" source="p-50CC-BD05B-8" target="t-50CC-BD14B-59">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1CF-122" source="p-50CC-BD05B-8" target="t-50CC-BD14D-60">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1CF-123" source="t-50CC-BD143-57" target="p-50CC-BD13B-54">
+  </arc>
+  <arc id="e-50CC-BD1D0-124" source="t-50CC-BD06D-14" target="p-50CC-BD068-12">
+  </arc>
+  <arc id="e-50CC-BD1D1-125" source="p-50CC-BD147-58" target="t-50CC-BD143-57">
+  </arc>
+  <arc id="e-50CC-BD1D2-126" source="p-50CC-BD0C7-25" target="t-50CC-BD143-57">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1D3-127" source="p-50CC-BD11E-48" target="t-50CC-BD143-57">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1D4-128" source="p-50CC-BD0DF-35" target="t-50CC-BD143-57">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1D5-129" source="p-50CC-BD112-43" target="t-50CC-BD143-57">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1D6-130" source="t-50CC-BD077-18" target="p-50CC-BD071-15">
+  </arc>
+  <arc id="e-50CC-BD1D8-131" source="p-50CC-BD126-51" target="t-50CC-BD143-57">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1D9-132" source="p-50CC-BD142-56" target="t-50CC-BD143-57">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1DA-133" source="p-50CC-BD072-16" target="t-50CC-BD143-57">
+   <type value="test"/>
+  </arc>
+  <arc id="e-50CC-BD1DB-134" source="t-50CC-BD0B7-19" target="p-50CC-BD072-16">
+  </arc>
+  <arc id="e-50CC-BD1DC-135" source="p-50CC-BD0BF-22" target="t-50CC-BD0B7-19">
+  </arc>
+  <arc id="e-50CC-BD1DD-136" source="p-50CC-BD065-11" target="t-50CC-BD06D-14">
+  </arc>
+  <arc id="e-50CC-BD1DE-137" source="p-50CC-BD0BD-21" target="t-50CC-BD077-18">
+  </arc>
+  <arc id="e-50CC-BD1DF-138" source="p-50CC-BD13B-54" target="t-50CC-BD077-18">
+   <type value="test"/>
+  </arc>
+ </page>
+ </net>
 </pnml>

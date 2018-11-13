@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-2A38-8C1D0-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>answerQuestion2</text>
+  </name>
+ <page id="g-2A38-8C1DB-1">
+  <place id="p-2A38-8C1E0-2">
+  <name>
+   <text>Answered</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="290" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-2A38-8C1EF-3">
+  <name>
+   <text>Answering</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="40" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-2A38-8C1F2-4">
+  <name>
+   <text>Correct</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="170" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-2A38-8C1F5-5">
+  <name>
+   <text>Wrong</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="170" y="170"/>
+   </graphics>
+  </transition>
+  <arc id="e-2A38-8C1FA-6" source="t-2A38-8C1F2-4" target="p-2A38-8C1E0-2">
+  </arc>
+  <arc id="e-2A38-8C1FB-7" source="p-2A38-8C1EF-3" target="t-2A38-8C1F5-5">
+   <type value="test"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-4768-D7CC1-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma11_2</text>
+  </name>
+ <page id="g-4768-D7CC9-1">
+  <place id="p-4768-D7CCC-2">
+  <name>
+   <text>AnswersInput_Answered_107</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1120" y="190"/>
+   </graphics>
+  </place>
+  <place id="p-4768-D7CD9-3">
+  <name>
+   <text>AnswersInput_Answering_107</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="870" y="190"/>
+   </graphics>
+  </place>
+  <transition id="t-4768-D7CDE-4">
+  <name>
+   <text>AnswersInput_Correct_107</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1000" y="130"/>
+   </graphics>
+  </transition>
+  <transition id="t-4768-D7CE1-5">
+  <name>
+   <text>AnswersInput_Wrong_107</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1000" y="250"/>
+   </graphics>
+  </transition>
+  <place id="p-4768-D7CE5-6">
+  <name>
+   <text>Fragment_souvenir_14_ActivationCount_93</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="120"/>
+   </graphics>
+  </place>
+  <transition id="t-4768-D7CE9-7">
+  <name>
+   <text>Fragment_souvenir_14_activate_93</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="120"/>
+   </graphics>
+  </transition>
+  <place id="p-4768-D7CEC-8">
+  <name>
+   <text>Fragment_souvenir_15_ActivationCount_92</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="190"/>
+   </graphics>
+  </place>
+  <transition id="t-4768-D7CF0-9">
+  <name>
+   <text>Fragment_souvenir_15_activate_92</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="190"/>
+   </graphics>
+  </transition>
+  <place id="p-4768-D7CF4-10">
+  <name>
+   <text>Fragment_souvenir_16_ActivationCount_95</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="260"/>
+   </graphics>
+  </place>
+  <transition id="t-4768-D7CF8-11">
+  <name>
+   <text>Fragment_souvenir_16_activate_95</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="260"/>
+   </graphics>
+  </transition>
+  <place id="p-4768-D7CFB-12">
+  <name>
+   <text>Fragment_souvenir_18_ActivationCount_76</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="330"/>
+   </graphics>
+  </place>
+  <transition id="t-4768-D7CFF-13">
+  <name>
+   <text>Fragment_souvenir_18_activate_76</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="330"/>
+   </graphics>
+  </transition>
+  <place id="p-4768-D7D03-14">
+  <name>
+   <text>Fragment_souvenir_7_ActivationCount_94</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-4768-D7D07-15">
+  <name>
+   <text>Fragment_souvenir_7_activate_94</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-4768-D7D0B-16">
+  <name>
+   <text>Puzzle_end_101</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="700" y="190"/>
+   </graphics>
+  </place>
+  <transition id="t-4768-D7D0E-17">
+  <name>
+   <text>Puzzle_perform_101</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="630" y="190"/>
+   </graphics>
+  </transition>
+  <place id="p-4768-D7D0F-18">
+  <name>
+   <text>Puzzle_start_101</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="550" y="190"/>
+   </graphics>
+  </place>
+  <arc id="e-4768-D7D50-19" source="t-4768-D7CFF-13" target="p-4768-D7CFB-12">
+  </arc>
+  <arc id="e-4768-D7D51-20" source="t-4768-D7CE9-7" target="p-4768-D7CE5-6">
+  </arc>
+  <arc id="e-4768-D7D52-21" source="t-4768-D7CDE-4" target="p-4768-D7CCC-2">
+  </arc>
+  <arc id="e-4768-D7D54-22" source="p-4768-D7CD9-3" target="t-4768-D7CDE-4">
+  </arc>
+  <arc id="e-4768-D7D55-23" source="p-4768-D7CD9-3" target="t-4768-D7CE1-5">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4768-D7D59-24" source="t-4768-D7CF0-9" target="p-4768-D7CEC-8">
+  </arc>
+  <arc id="e-4768-D7D5A-25" source="t-4768-D7CF8-11" target="p-4768-D7CF4-10">
+  </arc>
+  <arc id="e-4768-D7D5B-26" source="t-4768-D7D07-15" target="p-4768-D7D03-14">
+  </arc>
+  <arc id="e-4768-D7D5C-27" source="p-4768-D7CFB-12" target="t-4768-D7D0E-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4768-D7D5D-28" source="p-4768-D7CF4-10" target="t-4768-D7D0E-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4768-D7D5E-29" source="p-4768-D7CEC-8" target="t-4768-D7D0E-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4768-D7D5F-30" source="p-4768-D7CE5-6" target="t-4768-D7D0E-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4768-D7D60-31" source="p-4768-D7D03-14" target="t-4768-D7D0E-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4768-D7D61-32" source="p-4768-D7D0F-18" target="t-4768-D7D0E-17">
+  </arc>
+  <arc id="e-4768-D7D63-33" source="t-4768-D7D0E-17" target="p-4768-D7D0B-16">
+  </arc>
+ </page>
+ </net>
+</pnml>

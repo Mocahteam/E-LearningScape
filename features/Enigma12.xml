@@ -1,12 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
+  <transition id="Lamp_activate_114" label="activate Lamp" system="False" end="False" />
   <transition id="AnswersInput_Correct_104" label="ressources AnswersInput" system="False" end="True" />
   <transition id="AnswersInput_Wrong_104" label="Wrong AnswersInput" system="False" end="False" />
-  <transition id="Lamp_activate_114" label="activate Lamp" system="False" end="False" />
-  <transition id="Lamp_perform_113" label="perform Lamp" system="False" end="False" />
-  <transition id="AnswersInput_Correct_104" label="ressources AnswersInput" system="False" end="True" />
-  <transition id="AnswersInput_Wrong_104" label="Wrong AnswersInput" system="False" end="False" />
-  <transition id="Lamp_activate_114" label="activate Lamp" system="False" end="False" />
   <transition id="Lamp_perform_113" label="perform Lamp" system="False" end="False" />
   <transition id="Fragment_souvenir_6_activate_112" label="activate Fragment_souvenir_6" system="False" end="False" />
 </transitions>

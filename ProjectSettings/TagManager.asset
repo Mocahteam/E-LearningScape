@@ -64,6 +64,8 @@ TagManager:
   - ScrollUI
   - MirrorPlankImage
   - PasswordRoom2
+  - BoardUnremovableWords
+  - PlankNumbers
   layers:
   - Default
   - TransparentFX

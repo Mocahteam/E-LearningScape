@@ -4,9 +4,5 @@
   <transition id="AnswersInput_Wrong_106" label="Wrong AnswersInput" system="False" end="False" />
   <transition id="Board_turnOff_125" label="turnOff Board" system="False" end="False" />
   <transition id="Board_turnOn_125" label="turnOn Board" system="False" end="False" />
-  <transition id="AnswersInput_Correct_106" label="contenu AnswersInput" system="False" end="True" />
-  <transition id="AnswersInput_Wrong_106" label="Wrong AnswersInput" system="False" end="False" />
-  <transition id="Board_turnOff_125" label="turnOff Board" system="False" end="False" />
-  <transition id="Board_turnOn_125" label="turnOn Board" system="False" end="False" />
   <transition id="Eraser_activate_126" label="activate Eraser" system="False" end="False" />
 </transitions>

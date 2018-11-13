@@ -1,216 +1,145 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
-  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
-    <name>
-      <text>gen0</text>
-    </name>
-    <page id="A-A-1">
-      <transition id="Fragment_souvenir_3_activate_61">
-        <name>
-          <text>Fragment_souvenir_3_activate_61</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="40" y="55" />
-        </graphics>
-      </transition>
-      <transition id="Fragment_souvenir_11_activate_62">
-        <name>
-          <text>Fragment_souvenir_11_activate_62</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="245" y="55" />
-        </graphics>
-      </transition>
-      <transition id="Fragment_souvenir_12_activate_63">
-        <name>
-          <text>Fragment_souvenir_12_activate_63</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="450" y="55" />
-        </graphics>
-      </transition>
-      <transition id="Q6_Correct_64">
-        <name>
-          <text>Q6_Correct_64</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="795" y="55" />
-        </graphics>
-      </transition>
-      <transition id="Q6_Wrong_64">
-        <name>
-          <text>Q6_Wrong_64</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="795" y="175" />
-        </graphics>
-      </transition>
-      <place id="Fragment_souvenir_3_ActivationCount_61">
-        <name>
-          <text>Fragment_souvenir_3_ActivationCount_61</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="155" y="55" />
-        </graphics>
-      </place>
-      <place id="Fragment_souvenir_11_ActivationCount_62">
-        <name>
-          <text>Fragment_souvenir_11_ActivationCount_62</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="360" y="55" />
-        </graphics>
-      </place>
-      <place id="Fragment_souvenir_12_ActivationCount_63">
-        <name>
-          <text>Fragment_souvenir_12_ActivationCount_63</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="565" y="55" />
-        </graphics>
-      </place>
-      <place id="Q6_Answered_64">
-        <name>
-          <text>Q6_Answered_64</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="915" y="115" />
-        </graphics>
-      </place>
-      <place id="Q6_Answering_64">
-        <name>
-          <text>Q6_Answering_64</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="665" y="115" />
-        </graphics>
-      </place>
-      <arc id="11" source="Fragment_souvenir_3_activate_61" target="Fragment_souvenir_3_ActivationCount_61">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="12" source="Fragment_souvenir_11_activate_62" target="Fragment_souvenir_11_ActivationCount_62">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="13" source="Fragment_souvenir_12_activate_63" target="Fragment_souvenir_12_ActivationCount_63">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="14" source="Q6_Answering_64" target="Q6_Wrong_64">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="15" source="Q6_Answering_64" target="Q6_Correct_64">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="16" source="Q6_Correct_64" target="Q6_Answered_64">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="17" source="Fragment_souvenir_11_ActivationCount_62" target="Q6_Correct_64">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="18" source="Fragment_souvenir_3_ActivationCount_61" target="Q6_Correct_64">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="19" source="Fragment_souvenir_12_ActivationCount_63" target="Q6_Correct_64">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-    </page>
-  </net>
+ <net id="n-3990-E657F-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma10</text>
+  </name>
+ <page id="g-3990-E6588-1">
+  <place id="p-3990-E658D-2">
+  <name>
+   <text>Fragment_souvenir_11_ActivationCount_62</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="140"/>
+   </graphics>
+  </place>
+  <transition id="t-3990-E659C-3">
+  <name>
+   <text>Fragment_souvenir_11_activate_62</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="140"/>
+   </graphics>
+  </transition>
+  <place id="p-3990-E65A1-4">
+  <name>
+   <text>Fragment_souvenir_12_ActivationCount_63</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="230"/>
+   </graphics>
+  </place>
+  <transition id="t-3990-E65A5-5">
+  <name>
+   <text>Fragment_souvenir_12_activate_63</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="230"/>
+   </graphics>
+  </transition>
+  <place id="p-3990-E65A9-6">
+  <name>
+   <text>Fragment_souvenir_3_ActivationCount_61</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-3990-E65AD-7">
+  <name>
+   <text>Fragment_souvenir_3_activate_61</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-3990-E65B1-8">
+  <name>
+   <text>Q6_Answered_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="695" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-3990-E65B3-9">
+  <name>
+   <text>Q6_Answering_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="435" y="140"/>
+   </graphics>
+  </place>
+  <transition id="t-3990-E65B6-10">
+  <name>
+   <text>Q6_Correct_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="575" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-3990-E65BA-11">
+  <name>
+   <text>Q6_Wrong_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="575" y="200"/>
+   </graphics>
+  </transition>
+  <arc id="e-3990-E65BE-12" source="p-3990-E65A1-4" target="t-3990-E65B6-10">
+   <type value="test"/>
+  </arc>
+  <arc id="e-3990-E65C2-13" source="p-3990-E65A9-6" target="t-3990-E65B6-10">
+   <type value="test"/>
+  </arc>
+  <arc id="e-3990-E65C3-14" source="p-3990-E658D-2" target="t-3990-E65B6-10">
+   <type value="test"/>
+  </arc>
+  <arc id="e-3990-E65C4-15" source="t-3990-E65B6-10" target="p-3990-E65B1-8">
+  </arc>
+  <arc id="e-3990-E65C5-16" source="p-3990-E65B3-9" target="t-3990-E65B6-10">
+  </arc>
+  <arc id="e-3990-E65C7-17" source="p-3990-E65B3-9" target="t-3990-E65BA-11">
+   <type value="test"/>
+  </arc>
+  <arc id="e-3990-E65C8-18" source="t-3990-E65A5-5" target="p-3990-E65A1-4">
+  </arc>
+  <arc id="e-3990-E65C9-19" source="t-3990-E659C-3" target="p-3990-E658D-2">
+  </arc>
+  <arc id="e-3990-E65CA-20" source="t-3990-E65AD-7" target="p-3990-E65A9-6">
+  </arc>
+ </page>
+ </net>
 </pnml>

@@ -1,720 +1,428 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
-  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
-    <name>
-      <text>gen0</text>
-    </name>
-    <page id="A-A-1">
-      <transition id="Fragment_souvenir_4_activate_51">
-        <name>
-          <text>Fragment_souvenir_4_activate_51</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="40" y="55" />
-        </graphics>
-      </transition>
-      <transition id="Fragment_souvenir_de_activate_42">
-        <name>
-          <text>Fragment_souvenir_de_activate_42</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="245" y="55" />
-        </graphics>
-      </transition>
-      <transition id="or0_Fragment_souvenir_de_activate_42">
-        <name>
-          <text>or0_Fragment_souvenir_de_activate_42</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="245" y="105" />
-        </graphics>
-      </transition>
-      <transition id="Fragment_souvenir_faut_activate_49">
-        <name>
-          <text>Fragment_souvenir_faut_activate_49</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="450" y="55" />
-        </graphics>
-      </transition>
-      <transition id="Table_turnOff_48">
-        <name>
-          <text>Table_turnOff_48</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="730" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Table_turnOn_48">
-        <name>
-          <text>Table_turnOn_48</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="730" y="145" />
-        </graphics>
-      </transition>
-      <transition id="Fragment_souvenir_changer_activate_50">
-        <name>
-          <text>Fragment_souvenir_changer_activate_50</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="905" y="55" />
-        </graphics>
-      </transition>
-      <transition id="Fragment_souvenir_il_activate_47">
-        <name>
-          <text>Fragment_souvenir_il_activate_47</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="1110" y="55" />
-        </graphics>
-      </transition>
-      <transition id="Chair_turnOff_43">
-        <name>
-          <text>Chair_turnOff_43</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="1390" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Chair_turnOn_43">
-        <name>
-          <text>Chair_turnOn_43</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="1390" y="145" />
-        </graphics>
-      </transition>
-      <transition id="FPSController_turnOff_44">
-        <name>
-          <text>FPSController_turnOff_44</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="1640" y="50" />
-        </graphics>
-      </transition>
-      <transition id="FPSController_turnOn_44">
-        <name>
-          <text>FPSController_turnOn_44</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="1640" y="145" />
-        </graphics>
-      </transition>
-      <transition id="Fragment_souvenir_savoir_activate_46">
-        <name>
-          <text>Fragment_souvenir_savoir_activate_46</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="1815" y="55" />
-        </graphics>
-      </transition>
-      <transition id="Q3_Correct_52">
-        <name>
-          <text>Q3_Correct_52</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="2160" y="55" />
-        </graphics>
-      </transition>
-      <transition id="Q3_Wrong_52">
-        <name>
-          <text>Q3_Wrong_52</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="2160" y="175" />
-        </graphics>
-      </transition>
-      <transition id="Fragment_souvenir_posture_activate_45">
-        <name>
-          <text>Fragment_souvenir_posture_activate_45</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="2370" y="55" />
-        </graphics>
-      </transition>
-      <place id="Fragment_souvenir_4_ActivationCount_51">
-        <name>
-          <text>Fragment_souvenir_4_ActivationCount_51</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="155" y="55" />
-        </graphics>
-      </place>
-      <place id="Fragment_souvenir_de_ActivationCount_42">
-        <name>
-          <text>Fragment_souvenir_de_ActivationCount_42</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="360" y="55" />
-        </graphics>
-      </place>
-      <place id="Fragment_souvenir_faut_ActivationCount_49">
-        <name>
-          <text>Fragment_souvenir_faut_ActivationCount_49</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="565" y="55" />
-        </graphics>
-      </place>
-      <place id="Table_off_48">
-        <name>
-          <text>Table_off_48</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="815" y="80" />
-        </graphics>
-      </place>
-      <place id="Table_on_48">
-        <name>
-          <text>Table_on_48</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="645" y="85" />
-        </graphics>
-      </place>
-      <place id="Fragment_souvenir_changer_ActivationCount_50">
-        <name>
-          <text>Fragment_souvenir_changer_ActivationCount_50</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="1020" y="55" />
-        </graphics>
-      </place>
-      <place id="Fragment_souvenir_il_ActivationCount_47">
-        <name>
-          <text>Fragment_souvenir_il_ActivationCount_47</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="1225" y="55" />
-        </graphics>
-      </place>
-      <place id="Chair_off_43">
-        <name>
-          <text>Chair_off_43</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="1475" y="80" />
-        </graphics>
-      </place>
-      <place id="Chair_on_43">
-        <name>
-          <text>Chair_on_43</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="1305" y="85" />
-        </graphics>
-      </place>
-      <place id="FPSController_off_44">
-        <name>
-          <text>FPSController_off_44</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="1725" y="80" />
-        </graphics>
-      </place>
-      <place id="FPSController_on_44">
-        <name>
-          <text>FPSController_on_44</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="1555" y="85" />
-        </graphics>
-      </place>
-      <place id="Fragment_souvenir_savoir_ActivationCount_46">
-        <name>
-          <text>Fragment_souvenir_savoir_ActivationCount_46</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="1930" y="55" />
-        </graphics>
-      </place>
-      <place id="Q3_Answered_52">
-        <name>
-          <text>Q3_Answered_52</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="2280" y="115" />
-        </graphics>
-      </place>
-      <place id="Q3_Answering_52">
-        <name>
-          <text>Q3_Answering_52</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="2030" y="115" />
-        </graphics>
-      </place>
-      <place id="Fragment_souvenir_posture_ActivationCount_45">
-        <name>
-          <text>Fragment_souvenir_posture_ActivationCount_45</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="2485" y="55" />
-        </graphics>
-      </place>
-      <arc id="32" source="Fragment_souvenir_4_activate_51" target="Fragment_souvenir_4_ActivationCount_51">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="33" source="Fragment_souvenir_de_activate_42" target="Fragment_souvenir_de_ActivationCount_42">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="34" source="FPSController_on_44" target="Fragment_souvenir_de_activate_42">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="35" source="or0_Fragment_souvenir_de_activate_42" target="Fragment_souvenir_de_ActivationCount_42">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="36" source="Chair_on_43" target="or0_Fragment_souvenir_de_activate_42">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="37" source="Fragment_souvenir_faut_activate_49" target="Fragment_souvenir_faut_ActivationCount_49">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="38" source="FPSController_on_44" target="Fragment_souvenir_faut_activate_49">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="39" source="Table_turnOff_48" target="Table_off_48">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="40" source="Table_turnOn_48" target="Table_on_48">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="41" source="Table_off_48" target="Table_turnOn_48">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="42" source="Table_on_48" target="Table_turnOff_48">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="43" source="Fragment_souvenir_changer_activate_50" target="Fragment_souvenir_changer_ActivationCount_50">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="44" source="FPSController_on_44" target="Fragment_souvenir_changer_activate_50">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="45" source="Fragment_souvenir_il_activate_47" target="Fragment_souvenir_il_ActivationCount_47">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="46" source="Table_on_48" target="Fragment_souvenir_il_activate_47">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="47" source="Chair_turnOff_43" target="Chair_off_43">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="48" source="Chair_turnOn_43" target="Chair_on_43">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="49" source="Chair_off_43" target="Chair_turnOn_43">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="50" source="Chair_on_43" target="Chair_turnOff_43">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="51" source="FPSController_turnOff_44" target="FPSController_off_44">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="52" source="FPSController_turnOn_44" target="FPSController_on_44">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="53" source="FPSController_off_44" target="FPSController_turnOn_44">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="54" source="FPSController_on_44" target="FPSController_turnOff_44">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="55" source="Fragment_souvenir_savoir_activate_46" target="Fragment_souvenir_savoir_ActivationCount_46">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="56" source="Q3_Answering_52" target="Q3_Wrong_52">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="57" source="Q3_Answering_52" target="Q3_Correct_52">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="58" source="Q3_Correct_52" target="Q3_Answered_52">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="59" source="Fragment_souvenir_4_ActivationCount_51" target="Q3_Correct_52">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="60" source="Fragment_souvenir_de_ActivationCount_42" target="Q3_Correct_52">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="61" source="Fragment_souvenir_faut_ActivationCount_49" target="Q3_Correct_52">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="62" source="Fragment_souvenir_posture_ActivationCount_45" target="Q3_Correct_52">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="63" source="Fragment_souvenir_savoir_ActivationCount_46" target="Q3_Correct_52">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="64" source="Fragment_souvenir_il_ActivationCount_47" target="Q3_Correct_52">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="65" source="Fragment_souvenir_changer_ActivationCount_50" target="Q3_Correct_52">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="66" source="Fragment_souvenir_posture_activate_45" target="Fragment_souvenir_posture_ActivationCount_45">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="67" source="FPSController_on_44" target="Fragment_souvenir_posture_activate_45">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-    </page>
-  </net>
+ <net id="n-40F8-CC6E6-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma3</text>
+  </name>
+ <page id="g-40F8-CC6EF-1">
+  <place id="p-40F8-CC6F3-2">
+  <name>
+   <text>Chair_off_43</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="66" y="325"/>
+   </graphics>
+  </place>
+  <place id="p-40F8-CC701-3">
+  <name>
+   <text>Chair_on_43</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="246" y="325"/>
+   </graphics>
+  </place>
+  <transition id="t-40F8-CC703-4">
+  <name>
+   <text>Chair_turnOff_43</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="156" y="295"/>
+   </graphics>
+  </transition>
+  <transition id="t-40F8-CC708-5">
+  <name>
+   <text>Chair_turnOn_43</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="156" y="385"/>
+   </graphics>
+  </transition>
+  <place id="p-40F8-CC70A-6">
+  <name>
+   <text>FPSController_off_44</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="74" y="160"/>
+   </graphics>
+  </place>
+  <place id="p-40F8-CC70D-7">
+  <name>
+   <text>FPSController_on_44</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="234" y="160"/>
+   </graphics>
+  </place>
+  <transition id="t-40F8-CC70F-8">
+  <name>
+   <text>FPSController_turnOff_44</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="154" y="130"/>
+   </graphics>
+  </transition>
+  <transition id="t-40F8-CC713-9">
+  <name>
+   <text>FPSController_turnOn_44</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="154" y="220"/>
+   </graphics>
+  </transition>
+  <place id="p-40F8-CC716-10">
+  <name>
+   <text>Fragment_souvenir_4_ActivationCount_51</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="530" y="535"/>
+   </graphics>
+  </place>
+  <transition id="t-40F8-CC71A-11">
+  <name>
+   <text>Fragment_souvenir_4_activate_51</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="410" y="535"/>
+   </graphics>
+  </transition>
+  <place id="p-40F8-CC71E-12">
+  <name>
+   <text>Fragment_souvenir_changer_ActivationCount_50</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="530" y="130"/>
+   </graphics>
+  </place>
+  <transition id="t-40F8-CC722-13">
+  <name>
+   <text>Fragment_souvenir_changer_activate_50</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="410" y="130"/>
+   </graphics>
+  </transition>
+  <place id="p-40F8-CC726-14">
+  <name>
+   <text>Fragment_souvenir_de_ActivationCount_42</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="530" y="285"/>
+   </graphics>
+  </place>
+  <transition id="t-40F8-CC729-15">
+  <name>
+   <text>Fragment_souvenir_de_activate_42</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="410" y="285"/>
+   </graphics>
+  </transition>
+  <place id="p-40F8-CC72D-16">
+  <name>
+   <text>Fragment_souvenir_faut_ActivationCount_49</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="520" y="210"/>
+   </graphics>
+  </place>
+  <transition id="t-40F8-CC731-17">
+  <name>
+   <text>Fragment_souvenir_faut_activate_49</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="410" y="210"/>
+   </graphics>
+  </transition>
+  <place id="p-40F8-CC735-18">
+  <name>
+   <text>Fragment_souvenir_il_ActivationCount_47</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="520" y="455"/>
+   </graphics>
+  </place>
+  <transition id="t-40F8-CC78A-19">
+  <name>
+   <text>Fragment_souvenir_il_activate_47</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="410" y="455"/>
+   </graphics>
+  </transition>
+  <place id="p-40F8-CC78E-20">
+  <name>
+   <text>Fragment_souvenir_posture_ActivationCount_45</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="525" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-40F8-CC793-21">
+  <name>
+   <text>Fragment_souvenir_posture_activate_45</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="415" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-40F8-CC797-22">
+  <name>
+   <text>Fragment_souvenir_savoir_ActivationCount_46</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="520" y="605"/>
+   </graphics>
+  </place>
+  <transition id="t-40F8-CC79A-23">
+  <name>
+   <text>Fragment_souvenir_savoir_activate_46</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="410" y="605"/>
+   </graphics>
+  </transition>
+  <place id="p-40F8-CC79E-24">
+  <name>
+   <text>Q3_Answered_52</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1000" y="315"/>
+   </graphics>
+  </place>
+  <place id="p-40F8-CC7A1-25">
+  <name>
+   <text>Q3_Answering_52</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="750" y="315"/>
+   </graphics>
+  </place>
+  <transition id="t-40F8-CC7A3-26">
+  <name>
+   <text>Q3_Correct_52</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="880" y="255"/>
+   </graphics>
+  </transition>
+  <transition id="t-40F8-CC7A7-27">
+  <name>
+   <text>Q3_Wrong_52</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="880" y="375"/>
+   </graphics>
+  </transition>
+  <place id="p-40F8-CC7A8-28">
+  <name>
+   <text>Table_off_48</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="64" y="490"/>
+   </graphics>
+  </place>
+  <place id="p-40F8-CC7AC-29">
+  <name>
+   <text>Table_on_48</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="244" y="490"/>
+   </graphics>
+  </place>
+  <transition id="t-40F8-CC7AD-30">
+  <name>
+   <text>Table_turnOff_48</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="154" y="460"/>
+   </graphics>
+  </transition>
+  <transition id="t-40F8-CC7B0-31">
+  <name>
+   <text>Table_turnOn_48</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="154" y="550"/>
+   </graphics>
+  </transition>
+  <transition id="t-40F8-CC7B2-32">
+  <name>
+   <text>or0_Fragment_souvenir_de_activate_42</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="410" y="325"/>
+   </graphics>
+  </transition>
+  <arc id="e-40F8-CC7BA-33" source="p-40F8-CC70D-7" target="t-40F8-CC793-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-40F8-CC7BD-34" source="t-40F8-CC70F-8" target="p-40F8-CC70A-6">
+  </arc>
+  <arc id="e-40F8-CC7C0-35" source="p-40F8-CC701-3" target="t-40F8-CC703-4">
+  </arc>
+  <arc id="e-40F8-CC7C1-36" source="p-40F8-CC6F3-2" target="t-40F8-CC708-5">
+  </arc>
+  <arc id="e-40F8-CC7C2-37" source="t-40F8-CC708-5" target="p-40F8-CC701-3">
+  </arc>
+  <arc id="e-40F8-CC7C3-38" source="t-40F8-CC703-4" target="p-40F8-CC6F3-2">
+  </arc>
+  <arc id="e-40F8-CC7C4-39" source="p-40F8-CC7AC-29" target="t-40F8-CC78A-19">
+   <type value="test"/>
+  </arc>
+  <arc id="e-40F8-CC7E7-40" source="t-40F8-CC78A-19" target="p-40F8-CC735-18">
+  </arc>
+  <arc id="e-40F8-CC7E8-41" source="p-40F8-CC70D-7" target="t-40F8-CC722-13">
+   <type value="test"/>
+  </arc>
+  <arc id="e-40F8-CC7E9-42" source="t-40F8-CC722-13" target="p-40F8-CC71E-12">
+  </arc>
+  <arc id="e-40F8-CC7EA-43" source="p-40F8-CC7AC-29" target="t-40F8-CC7AD-30">
+  </arc>
+  <arc id="e-40F8-CC7ED-44" source="t-40F8-CC793-21" target="p-40F8-CC78E-20">
+  </arc>
+  <arc id="e-40F8-CC7EE-45" source="p-40F8-CC7A8-28" target="t-40F8-CC7B0-31">
+  </arc>
+  <arc id="e-40F8-CC7EF-46" source="t-40F8-CC7B0-31" target="p-40F8-CC7AC-29">
+  </arc>
+  <arc id="e-40F8-CC7F0-47" source="t-40F8-CC7AD-30" target="p-40F8-CC7A8-28">
+  </arc>
+  <arc id="e-40F8-CC7F2-48" source="p-40F8-CC70D-7" target="t-40F8-CC731-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-40F8-CC7F3-49" source="t-40F8-CC731-17" target="p-40F8-CC72D-16">
+  </arc>
+  <arc id="e-40F8-CC7F4-50" source="p-40F8-CC701-3" target="t-40F8-CC7B2-32">
+   <type value="test"/>
+  </arc>
+  <arc id="e-40F8-CC7F5-51" source="t-40F8-CC7B2-32" target="p-40F8-CC726-14">
+  </arc>
+  <arc id="e-40F8-CC7F6-52" source="p-40F8-CC70D-7" target="t-40F8-CC729-15">
+   <type value="test"/>
+  </arc>
+  <arc id="e-40F8-CC7F9-53" source="t-40F8-CC729-15" target="p-40F8-CC726-14">
+  </arc>
+  <arc id="e-40F8-CC7FA-54" source="t-40F8-CC71A-11" target="p-40F8-CC716-10">
+  </arc>
+  <arc id="e-40F8-CC7FB-55" source="t-40F8-CC7A3-26" target="p-40F8-CC79E-24">
+  </arc>
+  <arc id="e-40F8-CC7FC-56" source="p-40F8-CC7A1-25" target="t-40F8-CC7A3-26">
+  </arc>
+  <arc id="e-40F8-CC7FD-57" source="p-40F8-CC7A1-25" target="t-40F8-CC7A7-27">
+   <type value="test"/>
+  </arc>
+  <arc id="e-40F8-CC7FE-58" source="t-40F8-CC79A-23" target="p-40F8-CC797-22">
+  </arc>
+  <arc id="e-40F8-CC7FF-59" source="p-40F8-CC70D-7" target="t-40F8-CC70F-8">
+  </arc>
+  <arc id="e-40F8-CC7FF-60" source="p-40F8-CC70A-6" target="t-40F8-CC713-9">
+  </arc>
+  <arc id="e-40F8-CC800-61" source="t-40F8-CC713-9" target="p-40F8-CC70D-7">
+  </arc>
+ </page>
+ </net>
 </pnml>

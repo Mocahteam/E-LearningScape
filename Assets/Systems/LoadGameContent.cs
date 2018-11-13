@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 
 public class LoadGameContent : FSystem {
-
-    private Family f_gameContent = FamilyManager.getFamily(new AllOfComponents(typeof(GameContent)));
+    
+    private Family f_defaultGameContent = FamilyManager.getFamily(new AllOfComponents(typeof(DefaultGameContent)));
 
     private Family f_storyText = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
 
@@ -21,6 +21,7 @@ public class LoadGameContent : FSystem {
     private Family f_plankAndWireRule = FamilyManager.getFamily(new AnyOfTags("PlankAndWireRule"));
     private Family f_wrongWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(TextMeshPro)), new NoneOfComponents(typeof(SolutionWord)));
     private Family f_correctWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(TextMeshPro), typeof(SolutionWord)));
+    private Family f_plankNumbers = FamilyManager.getFamily(new AnyOfTags("PlankNumbers"));
 
     private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
 
@@ -38,22 +39,34 @@ public class LoadGameContent : FSystem {
 
     private Family f_puzzleUI = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"), new AllOfComponents(typeof(RectTransform)));
 
+    private Family f_lampPictures = FamilyManager.getFamily(new AllOfComponents(typeof(E12_Symbol)));
+
+    private Family f_boardUnremovable = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
+    private Family f_boardRemovable = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
+
 
     private FSystem instance;
 
     private GameContent gameContent;
+    private DefaultGameContent defaultGameContent;
+    private bool loadContent = true;
 
     private Texture2D tmpTex;
+    private byte[] tmpFileData;
+    private string[] convertedBoardText; //0- unremovable, 1- removable
     private GameObject forGO;
 
     public LoadGameContent()
     {
-        if (Application.isPlaying)
+        if (Application.isPlaying && loadContent)
         {
-            if (Directory.Exists("Data") && File.Exists("Data/Data_LearningScape.txt"))
+            defaultGameContent = f_defaultGameContent.First().GetComponent<DefaultGameContent>();
+            if (File.Exists("Data/Data_LearningScape.txt"))
             {
                 //Load game content from the file
                 gameContent = JsonUtility.FromJson<GameContent>(File.ReadAllText("Data/Data_LearningScape.txt"));
+
+                ActionsManager.instance.Pause = !gameContent.trace;
 
                 #region Story
                 StoryText st = f_storyText.First().GetComponent<StoryText>();
@@ -81,14 +94,10 @@ public class LoadGameContent : FSystem {
                             foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).GetComponentsInChildren<TextMeshProUGUI>()) {
                                 if (tmp.gameObject.name == "Description")
                                 {
-                                    int solutionID;
-                                    int.TryParse(gameContent.ballBoxAnswer[0], out solutionID);
-                                    tmp.text = gameContent.ballTexts[solutionID-1];
-                                    for (int j = 1; j < gameContent.ballBoxAnswer.Count; j++)
-                                    {
-                                        int.TryParse(gameContent.ballBoxAnswer[j], out solutionID);
-                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.ballTexts[solutionID-1]);
-                                    }
+                                    int nbCorrectBall = gameContent.ballCorrectTexts.Length;
+                                    tmp.text = gameContent.ballCorrectTexts[0];
+                                    for (int j = 1; j < nbCorrectBall; j++)
+                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.ballCorrectTexts[j]);
                                 }
                                 else if (tmp.gameObject.name == "Answer")
                                 {
@@ -117,9 +126,19 @@ public class LoadGameContent : FSystem {
                             foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).GetComponentsInChildren<TextMeshProUGUI>()) {
                                 if (tmp.gameObject.name == "Description")
                                 {
-                                    tmp.text = string.Concat(gameContent.plankAndWireAnswers[0], " - ", gameContent.plankAndWireAnswers[1], " - ", gameContent.plankAndWireAnswers[2]);
+                                    tmp.text = string.Concat(gameContent.plankAndWireCorrectWords[0], " - ", gameContent.plankAndWireCorrectWords[1], " - ", gameContent.plankAndWireCorrectWords[2]);
+                                }
+                                else if (tmp.gameObject.name == "Answer")
+                                {
+                                    tmp.text = gameContent.plankAndWireCorrectNumbers[0].ToString();
+                                    int l = gameContent.plankAndWireCorrectNumbers.Length;
+                                    for (int j = 1; j < l; j++)
+                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.plankAndWireCorrectNumbers[j].ToString());
                                 }
                             }
+                            forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
+                            for (int j = 0; j < gameContent.plankAndWireCorrectNumbers.Length; j++)
+                                forGO.GetComponent<QuerySolution>().andSolutions.Add(gameContent.plankAndWireCorrectNumbers[j].ToString());
                             break;
 
                         case "Q3":
@@ -156,10 +175,26 @@ public class LoadGameContent : FSystem {
                 //Ball Box
                 int nbBalls = f_balls.Count;
                 Ball b;
+                int correctBallCount = 0;
+                int wrongBallCount = 0;
+                List<int> idList = new List<int>();
+                for (int i = 0; i < nbBalls; i++)
+                    idList.Add(i);
                 for (int i = 0; i < nbBalls; i++)
                 {
                     b = f_balls.getAt(i).GetComponent<Ball>();
-                    b.text = gameContent.ballTexts[b.id].ToUpper();
+                    if(b.number == 1 || b.number == 2 || b.number == 8)
+                    {
+                        b.text = gameContent.ballCorrectTexts[correctBallCount].ToUpper();
+                        correctBallCount++;
+                    }
+                    else
+                    {
+                        b.text = gameContent.ballWrongTexts[wrongBallCount].ToUpper();
+                        wrongBallCount++;
+                    }
+                    b.id = idList[(int)Random.Range(0, idList.Count - 0.001f)];
+                    idList.Remove(b.id);
                 }
                 foreach (TextMeshPro tmp in f_ballBoxTop.First().GetComponentsInChildren<TextMeshPro>())
                 {
@@ -172,8 +207,24 @@ public class LoadGameContent : FSystem {
                 for (int i = 0; i < nbWrongWords; i++)
                     f_wrongWords.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankOtherWords[i];
                 for (int i = 0; i < nbCorrectWords; i++)
-                    f_correctWords.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankAndWireAnswers[i];
+                    f_correctWords.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankAndWireCorrectWords[i];
                 f_plankAndWireRule.First().GetComponent<TextMeshPro>().text = gameContent.plankAndWireQuestion;
+                int nbPlankNumbers = f_plankNumbers.Count;
+                int countCorrectNb = 0;
+                int countWrongNb = 0;
+                for(int i = 0; i < nbPlankNumbers; i++)
+                {
+                    if(f_plankNumbers.getAt(i).name == "4" || f_plankNumbers.getAt(i).name == "5" || f_plankNumbers.getAt(i).name == "9")
+                    {
+                        f_plankNumbers.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankAndWireCorrectNumbers[countCorrectNb].ToString();
+                        countCorrectNb++;
+                    }
+                    else
+                    {
+                        f_plankNumbers.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankAndWireOtherNumbers[countWrongNb].ToString();
+                        countWrongNb++;
+                    }
+                }
 
                 //Green Dream Fragments
                 int nbDreamFragments = f_dreamFragments.Count;
@@ -398,37 +449,39 @@ public class LoadGameContent : FSystem {
 
                 //Glasses
                 BagImage bi = f_bagImage.First().GetComponent<BagImage>();
-                for(int i = 0; i < 4; i++)
+                Sprite mySprite;
+                for (int i = 0; i < 4; i++)
                 {
+                    mySprite = defaultGameContent.noPictureFound;
                     if (File.Exists(gameContent.glassesPicturesPath[i]))
                     {
                         tmpTex = new Texture2D(1, 1);
-                        byte[] fileData = File.ReadAllBytes(gameContent.glassesPicturesPath[i]);
-                        if (tmpTex.LoadImage(fileData))
+                        tmpFileData = File.ReadAllBytes(gameContent.glassesPicturesPath[i]);
+                        if (tmpTex.LoadImage(tmpFileData))
                         {
-                            Sprite mySprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
-                            switch (i)
-                            {
-                                case 0:
-                                    bi.image1 = mySprite;
-                                    break;
-
-                                case 1:
-                                    bi.image2 = mySprite;
-                                    break;
-
-                                case 2:
-                                    bi.image3 = mySprite;
-                                    break;
-
-                                case 3:
-                                    bi.image4 = mySprite;
-                                    break;
-
-                                default:
-                                    break;
-                            }
+                            mySprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
                         }
+                    }
+                    switch (i)
+                    {
+                        case 0:
+                            bi.image1 = mySprite;
+                            break;
+
+                        case 1:
+                            bi.image2 = mySprite;
+                            break;
+
+                        case 2:
+                            bi.image3 = mySprite;
+                            break;
+
+                        case 3:
+                            bi.image4 = mySprite;
+                            break;
+
+                        default:
+                            break;
                     }
                 }
                 bi.gameObject.GetComponent<Image>().sprite = bi.image1;
@@ -444,11 +497,12 @@ public class LoadGameContent : FSystem {
                 }
 
                 //Mirror
+                f_mirrorImage.First().GetComponent<Image>().sprite = defaultGameContent.noPictureFound;
                 if (File.Exists(gameContent.mirrorPicturePath))
                 {
                     tmpTex = new Texture2D(1, 1);
-                    byte[] fileData = File.ReadAllBytes(gameContent.mirrorPicturePath);
-                    if(tmpTex.LoadImage(fileData))
+                    tmpFileData = File.ReadAllBytes(gameContent.mirrorPicturePath);
+                    if(tmpTex.LoadImage(tmpFileData))
                         f_mirrorImage.First().GetComponent<Image>().sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
                 }
 
@@ -473,38 +527,59 @@ public class LoadGameContent : FSystem {
                 }
 
                 //Puzzles
-                if(gameContent.puzzle && File.Exists(gameContent.puzzlePicturePath))
+                Sprite puzzlePicture = defaultGameContent.noPictureFound;
+                if (gameContent.puzzle && File.Exists(gameContent.puzzlePicturePath))
                 {
                     tmpTex = new Texture2D(1, 1);
-                    byte[] fileData = File.ReadAllBytes(gameContent.puzzlePicturePath);
-                    if (tmpTex.LoadImage(fileData))
+                    tmpFileData = File.ReadAllBytes(gameContent.puzzlePicturePath);
+                    if (tmpTex.LoadImage(tmpFileData))
                     {
-                        Sprite puzzlePicture;
                         puzzlePicture = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
-                        Rect rect;
-                        if (tmpTex.width > tmpTex.height)
-                            rect = new Rect(0, 0, 935, tmpTex.height * 935 / tmpTex.width);
-                        else
-                            rect = new Rect(0, 0, tmpTex.width * 935 / tmpTex.height, 935);
-
-                        int nbPuzzleUI = f_puzzleUI.Count;
-                        RectTransform rt = f_puzzleUI.getAt(0).GetComponent<RectTransform>();
-                        //int puzzleID = -1;
-                        Vector3 newPuzzleScale = new Vector3(rect.width * rt.localScale.x / 935, rect.width * rt.localScale.y / 935, rt.localScale.z);
-                        for (int i = 0; i < nbPuzzleUI; i++)
-                        {
-                            rt = f_puzzleUI.getAt(i).GetComponent<RectTransform>();
-                            rt.localScale = newPuzzleScale;
-                            rt.GetChild(0).gameObject.GetComponent<Image>().sprite = puzzlePicture;
-                            /*int.TryParse(rt.gameObject.name.Substring(rt.gameObject.name.Length - 2), out puzzleID);
-                            rt.GetChild(0).gameObject.GetComponent<RectTransform>().localPosition = */
-                        }
                     }
+                }
+                Rect rect;
+                if (puzzlePicture.texture.width > puzzlePicture.texture.height)
+                    rect = new Rect(0, 0, 935, puzzlePicture.texture.height * 935 / puzzlePicture.texture.width);
+                else
+                    rect = new Rect(0, 0, puzzlePicture.texture.width * 935 / puzzlePicture.texture.height, 935);
+
+                int nbPuzzleUI = f_puzzleUI.Count;
+                RectTransform rt = f_puzzleUI.getAt(0).GetComponent<RectTransform>();
+                Vector3 newPuzzleScale = new Vector3(rect.width * rt.localScale.x / 935, rect.width * rt.localScale.y / 935, rt.localScale.z);
+                for (int i = 0; i < nbPuzzleUI; i++)
+                {
+                    rt = f_puzzleUI.getAt(i).GetComponent<RectTransform>();
+                    rt.localScale = newPuzzleScale;
+                    rt.GetChild(0).gameObject.GetComponent<Image>().sprite = puzzlePicture;
                 }
 
                 //Lamp
+                int nbLampPictures = f_lampPictures.Count;
+                nbLampPictures = nbLampPictures > gameContent.lampPicturesPath.Length ? gameContent.lampPicturesPath.Length : nbLampPictures;
+                for (int i = 0; i < nbLampPictures; i++)
+                {
+                    mySprite = defaultGameContent.noPictureFound;
+                    if (File.Exists(gameContent.lampPicturesPath[i]))
+                    {
+                        tmpTex = new Texture2D(1, 1);
+                        tmpFileData = File.ReadAllBytes(gameContent.lampPicturesPath[i]);
+                        if (tmpTex.LoadImage(tmpFileData))
+                        {
+                            mySprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
+                        }
+                    }
+                    f_lampPictures.getAt(i).GetComponent<Image>().sprite = mySprite;
+                }
 
                 //White Board
+                convertedBoardText = new string[2];
+                int nbBoardTexts = Mathf.Min(gameContent.whiteBoardWords.Length, f_boardUnremovable.Count, f_boardRemovable.Count);
+                for(int i = 0; i < nbBoardTexts; i++)
+                {
+                    ConvertBoardText(gameContent.whiteBoardWords[i]);
+                    f_boardUnremovable.getAt(i).GetComponent<TextMeshPro>().text = convertedBoardText[0];
+                    f_boardRemovable.getAt(i).GetComponent<TextMeshPro>().text = convertedBoardText[1];
+                }
 
                 #endregion
                 Debug.Log("Data loaded");
@@ -512,9 +587,25 @@ public class LoadGameContent : FSystem {
             else
             {
                 //create default data files
-                gameContent = new GameContent();
                 Directory.CreateDirectory("Data");
-                File.WriteAllText("Data/Data_LearningScape.txt", JsonUtility.ToJson(gameContent, true));
+                File.WriteAllText("Data/Data_LearningScape.txt", defaultGameContent.jsonFile.text);
+
+                gameContent = new GameContent();
+                gameContent = JsonUtility.FromJson<GameContent>(defaultGameContent.jsonFile.text);
+
+                int l = defaultGameContent.glassesPictures.Length;
+                for(int i = 0; i < l; i++)
+                {
+                    File.WriteAllBytes(string.Concat("Data/", defaultGameContent.glassesPictures[i].name, ".png"), defaultGameContent.glassesPictures[i].EncodeToPNG());
+                }
+                l = defaultGameContent.lampPictures.Length;
+                for (int i = 0; i < l; i++)
+                {
+                    File.WriteAllBytes(string.Concat("Data/", defaultGameContent.lampPictures[i].name, ".png"), defaultGameContent.lampPictures[i].EncodeToPNG());
+                }
+                File.WriteAllBytes(string.Concat("Data/", defaultGameContent.plankPicture.name, ".png"), defaultGameContent.plankPicture.EncodeToPNG());
+                File.WriteAllBytes(string.Concat("Data/", defaultGameContent.puzzlePicture.name, ".png"), defaultGameContent.puzzlePicture.EncodeToPNG());
+
                 Debug.Log("Data created");
             }
 
@@ -531,6 +622,58 @@ public class LoadGameContent : FSystem {
         answer = answer.Replace('à', 'a');
         answer = answer.ToUpper();
         return answer;
+    }
+
+    private void ConvertBoardText(string text)
+    {
+        if(convertedBoardText == null)
+            convertedBoardText = new string[2];
+
+        convertedBoardText[0] = "<alpha=#00>";
+        convertedBoardText[1] = "";
+
+        int l = text.Length;
+        bool hash = false;
+        bool removable = true;
+        for(int i = 0; i < l; i++)
+        {
+            if(text[i] == '#')
+            {
+                if (hash)
+                {
+                    removable = !removable;
+                    if (removable)
+                    {
+                        convertedBoardText[0] = string.Concat(convertedBoardText[0], "<alpha=#00>");
+                        convertedBoardText[1] = string.Concat(convertedBoardText[1], "<alpha=#ff>");
+                    }
+                    else
+                    {
+                        convertedBoardText[0] = string.Concat(convertedBoardText[0], "<alpha=#ff>");
+                        convertedBoardText[1] = string.Concat(convertedBoardText[1], "<alpha=#00>");
+                    }
+                    hash = false;
+                }
+                else
+                    hash = true;
+            }
+            else
+            {
+                if (hash)
+                {
+                    convertedBoardText[0] = string.Concat(convertedBoardText[0], '#');
+                    convertedBoardText[1] = string.Concat(convertedBoardText[1], '#');
+                }
+                convertedBoardText[0] = string.Concat(convertedBoardText[0], text[i]);
+                convertedBoardText[1] = string.Concat(convertedBoardText[1], text[i]);
+                hash = false;
+            }
+        }
+        if (hash)
+        {
+            convertedBoardText[0] = string.Concat(convertedBoardText[0], '#');
+            convertedBoardText[1] = string.Concat(convertedBoardText[1], '#');
+        }
     }
 
 	// Use this to update member variables when system pause. 

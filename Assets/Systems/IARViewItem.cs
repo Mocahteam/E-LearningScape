@@ -16,7 +16,6 @@ public class IARViewItem : FSystem {
     private Family f_descriptionUI = FamilyManager.getFamily(new AnyOfTags("DescriptionUI"));
     private Family f_viewable = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_mainloop = FamilyManager.getFamily(new AllOfComponents(typeof(MainLoop)));
-    private Family f_collectedScrolls = FamilyManager.getFamily(new AnyOfTags("ScrollRoom2"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_collectedPuzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_selectedBag = FamilyManager.getFamily(new AnyOfTags("Bag"), new AllOfComponents(typeof(ReadyToWork)));
 
@@ -29,6 +28,10 @@ public class IARViewItem : FSystem {
 
     private GameObject currentView = null;
     private GameObject lastSelection = null;
+
+    //Variables used to blur the background when IAR opened
+    public static float focusDistance;
+    public static float initialFocusDistance = 1.5f;
 
     public static IARViewItem instance;
 
@@ -162,12 +165,14 @@ public class IARViewItem : FSystem {
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame)
     {
+        focusDistance = initialFocusDistance;
     }
 
     // Use this to update member variables when system resume.
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
     {
+        focusDistance = 0.1f;
         // display last selection if it exists
         if (lastSelection)
             showDescription(lastSelection);
@@ -198,9 +203,9 @@ public class IARViewItem : FSystem {
                             if (f_selectedBag.Count > 0)
                             {
                                 if (isSelected("Glasses1"))
-                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate2", performedBy = "player" });
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate2", performedBy = "player" });
                                 else if (isSelected("Glasses2"))
-                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate3", performedBy = "player" });
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate3", performedBy = "player" });
                                 else
                                     GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate", performedBy = "player" });
                             }
@@ -218,7 +223,7 @@ public class IARViewItem : FSystem {
                         GameObjectManager.addComponent<ActionPerformed>(go, new { name = "activate", performedBy = "player" });
                     else if(go.GetComponent<LinkLabel>())
                     {
-                        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player", orLabels = new string[] { go.GetComponent<LinkLabel>().text } });
+                        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player"/*, orLabels = new string[] { go.GetComponent<LinkLabel>().text }*/ });
                         if (go.name == "Puzzle" && f_collectedPuzzles.Count == 5)
                             GameObjectManager.addComponent<ActionPerformed>(go, new { name = "activate", performedBy = "system" });
                     }
@@ -231,15 +236,13 @@ public class IARViewItem : FSystem {
                             if(f_selectedBag.Count > 0)
                             {
                                 if (isSelected("Glasses1") && isSelected("Glasses2"))
-                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate4", performedBy = "player" });
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate4", performedBy = "player" });
                                 else if (isSelected("Glasses1"))
-                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate2", performedBy = "player" });
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate2", performedBy = "player" });
                                 else if (isSelected("Glasses2"))
-                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate3", performedBy = "player" });
+                                    GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate3", performedBy = "player" });
                             }
                         }
-                        else if (go.name == "Scroll" && f_collectedScrolls.Count == 5)
-                            GameObjectManager.addComponent<ActionPerformed>(go, new { name = "activate", performedBy = "system" });
                     }
                 }
             }

@@ -35,6 +35,9 @@ public class ActionsManager : FSystem {
 	// Use this to update member variables when system resume.
 	// Advice: avoid to update your families inside this function.
 	protected override void onResume(int currentFrame){
+        int nbActions = f_actions.Count;
+        for (int i = 0; i < nbActions; i++)
+            ActionProcessing(f_actions.getAt(i));
 	}
 
 	// Use to process your families.
@@ -76,7 +79,7 @@ public class ActionsManager : FSystem {
                     }
                     if (matched == 0 && ap.family == null)
                     {
-                        Debug.LogError(string.Concat("Unable to trace action on \"", go.name, "\" because \"", ap.name, "\" and \"", ap.overrideName, "\" in its ActionPerformed don't correspond to any ComponentMonitoring."));
+                        Debug.LogError(string.Concat("Unable to trace action on \"", go.name, "\" because the name \"", ap.name, "\" and the overrideName \"", ap.overrideName, "\" in its ActionPerformed don't correspond to any ComponentMonitoring."));
                     }
                 }
                 else if (ap.name != "")
@@ -102,7 +105,7 @@ public class ActionsManager : FSystem {
                     }
                     if (matched == 0 && ap.family == null)
                     {
-                        Debug.LogError(string.Concat("Unable to trace action on \"", go.name, "\" because \"", ap.name, "\" in its ActionPerformed doesn't correspond to any ComponentMonitoring."));
+                        Debug.LogError(string.Concat("Unable to trace action on \"", go.name, "\" because the name \"", ap.name, "\" in its ActionPerformed doesn't correspond to any ComponentMonitoring."));
                     }
                 }
                 else if (ap.overrideName != "")
@@ -128,7 +131,7 @@ public class ActionsManager : FSystem {
                     }
                     if (matched == 0 && ap.family == null)
                     {
-                        Debug.LogError(string.Concat("Unable to trace action on \"", go.name, "\" because \"", ap.overrideName, "\" in its ActionPerformed don't correspond to any ComponentMonitoring."));
+                        Debug.LogError(string.Concat("Unable to trace action on \"", go.name, "\" because the overrideName \"", ap.overrideName, "\" in its ActionPerformed don't correspond to any ComponentMonitoring."));
                     }
                 }
                 else

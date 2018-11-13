@@ -1,239 +1,155 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
-  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
-    <name>
-      <text>gen0</text>
-    </name>
-    <page id="A-A-1">
-      <transition id="AnswersInput_Correct_104">
-        <name>
-          <text>AnswersInput_Correct_104</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="180" y="55" />
-        </graphics>
-      </transition>
-      <transition id="AnswersInput_Wrong_104">
-        <name>
-          <text>AnswersInput_Wrong_104</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="180" y="175" />
-        </graphics>
-      </transition>
-      <transition id="Lamp_activate_114">
-        <name>
-          <text>Lamp_activate_114</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="390" y="55" />
-        </graphics>
-      </transition>
-      <transition id="Lamp_perform_113">
-        <name>
-          <text>Lamp_perform_113</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="665" y="50" />
-        </graphics>
-      </transition>
-      <transition id="Fragment_souvenir_6_activate_112">
-        <name>
-          <text>Fragment_souvenir_6_activate_112</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <graphics>
-          <position x="830" y="55" />
-        </graphics>
-      </transition>
-      <place id="AnswersInput_Answered_104">
-        <name>
-          <text>AnswersInput_Answered_104</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="300" y="115" />
-        </graphics>
-      </place>
-      <place id="AnswersInput_Answering_104">
-        <name>
-          <text>AnswersInput_Answering_104</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="50" y="115" />
-        </graphics>
-      </place>
-      <place id="Lamp_ActivationCount_114">
-        <name>
-          <text>Lamp_ActivationCount_114</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="505" y="55" />
-        </graphics>
-      </place>
-      <place id="Lamp_end_113">
-        <name>
-          <text>Lamp_end_113</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="740" y="50" />
-        </graphics>
-      </place>
-      <place id="Lamp_start_113">
-        <name>
-          <text>Lamp_start_113</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-        <graphics>
-          <position x="585" y="50" />
-        </graphics>
-      </place>
-      <place id="Fragment_souvenir_6_ActivationCount_112">
-        <name>
-          <text>Fragment_souvenir_6_ActivationCount_112</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </name>
-        <initialMarking>
-          <text>0</text>
-        </initialMarking>
-        <graphics>
-          <position x="945" y="55" />
-        </graphics>
-      </place>
-      <arc id="12" source="AnswersInput_Answering_104" target="AnswersInput_Wrong_104">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="13" source="AnswersInput_Answering_104" target="AnswersInput_Correct_104">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="14" source="AnswersInput_Correct_104" target="AnswersInput_Answered_104">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="15" source="Lamp_ActivationCount_114" target="AnswersInput_Correct_104">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="16" source="Fragment_souvenir_6_ActivationCount_112" target="AnswersInput_Correct_104">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="17" source="Lamp_activate_114" target="Lamp_ActivationCount_114">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="18" source="Lamp_end_113" target="Lamp_activate_114">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="test" />
-      </arc>
-      <arc id="19" source="Lamp_perform_113" target="Lamp_end_113">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="20" source="Lamp_start_113" target="Lamp_perform_113">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-      <arc id="21" source="Fragment_souvenir_6_activate_112" target="Fragment_souvenir_6_ActivationCount_112">
-        <inscription>
-          <text>1</text>
-          <graphics>
-            <offset x="0" y="-10" />
-          </graphics>
-        </inscription>
-        <type value="regular" />
-      </arc>
-    </page>
-  </net>
+ <net id="n-2374-5004A-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma12</text>
+  </name>
+ <page id="g-2374-50053-1">
+  <place id="p-2374-50055-2">
+  <name>
+   <text>AnswersInput_Answered_104</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="905" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-2374-50062-3">
+  <name>
+   <text>AnswersInput_Answering_104</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="665" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-2374-50067-4">
+  <name>
+   <text>AnswersInput_Correct_104</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="785" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-2374-5006B-5">
+  <name>
+   <text>AnswersInput_Wrong_104</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="785" y="170"/>
+   </graphics>
+  </transition>
+  <place id="p-2374-5006D-6">
+  <name>
+   <text>Fragment_souvenir_6_ActivationCount_112</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="465" y="150"/>
+   </graphics>
+  </place>
+  <transition id="t-2374-50071-7">
+  <name>
+   <text>Fragment_souvenir_6_activate_112</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="355" y="150"/>
+   </graphics>
+  </transition>
+  <place id="p-2374-50075-8">
+  <name>
+   <text>Lamp_ActivationCount_114</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="475" y="60"/>
+   </graphics>
+  </place>
+  <transition id="t-2374-50078-9">
+  <name>
+   <text>Lamp_activate_114</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="355" y="60"/>
+   </graphics>
+  </transition>
+  <place id="p-2374-5007B-10">
+  <name>
+   <text>Lamp_end_113</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="215" y="60"/>
+   </graphics>
+  </place>
+  <transition id="t-2374-5007D-11">
+  <name>
+   <text>Lamp_perform_113</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="135" y="60"/>
+   </graphics>
+  </transition>
+  <place id="p-2374-50080-12">
+  <name>
+   <text>Lamp_start_113</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="55" y="60"/>
+   </graphics>
+  </place>
+  <arc id="e-2374-50086-13" source="t-2374-50071-7" target="p-2374-5006D-6">
+  </arc>
+  <arc id="e-2374-50088-14" source="p-2374-50080-12" target="t-2374-5007D-11">
+  </arc>
+  <arc id="e-2374-50089-15" source="t-2374-5007D-11" target="p-2374-5007B-10">
+  </arc>
+  <arc id="e-2374-5008A-16" source="t-2374-50067-4" target="p-2374-50055-2">
+  </arc>
+  <arc id="e-2374-5008B-17" source="p-2374-50062-3" target="t-2374-50067-4">
+  </arc>
+  <arc id="e-2374-5008C-18" source="p-2374-50062-3" target="t-2374-5006B-5">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2374-5008F-19" source="p-2374-5007B-10" target="t-2374-50078-9">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2374-50090-20" source="t-2374-50078-9" target="p-2374-50075-8">
+  </arc>
+ </page>
+ </net>
 </pnml>

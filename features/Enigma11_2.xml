@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Fragment_souvenir_16_activate_95" label="activate Fragment_souvenir_16" system="False" end="False" />
+  <transition id="Fragment_souvenir_15_activate_92" label="activate Fragment_souvenir_15" system="False" end="False" />
+  <transition id="AnswersInput_Correct_107" label="planification2 AnswersInput" system="False" end="True" />
+  <transition id="AnswersInput_Wrong_107" label="Wrong AnswersInput" system="False" end="False" />
+  <transition id="Fragment_souvenir_14_activate_93" label="activate Fragment_souvenir_14" system="False" end="False" />
+  <transition id="Puzzle_perform_101" label="perform Puzzle" system="False" end="False" />
+  <transition id="Fragment_souvenir_7_activate_94" label="activate Fragment_souvenir_7" system="False" end="False" />
+  <transition id="Fragment_souvenir_18_activate_76" label="activate Fragment_souvenir_18" system="False" end="False" />
+</transitions>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-6B0-391DB-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma11_2</text>
+  </name>
+ <page id="g-6B0-391E4-1">
+  <place id="p-6B0-391E6-2">
+  <name>
+   <text>AnswersInput_Answered_107</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1120" y="190"/>
+   </graphics>
+  </place>
+  <place id="p-6B0-391F3-3">
+  <name>
+   <text>AnswersInput_Answering_107</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="870" y="190"/>
+   </graphics>
+  </place>
+  <transition id="t-6B0-391F8-4">
+  <name>
+   <text>AnswersInput_Correct_107</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1000" y="130"/>
+   </graphics>
+  </transition>
+  <place id="p-6B0-391FD-5">
+  <name>
+   <text>Fragment_souvenir_14_ActivationCount_93</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="120"/>
+   </graphics>
+  </place>
+  <transition id="t-6B0-39201-6">
+  <name>
+   <text>Fragment_souvenir_14_activate_93</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="120"/>
+   </graphics>
+  </transition>
+  <place id="p-6B0-39204-7">
+  <name>
+   <text>Fragment_souvenir_15_ActivationCount_92</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="190"/>
+   </graphics>
+  </place>
+  <transition id="t-6B0-39208-8">
+  <name>
+   <text>Fragment_souvenir_15_activate_92</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="190"/>
+   </graphics>
+  </transition>
+  <place id="p-6B0-3920C-9">
+  <name>
+   <text>Fragment_souvenir_16_ActivationCount_95</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="260"/>
+   </graphics>
+  </place>
+  <transition id="t-6B0-39210-10">
+  <name>
+   <text>Fragment_souvenir_16_activate_95</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="260"/>
+   </graphics>
+  </transition>
+  <place id="p-6B0-39214-11">
+  <name>
+   <text>Fragment_souvenir_18_ActivationCount_76</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="330"/>
+   </graphics>
+  </place>
+  <transition id="t-6B0-39217-12">
+  <name>
+   <text>Fragment_souvenir_18_activate_76</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="330"/>
+   </graphics>
+  </transition>
+  <place id="p-6B0-3921B-13">
+  <name>
+   <text>Fragment_souvenir_7_ActivationCount_94</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-6B0-3921F-14">
+  <name>
+   <text>Fragment_souvenir_7_activate_94</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-6B0-39223-15">
+  <name>
+   <text>Puzzle_end_101</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="700" y="190"/>
+   </graphics>
+  </place>
+  <transition id="t-6B0-39225-16">
+  <name>
+   <text>Puzzle_perform_101</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="630" y="190"/>
+   </graphics>
+  </transition>
+  <place id="p-6B0-39228-17">
+  <name>
+   <text>Puzzle_start_101</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="550" y="190"/>
+   </graphics>
+  </place>
+  <arc id="e-6B0-3922D-18" source="p-6B0-39223-15" target="t-6B0-391F8-4">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6B0-3926A-19" source="t-6B0-39210-10" target="p-6B0-3920C-9">
+  </arc>
+  <arc id="e-6B0-3926B-20" source="t-6B0-39208-8" target="p-6B0-39204-7">
+  </arc>
+  <arc id="e-6B0-3926C-21" source="p-6B0-391F3-3" target="t-6B0-391F8-4">
+  </arc>
+  <arc id="e-6B0-3926D-22" source="t-6B0-391F8-4" target="p-6B0-391E6-2">
+  </arc>
+  <arc id="e-6B0-3926E-23" source="t-6B0-39201-6" target="p-6B0-391FD-5">
+  </arc>
+  <arc id="e-6B0-3926F-24" source="t-6B0-39217-12" target="p-6B0-39214-11">
+  </arc>
+  <arc id="e-6B0-39270-25" source="t-6B0-39225-16" target="p-6B0-39223-15">
+  </arc>
+  <arc id="e-6B0-39271-26" source="p-6B0-39228-17" target="t-6B0-39225-16">
+  </arc>
+  <arc id="e-6B0-39272-27" source="p-6B0-3921B-13" target="t-6B0-39225-16">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6B0-39274-28" source="p-6B0-391FD-5" target="t-6B0-39225-16">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6B0-39275-29" source="p-6B0-39204-7" target="t-6B0-39225-16">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6B0-39276-30" source="p-6B0-3920C-9" target="t-6B0-39225-16">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6B0-39277-31" source="p-6B0-39214-11" target="t-6B0-39225-16">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6B0-39278-32" source="t-6B0-3921F-14" target="p-6B0-3921B-13">
+  </arc>
+ </page>
+ </net>
+</pnml>

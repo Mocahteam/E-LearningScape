@@ -5,10 +5,5 @@
   <transition id="Intro_Scroll_perform_0" label="ramasser Intro_Scroll" system="False" end="False" />
   <transition id="Fragment_souvenir_0_activate_2" label="regarder Fragment_souvenir_0" system="False" end="False" />
   <transition id="WallIntro_perform_4" label="perform WallIntro" system="False" end="True" />
-  <transition id="Verrou Mur_turnOff_3" label="turnOff Verrou Mur" system="False" end="False" />
-  <transition id="Verrou Mur_turnOn_3" label="turnOn Verrou Mur" system="False" end="False" />
-  <transition id="Intro_Scroll_perform_0" label="ramasser Intro_Scroll" system="False" end="False" />
-  <transition id="Fragment_souvenir_0_activate_2" label="regarder Fragment_souvenir_0" system="False" end="False" />
-  <transition id="WallIntro_perform_4" label="perform WallIntro" system="False" end="True" />
   <transition id="ScrollIntro_activate_1" label="activate ScrollIntro" system="False" end="False" />
 </transitions>

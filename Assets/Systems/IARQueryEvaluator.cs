@@ -119,7 +119,10 @@ public class IARQueryEvaluator : FSystem {
             // notify player error
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 1 });
 
-            GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Wrong", performedBy = "player" });
+            if(query.tag == "Q-R3")
+                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { name = "Wrong", performedBy = "player" });
+            else
+                GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Wrong", performedBy = "player" });
         }
         else
         {
@@ -136,15 +139,22 @@ public class IARQueryEvaluator : FSystem {
                         if(f_toggles.getAt(i).name == "TogglePuzzle")
                         {
                             if (f_toggles.getAt(i).GetComponent<Toggle>().isOn)
-                                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = answer.ToLower(), performedBy = "player", orLabels = new string[] { "l17" } });
+                                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "planification1", performedBy = "player" });
                             else
-                                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = answer.ToLower(), performedBy = "player", orLabels = new string[] { "l16" } });
+                                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "planification2", performedBy = "player" });
                             break;
                         }
                     }
                 }
                 else
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = answer.ToLower(), performedBy = "player" });
+            }
+            else if(query.tag == "Q-R2" && query.name == "Q2")
+            {
+                if(f_berthiaumeClue.Count == 0)
+                    GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player", orLabels = new string[] { "l1" } });
+                else
+                    GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player", orLabels = new string[] { "l0" } });
             }
             else
                 GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });

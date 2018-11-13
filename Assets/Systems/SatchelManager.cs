@@ -211,11 +211,11 @@ public class SatchelManager : FSystem {
                         paperOut = true;
 
                         if(isSelected("Glasses1") && isSelected("Glasses2"))
-                            GameObjectManager.addComponent<ActionPerformed>(paper, new { name = "activate4", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = "activate4", performedBy = "player" });
                         else if (isSelected("Glasses1"))
-                            GameObjectManager.addComponent<ActionPerformed>(paper, new { name = "activate2", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = "activate2", performedBy = "player" });
                         else if (isSelected("Glasses2"))
-                            GameObjectManager.addComponent<ActionPerformed>(paper, new { name = "activate3", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = "activate3", performedBy = "player" });
                         else
                             GameObjectManager.addComponent<ActionPerformed>(paper, new { name = "activate", performedBy = "player" });
                     }

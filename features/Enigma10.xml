@@ -5,9 +5,4 @@
   <transition id="Fragment_souvenir_12_activate_63" label="activate Fragment_souvenir_12" system="False" end="False" />
   <transition id="Q6_Correct_64" label="Correct Q6" system="False" end="True" />
   <transition id="Q6_Wrong_64" label="Wrong Q6" system="False" end="False" />
-  <transition id="Fragment_souvenir_3_activate_61" label="activate Fragment_souvenir_3" system="False" end="False" />
-  <transition id="Fragment_souvenir_11_activate_62" label="activate Fragment_souvenir_11" system="False" end="False" />
-  <transition id="Fragment_souvenir_12_activate_63" label="activate Fragment_souvenir_12" system="False" end="False" />
-  <transition id="Q6_Correct_64" label="Correct Q6" system="False" end="True" />
-  <transition id="Q6_Wrong_64" label="Wrong Q6" system="False" end="False" />
 </transitions>
