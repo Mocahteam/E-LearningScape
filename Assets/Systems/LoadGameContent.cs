@@ -38,6 +38,8 @@ public class LoadGameContent : FSystem {
     private Family f_lockRoom2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"), new AllOfComponents(typeof(Locker)));
 
     private Family f_puzzleUI = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"), new AllOfComponents(typeof(RectTransform)));
+    private Family f_puzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)));
+    private Family f_puzzlesFragment = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new AllOfComponents(typeof(DreamFragment)));
 
     private Family f_lampPictures = FamilyManager.getFamily(new AllOfComponents(typeof(E12_Symbol)));
 
@@ -67,6 +69,10 @@ public class LoadGameContent : FSystem {
                 gameContent = JsonUtility.FromJson<GameContent>(File.ReadAllText("Data/Data_LearningScape.txt"));
 
                 ActionsManager.instance.Pause = !gameContent.trace;
+                foreach (GameObject go in f_puzzles)
+                    GameObjectManager.setGameObjectState(go, gameContent.virtualPuzzle);
+                foreach (GameObject go in f_puzzlesFragment)
+                    GameObjectManager.setGameObjectState(go, !gameContent.virtualPuzzle);
 
                 #region Story
                 StoryText st = f_storyText.First().GetComponent<StoryText>();
@@ -91,6 +97,7 @@ public class LoadGameContent : FSystem {
                                     break;
                                 }
                             }
+                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.ballBoxPlaceHolder;
                             foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).GetComponentsInChildren<TextMeshProUGUI>()) {
                                 if (tmp.gameObject.name == "Description")
                                 {
@@ -122,6 +129,7 @@ public class LoadGameContent : FSystem {
                                     break;
                                 }
                             }
+                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.plankAndWirePlaceHolder;
 
                             foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).GetComponentsInChildren<TextMeshProUGUI>()) {
                                 if (tmp.gameObject.name == "Description")
@@ -150,6 +158,7 @@ public class LoadGameContent : FSystem {
                                     break;
                                 }
                             }
+                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.greenFragmentPlaceHolder;
 
                             foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).GetComponentsInChildren<TextMeshProUGUI>())
                             {
@@ -298,6 +307,7 @@ public class LoadGameContent : FSystem {
                     switch (forGO.name)
                     {
                         case "Q1":
+                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.glassesPlaceHolder;
                             foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
                                 if (tmp.gameObject.name == "Answer")
                                 {
@@ -316,6 +326,7 @@ public class LoadGameContent : FSystem {
                                     break;
                                 }
                             }
+                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.enigma6PlaceHolder;
 
                             foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
                             {
@@ -343,6 +354,7 @@ public class LoadGameContent : FSystem {
                                     break;
                                 }
                             }
+                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.scrollsPlaceHolder;
 
                             foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
                             {
@@ -375,6 +387,8 @@ public class LoadGameContent : FSystem {
                                     break;
                                 }
                             }
+                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.mirrorPlaceHolder;
+
                             foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
                             {
                                 if (tmp.gameObject.name == "Answer")
@@ -399,6 +413,7 @@ public class LoadGameContent : FSystem {
                                     break;
                                 }
                             }
+                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.enigma9PlaceHolder;
 
                             foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
                             {
@@ -424,6 +439,7 @@ public class LoadGameContent : FSystem {
                                     break;
                                 }
                             }
+                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.enigma10PlaceHolder;
 
                             foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
                             {

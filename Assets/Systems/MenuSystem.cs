@@ -63,7 +63,7 @@ public class MenuSystem : FSystem {
             // Get singleton MainMenu
             mainMenu = GameObject.Find("MainMenu");
             // Get singleton ToggleButton
-            togglePuzzle = GameObject.Find("TogglePuzzle").GetComponent<Toggle>();
+            //togglePuzzle = GameObject.Find("TogglePuzzle").GetComponent<Toggle>();
 
             // Set specific quality settings
             menuCamera = f_menuCameraFamily.First().GetComponent<Camera>();
@@ -186,10 +186,10 @@ public class MenuSystem : FSystem {
         GameObjectManager.setGameObjectState(mainMenu, false);
         GameObjectManager.setGameObjectState(fadingBackground.gameObject, false);
         // Switch on/off puzzle or fragments
-        foreach (GameObject go in f_puzzles)
+        /*foreach (GameObject go in f_puzzles)
             GameObjectManager.setGameObjectState(go, togglePuzzle.isOn);
         foreach (GameObject go in f_puzzlesFragment)
-            GameObjectManager.setGameObjectState(go, !togglePuzzle.isOn);
+            GameObjectManager.setGameObjectState(go, !togglePuzzle.isOn);*/
         // Play story
         StoryDisplaying.instance.Pause = false;
     }
