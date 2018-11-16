@@ -49,7 +49,7 @@ public class LoadGameContent : FSystem {
 
     private FSystem instance;
 
-    private GameContent gameContent;
+    public static GameContent gameContent;
     private DefaultGameContent defaultGameContent;
     private bool loadContent = true;
 
@@ -173,7 +173,8 @@ public class LoadGameContent : FSystem {
                                 }
                             }
                             forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
-                            forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(gameContent.greenFragmentAnswer));
+                            foreach(string s in gameContent.greenFragmentAnswer)
+                                forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(StringToAnswer(s)));
                             break;
 
                         default:
@@ -186,6 +187,14 @@ public class LoadGameContent : FSystem {
                 Ball b;
                 int correctBallCount = 0;
                 int wrongBallCount = 0;
+                int[] ballAnswer = new int[3] { 1, 2, 8};
+                int nbBallAnswers = gameContent.ballBoxAnswer.Count < 3 ? gameContent.ballBoxAnswer.Count : 3;
+                int tmpInt;
+                for (int i = 0; i < nbBallAnswers; i++)
+                {
+                    int.TryParse(gameContent.ballBoxAnswer[i], out tmpInt);
+                    ballAnswer[i] = tmpInt == 0 ? ballAnswer[i] : tmpInt;
+                }
                 List<int> idList = new List<int>();
                 for (int i = 0; i < nbBalls; i++)
                     idList.Add(i);
@@ -202,8 +211,25 @@ public class LoadGameContent : FSystem {
                         b.text = gameContent.ballWrongTexts[wrongBallCount].ToUpper();
                         wrongBallCount++;
                     }
+
+                    //change randomly the position of the ball
                     b.id = idList[(int)Random.Range(0, idList.Count - 0.001f)];
                     idList.Remove(b.id);
+
+                    //change the number of balls to set spheres 1, 2 and 8 to answer
+                    if (b.number == 1)
+                        b.number = ballAnswer[0];
+                    else if (b.number == 2)
+                        b.number = ballAnswer[1];
+                    else if (b.number == 8)
+                        b.number = ballAnswer[2];
+                    else if (b.number == ballAnswer[0])
+                        b.number = 1;
+                    else if (b.number == ballAnswer[1])
+                        b.number = 2;
+                    else if (b.number == ballAnswer[2])
+                        b.number = 8;
+                    b.GetComponentInChildren<TextMeshPro>().text = b.number.ToString();
                 }
                 foreach (TextMeshPro tmp in f_ballBoxTop.First().GetComponentsInChildren<TextMeshPro>())
                 {
@@ -234,6 +260,35 @@ public class LoadGameContent : FSystem {
                         countWrongNb++;
                     }
                 }
+                forGO = f_wrongWords.First().transform.parent.parent.gameObject;
+                List<float> validAngles = new List<float>();
+                #region Add valid angles to list
+                int from, to;
+                from = 0;
+                to = 4;
+                for (int i = from; i <= to; i++)
+                    validAngles.Add(i);
+                validAngles.Add(52);
+                from = 147;
+                to = 161;
+                for (int i = from; i <= to; i++)
+                    validAngles.Add(i);
+                from = 325;
+                to = 341;
+                for (int i = from; i <= to; i++)
+                    validAngles.Add(i);
+                from = 356;
+                to = 360;
+                for (int i = from; i <= to; i++)
+                    validAngles.Add(i);
+                #endregion
+                float angle = validAngles[(int)(Random.value*validAngles.Count - 0.001f)];
+                forGO.transform.Rotate(0, angle, 0);
+                foreach (Transform child in forGO.transform)
+                    if(child.name != "Numbers")
+                        child.Rotate(0, -angle, 0);
+                foreach(Transform child in forGO.transform.GetChild(0))
+                    child.Rotate(0, 0, -angle);
 
                 //Green Dream Fragments
                 int nbDreamFragments = f_dreamFragments.Count;
@@ -307,14 +362,27 @@ public class LoadGameContent : FSystem {
                     switch (forGO.name)
                     {
                         case "Q1":
+                            foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
+                            {
+                                if (tmp.gameObject.name == "Question")
+                                {
+                                    tmp.text = gameContent.glassesQuestion;
+                                    break;
+                                }
+                            }
                             forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.glassesPlaceHolder;
+
                             foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
                                 if (tmp.gameObject.name == "Answer")
                                 {
-                                    tmp.text = gameContent.glassesAnswer;
+                                    tmp.text = gameContent.glassesAnswer[0];
+                                    int l = gameContent.glassesAnswer.Count;
+                                    for (int j = 1; j < l; j++)
+                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.glassesAnswer[j]);
                                 }
                             forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
-                            forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(gameContent.glassesAnswer));
+                            foreach (string s in gameContent.glassesAnswer)
+                                forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
                             break;
 
                         case "Q2":
@@ -532,14 +600,15 @@ public class LoadGameContent : FSystem {
 
                 #region Room 3
                 int nbQuestionRoom3 = f_queriesR3.Count;
-                int nbAnswerRoom3 = gameContent.room3Answers.Length;
                 QuerySolution qs;
                 for (int i = 0; i < nbQuestionRoom3; i++)
                 {
                     qs = f_queriesR3.getAt(i).GetComponent<QuerySolution>();
                     qs.orSolutions = new List<string>();
-                    for (int j = 0; j < nbAnswerRoom3; j++)
-                        qs.orSolutions.Add(StringToAnswer(gameContent.room3Answers[j]));
+                    qs.orSolutions.Add(gameContent.puzzleAnswer);
+                    qs.orSolutions.Add(gameContent.enigma12Answer);
+                    qs.orSolutions.Add(gameContent.lampAnswer);
+                    qs.orSolutions.Add(gameContent.whiteBoardAnswer);
                 }
 
                 //Puzzles

@@ -22,7 +22,7 @@
     "ballBoxAnswer": [
         "1",
         "2",
-        "8"
+        "7"
     ],
     "ballCorrectTexts": [
         "CLASSE INVERSEE",
@@ -86,7 +86,9 @@
         "de",
         "posture"
     ],
-    "greenFragmentAnswer": "1023810149",
+    "greenFragmentAnswer": [
+        "1023810149"
+    ],
     "gearsQuestion": "Sur quels facteurs est-ce que je peux agir pour motiver mes étudiants ?",
     "gearTextUp": "Etudiants",
     "gearTextDown": "Motivation",
@@ -105,7 +107,10 @@
         "Data/contrat03.jpg",
         "Data/contrat04.jpg"
     ],
-    "glassesAnswer": "Contrat Pédagogique",
+    "glassesQuestion": "Le vase se renversant vous livrera la clé de cette enigme",
+    "glassesAnswer": [
+        "Contrat Pédagogique"
+    ],
     "enigma6Question": "A quoi Berthiaume nous conseille-t-il de faire attention ?",
     "enigma6PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
     "enigma6Answer": [
@@ -146,6 +151,8 @@
     "lockRoom2Password": 703,
     "puzzle": true,
     "puzzlePicturePath": "Data/Puzzle_Complet.png",
+    "puzzleAnswer": "planification",
+    "enigma12Answer": "Contraintes",
     "lampPicturesPath": [
         "Data/E12_C.png",
         "Data/E12_S.png",
@@ -154,6 +161,7 @@
         "Data/E12_U.png",
         "Data/E12_R.png"
     ],
+    "lampAnswer": "Ressources",
     "whiteBoardWords": [
         "##RIEN N'EST## IMPORTANT",
         "TOUT EST ##INDISPENSABLE##",
@@ -168,10 +176,5 @@
         "ME##T##HODE",
         "APPROCHE PROGRAMME"
     ],
-    "room3Answers": [
-        "Contenu",
-        "Contraintes",
-        "Planification",
-        "Ressources"
-    ]
+    "whiteBoardAnswer": "Contenu"
 }

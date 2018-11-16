@@ -35,7 +35,7 @@ public class GameContent {
     public string greenFragmentsQuestion;
     public string greenFragmentPlaceHolder;
     public string[] greenFragmentsWords = new string[6];
-    public string greenFragmentAnswer; //list
+    public List<string> greenFragmentAnswer;
 
     //Gears
     public string gearsQuestion;
@@ -48,10 +48,10 @@ public class GameContent {
     public int mdpLogin;
 
     //Glasses
-    //Question
+    public string glassesQuestion;
     public string glassesPlaceHolder;
     public string[] glassesPicturesPath = new string[4];
-    public string glassesAnswer; //list
+    public List<string> glassesAnswer;
 
     //Enigma 6 (3 dream fragments)
     public string enigma6Question;
@@ -87,14 +87,16 @@ public class GameContent {
     //Puzzle (or 5 dream fragments)
     public bool puzzle;
     public string puzzlePicturePath;
+    public string puzzleAnswer;
 
     //Enigma 12 (2 dream fragments)
+    public string enigma12Answer;
 
     //Lamp
     public string[] lampPicturesPath = new string[6];
+    public string lampAnswer;
 
     //White Board
     public string[] whiteBoardWords = new string [12]; //"AMENAGER L'ESPAC##E##"
-
-    public string[] room3Answers = new string[4];
+    public string whiteBoardAnswer;
 }

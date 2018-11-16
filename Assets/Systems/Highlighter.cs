@@ -33,10 +33,13 @@ public class Highlighter : FSystem {
             int nb = tmpRendererList.Length;
             for (int i = 0; i < nb; i++)
             {
-                Color c = previousColor.Dequeue();
-                // avoid to change fragments color
-                if (!tmpRendererList[i].GetComponentInParent<DreamFragment>())
-                    tmpRendererList[i].material.SetColor("_EmissionColor", c);
+                if (tmpRendererList[i].material.HasProperty("_EmissionColor"))
+                {
+                    Color c = previousColor.Dequeue();
+                    // avoid to change fragments color
+                    if (!tmpRendererList[i].GetComponentInParent<DreamFragment>())
+                        tmpRendererList[i].material.SetColor("_EmissionColor", c);
+                }
             }
             // Remove Highlighted component to this GameObject
             GameObjectManager.removeComponent<Highlighted>(previousHighlight);
@@ -53,13 +56,16 @@ public class Highlighter : FSystem {
         int nb = tmpRendererList.Length;
         for (int i = 0; i < nb; i++)
         {
-            // Save current emission color
-            previousColor.Enqueue(tmpRendererList[i].material.GetColor("_EmissionColor"));
-            // Enable emission and hightlight target (avoid to change fragments color)
-            if (!tmpRendererList[i].GetComponentInParent<DreamFragment>() && tmpRendererList[i].gameObject.name != ("BoardTexture"))
+            if (tmpRendererList[i].material.HasProperty("_EmissionColor"))
             {
-                tmpRendererList[i].material.EnableKeyword("_EMISSION");
-                tmpRendererList[i].material.SetColor("_EmissionColor", Color.yellow * Mathf.LinearToGammaSpace(0.8f));
+                // Save current emission color
+                previousColor.Enqueue(tmpRendererList[i].material.GetColor("_EmissionColor"));
+                // Enable emission and hightlight target (avoid to change fragments color)
+                if (!tmpRendererList[i].GetComponentInParent<DreamFragment>() && tmpRendererList[i].gameObject.name != ("BoardTexture"))
+                {
+                    tmpRendererList[i].material.EnableKeyword("_EMISSION");
+                    tmpRendererList[i].material.SetColor("_EmissionColor", Color.yellow * Mathf.LinearToGammaSpace(0.8f));
+                }
             }
         }
         // Add Highlighted component to this GameObject

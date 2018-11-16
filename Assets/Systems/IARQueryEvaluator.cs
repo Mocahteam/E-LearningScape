@@ -18,7 +18,6 @@ public class IARQueryEvaluator : FSystem {
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_mainloop = FamilyManager.getFamily(new AllOfComponents(typeof(MainLoop)));
     private Family f_berthiaumeClue = FamilyManager.getFamily(new AllOfComponents(typeof(BerthiaumeClueSeen)));
-    private Family f_toggles = FamilyManager.getFamily(new AllOfComponents(typeof(Toggle)));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
 
     public static IARQueryEvaluator instance;
@@ -85,13 +84,21 @@ public class IARQueryEvaluator : FSystem {
         }
     }
 
+    private string StringToAnswer(string answer)
+    {
+        // format answer
+        answer = answer.Replace('é', 'e');
+        answer = answer.Replace('è', 'e');
+        answer = answer.Replace('à', 'a');
+        answer = answer.ToUpper();
+        return answer;
+    }
+
     private void CheckAnswer(GameObject query)
     {
         string answer = query.GetComponentInChildren<InputField>().text; //player's answer
         // format answer
-        answer = answer.Replace('é', 'e');
-        answer = answer.Replace('è', 'e');
-        answer = answer.ToUpper();
+        answer = StringToAnswer(answer);
         // get query
         QuerySolution qs = query.GetComponent<QuerySolution>();
         // Check mandatory solution
@@ -131,20 +138,12 @@ public class IARQueryEvaluator : FSystem {
 
             if(query.tag == "Q-R3")
             {
-                if(answer == "PLANIFICATION")
+                if(answer == StringToAnswer(LoadGameContent.gameContent.puzzleAnswer))
                 {
-                    int nbToggle = f_toggles.Count;
-                    for(int i = 0; i < nbToggle; i++)
-                    {
-                        if(f_toggles.getAt(i).name == "TogglePuzzle")
-                        {
-                            if (f_toggles.getAt(i).GetComponent<Toggle>().isOn)
-                                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "planification1", performedBy = "player" });
-                            else
-                                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "planification2", performedBy = "player" });
-                            break;
-                        }
-                    }
+                    if (LoadGameContent.gameContent.virtualPuzzle)
+                        GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "planification1", performedBy = "player" });
+                    else
+                        GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "planification2", performedBy = "player" });
                 }
                 else
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = answer.ToLower(), performedBy = "player" });
