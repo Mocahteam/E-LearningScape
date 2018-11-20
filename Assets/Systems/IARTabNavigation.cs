@@ -78,10 +78,17 @@ public class IARTabNavigation : FSystem {
                 if (f_atWork.Count == 0)
                     openIar(f_tabs.Count - 1); // Open IAR on the last tab
         }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "pressed", objectType = "key", objectName = "A" });
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape))
+            GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "pressed", objectType = "key", objectName = "Escape" });
     }
 
     private void openIar(int tabId)
     {
+        GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "activated", objectType = "menu", objectName = iar.name });
         openedAtLeastOnce = true;
         GameObjectManager.setGameObjectState(f_HUD_A.First(), false); // hide HUD "A"
         GameObjectManager.setGameObjectState(iar, true); // open IAR
@@ -115,6 +122,7 @@ public class IARTabNavigation : FSystem {
 
     public void closeIar()
     {
+        GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "deactivated", objectType = "menu", objectName = iar.name });
         GameObjectManager.setGameObjectState(iar, false); // close IAR
         // Restaure systems state (exception for LampManager)
         bool backLampManagerState = LampManager.instance.Pause;
@@ -139,5 +147,6 @@ public class IARTabNavigation : FSystem {
         newSelectedTab.GetComponentInChildren<Text>().fontStyle = FontStyle.Bold;
         // enable new content
         GameObjectManager.setGameObjectState(newSelectedTab.GetComponent<LinkedWith>().link, true);
+        GameObjectManager.addComponent<ActionPerformedForLRS>(newSelectedTab.GetComponent<LinkedWith>().link, new { verb = "accessed", objectType = "menu", objectName = newSelectedTab.GetComponent<LinkedWith>().link.name });
     }
 }

@@ -104,6 +104,8 @@ public class MoveInFrontOf : FSystem {
 
             if (focusedGO)
             {
+                GameObjectManager.addComponent<ActionPerformedForLRS>(focusedGO, new { verb = "accessed", objectType = "interactable", objectName = focusedGO.name });
+
                 // pause unuse systems
                 MovingSystem.instance.Pause = true;
                 Highlighter.instance.Pause = true;

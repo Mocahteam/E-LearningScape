@@ -248,12 +248,15 @@ public class LockResolver : FSystem {
 
                     GameObjectManager.addComponent<ActionPerformed>(f_wallIntro.First(), new { name = "perform2", performedBy = "system" });
 
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new { verb = "completed", objectType = "interactable", objectName = selectedLocker.gameObject.name });
+
                     // disable the wall
                     GameObjectManager.setGameObjectState(f_wallIntro.First(), false);
                     gameAudioSource.loop = false; // stop sound
                     // update IAR
                     GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(0).gameObject, false); // first child is locked tab
                     GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(1).gameObject, true); // second child is unlocked tab
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new { verb = "unlocked", objectType = "menu", objectName = selectedLocker.IARScreenUnlock.name });
                     // update flags
                     playerLookingAtDoor = false;
                     IARScreenRoom1Unlocked = true;
@@ -296,6 +299,10 @@ public class LockResolver : FSystem {
                     GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(1).gameObject, true); // second child is unlocked tab
                     IARScreenRoom3Unlocked = true;
                     GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { name = "perform", performedBy = "player" });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new { verb = "completed",
+                        objectType = "interactable", objectName = selectedLocker.gameObject.name });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new { verb = "unlocked", objectType = "menu",
+                        objectName = selectedLocker.IARScreenUnlock.name });
                     closedBy = "system";
                     ExitLocker();
                 }
@@ -317,6 +324,7 @@ public class LockResolver : FSystem {
         GameObjectManager.removeComponent<ReadyToWork>(selectedLocker.gameObject);
 
         GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { name = "turnOff", performedBy = closedBy });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new { verb = "exited", objectType = "interactable", objectName = selectedLocker.gameObject.name });
 
         selectedLocker = null;
 

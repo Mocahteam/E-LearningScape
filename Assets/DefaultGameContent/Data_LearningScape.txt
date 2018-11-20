@@ -102,10 +102,10 @@
     "mdpLogin": 814,
     "glassesPlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
     "glassesPicturesPath": [
-        "Data/contrat01.jpg",
-        "Data/contrat02.jpg",
-        "Data/contrat03.jpg",
-        "Data/contrat04.jpg"
+        "Data/contrat01.png",
+        "Data/contrat02.png",
+        "Data/contrat03.png",
+        "Data/contrat04.png"
     ],
     "glassesQuestion": "Le vase se renversant vous livrera la clé de cette enigme",
     "glassesAnswer": [

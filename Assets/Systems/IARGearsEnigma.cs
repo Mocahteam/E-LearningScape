@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.PointerManager;
+using TMPro;
 
 public class IARGearsEnigma : FSystem
 {
@@ -117,6 +118,7 @@ public class IARGearsEnigma : FSystem
                     gearDragged = tmpGO; //save the dragged gear
                     GameObjectManager.setGameObjectState(question, false);
                     GameObjectManager.setGameObjectState(transparentGear, true);
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(gearDragged, new { verb = "dragged", objectType = "draggable", objectName = gearDragged.name });
                 }
             }
             if (gearDragged != null) //if a gear is dragged
@@ -124,6 +126,7 @@ public class IARGearsEnigma : FSystem
                 rotateGear = false; //initial value
                 if (Input.GetMouseButtonUp(0))  //when the gear is released
                 {
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(gearDragged, new { verb = "released", objectType = "draggable", objectName = gearDragged.name });
                     GameObjectManager.setGameObjectState(transparentGear, false);
                     //if the gear is released in the center of the tablet (player answering)
                     if (gearDragged.transform.localPosition.x < 125 && gearDragged.transform.localPosition.x > -125 && gearDragged.transform.localPosition.y < 125f / 2 && gearDragged.transform.localPosition.x > -125f / 2)
@@ -132,6 +135,10 @@ public class IARGearsEnigma : FSystem
                         if (gearDragged.GetComponent<Gear>().isSolution) //if answer is correct
                         {
                             GameObjectManager.addComponent<ActionPerformed>(gearsEnigma, new { name = "Correct", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma, new { verb = "answered", objectType = "question",
+                                objectName = gearsEnigma.name, result = true, success = true, response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma.transform.parent.gameObject, new { verb = "completed",
+                                objectType = "menu", objectName = gearsEnigma.transform.parent.gameObject.name });
 
                             //start audio and animation for "Right answer"
 
@@ -146,6 +153,15 @@ public class IARGearsEnigma : FSystem
                         else //if answer is wrong
                         {
                             GameObjectManager.addComponent<ActionPerformed>(gearsEnigma, new { name = "Wrong", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma, new
+                            {
+                                verb = "answered",
+                                objectType = "question",
+                                objectName = gearsEnigma.name,
+                                result = true,
+                                success = false,
+                                response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text
+                            });
 
                             GameObjectManager.setGameObjectState(question, true);
                             //start audio and animation for "Wrong answer"

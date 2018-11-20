@@ -111,6 +111,7 @@ public class ToggleObject : FSystem {
                         else
                             closingChest = true;
                     }
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new { verb = "interacted", objectType = "toggable", objectName = tmpGO.name });
                     break;
                 }
             }

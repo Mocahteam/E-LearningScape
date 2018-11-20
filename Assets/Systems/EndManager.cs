@@ -11,6 +11,7 @@ public class EndManager : FSystem {
     // this system manage the epilog
 
     private Family f_answer = FamilyManager.getFamily(new AnyOfTags("A-R3"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not already displayed of the third room
+    private Family f_questionR3 = FamilyManager.getFamily(new AnyOfTags("Q-R3"));
     // Will contain a game object when IAR is openned
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
@@ -46,6 +47,12 @@ public class EndManager : FSystem {
             switchToEndRoom = true;
 
             GameObjectManager.addComponent<ActionPerformed>(f_player.First(), new { name = "perform", performedBy = "system" });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(f_questionR3.First().transform.parent.parent.gameObject, new
+            {
+                verb = "completed",
+                objectType = "menu",
+                objectName = f_questionR3.First().transform.parent.parent.gameObject.name
+            });
         }
     }
 
@@ -98,7 +105,8 @@ public class EndManager : FSystem {
             foreach (FSystem sys in FSystemManager.fixedUpdateSystems())
                 sys.Pause = true;
             foreach (FSystem sys in FSystemManager.updateSystems())
-                sys.Pause = true;
+                if(sys != SendStatements.instance)
+                    sys.Pause = true;
             foreach (FSystem sys in FSystemManager.lateUpdateSystems())
                 sys.Pause = true;
             DreamFragmentCollecting.instance.Pause = false;

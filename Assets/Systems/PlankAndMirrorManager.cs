@@ -149,6 +149,7 @@ public class PlankAndMirrorManager : FSystem {
                 GameObjectManager.setGameObjectState(mirror, true);
 
                 GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "perform", performedBy = "system" });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new { verb = "completed", objectType = "interactable", objectName = selectedPlank.name });
             }
 
             if (!movePlank)
@@ -174,6 +175,7 @@ public class PlankAndMirrorManager : FSystem {
         GameObjectManager.removeComponent<ReadyToWork>(selectedPlank);
 
         GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "turnOff", performedBy = "player" });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new { verb = "exited", objectType = "interactable", objectName = selectedPlank.name });
 
         selectedPlank = null;
 

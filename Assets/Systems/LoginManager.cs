@@ -49,7 +49,7 @@ public class LoginManager : FSystem {
     private bool coverAnimate = false;
 
     private string exitBy = "";
-    
+
     public static LoginManager instance;
 
     public LoginManager()
@@ -177,6 +177,7 @@ public class LoginManager : FSystem {
                     GameObject IARsecondScreen = f_mainWindow.First().GetComponentInChildren<LinkedWith>().link;
                     GameObjectManager.setGameObjectState(IARsecondScreen.transform.GetChild(0).gameObject, false); // first child is locked tab
                     GameObjectManager.setGameObjectState(IARsecondScreen.transform.GetChild(1).gameObject, true); // second child is unlocked tab
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(IARsecondScreen, new { verb = "unlocked", objectType = "menu", objectName = IARsecondScreen.name });
                     // exit login
                     exitBy = "system";
                     ExitLogin();
@@ -191,6 +192,12 @@ public class LoginManager : FSystem {
         GameObjectManager.removeComponent<ReadyToWork>(selectedLoginPanel);
 
         GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "turnOff", performedBy = exitBy });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
+        {
+            verb = "exited",
+            objectType = "interactable",
+            objectName = selectedLoginPanel.name
+        });
 
         selectedLoginPanel = null;
 
@@ -206,6 +213,15 @@ public class LoginManager : FSystem {
         if (answer == passwordSolution) //if the answer is correct
         {
             GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "Correct", performedBy = "player" });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
+            {
+                verb = "answered",
+                objectType = "question",
+                objectName = selectedLoginPanel.name,
+                result = true,
+                success = true,
+                response = answer.ToString()
+            });
 
             //show correct answer feedback for the 3 numbers
             connectionAnswerCheck1.text = "O";
@@ -221,6 +237,15 @@ public class LoginManager : FSystem {
         else
         {
             GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "Wrong", performedBy = "player" });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
+            {
+                verb = "answered",
+                objectType = "question",
+                objectName = selectedLoginPanel.name,
+                result = true,
+                success = false,
+                response = answer.ToString()
+            });
 
             ifConnectionR2.ActivateInputField();
             //else, feedback following the rules of mastermind ('O' correct, '?' right number but wrong place, 'X' wrong number)

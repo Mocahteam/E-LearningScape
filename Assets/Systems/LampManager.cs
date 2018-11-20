@@ -77,6 +77,13 @@ public class LampManager : FSystem {
                 //if the symbol is illuminated by the lamp
                 if (Vector3.Angle(position - Camera.main.transform.position, Camera.main.transform.forward) < 22)
                 {
+                    if(!tmpGo.activeSelf)
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
+                        {
+                            verb = "accessed",
+                            objectType = "interactable",
+                            objectName = tmpGo.name
+                        });
                     GameObjectManager.setGameObjectState(tmpGo, true);
                     //calculate the intersection between player direction and the wall
                     float d = Vector3.Dot((position - Camera.main.transform.position), tmpGo.transform.forward) / Vector3.Dot(Camera.main.transform.forward, tmpGo.transform.forward);
@@ -97,6 +104,13 @@ public class LampManager : FSystem {
                     //disable the mask and the symbol
                     tmpGo.transform.position = position;
                     tmpGo.GetComponentInChildren<E12_Symbol>().gameObject.transform.position = position;
+                    if (tmpGo.activeSelf)
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
+                        {
+                            verb = "exited",
+                            objectType = "interactable",
+                            objectName = tmpGo.name
+                        });
                     GameObjectManager.setGameObjectState(tmpGo, false);
                 }
             }

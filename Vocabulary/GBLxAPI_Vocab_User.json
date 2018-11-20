@@ -10,6 +10,15 @@
                 "en-US": "area"
             }
         },
+        "draggable": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/draggable",
+            "name": {
+                "en-US": "draggable"
+            }
+        },
         "fragment": {
             "description": {
                 "en-US": "a dream fragment in the game e-learningscape."
@@ -145,6 +154,15 @@
                 "en-US": "deactivated"
             }
         },
+        "dragged": {
+            "description": {
+                "en-US": "indicates that the actor started dragging the object."
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/dragged",
+            "name": {
+                "en-US": "dragged"
+            }
+        },
         "exited": {
             "description": {
                 "en-US": "indicates the actor intentionally departed from the activity or object."
@@ -179,6 +197,15 @@
             "id": "https://www.lip6.fr/mocah/invaliduri/verbs/pressed",
             "name": {
                 "en-US": "pressed"
+            }
+        },
+        "released": {
+            "description": {
+                "en-US": "indicates that the actor released the object from one's grip from or a specific state."
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/released",
+            "name": {
+                "en-US": "released"
             }
         },
         "started": {

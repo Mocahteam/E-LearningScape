@@ -34,10 +34,11 @@ public static class GBL_Interface {
 	public static string lrsPassword = "90935a12c7eeb44d1d6acefd0f413e4d4c552467";
 	public static string standardsConfigDefault = "data/GBLxAPI_Vocab_Default";
 	public static string standardsConfigUser = "data/GBLxAPI_Vocab_User";
-	public static string gameURI = "https://dig-itgames.com/apps/GBLXAPITEST";
-	public static string gameName = "GBLxAPI TEST";
-	public static string companyURI = "https://dig-itgames.com/";
+	public static string gameURI = "https://www.lip6.fr/mocah/invalidURI/activity-types/serious-game/LearningScape";
+	public static string gameName = "E-LearningScape";
+	public static string companyURI = "https://www.lip6.fr/mocah/";
 	public static string userUUID = "f1cd58aa-ad22-49e5-8567-d59d97d3b209";
+    public static string playerName = "player";
 
     // ------------------------------------------------------------------------
 	// Sample Gameplay GBLxAPI Triggers
@@ -46,12 +47,26 @@ public static class GBL_Interface {
 	Here is where you will put functions to be called whenever you want to send a GBLxAPI statement.
 	 */
 	
-	public static void SendStatement(string verb, string activityType, string activityName, string userName = "player")
+	public static void SendStatement(string verb, string activityType, string activityName)
     {
-		Agent statementActor = GBLXAPI.Instance.CreateActorStatement(GBLXAPI.Instance.GenerateActorUUID(userName), "https://www.lip6.fr/mocah/", userName);
+		Agent statementActor = GBLXAPI.Instance.CreateActorStatement(userUUID, "https://www.lip6.fr/mocah/", playerName);
 		Verb statementVerb = GBLXAPI.Instance.CreateVerbStatement(verb);
 		Activity statementObject = GBLXAPI.Instance.CreateObjectActivityStatement(string.Concat("https://www.lip6.fr/mocah/invalidURI/",activityType,"/",activityName), activityType, activityName);
 		Result statementResult = null;
+
+		Context statementContext = null;
+
+		// QueueStatement(Agent statementActor, Verb statementVerb, Activity statementObject, Result statementResult, Context statementContext, StatementCallbackHandler sendCallback = null)
+		GBLXAPI.Instance.QueueStatement(statementActor, statementVerb, statementObject, statementResult, statementContext);
+	}
+	
+	public static void SendStatementWithResult(string verb, string activityType, string activityName, bool completed, 
+        bool success, string response = null, int? score = null, float duration = 0)
+    {
+		Agent statementActor = GBLXAPI.Instance.CreateActorStatement(userUUID, "https://www.lip6.fr/mocah/", playerName);
+		Verb statementVerb = GBLXAPI.Instance.CreateVerbStatement(verb);
+		Activity statementObject = GBLXAPI.Instance.CreateObjectActivityStatement(string.Concat("https://www.lip6.fr/mocah/invalidURI/",activityType,"/",activityName), activityType, activityName);
+        Result statementResult = GBLXAPI.Instance.CreateResultStatement(completed, success, duration, response, score);
 
 		Context statementContext = null;
 

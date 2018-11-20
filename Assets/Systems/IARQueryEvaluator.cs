@@ -81,6 +81,7 @@ public class IARQueryEvaluator : FSystem {
             GameObjectManager.setGameObjectState(queries, false);
             // enable final code
             GameObjectManager.setGameObjectState(queries.transform.parent.GetChild(1).gameObject, true);
+            GameObjectManager.addComponent<ActionPerformedForLRS>(queries.transform.parent.gameObject, new { verb = "completed", objectType = "menu", objectName = queries.transform.parent.gameObject.name });
         }
     }
 
@@ -130,6 +131,8 @@ public class IARQueryEvaluator : FSystem {
                 GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { name = "Wrong", performedBy = "player" });
             else
                 GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Wrong", performedBy = "player" });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(query, new { verb = "answered", objectType = "question",
+                objectName = string.Concat(query.name, "-", query.tag), result = true, success = false, response = answer });
         }
         else
         {
@@ -159,6 +162,15 @@ public class IARQueryEvaluator : FSystem {
                 GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });
 
             GameObjectManager.addComponent<ActionPerformed>(query, new { name = "perform", performedBy = "system" });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(query, new
+            {
+                verb = "answered",
+                objectType = "question",
+                objectName = string.Concat(query.name, "-", query.tag),
+                result = true,
+                success = true,
+                response = answer
+            });
 
             // Toggle UI element (hide input text and button and show answer)
             for (int i = 1; i < query.transform.childCount; i++)

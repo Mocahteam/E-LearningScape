@@ -67,6 +67,7 @@ public class DreamFragmentCollecting : FSystem {
                 {
                     // Show fragment UI
                     selectedFragment = hit.transform.gameObject;
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "fragment", objectName = selectedFragment.name });
                     GameObjectManager.setGameObjectState(dfUI, true);
                     tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
                     // Set UI text depending on type and id

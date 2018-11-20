@@ -193,6 +193,7 @@ public class IARViewItem : FSystem {
                 // we manage SelectedInInventory component
                 if (go.GetComponent<SelectedInInventory>())
                 {
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "deactivated", objectType = "item", objectName = go.name });
                     GameObjectManager.removeComponent<SelectedInInventory>(go);
                     if (!(go.name.Contains("Scroll") || go.name == "Puzzle" || go.name == "Lamp"))
                     {
@@ -203,11 +204,20 @@ public class IARViewItem : FSystem {
                             if (f_selectedBag.Count > 0)
                             {
                                 if (isSelected("Glasses1"))
+                                {
                                     GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate2", performedBy = "player" });
+                                    GameObjectManager.addComponent<ActionPerformedForLRS>(f_selectedBag.First().transform.GetChild(1).gameObject, new { verb = "accessed", objectType = "interactable", objectName = "paper2" });
+                                }
                                 else if (isSelected("Glasses2"))
+                                {
                                     GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate3", performedBy = "player" });
+                                    GameObjectManager.addComponent<ActionPerformedForLRS>(f_selectedBag.First().transform.GetChild(1).gameObject, new { verb = "accessed", objectType = "interactable", objectName = "paper3" });
+                                }
                                 else
+                                {
                                     GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { name = "activate", performedBy = "player" });
+                                    GameObjectManager.addComponent<ActionPerformedForLRS>(f_selectedBag.First().transform.GetChild(1).gameObject, new { verb = "accessed", objectType = "interactable", objectName = "paper1" });
+                                }
                             }
                         }
                     }
@@ -217,6 +227,7 @@ public class IARViewItem : FSystem {
                 }
                 else
                 {
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "activated", objectType = "item", objectName = go.name });
                     GameObjectManager.addComponent<SelectedInInventory>(go);
                     
                     if (go.name == "ScrollIntro" || go.name == "Lamp")
@@ -236,11 +247,20 @@ public class IARViewItem : FSystem {
                             if(f_selectedBag.Count > 0)
                             {
                                 if (isSelected("Glasses1") && isSelected("Glasses2"))
+                                {
                                     GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate4", performedBy = "player" });
+                                    GameObjectManager.addComponent<ActionPerformedForLRS>(f_selectedBag.First().transform.GetChild(1).gameObject, new { verb = "accessed", objectType = "interactable", objectName = "paper4" });
+                                }
                                 else if (isSelected("Glasses1"))
+                                {
                                     GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate2", performedBy = "player" });
+                                    GameObjectManager.addComponent<ActionPerformedForLRS>(f_selectedBag.First().transform.GetChild(1).gameObject, new { verb = "accessed", objectType = "interactable", objectName = "paper2" });
+                                }
                                 else if (isSelected("Glasses2"))
+                                {
                                     GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate3", performedBy = "player" });
+                                    GameObjectManager.addComponent<ActionPerformedForLRS>(f_selectedBag.First().transform.GetChild(1).gameObject, new { verb = "accessed", objectType = "interactable", objectName = "paper3" });
+                                }
                             }
                         }
                     }

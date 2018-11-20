@@ -49,6 +49,12 @@ public class Highlighter : FSystem {
 
     private void highlight (GameObject currentHighlight)
     {
+        if(currentHighlight.GetComponent<Selectable>())
+            GameObjectManager.addComponent<ActionPerformedForLRS>(currentHighlight, new { verb = "highlighted", objectType = "interactable", objectName = currentHighlight.name });
+        else if(currentHighlight.GetComponent<ToggleableGO>())
+            GameObjectManager.addComponent<ActionPerformedForLRS>(currentHighlight, new { verb = "highlighted", objectType = "toggable", objectName = currentHighlight.name });
+        else
+            GameObjectManager.addComponent<ActionPerformedForLRS>(currentHighlight, new { verb = "highlighted", objectType = "item", objectName = currentHighlight.name });
         if (previousHighlight == null)
             previousHighlight = currentHighlight;
         // Update renderer and highlight game object

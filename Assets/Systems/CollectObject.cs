@@ -45,6 +45,7 @@ public class CollectObject : FSystem {
         {
             foreach (GameObject collect in f_collectableObjects)
             {
+                GameObjectManager.addComponent<ActionPerformedForLRS>(collect, new { verb = "collected", objectType = "item", objectName = collect.name });
                 // enable UI target
                 GameObjectManager.setGameObjectState(collect.GetComponent<LinkedWith>().link, true);
                 GameObjectManager.addComponent<ActionPerformed>(collect, new { name = "perform", performedBy = "player"});

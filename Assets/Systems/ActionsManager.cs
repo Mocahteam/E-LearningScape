@@ -46,7 +46,7 @@ public class ActionsManager : FSystem {
 
     private void ActionProcessing(GameObject go)
     {
-        if (/*go.GetComponent<ComponentMonitoring>() &&*/ !this.Pause)
+        if (!this.Pause)
         {
             ActionPerformed[] listAP = go.GetComponents<ActionPerformed>();
             int nb = listAP.Length;

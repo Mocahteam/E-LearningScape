@@ -136,6 +136,10 @@ public class MovingSystem : FSystem
         // when control button or right click is pressed then the player can alternatively crouch and standing
         if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetMouseButtonDown(1)))
         {
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+                GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "pressed", objectType = "key", objectName = "LeftControl" });
+            else if(Input.GetMouseButtonDown(1))
+                GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "pressed", objectType = "key", objectName = "RightClick" });
             changingPose = true; //true when the player is crouching or standing
             //change moving speed according to the stance
             if (crouching)

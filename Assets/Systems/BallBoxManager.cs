@@ -96,6 +96,7 @@ public class BallBoxManager : FSystem {
             ballSubTitles.text = b.text;
 
             focusedBall = go;
+            GameObjectManager.addComponent<ActionPerformedForLRS>(focusedBall, new { verb = "highlighted", objectType = "interactable", objectName = focusedBall.name });
         }
     }
 
@@ -170,6 +171,7 @@ public class BallBoxManager : FSystem {
                         GameObjectManager.setGameObjectState(keySelected(), false);
 
                         GameObjectManager.addComponent<ActionPerformed>(boxPadlock, new { name = "perform", performedBy = "system" });
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "unlocked", objectType = "interactable", objectName = selectedBox.name });
                     }
                 }
             }
@@ -242,6 +244,7 @@ public class BallBoxManager : FSystem {
                     targetRotation = Quaternion.Euler(90, 0, 270);
                     moveBall = true;
                     selectedBall = focusedBall;
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBall, new { verb = "interacted", objectType = "interactable", objectName = selectedBall.name });
                     Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = false;
 
                     GameObjectManager.addComponent<ActionPerformed>(selectedBall, new { name = "activate", performedBy = "player" });
@@ -335,6 +338,7 @@ public class BallBoxManager : FSystem {
         boxOpenned = false;
 
         GameObjectManager.addComponent<ActionPerformed>(selectedBox, new { name = "turnOff", performedBy = "player" });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "exited", objectType = "interactable", objectName = selectedBox.name });
 
         selectedBox = null;
 

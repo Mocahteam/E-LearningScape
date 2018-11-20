@@ -65,6 +65,8 @@ public class WhiteBoardManager : FSystem {
         prevColor = rend.material.GetColor("_EmissionColor");
         rend.material.EnableKeyword("_EMISSION");
         rend.material.SetColor("_EmissionColor", Color.yellow * Mathf.LinearToGammaSpace(0.8f));
+        if(!eraserDragged)
+            GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "highlighted", objectType = "draggable", objectName = go.name });
     }
 
     private void onExitEraser(int instanceId)
@@ -98,6 +100,7 @@ public class WhiteBoardManager : FSystem {
                     eraserDragged = true;
 
                     GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "activate", performedBy = "player" });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "dragged", objectType = "draggable", objectName = eraser.name });
                 }
                 if (eraserDragged)
                 {
@@ -105,6 +108,7 @@ public class WhiteBoardManager : FSystem {
                     {
                         //stop dragging eraser when the click is released
                         eraserDragged = false;
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "released", objectType = "draggable", objectName = eraser.name });
                     }
                     else
                     {
@@ -140,6 +144,7 @@ public class WhiteBoardManager : FSystem {
         GameObjectManager.removeComponent<ReadyToWork>(selectedBoard);
 
         GameObjectManager.addComponent<ActionPerformed>(selectedBoard, new { name = "turnOff", performedBy = "player" });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBoard, new { verb = "exited", objectType = "interactable", objectName = selectedBoard.name });
 
         selectedBoard = null;
 

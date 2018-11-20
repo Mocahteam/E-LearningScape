@@ -151,6 +151,7 @@ public class SatchelManager : FSystem {
                         GameObjectManager.removeComponent<ReadyToWork>(selectedBag);
 
                         GameObjectManager.addComponent<ActionPerformed>(selectedBag, new { name = "turnOff", performedBy = "player" });
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBag, new { verb = "exited", objectType = "interactable", objectName = selectedBag.name });
 
                         selectedBag = null;
 
@@ -182,6 +183,7 @@ public class SatchelManager : FSystem {
                             getOutPaper = true;
 
                             GameObjectManager.addComponent<ActionPerformed>(bagPadlock, new { name = "perform", performedBy = "system" });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBag, new { verb = "unlocked", objectType = "interactable", objectName = selectedBag.name });
                         }
                     }
                 }
@@ -211,13 +213,25 @@ public class SatchelManager : FSystem {
                         paperOut = true;
 
                         if(isSelected("Glasses1") && isSelected("Glasses2"))
+                        {
                             GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = "activate4", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new { verb = "accessed", objectType = "interactable", objectName = "paper4" });
+                        }
                         else if (isSelected("Glasses1"))
+                        {
                             GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = "activate2", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new { verb = "accessed", objectType = "interactable", objectName = "paper2" });
+                        }
                         else if (isSelected("Glasses2"))
+                        {
                             GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = "activate3", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new { verb = "accessed", objectType = "interactable", objectName = "paper3" });
+                        }
                         else
+                        {
                             GameObjectManager.addComponent<ActionPerformed>(paper, new { name = "activate", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new { verb = "accessed", objectType = "interactable", objectName = "paper1" });
+                        }
                     }
                 }
             }

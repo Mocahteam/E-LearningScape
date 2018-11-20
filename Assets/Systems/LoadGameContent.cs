@@ -605,10 +605,10 @@ public class LoadGameContent : FSystem {
                 {
                     qs = f_queriesR3.getAt(i).GetComponent<QuerySolution>();
                     qs.orSolutions = new List<string>();
-                    qs.orSolutions.Add(gameContent.puzzleAnswer);
-                    qs.orSolutions.Add(gameContent.enigma12Answer);
-                    qs.orSolutions.Add(gameContent.lampAnswer);
-                    qs.orSolutions.Add(gameContent.whiteBoardAnswer);
+                    qs.orSolutions.Add(StringToAnswer(gameContent.puzzleAnswer));
+                    qs.orSolutions.Add(StringToAnswer(gameContent.enigma12Answer));
+                    qs.orSolutions.Add(StringToAnswer(gameContent.lampAnswer));
+                    qs.orSolutions.Add(StringToAnswer(gameContent.whiteBoardAnswer));
                 }
 
                 //Puzzles
