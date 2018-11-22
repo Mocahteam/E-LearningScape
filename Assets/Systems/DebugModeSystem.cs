@@ -28,7 +28,6 @@ public class DebugModeSystem : FSystem
     private Vector3 velocity = Vector3.zero;
 
     private bool running = false;
-    private float initialSpeed;
 
     public DebugModeSystem()
     {
@@ -42,7 +41,6 @@ public class DebugModeSystem : FSystem
             code.Add(KeyCode.N);
 
             player = f_player.First().GetComponent<FirstPersonController>();
-            initialSpeed = player.m_WalkSpeed;
             int nbLights = f_lights.Count;
             for (int i = 0; i < nbLights; i++)
             {

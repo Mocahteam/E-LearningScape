@@ -6,7 +6,6 @@ using System;
 public class ActionsManager : FSystem {
 
     private Family f_actions = FamilyManager.getFamily(new AllOfComponents(typeof(ActionPerformed)));
-    private Family f_mainloop = FamilyManager.getFamily(new AllOfComponents(typeof(MainLoop)));
 
     public static ActionsManager instance;
 

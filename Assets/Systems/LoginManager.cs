@@ -13,6 +13,7 @@ public class LoginManager : FSystem {
     private Family f_mainWindow = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(PointerSensitive)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_door = FamilyManager.getFamily(new AllOfComponents(typeof(Door)));
+    private Family f_forceMoveToLogin = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(ForceMove)));
 
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family f_gameRooms = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("GameRooms"));
@@ -49,6 +50,7 @@ public class LoginManager : FSystem {
     private bool coverAnimate = false;
 
     private string exitBy = "";
+    private string openedBy = "";
 
     public static LoginManager instance;
 
@@ -84,6 +86,7 @@ public class LoginManager : FSystem {
 
             f_loginUnlocked.addEntryCallback(onLoginUnlocked);
             f_focusedLogin.addEntryCallback(onReadyToWorkOnLogin);
+            f_forceMoveToLogin.addEntryCallback(onForceMoveTo);
 
             gameAudioSource = f_gameRooms.First().GetComponent<AudioSource>();
         }
@@ -108,7 +111,13 @@ public class LoginManager : FSystem {
         // Launch this system
         instance.Pause = false;
 
-        GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "turnOn", performedBy = "player" });
+        GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "turnOn", performedBy = openedBy });
+        openedBy = "player";
+    }
+
+    private void onForceMoveTo(GameObject go)
+    {
+        openedBy = "system";
     }
 
     // Use this to update member variables when system pause. 

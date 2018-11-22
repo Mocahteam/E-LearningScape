@@ -1,15 +1,6 @@
 {
     "action": {},
     "activity": {
-        "area": {
-            "description": {
-                "en-US": "an identified area inside the game world. in some games they can also be worlds. represents an aggregation of zones."
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/area",
-            "name": {
-                "en-US": "area"
-            }
-        },
         "draggable": {
             "description": {
                 "en-US": ""
@@ -37,15 +28,6 @@
                 "en-US": "interactable"
             }
         },
-        "item": {
-            "description": {
-                "en-US": "a collectable game object whose use or interaction results in an effect in a game. items are common elements in video games. players can collect/use/combine them."
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/item",
-            "name": {
-                "en-US": "item"
-            }
-        },
         "key": {
             "description": {
                 "en-US": "a keyboard or mouse key."
@@ -53,33 +35,6 @@
             "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/key",
             "name": {
                 "en-US": "key"
-            }
-        },
-        "menu": {
-            "description": {
-                "en-US": "a menu with several buttons/options whose selection produces different effects. represents a menu, integrated in the user interface (ui), with several a options."
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/menu",
-            "name": {
-                "en-US": "menu"
-            }
-        },
-        "question": {
-            "description": {
-                "en-US": "a question is typically part of an assessment and requires a response from the learner, a response that is then evaluated for correctness."
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/question",
-            "name": {
-                "en-US": "question"
-            }
-        },
-        "serious-game": {
-            "description": {
-                "en-US": "a game designed for a primary purpose other than pure entertainment. for instance, an educational game or a game-like simulation. a serious game is the root container for the rest of game elements."
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/serious-game",
-            "name": {
-                "en-US": "serious-game"
             }
         },
         "toggable": {
@@ -100,15 +55,6 @@
     "subdomain": {},
     "topic": {},
     "verb": {
-        "accessed": {
-            "description": {
-                "en-US": "indicates that the actor accesses to the object. associated to the virtual places a player visits during a gameplay."
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/accessed",
-            "name": {
-                "en-US": "accessed"
-            }
-        },
         "activated": {
             "description": {
                 "en-US": ""
@@ -118,15 +64,6 @@
                 "en-US": "activated"
             }
         },
-        "answered": {
-            "description": {
-                "en-US": "indicates the actor replied to a question, where the object is generally an activity representing the question."
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/answered",
-            "name": {
-                "en-US": "answered"
-            }
-        },
         "collected": {
             "description": {
                 "en-US": "indicates the actor collected the object"
@@ -134,15 +71,6 @@
             "id": "https://www.lip6.fr/mocah/invaliduri/verbs/collected",
             "name": {
                 "en-US": "collected"
-            }
-        },
-        "completed": {
-            "description": {
-                "en-US": ""
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/completed",
-            "name": {
-                "en-US": "completed"
             }
         },
         "deactivated": {
@@ -163,15 +91,6 @@
                 "en-US": "dragged"
             }
         },
-        "exited": {
-            "description": {
-                "en-US": "indicates the actor intentionally departed from the activity or object."
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/exited",
-            "name": {
-                "en-US": "exited"
-            }
-        },
         "highlighted": {
             "description": {
                 "en-US": "indicates that the actor put its cursor over the object."
@@ -181,24 +100,6 @@
                 "en-US": "highlighted"
             }
         },
-        "interacted": {
-            "description": {
-                "en-US": "indicates the actor engaged with a physical or virtual object."
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/interacted",
-            "name": {
-                "en-US": "interacted"
-            }
-        },
-        "pressed": {
-            "description": {
-                "en-US": "indicates that the actor made physical contact with the object. used when the player presses some button in an input device. press the left button in a mouse, press the x button in a xbox controller, etc."
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/pressed",
-            "name": {
-                "en-US": "pressed"
-            }
-        },
         "released": {
             "description": {
                 "en-US": "indicates that the actor released the object from one's grip from or a specific state."
@@ -206,24 +107,6 @@
             "id": "https://www.lip6.fr/mocah/invaliduri/verbs/released",
             "name": {
                 "en-US": "released"
-            }
-        },
-        "started": {
-            "description": {
-                "en-US": ""
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/started",
-            "name": {
-                "en-US": "started"
-            }
-        },
-        "unlocked": {
-            "description": {
-                "en-US": "indicates the actor unlocked an option that was previously unavailable. used when the player unlocks an option in an alternative."
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/unlocked",
-            "name": {
-                "en-US": "unlocked"
             }
         }
     }

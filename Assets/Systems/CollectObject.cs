@@ -12,7 +12,6 @@ public class CollectObject : FSystem {
     // We process only Highlighted game objects (this component is dynamically added by Highlight system)
     private Family f_collectableObjects = FamilyManager.getFamily(new AllOfComponents(typeof(LinkedWith), typeof(Highlighted)), new NoneOfLayers(5), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_pressA = FamilyManager.getFamily(new AnyOfTags("PressA"));
-    private Family f_mainloop = FamilyManager.getFamily(new AllOfComponents(typeof(MainLoop)));
     private Family f_inventoryElements = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
 
     public static CollectObject instance;

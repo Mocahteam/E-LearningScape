@@ -229,7 +229,7 @@ public class SatchelManager : FSystem {
                         }
                         else
                         {
-                            GameObjectManager.addComponent<ActionPerformed>(paper, new { name = "activate", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = "activate", performedBy = "player" });
                             GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new { verb = "accessed", objectType = "interactable", objectName = "paper1" });
                         }
                     }

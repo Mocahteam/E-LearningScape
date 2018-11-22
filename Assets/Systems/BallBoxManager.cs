@@ -16,7 +16,6 @@ public class BallBoxManager : FSystem {
     private Family f_closeBox = FamilyManager.getFamily(new AnyOfTags("Box", "Ball", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
-    private Family f_mainloop = FamilyManager.getFamily(new AllOfComponents(typeof(MainLoop)));
 
     //information for animations
     private float speed;

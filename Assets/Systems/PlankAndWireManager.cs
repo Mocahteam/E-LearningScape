@@ -19,7 +19,6 @@ public class PlankAndWireManager : FSystem {
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_syllabusSeen = FamilyManager.getFamily(new AllOfComponents(typeof(SyllabusSeen)));
-    private Family f_familyMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(FamilyMonitoring)));
 
     //plank
     private GameObject selectedPlank = null;
