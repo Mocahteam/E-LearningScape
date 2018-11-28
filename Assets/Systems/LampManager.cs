@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using FYFY;
+using FYFY_plugins.Monitoring;
 
 public class LampManager : FSystem {
 
@@ -75,15 +76,19 @@ public class LampManager : FSystem {
                 tmpGo = f_symbols.getAt(i);
                 Vector3 position = tmpGo.GetComponentInChildren<E12_Symbol>().position;
                 //if the symbol is illuminated by the lamp
+                Debug.Log(string.Concat(tmpGo.name, ": ", Vector3.SignedAngle(Camera.main.transform.forward, tmpGo.transform.forward, Vector3.up)));
                 if (Vector3.Angle(position - Camera.main.transform.position, Camera.main.transform.forward) < 22)
                 {
-                    if(!tmpGo.activeSelf)
+                    if (!tmpGo.activeSelf)
+                    {
                         GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
                         {
                             verb = "accessed",
                             objectType = "interactable",
                             objectName = tmpGo.name
                         });
+                        GameObjectManager.addComponent<ActionPerformed>(tmpGo, new { name = "activate", performedBy = "player" });
+                    }
                     GameObjectManager.setGameObjectState(tmpGo, true);
                     //calculate the intersection between player direction and the wall
                     float d = Vector3.Dot((position - Camera.main.transform.position), tmpGo.transform.forward) / Vector3.Dot(Camera.main.transform.forward, tmpGo.transform.forward);

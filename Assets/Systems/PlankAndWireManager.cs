@@ -4,6 +4,7 @@ using FYFY_plugins.PointerManager;
 using FYFY_plugins.Monitoring;
 using System.Collections.Generic;
 using TMPro;
+using FYFY_plugins.Monitoring;
 
 public class PlankAndWireManager : FSystem {
     
@@ -14,7 +15,7 @@ public class PlankAndWireManager : FSystem {
     private Family f_focusedPlank = FamilyManager.getFamily(new AnyOfTags("Plank"), new AllOfComponents(typeof(ReadyToWork), typeof(LinkedWith)));
     private Family f_focusedWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerOver), typeof(TextMeshPro))); // focused words on the plank
     private Family f_allWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro))); // all clickable words on the plank
-    private Family f_wrongWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro)), new NoneOfComponents(typeof(SolutionWord)));
+    private Family f_wrongWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro)), new NoneOfComponents(typeof(IsSolution)));
     private Family f_closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PlankText", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
@@ -121,12 +122,12 @@ public class PlankAndWireManager : FSystem {
                             lr.positionCount--;
                             //set the new positions
                             lr.SetPositions(lrPositions.ToArray());
-                            if (tmpGO.GetComponent<SolutionWord>())
+                            if (tmpGO.GetComponent<IsSolution>())
                                 GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player" });
                             else
                                 GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player", family = f_wrongWords });
                             GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new { verb = "interacted", objectType = "interactable",
-                                result = true, objectName = tmpGO.GetComponent<TextMeshPro>().text, completed = true, response = "turn off" });
+                                result = true, objectName = tmpGO.GetComponent<TextMeshPro>().text, completed = 1, response = "turn off" });
                         }
                         else
                         {    //if the word wasn't selected
@@ -137,7 +138,7 @@ public class PlankAndWireManager : FSystem {
                                 {
                                     if (w.GetComponent<TextMeshPro>().color == Color.red)
                                     {
-                                        if (tmpGO.GetComponent<SolutionWord>())
+                                        if (tmpGO.GetComponent<IsSolution>())
                                             GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player" });
                                         else
                                             GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player", family = f_wrongWords });
@@ -147,7 +148,7 @@ public class PlankAndWireManager : FSystem {
                                             objectType = "interactable",
                                             objectName = tmpGO.GetComponent<TextMeshPro>().text,
                                             result = true,
-                                            completed = true,
+                                            completed = 1,
                                             response = "turn off"
                                         });
                                     }
@@ -156,7 +157,7 @@ public class PlankAndWireManager : FSystem {
                                 lr.positionCount = 0;
                                 lrPositions.Clear();
                             }
-                            if (tmpGO.GetComponent<SolutionWord>())
+                            if (tmpGO.GetComponent<IsSolution>())
                             {
                                 if(f_syllabusSeen.Count < 2)
                                     GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12" } });
@@ -173,7 +174,7 @@ public class PlankAndWireManager : FSystem {
                                 objectType = "interactable",
                                 objectName = tmpGO.GetComponent<TextMeshPro>().text,
                                 result = true,
-                                completed = true,
+                                completed = 1,
                                 response = "turn on"
                             });
                             tmpGO.GetComponent<TextMeshPro>().color = Color.red;
@@ -184,7 +185,7 @@ public class PlankAndWireManager : FSystem {
 
                             bool correct = true;
                             foreach (GameObject word in f_allWords)
-                                if (word.GetComponent<SolutionWord>() && word.GetComponent<TextMeshPro>().color != Color.red)
+                                if (word.GetComponent<IsSolution>() && word.GetComponent<TextMeshPro>().color != Color.red)
                                     correct = false;
                             
                             if (correct)
@@ -214,7 +215,7 @@ public class PlankAndWireManager : FSystem {
                         tmpGO = f_focusedWords.getAt(i);
                         if (tmpGO.GetComponent<TextMeshPro>().color == Color.red)
                         {
-                            if(tmpGO.GetComponent<SolutionWord>())
+                            if(tmpGO.GetComponent<IsSolution>())
                                 GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player" });
                             else
                                 GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player", family = f_wrongWords });
@@ -224,13 +225,13 @@ public class PlankAndWireManager : FSystem {
                                 objectType = "interactable",
                                 objectName = tmpGO.GetComponent<TextMeshPro>().text,
                                 result = true,
-                                completed = false,
+                                completed = -1,
                                 response = "turn off"
                             });
                         }
                         else
                         {
-                            if (tmpGO.GetComponent<SolutionWord>())
+                            if (tmpGO.GetComponent<IsSolution>())
                             {
                                 if (f_syllabusSeen.Count < 2)
                                     GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12" } });
@@ -247,7 +248,7 @@ public class PlankAndWireManager : FSystem {
                                 objectType = "interactable",
                                 objectName = tmpGO.GetComponent<TextMeshPro>().text,
                                 result = true,
-                                completed = false,
+                                completed = -1,
                                 response = "turn off"
                             });
                         }
@@ -261,7 +262,7 @@ public class PlankAndWireManager : FSystem {
                     {
                         if (word.GetComponent<TextMeshPro>().color == Color.red)
                         {
-                            if (tmpGO.GetComponent<SolutionWord>())
+                            if (tmpGO.GetComponent<IsSolution>())
                                 GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player" });
                             else
                                 GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player", family = f_wrongWords });
@@ -272,7 +273,7 @@ public class PlankAndWireManager : FSystem {
                             objectType = "interactable",
                             objectName = tmpGO.GetComponent<TextMeshPro>().text,
                             result = true,
-                            completed = true,
+                            completed = 1,
                             response = "turn off"
                         });
                         word.GetComponent<TextMeshPro>().color = Color.black;

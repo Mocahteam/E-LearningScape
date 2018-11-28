@@ -8,6 +8,7 @@ public class GameContent {
 
     public string theme;
     public bool trace = true;
+    public bool traceToLRS = false;
     public bool virtualPuzzle = true;
 
     //Texte intro, transition, fin

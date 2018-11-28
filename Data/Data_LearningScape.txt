@@ -1,6 +1,7 @@
 {
     "theme": "Pédagogie",
     "trace": true,
+    "traceToLRS": false,
     "virtualPuzzle": true,
     "storyTextIntro": [
         "Game data loaded from file",

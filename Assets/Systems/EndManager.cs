@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using FYFY;
-using FYFY_plugins.TriggerManager;
-using FYFY_plugins.PointerManager;
-using System.Collections.Generic;
-using TMPro;
+using FYFY_plugins.Monitoring;
 
 public class EndManager : FSystem {
 
@@ -105,10 +102,11 @@ public class EndManager : FSystem {
             foreach (FSystem sys in FSystemManager.fixedUpdateSystems())
                 sys.Pause = true;
             foreach (FSystem sys in FSystemManager.updateSystems())
-                if(sys != SendStatements.instance)
-                    sys.Pause = true;
+                sys.Pause = true;
             foreach (FSystem sys in FSystemManager.lateUpdateSystems())
                 sys.Pause = true;
+            ActionsManager.instance.Pause = !LoadGameContent.gameContent.trace;
+            SendStatements.instance.Pause = false;
             DreamFragmentCollecting.instance.Pause = false;
             MovingSystem.instance.Pause = false;
             this.Pause = false;

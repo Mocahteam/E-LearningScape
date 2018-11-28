@@ -3,6 +3,7 @@ using FYFY;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 using FYFY_plugins.TriggerManager;
+using FYFY_plugins.Monitoring;
 
 public class MovingSystem : FSystem
 {

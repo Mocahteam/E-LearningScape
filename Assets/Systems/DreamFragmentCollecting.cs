@@ -3,6 +3,7 @@ using FYFY;
 using TMPro;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
+using FYFY_plugins.Monitoring;
 
 public class DreamFragmentCollecting : FSystem {
 

@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
+  <transition id="equivWith_ToggleObject_f_wrongChair_turnOff_115" label="turnOff equivWith_ToggleObject_f_wrongChair" system="False" end="False" />
+  <transition id="equivWith_ToggleObject_f_wrongChair_turnOn_115" label="turnOn equivWith_ToggleObject_f_wrongChair" system="False" end="False" />
   <transition id="Fragment_souvenir_4_activate_51" label="activate Fragment_souvenir_4" system="False" end="False" />
   <transition id="Fragment_souvenir_de_activate_42" label="activate Fragment_souvenir_de" system="False" end="False" />
   <transition id="or0_Fragment_souvenir_de_activate_42" label="activate Fragment_souvenir_de" system="False" end="False" />

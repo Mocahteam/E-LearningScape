@@ -1,6 +1,7 @@
 {
     "theme": "Pédagogie",
     "trace": true,
+    "traceToLRS": false,
     "virtualPuzzle": true,
     "storyTextIntro": [
         "Game data loaded from file",
@@ -22,7 +23,7 @@
     "ballBoxAnswer": [
         "1",
         "2",
-        "7"
+        "8"
     ],
     "ballCorrectTexts": [
         "CLASSE INVERSEE",

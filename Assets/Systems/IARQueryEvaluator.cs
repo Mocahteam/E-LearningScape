@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using FYFY;
-using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
 using TMPro;
+using FYFY_plugins.Monitoring;
 
 public class IARQueryEvaluator : FSystem {
 
@@ -131,7 +131,7 @@ public class IARQueryEvaluator : FSystem {
             else
                 GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Wrong", performedBy = "player" });
             GameObjectManager.addComponent<ActionPerformedForLRS>(query, new { verb = "answered", objectType = "question",
-                objectName = string.Concat(query.name, "-", query.tag), result = true, success = false, response = answer });
+                objectName = string.Concat(query.name, "-", query.tag), result = true, success = -1, response = answer });
         }
         else
         {
@@ -167,7 +167,7 @@ public class IARQueryEvaluator : FSystem {
                 objectType = "question",
                 objectName = string.Concat(query.name, "-", query.tag),
                 result = true,
-                success = true,
+                success = 1,
                 response = answer
             });
 

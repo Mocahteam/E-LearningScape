@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-40F8-CC6E6-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-3BE0-26C17-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma3</text>
   </name>
- <page id="g-40F8-CC6EF-1">
-  <place id="p-40F8-CC6F3-2">
+ <page id="g-3BE0-26C21-1">
+  <place id="p-3BE0-26C24-2">
   <name>
    <text>Chair_off_43</text>
     <graphics>
@@ -16,10 +16,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="66" y="325"/>
+    <position x="142" y="420"/>
    </graphics>
   </place>
-  <place id="p-40F8-CC701-3">
+  <place id="p-3BE0-26C32-3">
   <name>
    <text>Chair_on_43</text>
     <graphics>
@@ -27,10 +27,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="246" y="325"/>
+    <position x="302" y="420"/>
    </graphics>
   </place>
-  <transition id="t-40F8-CC703-4">
+  <transition id="t-3BE0-26C34-4">
   <name>
    <text>Chair_turnOff_43</text>
     <graphics>
@@ -38,10 +38,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="156" y="295"/>
+    <position x="222" y="390"/>
    </graphics>
   </transition>
-  <transition id="t-40F8-CC708-5">
+  <transition id="t-3BE0-26C38-5">
   <name>
    <text>Chair_turnOn_43</text>
     <graphics>
@@ -49,10 +49,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="156" y="385"/>
+    <position x="222" y="480"/>
    </graphics>
   </transition>
-  <place id="p-40F8-CC70A-6">
+  <place id="p-3BE0-26C39-6">
   <name>
    <text>FPSController_off_44</text>
     <graphics>
@@ -63,10 +63,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="74" y="160"/>
+    <position x="134" y="250"/>
    </graphics>
   </place>
-  <place id="p-40F8-CC70D-7">
+  <place id="p-3BE0-26C3D-7">
   <name>
    <text>FPSController_on_44</text>
     <graphics>
@@ -74,10 +74,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="234" y="160"/>
+    <position x="314" y="250"/>
    </graphics>
   </place>
-  <transition id="t-40F8-CC70F-8">
+  <transition id="t-3BE0-26C40-8">
   <name>
    <text>FPSController_turnOff_44</text>
     <graphics>
@@ -85,10 +85,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="154" y="130"/>
+    <position x="224" y="220"/>
    </graphics>
   </transition>
-  <transition id="t-40F8-CC713-9">
+  <transition id="t-3BE0-26C44-9">
   <name>
    <text>FPSController_turnOn_44</text>
     <graphics>
@@ -96,10 +96,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="154" y="220"/>
+    <position x="224" y="310"/>
    </graphics>
   </transition>
-  <place id="p-40F8-CC716-10">
+  <place id="p-3BE0-26C46-10">
   <name>
    <text>Fragment_souvenir_4_ActivationCount_51</text>
     <graphics>
@@ -107,10 +107,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="530" y="535"/>
+    <position x="745" y="650"/>
    </graphics>
   </place>
-  <transition id="t-40F8-CC71A-11">
+  <transition id="t-3BE0-26C49-11">
   <name>
    <text>Fragment_souvenir_4_activate_51</text>
     <graphics>
@@ -118,10 +118,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="410" y="535"/>
+    <position x="635" y="650"/>
    </graphics>
   </transition>
-  <place id="p-40F8-CC71E-12">
+  <place id="p-3BE0-26C4D-12">
   <name>
    <text>Fragment_souvenir_changer_ActivationCount_50</text>
     <graphics>
@@ -129,10 +129,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="530" y="130"/>
+    <position x="745" y="200"/>
    </graphics>
   </place>
-  <transition id="t-40F8-CC722-13">
+  <transition id="t-3BE0-26C51-13">
   <name>
    <text>Fragment_souvenir_changer_activate_50</text>
     <graphics>
@@ -140,10 +140,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="410" y="130"/>
+    <position x="635" y="200"/>
    </graphics>
   </transition>
-  <place id="p-40F8-CC726-14">
+  <place id="p-3BE0-26C57-14">
   <name>
    <text>Fragment_souvenir_de_ActivationCount_42</text>
     <graphics>
@@ -151,10 +151,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="530" y="285"/>
+    <position x="745" y="345"/>
    </graphics>
   </place>
-  <transition id="t-40F8-CC729-15">
+  <transition id="t-3BE0-26C5A-15">
   <name>
    <text>Fragment_souvenir_de_activate_42</text>
     <graphics>
@@ -162,10 +162,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="410" y="285"/>
+    <position x="635" y="345"/>
    </graphics>
   </transition>
-  <place id="p-40F8-CC72D-16">
+  <place id="p-3BE0-26C5E-16">
   <name>
    <text>Fragment_souvenir_faut_ActivationCount_49</text>
     <graphics>
@@ -173,10 +173,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="520" y="210"/>
+    <position x="755" y="275"/>
    </graphics>
   </place>
-  <transition id="t-40F8-CC731-17">
+  <transition id="t-3BE0-26C62-17">
   <name>
    <text>Fragment_souvenir_faut_activate_49</text>
     <graphics>
@@ -184,10 +184,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="410" y="210"/>
+    <position x="635" y="275"/>
    </graphics>
   </transition>
-  <place id="p-40F8-CC735-18">
+  <place id="p-3BE0-26C66-18">
   <name>
    <text>Fragment_souvenir_il_ActivationCount_47</text>
     <graphics>
@@ -195,10 +195,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="520" y="455"/>
+    <position x="755" y="575"/>
    </graphics>
   </place>
-  <transition id="t-40F8-CC78A-19">
+  <transition id="t-3BE0-26CAB-19">
   <name>
    <text>Fragment_souvenir_il_activate_47</text>
     <graphics>
@@ -206,10 +206,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="410" y="455"/>
+    <position x="635" y="575"/>
    </graphics>
   </transition>
-  <place id="p-40F8-CC78E-20">
+  <place id="p-3BE0-26CBE-20">
   <name>
    <text>Fragment_souvenir_posture_ActivationCount_45</text>
     <graphics>
@@ -217,10 +217,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="525" y="50"/>
+    <position x="755" y="125"/>
    </graphics>
   </place>
-  <transition id="t-40F8-CC793-21">
+  <transition id="t-3BE0-26CC2-21">
   <name>
    <text>Fragment_souvenir_posture_activate_45</text>
     <graphics>
@@ -228,10 +228,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="415" y="50"/>
+    <position x="635" y="125"/>
    </graphics>
   </transition>
-  <place id="p-40F8-CC797-22">
+  <place id="p-3BE0-26CC6-22">
   <name>
    <text>Fragment_souvenir_savoir_ActivationCount_46</text>
     <graphics>
@@ -239,10 +239,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="520" y="605"/>
+    <position x="755" y="725"/>
    </graphics>
   </place>
-  <transition id="t-40F8-CC79A-23">
+  <transition id="t-3BE0-26CCA-23">
   <name>
    <text>Fragment_souvenir_savoir_activate_46</text>
     <graphics>
@@ -250,10 +250,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="410" y="605"/>
+    <position x="635" y="725"/>
    </graphics>
   </transition>
-  <place id="p-40F8-CC79E-24">
+  <place id="p-3BE0-26CDC-24">
   <name>
    <text>Q3_Answered_52</text>
     <graphics>
@@ -261,10 +261,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1000" y="315"/>
+    <position x="1280" y="410"/>
    </graphics>
   </place>
-  <place id="p-40F8-CC7A1-25">
+  <place id="p-3BE0-26CDF-25">
   <name>
    <text>Q3_Answering_52</text>
     <graphics>
@@ -275,10 +275,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="750" y="315"/>
+    <position x="1030" y="410"/>
    </graphics>
   </place>
-  <transition id="t-40F8-CC7A3-26">
+  <transition id="t-3BE0-26CE1-26">
   <name>
    <text>Q3_Correct_52</text>
     <graphics>
@@ -286,10 +286,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="880" y="255"/>
+    <position x="1160" y="350"/>
    </graphics>
   </transition>
-  <transition id="t-40F8-CC7A7-27">
+  <transition id="t-3BE0-26CE4-27">
   <name>
    <text>Q3_Wrong_52</text>
     <graphics>
@@ -297,10 +297,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="880" y="375"/>
+    <position x="1160" y="470"/>
    </graphics>
   </transition>
-  <place id="p-40F8-CC7A8-28">
+  <place id="p-3BE0-26CE6-28">
   <name>
    <text>Table_off_48</text>
     <graphics>
@@ -311,10 +311,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="64" y="490"/>
+    <position x="144" y="660"/>
    </graphics>
   </place>
-  <place id="p-40F8-CC7AC-29">
+  <place id="p-3BE0-26CE9-29">
   <name>
    <text>Table_on_48</text>
     <graphics>
@@ -322,10 +322,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="244" y="490"/>
+    <position x="304" y="660"/>
    </graphics>
   </place>
-  <transition id="t-40F8-CC7AD-30">
+  <transition id="t-3BE0-26CEB-30">
   <name>
    <text>Table_turnOff_48</text>
     <graphics>
@@ -333,10 +333,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="154" y="460"/>
+    <position x="224" y="630"/>
    </graphics>
   </transition>
-  <transition id="t-40F8-CC7B0-31">
+  <transition id="t-3BE0-26CEE-31">
   <name>
    <text>Table_turnOn_48</text>
     <graphics>
@@ -344,10 +344,57 @@
     </graphics>
   </name>
    <graphics>
-    <position x="154" y="550"/>
+    <position x="224" y="720"/>
    </graphics>
   </transition>
-  <transition id="t-40F8-CC7B2-32">
+  <place id="p-3BE0-26CF1-32">
+  <name>
+   <text>equivWith_ToggleObject_f_wrongChair_off_115</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>5</text>
+   </initialMarking>
+   <graphics>
+    <position x="145" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-3BE0-26CF5-33">
+  <name>
+   <text>equivWith_ToggleObject_f_wrongChair_on_115</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="315" y="80"/>
+   </graphics>
+  </place>
+  <transition id="t-3BE0-26CF9-34">
+  <name>
+   <text>equivWith_ToggleObject_f_wrongChair_turnOff_115</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="225" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-3BE0-26CFD-35">
+  <name>
+   <text>equivWith_ToggleObject_f_wrongChair_turnOn_115</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="225" y="140"/>
+   </graphics>
+  </transition>
+  <transition id="t-3BE0-26D22-36">
   <name>
    <text>or0_Fragment_souvenir_de_activate_42</text>
     <graphics>
@@ -355,73 +402,81 @@
     </graphics>
   </name>
    <graphics>
-    <position x="410" y="325"/>
+    <position x="635" y="385"/>
    </graphics>
   </transition>
-  <arc id="e-40F8-CC7BA-33" source="p-40F8-CC70D-7" target="t-40F8-CC793-21">
+  <arc id="e-3BE0-28D48-37" source="p-3BE0-26C3D-7" target="t-3BE0-26CC2-21">
    <type value="test"/>
   </arc>
-  <arc id="e-40F8-CC7BD-34" source="t-40F8-CC70F-8" target="p-40F8-CC70A-6">
+  <arc id="e-3BE0-28D5A-38" source="t-3BE0-26C40-8" target="p-3BE0-26C39-6">
   </arc>
-  <arc id="e-40F8-CC7C0-35" source="p-40F8-CC701-3" target="t-40F8-CC703-4">
+  <arc id="e-3BE0-28D5C-39" source="p-3BE0-26C32-3" target="t-3BE0-26C34-4">
   </arc>
-  <arc id="e-40F8-CC7C1-36" source="p-40F8-CC6F3-2" target="t-40F8-CC708-5">
+  <arc id="e-3BE0-28D5D-40" source="p-3BE0-26C24-2" target="t-3BE0-26C38-5">
   </arc>
-  <arc id="e-40F8-CC7C2-37" source="t-40F8-CC708-5" target="p-40F8-CC701-3">
+  <arc id="e-3BE0-28D5E-41" source="t-3BE0-26C38-5" target="p-3BE0-26C32-3">
   </arc>
-  <arc id="e-40F8-CC7C3-38" source="t-40F8-CC703-4" target="p-40F8-CC6F3-2">
+  <arc id="e-3BE0-28D5F-42" source="t-3BE0-26C34-4" target="p-3BE0-26C24-2">
   </arc>
-  <arc id="e-40F8-CC7C4-39" source="p-40F8-CC7AC-29" target="t-40F8-CC78A-19">
+  <arc id="e-3BE0-28D60-43" source="p-3BE0-26CE9-29" target="t-3BE0-26CAB-19">
    <type value="test"/>
   </arc>
-  <arc id="e-40F8-CC7E7-40" source="t-40F8-CC78A-19" target="p-40F8-CC735-18">
+  <arc id="e-3BE0-28D61-44" source="t-3BE0-26CAB-19" target="p-3BE0-26C66-18">
   </arc>
-  <arc id="e-40F8-CC7E8-41" source="p-40F8-CC70D-7" target="t-40F8-CC722-13">
+  <arc id="e-3BE0-28D64-45" source="p-3BE0-26C3D-7" target="t-3BE0-26C51-13">
    <type value="test"/>
   </arc>
-  <arc id="e-40F8-CC7E9-42" source="t-40F8-CC722-13" target="p-40F8-CC71E-12">
+  <arc id="e-3BE0-28D66-46" source="t-3BE0-26C51-13" target="p-3BE0-26C4D-12">
   </arc>
-  <arc id="e-40F8-CC7EA-43" source="p-40F8-CC7AC-29" target="t-40F8-CC7AD-30">
+  <arc id="e-3BE0-28D67-47" source="p-3BE0-26CE9-29" target="t-3BE0-26CEB-30">
   </arc>
-  <arc id="e-40F8-CC7ED-44" source="t-40F8-CC793-21" target="p-40F8-CC78E-20">
+  <arc id="e-3BE0-28D68-48" source="t-3BE0-26CC2-21" target="p-3BE0-26CBE-20">
   </arc>
-  <arc id="e-40F8-CC7EE-45" source="p-40F8-CC7A8-28" target="t-40F8-CC7B0-31">
+  <arc id="e-3BE0-28D6A-49" source="p-3BE0-26CE6-28" target="t-3BE0-26CEE-31">
   </arc>
-  <arc id="e-40F8-CC7EF-46" source="t-40F8-CC7B0-31" target="p-40F8-CC7AC-29">
+  <arc id="e-3BE0-28D6A-50" source="t-3BE0-26CEE-31" target="p-3BE0-26CE9-29">
   </arc>
-  <arc id="e-40F8-CC7F0-47" source="t-40F8-CC7AD-30" target="p-40F8-CC7A8-28">
+  <arc id="e-3BE0-28D6C-51" source="t-3BE0-26CEB-30" target="p-3BE0-26CE6-28">
   </arc>
-  <arc id="e-40F8-CC7F2-48" source="p-40F8-CC70D-7" target="t-40F8-CC731-17">
+  <arc id="e-3BE0-28D6D-52" source="p-3BE0-26C3D-7" target="t-3BE0-26C62-17">
    <type value="test"/>
   </arc>
-  <arc id="e-40F8-CC7F3-49" source="t-40F8-CC731-17" target="p-40F8-CC72D-16">
+  <arc id="e-3BE0-28D6D-53" source="t-3BE0-26C62-17" target="p-3BE0-26C5E-16">
   </arc>
-  <arc id="e-40F8-CC7F4-50" source="p-40F8-CC701-3" target="t-40F8-CC7B2-32">
+  <arc id="e-3BE0-28D6F-54" source="p-3BE0-26C32-3" target="t-3BE0-26D22-36">
    <type value="test"/>
   </arc>
-  <arc id="e-40F8-CC7F5-51" source="t-40F8-CC7B2-32" target="p-40F8-CC726-14">
+  <arc id="e-3BE0-28D71-55" source="t-3BE0-26D22-36" target="p-3BE0-26C57-14">
   </arc>
-  <arc id="e-40F8-CC7F6-52" source="p-40F8-CC70D-7" target="t-40F8-CC729-15">
+  <arc id="e-3BE0-28D72-56" source="p-3BE0-26C3D-7" target="t-3BE0-26C5A-15">
    <type value="test"/>
   </arc>
-  <arc id="e-40F8-CC7F9-53" source="t-40F8-CC729-15" target="p-40F8-CC726-14">
+  <arc id="e-3BE0-28D73-57" source="t-3BE0-26C5A-15" target="p-3BE0-26C57-14">
   </arc>
-  <arc id="e-40F8-CC7FA-54" source="t-40F8-CC71A-11" target="p-40F8-CC716-10">
+  <arc id="e-3BE0-28D74-58" source="t-3BE0-26C49-11" target="p-3BE0-26C46-10">
   </arc>
-  <arc id="e-40F8-CC7FB-55" source="t-40F8-CC7A3-26" target="p-40F8-CC79E-24">
+  <arc id="e-3BE0-28D76-59" source="t-3BE0-26CE1-26" target="p-3BE0-26CDC-24">
   </arc>
-  <arc id="e-40F8-CC7FC-56" source="p-40F8-CC7A1-25" target="t-40F8-CC7A3-26">
+  <arc id="e-3BE0-28D77-60" source="p-3BE0-26CF5-33" target="t-3BE0-26CF9-34">
   </arc>
-  <arc id="e-40F8-CC7FD-57" source="p-40F8-CC7A1-25" target="t-40F8-CC7A7-27">
+  <arc id="e-3BE0-28D78-61" source="p-3BE0-26CF1-32" target="t-3BE0-26CFD-35">
+  </arc>
+  <arc id="e-3BE0-28D79-62" source="t-3BE0-26CFD-35" target="p-3BE0-26CF5-33">
+  </arc>
+  <arc id="e-3BE0-28D7A-63" source="t-3BE0-26CF9-34" target="p-3BE0-26CF1-32">
+  </arc>
+  <arc id="e-3BE0-28D7F-64" source="p-3BE0-26CDF-25" target="t-3BE0-26CE1-26">
+  </arc>
+  <arc id="e-3BE0-28D80-65" source="p-3BE0-26CDF-25" target="t-3BE0-26CE4-27">
    <type value="test"/>
   </arc>
-  <arc id="e-40F8-CC7FE-58" source="t-40F8-CC79A-23" target="p-40F8-CC797-22">
+  <arc id="e-3BE0-28D81-66" source="t-3BE0-26CCA-23" target="p-3BE0-26CC6-22">
   </arc>
-  <arc id="e-40F8-CC7FF-59" source="p-40F8-CC70D-7" target="t-40F8-CC70F-8">
+  <arc id="e-3BE0-28D82-67" source="p-3BE0-26C3D-7" target="t-3BE0-26C40-8">
   </arc>
-  <arc id="e-40F8-CC7FF-60" source="p-40F8-CC70A-6" target="t-40F8-CC713-9">
+  <arc id="e-3BE0-28D83-68" source="p-3BE0-26C39-6" target="t-3BE0-26C44-9">
   </arc>
-  <arc id="e-40F8-CC800-61" source="t-40F8-CC713-9" target="p-40F8-CC70D-7">
+  <arc id="e-3BE0-28D84-69" source="t-3BE0-26C44-9" target="p-3BE0-26C3D-7">
   </arc>
  </page>
  </net>

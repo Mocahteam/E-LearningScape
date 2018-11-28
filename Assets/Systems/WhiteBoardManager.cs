@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.PointerManager;
-using System.Collections.Generic;
-using TMPro;
+using FYFY_plugins.Monitoring;
 
 public class WhiteBoardManager : FSystem {
     

@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
+  <transition id="boite_turnOff_117" label="turnOff_11_2 boite" system="False" end="False" />
+  <transition id="boite_turnOn_117" label="turnOn_11_2 boite" system="False" end="False" />
   <transition id="Fragment_souvenir_16_activate_95" label="activate Fragment_souvenir_16" system="False" end="False" />
   <transition id="Fragment_souvenir_15_activate_92" label="activate Fragment_souvenir_15" system="False" end="False" />
   <transition id="AnswersInput_Correct_107" label="planification2 AnswersInput" system="False" end="True" />

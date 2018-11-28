@@ -7,8 +7,8 @@
   <transition id="Padlock_perform_73" label="perform Padlock" system="False" end="False" />
   <transition id="Paper_activate_133" label="activate Paper" system="False" end="False" />
   <transition id="Paper_activate_135" label="activate3 Paper" system="False" end="False" />
-  <transition id="Paper_activate_136" label="activate Paper" system="False" end="False" />
-  <transition id="Paper_activate_134" label="activate Paper" system="False" end="False" />
+  <transition id="Paper_activate_136" label="activate4 Paper" system="False" end="False" />
+  <transition id="Paper_activate_134" label="activate2 Paper" system="False" end="False" />
   <transition id="KeyE08_perform_66" label="perform KeyE08" system="False" end="False" />
   <transition id="Glasses1_turnOff_69" label="turnOff Glasses1" system="False" end="False" />
   <transition id="Glasses1_turnOn_69" label="turnOn Glasses1" system="False" end="False" />

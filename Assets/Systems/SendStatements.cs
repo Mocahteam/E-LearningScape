@@ -7,7 +7,9 @@ public class SendStatements : FSystem {
 
     private Family f_actionForLRS = FamilyManager.getFamily(new AllOfComponents(typeof(ActionPerformedForLRS)));
 
-    public static FSystem instance;
+    public static SendStatements instance;
+
+    public static bool shouldPause = true;
 
     public SendStatements()
     {
@@ -36,6 +38,7 @@ public class SendStatements : FSystem {
 	// Use this to update member variables when system resume.
 	// Advice: avoid to update your families inside this function.
 	protected override void onResume(int currentFrame){
+        this.Pause = shouldPause;
 	}
 
 	// Use to process your families.
@@ -44,21 +47,37 @@ public class SendStatements : FSystem {
 
     private void ActionProcessing(GameObject go)
     {
+        ActionPerformedForLRS[] listAP = go.GetComponents<ActionPerformedForLRS>();
+        int nb = listAP.Length;
+        ActionPerformedForLRS ap;
         if (!this.Pause)
         {
-            ActionPerformedForLRS[] listAP = go.GetComponents<ActionPerformedForLRS>();
-            int nb = listAP.Length;
-            ActionPerformedForLRS ap;
-            for(int i = nb-1; i > -1; i--)
+            for(int i = 0; i < nb; i++)
             {
                 ap = listAP[i];
                 //If no result info filled
                 if (!ap.result)
                     GBL_Interface.SendStatement(ap.verb, ap.objectType, ap.objectName);
                 else
-                    GBL_Interface.SendStatementWithResult(ap.verb, ap.objectType, ap.objectName, ap.completed, ap.success, ap.response, ap.score, ap.duration);
+                {
+                    bool? completed = null, success = null;
+
+                    if (ap.completed > 0)
+                        completed = true;
+                    else if (ap.completed < 0)
+                        completed = false;
+
+                    if (ap.success > 0)
+                        success = true;
+                    else if (ap.success < 0)
+                        success = false;
+
+                    GBL_Interface.SendStatementWithResult(ap.verb, ap.objectType, ap.objectName, completed, success, ap.response, ap.score, ap.duration);
+                }
                 GameObjectManager.removeComponent(ap);
             }
         }
+        for (int i = nb - 1; i > -1; i--)
+            GameObjectManager.removeComponent(listAP[i]);
     }
 }

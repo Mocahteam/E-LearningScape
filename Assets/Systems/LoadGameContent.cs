@@ -19,8 +19,8 @@ public class LoadGameContent : FSystem {
     private Family f_ballBoxTop = FamilyManager.getFamily(new AnyOfTags("BallBoxTop"));
 
     private Family f_plankAndWireRule = FamilyManager.getFamily(new AnyOfTags("PlankAndWireRule"));
-    private Family f_wrongWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(TextMeshPro)), new NoneOfComponents(typeof(SolutionWord)));
-    private Family f_correctWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(TextMeshPro), typeof(SolutionWord)));
+    private Family f_wrongWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(TextMeshPro)), new NoneOfComponents(typeof(IsSolution)));
+    private Family f_correctWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(TextMeshPro), typeof(IsSolution)));
     private Family f_plankNumbers = FamilyManager.getFamily(new AnyOfTags("PlankNumbers"));
 
     private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
@@ -69,6 +69,10 @@ public class LoadGameContent : FSystem {
                 gameContent = JsonUtility.FromJson<GameContent>(File.ReadAllText("Data/Data_LearningScape.txt"));
 
                 ActionsManager.instance.Pause = !gameContent.trace;
+                Debug.Log(string.Concat("Trace: ", gameContent.trace));
+                SendStatements.instance.Pause = !gameContent.traceToLRS;
+                SendStatements.shouldPause = !gameContent.traceToLRS;
+                Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
                 foreach (GameObject go in f_puzzles)
                     GameObjectManager.setGameObjectState(go, gameContent.virtualPuzzle);
                 foreach (GameObject go in f_puzzlesFragment)

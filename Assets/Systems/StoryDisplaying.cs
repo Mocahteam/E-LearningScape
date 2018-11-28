@@ -159,7 +159,7 @@ public class StoryDisplaying : FSystem {
                         CollectObject.instance.Pause = false;
                         MoveInFrontOf.instance.Pause = false;
                         UIEffectPlayer.instance.Pause = false;
-                        ActionsManager.instance.Pause = false;
+                        ActionsManager.instance.Pause = !LoadGameContent.gameContent.trace;
                         SendStatements.instance.Pause = false;
                     }
                     else

@@ -2,6 +2,7 @@
 using FYFY;
 using FYFY_plugins.PointerManager;
 using TMPro;
+using FYFY_plugins.Monitoring;
 
 public class IARGearsEnigma : FSystem
 {
@@ -136,7 +137,7 @@ public class IARGearsEnigma : FSystem
                         {
                             GameObjectManager.addComponent<ActionPerformed>(gearsEnigma, new { name = "Correct", performedBy = "player" });
                             GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma, new { verb = "answered", objectType = "question",
-                                objectName = gearsEnigma.name, result = true, success = true, response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text });
+                                objectName = gearsEnigma.name, result = true, success = 1, response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text });
                             GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma.transform.parent.gameObject, new { verb = "completed",
                                 objectType = "menu", objectName = gearsEnigma.transform.parent.gameObject.name });
 
@@ -159,7 +160,7 @@ public class IARGearsEnigma : FSystem
                                 objectType = "question",
                                 objectName = gearsEnigma.name,
                                 result = true,
-                                success = false,
+                                success = -1,
                                 response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text
                             });
 

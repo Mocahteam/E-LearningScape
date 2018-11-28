@@ -76,7 +76,7 @@ public class CheckDebugMode : FSystem
                 if (codeCount >= code.Count)
                 {
                     codeCount = 0;
-                    sun.color = Color.green;
+                    //sun.color = Color.green;
                     sun.gameObject.transform.rotation = Quaternion.Euler(Vector3.right * 90);
                     //Camera.main.clearFlags = CameraClearFlags.SolidColor;
                     Camera.main.backgroundColor = Color.black;

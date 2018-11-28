@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using TMPro;
+using FYFY_plugins.Monitoring;
 
 public class LoginManager : FSystem {
 
@@ -228,7 +229,7 @@ public class LoginManager : FSystem {
                 objectType = "question",
                 objectName = selectedLoginPanel.name,
                 result = true,
-                success = true,
+                success = 1,
                 response = answer.ToString()
             });
 
@@ -252,7 +253,7 @@ public class LoginManager : FSystem {
                 objectType = "question",
                 objectName = selectedLoginPanel.name,
                 result = true,
-                success = false,
+                success = -1,
                 response = answer.ToString()
             });
 

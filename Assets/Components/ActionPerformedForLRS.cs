@@ -8,8 +8,14 @@ public class ActionPerformedForLRS : MonoBehaviour {
     public string objectName;
 
     public bool result = false;
-    public bool completed;
-    public bool success;
+    /// <summary>
+    /// Negative: false, 0: null, Positive: true
+    /// </summary>
+    public int completed = 0;
+    /// <summary>
+    /// Negative: false, 0: null, Positive: true
+    /// </summary>
+    public int success = 0;
     public string response = null;
     public int? score = null;
     public float duration = 0;

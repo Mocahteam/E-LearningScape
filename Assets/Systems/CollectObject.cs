@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using FYFY;
-using UnityStandardAssets.Characters.FirstPerson;
-using UnityEngine.UI;
+using FYFY_plugins.Monitoring;
 
 public class CollectObject : FSystem {
 

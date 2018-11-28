@@ -4,6 +4,29 @@
         <name>Monitoring</name>
     </assembly>
     <members>
+        <member name="F:FYFY_plugins.Monitoring.ActionPerformed.performedBy">
+            <summary>
+            "player" or "system"
+            </summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.ActionPerformed.orLabels">
+            <summary>
+            links label concerned by this action. You can leave empty if only "*" operators
+            are used in logic expression. Must be defined if logic expression associated
+            to the action include "+" operators. For instance, if logic expression is "(l0+l1)*l3"
+            you have to indicate which links to use to build the trace: l0 and l3 OR l1 and
+            l3 => orLabels = new string[] {..., "l0", "l3"}; OR orLabels = new string[] {..., "l1", "l3"};
+            </summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.Trace.orlabels">
+            <summary>
+            links label concerned by this action. You can leave empty if only "*" operators
+            are used in logic expression. Must be defined if logic expression associated
+            to the action include "+" operators. For instance, if logic expression is "(l0+l1)*l3"
+            you have to indicate which links to use to build the trace: l0 and l3 OR l1 and
+            l3 => orLabels = new string[] {..., "l0", "l3"}; OR orLabels = new string[] {..., "l1", "l3"};
+            </summary>
+        </member>
         <member name="T:FYFY_plugins.Monitoring.ExpressionParser">
             <summary>Parser of logic expressions.</summary>
         </member>
@@ -26,6 +49,21 @@
         <member name="M:FYFY_plugins.Monitoring.InitFailed.#ctor(System.String,System.String)">
             <summary>
             	Initializes a new instance of the <see cref="T:FYFY_plugins.Monitoring.InitFailed"/> class.
+            </summary>
+        </member>
+        <member name="T:FYFY_plugins.Monitoring.InvalidTraceException">
+            <summary>
+            	Exception used when you try to access to a <c>GameObject</c> that is unknown to <c>FYFY</c>.
+            </summary>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.InvalidTraceException.#ctor(System.String)">
+            <summary>
+            	Initializes a new instance of the <see cref="!:FYFY.InvalidTraceException"/> class.
+            </summary>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.InvalidTraceException.#ctor(System.String,System.String)">
+            <summary>
+            	Initializes a new instance of the <see cref="T:FYFY.FyfyException"/> class.
             </summary>
         </member>
         <member name="T:FYFY_plugins.Monitoring.TraceAborted">

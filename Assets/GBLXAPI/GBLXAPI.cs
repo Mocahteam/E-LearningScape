@@ -603,7 +603,7 @@ namespace DIG.GBLXAPI {
 		//		"completion": true
 		//	},
 		// ------------------------------------------------------------------------
-		public Result CreateResultStatement(bool completed, bool success, float duration, string response = null, Nullable<int> score = null, TinCan.Extensions extensions = null){
+		public Result CreateResultStatement(bool? completed, bool? success, float duration, string response = null, Nullable<int> score = null, TinCan.Extensions extensions = null){
 
 			Result resultStatement = new Result();
 			resultStatement.completion = completed;

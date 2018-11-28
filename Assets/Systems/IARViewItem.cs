@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using FYFY;
-using UnityEngine.UI;
 using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
 using TMPro;
+using FYFY_plugins.Monitoring;
 
 public class IARViewItem : FSystem {
 
@@ -194,7 +194,7 @@ public class IARViewItem : FSystem {
                 {
                     GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "deactivated", objectType = "item", objectName = go.name });
                     GameObjectManager.removeComponent<SelectedInInventory>(go);
-                    if (!(go.name.Contains("Scroll") || go.name == "Lamp"))
+                    if (!go.name.Contains("Scroll"))
                     {
                         GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOff", performedBy = "player" });
 
@@ -229,7 +229,7 @@ public class IARViewItem : FSystem {
                     GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "activated", objectType = "item", objectName = go.name });
                     GameObjectManager.addComponent<SelectedInInventory>(go);
                     
-                    if (go.name == "ScrollIntro" || go.name == "Lamp")
+                    if (go.name == "ScrollIntro")
                         GameObjectManager.addComponent<ActionPerformed>(go, new { name = "activate", performedBy = "player" });
                     else
                     {

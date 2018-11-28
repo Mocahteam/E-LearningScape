@@ -66,6 +66,7 @@ TagManager:
   - PasswordRoom2
   - BoardUnremovableWords
   - PlankNumbers
+  - Chair
   layers:
   - Default
   - TransparentFX

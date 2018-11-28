@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
+  <transition id="boite_turnOff_116" label="turnOff_11_1 boite" system="False" end="False" />
+  <transition id="boite_turnOn_116" label="turnOn_11_1 boite" system="False" end="False" />
   <transition id="PuzzleSet_03_perform_97" label="perform PuzzleSet_03" system="False" end="False" />
   <transition id="PuzzleSet_04_perform_100" label="perform PuzzleSet_04" system="False" end="False" />
   <transition id="AnswersInput_Correct_139" label="planification1 AnswersInput" system="False" end="True" />

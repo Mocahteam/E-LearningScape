@@ -8,7 +8,8 @@ public class ChangePixelColor : MonoBehaviour {
     private Color eraseColor;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         eraseColor = this.transform.parent.gameObject.GetComponent<Renderer>().material.color;
         if (!this.GetComponent<Renderer>().material.mainTexture)
             this.GetComponent<Renderer>().material.mainTexture = new Texture2D(1480, 1070);

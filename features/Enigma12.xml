@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
-  <transition id="Lamp_activate_114" label="activate Lamp" system="False" end="False" />
+  <transition id="E12_R_activate_128" label="activate E12_R" system="False" end="False" />
+  <transition id="E12_U_activate_127" label="activate E12_U" system="False" end="False" />
+  <transition id="E12_E_activate_124" label="activate E12_E" system="False" end="False" />
+  <transition id="E12_O_activate_123" label="activate E12_O" system="False" end="False" />
+  <transition id="E12_S_activate_122" label="activate E12_S" system="False" end="False" />
+  <transition id="E12_C_activate_121" label="activate E12_C" system="False" end="False" />
+  <transition id="boite_turnOff_118" label="turnOff_12 boite" system="False" end="False" />
+  <transition id="boite_turnOn_118" label="turnOn_12 boite" system="False" end="False" />
+  <transition id="Lamp_turnOff_114" label="turnOff Lamp" system="False" end="False" />
+  <transition id="Lamp_turnOn_114" label="turnOn Lamp" system="False" end="False" />
   <transition id="AnswersInput_Correct_104" label="ressources AnswersInput" system="False" end="True" />
   <transition id="AnswersInput_Wrong_104" label="Wrong AnswersInput" system="False" end="False" />
   <transition id="Lamp_perform_113" label="perform Lamp" system="False" end="False" />

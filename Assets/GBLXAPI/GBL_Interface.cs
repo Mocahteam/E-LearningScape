@@ -60,8 +60,8 @@ public static class GBL_Interface {
 		GBLXAPI.Instance.QueueStatement(statementActor, statementVerb, statementObject, statementResult, statementContext);
 	}
 	
-	public static void SendStatementWithResult(string verb, string activityType, string activityName, bool completed, 
-        bool success, string response = null, int? score = null, float duration = 0)
+	public static void SendStatementWithResult(string verb, string activityType, string activityName, bool? completed, 
+        bool? success, string response = null, int? score = null, float duration = 0)
     {
 		Agent statementActor = GBLXAPI.Instance.CreateActorStatement(userUUID, "https://www.lip6.fr/mocah/", playerName);
 		Verb statementVerb = GBLXAPI.Instance.CreateVerbStatement(verb);
