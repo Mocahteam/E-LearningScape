@@ -16,7 +16,7 @@
         "Camille se réveille. Elle est en pleine forme, et tout est clair dans sa tête pour son premier enseignement. Elle a hâte de commencer.",
         "Les marchands de sable ont bien travaillé et se retrouvent pour un débriefing sur tout leur travail.",
         "Ce jeu est une adaptation du LearningScape créé par Sapiens et le CRI, soutenu d'un financement du projet IDEFI IIFR",
-        "Mounswif Darkaoui (Développement)\nSimon Giraud (Graphismes et sons)\nBasile Pesin (Réalité virtuelle)\nThomas Planques (Supervision artistique et game design)\nMathieu Muratet (Supervision développement et développement)\nBerni Hasenknopf (Initiateur du projet)"
+        "<align=\"left\">Mounswif Darkaoui (Développement)\nSimon Giraud (Graphismes et sons)\nBasile Pesin (Réalité virtuelle)\nThomas Planques (Supervision artistique et game design)\nMathieu Muratet (Supervision développement et développement)\nBerni Hasenknopf (Initiateur du projet)"
     ],
     "ballBoxQuestion": "Que faire pour rendre actifs mes étudiants ?",
     "ballBoxPlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",

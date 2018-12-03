@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System;
 
 public class StoryDisplaying : FSystem {
 
@@ -35,6 +36,8 @@ public class StoryDisplaying : FSystem {
     private bool plainToAlpha = false;
     private bool alphaToPlain = false;
     private bool fadingBackground = false;
+
+    private float startingTime;
 
     public static StoryDisplaying instance;
 
@@ -83,8 +86,6 @@ public class StoryDisplaying : FSystem {
                 syst.Pause = true;
         // Enable UI Story
         GameObjectManager.setGameObjectState(f_storyDisplayer.First(), true);
-        // Get current set of texts
-        readTexts = storyTexts[st.storyProgression].ToArray();
         // Set first fading
         readingTimer = Time.time;
         alphaToPlain = true;
@@ -95,16 +96,26 @@ public class StoryDisplaying : FSystem {
         // define color fading
         if (st.storyProgression < storyTexts.Count - 1)
         {
+            if (st.storyProgression == 0)
+                startingTime = Time.time;
             fadingImage.color = Color.black;
             background.color = Color.black;
             sdText.color = Color.white;
         }
         else
         {
+            float duration = Time.time - startingTime;
+            int hours = (int)duration / 3600;
+            int minutes = (int)(duration % 3600) / 60;
+            int seconds = (int)(duration % 3600) % 60;
+            storyTexts[st.storyProgression].Add(string.Concat(hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")));
             fadingImage.color = Color.white;
             background.color = Color.white;
             sdText.color = Color.black;
+            sdText.alignment = TextAlignmentOptions.Center;
         }
+        // Get current set of texts
+        readTexts = storyTexts[st.storyProgression].ToArray();
     }
 
 	// Use to process your families.

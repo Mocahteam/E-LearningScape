@@ -87,7 +87,6 @@ public class WhiteBoardManager : FSystem {
 
     private void onReadyToWorkOnWhiteBoard(GameObject go)
     {
-        Debug.Log(string.Concat(go.name, " triggered"));
         selectedBoard = go;
         distToBoard = (f_player.First().transform.position - selectedBoard.transform.position).magnitude;
 
