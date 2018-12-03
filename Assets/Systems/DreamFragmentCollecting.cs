@@ -82,18 +82,6 @@ public class DreamFragmentCollecting : FSystem {
 
                     switch (selectedFragment.name)
                     {
-                        case "Fragment_souvenir_9":
-                            GameObjectManager.addComponent<SyllabusSeen>(selectedFragment);
-                            break;
-
-                        case "Fragment_souvenir_17":
-                            GameObjectManager.addComponent<SyllabusSeen>(selectedFragment);
-                            break;
-
-                        case "Fragment_souvenir_1":
-                            GameObjectManager.addComponent<BerthiaumeClueSeen>(selectedFragment);
-                            break;
-
                         case "Fragment_souvenir_7":
                             GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
                             if(!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)

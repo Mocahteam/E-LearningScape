@@ -76,8 +76,7 @@ public class LampManager : FSystem {
                 tmpGo = f_symbols.getAt(i);
                 Vector3 position = tmpGo.GetComponentInChildren<E12_Symbol>().position;
                 //if the symbol is illuminated by the lamp
-                Debug.Log(string.Concat(tmpGo.name, ": ", Vector3.SignedAngle(Camera.main.transform.forward, tmpGo.transform.forward, Vector3.up)));
-                if (Vector3.Angle(position - Camera.main.transform.position, Camera.main.transform.forward) < 22)
+                if (Vector3.Angle(position - Camera.main.transform.position, Camera.main.transform.forward) < 22 && Vector3.Angle(Camera.main.transform.forward, tmpGo.transform.forward) < 87)
                 {
                     if (!tmpGo.activeSelf)
                     {
@@ -104,18 +103,17 @@ public class LampManager : FSystem {
                     tmpGo.GetComponentInChildren<E12_Symbol>().gameObject.transform.localScale *= tmpGo.transform.localScale.x / scale * tmpGo.transform.parent.localScale.x * 100;
                     tmpGo.transform.localScale = new Vector3(scale, scale, scale) / tmpGo.transform.parent.localScale.x / 100;
                 }
-                else
+                else if (tmpGo.activeSelf)
                 {
                     //disable the mask and the symbol
                     tmpGo.transform.position = position;
-                    tmpGo.GetComponentInChildren<E12_Symbol>().gameObject.transform.position = position;
-                    if (tmpGo.activeSelf)
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
-                        {
-                            verb = "exited",
-                            objectType = "interactable",
-                            objectName = tmpGo.name
-                        });
+                    tmpGo.GetComponentInChildren<E12_Symbol>().gameObject.transform.position = position; 
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
+                    {
+                        verb = "exited",
+                        objectType = "interactable",
+                        objectName = tmpGo.name
+                    });
                     GameObjectManager.setGameObjectState(tmpGo, false);
                 }
             }

@@ -4,18 +4,55 @@
         <name>Monitoring</name>
     </assembly>
     <members>
-        <member name="F:FYFY_plugins.Monitoring.ActionPerformed.performedBy">
+        <member name="T:FYFY_plugins.Monitoring.ActionsManager">
             <summary>
-            "player" or "system"
+            This system processes <c>ActionPerformed</c> components and uses <c>MonitoringManager</c> functions to build traces.
             </summary>
         </member>
-        <member name="F:FYFY_plugins.Monitoring.ActionPerformed.orLabels">
+        <member name="F:FYFY_plugins.Monitoring.ActionsManager.instance">
             <summary>
-            links label concerned by this action. You can leave empty if only "*" operators
-            are used in logic expression. Must be defined if logic expression associated
-            to the action include "+" operators. For instance, if logic expression is "(l0+l1)*l3"
-            you have to indicate which links to use to build the trace: l0 and l3 OR l1 and
-            l3 => orLabels = new string[] {..., "l0", "l3"}; OR orLabels = new string[] {..., "l1", "l3"};
+            As a singleton, this system can be accessed through this static instance.
+            </summary>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.ActionsManager.#ctor">
+            <summary>
+            The contructor of this system.
+            </summary>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.ActionsManager.onResume(System.Int32)">
+            <summary>
+            Used to update member variables when system resume.
+            </summary>
+            <param name="currentFrame"></param>
+        </member>
+        <member name="T:FYFY_plugins.Monitoring.Trace">
+            <summary>
+            Data describing the trace built.
+            </summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.Trace.labels">
+            <summary>
+            Labels found for this traced game action if in game analysis is enabled (see: MonitoringManager). return empty Array else
+            </summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.Trace.time">
+            <summary>
+            Birth date of the trace.
+            </summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.Trace.componentMonitoring">
+            <summary>
+            The ComponentMonitoring used to build this trace.
+            </summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.Trace.actionName">
+            <summary>
+            Name of the traced action matching a transition in the Petri net of the ComponentMonitoring
+            </summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.Trace.performedBy">
+            <summary>
+            Specify who performed this action, the player or the system.
             </summary>
         </member>
         <member name="F:FYFY_plugins.Monitoring.Trace.orlabels">
@@ -25,6 +62,11 @@
             to the action include "+" operators. For instance, if logic expression is "(l0+l1)*l3"
             you have to indicate which links to use to build the trace: l0 and l3 OR l1 and
             l3 => orLabels = new string[] {..., "l0", "l3"}; OR orLabels = new string[] {..., "l1", "l3"};
+            </summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.Trace.family">
+            <summary>
+            The monitored Family to used to build trace. Null if the field ComponentMonitoring is filled.
             </summary>
         </member>
         <member name="T:FYFY_plugins.Monitoring.ExpressionParser">
@@ -53,17 +95,17 @@
         </member>
         <member name="T:FYFY_plugins.Monitoring.InvalidTraceException">
             <summary>
-            	Exception used when you try to access to a <c>GameObject</c> that is unknown to <c>FYFY</c>.
+            	Exception used when the data given to build the trace are not matching any ComponentMonitoring or monitored Family.
             </summary>
         </member>
         <member name="M:FYFY_plugins.Monitoring.InvalidTraceException.#ctor(System.String)">
             <summary>
-            	Initializes a new instance of the <see cref="!:FYFY.InvalidTraceException"/> class.
+            	Initializes a new instance of the <see cref="T:FYFY_plugins.Monitoring.InvalidTraceException"/> class.
             </summary>
         </member>
         <member name="M:FYFY_plugins.Monitoring.InvalidTraceException.#ctor(System.String,System.String)">
             <summary>
-            	Initializes a new instance of the <see cref="T:FYFY.FyfyException"/> class.
+            	Initializes a new instance of the <see cref="T:FYFY_plugins.Monitoring.InvalidTraceException"/> class.
             </summary>
         </member>
         <member name="T:FYFY_plugins.Monitoring.TraceAborted">
@@ -79,6 +121,21 @@
         <member name="M:FYFY_plugins.Monitoring.TraceAborted.#ctor(System.String,System.String)">
             <summary>
             	Initializes a new instance of the <see cref="T:FYFY_plugins.Monitoring.TraceAborted"/> class.
+            </summary>
+        </member>
+        <member name="T:FYFY_plugins.Monitoring.WarningException">
+            <summary>
+            	Exception used to build a clickable warning message.
+            </summary>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.WarningException.#ctor(System.String)">
+            <summary>
+            	Initializes a new instance of the <see cref="T:FYFY_plugins.Monitoring.WarningException"/> class.
+            </summary>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.WarningException.#ctor(System.String,System.String)">
+            <summary>
+            	Initializes a new instance of the <see cref="T:FYFY_plugins.Monitoring.WarningException"/> class.
             </summary>
         </member>
         <member name="T:FYFY_plugins.Monitoring.ComponentMonitoring">

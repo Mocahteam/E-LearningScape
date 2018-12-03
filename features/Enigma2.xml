@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
+  <transition id="equivWith_PlankAndWireManager_f_wrongWords_turnOff_77" label="turnOff equivWith_PlankAndWireManager_f_wrongWords" system="False" end="False" />
+  <transition id="equivWith_PlankAndWireManager_f_wrongWords_turnOn_77" label="turnOn equivWith_PlankAndWireManager_f_wrongWords" system="False" end="False" />
   <transition id="Q2_Correct_55" label="Correct Q2" system="False" end="True" />
   <transition id="Q2_Wrong_55" label="Wrong Q2" system="False" end="False" />
   <transition id="Evaluation_turnOff_38" label="turnOff Evaluation" system="False" end="False" />
@@ -9,8 +11,6 @@
   <transition id="Plank_turnOff_24" label="turnOff Plank" system="False" end="False" />
   <transition id="Plank_turnOn_24" label="turnOn Plank" system="False" end="False" />
   <transition id="Wire_perform_26" label="perform Wire" system="False" end="False" />
-  <transition id="equivWith_PlankAndWireManager_f_wrongWords_turnOff_77" label="turnOff equivWith_PlankAndWireManager_f_wrongWords" system="False" end="False" />
-  <transition id="equivWith_PlankAndWireManager_f_wrongWords_turnOn_77" label="turnOn equivWith_PlankAndWireManager_f_wrongWords" system="False" end="False" />
   <transition id="Objectifs_turnOff_28" label="turnOff Objectifs" system="False" end="False" />
   <transition id="Objectifs_turnOn_28" label="turnOn Objectifs" system="False" end="False" />
   <transition id="Methodes_turnOff_36" label="turnOff Methodes" system="False" end="False" />

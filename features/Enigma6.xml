@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
   <transition id="Q2_Correct_32" label="Correct Q2" system="False" end="True" />
-  <transition id="or0_Q2_Correct_32" label="Correct Q2" system="False" end="True" />
   <transition id="Q2_Wrong_32" label="Wrong Q2" system="False" end="False" />
   <transition id="Fragment_souvenir_8_activate_29" label="activate Fragment_souvenir_8" system="False" end="False" />
   <transition id="Fragment_souvenir_5_activate_30" label="activate Fragment_souvenir_5" system="False" end="False" />

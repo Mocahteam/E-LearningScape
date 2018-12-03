@@ -1,8 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
-  <transition id="AnswersInput_Correct_106" label="contenu AnswersInput" system="False" end="True" />
-  <transition id="AnswersInput_Wrong_106" label="Wrong AnswersInput" system="False" end="False" />
+  <transition id="TextMeshPro_perform_148" label="perform TextMeshPro" system="False" end="False" />
+  <transition id="TextMeshPro_perform_147" label="perform TextMeshPro" system="False" end="False" />
+  <transition id="TextMeshPro_perform_146" label="perform TextMeshPro" system="False" end="False" />
+  <transition id="TextMeshPro_perform_145" label="perform TextMeshPro" system="False" end="False" />
+  <transition id="TextMeshPro_perform_144" label="perform TextMeshPro" system="False" end="False" />
+  <transition id="TextMeshPro_perform_143" label="perform TextMeshPro" system="False" end="False" />
+  <transition id="TextMeshPro_perform_142" label="perform TextMeshPro" system="False" end="False" />
+  <transition id="TextMeshPro_perform_141" label="perform TextMeshPro" system="False" end="False" />
+  <transition id="TextMeshPro_perform_140" label="perform TextMeshPro" system="False" end="False" />
+  <transition id="TextMeshPro_perform_132" label="perform TextMeshPro" system="False" end="False" />
+  <transition id="TextMeshPro_perform_130" label="perform TextMeshPro" system="False" end="False" />
+  <transition id="TextMeshPro_perform_129" label="perform TextMeshPro" system="False" end="False" />
+  <transition id="AnswersInput_Correct_106" label="Correct14 AnswersInput" system="False" end="True" />
+  <transition id="AnswersInput_Wrong_106" label="Wrong14 AnswersInput" system="False" end="False" />
   <transition id="Board_turnOff_125" label="turnOff Board" system="False" end="False" />
   <transition id="Board_turnOn_125" label="turnOn Board" system="False" end="False" />
-  <transition id="Eraser_activate_126" label="activate Eraser" system="False" end="False" />
+  <transition id="Eraser_turnOff_126" label="turnOff Eraser" system="False" end="False" />
+  <transition id="Eraser_turnOn_126" label="turnOn Eraser" system="False" end="False" />
 </transitions>

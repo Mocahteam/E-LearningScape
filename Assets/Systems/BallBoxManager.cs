@@ -274,34 +274,6 @@ public class BallBoxManager : FSystem {
                         inFrontOfCamera = targetPos != ballPosOnGrid(selectedBall.GetComponent<Ball>());
                         if (!inFrontOfCamera)
                             selectedBall = null;
-                        /*else
-                        {
-                            int id = selectedBall.GetComponent<Ball>().id;
-                            switch (id)
-                            {
-                                case 0:
-                                    ball1Seen = true;
-                                    break;
-
-                                case 1:
-                                    ball2Seen = true;
-                                    break;
-
-                                case 7:
-                                    ball8Seen = true;
-                                    break;
-
-                                default:
-                                    break;
-                            }
-                            if (!box.GetComponent<Selectable>().solved)
-                            {
-                                if (ball1Seen && ball2Seen && ball8Seen)
-                                {
-                                    box.GetComponent<Selectable>().solved = true;
-                                }
-                            }
-                        }*/
                     }
                 }
             }

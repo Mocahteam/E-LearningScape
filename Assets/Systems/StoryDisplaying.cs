@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using FYFY;
+using FYFY_plugins.Monitoring;
 using UnityEngine.UI;
 using TMPro;
-using UnityStandardAssets.Characters.FirstPerson;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
@@ -152,7 +152,6 @@ public class StoryDisplaying : FSystem {
                         SpritesAnimator.instance.Pause = false;
                         DreamFragmentCollecting.instance.Pause = false;
                         IARNewItemAvailable.instance.Pause = false;
-                        IARTabNavigation.instance.Pause = false;
                         Highlighter.instance.Pause = false;
                         MirrorSystem.instance.Pause = false;
                         ToggleObject.instance.Pause = false;
@@ -189,6 +188,8 @@ public class StoryDisplaying : FSystem {
                 {
                     background.color = new Color(background.color.r, background.color.g, background.color.b, 0);
                     fadingBackground = false;
+                    //Enable IARSystem (done after the others to prevent a bug)
+                    IARTabNavigation.instance.Pause = false;
                     this.Pause = true; // Stop this system
                 }
             }

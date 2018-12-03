@@ -19,7 +19,6 @@ public class PlankAndWireManager : FSystem {
     private Family f_closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PlankText", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_syllabusSeen = FamilyManager.getFamily(new AllOfComponents(typeof(SyllabusSeen)));
 
     //plank
     private GameObject selectedPlank = null;
@@ -158,16 +157,9 @@ public class PlankAndWireManager : FSystem {
                                 lrPositions.Clear();
                             }
                             if (tmpGO.GetComponent<IsSolution>())
-                            {
-                                if(f_syllabusSeen.Count < 2)
-                                    GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12" } });
-                                else
-                                    GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l10", "l13" } });
-                            }
+                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player" });
                             else
-                            {
                                 GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", family = f_wrongWords });
-                            }
                             GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new
                             {
                                 verb = "interacted",
@@ -232,16 +224,9 @@ public class PlankAndWireManager : FSystem {
                         else
                         {
                             if (tmpGO.GetComponent<IsSolution>())
-                            {
-                                if (f_syllabusSeen.Count < 2)
-                                    GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12" } });
-                                else
-                                    GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", orLabels = new string[] { "l11", "l12", "l10", "l13" } });
-                            }
+                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player" });
                             else
-                            {
                                 GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", family = f_wrongWords });
-                            }
                             GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new
                             {
                                 verb = "interacted",

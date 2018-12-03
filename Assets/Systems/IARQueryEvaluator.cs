@@ -16,7 +16,6 @@ public class IARQueryEvaluator : FSystem {
     private Family f_queriesRoom2 = FamilyManager.getFamily(new AnyOfTags("Q-R2"));
     private Family f_answerRoom2 = FamilyManager.getFamily(new AnyOfTags("A-R2"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not displayed for the second room
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
-    private Family f_berthiaumeClue = FamilyManager.getFamily(new AllOfComponents(typeof(BerthiaumeClueSeen)));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
 
     public static IARQueryEvaluator instance;
@@ -127,7 +126,21 @@ public class IARQueryEvaluator : FSystem {
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 1 });
 
             if(query.tag == "Q-R3")
-                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { name = "Wrong", performedBy = "player" });
+            {
+                if (availableOrSolutions.Contains(StringToAnswer(LoadGameContent.gameContent.puzzleAnswer)))
+                {
+                    if (LoadGameContent.gameContent.virtualPuzzle)
+                        GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong11_1", performedBy = "player" });
+                    else
+                        GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong11_2", performedBy = "player" });
+                }
+                if (availableOrSolutions.Contains(StringToAnswer(LoadGameContent.gameContent.lampAnswer)))
+                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong12", performedBy = "player" });
+                if (availableOrSolutions.Contains(StringToAnswer(LoadGameContent.gameContent.enigma12Answer)))
+                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong13", performedBy = "player" });
+                if (availableOrSolutions.Contains(StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer)))
+                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong14", performedBy = "player" });
+            }
             else
                 GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Wrong", performedBy = "player" });
             GameObjectManager.addComponent<ActionPerformedForLRS>(query, new { verb = "answered", objectType = "question",
@@ -143,19 +156,16 @@ public class IARQueryEvaluator : FSystem {
                 if(answer == StringToAnswer(LoadGameContent.gameContent.puzzleAnswer))
                 {
                     if (LoadGameContent.gameContent.virtualPuzzle)
-                        GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "planification1", performedBy = "player" });
+                        GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct11_1", performedBy = "player" });
                     else
-                        GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "planification2", performedBy = "player" });
+                        GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct11_2", performedBy = "player" });
                 }
-                else
-                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = answer.ToLower(), performedBy = "player" });
-            }
-            else if(query.tag == "Q-R2" && query.name == "Q2")
-            {
-                if(f_berthiaumeClue.Count == 0)
-                    GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player", orLabels = new string[] { "l1" } });
-                else
-                    GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player", orLabels = new string[] { "l0" } });
+                else if (answer == StringToAnswer(LoadGameContent.gameContent.lampAnswer))
+                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct12", performedBy = "player" });
+                else if (answer == StringToAnswer(LoadGameContent.gameContent.enigma12Answer))
+                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct13", performedBy = "player" });
+                else if (answer == StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer))
+                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct14", performedBy = "player" });
             }
             else
                 GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });

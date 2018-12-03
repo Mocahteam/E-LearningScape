@@ -61,6 +61,7 @@ public class EndManager : FSystem {
             switchToEndRoom = false;
             alphaToWhite = true;
             this.Pause = false;
+            IARTabNavigation.instance.Pause = true;
             GameObjectManager.setGameObjectState(fadingBackground.gameObject, true);
         }
     }
