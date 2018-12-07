@@ -5,6 +5,7 @@ using TMPro;
 using System.Collections.Generic;
 using System.IO;
 using FYFY_plugins.Monitoring;
+using Newtonsoft.Json;
 
 public class LoadGameContent : FSystem {
     
@@ -46,6 +47,8 @@ public class LoadGameContent : FSystem {
 
     private Family f_boardUnremovable = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
     private Family f_boardRemovable = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
+
+    private Family f_gameTips = FamilyManager.getFamily(new AllOfComponents(typeof(GameTips)));
 
 
     private FSystem instance;
@@ -672,6 +675,19 @@ public class LoadGameContent : FSystem {
                 }
 
                 #endregion
+
+                if (File.Exists("Data/Tips_LearningScape.txt"))
+                {
+                    GameTips gameTips = f_gameTips.First().GetComponent<GameTips>();
+                    gameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>> (File.ReadAllText("Data/Tips_LearningScape.txt"));
+                    if (gameTips.dictionary == null)
+                        gameTips.dictionary = new Dictionary<string, Dictionary<string, List<string>>>();
+                }
+                else
+                {
+                    Debug.LogWarning("File containting tips not found.");
+                }
+
                 Debug.Log("Data loaded");
             }
             else
@@ -679,6 +695,7 @@ public class LoadGameContent : FSystem {
                 //create default data files
                 Directory.CreateDirectory("Data");
                 File.WriteAllText("Data/Data_LearningScape.txt", defaultGameContent.jsonFile.text);
+                File.WriteAllText("Data/Tips_LearningScape.txt", defaultGameContent.tipsJsonFile.text);
 
                 gameContent = new GameContent();
                 gameContent = JsonUtility.FromJson<GameContent>(defaultGameContent.jsonFile.text);

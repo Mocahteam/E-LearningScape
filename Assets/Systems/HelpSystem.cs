@@ -2,24 +2,25 @@
 using FYFY;
 using FYFY_plugins.Monitoring;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using TMPro;
+using Newtonsoft.Json;
 
 public class HelpSystem : FSystem {
 
     private Family f_subtitlesFamily = FamilyManager.getFamily(new AnyOfTags("HelpSubtitles"), new AllOfComponents(typeof(TextMeshProUGUI)));
     private Family f_monitoringComponents = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
     private Family f_traces = FamilyManager.getFamily(new AllOfComponents(typeof(Trace)));
+    private Family f_gameTips = FamilyManager.getFamily(new AllOfComponents(typeof(GameTips)));
+    private Family f_internalGameTips = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameTips)));
+    private Family f_defaultGameContent = FamilyManager.getFamily(new AllOfComponents(typeof(DefaultGameContent)));
 
-    public static bool monitoring = false;
-    public static Queue<Trace> traces;
+    private GameTips gameTips;
+    private InternalGameTips internalGameTips;
 
-    private Dictionary<int, List<KeyValuePair<ComponentMonitoring, string>>> endActions;
-    private KeyValuePair<ComponentMonitoring, string> tmpEndAction;
-    private List<Trace> history;
     private Dictionary<int, int> uselessTagCount;
     private List<string> stringsError;
-    private List<string> answersGONames;
 
     private TextMeshProUGUI subtitles;
     private float subtitlesTimer = float.MinValue;
@@ -30,13 +31,28 @@ public class HelpSystem : FSystem {
     {
         if (Application.isPlaying)
         {
-            traces = new Queue<Trace>();
-            history = new List<Trace>();
+            //get game tips filled with tips loaded from "Data/Tips_LearningScape.txt"
+            gameTips = f_gameTips.First().GetComponent<GameTips>();
+            //get internal game tips
+            internalGameTips = f_internalGameTips.First().GetComponent<InternalGameTips>();
+            internalGameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(f_defaultGameContent.First().GetComponent<DefaultGameContent>().internalTipsJsonFile.text);
+
+            string[] tmpStringArray;
+            //add internal game tips to the dictionary of the component GameTips
+            foreach(string key1 in internalGameTips.dictionary.Keys)
+            {
+                if (!gameTips.dictionary.ContainsKey(key1))
+                    gameTips.dictionary.Add(key1, new Dictionary<string, List<string>>());
+                foreach (string key2 in internalGameTips.dictionary[key1].Keys)
+                {
+                    tmpStringArray = key2.Split('.');
+                    gameTips.dictionary[key1].Add(string.Concat("##monitor##",tmpStringArray[1]), internalGameTips.dictionary[key1][key2]);
+                }
+            }
+
             uselessTagCount = new Dictionary<int, int>();
-            endActions = new Dictionary<int, List<KeyValuePair<ComponentMonitoring, string>>>();
             subtitles = f_subtitlesFamily.First().GetComponent<TextMeshProUGUI>();
             stringsError = new List<string>() { "useless", "erroneous", "too-early" };
-            answersGONames = new List<string>() { "Objectifs","Methodes", "Evaluation"};
 
             int nb = f_monitoringComponents.Count;
             ComponentMonitoring tmpCM;
@@ -47,28 +63,9 @@ public class HelpSystem : FSystem {
                 {
                     uselessTagCount.Add(tmpCM.fullPnSelected, 0);
                 }
-                foreach (TransitionLink link in tmpCM.transitionLinks)
-                {
-                    //Debug.Log(string.Concat(tmpCM.fullPn, " ", link.transition.label, " ", link.isEndAction));
-                    if (link.isEndAction)
-                    {
-                        if (!endActions.ContainsKey(tmpCM.fullPnSelected))
-                        {
-                            endActions.Add(tmpCM.fullPnSelected, new List<KeyValuePair<ComponentMonitoring, string>>());
-                        }
-                        KeyValuePair<ComponentMonitoring, string> pair = new KeyValuePair<ComponentMonitoring, string>(tmpCM, link.transition.label);
-                        endActions[tmpCM.fullPnSelected].Add(pair);
-                    }
-                }
             }
-            f_traces.addEntryCallback(EnqueueTrace);
         }
         instance = this;
-    }
-
-    private void EnqueueTrace(GameObject go)
-    {
-        traces.Enqueue(go.GetComponent<Trace>());
     }
 
     // Use this to update member variables when system pause. 
@@ -90,61 +87,47 @@ public class HelpSystem : FSystem {
             subtitles.text = string.Empty;
             GameObjectManager.setGameObjectState(subtitles.gameObject, false);
         }
-        if (traces.Count != 0)
-        {
-            int nbTraces = traces.Count;
-            Trace trace;
-            for (int i = 0; i < nbTraces; i++)
-            {
-                trace = traces.Dequeue();
-                int nbTags = trace.labels.Length;
-                for (int j = 0; j < nbTags; j++)
-                {
-                    trace.labels[j] = Regex.Replace(trace.labels[j], @"\t|\n|\r", "");
-                    if (stringsError.Contains(trace.labels[j]))
-                    {
-                        uselessTagCount[trace.componentMonitoring.fullPnSelected]++;
-                    }
-                }
-                history.Add(trace);
-            }
-            trace = history[history.Count - 1];
-            if (uselessTagCount[trace.componentMonitoring.fullPnSelected] > 1)
-            {
-                GameObjectManager.setGameObjectState(subtitles.gameObject, true);
-                tmpEndAction = endActions[trace.componentMonitoring.fullPnSelected][(int)(Random.value * endActions[trace.componentMonitoring.fullPnSelected].Count)];
-                tmpEndAction = MonitoringManager.getNextActionsToReach(tmpEndAction.Key, tmpEndAction.Value, 1)[0];
-                if (answersGONames.Contains(tmpEndAction.Key.gameObject.name))
-                {
-                    if(uselessTagCount[trace.componentMonitoring.fullPnSelected] > 3)
-                    {
-                        subtitles.text = string.Concat("Maintenant il faut que je ", tmpEndAction.Value, " ", tmpEndAction.Key.gameObject.name);
-                        subtitlesTimer = Time.time;
-                        uselessTagCount[trace.componentMonitoring.fullPnSelected] = 0;
-                    }
-                }
-                else
-                {
-                    subtitles.text = string.Concat("Maintenant il faut que je ", tmpEndAction.Value, " ", tmpEndAction.Key.gameObject.name);
-                    subtitlesTimer = Time.time;
-                    uselessTagCount[trace.componentMonitoring.fullPnSelected] = 0;
-                }
-            }
-        }
+        //if (traces.Count != 0)
+        //{
+        //    int nbTraces = traces.Count;
+        //    Trace trace;
+        //    for (int i = 0; i < nbTraces; i++)
+        //    {
+        //        trace = traces.Dequeue();
+        //        int nbTags = trace.labels.Length;
+        //        for (int j = 0; j < nbTags; j++)
+        //        {
+        //            //trace.labels[j] = Regex.Replace(trace.labels[j], @"\t|\n|\r", "");
+        //            if (stringsError.Contains(trace.labels[j]))
+        //            {
+        //                uselessTagCount[trace.componentMonitoring.fullPnSelected]++;
+        //            }
+        //        }
+        //        history.Add(trace);
+        //    }
+        //    trace = history[history.Count - 1];
+        //    if (uselessTagCount[trace.componentMonitoring.fullPnSelected] > 1)
+        //    {
+        //        GameObjectManager.setGameObjectState(subtitles.gameObject, true);
+        //        tmpEndAction = endActions[trace.componentMonitoring.fullPnSelected][(int)(Random.value * endActions[trace.componentMonitoring.fullPnSelected].Count)];
+        //        tmpEndAction = MonitoringManager.getNextActionsToReach(tmpEndAction.Key, tmpEndAction.Value, 1)[0];
+        //        if (answersGONames.Contains(tmpEndAction.Key.gameObject.name))
+        //        {
+        //            if(uselessTagCount[trace.componentMonitoring.fullPnSelected] > 3)
+        //            {
+        //                subtitles.text = string.Concat("Maintenant il faut que je ", tmpEndAction.Value, " ", tmpEndAction.Key.gameObject.name);
+        //                subtitlesTimer = Time.time;
+        //                uselessTagCount[trace.componentMonitoring.fullPnSelected] = 0;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            subtitles.text = string.Concat("Maintenant il faut que je ", tmpEndAction.Value, " ", tmpEndAction.Key.gameObject.name);
+        //            subtitlesTimer = Time.time;
+        //            uselessTagCount[trace.componentMonitoring.fullPnSelected] = 0;
+        //        }
+        //    }
+        //}
         /*.transitionLinks[0].transition.overridedLabel*/
     }
 }
-
-//public struct MonitoringTrace
-//{
-//    public ComponentMonitoring component;
-//    public string action;
-//    public string[] result;
-
-//    public MonitoringTrace(ComponentMonitoring initCompenent, string initAction)
-//    {
-//        component = initCompenent;
-//        action = initAction;
-//        result = null;
-//    }
-//}

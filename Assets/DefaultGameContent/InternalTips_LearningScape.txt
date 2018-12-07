@@ -1,0 +1,218 @@
+{
+  "1.1": {
+    "keyE03World.6": [
+      "Il reste des objets à trouver",
+      "Il me manque des objets"
+    ],
+    "keyE03Inventory.25": [
+      "Il faut peut-être utiliser un objet"
+    ]
+  },
+  "1.2": {
+    "keyE03World.6": [
+      "Je dois trouver la clé"
+    ],
+    "sphere1.8": [
+      "Il faut que j'identifie les bonnes sphères"
+    ],
+    "sphere2.9": [
+      "Il faut que j'identifie les bonnes sphères"
+    ],
+    "sphere8.15": [
+      "Il faut que j'identifie les bonnes sphères"
+    ]
+  },
+  "1.3": {
+    "keyE03Inventory.5": [
+      "Ouvrons cette boite"
+    ],
+    "keyE03World.6": [
+      "Ah! La clé est sur cette commode"
+    ],
+    "keyE03Inventory.25": [
+      "Maintenant il faut que j'utilise la clé"
+    ],
+    "questionBallBox.54": [
+      "Je crois avoir trouver les bonnes sphères pour répondre à la question"
+    ]
+  },
+  "2.1": {
+    "wireWorld.26": [
+      "Il reste des objets à trouver"
+    ],
+    "wireInventory.27": [
+      "Il faut peut-être utiliser un objet"
+    ],
+    "fragment9.74": [
+      "Peut-être que je peux trouver un indice dans la pièce"
+    ],
+    "fragment17.75": [
+      "Peut-être que je peux trouver un indice dans la pièce"
+    ]
+  },
+  "2.2": {
+    "wireWorld.26": [
+      "Je dois trouver une corde"
+    ],
+    "objectif.28": [
+      "On dirait que je peux interagir avec ces mots"
+    ],
+    "methodes.36": [
+      "On dirait que je peux interagir avec ces mots"
+    ],
+    "evaluation.38": [
+      "On dirait que je peux interagir avec ces mots"
+    ],
+    "fragment9.74": [
+      "Il doit rester des fragments de rêve à trouver"
+    ],
+    "fragment17.75": [
+      "Il doit rester des fragments de rêve à trouver"
+    ]
+  },
+  "2.3": {
+    "plankWire.24": [
+      "Le texte sur ce tableau a l'air important"
+    ],
+    "wireWorld.26": [
+      "Je vois une corde en bas de l'étagère"
+    ],
+    "wireInventory.27": [
+      "Et si j'essayais d'utiliser la corde"
+    ],
+    "objectif.28": [
+      "Il faut que je relie les bons mots avec la corde"
+    ],
+    "methodes.36": [
+      "Il faut que je relie les bons mots avec la corde"
+    ],
+    "evaluation.38": [
+      "Il faut que je relie les bons mots avec la corde"
+    ],
+    "questionPlankAndWire.55": [
+      "Maintenant que les mots sont reliés j'ai la réponse"
+    ],
+    "fragment9.74": [
+      "Je vois un fragment à droite de l'étagère"
+    ],
+    "fragment17.75": [
+      "On dirait qu'il y a quelque chose dans le tirroir de la commode"
+    ]
+  },
+  "2.3": {
+    "plankWire.24": [
+      "Le texte sur ce tableau a l'air important"
+    ],
+    "wireWorld.26": [
+      "Je vois une corde en bas de l'étagère"
+    ],
+    "wireInventory.27": [
+      "Et si j'essayais d'utiliser la corde"
+    ],
+    "objectif.28": [
+      "Il faut que je relie les bons mots avec la corde"
+    ],
+    "methodes.36": [
+      "Il faut que je relie les bons mots avec la corde"
+    ],
+    "evaluation.38": [
+      "Il faut que je relie les bons mots avec la corde"
+    ],
+    "questionPlankAndWire.55": [
+      "Maintenant que les mots sont reliés j'ai la réponse"
+    ],
+    "fragment9.74": [
+      "Je vois un fragment à droite de l'étagère"
+    ],
+    "fragment17.75": [
+      "On dirait qu'il y a quelque chose dans le tirroir de la commode"
+    ]
+  },
+  "3.1": {
+    "chair.43": [
+    	"Peut-être qu'en bougeant les meubles..."
+    ],
+    "fragmentDe.42": [
+    	"Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "playerCrouch.44": [
+    	"Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "fragmentPosture.45": [
+    	"Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "fragmentSavoir.46": [
+    	"Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "fragmentIl.47": [
+    	"Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "table.48": [
+    	"Peut-être qu'en bougeant les meubles..."
+    ],
+    "fragmentFaut.49": [
+    	"Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "fragmentChanger.50": [
+    	"Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "fragment4.51": [
+    	"Il faut que je fouille tous les recoins de la pièce"
+    ]
+  },
+  "3.2": {
+    "fragmentDe.42": [
+    	"Il me reste des fragments verts à trouver"
+    ],
+    "chaise.43": [
+    	"Il reste des chaises à retourner"
+    ],
+    "fragmentPosture.45": [
+    	"Il me reste des fragments verts à trouver"
+    ],
+    "fragmentSavoir.46": [
+    	"Il me reste des fragments verts à trouver"
+    ],
+    "fragmentIl.47": [
+    	"Il me reste des fragments verts à trouver"
+    ],
+    "fragmentFaut.49": [
+    	"Il me reste des fragments verts à trouver"
+    ],
+    "fragmentChanger.50": [
+    	"Il me reste des fragments verts à trouver"
+    ]
+  },
+  "3.3": {
+    "fragmentDe.42": [
+    	"Il y a quelque chose sous cette chaise"
+    ],
+    "playerCrouch.44": [
+    	"Et si je me baissais"
+    ],
+    "fragmentPosture.45": [
+    	"Quelque chose brille sous cette étagère"
+    ],
+    "fragmentSavoir.46": [
+    	"Je vois un des fragments sur l'étagère"
+    ],
+    "fragmentIl.47": [
+    	"Il y a quelque chose sous la table"
+    ],
+    "table.48": [
+    	"Il y a quelque chose sous la table"
+    ],
+    "fragmentFaut.49": [
+    	"Je vois un fragment sour la fenetre"
+    ],
+    "fragmentChanger.50": [
+    	"Quelque chose brille sous le tirroir"
+    ],
+    "fragment4.51": [
+    	"On dirait que j'ai oublié un fragment dans les escaliers à l'entrée"
+    ],
+    "questionGreenFragments.52": [
+    	"J'ai rassemblés tout les fragments verts nécessaires pour à la question"
+    ]
+  }
+}
