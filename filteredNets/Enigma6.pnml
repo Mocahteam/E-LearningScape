@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-4A04-4FE46-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma6</text>
+  </name>
+ <page id="g-4A04-4FE50-1">
+  <place id="p-4A04-4FE60-2">
+  <name>
+   <text>Fragment_souvenir_1_ActivationCount_31</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="200"/>
+   </graphics>
+  </place>
+  <transition id="t-4A04-4FE7C-3">
+  <name>
+   <text>Fragment_souvenir_1_activate_31</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="200"/>
+   </graphics>
+  </transition>
+  <place id="p-4A04-4FE81-4">
+  <name>
+   <text>Fragment_souvenir_5_ActivationCount_30</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="130"/>
+   </graphics>
+  </place>
+  <transition id="t-4A04-4FE85-5">
+  <name>
+   <text>Fragment_souvenir_5_activate_30</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="130"/>
+   </graphics>
+  </transition>
+  <place id="p-4A04-4FE89-6">
+  <name>
+   <text>Fragment_souvenir_8_ActivationCount_29</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-4A04-4FE8D-7">
+  <name>
+   <text>Fragment_souvenir_8_activate_29</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-4A04-4FE91-8">
+  <name>
+   <text>Q2_Answered_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="710" y="130"/>
+   </graphics>
+  </place>
+  <place id="p-4A04-4FE93-9">
+  <name>
+   <text>Q2_Answering_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="460" y="130"/>
+   </graphics>
+  </place>
+  <transition id="t-4A04-4FE96-10">
+  <name>
+   <text>Q2_Correct_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="590" y="70"/>
+   </graphics>
+  </transition>
+  <arc id="e-4A04-4FE9B-11" source="p-4A04-4FE60-2" target="t-4A04-4FE96-10">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4A04-4FE9F-12" source="p-4A04-4FE81-4" target="t-4A04-4FE96-10">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4A04-4FEA1-13" source="p-4A04-4FE89-6" target="t-4A04-4FE96-10">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4A04-4FEA2-14" source="p-4A04-4FE93-9" target="t-4A04-4FE96-10">
+  </arc>
+  <arc id="e-4A04-4FEA3-15" source="t-4A04-4FE96-10" target="p-4A04-4FE91-8">
+  </arc>
+  <arc id="e-4A04-4FEA4-16" source="t-4A04-4FE8D-7" target="p-4A04-4FE89-6">
+  </arc>
+  <arc id="e-4A04-4FEA5-17" source="t-4A04-4FE85-5" target="p-4A04-4FE81-4">
+  </arc>
+  <arc id="e-4A04-4FEA6-18" source="t-4A04-4FE7C-3" target="p-4A04-4FE60-2">
+  </arc>
+ </page>
+ </net>
+</pnml>

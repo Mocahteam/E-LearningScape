@@ -1,0 +1,77 @@
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-1A4C-1C0DB-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+  <name>
+   <text>activableAndCount</text>
+  </name>
+ <page id="g-1A4C-1C0E7-1">
+  <place id="p-1A4C-1C0EA-2">
+  <name>
+   <text>ActivationCount</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="200" y="195"/>
+   </graphics>
+  </place>
+  <place id="p-1A4C-1C0F6-3">
+  <name>
+   <text>off</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="30" y="75"/>
+   </graphics>
+  </place>
+  <place id="p-1A4C-1C0FA-4">
+  <name>
+   <text>on</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="200" y="75"/>
+   </graphics>
+  </place>
+  <transition id="t-1A4C-1C0FC-5">
+  <name>
+   <text>turnOff</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="55"/>
+   </graphics>
+  </transition>
+  <transition id="t-1A4C-1C0FE-6">
+  <name>
+   <text>turnOn</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="135"/>
+   </graphics>
+  </transition>
+  <arc id="e-1A4C-1C105-7" source="t-1A4C-1C0FC-5" target="p-1A4C-1C0F6-3">
+  </arc>
+  <arc id="e-1A4C-1C106-8" source="t-1A4C-1C0FE-6" target="p-1A4C-1C0FA-4">
+  </arc>
+  <arc id="e-1A4C-1C107-9" source="p-1A4C-1C0F6-3" target="t-1A4C-1C0FE-6">
+  </arc>
+  <arc id="e-1A4C-1C108-10" source="p-1A4C-1C0FA-4" target="t-1A4C-1C0FC-5">
+  </arc>
+  <arc id="e-1A4C-1C109-11" source="t-1A4C-1C0FE-6" target="p-1A4C-1C0EA-2">
+  </arc>
+ </page>
+ </net>
+</pnml>

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Plank_perform_84" label="perform Plank" system="False" end="False" />
+  <transition id="Plank_turnOff_81" label="turnOff Plank" system="False" end="False" />
+  <transition id="Plank_turnOn_81" label="turnOn Plank" system="False" end="False" />
+  <transition id="Mirror_turnOff_83" label="turnOff Mirror" system="False" end="False" />
+  <transition id="Mirror_turnOn_83" label="turnOn Mirror" system="False" end="False" />
+  <transition id="Q4_Correct_85" label="Correct Q4" system="False" end="True" />
+  <transition id="Q4_Wrong_85" label="Wrong Q4" system="False" end="False" />
+  <transition id="Mirror_perform_82" label="perform Mirror" system="False" end="False" />
+</transitions>

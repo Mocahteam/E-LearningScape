@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-10EC-17616-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma11_1</text>
+  </name>
+ <page id="g-10EC-17633-1">
+  <place id="p-10EC-17638-2">
+  <name>
+   <text>AnswersInput_Answered_139</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1320" y="310"/>
+   </graphics>
+  </place>
+  <place id="p-10EC-1764A-3">
+  <name>
+   <text>AnswersInput_Answering_139</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1070" y="310"/>
+   </graphics>
+  </place>
+  <transition id="t-10EC-17652-4">
+  <name>
+   <text>AnswersInput_Correct_139</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1200" y="250"/>
+   </graphics>
+  </transition>
+  <place id="p-10EC-17657-5">
+  <name>
+   <text>PuzzleSet_01_end_96</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="520" y="150"/>
+   </graphics>
+  </place>
+  <transition id="t-10EC-1765C-6">
+  <name>
+   <text>PuzzleSet_01_perform_96</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="440" y="150"/>
+   </graphics>
+  </transition>
+  <place id="p-10EC-17662-7">
+  <name>
+   <text>PuzzleSet_01_start_96</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="360" y="150"/>
+   </graphics>
+  </place>
+  <place id="p-10EC-17666-8">
+  <name>
+   <text>PuzzleSet_02_end_99</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="520" y="230"/>
+   </graphics>
+  </place>
+  <transition id="t-10EC-1766C-9">
+  <name>
+   <text>PuzzleSet_02_perform_99</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="440" y="230"/>
+   </graphics>
+  </transition>
+  <place id="p-10EC-17672-10">
+  <name>
+   <text>PuzzleSet_02_start_99</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="360" y="230"/>
+   </graphics>
+  </place>
+  <place id="p-10EC-17678-11">
+  <name>
+   <text>PuzzleSet_03_end_97</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="520" y="310"/>
+   </graphics>
+  </place>
+  <transition id="t-10EC-1767B-12">
+  <name>
+   <text>PuzzleSet_03_perform_97</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="440" y="310"/>
+   </graphics>
+  </transition>
+  <place id="p-10EC-17681-13">
+  <name>
+   <text>PuzzleSet_03_start_97</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="360" y="310"/>
+   </graphics>
+  </place>
+  <place id="p-10EC-17687-14">
+  <name>
+   <text>PuzzleSet_04_end_100</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="390"/>
+   </graphics>
+  </place>
+  <transition id="t-10EC-1768A-15">
+  <name>
+   <text>PuzzleSet_04_perform_100</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="440" y="390"/>
+   </graphics>
+  </transition>
+  <place id="p-10EC-17690-16">
+  <name>
+   <text>PuzzleSet_04_start_100</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="360" y="390"/>
+   </graphics>
+  </place>
+  <place id="p-10EC-17696-17">
+  <name>
+   <text>PuzzleSet_05_end_98</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="470"/>
+   </graphics>
+  </place>
+  <transition id="t-10EC-176E5-18">
+  <name>
+   <text>PuzzleSet_05_perform_98</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="440" y="470"/>
+   </graphics>
+  </transition>
+  <place id="p-10EC-176ED-19">
+  <name>
+   <text>PuzzleSet_05_start_98</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="360" y="470"/>
+   </graphics>
+  </place>
+  <place id="p-10EC-176F3-20">
+  <name>
+   <text>Puzzle_ActivationCount_103</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="860" y="310"/>
+   </graphics>
+  </place>
+  <transition id="t-10EC-176F9-21">
+  <name>
+   <text>Puzzle_activate_103</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="740" y="310"/>
+   </graphics>
+  </transition>
+  <place id="p-10EC-176FD-22">
+  <name>
+   <text>Puzzle_off_102</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="650" y="50"/>
+   </graphics>
+  </place>
+  <place id="p-10EC-17702-23">
+  <name>
+   <text>Puzzle_on_102</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="820" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-10EC-17706-24">
+  <name>
+   <text>Puzzle_turnOn_102</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="730" y="110"/>
+   </graphics>
+  </transition>
+  <place id="p-10EC-1770B-25">
+  <name>
+   <text>boite_off_116</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="50" y="310"/>
+   </graphics>
+  </place>
+  <place id="p-10EC-17710-26">
+  <name>
+   <text>boite_on_116</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="310"/>
+   </graphics>
+  </place>
+  <transition id="t-10EC-17714-27">
+  <name>
+   <text>boite_turnOn_116</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="130" y="370"/>
+   </graphics>
+  </transition>
+  <arc id="e-10EC-1771F-28" source="p-10EC-176F3-20" target="t-10EC-17652-4">
+   <type value="test"/>
+  </arc>
+  <arc id="e-10EC-17724-29" source="p-10EC-1770B-25" target="t-10EC-17714-27">
+  </arc>
+  <arc id="e-10EC-17726-30" source="t-10EC-1767B-12" target="p-10EC-17678-11">
+  </arc>
+  <arc id="e-10EC-17728-31" source="p-10EC-17681-13" target="t-10EC-1767B-12">
+  </arc>
+  <arc id="e-10EC-1772A-32" source="t-10EC-1768A-15" target="p-10EC-17687-14">
+  </arc>
+  <arc id="e-10EC-1772C-33" source="p-10EC-17690-16" target="t-10EC-1768A-15">
+  </arc>
+  <arc id="e-10EC-1772E-34" source="p-10EC-1764A-3" target="t-10EC-17652-4">
+  </arc>
+  <arc id="e-10EC-1772F-35" source="t-10EC-1765C-6" target="p-10EC-17657-5">
+  </arc>
+  <arc id="e-10EC-17733-36" source="t-10EC-17652-4" target="p-10EC-17638-2">
+  </arc>
+  <arc id="e-10EC-17735-37" source="t-10EC-1766C-9" target="p-10EC-17666-8">
+  </arc>
+  <arc id="e-10EC-17737-38" source="p-10EC-17672-10" target="t-10EC-1766C-9">
+  </arc>
+  <arc id="e-10EC-17739-39" source="t-10EC-176F9-21" target="p-10EC-176F3-20">
+  </arc>
+  <arc id="e-10EC-1773A-40" source="p-10EC-17710-26" target="t-10EC-1766C-9">
+   <type value="test"/>
+  </arc>
+  <arc id="e-10EC-1773C-41" source="t-10EC-176E5-18" target="p-10EC-17696-17">
+  </arc>
+  <arc id="e-10EC-1773E-42" source="p-10EC-176ED-19" target="t-10EC-176E5-18">
+  </arc>
+  <arc id="e-10EC-1773F-43" source="t-10EC-17706-24" target="p-10EC-17702-23">
+  </arc>
+  <arc id="e-10EC-17741-44" source="p-10EC-176FD-22" target="t-10EC-17706-24">
+  </arc>
+  <arc id="e-10EC-17745-45" source="p-10EC-17662-7" target="t-10EC-1765C-6">
+  </arc>
+  <arc id="e-10EC-17747-46" source="p-10EC-17702-23" target="t-10EC-176F9-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-10EC-17781-47" source="p-10EC-17657-5" target="t-10EC-176F9-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-10EC-17784-48" source="p-10EC-17666-8" target="t-10EC-176F9-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-10EC-17786-49" source="p-10EC-17678-11" target="t-10EC-176F9-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-10EC-17788-50" source="p-10EC-17687-14" target="t-10EC-176F9-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-10EC-1778A-51" source="p-10EC-17696-17" target="t-10EC-176F9-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-10EC-1778C-52" source="t-10EC-17714-27" target="p-10EC-17710-26">
+  </arc>
+ </page>
+ </net>
+</pnml>

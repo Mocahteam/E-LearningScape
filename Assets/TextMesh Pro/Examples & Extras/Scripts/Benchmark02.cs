@@ -34,6 +34,7 @@ namespace TMPro.Examples
 
                     textMeshPro.alignment = TextAlignmentOptions.Bottom;
                     textMeshPro.fontSize = 96;
+                    textMeshPro.enableKerning = false;
 
                     textMeshPro.color = new Color32(255, 255, 0, 255);
                     textMeshPro.text = "!";
@@ -43,13 +44,13 @@ namespace TMPro.Examples
                     floatingText_Script.SpawnType = 0;
                 }
                 else if (SpawnType == 1)
-                {                
+                {
                     // TextMesh Implementation
                     GameObject go = new GameObject();
                     go.transform.position = new Vector3(Random.Range(-95f, 95f), 0.25f, Random.Range(-95f, 95f));
 
                     TextMesh textMesh = go.AddComponent<TextMesh>();
-                    textMesh.font = Resources.Load("Fonts/ARIAL", typeof(Font)) as Font;
+                    textMesh.font = Resources.Load<Font>("Fonts/ARIAL");
                     textMesh.GetComponent<Renderer>().sharedMaterial = textMesh.font.material;
 
                     textMesh.anchor = TextAnchor.LowerCenter;

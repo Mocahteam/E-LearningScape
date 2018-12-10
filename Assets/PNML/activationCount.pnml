@@ -1,0 +1,33 @@
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-3BE0-8B071-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+  <name>
+   <text>activationCount</text>
+  </name>
+ <page id="g-3BE0-8B07D-1">
+  <place id="p-3BE0-8B080-2">
+  <name>
+   <text>ActivationCount</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="155" y="55"/>
+   </graphics>
+  </place>
+  <transition id="t-3BE0-8B08C-3">
+  <name>
+   <text>activate</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="40" y="55"/>
+   </graphics>
+  </transition>
+  <arc id="e-3BE0-8B096-4" source="t-3BE0-8B08C-3" target="p-3BE0-8B080-2">
+  </arc>
+ </page>
+ </net>
+</pnml>

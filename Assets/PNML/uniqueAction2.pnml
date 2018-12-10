@@ -1,0 +1,49 @@
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-180C-8CB65-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+  <name>
+   <text>uniqueAction2</text>
+  </name>
+ <page id="g-180C-8CB6F-1">
+  <place id="p-180C-8CB74-2">
+  <name>
+   <text>end</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="180" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-180C-8CB84-3">
+  <name>
+   <text>perform2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-180C-8CB88-4">
+  <name>
+   <text>start</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="30" y="50"/>
+   </graphics>
+  </place>
+  <arc id="e-180C-8CB91-5" source="p-180C-8CB88-4" target="t-180C-8CB84-3">
+  </arc>
+  <arc id="e-180C-8CB93-6" source="t-180C-8CB84-3" target="p-180C-8CB74-2">
+  </arc>
+ </page>
+ </net>
+</pnml>

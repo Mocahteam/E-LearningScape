@@ -4,23 +4,69 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Object
-  - Answer
-  - Timings
   - Plank
-  - MouseOver
   - PlankText
   - Box
   - Ball
-  - BoxTop
-  - Tablet
-  - Q-R1
-  - Screen1
   - A-R1
   - RotateGear
-  - ChangeRoom
-  - WrongTimerText
-  - TableE05
+  - Bag
+  - PlankE09
+  - Q-R2
+  - A-R2
+  - LockRoom2
+  - InventoryElements
+  - E12_Symbol
+  - Q-R3
+  - A-R3
+  - BoardRemovableWords
+  - Board
+  - Eraser
+  - IARTab
+  - DreamFragmentUI
+  - LockR2Wheel
+  - Fence
+  - DreamFragmentLight
+  - LockIntro
+  - LockIntroWheel
+  - WallIntro
+  - ChestLid
+  - GameRooms
+  - EndRoom
+  - WaterFloor
+  - BoardTexture
+  - UIBackground
+  - NewItemFeedback
+  - HelpSubtitles
+  - MainMenuButton
+  - EnableOnFirstCrouch
+  - InventoryWarning
+  - Cursor
+  - IARMenuButton
+  - HUD_A
+  - DescriptionUI
+  - PressA
+  - UIEffect
+  - Gears
+  - Login
+  - QuitEnigma
+  - Q-R1
+  - Sheet
+  - MouseOver
+  - Timings
+  - GlassesBG
+  - Puzzle
+  - PuzzleCanvas
+  - PuzzleUI
+  - ScrollRoom2
+  - BallBoxTop
+  - PlankAndWireRule
+  - ScrollUI
+  - MirrorPlankImage
+  - PasswordRoom2
+  - BoardUnremovableWords
+  - PlankNumbers
+  - Chair
   layers:
   - Default
   - TransparentFX
@@ -30,12 +76,12 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - MirrorGO
+  - Eraser
+  - EraserLinerenderer
+  - BlurredBackgrounds
+  - WaterCollider
+  - EraserSphereTrigger
   - 
   - 
   - 

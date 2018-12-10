@@ -1,0 +1,113 @@
+{
+    "action": {},
+    "activity": {
+        "draggable": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/draggable",
+            "name": {
+                "en-US": "draggable"
+            }
+        },
+        "fragment": {
+            "description": {
+                "en-US": "a dream fragment in the game e-learningscape."
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/fragment",
+            "name": {
+                "en-US": "fragment"
+            }
+        },
+        "interactable": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/interactable",
+            "name": {
+                "en-US": "interactable"
+            }
+        },
+        "key": {
+            "description": {
+                "en-US": "a keyboard or mouse key."
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/key",
+            "name": {
+                "en-US": "key"
+            }
+        },
+        "toggable": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/toggable",
+            "name": {
+                "en-US": "toggable"
+            }
+        }
+    },
+    "domain": {},
+    "extension": {},
+    "focus": {},
+    "grade": {},
+    "skills": {},
+    "subdomain": {},
+    "topic": {},
+    "verb": {
+        "activated": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/activated",
+            "name": {
+                "en-US": "activated"
+            }
+        },
+        "collected": {
+            "description": {
+                "en-US": "indicates the actor collected the object"
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/collected",
+            "name": {
+                "en-US": "collected"
+            }
+        },
+        "deactivated": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/deactivated",
+            "name": {
+                "en-US": "deactivated"
+            }
+        },
+        "dragged": {
+            "description": {
+                "en-US": "indicates that the actor started dragging the object."
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/dragged",
+            "name": {
+                "en-US": "dragged"
+            }
+        },
+        "highlighted": {
+            "description": {
+                "en-US": "indicates that the actor put its cursor over the object."
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/highlighted",
+            "name": {
+                "en-US": "highlighted"
+            }
+        },
+        "released": {
+            "description": {
+                "en-US": "indicates that the actor released the object from one's grip from or a specific state."
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/released",
+            "name": {
+                "en-US": "released"
+            }
+        }
+    }
+}

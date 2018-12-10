@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Puzzle_transition_115" label="consumeFragment Puzzle" system="True" end="False" />
+  <transition id="Puzzle_transition_107" label="consumeVirtual Puzzle" system="True" end="False" />
+  <transition id="PuzzleSet_03_perform_97" label="perform PuzzleSet_03" system="False" end="False" />
+  <transition id="Fragment_souvenir_16_perform_95" label="perform Fragment_souvenir_16" system="False" end="False" />
+  <transition id="Fragment_souvenir_15_perform_92" label="perform Fragment_souvenir_15" system="False" end="False" />
+  <transition id="PuzzleSet_04_perform_100" label="perform PuzzleSet_04" system="False" end="False" />
+  <transition id="AnswersInput_Correct_139" label="planification AnswersInput" system="False" end="True" />
+  <transition id="or0_AnswersInput_Correct_139" label="planification AnswersInput" system="False" end="True" />
+  <transition id="AnswersInput_Wrong_139" label="Wrong AnswersInput" system="False" end="False" />
+  <transition id="PuzzleSet_02_perform_99" label="perform PuzzleSet_02" system="False" end="False" />
+  <transition id="Fragment_souvenir_14_perform_93" label="perform Fragment_souvenir_14" system="False" end="False" />
+  <transition id="PuzzleSet_05_perform_98" label="perform PuzzleSet_05" system="False" end="False" />
+  <transition id="Puzzle_turnOff_102" label="turnOff Puzzle" system="False" end="False" />
+  <transition id="Puzzle_turnOn_102" label="turnOn Puzzle" system="False" end="False" />
+  <transition id="or0_Puzzle_turnOn_102" label="turnOn Puzzle" system="False" end="False" />
+  <transition id="or1_Puzzle_turnOn_102" label="turnOn Puzzle" system="False" end="False" />
+  <transition id="or2_Puzzle_turnOn_102" label="turnOn Puzzle" system="False" end="False" />
+  <transition id="or3_Puzzle_turnOn_102" label="turnOn Puzzle" system="False" end="False" />
+  <transition id="Puzzle_perform_101" label="perform Puzzle" system="False" end="False" />
+  <transition id="Puzzle_activate_103" label="activate Puzzle" system="True" end="False" />
+  <transition id="PuzzleSet_01_perform_96" label="perform PuzzleSet_01" system="False" end="False" />
+  <transition id="Fragment_souvenir_7_perform_94" label="perform Fragment_souvenir_7" system="False" end="False" />
+  <transition id="Fragment_souvenir_18_perform_76" label="perform Fragment_souvenir_18" system="False" end="False" />
+</transitions>

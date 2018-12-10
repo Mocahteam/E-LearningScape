@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="E12_1_activate_121" label="activate E12_1" system="False" end="False" />
+  <transition id="Lamp_turnOff_114" label="turnOff Lamp" system="False" end="False" />
+  <transition id="Lamp_turnOn_114" label="turnOn Lamp" system="False" end="False" />
+  <transition id="E12_4_activate_124" label="activate E12_4" system="False" end="False" />
+  <transition id="E12_6_activate_128" label="activate E12_6" system="False" end="False" />
+  <transition id="E12_2_activate_122" label="activate E12_2" system="False" end="False" />
+  <transition id="AnswersInput_Correct_104" label="Correct12 AnswersInput" system="False" end="True" />
+  <transition id="AnswersInput_Wrong_104" label="Wrong12 AnswersInput" system="False" end="False" />
+  <transition id="boite_turnOff_118" label="turnOff_12 boite" system="False" end="False" />
+  <transition id="boite_turnOn_118" label="turnOn_12 boite" system="False" end="False" />
+  <transition id="E12_3_activate_123" label="activate E12_3" system="False" end="False" />
+  <transition id="E12_5_activate_127" label="activate E12_5" system="False" end="False" />
+  <transition id="Lamp_perform_113" label="perform Lamp" system="False" end="False" />
+  <transition id="Fragment_souvenir_6_activate_112" label="activate Fragment_souvenir_6" system="False" end="False" />
+</transitions>

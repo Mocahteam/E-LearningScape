@@ -1,0 +1,181 @@
+{
+    "theme": "Pédagogie",
+    "trace": true,
+    "traceToLRS": false,
+    "virtualPuzzle": true,
+    "storyTextIntro": [
+        "Game data loaded from file",
+        "Il est déjà tard le soir, Camille reste inquiète pour son premier enseignement à Sorbonne Université. Ce n’est pas la première fois qu’elle enseigne, mais maintenant elle est Maître de Conférences, son premier poste permanent.",
+        "En se brossant les dents, elle révise la matière qu'elle devra enseigner demain en TD. Puis elle se couche, et plein de questions tournent dans sa tête : et si j’ai un blanc ? et si les étudiants ne sont pas motivés ? et s’il n’y a pas de craie ?",
+        "Camille finit par s'endormir... C'est alors que les marchands de sable entrent en action pour aider Camille à structurer sa pensée pendant son sommeil."
+    ],
+    "storyTextransition": [
+        "Camille est tombée en sommeil paradoxal, et elle se met à rêver. L’université se transforme en jungle pleine de dangers. Les marchands de sable restent avec elle pour la protéger."
+    ],
+    "storyTextEnd": [
+        "Camille se réveille. Elle est en pleine forme, et tout est clair dans sa tête pour son premier enseignement. Elle a hâte de commencer.",
+        "Les marchands de sable ont bien travaillé et se retrouvent pour un débriefing sur tout leur travail.",
+        "Ce jeu est une adaptation du LearningScape créé par Sapiens et le CRI, soutenu d'un financement du projet IDEFI IIFR",
+        "Mounswif Darkaoui (Développement)\nSimon Giraud (Graphismes et sons)\nBasile Pesin (Réalité virtuelle)\nThomas Planques (Supervision artistique et game design)\nMathieu Muratet (Supervision développement et développement)\nBerni Hasenknopf (Initiateur du projet)"
+    ],
+    "ballBoxQuestion": "Que faire pour rendre actifs mes étudiants ?",
+    "ballBoxPlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+    "ballBoxAnswer": [
+        "1",
+        "2",
+        "8"
+    ],
+    "ballCorrectTexts": [
+        "CLASSE INVERSEE",
+        "INTERACTIVITE",
+        "APPROCHE PROJET"
+    ],
+    "ballWrongTexts": [
+        "COPINAGE AVEC LES ETUDIANTS",
+        "ECRIRE AU TABLEAU",
+        "BEAUCOUP DE DEVOIRS A LA MAISON",
+        "INTERROGATIONS SURPRISES",
+        "BONUS DE PARTICIPATION",
+        "INTERROGER UN ETUDIANT AU HASARD",
+        "SEVERITE AVEC LES ETUDIANTS",
+        "DEPLACEMENT DANS LA SALLE",
+        "SUPPRIMER LE SUPPORT VISUEL",
+        "SIMPLIFIER BEAUCOUP LES EXERCICES",
+        "ENSEIGNER TOT LE MATIN",
+        "AUGMENTER LE NIVEAU D'EXIGENCE"
+    ],
+    "plankAndWireQuestion": "Relier avec la corde les 3 éléments qui assurent la cohérence d'un cours",
+    "plankAndWirePlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+    "plankAndWireQuestionIAR": "Comment construire une séquence cohérente ?",
+    "plankAndWireCorrectWords": [
+        "Objectifs",
+        "Méthodes Pédagogiques",
+        "Evaluation"
+    ],
+    "plankAndWireCorrectNumbers": [
+        4,
+        5,
+        9
+    ],
+    "plankOtherWords": [
+        "Motivation",
+        "Implication",
+        "Création",
+        "Validité",
+        "Compréhension",
+        "Accompagnement",
+        "Attentes",
+        "Connaissances",
+        "Bibliographie",
+        "Participation"
+    ],
+    "plankAndWireOtherNumbers": [
+        1,
+        2,
+        3,
+        6,
+        7,
+        8
+    ],
+    "greenFragmentsQuestion": "Comment favoriser mon innovation pédagogique ?",
+    "greenFragmentPlaceHolder": "     Tapez votre réponse ici (10 chiffres)...",
+    "greenFragmentsWords": [
+        "il",
+        "faut",
+        "savoir",
+        "changer",
+        "de",
+        "posture"
+    ],
+    "greenFragmentAnswer": [
+        "1023810149"
+    ],
+    "gearsQuestion": "Sur quels facteurs est-ce que je peux agir pour motiver mes étudiants ?",
+    "gearTextUp": "Etudiants",
+    "gearTextDown": "Motivation",
+    "gearMovableTexts": [
+        "Facteurs relatifs à la classe",
+        "Facteurs relatifs à l'université",
+        "Facteurs relatifs à la vie de l'élève",
+        "Facteurs relatifs à la société"
+    ],
+    "gearAnswer": "Facteurs relatifs à la classe",
+    "mdpLogin": 814,
+    "glassesPlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
+    "glassesPicturesPath": [
+        "Data/contrat01.png",
+        "Data/contrat02.png",
+        "Data/contrat03.png",
+        "Data/contrat04.png"
+    ],
+    "glassesQuestion": "Le vase se renversant vous livrera la clé de cette enigme",
+    "glassesAnswer": [
+        "Contrat Pédagogique"
+    ],
+    "enigma6Question": "A quoi Berthiaume nous conseille-t-il de faire attention ?",
+    "enigma6PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+    "enigma6Answer": [
+        "9",
+        "14"
+    ],
+    "enigma6AnswerDescription": "Feedbacks constructifs",
+    "scrollsQuestion": "Cet acronyme anglais décrit des objectifs clairs",
+    "scrollsPlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
+    "scrollsAnswer": [
+        "SMART"
+    ],
+    "scrollsWords": [
+        "<color=red>S</color>ensé",
+        "<color=red>M</color>esurable",
+        "<color=red>A</color>tteignable",
+        "<color=red>R</color>éaliste",
+        "<color=red>T</color>emporalisé"
+    ],
+    "mirrorQuestion": "L'année de création de la taxonomie de Bloom est...",
+    "mirrorPlaceHolder": "     Tapez votre réponse ici (4 chiffres)...",
+    "mirrorAnswer": [
+        "1956"
+    ],
+    "mirrorPicturePath": "Data/Plank.png",
+    "enigma9Question": "L'utilisation d'une grille critériée est la solution",
+    "enigma9PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+    "enigma9Answer": [
+        "3",
+        "1",
+        "2"
+    ],
+    "enigma10Question": "Seul, vous ne sortirez pas de ce labyrinthe",
+    "enigma10PlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
+    "enigma10Answer": [
+        "Collaboration"
+    ],
+    "lockRoom2Password": 703,
+    "puzzle": true,
+    "puzzlePicturePath": "Data/Puzzle_Complet.png",
+    "puzzleAnswer": "planification",
+    "enigma12Answer": "Contraintes",
+    "lampPicturesPath": [
+        "Data/E12_C.png",
+        "Data/E12_S.png",
+        "Data/E12_O.png",
+        "Data/E12_E.png",
+        "Data/E12_U.png",
+        "Data/E12_R.png"
+    ],
+    "lampAnswer": "Ressources",
+    "whiteBoardWords": [
+        "##RIEN N'EST## IMPORTANT",
+        "TOUT EST ##INDISPENSABLE##",
+        "AME##N##AGER L'ESPACE",
+        "S##C##ENARISATION",
+        "ENCO##U##RAGER",
+        "M##O##TIVATION",
+        "FEEDBACK CONSTRUCTIF",
+        "##N##OTER LES APPRENANTS",
+        "P##E##DAGOGIE",
+        "RECOMPENSE",
+        "ME##T##HODE",
+        "APPROCHE PROGRAMME"
+    ],
+    "whiteBoardAnswer": "Contenu"
+}

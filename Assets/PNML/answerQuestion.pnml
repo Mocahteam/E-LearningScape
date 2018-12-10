@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-25C4-8A326-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>answerQuestion</text>
+  </name>
+ <page id="g-25C4-8A331-1">
+  <place id="p-25C4-8A333-2">
+  <name>
+   <text>Answered</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="300" y="115"/>
+   </graphics>
+  </place>
+  <place id="p-25C4-8A340-3">
+  <name>
+   <text>Answering</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="50" y="115"/>
+   </graphics>
+  </place>
+  <transition id="t-25C4-8A344-4">
+  <name>
+   <text>Correct</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="180" y="55"/>
+   </graphics>
+  </transition>
+  <transition id="t-25C4-8A346-5">
+  <name>
+   <text>Wrong</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="180" y="175"/>
+   </graphics>
+  </transition>
+  <arc id="e-25C4-8A34B-6" source="p-25C4-8A340-3" target="t-25C4-8A346-5">
+   <type value="test"/>
+  </arc>
+  <arc id="e-25C4-8A350-7" source="p-25C4-8A340-3" target="t-25C4-8A344-4">
+  </arc>
+  <arc id="e-25C4-8A350-8" source="t-25C4-8A344-4" target="p-25C4-8A333-2">
+  </arc>
+ </page>
+ </net>
+</pnml>

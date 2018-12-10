@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-2680-59F43-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma10</text>
+  </name>
+ <page id="g-2680-59F4F-1">
+  <place id="p-2680-59F54-2">
+  <name>
+   <text>Fragment_souvenir_11_ActivationCount_62</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="130"/>
+   </graphics>
+  </place>
+  <transition id="t-2680-59F68-3">
+  <name>
+   <text>Fragment_souvenir_11_activate_62</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="130"/>
+   </graphics>
+  </transition>
+  <place id="p-2680-59F73-4">
+  <name>
+   <text>Fragment_souvenir_12_ActivationCount_63</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="205"/>
+   </graphics>
+  </place>
+  <transition id="t-2680-59F7A-5">
+  <name>
+   <text>Fragment_souvenir_12_activate_63</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="205"/>
+   </graphics>
+  </transition>
+  <place id="p-2680-59F82-6">
+  <name>
+   <text>Fragment_souvenir_3_ActivationCount_61</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-2680-59F88-7">
+  <name>
+   <text>Fragment_souvenir_3_activate_61</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-2680-59F8E-8">
+  <name>
+   <text>Q6_Answered_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="695" y="130"/>
+   </graphics>
+  </place>
+  <place id="p-2680-59F93-9">
+  <name>
+   <text>Q6_Answering_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="435" y="130"/>
+   </graphics>
+  </place>
+  <transition id="t-2680-59F96-10">
+  <name>
+   <text>Q6_Correct_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="575" y="70"/>
+   </graphics>
+  </transition>
+  <transition id="t-2680-59F9B-11">
+  <name>
+   <text>Q6_Wrong_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="575" y="190"/>
+   </graphics>
+  </transition>
+  <arc id="e-2680-59FA3-12" source="t-2680-59F96-10" target="p-2680-59F8E-8">
+  </arc>
+  <arc id="e-2680-59FA5-13" source="p-2680-59F93-9" target="t-2680-59F96-10">
+  </arc>
+  <arc id="e-2680-59FA8-14" source="p-2680-59F93-9" target="t-2680-59F9B-11">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2680-59FAD-15" source="t-2680-59F7A-5" target="p-2680-59F73-4">
+  </arc>
+  <arc id="e-2680-59FAE-16" source="t-2680-59F68-3" target="p-2680-59F54-2">
+  </arc>
+  <arc id="e-2680-59FB0-17" source="t-2680-59F88-7" target="p-2680-59F82-6">
+  </arc>
+ </page>
+ </net>
+</pnml>
