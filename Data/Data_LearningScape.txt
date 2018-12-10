@@ -3,6 +3,7 @@
     "trace": true,
     "traceToLRS": false,
     "virtualPuzzle": true,
+    "fragmentContentOnline": false,
     "storyTextIntro": [
         "Game data loaded from file",
         "Il est déjà tard le soir, Camille reste inquiète pour son premier enseignement à Sorbonne Université. Ce n’est pas la première fois qu’elle enseigne, mais maintenant elle est Maître de Conférences, son premier poste permanent.",

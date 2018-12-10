@@ -10,6 +10,7 @@ public class GameContent {
     public bool trace = true;
     public bool traceToLRS = false;
     public bool virtualPuzzle = true;
+    public bool fragmentContentOnline = false;
 
     //Texte intro, transition, fin
     public string[] storyTextIntro;

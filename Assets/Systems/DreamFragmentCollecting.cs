@@ -3,7 +3,6 @@ using FYFY;
 using TMPro;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
-using FYFY_plugins.Monitoring;
 
 public class DreamFragmentCollecting : FSystem {
 
@@ -34,7 +33,16 @@ public class DreamFragmentCollecting : FSystem {
         {
             dfUI = f_dreamFragmentUI.First();
             // Add listener on child button to close UI
-            dfUI.GetComponentInChildren<Button>().onClick.AddListener(CloseWindow);
+            foreach(Button b in dfUI.GetComponentsInChildren<Button>())
+            {
+                if(b.gameObject.name == "OKButton")
+                    dfUI.GetComponentInChildren<Button>().onClick.AddListener(CloseWindow);
+                else if (b.gameObject.name == "ButtonOnline")
+                {
+                    GameObjectManager.setGameObjectState(b.gameObject, LoadGameContent.gameContent.fragmentContentOnline);
+                    b.onClick.AddListener(OpenFragmentLink);
+                }
+            }
             // Get child text area
             FragmentText = dfUI.GetComponentInChildren<TextMeshProUGUI>();
 
@@ -170,5 +178,10 @@ public class DreamFragmentCollecting : FSystem {
         this.Pause = false;
         MovingSystem.instance.Pause = false;
         IARTabNavigation.instance.Pause = backupIARNavigationState;
+    }
+
+    private void OpenFragmentLink()
+    {
+
     }
 }

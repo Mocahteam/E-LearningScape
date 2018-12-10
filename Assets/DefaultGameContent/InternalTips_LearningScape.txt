@@ -99,35 +99,6 @@
       "On dirait qu'il y a quelque chose dans le tirroir de la commode"
     ]
   },
-  "2.3": {
-    "plankWire.24": [
-      "Le texte sur ce tableau a l'air important"
-    ],
-    "wireWorld.26": [
-      "Je vois une corde en bas de l'étagère"
-    ],
-    "wireInventory.27": [
-      "Et si j'essayais d'utiliser la corde"
-    ],
-    "objectif.28": [
-      "Il faut que je relie les bons mots avec la corde"
-    ],
-    "methodes.36": [
-      "Il faut que je relie les bons mots avec la corde"
-    ],
-    "evaluation.38": [
-      "Il faut que je relie les bons mots avec la corde"
-    ],
-    "questionPlankAndWire.55": [
-      "Maintenant que les mots sont reliés j'ai la réponse"
-    ],
-    "fragment9.74": [
-      "Je vois un fragment à droite de l'étagère"
-    ],
-    "fragment17.75": [
-      "On dirait qu'il y a quelque chose dans le tirroir de la commode"
-    ]
-  },
   "3.1": {
     "chair.43": [
     	"Peut-être qu'en bougeant les meubles..."
@@ -213,6 +184,151 @@
     ],
     "questionGreenFragments.52": [
     	"J'ai rassemblés tout les fragments verts nécessaires pour à la question"
+    ]
+  },
+  "4.1": {
+    "gearsEnigma.58": [
+    	"Il faut que je glisse le bon engrenage au milieu dans le rêve 1"
+    ]
+  },
+  "4.2": {
+    "loginPanelAnswering.59": [
+    	"Il est écrit que le hasard pourrait m'aider"
+    ],
+    "loginPanelActivation.60": [
+    	"Je dois réessayer de me connecter"
+    ]
+  },
+  "5.1": {
+    "keyE08World.66": [
+    	"Il reste des objets à trouver"
+    ],
+    "redGlassesWorld.68": [
+    	"Il reste des objets à trouver"
+    ],
+    "yellowGlassesWorld.70": [
+    	"Il reste des objets à trouver"
+    ]
+  },
+  "5.2": {
+    "keyE08World.66": [
+    	"Il est indiqué que la clé se trouve dans un vase se renversant"
+    ],
+    "keyE08Inventory.67": [
+    	"J'ai la clé pour ouvrir le sac"
+    ],
+    "redGlassesWorld.68": [
+    	"Peut-être que j'ai oublié un objet dans la première pièce"
+    ],
+    "yellowGlassesWorld.70": [
+    	"Je dois trouver la lunette jaune"
+    ],
+    "satchel.72": [
+    	"Voyons ce qu'il y a dans ce sac"
+    ]
+  },
+  "5.3": {
+    "keyE08World.66": [
+    	"Je vois la clé à droite du verrou"
+    ],
+    "redGlassesWorld.68": [
+    	"Je crois que la lunette rouge est en bas de l'étagère de la première pièce"
+    ],
+    "redGlassesInventory.69": [
+    	"Je devrais pouvoir décoder l'image du sac avec les lunettes"
+    ],
+    "yellowGlassesWorld.70": [
+    	"Je vois la lunette jaune devant le verrou"
+    ],
+    "yellowGlassesInventory.71": [
+    	"Je devrais pouvoir décoder l'image du sac avec les lunettes"
+    ],
+    "questionGlasses": [
+    	"J'ai pu déchiffrer le contenu du sac et je peux maintenant répondre à la question"
+    ]
+  },
+  "6.1": {
+    "fragment8.29": [
+    	"Je crois qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "fragment5.30": [
+    	"Je crois qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "fragment1.31": [
+    	"Je crois qu'il me reste des éléments à trouver dans la pièce"
+    ]
+  },
+  "6.2": {
+    "fragment8.29": [
+    	"Je dois encore trouver des fragments de rêve"
+    ],
+    "fragment5.30": [
+    	"Je dois encore trouver des fragments de rêve"
+    ],
+    "fragment1.31": [
+    	"Je dois encore trouver des fragments de rêve"
+    ]
+  },
+  "6.3": {
+    "fragment8.29": [
+    	"Je vois des fragments de rêve sur les arbres"
+    ],
+    "fragment5.30": [
+    	"Je vois des fragments de rêve sur les arbres"
+    ],
+    "fragment1.31": [
+    	"Il y a un fragment de rêve près du sac"
+    ]
+  },
+  "7.1": {
+    "S_Scroll.34": [
+    	"J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "M_Scroll.35": [
+    	"J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "A_Scroll.37": [
+    	"J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "R_Scroll.39": [
+    	"J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "T_Scroll.40": [
+    	"J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
+    ]
+  },
+  "7.2": {
+    "S_Scroll.34": [
+    	"Il me reste des parchemins à ramasser"
+    ],
+    "M_Scroll.35": [
+    	"Il me reste des parchemins à ramasser"
+    ],
+    "A_Scroll.37": [
+    	"Il me reste des parchemins à ramasser"
+    ],
+    "R_Scroll.39": [
+    	"Il me reste des parchemins à ramasser"
+    ],
+    "T_Scroll.40": [
+    	"Il me reste des parchemins à ramasser"
+    ]
+  },
+  "7.3": {
+    "S_Scroll.34": [
+    	"Il y a un parchemin près du sac"
+    ],
+    "M_Scroll.35": [
+    	"Il y a un parchemin derrière le sac"
+    ],
+    "A_Scroll.37": [
+    	"Il y a  des parchemins près de l'abre"
+    ],
+    "R_Scroll.39": [
+    	"Je vois un parchemin derrière l'arbre"
+    ],
+    "T_Scroll.40": [
+    	"Il y a des parchemins près de l'abre"
     ]
   }
 }
