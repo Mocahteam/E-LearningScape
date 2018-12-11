@@ -49,6 +49,7 @@ public class LoadGameContent : FSystem {
     private Family f_boardRemovable = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
 
     private Family f_gameTips = FamilyManager.getFamily(new AllOfComponents(typeof(GameTips)));
+    private Family f_internalGameTips = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameTips)));
 
 
     private FSystem instance;
@@ -149,10 +150,25 @@ public class LoadGameContent : FSystem {
                     {
                         if (tmp.gameObject.name == "Description")
                         {
-                            int nbCorrectBall = gameContent.ballCorrectTexts.Length;
-                            tmp.text = gameContent.ballCorrectTexts[0];
-                            for (int j = 1; j < nbCorrectBall; j++)
-                                tmp.text = string.Concat(tmp.text, " - ", gameContent.ballCorrectTexts[j]);
+                            int nbAnswers = gameContent.ballBoxAnswer.Count > 3 ? 3 : gameContent.ballBoxAnswer.Count;
+                            int answerID;
+                            int startingID = 1;
+                            for(int j = 0; j < nbAnswers; j++)
+                            {
+                                int.TryParse(gameContent.ballBoxAnswer[j], out answerID);
+                                if (answerID != 0)
+                                {
+                                    tmp.text = gameContent.ballTexts[answerID];
+                                    startingID = j + 1;
+                                    break;
+                                }
+                            }
+                            for (int j = startingID; j < nbAnswers; j++)
+                            {
+                                int.TryParse(gameContent.ballBoxAnswer[j], out answerID);
+                                if (answerID != 0)
+                                    tmp.text = string.Concat(tmp.text, " - ", gameContent.ballTexts[answerID]);
+                            }
                         }
                         else if (tmp.gameObject.name == "Answer")
                         {
@@ -233,54 +249,95 @@ public class LoadGameContent : FSystem {
 
         //Ball Box
         int nbBalls = f_balls.Count;
-        Ball b;
-        int correctBallCount = 0;
-        int wrongBallCount = 0;
-        int[] ballAnswer = new int[3] { 1, 2, 8 };
-        int nbBallAnswers = gameContent.ballBoxAnswer.Count < 3 ? gameContent.ballBoxAnswer.Count : 3;
-        int tmpInt;
-        for (int i = 0; i < nbBallAnswers; i++)
-        {
-            int.TryParse(gameContent.ballBoxAnswer[i], out tmpInt);
-            ballAnswer[i] = tmpInt == 0 ? ballAnswer[i] : tmpInt;
-        }
+        Ball b = null;
+        Ball b2 = null;
+        string tmpString;
+        int nbBallSeen = 0;
+        int answer;
+        //initialise position and texts for all balls
         List<int> idList = new List<int>();
         for (int i = 0; i < nbBalls; i++)
             idList.Add(i);
         for (int i = 0; i < nbBalls; i++)
         {
             b = f_balls.getAt(i).GetComponent<Ball>();
-            if (b.number == 1 || b.number == 2 || b.number == 8)
-            {
-                b.text = gameContent.ballCorrectTexts[correctBallCount].ToUpper();
-                correctBallCount++;
-            }
-            else
-            {
-                b.text = gameContent.ballWrongTexts[wrongBallCount].ToUpper();
-                wrongBallCount++;
-            }
 
             //change randomly the position of the ball
             b.id = idList[(int)Random.Range(0, idList.Count - 0.001f)];
             idList.Remove(b.id);
 
-            //change the number of balls to set spheres 1, 2 and 8 to answer
-            if (b.number == 1)
-                b.number = ballAnswer[0];
-            else if (b.number == 2)
-                b.number = ballAnswer[1];
-            else if (b.number == 8)
-                b.number = ballAnswer[2];
-            else if (b.number == ballAnswer[0])
-                b.number = 1;
-            else if (b.number == ballAnswer[1])
-                b.number = 2;
-            else if (b.number == ballAnswer[2])
-                b.number = 8;
+            if(b.number - 1 < gameContent.ballTexts.Length)
+                b.text = gameContent.ballTexts[b.number - 1];
+        }
+        //Exchange texts and numbers to set solution balls
+        for(int j = 0; j < 3; j++)
+        {
+            //If there is still unprocessed answers
+            if (gameContent.ballBoxAnswer.Count > j)
+            {
+                int.TryParse(gameContent.ballBoxAnswer[j], out answer);
+                //If the answer given was integer
+                if (answer != 0)
+                {
+                    //If the answer given is different than the default answer
+                    if(answer != j + 1)
+                    {
+                        //Look for a default solution ball (j+1 can be 1, 2 or 3) and a new solution ball (number stored in "answer")
+                        for (int i = 0; i < nbBalls; i++)
+                        {
+                            b = f_balls.getAt(i).GetComponent<Ball>();
+                            if (b.number == j + 1 || b.number == answer)
+                            {
+                                Debug.Log(b.number);
+                                if (nbBallSeen == 1)
+                                {
+                                    nbBallSeen++;
+                                    break;
+                                }
+                                else
+                                {
+                                    b2 = b;
+                                    nbBallSeen++;
+                                }
+                            }
+                        }
+                        //If the two balls were found
+                        if (nbBallSeen == 2)
+                        {
+                            //exchange numbers and texts
+                            if (b.number == j + 1)
+                            {
+                                b.number = answer;
+                                b2.number = j + 1;
+                            }
+                            else
+                            {
+                                b.number = j + 1;
+                                b2.number = answer;
+                            }
+                            tmpString = b.text;
+                            b.text = b2.text;
+                            b2.text = tmpString;
+                        }
+                        else
+                            Debug.LogWarning(string.Concat("The answer ", j + 1, " of BallBox enigma should be between 1 and 15 included."));
+
+                        nbBallSeen = 0;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning(string.Concat("The answer ", j + 1, " of BallBox enigma should be an integer."));
+                }
+            }
+        }
+        for (int i = 0; i < nbBalls; i++)
+        {
+            b = f_balls.getAt(i).GetComponent<Ball>();
             b.GetComponentInChildren<TextMeshPro>().text = b.number.ToString();
         }
-        foreach (TextMeshPro tmp in f_ballBoxTop.First().GetComponentsInChildren<TextMeshPro>())
+
+            foreach (TextMeshPro tmp in f_ballBoxTop.First().GetComponentsInChildren<TextMeshPro>())
         {
             tmp.text = gameContent.ballBoxQuestion;
         }
@@ -717,16 +774,32 @@ public class LoadGameContent : FSystem {
 
         #endregion
 
-        if (File.Exists("Data/Tips_LearningScape.txt"))
+        if (File.Exists(gameContent.tipsPath))
         {
             GameTips gameTips = f_gameTips.First().GetComponent<GameTips>();
-            gameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(File.ReadAllText("Data/Tips_LearningScape.txt"));
+            gameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(File.ReadAllText(gameContent.tipsPath));
             if (gameTips.dictionary == null)
                 gameTips.dictionary = new Dictionary<string, Dictionary<string, List<string>>>();
         }
         else
         {
             Debug.LogWarning("File containting tips not found.");
+        }
+
+        if (File.Exists(gameContent.internalTipsPath))
+        {
+            InternalGameTips internalGameTips = f_internalGameTips.First().GetComponent<InternalGameTips>();
+            internalGameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(File.ReadAllText(gameContent.internalTipsPath));
+            if (internalGameTips.dictionary == null)
+            {
+                internalGameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalTipsJsonFile.text);
+                Debug.LogWarning("File containting internal tips empty. Default used.");
+            }
+        }
+        else
+        {
+            f_internalGameTips.First().GetComponent<InternalGameTips>().dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalTipsJsonFile.text);
+            Debug.LogWarning("File containting internal tips not found. Default used.");
         }
 
         Debug.Log("Data loaded");

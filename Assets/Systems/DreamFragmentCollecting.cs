@@ -65,8 +65,8 @@ public class DreamFragmentCollecting : FSystem {
                 }
             }
 
-            if (File.Exists("Data/DreamFragmentLinks.txt"))
-                dreamFragmentsLinks = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText("Data/DreamFragmentLinks.txt"));
+            if (File.Exists(LoadGameContent.gameContent.dreamFragmentLinksPath))
+                dreamFragmentsLinks = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(LoadGameContent.gameContent.dreamFragmentLinksPath));
             else
                 Debug.LogWarning("Unable to load dream fragment links because no file found.");
             if (dreamFragmentsLinks == null)

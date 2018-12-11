@@ -3,7 +3,9 @@
     "trace": true,
     "traceToLRS": false,
     "virtualPuzzle": true,
-    "fragmentContentOnline": false,
+    "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
+    "tipsPath": "Data/Tips_LearningScape.txt",
+    "internalTipsPath": "Data/InternalTips_LearningScape.txt",
     "storyTextIntro": [
         "Game data loaded from file",
         "Il est déjà tard le soir, Camille reste inquiète pour son premier enseignement à Sorbonne Université. Ce n’est pas la première fois qu’elle enseigne, mais maintenant elle est Maître de Conférences, son premier poste permanent.",
@@ -26,17 +28,15 @@
         "2",
         "8"
     ],
-    "ballCorrectTexts": [
+    "ballTexts": [
         "CLASSE INVERSEE",
         "INTERACTIVITE",
-        "APPROCHE PROJET"
-    ],
-    "ballWrongTexts": [
         "COPINAGE AVEC LES ETUDIANTS",
         "ECRIRE AU TABLEAU",
         "BEAUCOUP DE DEVOIRS A LA MAISON",
         "INTERROGATIONS SURPRISES",
         "BONUS DE PARTICIPATION",
+        "APPROCHE PROJET",
         "INTERROGER UN ETUDIANT AU HASARD",
         "SEVERITE AVEC LES ETUDIANTS",
         "DEPLACEMENT DANS LA SALLE",

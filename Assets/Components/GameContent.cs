@@ -10,7 +10,9 @@ public class GameContent {
     public bool trace = true;
     public bool traceToLRS = false;
     public bool virtualPuzzle = true;
-    public bool fragmentContentOnline = false;
+    public string dreamFragmentLinksPath;
+    public string tipsPath;
+    public string internalTipsPath;
 
     //Texte intro, transition, fin
     public string[] storyTextIntro;
@@ -21,8 +23,7 @@ public class GameContent {
     public string ballBoxQuestion;
     public string ballBoxPlaceHolder;
     public List<string> ballBoxAnswer;
-    public string[] ballCorrectTexts = new string[3];
-    public string[] ballWrongTexts = new string[12];
+    public string[] ballTexts = new string[15];
 
     //Plank And Wire
     public string plankAndWireQuestion;

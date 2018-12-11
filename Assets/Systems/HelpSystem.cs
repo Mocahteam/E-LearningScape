@@ -39,6 +39,9 @@ public class HelpSystem : FSystem {
 
             string[] tmpStringArray;
             //add internal game tips to the dictionary of the component GameTips
+            //
+            //changer ca
+            //
             foreach(string key1 in internalGameTips.dictionary.Keys)
             {
                 if (!gameTips.dictionary.ContainsKey(key1))
