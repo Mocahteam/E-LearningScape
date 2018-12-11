@@ -324,6 +324,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\DefaultGameContent\Data_LearningScape.txt" />
+    <None Include="Assets\DefaultGameContent\DreamFragmentLinks.txt" />
     <None Include="Assets\DefaultGameContent\InternalTips_LearningScape.txt" />
     <None Include="Assets\DefaultGameContent\Tips_LearningScape.txt" />
     <None Include="Assets\Libraries\Caliper\Newtonsoft.Json.xml" />
