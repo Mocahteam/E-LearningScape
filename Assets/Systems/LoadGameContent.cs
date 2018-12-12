@@ -288,7 +288,6 @@ public class LoadGameContent : FSystem {
                             b = f_balls.getAt(i).GetComponent<Ball>();
                             if (b.number == j + 1 || b.number == answer)
                             {
-                                Debug.Log(b.number);
                                 if (nbBallSeen == 1)
                                 {
                                     nbBallSeen++;
