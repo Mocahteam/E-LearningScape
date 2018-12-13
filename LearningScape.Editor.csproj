@@ -321,8 +321,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\FMODMigrationUtil.cs" />
-    <Compile Include="Assets\GoogleVR\Editor\FmodGvrAudioRoomEditor.cs" />
     <Compile Include="Assets\PostProcessing\Editor\Attributes\PostProcessingModelEditorAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Editor\Models\AmbientOcclusionModelEditor.cs" />
     <Compile Include="Assets\PostProcessing\Editor\Models\AntialiasingModelEditor.cs" />
@@ -359,7 +357,6 @@
     <Compile Include="Assets\PostProcessing\Editor\Utils\ReflectionUtils.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\Editor\FocusPullerEditor.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\Editor\PostProcessingControllerEditor.cs" />
-    <Compile Include="Assets\ResonanceAudio\Editor\FmodResonanceAudioRoomEditor.cs" />
     <Compile Include="Assets\Volumetric Light\Editor\ImageEffects\TonemappingEditor.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -385,7 +382,6 @@
     <None Include="Assets\MagicMirror\Prefab\MirrorShaderBumpMap.shader" />
     <None Include="Assets\MagicMirror\Prefab\MirrorShaderOld.shader" />
     <None Include="Assets\MagicMirror\Prefab\Readme.txt" />
-    <None Include="Assets\Plugins\FMOD\LICENSE.TXT" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\ParadeRender.shader" />

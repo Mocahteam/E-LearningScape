@@ -259,24 +259,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\FMOD\BankRefAttribute.cs" />
-    <Compile Include="Assets\Plugins\FMOD\EventRefAttribute.cs" />
-    <Compile Include="Assets\Plugins\FMOD\FMOD_Listener.cs" />
-    <Compile Include="Assets\Plugins\FMOD\FMOD_StudioEventEmitter.cs" />
-    <Compile Include="Assets\Plugins\FMOD\FMODAsset.cs" />
-    <Compile Include="Assets\Plugins\FMOD\OneshotList.cs" />
-    <Compile Include="Assets\Plugins\FMOD\ParamRef.cs" />
-    <Compile Include="Assets\Plugins\FMOD\RuntimeManager.cs" />
-    <Compile Include="Assets\Plugins\FMOD\RuntimeUtils.cs" />
-    <Compile Include="Assets\Plugins\FMOD\Settings.cs" />
-    <Compile Include="Assets\Plugins\FMOD\StudioBankLoader.cs" />
-    <Compile Include="Assets\Plugins\FMOD\StudioEventEmitter.cs" />
-    <Compile Include="Assets\Plugins\FMOD\StudioListener.cs" />
-    <Compile Include="Assets\Plugins\FMOD\StudioParameterTrigger.cs" />
-    <Compile Include="Assets\Plugins\FMOD\Wrapper\fmod.cs" />
-    <Compile Include="Assets\Plugins\FMOD\Wrapper\fmod_dsp.cs" />
-    <Compile Include="Assets\Plugins\FMOD\Wrapper\fmod_errors.cs" />
-    <Compile Include="Assets\Plugins\FMOD\Wrapper\fmod_studio.cs" />
     <Compile Include="Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\FirstPersonController.cs" />
     <Compile Include="Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\HeadBob.cs" />
     <Compile Include="Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\MouseLook.cs" />
@@ -345,7 +327,6 @@
     <None Include="Assets\MagicMirror\Prefab\MirrorShaderBumpMap.shader" />
     <None Include="Assets\MagicMirror\Prefab\MirrorShaderOld.shader" />
     <None Include="Assets\MagicMirror\Prefab\Readme.txt" />
-    <None Include="Assets\Plugins\FMOD\LICENSE.TXT" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\ParadeRender.shader" />

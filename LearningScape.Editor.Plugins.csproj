@@ -313,26 +313,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\Editor\FMOD\BankRefDrawer.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\CreateEventPopup.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\EditorBankRef.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\EditorEventRef.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\EditorParamRef.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\EditorUtils.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\EventBrowser.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\EventCache.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\EventManager.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\EventRefDrawer.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\FindAndReplace.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\LogViewer.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\MigrationUtil.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\ParamRefDrawer.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\SettingsEditor.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\StudioBankLoaderEditor.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\StudioEventEmitterEditor.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\StudioEventEmitterGizmoDrawer.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\StudioListenerEditor.cs" />
-    <Compile Include="Assets\Plugins\Editor\FMOD\StudioParameterTriggerEditor.cs" />
     <Compile Include="Assets\Standard Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -358,7 +338,6 @@
     <None Include="Assets\MagicMirror\Prefab\MirrorShaderBumpMap.shader" />
     <None Include="Assets\MagicMirror\Prefab\MirrorShaderOld.shader" />
     <None Include="Assets\MagicMirror\Prefab\Readme.txt" />
-    <None Include="Assets\Plugins\FMOD\LICENSE.TXT" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\ParadeRender.shader" />
