@@ -143,6 +143,13 @@
             	Add monitoring functionalities to a Game Object
             </summary>
         </member>
+        <member name="F:FYFY_plugins.Monitoring.ComponentMonitoring.canFreeUniqueId">
+            <summary>
+            If true, when the garbage collector will be called this component ID will be removed from the list of IDs int he MonitoringManager
+            By default it is set to true
+            It is set to false right before the MonitoringManager clears the monitors lists and is set back to true each time the constructor is called
+            </summary>
+        </member>
         <member name="F:FYFY_plugins.Monitoring.ComponentMonitoring.PnmlFile">
             <summary> Pnml File associated to the monitor </summary>
         </member>
@@ -157,6 +164,18 @@
         </member>
         <member name="F:FYFY_plugins.Monitoring.ComponentMonitoring.transitionLinks">
             <summary> List of transitions influenced by links. </summary>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.#ctor">
+            <summary>
+            Contructor of the ComponentMonitoring
+            In Editor: called at compilation, right before and right after Play/Pause, and when a new component is created
+            At runtime: called when a new component is created
+            </summary>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.Finalize">
+            <summary>
+            Destructor of ComponentMonitoring called by the Garbage Collector after the destruction of the component
+            </summary>
         </member>
         <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.getTransitionLinkByTransitionLabel(System.String)">
             <summary> Look for a transition matching with label influenced by links </summary>
@@ -213,6 +232,15 @@
             <summary>
             	This component trigger the building of PetriNets and Features and write traces when the game is over.
             </summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.MonitoringManager.Instance">
+            <summary>
+            Instance of the singleton MonitoringManager
+            The value is set in the constructor
+            </summary>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.MonitoringManager.#ctor">
+            <summary> Set singleton instance of MonitoringManager </summary>
         </member>
         <member name="F:FYFY_plugins.Monitoring.MonitoringManager.PetriNetsName">
             <summary>List of Petri Nets name</summary>
@@ -287,9 +315,6 @@
         <member name="M:FYFY_plugins.Monitoring.MonitoringManager.getTriggerableActions">
             <summary>Ask to Laalys to provide all triggerable actions</summary>
             <return>List of Pairs including a ComponentMonitoring and its associated game action that may be triggered.</return>
-        </member>
-        <member name="P:FYFY_plugins.Monitoring.MonitoringManager.Instance">
-            <summary> Get singleton instance of MonitoringManager </summary>
         </member>
         <member name="T:FYFY_plugins.Monitoring.MonitoringManager.Source">
             <summary>Define the different source that can trigger a game action.</summary>
