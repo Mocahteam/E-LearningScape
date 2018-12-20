@@ -6,6 +6,7 @@ public class DefaultGameContent : MonoBehaviour {
     public TextAsset jsonFile;
     public TextAsset tipsJsonFile;
     public TextAsset internalTipsJsonFile;
+    public TextAsset dreamFragmentlinks;
 
     public Texture2D[] glassesPictures;
     public Texture2D[] lampPictures;

@@ -108,11 +108,10 @@ public class StoryDisplaying : FSystem {
             int hours = (int)duration / 3600;
             int minutes = (int)(duration % 3600) / 60;
             int seconds = (int)(duration % 3600) % 60;
-            storyTexts[st.storyProgression].Add(string.Concat(hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")));
+            storyTexts[st.storyProgression].Add(string.Concat("<align=\"center\">", hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")));
             fadingImage.color = Color.white;
             background.color = Color.white;
             sdText.color = Color.black;
-            sdText.alignment = TextAlignmentOptions.Center;
         }
         // Get current set of texts
         readTexts = storyTexts[st.storyProgression].ToArray();

@@ -3,7 +3,9 @@ using FYFY;
 using TMPro;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
-using FYFY_plugins.Monitoring;
+using System.IO;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 public class DreamFragmentCollecting : FSystem {
 
@@ -26,6 +28,9 @@ public class DreamFragmentCollecting : FSystem {
     private bool allPuzzleFragmentsCollected = false;
     private GameObject tmpGo;
 
+    private Dictionary<string, string> dreamFragmentsLinks;
+    private GameObject onlineButton;
+
     public static DreamFragmentCollecting instance;
 
     public DreamFragmentCollecting()
@@ -34,7 +39,16 @@ public class DreamFragmentCollecting : FSystem {
         {
             dfUI = f_dreamFragmentUI.First();
             // Add listener on child button to close UI
-            dfUI.GetComponentInChildren<Button>().onClick.AddListener(CloseWindow);
+            foreach(Button b in dfUI.GetComponentsInChildren<Button>())
+            {
+                if(b.gameObject.name == "OKButton")
+                    dfUI.GetComponentInChildren<Button>().onClick.AddListener(CloseWindow);
+                else if (b.gameObject.name == "ButtonOnline")
+                {
+                    b.onClick.AddListener(OpenFragmentLink);
+                    onlineButton = b.gameObject;
+                }
+            }
             // Get child text area
             FragmentText = dfUI.GetComponentInChildren<TextMeshProUGUI>();
 
@@ -50,6 +64,13 @@ public class DreamFragmentCollecting : FSystem {
                     break;
                 }
             }
+
+            if (File.Exists(LoadGameContent.gameContent.dreamFragmentLinksPath))
+                dreamFragmentsLinks = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(LoadGameContent.gameContent.dreamFragmentLinksPath));
+            else
+                Debug.LogWarning("Unable to load dream fragment links because no file found.");
+            if (dreamFragmentsLinks == null)
+                dreamFragmentsLinks = new Dictionary<string, string>();
         }
         instance = this;
     }
@@ -69,6 +90,7 @@ public class DreamFragmentCollecting : FSystem {
                     GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "fragment", objectName = selectedFragment.name });
                     GameObjectManager.setGameObjectState(dfUI, true);
                     tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
+                    GameObjectManager.setGameObjectState(onlineButton, dreamFragmentsLinks.ContainsKey(selectedFragment.name) && dreamFragmentsLinks[selectedFragment.name] != "");
                     // Set UI text depending on type and id
                     if (tmpDFComponent.type == 0)
                         FragmentText.text = string.Concat("Ouvrez le fragment de rêve numéro ", tmpDFComponent.id);
@@ -170,5 +192,10 @@ public class DreamFragmentCollecting : FSystem {
         this.Pause = false;
         MovingSystem.instance.Pause = false;
         IARTabNavigation.instance.Pause = backupIARNavigationState;
+    }
+
+    private void OpenFragmentLink()
+    {
+        Application.OpenURL(dreamFragmentsLinks[selectedFragment.name]);
     }
 }

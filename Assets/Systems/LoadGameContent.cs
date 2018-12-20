@@ -49,6 +49,7 @@ public class LoadGameContent : FSystem {
     private Family f_boardRemovable = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
 
     private Family f_gameTips = FamilyManager.getFamily(new AllOfComponents(typeof(GameTips)));
+    private Family f_internalGameTips = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameTips)));
 
 
     private FSystem instance;
@@ -70,625 +71,7 @@ public class LoadGameContent : FSystem {
             if (File.Exists("Data/Data_LearningScape.txt"))
             {
                 //Load game content from the file
-                gameContent = JsonUtility.FromJson<GameContent>(File.ReadAllText("Data/Data_LearningScape.txt"));
-
-                ActionsManager.instance.Pause = !gameContent.trace;
-                Debug.Log(string.Concat("Trace: ", gameContent.trace));
-                SendStatements.instance.Pause = !gameContent.traceToLRS;
-                SendStatements.shouldPause = !gameContent.traceToLRS;
-                Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
-                foreach (GameObject go in f_puzzles)
-                    GameObjectManager.setGameObjectState(go, gameContent.virtualPuzzle);
-                foreach (GameObject go in f_puzzlesFragment)
-                    GameObjectManager.setGameObjectState(go, !gameContent.virtualPuzzle);
-
-                #region Story
-                StoryText st = f_storyText.First().GetComponent<StoryText>();
-                st.intro = gameContent.storyTextIntro;
-                st.transition = gameContent.storyTextransition;
-                st.end = gameContent.storyTextEnd;
-                #endregion
-
-                #region Room 1
-                int nbQueries = f_queriesR1.Count;
-                for (int i = 0; i < nbQueries; i++)
-                {
-                    forGO = f_queriesR1.getAt(i);
-                    switch (forGO.name)
-                    {
-                        case "Q1":
-                            foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Question")
-                                {
-                                    tmp.text = gameContent.ballBoxQuestion;
-                                    break;
-                                }
-                            }
-                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.ballBoxPlaceHolder;
-                            foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).GetComponentsInChildren<TextMeshProUGUI>()) {
-                                if (tmp.gameObject.name == "Description")
-                                {
-                                    int nbCorrectBall = gameContent.ballCorrectTexts.Length;
-                                    tmp.text = gameContent.ballCorrectTexts[0];
-                                    for (int j = 1; j < nbCorrectBall; j++)
-                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.ballCorrectTexts[j]);
-                                }
-                                else if (tmp.gameObject.name == "Answer")
-                                {
-                                    tmp.text = gameContent.ballBoxAnswer[0];
-                                    for (int j = 1; j < gameContent.ballBoxAnswer.Count; j++)
-                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.ballBoxAnswer[j]);
-                                }
-                            }
-                            forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
-                            foreach (string s in gameContent.ballBoxAnswer)
-                            {
-                                forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
-                            }
-                            break;
-
-                        case "Q2":
-                            foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Question")
-                                {
-                                    tmp.text = gameContent.plankAndWireQuestionIAR;
-                                    break;
-                                }
-                            }
-                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.plankAndWirePlaceHolder;
-
-                            foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).GetComponentsInChildren<TextMeshProUGUI>()) {
-                                if (tmp.gameObject.name == "Description")
-                                {
-                                    tmp.text = string.Concat(gameContent.plankAndWireCorrectWords[0], " - ", gameContent.plankAndWireCorrectWords[1], " - ", gameContent.plankAndWireCorrectWords[2]);
-                                }
-                                else if (tmp.gameObject.name == "Answer")
-                                {
-                                    tmp.text = gameContent.plankAndWireCorrectNumbers[0].ToString();
-                                    int l = gameContent.plankAndWireCorrectNumbers.Length;
-                                    for (int j = 1; j < l; j++)
-                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.plankAndWireCorrectNumbers[j].ToString());
-                                }
-                            }
-                            forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
-                            for (int j = 0; j < gameContent.plankAndWireCorrectNumbers.Length; j++)
-                                forGO.GetComponent<QuerySolution>().andSolutions.Add(gameContent.plankAndWireCorrectNumbers[j].ToString());
-                            break;
-
-                        case "Q3":
-                            foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Question")
-                                {
-                                    tmp.text = gameContent.greenFragmentsQuestion;
-                                    break;
-                                }
-                            }
-                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.greenFragmentPlaceHolder;
-
-                            foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Answer")
-                                {
-                                    tmp.text = gameContent.greenFragmentsWords[0];
-                                    int l = gameContent.greenFragmentsWords.Length;
-                                    for(int j = 1; j < l; j++)
-                                    {
-                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.greenFragmentsWords[j]);
-                                    }
-                                }
-                            }
-                            forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
-                            foreach(string s in gameContent.greenFragmentAnswer)
-                                forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(StringToAnswer(s)));
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-
-                //Ball Box
-                int nbBalls = f_balls.Count;
-                Ball b;
-                int correctBallCount = 0;
-                int wrongBallCount = 0;
-                int[] ballAnswer = new int[3] { 1, 2, 8};
-                int nbBallAnswers = gameContent.ballBoxAnswer.Count < 3 ? gameContent.ballBoxAnswer.Count : 3;
-                int tmpInt;
-                for (int i = 0; i < nbBallAnswers; i++)
-                {
-                    int.TryParse(gameContent.ballBoxAnswer[i], out tmpInt);
-                    ballAnswer[i] = tmpInt == 0 ? ballAnswer[i] : tmpInt;
-                }
-                List<int> idList = new List<int>();
-                for (int i = 0; i < nbBalls; i++)
-                    idList.Add(i);
-                for (int i = 0; i < nbBalls; i++)
-                {
-                    b = f_balls.getAt(i).GetComponent<Ball>();
-                    if(b.number == 1 || b.number == 2 || b.number == 8)
-                    {
-                        b.text = gameContent.ballCorrectTexts[correctBallCount].ToUpper();
-                        correctBallCount++;
-                    }
-                    else
-                    {
-                        b.text = gameContent.ballWrongTexts[wrongBallCount].ToUpper();
-                        wrongBallCount++;
-                    }
-
-                    //change randomly the position of the ball
-                    b.id = idList[(int)Random.Range(0, idList.Count - 0.001f)];
-                    idList.Remove(b.id);
-
-                    //change the number of balls to set spheres 1, 2 and 8 to answer
-                    if (b.number == 1)
-                        b.number = ballAnswer[0];
-                    else if (b.number == 2)
-                        b.number = ballAnswer[1];
-                    else if (b.number == 8)
-                        b.number = ballAnswer[2];
-                    else if (b.number == ballAnswer[0])
-                        b.number = 1;
-                    else if (b.number == ballAnswer[1])
-                        b.number = 2;
-                    else if (b.number == ballAnswer[2])
-                        b.number = 8;
-                    b.GetComponentInChildren<TextMeshPro>().text = b.number.ToString();
-                }
-                foreach (TextMeshPro tmp in f_ballBoxTop.First().GetComponentsInChildren<TextMeshPro>())
-                {
-                    tmp.text = gameContent.ballBoxQuestion;
-                }
-
-                //Plank and Wire
-                int nbWrongWords = f_wrongWords.Count;
-                int nbCorrectWords = f_correctWords.Count;
-                for (int i = 0; i < nbWrongWords; i++)
-                    f_wrongWords.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankOtherWords[i];
-                for (int i = 0; i < nbCorrectWords; i++)
-                    f_correctWords.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankAndWireCorrectWords[i];
-                f_plankAndWireRule.First().GetComponent<TextMeshPro>().text = gameContent.plankAndWireQuestion;
-                int nbPlankNumbers = f_plankNumbers.Count;
-                int countCorrectNb = 0;
-                int countWrongNb = 0;
-                for(int i = 0; i < nbPlankNumbers; i++)
-                {
-                    if(f_plankNumbers.getAt(i).name == "4" || f_plankNumbers.getAt(i).name == "5" || f_plankNumbers.getAt(i).name == "9")
-                    {
-                        f_plankNumbers.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankAndWireCorrectNumbers[countCorrectNb].ToString();
-                        countCorrectNb++;
-                    }
-                    else
-                    {
-                        f_plankNumbers.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankAndWireOtherNumbers[countWrongNb].ToString();
-                        countWrongNb++;
-                    }
-                }
-                forGO = f_wrongWords.First().transform.parent.parent.gameObject;
-                List<float> validAngles = new List<float>();
-                #region Add valid angles to list
-                int from, to;
-                from = 0;
-                to = 4;
-                for (int i = from; i <= to; i++)
-                    validAngles.Add(i);
-                validAngles.Add(52);
-                from = 147;
-                to = 161;
-                for (int i = from; i <= to; i++)
-                    validAngles.Add(i);
-                from = 325;
-                to = 341;
-                for (int i = from; i <= to; i++)
-                    validAngles.Add(i);
-                from = 356;
-                to = 360;
-                for (int i = from; i <= to; i++)
-                    validAngles.Add(i);
-                #endregion
-                float angle = validAngles[(int)(Random.value*validAngles.Count - 0.001f)];
-                forGO.transform.Rotate(0, angle, 0);
-                foreach (Transform child in forGO.transform)
-                    if(child.name != "Numbers")
-                        child.Rotate(0, -angle, 0);
-                foreach(Transform child in forGO.transform.GetChild(0))
-                    child.Rotate(0, 0, -angle);
-
-                //Green Dream Fragments
-                int nbDreamFragments = f_dreamFragments.Count;
-                DreamFragment tmpDF;
-                int nbGreenFragments = 0;
-                for (int i = 0; i < nbDreamFragments; i++)
-                {
-                    tmpDF = f_dreamFragments.getAt(i).GetComponent<DreamFragment>();
-                    if (tmpDF.type == 1)
-                    {
-                        tmpDF.itemName = gameContent.greenFragmentsWords[nbGreenFragments];
-                        nbGreenFragments++;
-                        if (nbGreenFragments > 5)
-                            break;
-                    }
-                }
-
-                //Gears
-                int nbQuestionGears = 0;
-                int nbAnswerGears = 0;
-                bool answerGearFound = false;
-                foreach (Transform child in f_gears.First().transform)
-                {
-                    if (child.gameObject.name.Contains("Gear"))
-                    {
-                        if (child.gameObject.name.Length == 5 && nbAnswerGears < 4)
-                        {
-                            child.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = gameContent.gearMovableTexts[nbAnswerGears];
-                            if (gameContent.gearMovableTexts[nbAnswerGears] == gameContent.gearAnswer)
-                            {
-                                child.gameObject.tag = "RotateGear";
-                                child.gameObject.GetComponent<Gear>().isSolution = true;
-                                answerGearFound = true;
-                            }
-                            else
-                            {
-                                child.gameObject.tag = "Untagged";
-                                child.gameObject.GetComponent<Gear>().isSolution = false;
-                            }
-                            nbAnswerGears++;
-                        }
-                        else
-                        {
-                            if (child.gameObject.name != "TransparentGear")
-                            {
-                                if (nbQuestionGears == 0)
-                                    child.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = gameContent.gearTextUp;
-                                else
-                                    child.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = gameContent.gearTextDown;
-                                nbQuestionGears++;
-                            }
-                        }
-                    }
-                    else if (child.gameObject.name == "Q4")
-                        child.gameObject.GetComponent<TextMeshProUGUI>().text = gameContent.gearsQuestion;
-                }
-                if(!answerGearFound)
-                {
-                    int nbGears = f_gearComponent.Count;
-                    Gear gear = f_gearComponent.getAt((int)Random.Range(0, nbGears -1)).GetComponent<Gear>();
-                    gear.isSolution = true;
-                    gear.tag = "RotateGear";
-                }
-                #endregion
-
-                #region Room 2
-                nbQueries = f_queriesR2.Count;
-                for (int i = 0; i < nbQueries; i++)
-                {
-                    forGO = f_queriesR2.getAt(i);
-                    switch (forGO.name)
-                    {
-                        case "Q1":
-                            foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Question")
-                                {
-                                    tmp.text = gameContent.glassesQuestion;
-                                    break;
-                                }
-                            }
-                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.glassesPlaceHolder;
-
-                            foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
-                                if (tmp.gameObject.name == "Answer")
-                                {
-                                    tmp.text = gameContent.glassesAnswer[0];
-                                    int l = gameContent.glassesAnswer.Count;
-                                    for (int j = 1; j < l; j++)
-                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.glassesAnswer[j]);
-                                }
-                            forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
-                            foreach (string s in gameContent.glassesAnswer)
-                                forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
-                            break;
-
-                        case "Q2":
-                            foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Question")
-                                {
-                                    tmp.text = gameContent.enigma6Question;
-                                    break;
-                                }
-                            }
-                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.enigma6PlaceHolder;
-
-                            foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Answer")
-                                {
-                                    tmp.text = gameContent.enigma6Answer[0];
-                                    int l = gameContent.enigma6Answer.Count;
-                                    for (int j = 1; j < l; j++)
-                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.enigma6Answer[j]);
-                                }
-                                else if (tmp.gameObject.name == "Description")
-                                    tmp.text = gameContent.enigma6AnswerDescription;
-                            }
-                            forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
-                            foreach (string s in gameContent.enigma6Answer)
-                                forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
-                            break;
-
-                        case "Q3":
-                            foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Question")
-                                {
-                                    tmp.text = gameContent.scrollsQuestion;
-                                    break;
-                                }
-                            }
-                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.scrollsPlaceHolder;
-
-                            foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Answer")
-                                {
-                                    tmp.text = gameContent.scrollsAnswer[0];
-                                    int l = gameContent.scrollsAnswer.Count;
-                                    for (int j = 1; j < l; j++)
-                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.scrollsAnswer[j]);
-                                }
-                                else if (tmp.gameObject.name == "Description")
-                                {
-                                    tmp.text = gameContent.scrollsWords[0];
-                                    int l = gameContent.scrollsWords.Length;
-                                    for (int j = 1; j < l; j++)
-                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.scrollsWords[j]);
-                                }
-                            }
-                            forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
-                            foreach (string s in gameContent.scrollsAnswer)
-                                forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
-                            break;
-
-                        case "Q4":
-                            foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Question")
-                                {
-                                    tmp.text = gameContent.mirrorQuestion;
-                                    break;
-                                }
-                            }
-                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.mirrorPlaceHolder;
-
-                            foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Answer")
-                                {
-                                    tmp.text = gameContent.mirrorAnswer[0];
-                                    int l = gameContent.mirrorAnswer.Count;
-                                    for (int j = 1; j < l; j++)
-                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.mirrorAnswer[j]);
-                                }
-                            }
-                            forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
-                            foreach (string s in gameContent.mirrorAnswer)
-                                forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
-                            break;
-
-                        case "Q5":
-                            foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Question")
-                                {
-                                    tmp.text = gameContent.enigma9Question;
-                                    break;
-                                }
-                            }
-                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.enigma9PlaceHolder;
-
-                            foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Answer")
-                                {
-                                    tmp.text = gameContent.enigma9Answer[0];
-                                    int l = gameContent.enigma9Answer.Count;
-                                    for (int j = 1; j < l; j++)
-                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.enigma9Answer[j]);
-                                }
-                            }
-                            forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
-                            foreach (string s in gameContent.enigma9Answer)
-                                forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
-                            break;
-
-                        case "Q6":
-                            foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Question")
-                                {
-                                    tmp.text = gameContent.enigma10Question;
-                                    break;
-                                }
-                            }
-                            forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.enigma10PlaceHolder;
-
-                            foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
-                            {
-                                if (tmp.gameObject.name == "Answer")
-                                {
-                                    tmp.text = gameContent.enigma10Answer[0];
-                                    int l = gameContent.enigma10Answer.Count;
-                                    for (int j = 1; j < l; j++)
-                                        tmp.text = string.Concat(tmp.text, " - ", gameContent.enigma10Answer[j]);
-                                }
-                            }
-                            forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
-                            foreach (string s in gameContent.enigma10Answer)
-                                forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-
-                LoginManager.passwordSolution = gameContent.mdpLogin;
-
-                //Glasses
-                BagImage bi = f_bagImage.First().GetComponent<BagImage>();
-                Sprite mySprite;
-                for (int i = 0; i < 4; i++)
-                {
-                    mySprite = defaultGameContent.noPictureFound;
-                    if (File.Exists(gameContent.glassesPicturesPath[i]))
-                    {
-                        tmpTex = new Texture2D(1, 1);
-                        tmpFileData = File.ReadAllBytes(gameContent.glassesPicturesPath[i]);
-                        if (tmpTex.LoadImage(tmpFileData))
-                        {
-                            mySprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
-                        }
-                    }
-                    switch (i)
-                    {
-                        case 0:
-                            bi.image1 = mySprite;
-                            break;
-
-                        case 1:
-                            bi.image2 = mySprite;
-                            break;
-
-                        case 2:
-                            bi.image3 = mySprite;
-                            break;
-
-                        case 3:
-                            bi.image4 = mySprite;
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-                bi.gameObject.GetComponent<Image>().sprite = bi.image1;
-
-                //Scrolls
-                int nbScroll = gameContent.scrollsWords.Length < f_scrollUI.Count ? gameContent.scrollsWords.Length : f_scrollUI.Count;
-                for(int i = 0; i < nbScroll; i++)
-                {
-                    if (gameContent.scrollsWords[i] == string.Empty)
-                        GameObjectManager.setGameObjectState(f_scrollUI.getAt(i), false);
-                    else
-                        f_scrollUI.getAt(i).GetComponentInChildren<TextMeshProUGUI>().text = gameContent.scrollsWords[i];
-                }
-
-                //Mirror
-                f_mirrorImage.First().GetComponent<Image>().sprite = defaultGameContent.noPictureFound;
-                if (File.Exists(gameContent.mirrorPicturePath))
-                {
-                    tmpTex = new Texture2D(1, 1);
-                    tmpFileData = File.ReadAllBytes(gameContent.mirrorPicturePath);
-                    if(tmpTex.LoadImage(tmpFileData))
-                        f_mirrorImage.First().GetComponent<Image>().sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
-                }
-
-                //Lock Room 2
-                Locker locker = f_lockRoom2.First().GetComponent<Locker>();
-                locker.wheel1Solution = (gameContent.lockRoom2Password / 100) % 10;
-                locker.wheel2Solution = (gameContent.lockRoom2Password / 10) % 10;
-                locker.wheel3Solution = gameContent.lockRoom2Password % 10;
-                f_passwordRoom2.First().GetComponentInChildren<TextMeshProUGUI>().text = (gameContent.lockRoom2Password % 1000).ToString();
-                #endregion
-
-                #region Room 3
-                int nbQuestionRoom3 = f_queriesR3.Count;
-                QuerySolution qs;
-                for (int i = 0; i < nbQuestionRoom3; i++)
-                {
-                    qs = f_queriesR3.getAt(i).GetComponent<QuerySolution>();
-                    qs.orSolutions = new List<string>();
-                    qs.orSolutions.Add(StringToAnswer(gameContent.puzzleAnswer));
-                    qs.orSolutions.Add(StringToAnswer(gameContent.enigma12Answer));
-                    qs.orSolutions.Add(StringToAnswer(gameContent.lampAnswer));
-                    qs.orSolutions.Add(StringToAnswer(gameContent.whiteBoardAnswer));
-                }
-
-                //Puzzles
-                Sprite puzzlePicture = defaultGameContent.noPictureFound;
-                if (gameContent.puzzle && File.Exists(gameContent.puzzlePicturePath))
-                {
-                    tmpTex = new Texture2D(1, 1);
-                    tmpFileData = File.ReadAllBytes(gameContent.puzzlePicturePath);
-                    if (tmpTex.LoadImage(tmpFileData))
-                    {
-                        puzzlePicture = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
-                    }
-                }
-                Rect rect;
-                if (puzzlePicture.texture.width > puzzlePicture.texture.height)
-                    rect = new Rect(0, 0, 935, puzzlePicture.texture.height * 935 / puzzlePicture.texture.width);
-                else
-                    rect = new Rect(0, 0, puzzlePicture.texture.width * 935 / puzzlePicture.texture.height, 935);
-
-                int nbPuzzleUI = f_puzzleUI.Count;
-                RectTransform rt = f_puzzleUI.getAt(0).GetComponent<RectTransform>();
-                Vector3 newPuzzleScale = new Vector3(rect.width * rt.localScale.x / 935, rect.width * rt.localScale.y / 935, rt.localScale.z);
-                for (int i = 0; i < nbPuzzleUI; i++)
-                {
-                    rt = f_puzzleUI.getAt(i).GetComponent<RectTransform>();
-                    rt.localScale = newPuzzleScale;
-                    rt.GetChild(0).gameObject.GetComponent<Image>().sprite = puzzlePicture;
-                }
-
-                //Lamp
-                int nbLampPictures = f_lampPictures.Count;
-                nbLampPictures = nbLampPictures > gameContent.lampPicturesPath.Length ? gameContent.lampPicturesPath.Length : nbLampPictures;
-                for (int i = 0; i < nbLampPictures; i++)
-                {
-                    mySprite = defaultGameContent.noPictureFound;
-                    if (File.Exists(gameContent.lampPicturesPath[i]))
-                    {
-                        tmpTex = new Texture2D(1, 1);
-                        tmpFileData = File.ReadAllBytes(gameContent.lampPicturesPath[i]);
-                        if (tmpTex.LoadImage(tmpFileData))
-                        {
-                            mySprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
-                        }
-                    }
-                    f_lampPictures.getAt(i).GetComponent<Image>().sprite = mySprite;
-                }
-
-                //White Board
-                convertedBoardText = new string[2];
-                int nbBoardTexts = Mathf.Min(gameContent.whiteBoardWords.Length, f_boardUnremovable.Count, f_boardRemovable.Count);
-                for(int i = 0; i < nbBoardTexts; i++)
-                {
-                    ConvertBoardText(gameContent.whiteBoardWords[i]);
-                    f_boardUnremovable.getAt(i).GetComponent<TextMeshPro>().text = convertedBoardText[0];
-                    f_boardRemovable.getAt(i).GetComponent<TextMeshPro>().text = convertedBoardText[1];
-                }
-
-                #endregion
-
-                if (File.Exists("Data/Tips_LearningScape.txt"))
-                {
-                    GameTips gameTips = f_gameTips.First().GetComponent<GameTips>();
-                    gameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>> (File.ReadAllText("Data/Tips_LearningScape.txt"));
-                    if (gameTips.dictionary == null)
-                        gameTips.dictionary = new Dictionary<string, Dictionary<string, List<string>>>();
-                }
-                else
-                {
-                    Debug.LogWarning("File containting tips not found.");
-                }
-
-                Debug.Log("Data loaded");
+                Load();
             }
             else
             {
@@ -696,6 +79,7 @@ public class LoadGameContent : FSystem {
                 Directory.CreateDirectory("Data");
                 File.WriteAllText("Data/Data_LearningScape.txt", defaultGameContent.jsonFile.text);
                 File.WriteAllText("Data/Tips_LearningScape.txt", defaultGameContent.tipsJsonFile.text);
+                File.WriteAllText("Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
 
                 gameContent = new GameContent();
                 gameContent = JsonUtility.FromJson<GameContent>(defaultGameContent.jsonFile.text);
@@ -714,11 +98,710 @@ public class LoadGameContent : FSystem {
                 File.WriteAllBytes(string.Concat("Data/", defaultGameContent.puzzlePicture.name, ".png"), defaultGameContent.puzzlePicture.EncodeToPNG());
 
                 Debug.Log("Data created");
+
+                Load();
             }
 
             this.Pause = true;
         }
         instance = this;
+    }
+
+    private void Load()
+    {
+        //Load game content from the file
+        gameContent = JsonUtility.FromJson<GameContent>(File.ReadAllText("Data/Data_LearningScape.txt"));
+
+        ActionsManager.instance.Pause = !gameContent.trace;
+        Debug.Log(string.Concat("Trace: ", gameContent.trace));
+        SendStatements.instance.Pause = !gameContent.traceToLRS;
+        SendStatements.shouldPause = !gameContent.traceToLRS;
+        Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
+        foreach (GameObject go in f_puzzles)
+            GameObjectManager.setGameObjectState(go, gameContent.virtualPuzzle);
+        foreach (GameObject go in f_puzzlesFragment)
+            GameObjectManager.setGameObjectState(go, !gameContent.virtualPuzzle);
+
+        #region Story
+        StoryText st = f_storyText.First().GetComponent<StoryText>();
+        st.intro = gameContent.storyTextIntro;
+        st.transition = gameContent.storyTextransition;
+        st.end = gameContent.storyTextEnd;
+        #endregion
+
+        #region Room 1
+        int nbQueries = f_queriesR1.Count;
+        for (int i = 0; i < nbQueries; i++)
+        {
+            forGO = f_queriesR1.getAt(i);
+            switch (forGO.name)
+            {
+                case "Q1":
+                    foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Question")
+                        {
+                            tmp.text = gameContent.ballBoxQuestion;
+                            break;
+                        }
+                    }
+                    forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.ballBoxPlaceHolder;
+                    foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Description")
+                        {
+                            int nbAnswers = gameContent.ballBoxAnswer.Count > 3 ? 3 : gameContent.ballBoxAnswer.Count;
+                            int answerID;
+                            int startingID = 1;
+                            for(int j = 0; j < nbAnswers; j++)
+                            {
+                                int.TryParse(gameContent.ballBoxAnswer[j], out answerID);
+                                if (answerID != 0)
+                                {
+                                    tmp.text = gameContent.ballTexts[answerID];
+                                    startingID = j + 1;
+                                    break;
+                                }
+                            }
+                            for (int j = startingID; j < nbAnswers; j++)
+                            {
+                                int.TryParse(gameContent.ballBoxAnswer[j], out answerID);
+                                if (answerID != 0)
+                                    tmp.text = string.Concat(tmp.text, " - ", gameContent.ballTexts[answerID]);
+                            }
+                        }
+                        else if (tmp.gameObject.name == "Answer")
+                        {
+                            tmp.text = gameContent.ballBoxAnswer[0];
+                            for (int j = 1; j < gameContent.ballBoxAnswer.Count; j++)
+                                tmp.text = string.Concat(tmp.text, " - ", gameContent.ballBoxAnswer[j]);
+                        }
+                    }
+                    forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
+                    foreach (string s in gameContent.ballBoxAnswer)
+                    {
+                        forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
+                    }
+                    break;
+
+                case "Q2":
+                    foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Question")
+                        {
+                            tmp.text = gameContent.plankAndWireQuestionIAR;
+                            break;
+                        }
+                    }
+                    forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.plankAndWirePlaceHolder;
+
+                    foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Description")
+                        {
+                            tmp.text = string.Concat(gameContent.plankAndWireCorrectWords[0], " - ", gameContent.plankAndWireCorrectWords[1], " - ", gameContent.plankAndWireCorrectWords[2]);
+                        }
+                        else if (tmp.gameObject.name == "Answer")
+                        {
+                            tmp.text = gameContent.plankAndWireCorrectNumbers[0].ToString();
+                            int l = gameContent.plankAndWireCorrectNumbers.Length;
+                            for (int j = 1; j < l; j++)
+                                tmp.text = string.Concat(tmp.text, " - ", gameContent.plankAndWireCorrectNumbers[j].ToString());
+                        }
+                    }
+                    forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
+                    for (int j = 0; j < gameContent.plankAndWireCorrectNumbers.Length; j++)
+                        forGO.GetComponent<QuerySolution>().andSolutions.Add(gameContent.plankAndWireCorrectNumbers[j].ToString());
+                    break;
+
+                case "Q3":
+                    foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Question")
+                        {
+                            tmp.text = gameContent.greenFragmentsQuestion;
+                            break;
+                        }
+                    }
+                    forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.greenFragmentPlaceHolder;
+
+                    foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Answer")
+                        {
+                            tmp.text = gameContent.greenFragmentsWords[0];
+                            int l = gameContent.greenFragmentsWords.Length;
+                            for (int j = 1; j < l; j++)
+                            {
+                                tmp.text = string.Concat(tmp.text, " - ", gameContent.greenFragmentsWords[j]);
+                            }
+                        }
+                    }
+                    forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
+                    foreach (string s in gameContent.greenFragmentAnswer)
+                        forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(StringToAnswer(s)));
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        //Ball Box
+        int nbBalls = f_balls.Count;
+        Ball b = null;
+        Ball b2 = null;
+        string tmpString;
+        int nbBallSeen = 0;
+        int answer;
+        //initialise position and texts for all balls
+        List<int> idList = new List<int>();
+        for (int i = 0; i < nbBalls; i++)
+            idList.Add(i);
+        for (int i = 0; i < nbBalls; i++)
+        {
+            b = f_balls.getAt(i).GetComponent<Ball>();
+
+            //change randomly the position of the ball
+            b.id = idList[(int)Random.Range(0, idList.Count - 0.001f)];
+            idList.Remove(b.id);
+
+            if(b.number - 1 < gameContent.ballTexts.Length)
+                b.text = gameContent.ballTexts[b.number - 1];
+        }
+        //Exchange texts and numbers to set solution balls
+        for(int j = 0; j < 3; j++)
+        {
+            //If there is still unprocessed answers
+            if (gameContent.ballBoxAnswer.Count > j)
+            {
+                int.TryParse(gameContent.ballBoxAnswer[j], out answer);
+                //If the answer given was integer
+                if (answer != 0)
+                {
+                    //If the answer given is different than the default answer
+                    if(answer != j + 1)
+                    {
+                        //Look for a default solution ball (j+1 can be 1, 2 or 3) and a new solution ball (number stored in "answer")
+                        for (int i = 0; i < nbBalls; i++)
+                        {
+                            b = f_balls.getAt(i).GetComponent<Ball>();
+                            if (b.number == j + 1 || b.number == answer)
+                            {
+                                if (nbBallSeen == 1)
+                                {
+                                    nbBallSeen++;
+                                    break;
+                                }
+                                else
+                                {
+                                    b2 = b;
+                                    nbBallSeen++;
+                                }
+                            }
+                        }
+                        //If the two balls were found
+                        if (nbBallSeen == 2)
+                        {
+                            //exchange numbers and texts
+                            if (b.number == j + 1)
+                            {
+                                b.number = answer;
+                                b2.number = j + 1;
+                            }
+                            else
+                            {
+                                b.number = j + 1;
+                                b2.number = answer;
+                            }
+                            tmpString = b.text;
+                            b.text = b2.text;
+                            b2.text = tmpString;
+                        }
+                        else
+                            Debug.LogWarning(string.Concat("The answer ", j + 1, " of BallBox enigma should be between 1 and 15 included."));
+
+                        nbBallSeen = 0;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning(string.Concat("The answer ", j + 1, " of BallBox enigma should be an integer."));
+                }
+            }
+        }
+        for (int i = 0; i < nbBalls; i++)
+        {
+            b = f_balls.getAt(i).GetComponent<Ball>();
+            b.GetComponentInChildren<TextMeshPro>().text = b.number.ToString();
+        }
+
+            foreach (TextMeshPro tmp in f_ballBoxTop.First().GetComponentsInChildren<TextMeshPro>())
+        {
+            tmp.text = gameContent.ballBoxQuestion;
+        }
+
+        //Plank and Wire
+        int nbWrongWords = f_wrongWords.Count;
+        int nbCorrectWords = f_correctWords.Count;
+        for (int i = 0; i < nbWrongWords; i++)
+            f_wrongWords.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankOtherWords[i];
+        for (int i = 0; i < nbCorrectWords; i++)
+            f_correctWords.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankAndWireCorrectWords[i];
+        f_plankAndWireRule.First().GetComponent<TextMeshPro>().text = gameContent.plankAndWireQuestion;
+        int nbPlankNumbers = f_plankNumbers.Count;
+        int countCorrectNb = 0;
+        int countWrongNb = 0;
+        for (int i = 0; i < nbPlankNumbers; i++)
+        {
+            if (f_plankNumbers.getAt(i).name == "4" || f_plankNumbers.getAt(i).name == "5" || f_plankNumbers.getAt(i).name == "9")
+            {
+                f_plankNumbers.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankAndWireCorrectNumbers[countCorrectNb].ToString();
+                countCorrectNb++;
+            }
+            else
+            {
+                f_plankNumbers.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankAndWireOtherNumbers[countWrongNb].ToString();
+                countWrongNb++;
+            }
+        }
+        forGO = f_wrongWords.First().transform.parent.parent.gameObject;
+        List<float> validAngles = new List<float>();
+        #region Add valid angles to list
+        int from, to;
+        from = 0;
+        to = 4;
+        for (int i = from; i <= to; i++)
+            validAngles.Add(i);
+        validAngles.Add(52);
+        from = 147;
+        to = 161;
+        for (int i = from; i <= to; i++)
+            validAngles.Add(i);
+        from = 325;
+        to = 341;
+        for (int i = from; i <= to; i++)
+            validAngles.Add(i);
+        from = 356;
+        to = 360;
+        for (int i = from; i <= to; i++)
+            validAngles.Add(i);
+        #endregion
+        float angle = validAngles[(int)(Random.value * validAngles.Count - 0.001f)];
+        forGO.transform.Rotate(0, angle, 0);
+        foreach (Transform child in forGO.transform)
+            if (child.name != "Numbers")
+                child.Rotate(0, -angle, 0);
+        foreach (Transform child in forGO.transform.GetChild(0))
+            child.Rotate(0, 0, -angle);
+
+        //Green Dream Fragments
+        int nbDreamFragments = f_dreamFragments.Count;
+        DreamFragment tmpDF;
+        int nbGreenFragments = 0;
+        for (int i = 0; i < nbDreamFragments; i++)
+        {
+            tmpDF = f_dreamFragments.getAt(i).GetComponent<DreamFragment>();
+            if (tmpDF.type == 1)
+            {
+                tmpDF.itemName = gameContent.greenFragmentsWords[nbGreenFragments];
+                nbGreenFragments++;
+                if (nbGreenFragments > 5)
+                    break;
+            }
+        }
+
+        //Gears
+        int nbQuestionGears = 0;
+        int nbAnswerGears = 0;
+        bool answerGearFound = false;
+        foreach (Transform child in f_gears.First().transform)
+        {
+            if (child.gameObject.name.Contains("Gear"))
+            {
+                if (child.gameObject.name.Length == 5 && nbAnswerGears < 4)
+                {
+                    child.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = gameContent.gearMovableTexts[nbAnswerGears];
+                    if (gameContent.gearMovableTexts[nbAnswerGears] == gameContent.gearAnswer)
+                    {
+                        child.gameObject.tag = "RotateGear";
+                        child.gameObject.GetComponent<Gear>().isSolution = true;
+                        answerGearFound = true;
+                    }
+                    else
+                    {
+                        child.gameObject.tag = "Untagged";
+                        child.gameObject.GetComponent<Gear>().isSolution = false;
+                    }
+                    nbAnswerGears++;
+                }
+                else
+                {
+                    if (child.gameObject.name != "TransparentGear")
+                    {
+                        if (nbQuestionGears == 0)
+                            child.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = gameContent.gearTextUp;
+                        else
+                            child.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = gameContent.gearTextDown;
+                        nbQuestionGears++;
+                    }
+                }
+            }
+            else if (child.gameObject.name == "Q4")
+                child.gameObject.GetComponent<TextMeshProUGUI>().text = gameContent.gearsQuestion;
+        }
+        if (!answerGearFound)
+        {
+            int nbGears = f_gearComponent.Count;
+            Gear gear = f_gearComponent.getAt((int)Random.Range(0, nbGears - 1)).GetComponent<Gear>();
+            gear.isSolution = true;
+            gear.tag = "RotateGear";
+        }
+        #endregion
+
+        #region Room 2
+        nbQueries = f_queriesR2.Count;
+        for (int i = 0; i < nbQueries; i++)
+        {
+            forGO = f_queriesR2.getAt(i);
+            switch (forGO.name)
+            {
+                case "Q1":
+                    foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Question")
+                        {
+                            tmp.text = gameContent.glassesQuestion;
+                            break;
+                        }
+                    }
+                    forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.glassesPlaceHolder;
+
+                    foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
+                        if (tmp.gameObject.name == "Answer")
+                        {
+                            tmp.text = gameContent.glassesAnswer[0];
+                            int l = gameContent.glassesAnswer.Count;
+                            for (int j = 1; j < l; j++)
+                                tmp.text = string.Concat(tmp.text, " - ", gameContent.glassesAnswer[j]);
+                        }
+                    forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
+                    foreach (string s in gameContent.glassesAnswer)
+                        forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
+                    break;
+
+                case "Q2":
+                    foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Question")
+                        {
+                            tmp.text = gameContent.enigma6Question;
+                            break;
+                        }
+                    }
+                    forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.enigma6PlaceHolder;
+
+                    foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Answer")
+                        {
+                            tmp.text = gameContent.enigma6Answer[0];
+                            int l = gameContent.enigma6Answer.Count;
+                            for (int j = 1; j < l; j++)
+                                tmp.text = string.Concat(tmp.text, " - ", gameContent.enigma6Answer[j]);
+                        }
+                        else if (tmp.gameObject.name == "Description")
+                            tmp.text = gameContent.enigma6AnswerDescription;
+                    }
+                    forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
+                    foreach (string s in gameContent.enigma6Answer)
+                        forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
+                    break;
+
+                case "Q3":
+                    foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Question")
+                        {
+                            tmp.text = gameContent.scrollsQuestion;
+                            break;
+                        }
+                    }
+                    forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.scrollsPlaceHolder;
+
+                    foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Answer")
+                        {
+                            tmp.text = gameContent.scrollsAnswer[0];
+                            int l = gameContent.scrollsAnswer.Count;
+                            for (int j = 1; j < l; j++)
+                                tmp.text = string.Concat(tmp.text, " - ", gameContent.scrollsAnswer[j]);
+                        }
+                        else if (tmp.gameObject.name == "Description")
+                        {
+                            tmp.text = gameContent.scrollsWords[0];
+                            int l = gameContent.scrollsWords.Length;
+                            for (int j = 1; j < l; j++)
+                                tmp.text = string.Concat(tmp.text, " - ", gameContent.scrollsWords[j]);
+                        }
+                    }
+                    forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
+                    foreach (string s in gameContent.scrollsAnswer)
+                        forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
+                    break;
+
+                case "Q4":
+                    foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Question")
+                        {
+                            tmp.text = gameContent.mirrorQuestion;
+                            break;
+                        }
+                    }
+                    forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.mirrorPlaceHolder;
+
+                    foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Answer")
+                        {
+                            tmp.text = gameContent.mirrorAnswer[0];
+                            int l = gameContent.mirrorAnswer.Count;
+                            for (int j = 1; j < l; j++)
+                                tmp.text = string.Concat(tmp.text, " - ", gameContent.mirrorAnswer[j]);
+                        }
+                    }
+                    forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
+                    foreach (string s in gameContent.mirrorAnswer)
+                        forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
+                    break;
+
+                case "Q5":
+                    foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Question")
+                        {
+                            tmp.text = gameContent.enigma9Question;
+                            break;
+                        }
+                    }
+                    forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.enigma9PlaceHolder;
+
+                    foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Answer")
+                        {
+                            tmp.text = gameContent.enigma9Answer[0];
+                            int l = gameContent.enigma9Answer.Count;
+                            for (int j = 1; j < l; j++)
+                                tmp.text = string.Concat(tmp.text, " - ", gameContent.enigma9Answer[j]);
+                        }
+                    }
+                    forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
+                    foreach (string s in gameContent.enigma9Answer)
+                        forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
+                    break;
+
+                case "Q6":
+                    foreach (TextMeshProUGUI tmp in forGO.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Question")
+                        {
+                            tmp.text = gameContent.enigma10Question;
+                            break;
+                        }
+                    }
+                    forGO.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = gameContent.enigma10PlaceHolder;
+
+                    foreach (TextMeshProUGUI tmp in forGO.transform.GetChild(3).gameObject.GetComponentsInChildren<TextMeshProUGUI>())
+                    {
+                        if (tmp.gameObject.name == "Answer")
+                        {
+                            tmp.text = gameContent.enigma10Answer[0];
+                            int l = gameContent.enigma10Answer.Count;
+                            for (int j = 1; j < l; j++)
+                                tmp.text = string.Concat(tmp.text, " - ", gameContent.enigma10Answer[j]);
+                        }
+                    }
+                    forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
+                    foreach (string s in gameContent.enigma10Answer)
+                        forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        LoginManager.passwordSolution = gameContent.mdpLogin;
+
+        //Glasses
+        BagImage bi = f_bagImage.First().GetComponent<BagImage>();
+        Sprite mySprite;
+        for (int i = 0; i < 4; i++)
+        {
+            mySprite = defaultGameContent.noPictureFound;
+            if (File.Exists(gameContent.glassesPicturesPath[i]))
+            {
+                tmpTex = new Texture2D(1, 1);
+                tmpFileData = File.ReadAllBytes(gameContent.glassesPicturesPath[i]);
+                if (tmpTex.LoadImage(tmpFileData))
+                {
+                    mySprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
+                }
+            }
+            switch (i)
+            {
+                case 0:
+                    bi.image1 = mySprite;
+                    break;
+
+                case 1:
+                    bi.image2 = mySprite;
+                    break;
+
+                case 2:
+                    bi.image3 = mySprite;
+                    break;
+
+                case 3:
+                    bi.image4 = mySprite;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        bi.gameObject.GetComponent<Image>().sprite = bi.image1;
+
+        //Scrolls
+        int nbScroll = gameContent.scrollsWords.Length < f_scrollUI.Count ? gameContent.scrollsWords.Length : f_scrollUI.Count;
+        for (int i = 0; i < nbScroll; i++)
+        {
+            if (gameContent.scrollsWords[i] == string.Empty)
+                GameObjectManager.setGameObjectState(f_scrollUI.getAt(i), false);
+            else
+                f_scrollUI.getAt(i).GetComponentInChildren<TextMeshProUGUI>().text = gameContent.scrollsWords[i];
+        }
+
+        //Mirror
+        f_mirrorImage.First().GetComponent<Image>().sprite = defaultGameContent.noPictureFound;
+        if (File.Exists(gameContent.mirrorPicturePath))
+        {
+            tmpTex = new Texture2D(1, 1);
+            tmpFileData = File.ReadAllBytes(gameContent.mirrorPicturePath);
+            if (tmpTex.LoadImage(tmpFileData))
+                f_mirrorImage.First().GetComponent<Image>().sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
+        }
+
+        //Lock Room 2
+        Locker locker = f_lockRoom2.First().GetComponent<Locker>();
+        locker.wheel1Solution = (gameContent.lockRoom2Password / 100) % 10;
+        locker.wheel2Solution = (gameContent.lockRoom2Password / 10) % 10;
+        locker.wheel3Solution = gameContent.lockRoom2Password % 10;
+        f_passwordRoom2.First().GetComponentInChildren<TextMeshProUGUI>().text = (gameContent.lockRoom2Password % 1000).ToString();
+        #endregion
+
+        #region Room 3
+        int nbQuestionRoom3 = f_queriesR3.Count;
+        QuerySolution qs;
+        for (int i = 0; i < nbQuestionRoom3; i++)
+        {
+            qs = f_queriesR3.getAt(i).GetComponent<QuerySolution>();
+            qs.orSolutions = new List<string>();
+            qs.orSolutions.Add(StringToAnswer(gameContent.puzzleAnswer));
+            qs.orSolutions.Add(StringToAnswer(gameContent.enigma12Answer));
+            qs.orSolutions.Add(StringToAnswer(gameContent.lampAnswer));
+            qs.orSolutions.Add(StringToAnswer(gameContent.whiteBoardAnswer));
+        }
+
+        //Puzzles
+        Sprite puzzlePicture = defaultGameContent.noPictureFound;
+        if (gameContent.puzzle && File.Exists(gameContent.puzzlePicturePath))
+        {
+            tmpTex = new Texture2D(1, 1);
+            tmpFileData = File.ReadAllBytes(gameContent.puzzlePicturePath);
+            if (tmpTex.LoadImage(tmpFileData))
+            {
+                puzzlePicture = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
+            }
+        }
+        Rect rect;
+        if (puzzlePicture.texture.width > puzzlePicture.texture.height)
+            rect = new Rect(0, 0, 935, puzzlePicture.texture.height * 935 / puzzlePicture.texture.width);
+        else
+            rect = new Rect(0, 0, puzzlePicture.texture.width * 935 / puzzlePicture.texture.height, 935);
+
+        int nbPuzzleUI = f_puzzleUI.Count;
+        RectTransform rt = f_puzzleUI.getAt(0).GetComponent<RectTransform>();
+        Vector3 newPuzzleScale = new Vector3(rect.width * rt.localScale.x / 935, rect.width * rt.localScale.y / 935, rt.localScale.z);
+        for (int i = 0; i < nbPuzzleUI; i++)
+        {
+            rt = f_puzzleUI.getAt(i).GetComponent<RectTransform>();
+            rt.localScale = newPuzzleScale;
+            rt.GetChild(0).gameObject.GetComponent<Image>().sprite = puzzlePicture;
+        }
+
+        //Lamp
+        int nbLampPictures = f_lampPictures.Count;
+        nbLampPictures = nbLampPictures > gameContent.lampPicturesPath.Length ? gameContent.lampPicturesPath.Length : nbLampPictures;
+        for (int i = 0; i < nbLampPictures; i++)
+        {
+            mySprite = defaultGameContent.noPictureFound;
+            if (File.Exists(gameContent.lampPicturesPath[i]))
+            {
+                tmpTex = new Texture2D(1, 1);
+                tmpFileData = File.ReadAllBytes(gameContent.lampPicturesPath[i]);
+                if (tmpTex.LoadImage(tmpFileData))
+                {
+                    mySprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
+                }
+            }
+            f_lampPictures.getAt(i).GetComponent<Image>().sprite = mySprite;
+        }
+
+        //White Board
+        convertedBoardText = new string[2];
+        int nbBoardTexts = Mathf.Min(gameContent.whiteBoardWords.Length, f_boardUnremovable.Count, f_boardRemovable.Count);
+        for (int i = 0; i < nbBoardTexts; i++)
+        {
+            ConvertBoardText(gameContent.whiteBoardWords[i]);
+            f_boardUnremovable.getAt(i).GetComponent<TextMeshPro>().text = convertedBoardText[0];
+            f_boardRemovable.getAt(i).GetComponent<TextMeshPro>().text = convertedBoardText[1];
+        }
+
+        #endregion
+
+        if (File.Exists(gameContent.tipsPath))
+        {
+            GameTips gameTips = f_gameTips.First().GetComponent<GameTips>();
+            gameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(File.ReadAllText(gameContent.tipsPath));
+            if (gameTips.dictionary == null)
+                gameTips.dictionary = new Dictionary<string, Dictionary<string, List<string>>>();
+        }
+        else
+        {
+            Debug.LogWarning("File containting tips not found.");
+        }
+
+        if (File.Exists(gameContent.internalTipsPath))
+        {
+            InternalGameTips internalGameTips = f_internalGameTips.First().GetComponent<InternalGameTips>();
+            internalGameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(File.ReadAllText(gameContent.internalTipsPath));
+            if (internalGameTips.dictionary == null)
+            {
+                internalGameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalTipsJsonFile.text);
+                Debug.LogWarning("File containting internal tips empty. Default used.");
+            }
+        }
+        else
+        {
+            f_internalGameTips.First().GetComponent<InternalGameTips>().dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalTipsJsonFile.text);
+            Debug.LogWarning("File containting internal tips not found. Default used.");
+        }
+
+        Debug.Log("Data loaded");
     }
 
     private string StringToAnswer(string answer)
