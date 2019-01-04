@@ -153,12 +153,13 @@ public class DreamFragmentCollecting : FSystem {
                             break;
                     }
 
-                    if (selectedFragment.name == "Fragment_souvenir_de")
+                    if (selectedFragment.transform.parent.gameObject.tag == "chair" && selectedFragment.transform.parent.gameObject.GetComponent<IsSolution>())
                     {
                         if(f_player.First().transform.localScale.x < 0.9f)
-                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "l16"} });
+                            //if the player is crouching
+                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "l21"} });
                         else
-                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "l17" } });
+                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "l20" } });
 
                     }
                     else

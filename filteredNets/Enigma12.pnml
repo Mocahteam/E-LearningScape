@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-3454-9B75F-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-128-DC233-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma12</text>
   </name>
- <page id="g-3454-9B769-1">
-  <place id="p-3454-9B76D-2">
+ <page id="g-128-DC23C-1">
+  <place id="p-128-DC24D-2">
   <name>
-   <text>AnswersInput_Answered_104</text>
+   <text>AnswersInput_Answered_122</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1230" y="265"/>
+    <position x="1360" y="220"/>
    </graphics>
   </place>
-  <place id="p-3454-9B77B-3">
+  <place id="p-128-DC25A-3">
   <name>
-   <text>AnswersInput_Answering_104</text>
+   <text>AnswersInput_Answering_122</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -27,188 +27,188 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="980" y="265"/>
+    <position x="1110" y="220"/>
    </graphics>
   </place>
-  <transition id="t-3454-9B780-4">
+  <transition id="t-128-DC25F-4">
   <name>
-   <text>AnswersInput_Correct_104</text>
+   <text>AnswersInput_Correct_122</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1110" y="205"/>
+    <position x="1240" y="160"/>
    </graphics>
   </transition>
-  <place id="p-3454-9B784-5">
+  <place id="p-128-DC263-5">
   <name>
-   <text>E12_C_ActivationCount_121</text>
+   <text>E12_1_ActivationCount_114</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="780" y="50"/>
+    <position x="800" y="50"/>
    </graphics>
   </place>
-  <transition id="t-3454-9B787-6">
+  <transition id="t-128-DC267-6">
   <name>
-   <text>E12_C_activate_121</text>
+   <text>E12_1_activate_114</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="660" y="50"/>
+    <position x="680" y="50"/>
    </graphics>
   </transition>
-  <place id="p-3454-9B78A-7">
+  <place id="p-128-DC269-7">
   <name>
-   <text>E12_E_ActivationCount_124</text>
+   <text>E12_2_ActivationCount_115</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="770" y="120"/>
+    <position x="800" y="120"/>
    </graphics>
   </place>
-  <transition id="t-3454-9B78E-8">
+  <transition id="t-128-DC26C-8">
   <name>
-   <text>E12_E_activate_124</text>
+   <text>E12_2_activate_115</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="660" y="120"/>
+    <position x="680" y="120"/>
    </graphics>
   </transition>
-  <place id="p-3454-9B790-9">
+  <place id="p-128-DC26F-9">
   <name>
-   <text>E12_O_ActivationCount_123</text>
+   <text>E12_3_ActivationCount_116</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="770" y="190"/>
+    <position x="800" y="200"/>
    </graphics>
   </place>
-  <transition id="t-3454-9B793-10">
+  <transition id="t-128-DC272-10">
   <name>
-   <text>E12_O_activate_123</text>
+   <text>E12_3_activate_116</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="660" y="190"/>
+    <position x="680" y="200"/>
    </graphics>
   </transition>
-  <place id="p-3454-9B797-11">
+  <place id="p-128-DC275-11">
   <name>
-   <text>E12_R_ActivationCount_128</text>
+   <text>E12_4_ActivationCount_117</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="780" y="250"/>
+    <position x="800" y="260"/>
    </graphics>
   </place>
-  <transition id="t-3454-9B79B-12">
+  <transition id="t-128-DC278-12">
   <name>
-   <text>E12_R_activate_128</text>
+   <text>E12_4_activate_117</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="660" y="250"/>
+    <position x="680" y="260"/>
    </graphics>
   </transition>
-  <place id="p-3454-9B79C-13">
+  <place id="p-128-DC27A-13">
   <name>
-   <text>E12_S_ActivationCount_122</text>
+   <text>E12_5_ActivationCount_118</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="780" y="330"/>
+    <position x="800" y="340"/>
    </graphics>
   </place>
-  <transition id="t-3454-9B7A0-14">
+  <transition id="t-128-DC27E-14">
   <name>
-   <text>E12_S_activate_122</text>
+   <text>E12_5_activate_118</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="660" y="330"/>
+    <position x="680" y="340"/>
    </graphics>
   </transition>
-  <place id="p-3454-9B7A3-15">
+  <place id="p-128-DC281-15">
   <name>
-   <text>E12_U_ActivationCount_127</text>
+   <text>E12_6_ActivationCount_119</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="780" y="390"/>
+    <position x="800" y="400"/>
    </graphics>
   </place>
-  <transition id="t-3454-9B7A7-16">
+  <transition id="t-128-DC284-16">
   <name>
-   <text>E12_U_activate_127</text>
+   <text>E12_6_activate_119</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="660" y="390"/>
+    <position x="680" y="400"/>
    </graphics>
   </transition>
-  <place id="p-3454-9B7A8-17">
+  <place id="p-128-DC285-17">
   <name>
-   <text>Fragment_souvenir_6_ActivationCount_112</text>
+   <text>Fragment_souvenir_6_ActivationCount_120</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1160" y="70"/>
+    <position x="1120" y="50"/>
    </graphics>
   </place>
-  <transition id="t-3454-9B7AD-18">
+  <transition id="t-128-DC28A-18">
   <name>
-   <text>Fragment_souvenir_6_activate_112</text>
+   <text>Fragment_souvenir_6_activate_120</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1050" y="70"/>
+    <position x="1020" y="50"/>
    </graphics>
   </transition>
-  <place id="p-3454-9B7F0-19">
+  <place id="p-128-DC301-19">
   <name>
-   <text>Lamp_end_113</text>
+   <text>Lamp_end_112</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="500" y="50"/>
+    <position x="510" y="100"/>
    </graphics>
   </place>
-  <place id="p-3454-9B7F5-20">
+  <place id="p-128-DC305-20">
   <name>
-   <text>Lamp_off_114</text>
+   <text>Lamp_off_113</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -217,34 +217,34 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="350" y="220"/>
+    <position x="350" y="230"/>
    </graphics>
   </place>
-  <place id="p-3454-9B7F6-21">
+  <place id="p-128-DC307-21">
   <name>
-   <text>Lamp_on_114</text>
+   <text>Lamp_on_113</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="520" y="220"/>
+    <position x="510" y="230"/>
    </graphics>
   </place>
-  <transition id="t-3454-9B7FA-22">
+  <transition id="t-128-DC30A-22">
   <name>
-   <text>Lamp_perform_113</text>
+   <text>Lamp_perform_112</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="430" y="50"/>
+    <position x="430" y="100"/>
    </graphics>
   </transition>
-  <place id="p-3454-9B7FC-23">
+  <place id="p-128-DC30C-23">
   <name>
-   <text>Lamp_start_113</text>
+   <text>Lamp_start_112</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -253,34 +253,34 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="350" y="50"/>
+    <position x="350" y="100"/>
    </graphics>
   </place>
-  <transition id="t-3454-9B800-24">
+  <transition id="t-128-DC31F-24">
   <name>
-   <text>Lamp_turnOff_114</text>
+   <text>Lamp_turnOff_113</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="430" y="190"/>
+    <position x="430" y="200"/>
    </graphics>
   </transition>
-  <transition id="t-3454-9B801-25">
+  <transition id="t-128-DC322-25">
   <name>
-   <text>Lamp_turnOn_114</text>
+   <text>Lamp_turnOn_113</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="430" y="280"/>
+    <position x="430" y="290"/>
    </graphics>
   </transition>
-  <place id="p-3454-9B805-26">
+  <place id="p-128-DC324-26">
   <name>
-   <text>boite_off_118</text>
+   <text>boite_off_111</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -289,108 +289,108 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="50" y="50"/>
+    <position x="50" y="100"/>
    </graphics>
   </place>
-  <place id="p-3454-9B809-27">
+  <place id="p-128-DC327-27">
   <name>
-   <text>boite_on_118</text>
+   <text>boite_on_111</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="220" y="50"/>
+    <position x="220" y="100"/>
    </graphics>
   </place>
-  <transition id="t-3454-9B80B-28">
+  <transition id="t-128-DC329-28">
   <name>
-   <text>boite_turnOn_118</text>
+   <text>boite_turnOn_111</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="140" y="110"/>
+    <position x="140" y="160"/>
    </graphics>
   </transition>
-  <arc id="e-3454-9B815-29" source="p-3454-9B7A3-15" target="t-3454-9B780-4">
+  <arc id="e-128-DC33E-29" source="p-128-DC281-15" target="t-128-DC25F-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B81C-30" source="p-3454-9B77B-3" target="t-3454-9B780-4">
+  <arc id="e-128-DC342-30" source="t-128-DC30A-22" target="p-128-DC301-19">
   </arc>
-  <arc id="e-3454-9B81D-31" source="t-3454-9B780-4" target="p-3454-9B76D-2">
+  <arc id="e-128-DC343-31" source="p-128-DC30C-23" target="t-128-DC30A-22">
   </arc>
-  <arc id="e-3454-9B81E-32" source="t-3454-9B7FA-22" target="p-3454-9B7F0-19">
-  </arc>
-  <arc id="e-3454-9B81F-33" source="p-3454-9B7FC-23" target="t-3454-9B7FA-22">
-  </arc>
-  <arc id="e-3454-9B820-34" source="t-3454-9B79B-12" target="p-3454-9B797-11">
-  </arc>
-  <arc id="e-3454-9B821-35" source="p-3454-9B7F6-21" target="t-3454-9B79B-12">
+  <arc id="e-128-DC344-32" source="p-128-DC327-27" target="t-128-DC30A-22">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B822-36" source="t-3454-9B7A7-16" target="p-3454-9B7A3-15">
+  <arc id="e-128-DC345-33" source="t-128-DC329-28" target="p-128-DC327-27">
   </arc>
-  <arc id="e-3454-9B823-37" source="p-3454-9B7F6-21" target="t-3454-9B7A7-16">
+  <arc id="e-128-DC345-34" source="p-128-DC25A-3" target="t-128-DC25F-4">
+  </arc>
+  <arc id="e-128-DC347-35" source="t-128-DC25F-4" target="p-128-DC24D-2">
+  </arc>
+  <arc id="e-128-DC348-36" source="t-128-DC28A-18" target="p-128-DC285-17">
+  </arc>
+  <arc id="e-128-DC34A-37" source="t-128-DC284-16" target="p-128-DC281-15">
+  </arc>
+  <arc id="e-128-DC34B-38" source="p-128-DC307-21" target="t-128-DC284-16">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B825-38" source="t-3454-9B78E-8" target="p-3454-9B78A-7">
+  <arc id="e-128-DC34C-39" source="t-128-DC27E-14" target="p-128-DC27A-13">
   </arc>
-  <arc id="e-3454-9B827-39" source="p-3454-9B7F6-21" target="t-3454-9B78E-8">
+  <arc id="e-128-DC34D-40" source="p-128-DC27A-13" target="t-128-DC25F-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B827-40" source="p-3454-9B79C-13" target="t-3454-9B780-4">
+  <arc id="e-128-DC34E-41" source="p-128-DC307-21" target="t-128-DC27E-14">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B829-41" source="t-3454-9B793-10" target="p-3454-9B790-9">
+  <arc id="e-128-DC34E-42" source="t-128-DC278-12" target="p-128-DC275-11">
   </arc>
-  <arc id="e-3454-9B82A-42" source="p-3454-9B7F6-21" target="t-3454-9B793-10">
+  <arc id="e-128-DC34F-43" source="p-128-DC324-26" target="t-128-DC329-28">
+  </arc>
+  <arc id="e-128-DC350-44" source="p-128-DC307-21" target="t-128-DC278-12">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B82A-43" source="t-3454-9B7A0-14" target="p-3454-9B79C-13">
+  <arc id="e-128-DC351-45" source="t-128-DC272-10" target="p-128-DC26F-9">
   </arc>
-  <arc id="e-3454-9B82B-44" source="p-3454-9B809-27" target="t-3454-9B7FA-22">
+  <arc id="e-128-DC353-46" source="p-128-DC307-21" target="t-128-DC272-10">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B82C-45" source="p-3454-9B7F6-21" target="t-3454-9B7A0-14">
+  <arc id="e-128-DC354-47" source="t-128-DC26C-8" target="p-128-DC269-7">
+  </arc>
+  <arc id="e-128-DC387-48" source="p-128-DC307-21" target="t-128-DC26C-8">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B853-46" source="t-3454-9B787-6" target="p-3454-9B784-5">
+  <arc id="e-128-DC388-49" source="t-128-DC267-6" target="p-128-DC263-5">
   </arc>
-  <arc id="e-3454-9B854-47" source="p-3454-9B7F6-21" target="t-3454-9B787-6">
+  <arc id="e-128-DC389-50" source="p-128-DC307-21" target="t-128-DC267-6">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B855-48" source="t-3454-9B80B-28" target="p-3454-9B809-27">
-  </arc>
-  <arc id="e-3454-9B856-49" source="p-3454-9B805-26" target="t-3454-9B80B-28">
-  </arc>
-  <arc id="e-3454-9B857-50" source="t-3454-9B800-24" target="p-3454-9B7F5-20">
-  </arc>
-  <arc id="e-3454-9B858-51" source="p-3454-9B797-11" target="t-3454-9B780-4">
+  <arc id="e-128-DC38A-51" source="p-128-DC275-11" target="t-128-DC25F-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B859-52" source="t-3454-9B801-25" target="p-3454-9B7F6-21">
+  <arc id="e-128-DC38B-52" source="t-128-DC31F-24" target="p-128-DC305-20">
   </arc>
-  <arc id="e-3454-9B85A-53" source="p-3454-9B7F5-20" target="t-3454-9B801-25">
+  <arc id="e-128-DC38C-53" source="t-128-DC322-25" target="p-128-DC307-21">
   </arc>
-  <arc id="e-3454-9B85B-54" source="t-3454-9B7AD-18" target="p-3454-9B7A8-17">
+  <arc id="e-128-DC38D-54" source="p-128-DC305-20" target="t-128-DC322-25">
   </arc>
-  <arc id="e-3454-9B85B-55" source="p-3454-9B790-9" target="t-3454-9B780-4">
+  <arc id="e-128-DC39D-55" source="p-128-DC26F-9" target="t-128-DC25F-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B85E-56" source="p-3454-9B78A-7" target="t-3454-9B780-4">
+  <arc id="e-128-DC39E-56" source="p-128-DC269-7" target="t-128-DC25F-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B85F-57" source="p-3454-9B784-5" target="t-3454-9B780-4">
+  <arc id="e-128-DC39F-57" source="p-128-DC263-5" target="t-128-DC25F-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B860-58" source="p-3454-9B7A8-17" target="t-3454-9B780-4">
+  <arc id="e-128-DC3A0-58" source="p-128-DC285-17" target="t-128-DC25F-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3454-9B861-59" source="p-3454-9B7F6-21" target="t-3454-9B800-24">
+  <arc id="e-128-DC3A0-59" source="p-128-DC307-21" target="t-128-DC31F-24">
   </arc>
-  <arc id="e-3454-9B862-60" source="p-3454-9B7F0-19" target="t-3454-9B801-25">
+  <arc id="e-128-DC3A1-60" source="p-128-DC301-19" target="t-128-DC322-25">
    <type value="test"/>
   </arc>
  </page>

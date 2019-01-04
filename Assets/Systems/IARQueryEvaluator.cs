@@ -167,6 +167,13 @@ public class IARQueryEvaluator : FSystem {
                 else if (answer == StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer))
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct14", performedBy = "player" });
             }
+            else if(query.tag == "Q-R2" && query.name == "Q1")
+            {
+                if(isSelected("Glasses1") && isSelected("Glasses2"))
+                    GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });
+                else
+                    GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = "orCorrect", performedBy = "player" });
+            }
             else
                 GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });
 

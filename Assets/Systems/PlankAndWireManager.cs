@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.PointerManager;
-using FYFY_plugins.Monitoring;
 using System.Collections.Generic;
 using TMPro;
-using FYFY_plugins.Monitoring;
 
 public class PlankAndWireManager : FSystem {
     

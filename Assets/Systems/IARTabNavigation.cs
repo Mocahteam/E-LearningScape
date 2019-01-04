@@ -12,6 +12,7 @@ public class IARTabNavigation : FSystem {
     private Family f_fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)));
     private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
+    private Family f_HUD_H = FamilyManager.getFamily(new AnyOfTags("HUD_H"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
 
     private Sprite selectedTabSprite;
@@ -53,6 +54,7 @@ public class IARTabNavigation : FSystem {
     protected override void onPause(int currentFrame)
     {
         GameObjectManager.setGameObjectState(f_HUD_A.First(), false); // hide HUD "A"
+        GameObjectManager.setGameObjectState(f_HUD_H.First(), false); // hide HUD "H"
     }
 
     // Use this to update member variables when system resume.
@@ -61,6 +63,7 @@ public class IARTabNavigation : FSystem {
     {
         if (openedAtLeastOnce)
             GameObjectManager.setGameObjectState(f_HUD_A.First(), true); // display HUD "A"
+            GameObjectManager.setGameObjectState(f_HUD_H.First(), true); // display HUD "H"
     }
 
     // Use to process your families.
@@ -91,6 +94,7 @@ public class IARTabNavigation : FSystem {
         GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "activated", objectType = "menu", objectName = iar.name });
         openedAtLeastOnce = true;
         GameObjectManager.setGameObjectState(f_HUD_A.First(), false); // hide HUD "A"
+        GameObjectManager.setGameObjectState(f_HUD_H.First(), false); // hide HUD "H"
         GameObjectManager.setGameObjectState(iar, true); // open IAR
         SwitchTab(f_tabs.getAt(tabId)); // switch to the first tab
         systemsStates.Clear();
@@ -131,6 +135,8 @@ public class IARTabNavigation : FSystem {
         LampManager.instance.Pause = backLampManagerState;
         // display HUD "A"
         GameObjectManager.setGameObjectState(f_HUD_A.First(), true);
+        // display HUD "H"
+        GameObjectManager.setGameObjectState(f_HUD_H.First(), true);
     }
 
     private void SwitchTab(GameObject newSelectedTab)

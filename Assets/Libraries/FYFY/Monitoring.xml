@@ -182,6 +182,18 @@
             <param name="label">The label of the transition to find.</param>
             <return> If a transition with appropriate label exists, returns this transition and links. Returns null otherwise. </return>
         </member>
+        <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.OnBeforeSerialize">
+            <summary>
+            This fonction is called by Unity right before it serializes data from every component
+            It has to be implemented because ComponentMonitoring inherits from the interface ISerializationCallbackReceiver
+            </summary>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.OnAfterDeserialize">
+            <summary>
+            This fonction is called by Unity right after it serializes data from every component
+            We set the ComponentMonitoring to ready when it is done
+            </summary>
+        </member>
         <member name="P:FYFY_plugins.Monitoring.ComponentMonitoring.PetriNet">
             <summary> PetriNet getter and setter. Set the PetriNet implies reset transitionLinks. </summary>
         </member>

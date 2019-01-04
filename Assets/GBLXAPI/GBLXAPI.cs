@@ -95,11 +95,11 @@ namespace DIG.GBLXAPI {
 
 		// ------------------------------------------------------------------------
 		// ------------------------------------------------------------------------
-		public void init(string lrsURL, string lrsUser, string lrsPassword, string standardsConfigDefault, string standardsConfigUser, int queueDepth = 1000){
+		public void init(List<LRSAddress> addresses, string standardsConfigDefault, string standardsConfigUser, int queueDepth = 1000){
 
 			// lrs init
 			this.lrsEndpoint = this.gameObject.AddComponent<RemoteLRSAsync>();
-			this.lrsEndpoint.initLRS(lrsURL, lrsUser, lrsPassword);
+			this.lrsEndpoint.initLRS(addresses);
 
 			// queue init
 			this.gblQueue = new RingBuffer<QueuedStatement>(queueDepth);

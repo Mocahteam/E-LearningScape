@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-3A04-3D0C3-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-4098-67C48-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma14</text>
   </name>
- <page id="g-3A04-3D0CD-1">
-  <place id="p-3A04-3D0D1-2">
+ <page id="g-4098-67C50-1">
+  <place id="p-4098-67C55-2">
   <name>
-   <text>AnswersInput_Answered_106</text>
+   <text>AnswersInput_Answered_142</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1110" y="400"/>
+    <position x="1380" y="440"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D0DF-3">
+  <place id="p-4098-67C62-3">
   <name>
-   <text>AnswersInput_Answering_106</text>
+   <text>AnswersInput_Answering_142</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -27,34 +27,287 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="860" y="400"/>
+    <position x="1120" y="440"/>
    </graphics>
   </place>
-  <transition id="t-3A04-3D0E3-4">
+  <transition id="t-4098-67C67-4">
   <name>
-   <text>AnswersInput_Correct_106</text>
+   <text>AnswersInput_Correct_142</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="990" y="340"/>
+    <position x="1260" y="380"/>
    </graphics>
   </transition>
-  <transition id="t-3A04-3D0E8-5">
+  <place id="p-4098-67C6B-5">
   <name>
-   <text>AnswersInput_Wrong_106</text>
+   <text>BoardRemovable_end_129</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="990" y="460"/>
+    <position x="920" y="50"/>
+   </graphics>
+  </place>
+  <place id="p-4098-67C6D-6">
+  <name>
+   <text>BoardRemovable_end_130</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="920" y="120"/>
+   </graphics>
+  </place>
+  <place id="p-4098-67C70-7">
+  <name>
+   <text>BoardRemovable_end_131</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="920" y="190"/>
+   </graphics>
+  </place>
+  <place id="p-4098-67C74-8">
+  <name>
+   <text>BoardRemovable_end_132</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="920" y="260"/>
+   </graphics>
+  </place>
+  <place id="p-4098-67C76-9">
+  <name>
+   <text>BoardRemovable_end_133</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="920" y="330"/>
+   </graphics>
+  </place>
+  <place id="p-4098-67C7A-10">
+  <name>
+   <text>BoardRemovable_end_134</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="920" y="400"/>
+   </graphics>
+  </place>
+  <place id="p-4098-67C7D-11">
+  <name>
+   <text>BoardRemovable_end_135</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="920" y="470"/>
+   </graphics>
+  </place>
+  <place id="p-4098-67C80-12">
+  <name>
+   <text>BoardRemovable_end_136</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="920" y="540"/>
+   </graphics>
+  </place>
+  <place id="p-4098-67C82-13">
+  <name>
+   <text>BoardRemovable_end_137</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="920" y="620"/>
+   </graphics>
+  </place>
+  <place id="p-4098-67C86-14">
+  <name>
+   <text>BoardRemovable_end_138</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="920" y="690"/>
+   </graphics>
+  </place>
+  <place id="p-4098-67C89-15">
+  <name>
+   <text>BoardRemovable_end_139</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="920" y="760"/>
+   </graphics>
+  </place>
+  <place id="p-4098-67C8B-16">
+  <name>
+   <text>BoardRemovable_end_140</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="920" y="830"/>
+   </graphics>
+  </place>
+  <transition id="t-4098-67C8E-17">
+  <name>
+   <text>BoardRemovable_perform_129</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="840" y="50"/>
    </graphics>
   </transition>
-  <place id="p-3A04-3D0EC-6">
+  <transition id="t-4098-67C92-18">
   <name>
-   <text>Board_off_125</text>
+   <text>BoardRemovable_perform_130</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="840" y="120"/>
+   </graphics>
+  </transition>
+  <transition id="t-4098-67CCF-19">
+  <name>
+   <text>BoardRemovable_perform_131</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="840" y="190"/>
+   </graphics>
+  </transition>
+  <transition id="t-4098-67CD4-20">
+  <name>
+   <text>BoardRemovable_perform_132</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="840" y="260"/>
+   </graphics>
+  </transition>
+  <transition id="t-4098-67CD6-21">
+  <name>
+   <text>BoardRemovable_perform_133</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="840" y="330"/>
+   </graphics>
+  </transition>
+  <transition id="t-4098-67CDA-22">
+  <name>
+   <text>BoardRemovable_perform_134</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="840" y="400"/>
+   </graphics>
+  </transition>
+  <transition id="t-4098-67CDD-23">
+  <name>
+   <text>BoardRemovable_perform_135</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="840" y="470"/>
+   </graphics>
+  </transition>
+  <transition id="t-4098-67CE1-24">
+  <name>
+   <text>BoardRemovable_perform_136</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="840" y="540"/>
+   </graphics>
+  </transition>
+  <transition id="t-4098-67CE4-25">
+  <name>
+   <text>BoardRemovable_perform_137</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="840" y="620"/>
+   </graphics>
+  </transition>
+  <transition id="t-4098-67CE6-26">
+  <name>
+   <text>BoardRemovable_perform_138</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="840" y="690"/>
+   </graphics>
+  </transition>
+  <transition id="t-4098-67CEA-27">
+  <name>
+   <text>BoardRemovable_perform_139</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="840" y="760"/>
+   </graphics>
+  </transition>
+  <transition id="t-4098-67CED-28">
+  <name>
+   <text>BoardRemovable_perform_140</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="840" y="830"/>
+   </graphics>
+  </transition>
+  <place id="p-4098-67CF1-29">
+  <name>
+   <text>BoardRemovable_start_129</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -63,45 +316,12 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="50" y="160"/>
+    <position x="760" y="50"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D0F1-7">
+  <place id="p-4098-67CF5-30">
   <name>
-   <text>Board_on_125</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="220" y="160"/>
-   </graphics>
-  </place>
-  <transition id="t-3A04-3D0F3-8">
-  <name>
-   <text>Board_turnOff_125</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="140" y="120"/>
-   </graphics>
-  </transition>
-  <transition id="t-3A04-3D0F6-9">
-  <name>
-   <text>Board_turnOn_125</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="140" y="220"/>
-   </graphics>
-  </transition>
-  <place id="p-3A04-3D0F8-10">
-  <name>
-   <text>Eraser_off_126</text>
+   <text>BoardRemovable_start_130</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -110,309 +330,12 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="180" y="410"/>
+    <position x="760" y="120"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D0FB-11">
+  <place id="p-4098-67CF7-31">
   <name>
-   <text>Eraser_on_126</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="350" y="410"/>
-   </graphics>
-  </place>
-  <transition id="t-3A04-3D0FD-12">
-  <name>
-   <text>Eraser_turnOff_126</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="260" y="380"/>
-   </graphics>
-  </transition>
-  <transition id="t-3A04-3D100-13">
-  <name>
-   <text>Eraser_turnOn_126</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="260" y="470"/>
-   </graphics>
-  </transition>
-  <place id="p-3A04-3D104-14">
-  <name>
-   <text>TextMeshPro_end_129</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="650" y="50"/>
-   </graphics>
-  </place>
-  <place id="p-3A04-3D105-15">
-  <name>
-   <text>TextMeshPro_end_130</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="660" y="120"/>
-   </graphics>
-  </place>
-  <place id="p-3A04-3D109-16">
-  <name>
-   <text>TextMeshPro_end_132</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="660" y="180"/>
-   </graphics>
-  </place>
-  <place id="p-3A04-3D10C-17">
-  <name>
-   <text>TextMeshPro_end_140</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="650" y="240"/>
-   </graphics>
-  </place>
-  <place id="p-3A04-3D10E-18">
-  <name>
-   <text>TextMeshPro_end_141</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="650" y="310"/>
-   </graphics>
-  </place>
-  <place id="p-3A04-3D17B-19">
-  <name>
-   <text>TextMeshPro_end_142</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="660" y="380"/>
-   </graphics>
-  </place>
-  <place id="p-3A04-3D184-20">
-  <name>
-   <text>TextMeshPro_end_143</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="660" y="440"/>
-   </graphics>
-  </place>
-  <place id="p-3A04-3D197-21">
-  <name>
-   <text>TextMeshPro_end_144</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="650" y="500"/>
-   </graphics>
-  </place>
-  <place id="p-3A04-3D19B-22">
-  <name>
-   <text>TextMeshPro_end_145</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="650" y="570"/>
-   </graphics>
-  </place>
-  <place id="p-3A04-3D1A0-23">
-  <name>
-   <text>TextMeshPro_end_146</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="660" y="640"/>
-   </graphics>
-  </place>
-  <place id="p-3A04-3D1A3-24">
-  <name>
-   <text>TextMeshPro_end_147</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="660" y="700"/>
-   </graphics>
-  </place>
-  <place id="p-3A04-3D1B1-25">
-  <name>
-   <text>TextMeshPro_end_148</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="650" y="760"/>
-   </graphics>
-  </place>
-  <transition id="t-3A04-3D1B6-26">
-  <name>
-   <text>TextMeshPro_perform_129</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="580" y="50"/>
-   </graphics>
-  </transition>
-  <transition id="t-3A04-3D1BA-27">
-  <name>
-   <text>TextMeshPro_perform_130</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="580" y="120"/>
-   </graphics>
-  </transition>
-  <transition id="t-3A04-3D1C2-28">
-  <name>
-   <text>TextMeshPro_perform_132</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="580" y="180"/>
-   </graphics>
-  </transition>
-  <transition id="t-3A04-3D1C8-29">
-  <name>
-   <text>TextMeshPro_perform_140</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="580" y="240"/>
-   </graphics>
-  </transition>
-  <transition id="t-3A04-3D1CE-30">
-  <name>
-   <text>TextMeshPro_perform_141</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="580" y="310"/>
-   </graphics>
-  </transition>
-  <transition id="t-3A04-3D1D0-31">
-  <name>
-   <text>TextMeshPro_perform_142</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="580" y="380"/>
-   </graphics>
-  </transition>
-  <transition id="t-3A04-3D1D4-32">
-  <name>
-   <text>TextMeshPro_perform_143</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="580" y="440"/>
-   </graphics>
-  </transition>
-  <transition id="t-3A04-3D1D7-33">
-  <name>
-   <text>TextMeshPro_perform_144</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="580" y="500"/>
-   </graphics>
-  </transition>
-  <transition id="t-3A04-3D1DB-34">
-  <name>
-   <text>TextMeshPro_perform_145</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="580" y="570"/>
-   </graphics>
-  </transition>
-  <transition id="t-3A04-3D1DD-35">
-  <name>
-   <text>TextMeshPro_perform_146</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="580" y="640"/>
-   </graphics>
-  </transition>
-  <transition id="t-3A04-3D1E1-36">
-  <name>
-   <text>TextMeshPro_perform_147</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="580" y="700"/>
-   </graphics>
-  </transition>
-  <transition id="t-3A04-3D20C-37">
-  <name>
-   <text>TextMeshPro_perform_148</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="580" y="760"/>
-   </graphics>
-  </transition>
-  <place id="p-3A04-3D211-38">
-  <name>
-   <text>TextMeshPro_start_129</text>
+   <text>BoardRemovable_start_131</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -421,12 +344,12 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="500" y="50"/>
+    <position x="760" y="190"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D214-39">
+  <place id="p-4098-67CFB-32">
   <name>
-   <text>TextMeshPro_start_130</text>
+   <text>BoardRemovable_start_132</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -435,12 +358,12 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="500" y="120"/>
+    <position x="760" y="260"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D228-40">
+  <place id="p-4098-67CFE-33">
   <name>
-   <text>TextMeshPro_start_132</text>
+   <text>BoardRemovable_start_133</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -449,12 +372,12 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="500" y="180"/>
+    <position x="760" y="330"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D22C-41">
+  <place id="p-4098-67D02-34">
   <name>
-   <text>TextMeshPro_start_140</text>
+   <text>BoardRemovable_start_134</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -463,12 +386,12 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="500" y="240"/>
+    <position x="760" y="400"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D22E-42">
+  <place id="p-4098-67D06-35">
   <name>
-   <text>TextMeshPro_start_141</text>
+   <text>BoardRemovable_start_135</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -477,12 +400,12 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="500" y="310"/>
+    <position x="760" y="470"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D232-43">
+  <place id="p-4098-67D2D-36">
   <name>
-   <text>TextMeshPro_start_142</text>
+   <text>BoardRemovable_start_136</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -491,12 +414,12 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="500" y="380"/>
+    <position x="760" y="540"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D235-44">
+  <place id="p-4098-67D31-37">
   <name>
-   <text>TextMeshPro_start_143</text>
+   <text>BoardRemovable_start_137</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -505,12 +428,12 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="500" y="440"/>
+    <position x="760" y="620"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D239-45">
+  <place id="p-4098-67D34-38">
   <name>
-   <text>TextMeshPro_start_144</text>
+   <text>BoardRemovable_start_138</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -519,12 +442,12 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="500" y="500"/>
+    <position x="760" y="690"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D23B-46">
+  <place id="p-4098-67D38-39">
   <name>
-   <text>TextMeshPro_start_145</text>
+   <text>BoardRemovable_start_139</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -533,12 +456,12 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="500" y="570"/>
+    <position x="760" y="760"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D23F-47">
+  <place id="p-4098-67D3C-40">
   <name>
-   <text>TextMeshPro_start_146</text>
+   <text>BoardRemovable_start_140</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -547,12 +470,12 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="500" y="640"/>
+    <position x="760" y="830"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D242-48">
+  <place id="p-4098-67D3E-41">
   <name>
-   <text>TextMeshPro_start_147</text>
+   <text>Board_off_127</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -561,12 +484,56 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="500" y="700"/>
+    <position x="50" y="320"/>
    </graphics>
   </place>
-  <place id="p-3A04-3D246-49">
+  <place id="p-4098-67D41-42">
   <name>
-   <text>TextMeshPro_start_148</text>
+   <text>Board_on_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="320"/>
+   </graphics>
+  </place>
+  <transition id="t-4098-67D43-43">
+  <name>
+   <text>Board_turnOff_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="130" y="280"/>
+   </graphics>
+  </transition>
+  <transition id="t-4098-67D46-44">
+  <name>
+   <text>Board_turnOn_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="130" y="380"/>
+   </graphics>
+  </transition>
+  <place id="p-4098-67D4B-45">
+  <name>
+   <text>Eraser_ActivationCount_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="520" y="440"/>
+   </graphics>
+  </place>
+  <place id="p-4098-67D4E-46">
+  <name>
+   <text>Eraser_off_128</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -575,156 +542,188 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="500" y="760"/>
+    <position x="360" y="320"/>
    </graphics>
   </place>
-  <arc id="e-3A04-3D24D-50" source="p-3A04-3D1B1-25" target="t-3A04-3D0E3-4">
+  <place id="p-4098-67D52-47">
+  <name>
+   <text>Eraser_on_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="520" y="320"/>
+   </graphics>
+  </place>
+  <transition id="t-4098-67D55-48">
+  <name>
+   <text>Eraser_turnOff_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="440" y="300"/>
+   </graphics>
+  </transition>
+  <transition id="t-4098-67D58-49">
+  <name>
+   <text>Eraser_turnOn_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="440" y="380"/>
+   </graphics>
+  </transition>
+  <arc id="e-4098-67D5F-50" source="p-4098-67C8B-16" target="t-4098-67C67-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D251-51" source="p-3A04-3D109-16" target="t-3A04-3D0E3-4">
+  <arc id="e-4098-67D63-51" source="p-4098-67C70-7" target="t-4098-67C67-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D254-52" source="p-3A04-3D105-15" target="t-3A04-3D0E3-4">
+  <arc id="e-4098-67D64-52" source="p-4098-67C6D-6" target="t-4098-67C67-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D255-53" source="p-3A04-3D104-14" target="t-3A04-3D0E3-4">
+  <arc id="e-4098-67D75-53" source="p-4098-67C6B-5" target="t-4098-67C67-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D267-54" source="t-3A04-3D0F6-9" target="p-3A04-3D0F1-7">
+  <arc id="e-4098-67D76-54" source="t-4098-67D55-48" target="p-4098-67D4E-46">
   </arc>
-  <arc id="e-3A04-3D268-55" source="p-3A04-3D0EC-6" target="t-3A04-3D0F6-9">
+  <arc id="e-4098-67D77-55" source="t-4098-67D58-49" target="p-4098-67D52-47">
   </arc>
-  <arc id="e-3A04-3D269-56" source="p-3A04-3D0F1-7" target="t-3A04-3D0F3-8">
+  <arc id="e-4098-67D7A-56" source="p-4098-67D4E-46" target="t-4098-67D58-49">
   </arc>
-  <arc id="e-3A04-3D26A-57" source="t-3A04-3D0FD-12" target="p-3A04-3D0F8-10">
+  <arc id="e-4098-67D7A-57" source="p-4098-67D52-47" target="t-4098-67D55-48">
   </arc>
-  <arc id="e-3A04-3D26B-58" source="t-3A04-3D100-13" target="p-3A04-3D0FB-11">
+  <arc id="e-4098-67D7B-58" source="p-4098-67D3E-41" target="t-4098-67D46-44">
   </arc>
-  <arc id="e-3A04-3D26C-59" source="t-3A04-3D20C-37" target="p-3A04-3D1B1-25">
+  <arc id="e-4098-67D7D-59" source="p-4098-67D41-42" target="t-4098-67D43-43">
   </arc>
-  <arc id="e-3A04-3D26D-60" source="p-3A04-3D246-49" target="t-3A04-3D20C-37">
+  <arc id="e-4098-67D7D-60" source="t-4098-67D58-49" target="p-4098-67D4B-45">
   </arc>
-  <arc id="e-3A04-3D26F-61" source="p-3A04-3D1A3-24" target="t-3A04-3D0E3-4">
+  <arc id="e-4098-67D7E-61" source="p-4098-67C89-15" target="t-4098-67C67-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D272-62" source="p-3A04-3D0FB-11" target="t-3A04-3D20C-37">
+  <arc id="e-4098-67D80-62" source="p-4098-67C62-3" target="t-4098-67C67-4">
+  </arc>
+  <arc id="e-4098-67D80-63" source="t-4098-67C67-4" target="p-4098-67C55-2">
+  </arc>
+  <arc id="e-4098-67D81-64" source="t-4098-67CED-28" target="p-4098-67C8B-16">
+  </arc>
+  <arc id="e-4098-67D84-65" source="p-4098-67D3C-40" target="t-4098-67CED-28">
+  </arc>
+  <arc id="e-4098-67D85-66" source="p-4098-67D4B-45" target="t-4098-67CED-28">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D273-63" source="t-3A04-3D1E1-36" target="p-3A04-3D1A3-24">
+  <arc id="e-4098-67D86-67" source="t-4098-67CEA-27" target="p-4098-67C89-15">
   </arc>
-  <arc id="e-3A04-3D274-64" source="p-3A04-3D242-48" target="t-3A04-3D1E1-36">
+  <arc id="e-4098-67D88-68" source="p-4098-67D38-39" target="t-4098-67CEA-27">
   </arc>
-  <arc id="e-3A04-3D275-65" source="p-3A04-3D0FB-11" target="t-3A04-3D1E1-36">
+  <arc id="e-4098-67D89-69" source="p-4098-67D4B-45" target="t-4098-67CEA-27">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D276-66" source="t-3A04-3D1DD-35" target="p-3A04-3D1A0-23">
-  </arc>
-  <arc id="e-3A04-3D278-67" source="p-3A04-3D23F-47" target="t-3A04-3D1DD-35">
-  </arc>
-  <arc id="e-3A04-3D279-68" source="p-3A04-3D0FB-11" target="t-3A04-3D1DD-35">
+  <arc id="e-4098-67D8A-70" source="p-4098-67D41-42" target="t-4098-67D55-48">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D27A-69" source="t-3A04-3D1DB-34" target="p-3A04-3D19B-22">
+  <arc id="e-4098-67D8B-71" source="t-4098-67CE6-26" target="p-4098-67C86-14">
   </arc>
-  <arc id="e-3A04-3D27B-70" source="p-3A04-3D0F8-10" target="t-3A04-3D100-13">
-  </arc>
-  <arc id="e-3A04-3D27E-71" source="p-3A04-3D23B-46" target="t-3A04-3D1DB-34">
-  </arc>
-  <arc id="e-3A04-3D27F-72" source="p-3A04-3D1A0-23" target="t-3A04-3D0E3-4">
+  <arc id="e-4098-67D8C-72" source="p-4098-67C86-14" target="t-4098-67C67-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D280-73" source="p-3A04-3D0FB-11" target="t-3A04-3D1DB-34">
+  <arc id="e-4098-67D8D-73" source="p-4098-67D34-38" target="t-4098-67CE6-26">
+  </arc>
+  <arc id="e-4098-67D8F-74" source="p-4098-67D4B-45" target="t-4098-67CE6-26">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D281-74" source="t-3A04-3D1D7-33" target="p-3A04-3D197-21">
+  <arc id="e-4098-67D91-75" source="t-4098-67CE4-25" target="p-4098-67C82-13">
   </arc>
-  <arc id="e-3A04-3D282-75" source="p-3A04-3D239-45" target="t-3A04-3D1D7-33">
+  <arc id="e-4098-67D92-76" source="p-4098-67D31-37" target="t-4098-67CE4-25">
   </arc>
-  <arc id="e-3A04-3D283-76" source="p-3A04-3D0FB-11" target="t-3A04-3D1D7-33">
+  <arc id="e-4098-67D93-77" source="p-4098-67D4B-45" target="t-4098-67CE4-25">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D284-77" source="t-3A04-3D1D4-32" target="p-3A04-3D184-20">
+  <arc id="e-4098-67D94-78" source="t-4098-67CE1-24" target="p-4098-67C80-12">
   </arc>
-  <arc id="e-3A04-3D285-78" source="p-3A04-3D235-44" target="t-3A04-3D1D4-32">
+  <arc id="e-4098-67D95-79" source="p-4098-67D2D-36" target="t-4098-67CE1-24">
   </arc>
-  <arc id="e-3A04-3D287-79" source="p-3A04-3D0FB-11" target="t-3A04-3D1D4-32">
+  <arc id="e-4098-67D96-80" source="p-4098-67D4B-45" target="t-4098-67CE1-24">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D289-80" source="t-3A04-3D1D0-31" target="p-3A04-3D17B-19">
+  <arc id="e-4098-67D97-81" source="t-4098-67CDD-23" target="p-4098-67C7D-11">
   </arc>
-  <arc id="e-3A04-3D28A-81" source="p-3A04-3D232-43" target="t-3A04-3D1D0-31">
-  </arc>
-  <arc id="e-3A04-3D28B-82" source="p-3A04-3D0FB-11" target="t-3A04-3D0FD-12">
-  </arc>
-  <arc id="e-3A04-3D28C-83" source="p-3A04-3D19B-22" target="t-3A04-3D0E3-4">
+  <arc id="e-4098-67D98-82" source="p-4098-67D41-42" target="t-4098-67D58-49">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D28E-84" source="p-3A04-3D0FB-11" target="t-3A04-3D1D0-31">
+  <arc id="e-4098-67D99-83" source="p-4098-67C82-13" target="t-4098-67C67-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D28F-85" source="t-3A04-3D1CE-30" target="p-3A04-3D10E-18">
+  <arc id="e-4098-67D9C-84" source="p-4098-67D06-35" target="t-4098-67CDD-23">
   </arc>
-  <arc id="e-3A04-3D290-86" source="p-3A04-3D22E-42" target="t-3A04-3D1CE-30">
-  </arc>
-  <arc id="e-3A04-3D291-87" source="p-3A04-3D0FB-11" target="t-3A04-3D1CE-30">
+  <arc id="e-4098-67D9D-85" source="p-4098-67D4B-45" target="t-4098-67CDD-23">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D293-88" source="t-3A04-3D1C8-29" target="p-3A04-3D10C-17">
+  <arc id="e-4098-67D9E-86" source="t-4098-67CDA-22" target="p-4098-67C7A-10">
   </arc>
-  <arc id="e-3A04-3D295-89" source="p-3A04-3D22C-41" target="t-3A04-3D1C8-29">
+  <arc id="e-4098-67D9F-87" source="p-4098-67D02-34" target="t-4098-67CDA-22">
   </arc>
-  <arc id="e-3A04-3D296-90" source="p-3A04-3D0FB-11" target="t-3A04-3D1C8-29">
+  <arc id="e-4098-67DA1-88" source="p-4098-67D4B-45" target="t-4098-67CDA-22">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D297-91" source="t-3A04-3D1C2-28" target="p-3A04-3D109-16">
+  <arc id="e-4098-67DA2-89" source="t-4098-67CD6-21" target="p-4098-67C76-9">
   </arc>
-  <arc id="e-3A04-3D299-92" source="p-3A04-3D228-40" target="t-3A04-3D1C2-28">
+  <arc id="e-4098-67DA3-90" source="p-4098-67CFE-33" target="t-4098-67CD6-21">
   </arc>
-  <arc id="e-3A04-3D29A-93" source="p-3A04-3D0FB-11" target="t-3A04-3D1C2-28">
+  <arc id="e-4098-67DA4-91" source="p-4098-67D4B-45" target="t-4098-67CD6-21">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D29B-94" source="p-3A04-3D197-21" target="t-3A04-3D0E3-4">
+  <arc id="e-4098-67DA5-92" source="t-4098-67CD4-20" target="p-4098-67C74-8">
+  </arc>
+  <arc id="e-4098-67DA7-93" source="p-4098-67CFB-32" target="t-4098-67CD4-20">
+  </arc>
+  <arc id="e-4098-67DA9-94" source="p-4098-67C80-12" target="t-4098-67C67-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D29C-95" source="p-3A04-3D0F1-7" target="t-3A04-3D0FD-12">
+  <arc id="e-4098-67DAA-95" source="t-4098-67D43-43" target="p-4098-67D3E-41">
+  </arc>
+  <arc id="e-4098-67DCC-96" source="p-4098-67D4B-45" target="t-4098-67CD4-20">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D29D-96" source="t-3A04-3D1BA-27" target="p-3A04-3D105-15">
+  <arc id="e-4098-67DCE-97" source="t-4098-67CCF-19" target="p-4098-67C70-7">
   </arc>
-  <arc id="e-3A04-3D2BF-97" source="p-3A04-3D214-39" target="t-3A04-3D1BA-27">
+  <arc id="e-4098-67DCF-98" source="p-4098-67CF7-31" target="t-4098-67CCF-19">
   </arc>
-  <arc id="e-3A04-3D2C2-98" source="p-3A04-3D0FB-11" target="t-3A04-3D1BA-27">
+  <arc id="e-4098-67DD0-99" source="p-4098-67D4B-45" target="t-4098-67CCF-19">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D2C3-99" source="t-3A04-3D1B6-26" target="p-3A04-3D104-14">
+  <arc id="e-4098-67DD1-100" source="t-4098-67C92-18" target="p-4098-67C6D-6">
   </arc>
-  <arc id="e-3A04-3D2C5-100" source="p-3A04-3D211-38" target="t-3A04-3D1B6-26">
+  <arc id="e-4098-67DD3-101" source="p-4098-67CF5-30" target="t-4098-67C92-18">
   </arc>
-  <arc id="e-3A04-3D2C6-101" source="p-3A04-3D0FB-11" target="t-3A04-3D1B6-26">
+  <arc id="e-4098-67DD5-102" source="p-4098-67D4B-45" target="t-4098-67C92-18">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D2C8-102" source="p-3A04-3D0DF-3" target="t-3A04-3D0E8-5">
+  <arc id="e-4098-67DD7-103" source="t-4098-67C8E-17" target="p-4098-67C6B-5">
+  </arc>
+  <arc id="e-4098-67DD8-104" source="p-4098-67CF1-29" target="t-4098-67C8E-17">
+  </arc>
+  <arc id="e-4098-67DD8-105" source="p-4098-67C7D-11" target="t-4098-67C67-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D2C9-103" source="p-3A04-3D0DF-3" target="t-3A04-3D0E3-4">
-  </arc>
-  <arc id="e-3A04-3D2CA-104" source="t-3A04-3D0E3-4" target="p-3A04-3D0D1-2">
-  </arc>
-  <arc id="e-3A04-3D2DB-105" source="p-3A04-3D184-20" target="t-3A04-3D0E3-4">
+  <arc id="e-4098-67DDA-106" source="p-4098-67D4B-45" target="t-4098-67C8E-17">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D2DC-106" source="t-3A04-3D0F3-8" target="p-3A04-3D0EC-6">
+  <arc id="e-4098-67DDB-107" source="t-4098-67D46-44" target="p-4098-67D41-42">
   </arc>
-  <arc id="e-3A04-3D2DE-107" source="p-3A04-3D0F1-7" target="t-3A04-3D100-13">
+  <arc id="e-4098-67DDC-108" source="p-4098-67C7A-10" target="t-4098-67C67-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D2DF-108" source="p-3A04-3D17B-19" target="t-3A04-3D0E3-4">
+  <arc id="e-4098-67DDD-109" source="p-4098-67C76-9" target="t-4098-67C67-4">
    <type value="test"/>
   </arc>
-  <arc id="e-3A04-3D2E0-109" source="p-3A04-3D10E-18" target="t-3A04-3D0E3-4">
-   <type value="test"/>
-  </arc>
-  <arc id="e-3A04-3D2E1-110" source="p-3A04-3D10C-17" target="t-3A04-3D0E3-4">
+  <arc id="e-4098-67DDE-110" source="p-4098-67C74-8" target="t-4098-67C67-4">
    <type value="test"/>
   </arc>
  </page>

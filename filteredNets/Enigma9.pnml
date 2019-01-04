@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-3B48-A4706-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-1964-A3D9A-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma9</text>
   </name>
- <page id="g-3B48-A4714-1">
-  <place id="p-3B48-A4718-2">
+ <page id="g-1964-A3DA3-1">
+  <place id="p-1964-A3DA6-2">
   <name>
-   <text>Fragment_souvenir_2_ActivationCount_87</text>
+   <text>Fragment_souvenir_2_ActivationCount_84</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -16,9 +16,9 @@
     <position x="230" y="110"/>
    </graphics>
   </place>
-  <transition id="t-3B48-A4725-3">
+  <transition id="t-1964-A3DB3-3">
   <name>
-   <text>Fragment_souvenir_2_activate_87</text>
+   <text>Fragment_souvenir_2_activate_84</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -27,20 +27,20 @@
     <position x="110" y="110"/>
    </graphics>
   </transition>
-  <place id="p-3B48-A472B-4">
+  <place id="p-1964-A3DB8-4">
   <name>
-   <text>Q5_Answered_88</text>
+   <text>Q5_Answered_86</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="690" y="110"/>
+    <position x="660" y="110"/>
    </graphics>
   </place>
-  <place id="p-3B48-A472E-5">
+  <place id="p-1964-A3DBC-5">
   <name>
-   <text>Q5_Answering_88</text>
+   <text>Q5_Answering_86</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -49,28 +49,28 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="450" y="110"/>
+    <position x="420" y="110"/>
    </graphics>
   </place>
-  <transition id="t-3B48-A4730-6">
+  <transition id="t-1964-A3DBE-6">
   <name>
-   <text>Q5_Correct_88</text>
+   <text>Q5_Correct_86</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="570" y="50"/>
+    <position x="540" y="50"/>
    </graphics>
   </transition>
-  <arc id="e-3B48-A4737-7" source="p-3B48-A472E-5" target="t-3B48-A4730-6">
-  </arc>
-  <arc id="e-3B48-A4738-8" source="t-3B48-A4725-3" target="p-3B48-A4718-2">
-  </arc>
-  <arc id="e-3B48-A4739-9" source="p-3B48-A4718-2" target="t-3B48-A4730-6">
+  <arc id="e-1964-A3DC5-7" source="p-1964-A3DA6-2" target="t-1964-A3DBE-6">
    <type value="test"/>
   </arc>
-  <arc id="e-3B48-A473B-10" source="t-3B48-A4730-6" target="p-3B48-A472B-4">
+  <arc id="e-1964-A3DC8-8" source="p-1964-A3DBC-5" target="t-1964-A3DBE-6">
+  </arc>
+  <arc id="e-1964-A3DC9-9" source="t-1964-A3DBE-6" target="p-1964-A3DB8-4">
+  </arc>
+  <arc id="e-1964-A3DCA-10" source="t-1964-A3DB3-3" target="p-1964-A3DA6-2">
   </arc>
  </page>
  </net>

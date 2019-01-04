@@ -118,7 +118,7 @@ public class ToggleObject : FSystem {
                             if(LoadGameContent.gameContent.virtualPuzzle)
                                 GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOn_11_1", performedBy = "player" });
                             else
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOn_11_1", performedBy = "player" });
+                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOn_11_2", performedBy = "player" });
                             GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOn_12", performedBy = "player" });
                         }
                         else
@@ -258,7 +258,7 @@ public class ToggleObject : FSystem {
                 if (LoadGameContent.gameContent.virtualPuzzle)
                     GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOff_11_1", performedBy = "player" });
                 else
-                    GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOff_11_1", performedBy = "player" });
+                    GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOff_11_2", performedBy = "player" });
                 GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOff_12", performedBy = "player" });
             }
         }

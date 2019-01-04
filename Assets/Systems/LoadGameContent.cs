@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using FYFY;
 using TMPro;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using FYFY_plugins.Monitoring;
@@ -48,8 +49,8 @@ public class LoadGameContent : FSystem {
     private Family f_boardUnremovable = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
     private Family f_boardRemovable = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
 
-    private Family f_gameTips = FamilyManager.getFamily(new AllOfComponents(typeof(GameTips)));
-    private Family f_internalGameTips = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameTips)));
+    private Family f_gameHints = FamilyManager.getFamily(new AllOfComponents(typeof(GameHints)));
+    private Family f_internalGameHints = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameHints)));
 
 
     private FSystem instance;
@@ -78,7 +79,8 @@ public class LoadGameContent : FSystem {
                 //create default data files
                 Directory.CreateDirectory("Data");
                 File.WriteAllText("Data/Data_LearningScape.txt", defaultGameContent.jsonFile.text);
-                File.WriteAllText("Data/Tips_LearningScape.txt", defaultGameContent.tipsJsonFile.text);
+                File.WriteAllText("Data/LRSConfig.txt", defaultGameContent.lrsConfigFile.text);
+                File.WriteAllText("Data/Hints_LearningScape.txt", defaultGameContent.hintsJsonFile.text);
                 File.WriteAllText("Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
 
                 gameContent = new GameContent();
@@ -263,7 +265,7 @@ public class LoadGameContent : FSystem {
             b = f_balls.getAt(i).GetComponent<Ball>();
 
             //change randomly the position of the ball
-            b.id = idList[(int)Random.Range(0, idList.Count - 0.001f)];
+            b.id = idList[(int)UnityEngine.Random.Range(0, idList.Count - 0.001f)];
             idList.Remove(b.id);
 
             if(b.number - 1 < gameContent.ballTexts.Length)
@@ -387,7 +389,7 @@ public class LoadGameContent : FSystem {
         for (int i = from; i <= to; i++)
             validAngles.Add(i);
         #endregion
-        float angle = validAngles[(int)(Random.value * validAngles.Count - 0.001f)];
+        float angle = validAngles[(int)(UnityEngine.Random.value * validAngles.Count - 0.001f)];
         forGO.transform.Rotate(0, angle, 0);
         foreach (Transform child in forGO.transform)
             if (child.name != "Numbers")
@@ -453,7 +455,7 @@ public class LoadGameContent : FSystem {
         if (!answerGearFound)
         {
             int nbGears = f_gearComponent.Count;
-            Gear gear = f_gearComponent.getAt((int)Random.Range(0, nbGears - 1)).GetComponent<Gear>();
+            Gear gear = f_gearComponent.getAt((int)UnityEngine.Random.Range(0, nbGears - 1)).GetComponent<Gear>();
             gear.isSolution = true;
             gear.tag = "RotateGear";
         }
@@ -773,32 +775,37 @@ public class LoadGameContent : FSystem {
 
         #endregion
 
-        if (File.Exists(gameContent.tipsPath))
+        if (File.Exists("Data/LRSConfig.txt"))
+            GBL_Interface.lrsAddresses = JsonConvert.DeserializeObject<List<LRSAddress>>(File.ReadAllText("Data/LRSConfig.txt"));
+        else
+            Debug.LogWarning("LRS configuration file not found. Default LRS used (Lip6).");
+
+        if (File.Exists(gameContent.hintsPath))
         {
-            GameTips gameTips = f_gameTips.First().GetComponent<GameTips>();
-            gameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(File.ReadAllText(gameContent.tipsPath));
-            if (gameTips.dictionary == null)
-                gameTips.dictionary = new Dictionary<string, Dictionary<string, List<string>>>();
+            GameHints gameHints = f_gameHints.First().GetComponent<GameHints>();
+            gameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>>(File.ReadAllText(gameContent.hintsPath));
+            if (gameHints.dictionary == null)
+                gameHints.dictionary = new Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>();
         }
         else
         {
-            Debug.LogWarning("File containting tips not found.");
+            Debug.LogWarning("File containting hints not found.");
         }
 
-        if (File.Exists(gameContent.internalTipsPath))
+        if (File.Exists(gameContent.internalHintsPath))
         {
-            InternalGameTips internalGameTips = f_internalGameTips.First().GetComponent<InternalGameTips>();
-            internalGameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(File.ReadAllText(gameContent.internalTipsPath));
-            if (internalGameTips.dictionary == null)
+            InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
+            internalGameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(File.ReadAllText(gameContent.internalHintsPath));
+            if (internalGameHints.dictionary == null)
             {
-                internalGameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalTipsJsonFile.text);
-                Debug.LogWarning("File containting internal tips empty. Default used.");
+                internalGameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalHintsJsonFile.text);
+                Debug.LogWarning("File containting internal hints empty. Default used.");
             }
         }
         else
         {
-            f_internalGameTips.First().GetComponent<InternalGameTips>().dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalTipsJsonFile.text);
-            Debug.LogWarning("File containting internal tips not found. Default used.");
+            f_internalGameHints.First().GetComponent<InternalGameHints>().dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalHintsJsonFile.text);
+            Debug.LogWarning("File containting internal hints not found. Default used.");
         }
 
         Debug.Log("Data loaded");

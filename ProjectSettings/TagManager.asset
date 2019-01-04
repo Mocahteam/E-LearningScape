@@ -67,6 +67,7 @@ TagManager:
   - BoardUnremovableWords
   - PlankNumbers
   - Chair
+  - HUD_H
   layers:
   - Default
   - TransparentFX

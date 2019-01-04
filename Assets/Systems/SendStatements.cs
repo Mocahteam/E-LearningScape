@@ -2,6 +2,9 @@
 using FYFY;
 using DIG.GBLXAPI;
 using System;
+using System.IO;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 public class SendStatements : FSystem {
 
@@ -15,8 +18,8 @@ public class SendStatements : FSystem {
     {
         if (Application.isPlaying)
         {
-            if(!GBLXAPI.Instance.IsInit())
-                GBLXAPI.Instance.init(GBL_Interface.lrsURL, GBL_Interface.lrsUser, GBL_Interface.lrsPassword, GBL_Interface.standardsConfigDefault, GBL_Interface.standardsConfigUser);
+            if (!GBLXAPI.Instance.IsInit())
+                GBLXAPI.Instance.init(GBL_Interface.lrsAddresses, GBL_Interface.standardsConfigDefault, GBL_Interface.standardsConfigUser);
 
             GBLXAPI.Instance.debugStatement = false;
 

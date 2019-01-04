@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-3B54-7E4FF-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-2B8C-52946-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma9</text>
   </name>
- <page id="g-3B54-7E510-1">
-  <place id="p-3B54-7E513-2">
+ <page id="g-2B8C-52955-1">
+  <place id="p-2B8C-5295A-2">
   <name>
-   <text>Fragment_souvenir_2_ActivationCount_87</text>
+   <text>Fragment_souvenir_2_ActivationCount_84</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -16,9 +16,9 @@
     <position x="230" y="110"/>
    </graphics>
   </place>
-  <transition id="t-3B54-7E523-3">
+  <transition id="t-2B8C-52973-3">
   <name>
-   <text>Fragment_souvenir_2_activate_87</text>
+   <text>Fragment_souvenir_2_activate_84</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -27,20 +27,20 @@
     <position x="110" y="110"/>
    </graphics>
   </transition>
-  <place id="p-3B54-7E528-4">
+  <place id="p-2B8C-5297B-4">
   <name>
-   <text>Q5_Answered_88</text>
+   <text>Q5_Answered_86</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="660" y="110"/>
+    <position x="655" y="110"/>
    </graphics>
   </place>
-  <place id="p-3B54-7E52B-5">
+  <place id="p-2B8C-52982-5">
   <name>
-   <text>Q5_Answering_88</text>
+   <text>Q5_Answering_86</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -49,39 +49,53 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="420" y="110"/>
+    <position x="415" y="110"/>
    </graphics>
   </place>
-  <transition id="t-3B54-7E52F-6">
+  <transition id="t-2B8C-52986-6">
   <name>
-   <text>Q5_Correct_88</text>
+   <text>Q5_Correct_86</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="540" y="50"/>
+    <position x="535" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-3B54-7E531-7">
+  <transition id="t-2B8C-5298C-7">
   <name>
-   <text>Q5_Wrong_88</text>
+   <text>Q5_Wrong_86</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="540" y="170"/>
+    <position x="535" y="170"/>
    </graphics>
   </transition>
-  <arc id="e-3B54-7E536-8" source="p-3B54-7E52B-5" target="t-3B54-7E52F-6">
-  </arc>
-  <arc id="e-3B54-7E538-9" source="p-3B54-7E52B-5" target="t-3B54-7E531-7">
+  <place id="p-2B8C-5298F-8">
+  <name>
+   <text>Q5_place_85</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="415" y="205"/>
+   </graphics>
+  </place>
+  <arc id="e-2B8C-5299B-9" source="p-2B8C-52982-5" target="t-2B8C-5298C-7">
    <type value="test"/>
   </arc>
-  <arc id="e-3B54-7E53B-10" source="t-3B54-7E523-3" target="p-3B54-7E513-2">
+  <arc id="e-2B8C-529A0-10" source="t-2B8C-52973-3" target="p-2B8C-5295A-2">
   </arc>
-  <arc id="e-3B54-7E53C-11" source="t-3B54-7E52F-6" target="p-3B54-7E528-4">
+  <arc id="e-2B8C-529A2-11" source="p-2B8C-5298F-8" target="t-2B8C-5298C-7">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2B8C-529A4-12" source="t-2B8C-52986-6" target="p-2B8C-5297B-4">
+  </arc>
+  <arc id="e-2B8C-529A6-13" source="p-2B8C-52982-5" target="t-2B8C-52986-6">
   </arc>
  </page>
  </net>

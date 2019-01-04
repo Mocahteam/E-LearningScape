@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.Monitoring;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -12,13 +13,14 @@ public class HelpSystem : FSystem {
     private Family f_subtitlesFamily = FamilyManager.getFamily(new AnyOfTags("HelpSubtitles"), new AllOfComponents(typeof(TextMeshProUGUI)));
     private Family f_monitoringComponents = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
     private Family f_traces = FamilyManager.getFamily(new AllOfComponents(typeof(Trace)));
-    private Family f_gameTips = FamilyManager.getFamily(new AllOfComponents(typeof(GameTips)));
-    private Family f_internalGameTips = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameTips)));
+    private Family f_gameHints = FamilyManager.getFamily(new AllOfComponents(typeof(GameHints)));
+    private Family f_internalGameHints = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameHints)));
     private Family f_defaultGameContent = FamilyManager.getFamily(new AllOfComponents(typeof(DefaultGameContent)));
 
-    private GameTips gameTips;
-    private InternalGameTips internalGameTips;
+    private GameHints gameHints;
+    private InternalGameHints internalGameHints;
 
+    private float sessionDuration = 3600; //in Seconds
     private Dictionary<int, int> uselessTagCount;
     private List<string> stringsError;
 
@@ -31,27 +33,30 @@ public class HelpSystem : FSystem {
     {
         if (Application.isPlaying)
         {
-            //get game tips filled with tips loaded from "Data/Tips_LearningScape.txt"
-            gameTips = f_gameTips.First().GetComponent<GameTips>();
-            //get internal game tips
-            internalGameTips = f_internalGameTips.First().GetComponent<InternalGameTips>();
-            internalGameTips.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(f_defaultGameContent.First().GetComponent<DefaultGameContent>().internalTipsJsonFile.text);
+            //get game hints filled with tips loaded from "Data/Hints_LearningScape.txt"
+            gameHints = f_gameHints.First().GetComponent<GameHints>();
+            //get internal game hints
+            internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
+            //Dictionary<string, Dictionary<string, List<string>>>
+            internalGameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(f_defaultGameContent.First().GetComponent<DefaultGameContent>().internalHintsJsonFile.text);
 
             string[] tmpStringArray;
-            //add internal game tips to the dictionary of the component GameTips
+            //add internal game hints to the dictionary of the component GameHints
             //
             //changer ca
             //
-            foreach(string key1 in internalGameTips.dictionary.Keys)
+            foreach(string key1 in internalGameHints.dictionary.Keys)
             {
-                if (!gameTips.dictionary.ContainsKey(key1))
-                    gameTips.dictionary.Add(key1, new Dictionary<string, List<string>>());
-                foreach (string key2 in internalGameTips.dictionary[key1].Keys)
+                if (!gameHints.dictionary.ContainsKey(key1))
+                    gameHints.dictionary.Add(key1, new Dictionary<string, KeyValuePair<string, List<string>>>());
+                foreach (string key2 in internalGameHints.dictionary[key1].Keys)
                 {
                     tmpStringArray = key2.Split('.');
-                    gameTips.dictionary[key1].Add(string.Concat("##monitor##",tmpStringArray[1]), internalGameTips.dictionary[key1][key2]);
+                    gameHints.dictionary[key1].Add(string.Concat("##monitor##",tmpStringArray[1]), new KeyValuePair<string, List<string>>("", internalGameHints.dictionary[key1][key2]));
                 }
             }
+
+            sessionDuration = LoadGameContent.gameContent.sessionDuration * 60; //convert to seconds
 
             uselessTagCount = new Dictionary<int, int>();
             subtitles = f_subtitlesFamily.First().GetComponent<TextMeshProUGUI>();

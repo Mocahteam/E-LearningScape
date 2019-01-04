@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-10EC-17616-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-4FBC-3AE9D-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma11_1</text>
   </name>
- <page id="g-10EC-17633-1">
-  <place id="p-10EC-17638-2">
+ <page id="g-4FBC-3AEA7-1">
+  <place id="p-4FBC-3AEAA-2">
   <name>
-   <text>AnswersInput_Answered_139</text>
+   <text>AnswersInput_Answered_101</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1320" y="310"/>
+    <position x="1425" y="300"/>
    </graphics>
   </place>
-  <place id="p-10EC-1764A-3">
+  <place id="p-4FBC-3AEB7-3">
   <name>
-   <text>AnswersInput_Answering_139</text>
+   <text>AnswersInput_Answering_101</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -27,45 +27,45 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="1070" y="310"/>
+    <position x="1185" y="300"/>
    </graphics>
   </place>
-  <transition id="t-10EC-17652-4">
+  <transition id="t-4FBC-3AEBB-4">
   <name>
-   <text>AnswersInput_Correct_139</text>
+   <text>AnswersInput_Correct_101</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1200" y="250"/>
+    <position x="1305" y="240"/>
    </graphics>
   </transition>
-  <place id="p-10EC-17657-5">
+  <place id="p-4FBC-3AEC0-5">
   <name>
-   <text>PuzzleSet_01_end_96</text>
+   <text>PuzzleSet_01_end_93</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="520" y="150"/>
+    <position x="655" y="190"/>
    </graphics>
   </place>
-  <transition id="t-10EC-1765C-6">
+  <transition id="t-4FBC-3AEC3-6">
   <name>
-   <text>PuzzleSet_01_perform_96</text>
+   <text>PuzzleSet_01_perform_93</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="150"/>
+    <position x="575" y="190"/>
    </graphics>
   </transition>
-  <place id="p-10EC-17662-7">
+  <place id="p-4FBC-3AEC7-7">
   <name>
-   <text>PuzzleSet_01_start_96</text>
+   <text>PuzzleSet_01_start_93</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -74,34 +74,34 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="360" y="150"/>
+    <position x="495" y="190"/>
    </graphics>
   </place>
-  <place id="p-10EC-17666-8">
+  <place id="p-4FBC-3AEC9-8">
   <name>
-   <text>PuzzleSet_02_end_99</text>
+   <text>PuzzleSet_02_end_94</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="520" y="230"/>
+    <position x="645" y="260"/>
    </graphics>
   </place>
-  <transition id="t-10EC-1766C-9">
+  <transition id="t-4FBC-3AECC-9">
   <name>
-   <text>PuzzleSet_02_perform_99</text>
+   <text>PuzzleSet_02_perform_94</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="230"/>
+    <position x="575" y="260"/>
    </graphics>
   </transition>
-  <place id="p-10EC-17672-10">
+  <place id="p-4FBC-3AED0-10">
   <name>
-   <text>PuzzleSet_02_start_99</text>
+   <text>PuzzleSet_02_start_94</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -110,34 +110,34 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="360" y="230"/>
+    <position x="495" y="260"/>
    </graphics>
   </place>
-  <place id="p-10EC-17678-11">
+  <place id="p-4FBC-3AED3-11">
   <name>
-   <text>PuzzleSet_03_end_97</text>
+   <text>PuzzleSet_03_end_95</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="520" y="310"/>
+    <position x="645" y="340"/>
    </graphics>
   </place>
-  <transition id="t-10EC-1767B-12">
+  <transition id="t-4FBC-3AED8-12">
   <name>
-   <text>PuzzleSet_03_perform_97</text>
+   <text>PuzzleSet_03_perform_95</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="310"/>
+    <position x="575" y="340"/>
    </graphics>
   </transition>
-  <place id="p-10EC-17681-13">
+  <place id="p-4FBC-3AEDB-13">
   <name>
-   <text>PuzzleSet_03_start_97</text>
+   <text>PuzzleSet_03_start_95</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -146,34 +146,34 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="360" y="310"/>
+    <position x="495" y="340"/>
    </graphics>
   </place>
-  <place id="p-10EC-17687-14">
+  <place id="p-4FBC-3AEDE-14">
   <name>
-   <text>PuzzleSet_04_end_100</text>
+   <text>PuzzleSet_04_end_96</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="510" y="390"/>
+    <position x="655" y="410"/>
    </graphics>
   </place>
-  <transition id="t-10EC-1768A-15">
+  <transition id="t-4FBC-3AEE1-15">
   <name>
-   <text>PuzzleSet_04_perform_100</text>
+   <text>PuzzleSet_04_perform_96</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="390"/>
+    <position x="575" y="410"/>
    </graphics>
   </transition>
-  <place id="p-10EC-17690-16">
+  <place id="p-4FBC-3AEE6-16">
   <name>
-   <text>PuzzleSet_04_start_100</text>
+   <text>PuzzleSet_04_start_96</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -182,34 +182,34 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="360" y="390"/>
+    <position x="495" y="410"/>
    </graphics>
   </place>
-  <place id="p-10EC-17696-17">
+  <place id="p-4FBC-3AEE9-17">
   <name>
-   <text>PuzzleSet_05_end_98</text>
+   <text>PuzzleSet_05_end_97</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="510" y="470"/>
+    <position x="645" y="480"/>
    </graphics>
   </place>
-  <transition id="t-10EC-176E5-18">
+  <transition id="t-4FBC-3AF22-18">
   <name>
-   <text>PuzzleSet_05_perform_98</text>
+   <text>PuzzleSet_05_perform_97</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="470"/>
+    <position x="575" y="480"/>
    </graphics>
   </transition>
-  <place id="p-10EC-176ED-19">
+  <place id="p-4FBC-3AF27-19">
   <name>
-   <text>PuzzleSet_05_start_98</text>
+   <text>PuzzleSet_05_start_97</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -218,34 +218,34 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="360" y="470"/>
+    <position x="495" y="480"/>
    </graphics>
   </place>
-  <place id="p-10EC-176F3-20">
+  <place id="p-4FBC-3AF2A-20">
   <name>
-   <text>Puzzle_ActivationCount_103</text>
+   <text>Puzzle_ActivationCount_99</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="860" y="310"/>
+    <position x="985" y="340"/>
    </graphics>
   </place>
-  <transition id="t-10EC-176F9-21">
+  <transition id="t-4FBC-3AF2D-21">
   <name>
-   <text>Puzzle_activate_103</text>
+   <text>Puzzle_activate_99</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="740" y="310"/>
+    <position x="865" y="340"/>
    </graphics>
   </transition>
-  <place id="p-10EC-176FD-22">
+  <place id="p-4FBC-3AF30-22">
   <name>
-   <text>Puzzle_off_102</text>
+   <text>Puzzle_off_98</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -254,34 +254,45 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="650" y="50"/>
+    <position x="785" y="80"/>
    </graphics>
   </place>
-  <place id="p-10EC-17702-23">
+  <place id="p-4FBC-3AF33-23">
   <name>
-   <text>Puzzle_on_102</text>
+   <text>Puzzle_on_98</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="820" y="50"/>
+    <position x="945" y="80"/>
    </graphics>
   </place>
-  <transition id="t-10EC-17706-24">
+  <transition id="t-4FBC-3AF35-24">
   <name>
-   <text>Puzzle_turnOn_102</text>
+   <text>Puzzle_turnOff_98</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="730" y="110"/>
+    <position x="865" y="50"/>
    </graphics>
   </transition>
-  <place id="p-10EC-1770B-25">
+  <transition id="t-4FBC-3AF38-25">
   <name>
-   <text>boite_off_116</text>
+   <text>Puzzle_turnOn_98</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="865" y="140"/>
+   </graphics>
+  </transition>
+  <place id="p-4FBC-3AF3A-26">
+  <name>
+   <text>boite_off_92</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -290,88 +301,92 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="50" y="310"/>
+    <position x="45" y="340"/>
    </graphics>
   </place>
-  <place id="p-10EC-17710-26">
+  <place id="p-4FBC-3AF3D-27">
   <name>
-   <text>boite_on_116</text>
+   <text>boite_on_92</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="220" y="310"/>
+    <position x="225" y="340"/>
    </graphics>
   </place>
-  <transition id="t-10EC-17714-27">
+  <transition id="t-4FBC-3AF3F-28">
   <name>
-   <text>boite_turnOn_116</text>
+   <text>boite_turnOn_92</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="130" y="370"/>
+    <position x="145" y="400"/>
    </graphics>
   </transition>
-  <arc id="e-10EC-1771F-28" source="p-10EC-176F3-20" target="t-10EC-17652-4">
+  <arc id="e-4FBC-3AF46-29" source="p-4FBC-3AF2A-20" target="t-4FBC-3AEBB-4">
    <type value="test"/>
   </arc>
-  <arc id="e-10EC-17724-29" source="p-10EC-1770B-25" target="t-10EC-17714-27">
+  <arc id="e-4FBC-3AF49-30" source="p-4FBC-3AEDB-13" target="t-4FBC-3AED8-12">
   </arc>
-  <arc id="e-10EC-17726-30" source="t-10EC-1767B-12" target="p-10EC-17678-11">
+  <arc id="e-4FBC-3AF4B-31" source="t-4FBC-3AEE1-15" target="p-4FBC-3AEDE-14">
   </arc>
-  <arc id="e-10EC-17728-31" source="p-10EC-17681-13" target="t-10EC-1767B-12">
+  <arc id="e-4FBC-3AF4B-32" source="p-4FBC-3AEE6-16" target="t-4FBC-3AEE1-15">
   </arc>
-  <arc id="e-10EC-1772A-32" source="t-10EC-1768A-15" target="p-10EC-17687-14">
+  <arc id="e-4FBC-3AF4D-33" source="p-4FBC-3AEB7-3" target="t-4FBC-3AEBB-4">
   </arc>
-  <arc id="e-10EC-1772C-33" source="p-10EC-17690-16" target="t-10EC-1768A-15">
+  <arc id="e-4FBC-3AF4E-34" source="t-4FBC-3AEBB-4" target="p-4FBC-3AEAA-2">
   </arc>
-  <arc id="e-10EC-1772E-34" source="p-10EC-1764A-3" target="t-10EC-17652-4">
+  <arc id="e-4FBC-3AF50-35" source="t-4FBC-3AECC-9" target="p-4FBC-3AEC9-8">
   </arc>
-  <arc id="e-10EC-1772F-35" source="t-10EC-1765C-6" target="p-10EC-17657-5">
+  <arc id="e-4FBC-3AF51-36" source="p-4FBC-3AED0-10" target="t-4FBC-3AECC-9">
   </arc>
-  <arc id="e-10EC-17733-36" source="t-10EC-17652-4" target="p-10EC-17638-2">
-  </arc>
-  <arc id="e-10EC-17735-37" source="t-10EC-1766C-9" target="p-10EC-17666-8">
-  </arc>
-  <arc id="e-10EC-17737-38" source="p-10EC-17672-10" target="t-10EC-1766C-9">
-  </arc>
-  <arc id="e-10EC-17739-39" source="t-10EC-176F9-21" target="p-10EC-176F3-20">
-  </arc>
-  <arc id="e-10EC-1773A-40" source="p-10EC-17710-26" target="t-10EC-1766C-9">
+  <arc id="e-4FBC-3AF52-37" source="p-4FBC-3AF3D-27" target="t-4FBC-3AECC-9">
    <type value="test"/>
   </arc>
-  <arc id="e-10EC-1773C-41" source="t-10EC-176E5-18" target="p-10EC-17696-17">
+  <arc id="e-4FBC-3AF53-38" source="t-4FBC-3AEC3-6" target="p-4FBC-3AEC0-5">
   </arc>
-  <arc id="e-10EC-1773E-42" source="p-10EC-176ED-19" target="t-10EC-176E5-18">
+  <arc id="e-4FBC-3AF54-39" source="t-4FBC-3AF3F-28" target="p-4FBC-3AF3D-27">
   </arc>
-  <arc id="e-10EC-1773F-43" source="t-10EC-17706-24" target="p-10EC-17702-23">
-  </arc>
-  <arc id="e-10EC-17741-44" source="p-10EC-176FD-22" target="t-10EC-17706-24">
-  </arc>
-  <arc id="e-10EC-17745-45" source="p-10EC-17662-7" target="t-10EC-1765C-6">
-  </arc>
-  <arc id="e-10EC-17747-46" source="p-10EC-17702-23" target="t-10EC-176F9-21">
+  <arc id="e-4FBC-3AF55-40" source="p-4FBC-3AED3-11" target="t-4FBC-3AF2D-21">
    <type value="test"/>
   </arc>
-  <arc id="e-10EC-17781-47" source="p-10EC-17657-5" target="t-10EC-176F9-21">
+  <arc id="e-4FBC-3AF56-41" source="p-4FBC-3AF3A-26" target="t-4FBC-3AF3F-28">
+  </arc>
+  <arc id="e-4FBC-3AF57-42" source="t-4FBC-3AF22-18" target="p-4FBC-3AEE9-17">
+  </arc>
+  <arc id="e-4FBC-3AF58-43" source="p-4FBC-3AF27-19" target="t-4FBC-3AF22-18">
+  </arc>
+  <arc id="e-4FBC-3AF5A-44" source="t-4FBC-3AF2D-21" target="p-4FBC-3AF2A-20">
+  </arc>
+  <arc id="e-4FBC-3AF7D-45" source="p-4FBC-3AF33-23" target="t-4FBC-3AF2D-21">
    <type value="test"/>
   </arc>
-  <arc id="e-10EC-17784-48" source="p-10EC-17666-8" target="t-10EC-176F9-21">
+  <arc id="e-4FBC-3AF7E-46" source="p-4FBC-3AEC0-5" target="t-4FBC-3AF2D-21">
    <type value="test"/>
   </arc>
-  <arc id="e-10EC-17786-49" source="p-10EC-17678-11" target="t-10EC-176F9-21">
+  <arc id="e-4FBC-3AF7F-47" source="p-4FBC-3AEC9-8" target="t-4FBC-3AF2D-21">
    <type value="test"/>
   </arc>
-  <arc id="e-10EC-17788-50" source="p-10EC-17687-14" target="t-10EC-176F9-21">
+  <arc id="e-4FBC-3AF80-48" source="p-4FBC-3AEC7-7" target="t-4FBC-3AEC3-6">
+  </arc>
+  <arc id="e-4FBC-3AF81-49" source="p-4FBC-3AEDE-14" target="t-4FBC-3AF2D-21">
    <type value="test"/>
   </arc>
-  <arc id="e-10EC-1778A-51" source="p-10EC-17696-17" target="t-10EC-176F9-21">
+  <arc id="e-4FBC-3AF82-50" source="p-4FBC-3AEE9-17" target="t-4FBC-3AF2D-21">
    <type value="test"/>
   </arc>
-  <arc id="e-10EC-1778C-52" source="t-10EC-17714-27" target="p-10EC-17710-26">
+  <arc id="e-4FBC-3AF83-51" source="t-4FBC-3AF35-24" target="p-4FBC-3AF30-22">
+  </arc>
+  <arc id="e-4FBC-3AF84-52" source="t-4FBC-3AF38-25" target="p-4FBC-3AF33-23">
+  </arc>
+  <arc id="e-4FBC-3AF86-53" source="p-4FBC-3AF30-22" target="t-4FBC-3AF38-25">
+  </arc>
+  <arc id="e-4FBC-3AF87-54" source="t-4FBC-3AED8-12" target="p-4FBC-3AED3-11">
+  </arc>
+  <arc id="e-4FBC-3AF88-55" source="p-4FBC-3AF33-23" target="t-4FBC-3AF35-24">
   </arc>
  </page>
  </net>

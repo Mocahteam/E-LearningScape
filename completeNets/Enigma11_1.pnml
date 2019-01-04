@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-11D0-DAD62-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-18C8-1F0BE-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma11_1</text>
   </name>
- <page id="g-11D0-DAD6B-1">
-  <place id="p-11D0-DAD6F-2">
+ <page id="g-18C8-1F0CC-1">
+  <place id="p-18C8-1F0CF-2">
   <name>
-   <text>AnswersInput_Answered_139</text>
+   <text>AnswersInput_Answered_101</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1320" y="335"/>
+    <position x="1425" y="305"/>
    </graphics>
   </place>
-  <place id="p-11D0-DAD7C-3">
+  <place id="p-18C8-1F0DD-3">
   <name>
-   <text>AnswersInput_Answering_139</text>
+   <text>AnswersInput_Answering_101</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -27,56 +27,67 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="1070" y="335"/>
+    <position x="1175" y="305"/>
    </graphics>
   </place>
-  <transition id="t-11D0-DAD80-4">
+  <transition id="t-18C8-1F0E1-4">
   <name>
-   <text>AnswersInput_Correct_139</text>
+   <text>AnswersInput_Correct_101</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1200" y="275"/>
+    <position x="1305" y="245"/>
    </graphics>
   </transition>
-  <transition id="t-11D0-DAD84-5">
+  <transition id="t-18C8-1F0E6-5">
   <name>
-   <text>AnswersInput_Wrong_139</text>
+   <text>AnswersInput_Wrong_101</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1200" y="395"/>
+    <position x="1305" y="365"/>
    </graphics>
   </transition>
-  <place id="p-11D0-DAD88-6">
+  <place id="p-18C8-1F0E8-6">
   <name>
-   <text>PuzzleSet_01_end_96</text>
+   <text>AnswersInput_place_100</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="520" y="175"/>
+    <position x="1175" y="395"/>
    </graphics>
   </place>
-  <transition id="t-11D0-DAD8A-7">
+  <place id="p-18C8-1F0EB-7">
   <name>
-   <text>PuzzleSet_01_perform_96</text>
+   <text>PuzzleSet_01_end_93</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="175"/>
+    <position x="650" y="190"/>
+   </graphics>
+  </place>
+  <transition id="t-18C8-1F0EF-8">
+  <name>
+   <text>PuzzleSet_01_perform_93</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="570" y="190"/>
    </graphics>
   </transition>
-  <place id="p-11D0-DAD9F-8">
+  <place id="p-18C8-1F0F1-9">
   <name>
-   <text>PuzzleSet_01_start_96</text>
+   <text>PuzzleSet_01_start_93</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -85,34 +96,34 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="360" y="175"/>
+    <position x="490" y="190"/>
    </graphics>
   </place>
-  <place id="p-11D0-DADA3-9">
+  <place id="p-18C8-1F0F5-10">
   <name>
-   <text>PuzzleSet_02_end_99</text>
+   <text>PuzzleSet_02_end_94</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="520" y="255"/>
+    <position x="640" y="265"/>
    </graphics>
   </place>
-  <transition id="t-11D0-DADA5-10">
+  <transition id="t-18C8-1F0F8-11">
   <name>
-   <text>PuzzleSet_02_perform_99</text>
+   <text>PuzzleSet_02_perform_94</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="255"/>
+    <position x="570" y="265"/>
    </graphics>
   </transition>
-  <place id="p-11D0-DADA9-11">
+  <place id="p-18C8-1F0FC-12">
   <name>
-   <text>PuzzleSet_02_start_99</text>
+   <text>PuzzleSet_02_start_94</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -121,34 +132,34 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="360" y="255"/>
+    <position x="490" y="265"/>
    </graphics>
   </place>
-  <place id="p-11D0-DADBA-12">
+  <place id="p-18C8-1F0FE-13">
   <name>
-   <text>PuzzleSet_03_end_97</text>
+   <text>PuzzleSet_03_end_95</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="520" y="335"/>
+    <position x="640" y="335"/>
    </graphics>
   </place>
-  <transition id="t-11D0-DADBC-13">
+  <transition id="t-18C8-1F101-14">
   <name>
-   <text>PuzzleSet_03_perform_97</text>
+   <text>PuzzleSet_03_perform_95</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="335"/>
+    <position x="570" y="335"/>
    </graphics>
   </transition>
-  <place id="p-11D0-DADBF-14">
+  <place id="p-18C8-1F105-15">
   <name>
-   <text>PuzzleSet_03_start_97</text>
+   <text>PuzzleSet_03_start_95</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -157,34 +168,34 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="360" y="335"/>
+    <position x="490" y="335"/>
    </graphics>
   </place>
-  <place id="p-11D0-DADC3-15">
+  <place id="p-18C8-1F107-16">
   <name>
-   <text>PuzzleSet_04_end_100</text>
+   <text>PuzzleSet_04_end_96</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="510" y="415"/>
+    <position x="650" y="410"/>
    </graphics>
   </place>
-  <transition id="t-11D0-DADC6-16">
+  <transition id="t-18C8-1F10A-17">
   <name>
-   <text>PuzzleSet_04_perform_100</text>
+   <text>PuzzleSet_04_perform_96</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="415"/>
+    <position x="570" y="410"/>
    </graphics>
   </transition>
-  <place id="p-11D0-DADC8-17">
+  <place id="p-18C8-1F10D-18">
   <name>
-   <text>PuzzleSet_04_start_100</text>
+   <text>PuzzleSet_04_start_96</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -193,34 +204,34 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="360" y="415"/>
+    <position x="490" y="410"/>
    </graphics>
   </place>
-  <place id="p-11D0-DAE06-18">
+  <place id="p-18C8-1F14C-19">
   <name>
-   <text>PuzzleSet_05_end_98</text>
+   <text>PuzzleSet_05_end_97</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="510" y="495"/>
+    <position x="640" y="485"/>
    </graphics>
   </place>
-  <transition id="t-11D0-DAE0A-19">
+  <transition id="t-18C8-1F150-20">
   <name>
-   <text>PuzzleSet_05_perform_98</text>
+   <text>PuzzleSet_05_perform_97</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="495"/>
+    <position x="570" y="485"/>
    </graphics>
   </transition>
-  <place id="p-11D0-DAE0D-20">
+  <place id="p-18C8-1F153-21">
   <name>
-   <text>PuzzleSet_05_start_98</text>
+   <text>PuzzleSet_05_start_97</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -229,34 +240,34 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="360" y="495"/>
+    <position x="490" y="485"/>
    </graphics>
   </place>
-  <place id="p-11D0-DAE10-21">
+  <place id="p-18C8-1F157-22">
   <name>
-   <text>Puzzle_ActivationCount_103</text>
+   <text>Puzzle_ActivationCount_99</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="855" y="335"/>
+    <position x="985" y="335"/>
    </graphics>
   </place>
-  <transition id="t-11D0-DAE14-22">
+  <transition id="t-18C8-1F159-23">
   <name>
-   <text>Puzzle_activate_103</text>
+   <text>Puzzle_activate_99</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="745" y="335"/>
+    <position x="865" y="335"/>
    </graphics>
   </transition>
-  <place id="p-11D0-DAE17-23">
+  <place id="p-18C8-1F15C-24">
   <name>
-   <text>Puzzle_off_102</text>
+   <text>Puzzle_off_98</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -265,45 +276,45 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="650" y="80"/>
+    <position x="783" y="80"/>
    </graphics>
   </place>
-  <place id="p-11D0-DAE19-24">
+  <place id="p-18C8-1F160-25">
   <name>
-   <text>Puzzle_on_102</text>
+   <text>Puzzle_on_98</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="820" y="80"/>
+    <position x="943" y="80"/>
    </graphics>
   </place>
-  <transition id="t-11D0-DAE1C-25">
+  <transition id="t-18C8-1F162-26">
   <name>
-   <text>Puzzle_turnOff_102</text>
+   <text>Puzzle_turnOff_98</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="730" y="50"/>
+    <position x="863" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-11D0-DAE1E-26">
+  <transition id="t-18C8-1F165-27">
   <name>
-   <text>Puzzle_turnOn_102</text>
+   <text>Puzzle_turnOn_98</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="730" y="140"/>
+    <position x="863" y="140"/>
    </graphics>
   </transition>
-  <place id="p-11D0-DAE22-27">
+  <place id="p-18C8-1F167-28">
   <name>
-   <text>boite_off_116</text>
+   <text>boite_off_92</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -312,107 +323,110 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="47" y="335"/>
+    <position x="45" y="340"/>
    </graphics>
   </place>
-  <place id="p-11D0-DAE25-28">
+  <place id="p-18C8-1F16A-29">
   <name>
-   <text>boite_on_116</text>
+   <text>boite_on_92</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="217" y="335"/>
+    <position x="225" y="340"/>
    </graphics>
   </place>
-  <transition id="t-11D0-DAE27-29">
+  <transition id="t-18C8-1F16C-30">
   <name>
-   <text>boite_turnOff_116</text>
+   <text>boite_turnOff_92</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="127" y="305"/>
+    <position x="135" y="310"/>
    </graphics>
   </transition>
-  <transition id="t-11D0-DAE2A-30">
+  <transition id="t-18C8-1F16F-31">
   <name>
-   <text>boite_turnOn_116</text>
+   <text>boite_turnOn_92</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="127" y="395"/>
+    <position x="135" y="400"/>
    </graphics>
   </transition>
-  <arc id="e-11D0-DAE30-31" source="p-11D0-DAD9F-8" target="t-11D0-DAD8A-7">
+  <arc id="e-18C8-1F175-32" source="p-18C8-1F0F1-9" target="t-18C8-1F0EF-8">
   </arc>
-  <arc id="e-11D0-DAE32-32" source="p-11D0-DAE19-24" target="t-11D0-DAE1C-25">
-  </arc>
-  <arc id="e-11D0-DAE33-33" source="p-11D0-DAE17-23" target="t-11D0-DAE1E-26">
-  </arc>
-  <arc id="e-11D0-DAE35-34" source="t-11D0-DAE1E-26" target="p-11D0-DAE19-24">
-  </arc>
-  <arc id="e-11D0-DAE36-35" source="t-11D0-DAE1C-25" target="p-11D0-DAE17-23">
-  </arc>
-  <arc id="e-11D0-DAE37-36" source="p-11D0-DAE0D-20" target="t-11D0-DAE0A-19">
-  </arc>
-  <arc id="e-11D0-DAE38-37" source="t-11D0-DAE0A-19" target="p-11D0-DAE06-18">
-  </arc>
-  <arc id="e-11D0-DAE39-38" source="p-11D0-DAE25-28" target="t-11D0-DADA5-10">
+  <arc id="e-18C8-1F178-33" source="p-18C8-1F0F5-10" target="t-18C8-1F159-23">
    <type value="test"/>
   </arc>
-  <arc id="e-11D0-DAE3C-39" source="p-11D0-DADA9-11" target="t-11D0-DADA5-10">
-  </arc>
-  <arc id="e-11D0-DAE3D-40" source="t-11D0-DADA5-10" target="p-11D0-DADA3-9">
-  </arc>
-  <arc id="e-11D0-DAE3E-41" source="t-11D0-DAD80-4" target="p-11D0-DAD6F-2">
-  </arc>
-  <arc id="e-11D0-DAE63-42" source="t-11D0-DAD8A-7" target="p-11D0-DAD88-6">
-  </arc>
-  <arc id="e-11D0-DAE66-43" source="p-11D0-DAD7C-3" target="t-11D0-DAD80-4">
-  </arc>
-  <arc id="e-11D0-DAE67-44" source="p-11D0-DAD7C-3" target="t-11D0-DAD84-5">
+  <arc id="e-18C8-1F17B-34" source="p-18C8-1F0EB-7" target="t-18C8-1F159-23">
    <type value="test"/>
   </arc>
-  <arc id="e-11D0-DAE68-45" source="p-11D0-DADC8-17" target="t-11D0-DADC6-16">
-  </arc>
-  <arc id="e-11D0-DAE69-46" source="t-11D0-DADC6-16" target="p-11D0-DADC3-15">
-  </arc>
-  <arc id="e-11D0-DAE6A-47" source="p-11D0-DADBF-14" target="t-11D0-DADBC-13">
-  </arc>
-  <arc id="e-11D0-DAE6B-48" source="t-11D0-DADBC-13" target="p-11D0-DADBA-12">
-  </arc>
-  <arc id="e-11D0-DAE6C-49" source="p-11D0-DAE25-28" target="t-11D0-DAE27-29">
-  </arc>
-  <arc id="e-11D0-DAE6D-50" source="p-11D0-DAE22-27" target="t-11D0-DAE2A-30">
-  </arc>
-  <arc id="e-11D0-DAE6E-51" source="t-11D0-DAE2A-30" target="p-11D0-DAE25-28">
-  </arc>
-  <arc id="e-11D0-DAE6F-52" source="t-11D0-DAE27-29" target="p-11D0-DAE22-27">
-  </arc>
-  <arc id="e-11D0-DAE71-53" source="p-11D0-DAE06-18" target="t-11D0-DAE14-22">
+  <arc id="e-18C8-1F17C-35" source="p-18C8-1F160-25" target="t-18C8-1F159-23">
    <type value="test"/>
   </arc>
-  <arc id="e-11D0-DAE72-54" source="p-11D0-DADC3-15" target="t-11D0-DAE14-22">
+  <arc id="e-18C8-1F17D-36" source="t-18C8-1F159-23" target="p-18C8-1F157-22">
+  </arc>
+  <arc id="e-18C8-1F17E-37" source="p-18C8-1F153-21" target="t-18C8-1F150-20">
+  </arc>
+  <arc id="e-18C8-1F17F-38" source="t-18C8-1F150-20" target="p-18C8-1F14C-19">
+  </arc>
+  <arc id="e-18C8-1F180-39" source="p-18C8-1F16A-29" target="t-18C8-1F16C-30">
+  </arc>
+  <arc id="e-18C8-1F1A3-40" source="p-18C8-1F167-28" target="t-18C8-1F16F-31">
+  </arc>
+  <arc id="e-18C8-1F1A5-41" source="t-18C8-1F16F-31" target="p-18C8-1F16A-29">
+  </arc>
+  <arc id="e-18C8-1F1A7-42" source="t-18C8-1F16C-30" target="p-18C8-1F167-28">
+  </arc>
+  <arc id="e-18C8-1F1A8-43" source="t-18C8-1F0EF-8" target="p-18C8-1F0EB-7">
+  </arc>
+  <arc id="e-18C8-1F1A9-44" source="p-18C8-1F16A-29" target="t-18C8-1F0F8-11">
    <type value="test"/>
   </arc>
-  <arc id="e-11D0-DAE73-55" source="p-11D0-DADBA-12" target="t-11D0-DAE14-22">
+  <arc id="e-18C8-1F1AA-45" source="p-18C8-1F0FC-12" target="t-18C8-1F0F8-11">
+  </arc>
+  <arc id="e-18C8-1F1AB-46" source="t-18C8-1F0F8-11" target="p-18C8-1F0F5-10">
+  </arc>
+  <arc id="e-18C8-1F1AC-47" source="p-18C8-1F0E8-6" target="t-18C8-1F0E6-5">
    <type value="test"/>
   </arc>
-  <arc id="e-11D0-DAE74-56" source="p-11D0-DADA3-9" target="t-11D0-DAE14-22">
+  <arc id="e-18C8-1F1AD-48" source="t-18C8-1F0E1-4" target="p-18C8-1F0CF-2">
+  </arc>
+  <arc id="e-18C8-1F1AE-49" source="p-18C8-1F0DD-3" target="t-18C8-1F0E1-4">
+  </arc>
+  <arc id="e-18C8-1F1AF-50" source="p-18C8-1F0DD-3" target="t-18C8-1F0E6-5">
    <type value="test"/>
   </arc>
-  <arc id="e-11D0-DAE75-57" source="p-11D0-DAD88-6" target="t-11D0-DAE14-22">
+  <arc id="e-18C8-1F1B1-51" source="p-18C8-1F10D-18" target="t-18C8-1F10A-17">
+  </arc>
+  <arc id="e-18C8-1F1B2-52" source="t-18C8-1F10A-17" target="p-18C8-1F107-16">
+  </arc>
+  <arc id="e-18C8-1F1B3-53" source="p-18C8-1F105-15" target="t-18C8-1F101-14">
+  </arc>
+  <arc id="e-18C8-1F1B4-54" source="p-18C8-1F160-25" target="t-18C8-1F162-26">
+  </arc>
+  <arc id="e-18C8-1F1B5-55" source="t-18C8-1F101-14" target="p-18C8-1F0FE-13">
+  </arc>
+  <arc id="e-18C8-1F1B6-56" source="p-18C8-1F15C-24" target="t-18C8-1F165-27">
+  </arc>
+  <arc id="e-18C8-1F1B7-57" source="t-18C8-1F165-27" target="p-18C8-1F160-25">
+  </arc>
+  <arc id="e-18C8-1F1B8-58" source="t-18C8-1F162-26" target="p-18C8-1F15C-24">
+  </arc>
+  <arc id="e-18C8-1F1B9-59" source="p-18C8-1F14C-19" target="t-18C8-1F159-23">
    <type value="test"/>
   </arc>
-  <arc id="e-11D0-DAE76-58" source="p-11D0-DAE19-24" target="t-11D0-DAE14-22">
+  <arc id="e-18C8-1F1BA-60" source="p-18C8-1F107-16" target="t-18C8-1F159-23">
    <type value="test"/>
   </arc>
-  <arc id="e-11D0-DAE77-59" source="t-11D0-DAE14-22" target="p-11D0-DAE10-21">
+  <arc id="e-18C8-1F1BC-61" source="p-18C8-1F0FE-13" target="t-18C8-1F159-23">
+   <type value="test"/>
   </arc>
  </page>
  </net>

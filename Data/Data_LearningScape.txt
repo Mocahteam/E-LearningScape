@@ -1,11 +1,12 @@
 {
     "theme": "Pédagogie",
+    "sessionDuration": 60,
     "trace": true,
     "traceToLRS": false,
     "virtualPuzzle": true,
     "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
-    "tipsPath": "Data/Tips_LearningScape.txt",
-    "internalTipsPath": "Data/InternalTips_LearningScape.txt",
+    "tipsPath": "Data/Hints_LearningScape.txt",
+    "internalTipsPath": "Data/InternalHints_LearningScape.txt",
     "storyTextIntro": [
         "Game data loaded from file",
         "Il est déjà tard le soir, Camille reste inquiète pour son premier enseignement à Sorbonne Université. Ce n’est pas la première fois qu’elle enseigne, mais maintenant elle est Maître de Conférences, son premier poste permanent.",

@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-2680-59F43-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-19FC-36FE9-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma10</text>
   </name>
- <page id="g-2680-59F4F-1">
-  <place id="p-2680-59F54-2">
+ <page id="g-19FC-36FF2-1">
+  <place id="p-19FC-36FF5-2">
   <name>
-   <text>Fragment_souvenir_11_ActivationCount_62</text>
+   <text>Fragment_souvenir_11_ActivationCount_88</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="230" y="130"/>
+    <position x="230" y="125"/>
    </graphics>
   </place>
-  <transition id="t-2680-59F68-3">
+  <transition id="t-19FC-37003-3">
   <name>
-   <text>Fragment_souvenir_11_activate_62</text>
+   <text>Fragment_souvenir_11_activate_88</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="110" y="130"/>
+    <position x="110" y="125"/>
    </graphics>
   </transition>
-  <place id="p-2680-59F73-4">
+  <place id="p-19FC-37008-4">
   <name>
-   <text>Fragment_souvenir_12_ActivationCount_63</text>
+   <text>Fragment_souvenir_12_ActivationCount_89</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="220" y="205"/>
+    <position x="220" y="200"/>
    </graphics>
   </place>
-  <transition id="t-2680-59F7A-5">
+  <transition id="t-19FC-3700C-5">
   <name>
-   <text>Fragment_souvenir_12_activate_63</text>
+   <text>Fragment_souvenir_12_activate_89</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="110" y="205"/>
+    <position x="110" y="200"/>
    </graphics>
   </transition>
-  <place id="p-2680-59F82-6">
+  <place id="p-19FC-37010-6">
   <name>
-   <text>Fragment_souvenir_3_ActivationCount_61</text>
+   <text>Fragment_souvenir_3_ActivationCount_87</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -60,9 +60,9 @@
     <position x="230" y="50"/>
    </graphics>
   </place>
-  <transition id="t-2680-59F88-7">
+  <transition id="t-19FC-37013-7">
   <name>
-   <text>Fragment_souvenir_3_activate_61</text>
+   <text>Fragment_souvenir_3_activate_87</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -71,20 +71,20 @@
     <position x="110" y="50"/>
    </graphics>
   </transition>
-  <place id="p-2680-59F8E-8">
+  <place id="p-19FC-37017-8">
   <name>
-   <text>Q6_Answered_64</text>
+   <text>Q6_Answered_91</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="695" y="130"/>
+    <position x="725" y="110"/>
    </graphics>
   </place>
-  <place id="p-2680-59F93-9">
+  <place id="p-19FC-3701A-9">
   <name>
-   <text>Q6_Answering_64</text>
+   <text>Q6_Answering_91</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -93,43 +93,57 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="435" y="130"/>
+    <position x="465" y="110"/>
    </graphics>
   </place>
-  <transition id="t-2680-59F96-10">
+  <transition id="t-19FC-3701C-10">
   <name>
-   <text>Q6_Correct_64</text>
+   <text>Q6_Correct_91</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="575" y="70"/>
+    <position x="605" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-2680-59F9B-11">
+  <transition id="t-19FC-37020-11">
   <name>
-   <text>Q6_Wrong_64</text>
+   <text>Q6_Wrong_91</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="575" y="190"/>
+    <position x="605" y="170"/>
    </graphics>
   </transition>
-  <arc id="e-2680-59FA3-12" source="t-2680-59F96-10" target="p-2680-59F8E-8">
-  </arc>
-  <arc id="e-2680-59FA5-13" source="p-2680-59F93-9" target="t-2680-59F96-10">
-  </arc>
-  <arc id="e-2680-59FA8-14" source="p-2680-59F93-9" target="t-2680-59F9B-11">
+  <place id="p-19FC-37021-12">
+  <name>
+   <text>Q6_place_90</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="465" y="195"/>
+   </graphics>
+  </place>
+  <arc id="e-19FC-37027-13" source="p-19FC-37021-12" target="t-19FC-37020-11">
    <type value="test"/>
   </arc>
-  <arc id="e-2680-59FAD-15" source="t-2680-59F7A-5" target="p-2680-59F73-4">
+  <arc id="e-19FC-3702B-14" source="t-19FC-3701C-10" target="p-19FC-37017-8">
   </arc>
-  <arc id="e-2680-59FAE-16" source="t-2680-59F68-3" target="p-2680-59F54-2">
+  <arc id="e-19FC-3702C-15" source="p-19FC-3701A-9" target="t-19FC-3701C-10">
   </arc>
-  <arc id="e-2680-59FB0-17" source="t-2680-59F88-7" target="p-2680-59F82-6">
+  <arc id="e-19FC-3702D-16" source="p-19FC-3701A-9" target="t-19FC-37020-11">
+   <type value="test"/>
+  </arc>
+  <arc id="e-19FC-3702D-17" source="t-19FC-3700C-5" target="p-19FC-37008-4">
+  </arc>
+  <arc id="e-19FC-3702F-18" source="t-19FC-37003-3" target="p-19FC-36FF5-2">
+  </arc>
+  <arc id="e-19FC-37030-19" source="t-19FC-37013-7" target="p-19FC-37010-6">
   </arc>
  </page>
  </net>

@@ -26,9 +26,8 @@ namespace TinCan {
 	public class RemoteLRSAsync : MonoBehaviour {
 
 		// config
-		public string endpoint { get; set; }
 		public TCAPIVersion version { get; set; }
-		public String auth { get; set; }
+        public List<LRSAddress> lrsAddresses;
 
 		// state
 		public bool complete { get; set; }
@@ -37,15 +36,10 @@ namespace TinCan {
 
 		// ------------------------------------------------------------------------
 		// ------------------------------------------------------------------------
-		public void initLRS(String endpoint, String username, String password){
-
-			this.endpoint = endpoint;
-			// endpoint should have trailing /
-			if (this.endpoint[this.endpoint.Length - 1] != '/'){
-				this.endpoint += "/";
-			}
+		public void initLRS(List<LRSAddress> addresses){
+            
+            lrsAddresses = new List<LRSAddress>(addresses);
 			this.version = TCAPIVersion.latest();
-			this.auth = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password));
 
 			this.initState();
 		}
@@ -62,35 +56,42 @@ namespace TinCan {
 		// ------------------------------------------------------------------------
 		// ------------------------------------------------------------------------
 		public void SaveStatement(Statement statement){
+            foreach(LRSAddress address in lrsAddresses)
+            {
+                // reinit state
+                this.initState();
 
-			// reinit state
-			this.initState();
+                // post header
+                Dictionary<string, string> postHeader = new Dictionary<string, string>();
+                postHeader.Add("Content-Type", "application/json");
+                postHeader.Add("X-Experience-API-Version", this.version.ToString());
+                postHeader.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Concat(address.lrsUser, ":", address.lrsPassword))));
 
-			// post header
-			Dictionary<string,string> postHeader = new Dictionary<string, string>();
-			postHeader.Add("Content-Type", "application/json");
-			postHeader.Add("X-Experience-API-Version", this.version.ToString());
-			postHeader.Add("Authorization", auth);
+                // form data
+                byte[] formBytes = Encoding.UTF8.GetBytes(statement.ToJSON(this.version));
 
-			// form data
-			byte[] formBytes = Encoding.UTF8.GetBytes(statement.ToJSON(this.version));
+                string queryURL;
+                // endpoint should have trailing /
+                if (address.lrsURL[address.lrsURL.Length - 1] != '/')
+                    queryURL = address.lrsURL + "/statements";
+                else
+                    // https://learninglocker.dig-itgames.com/data/xAPI/statements?statementId=58098b7c-3353-4f9c-b812-1bddb08876fd
+                    queryURL = address.lrsURL + "statements";
 
-			// https://learninglocker.dig-itgames.com/data/xAPI/statements?statementId=58098b7c-3353-4f9c-b812-1bddb08876fd
-			string queryURL = this.endpoint + "statements";
+                /*
+                // debug
+                foreach (string key in postHeader.Keys){
+                    string val = postHeader[key];
+                    Debug.Log(key + ": " + val);
+                }
+                Debug.Log(statement.ToJSON());
+                Debug.Log("Starting WWW: " + queryURL + " FORM:" + Encoding.UTF8.GetString(formBytes));
+                */
 
-			/*
-			// debug
-			foreach (string key in postHeader.Keys){
-				string val = postHeader[key];
-				Debug.Log(key + ": " + val);
-			}
-			Debug.Log(statement.ToJSON());
-			Debug.Log("Starting WWW: " + queryURL + " FORM:" + Encoding.UTF8.GetString(formBytes));
-			*/
-
-			// post via www
-			WWW www = new WWW(queryURL, formBytes, postHeader);
-			StartCoroutine(WaitForRequest(www));
+                // post via www
+                WWW www = new WWW(queryURL, formBytes, postHeader);
+                StartCoroutine(WaitForRequest(www));
+            }
 		}
 
 		// ------------------------------------------------------------------------

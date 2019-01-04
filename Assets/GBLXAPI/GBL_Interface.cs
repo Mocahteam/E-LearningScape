@@ -16,6 +16,20 @@ using System.Text; // required for StringBuilder()
 
 using Newtonsoft.Json.Linq; // for extensions
 
+public struct LRSAddress
+{
+    public string lrsURL;       //endpoint
+    public string lrsUser;      //key
+    public string lrsPassword;  //secret
+
+    public LRSAddress(string url, string user, string password)
+    {
+        lrsURL = url;
+        lrsUser = user;
+        lrsPassword = password;
+    }
+}
+
 // --------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------
 public static class GBL_Interface {
@@ -29,9 +43,10 @@ public static class GBL_Interface {
 	};
 
     // Fill in these fields for GBLxAPI setup.
-	public static string lrsURL = "https://lrsmocah.lip6.fr/data/xAPI"; 				// endpoint
-	public static string lrsUser = "2da3ea73b1dcf6258c02649d1d3f7a9385b74d61";  		// key
-	public static string lrsPassword = "90935a12c7eeb44d1d6acefd0f413e4d4c552467";
+    //Statements will be sent to all addresses in this list
+    public static List<LRSAddress> lrsAddresses = new List<LRSAddress>() {
+        new LRSAddress("https://lrsmocah.lip6.fr/data/xAPI", "2da3ea73b1dcf6258c02649d1d3f7a9385b74d61", "90935a12c7eeb44d1d6acefd0f413e4d4c552467")    //default lip6 LRS
+    };
 	public static string standardsConfigDefault = "data/GBLxAPI_Vocab_Default";
 	public static string standardsConfigUser = "data/GBLxAPI_Vocab_User";
 	public static string gameURI = "https://www.lip6.fr/mocah/invalidURI/activity-types/serious-game/LearningScape";
