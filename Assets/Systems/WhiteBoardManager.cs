@@ -184,10 +184,6 @@ public class WhiteBoardManager : FSystem {
                     }
                     else
                     {
-                        int nb = f_boardRemovableWords.Count;
-                        for(int i = 0; i < nb; i++)
-                            if((f_boardRemovableWords.getAt(i).transform.position - eraser.transform.position).magnitude < eraser.transform.localScale.x)
-                                Debug.Log(f_boardRemovableWords.getAt(i).name);
                         //move eraser to mouse position
                         Vector3 mousePos = selectedBoard.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distToBoard)));
                         eraser.transform.localPosition = new Vector3(mousePos.x, eraser.transform.localPosition.y, mousePos.z);

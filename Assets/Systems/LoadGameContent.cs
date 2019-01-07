@@ -100,6 +100,7 @@ public class LoadGameContent : FSystem {
                 File.WriteAllBytes(string.Concat("Data/", defaultGameContent.puzzlePicture.name, ".png"), defaultGameContent.puzzlePicture.EncodeToPNG());
 
                 Debug.Log("Data created");
+                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data created"));
 
                 Load();
             }
@@ -116,9 +117,11 @@ public class LoadGameContent : FSystem {
 
         ActionsManager.instance.Pause = !gameContent.trace;
         Debug.Log(string.Concat("Trace: ", gameContent.trace));
+        File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace: ", gameContent.trace));
         SendStatements.instance.Pause = !gameContent.traceToLRS;
         SendStatements.shouldPause = !gameContent.traceToLRS;
         Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
+        File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace to LRS: ", gameContent.traceToLRS));
         foreach (GameObject go in f_puzzles)
             GameObjectManager.setGameObjectState(go, gameContent.virtualPuzzle);
         foreach (GameObject go in f_puzzlesFragment)
@@ -321,7 +324,10 @@ public class LoadGameContent : FSystem {
                             b2.text = tmpString;
                         }
                         else
+                        {
                             Debug.LogWarning(string.Concat("The answer ", j + 1, " of BallBox enigma should be between 1 and 15 included."));
+                            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - The answer ", j + 1, " of BallBox enigma should be between 1 and 15 included"));
+                        }
 
                         nbBallSeen = 0;
                     }
@@ -329,6 +335,7 @@ public class LoadGameContent : FSystem {
                 else
                 {
                     Debug.LogWarning(string.Concat("The answer ", j + 1, " of BallBox enigma should be an integer."));
+                    File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - The answer ", j + 1, " of BallBox enigma should be an integer"));
                 }
             }
         }
@@ -778,7 +785,10 @@ public class LoadGameContent : FSystem {
         if (File.Exists("Data/LRSConfig.txt"))
             GBL_Interface.lrsAddresses = JsonConvert.DeserializeObject<List<LRSAddress>>(File.ReadAllText("Data/LRSConfig.txt"));
         else
+        {
             Debug.LogWarning("LRS configuration file not found. Default LRS used (Lip6).");
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - LRS configuration file not found. Default LRS used (Lip6)"));
+        }
 
         if (File.Exists(gameContent.hintsPath))
         {
@@ -790,6 +800,7 @@ public class LoadGameContent : FSystem {
         else
         {
             Debug.LogWarning("File containting hints not found.");
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting hints not found"));
         }
 
         if (File.Exists(gameContent.internalHintsPath))
@@ -800,15 +811,18 @@ public class LoadGameContent : FSystem {
             {
                 internalGameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalHintsJsonFile.text);
                 Debug.LogWarning("File containting internal hints empty. Default used.");
+                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting internal hints empty. Default used"));
             }
         }
         else
         {
             f_internalGameHints.First().GetComponent<InternalGameHints>().dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalHintsJsonFile.text);
             Debug.LogWarning("File containting internal hints not found. Default used.");
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting internal hints not found. Default used"));
         }
 
         Debug.Log("Data loaded");
+        File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));
     }
 
     private string StringToAnswer(string answer)

@@ -3,6 +3,7 @@ using FYFY;
 using TMPro;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
@@ -68,7 +69,10 @@ public class DreamFragmentCollecting : FSystem {
             if (File.Exists(LoadGameContent.gameContent.dreamFragmentLinksPath))
                 dreamFragmentsLinks = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(LoadGameContent.gameContent.dreamFragmentLinksPath));
             else
+            {
                 Debug.LogWarning("Unable to load dream fragment links because no file found.");
+                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - Unable to load dream fragment links because no file found"));
+            }
             if (dreamFragmentsLinks == null)
                 dreamFragmentsLinks = new Dictionary<string, string>();
         }
