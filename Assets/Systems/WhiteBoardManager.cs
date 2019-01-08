@@ -180,7 +180,7 @@ public class WhiteBoardManager : FSystem {
                         //stop dragging eraser when the click is released
                         eraserDragged = false;
                         GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "turnOff", performedBy = "player" });
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "released", objectType = "draggable", objectName = eraser.name });
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "dropped", objectType = "draggable", objectName = eraser.name });
                     }
                     else
                     {

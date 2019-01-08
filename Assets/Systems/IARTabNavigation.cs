@@ -81,12 +81,6 @@ public class IARTabNavigation : FSystem {
                 if (f_atWork.Count == 0)
                     openIar(f_tabs.Count - 1); // Open IAR on the last tab
         }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "pressed", objectType = "key", objectName = "A" });
-        }
-        else if(Input.GetKeyDown(KeyCode.Escape))
-            GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "pressed", objectType = "key", objectName = "Escape" });
     }
 
     private void openIar(int tabId)

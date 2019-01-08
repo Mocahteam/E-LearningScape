@@ -60,7 +60,9 @@ public class SendStatements : FSystem {
                 ap = listAP[i];
                 //If no result info filled
                 if (!ap.result)
-                    GBL_Interface.SendStatement(ap.verb, ap.objectType, ap.objectName);
+                {
+                    GBL_Interface.SendStatement(ap.verb, ap.objectType, ap.objectName, ap.activityExtensions);
+                }
                 else
                 {
                     bool? completed = null, success = null;
@@ -75,7 +77,8 @@ public class SendStatements : FSystem {
                     else if (ap.success < 0)
                         success = false;
 
-                    GBL_Interface.SendStatementWithResult(ap.verb, ap.objectType, ap.objectName, completed, success, ap.response, ap.score, ap.duration);
+                    GBL_Interface.SendStatementWithResult(ap.verb, ap.objectType, ap.objectName, ap.activityExtensions, ap.resultExtensions,
+                        completed, success, ap.response, ap.score, ap.duration);
                 }
                 GameObjectManager.removeComponent(ap);
             }

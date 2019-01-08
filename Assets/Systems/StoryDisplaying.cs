@@ -108,7 +108,14 @@ public class StoryDisplaying : FSystem {
             int hours = (int)duration / 3600;
             int minutes = (int)(duration % 3600) / 60;
             int seconds = (int)(duration % 3600) % 60;
-            storyTexts[st.storyProgression].Add(string.Concat("<align=\"center\">", hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")));
+            storyTexts[st.storyProgression].Add(string.Concat("<align=\"center\">Vous avez terminé en:\n", hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")));
+            GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
+            {
+                verb = "reached",
+                objectType = "area",
+                objectName = "End_Door",
+                activityExtensions = new Dictionary<string, List<string>>() { { "time", new List<string>() { string.Concat(hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")) } } }
+            });
             fadingImage.color = Color.white;
             background.color = Color.white;
             sdText.color = Color.black;
@@ -130,7 +137,10 @@ public class StoryDisplaying : FSystem {
                     background.color = new Color(background.color.r, background.color.g, background.color.b, (Time.time - readingTimer) / fadeSpeed);
                 // stop fading if mouse clicked
                 if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
+                {
                     readingTimer = Time.time - (fadeSpeed + 1);
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
+                }
             }
             else
             {
@@ -186,7 +196,10 @@ public class StoryDisplaying : FSystem {
                 if (fadingBackground)
                     background.color = new Color(background.color.r, background.color.g, background.color.b, 1 - (Time.time - readingTimer) / fadeSpeed);
                 if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
+                {
                     readingTimer = Time.time - (fadeSpeed + 1);
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
+                }
             }
             else
             {
@@ -210,6 +223,7 @@ public class StoryDisplaying : FSystem {
             {
                 alphaToPlain = true;
                 readingTimer = Time.time;
+                GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new { verb = "read", objectType = "text", objectName = sdGo.name });
             }
         }
     }

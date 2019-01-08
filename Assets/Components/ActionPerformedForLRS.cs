@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class ActionPerformedForLRS : MonoBehaviour {
     // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
@@ -19,4 +20,12 @@ public class ActionPerformedForLRS : MonoBehaviour {
     public string response = null;
     public int? score = null;
     public float duration = 0;
+    /// <summary>
+    /// Keys are extention's fields' names and values are lists of values of each field
+    /// </summary>
+    public Dictionary<string, List<string>> activityExtensions = null;
+    /// <summary>
+    /// Keys are extention's fields' names and values are lists of values of each field
+    /// </summary>
+    public Dictionary<string, List<string>> resultExtensions = null;
 }

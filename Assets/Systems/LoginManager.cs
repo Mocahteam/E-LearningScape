@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using TMPro;
@@ -307,6 +308,18 @@ public class LoginManager : FSystem {
                 connectionAnswerCheck3.text = "X";
                 connectionAnswerCheck3.color = cacRed;
             }
+
+            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
+            {
+                verb = "received",
+                objectType = "feedback",
+                objectName = string.Concat(selectedLoginPanel.name, "_feedback"),
+                activityExtensions = new Dictionary<string, List<string>>() {
+                    { "content", new List<string>() {
+                        string.Concat(connectionAnswerCheck1, connectionAnswerCheck2, connectionAnswerCheck3), answer.ToString() } },
+                    { "type", new List<string>() { "answer validation" } }
+                }
+            });
         }
     }
 }

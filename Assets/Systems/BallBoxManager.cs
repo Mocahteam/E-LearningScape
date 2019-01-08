@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.PostProcessing;
+using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using FYFY_plugins.Monitoring;
@@ -96,7 +97,13 @@ public class BallBoxManager : FSystem {
             ballSubTitles.text = b.text;
 
             focusedBall = go;
-            GameObjectManager.addComponent<ActionPerformedForLRS>(focusedBall, new { verb = "highlighted", objectType = "interactable", objectName = focusedBall.name });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(focusedBall, new
+            {
+                verb = "read",
+                objectType = "interactable",
+                objectName = focusedBall.name,
+                activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { b.text } } }
+            });
         }
     }
 
@@ -105,6 +112,12 @@ public class BallBoxManager : FSystem {
         ballSubTitles.text = "";
         if (focusedBall)
         {
+            GameObjectManager.addComponent<ActionPerformedForLRS>(focusedBall, new
+            {
+                verb = "exitedView",
+                objectType = "interactable",
+                objectName = focusedBall.name
+            });
             focusedBall.GetComponent<Renderer>().material.color = focusedBall.GetComponent<Ball>().color;
             focusedBall = null;
         }
@@ -216,6 +229,7 @@ public class BallBoxManager : FSystem {
                             ballGo.transform.localPosition = ballPos;
                         }
                         ballCounter = f_balls.Count;
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "skipped", objectType = "animation", objectName = string.Concat(selectedBox.name, "_opening") });
                     }
                     //when the last ball arrives to its position
                     if (ballGo.transform.localPosition == ballPos)
@@ -244,7 +258,16 @@ public class BallBoxManager : FSystem {
                     targetRotation = Quaternion.Euler(90, 0, 270);
                     moveBall = true;
                     selectedBall = focusedBall;
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBall, new { verb = "interacted", objectType = "interactable", objectName = selectedBall.name });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBall, new
+                    {
+                        verb = "interacted",
+                        objectType = "interactable",
+                        objectName = selectedBall.name,
+                        activityExtensions = new Dictionary<string, List<string>>() {
+                            { "content", new List<string>() { focusedBall.GetComponent<Ball>().text } },
+                            { "value", new List<string>() { focusedBall.GetComponent<Ball>().number.ToString() } }
+                        }
+                    });
                     Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = false;
 
                     GameObjectManager.addComponent<ActionPerformed>(selectedBall, new { name = "activate", performedBy = "player" });

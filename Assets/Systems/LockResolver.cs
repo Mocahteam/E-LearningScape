@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using UnityEngine.UI;
@@ -35,6 +36,7 @@ public class LockResolver : FSystem {
     private bool lockRotationDown = false;
     private Color lockWheelColor;
     private float wheelRotationCount = 0;
+    private string rotationDirection = "";
 
     private bool room1Unlocked = false;
     private bool room3Unlocked = false;
@@ -192,18 +194,22 @@ public class LockResolver : FSystem {
             {
                 if (lockRotationUp)
                 {
+                    rotationDirection = "up";
                     selectedWheel.transform.Rotate(36 - wheelRotationCount, 0, 0);
                     lockRotationUp = false;
                 }
                 else
                 {
+                    rotationDirection = "down";
                     selectedWheel.transform.Rotate(-(36 - wheelRotationCount), 0, 0);
                     lockRotationDown = false;
                 }
                 wheelRotationCount = 0;
+                int solved = -1;
                 // Check if the solution is found
                 if (selectedLocker.Wheel1.GetComponent<WheelFrontFace>().faceNumber == selectedLocker.wheel1Solution && selectedLocker.Wheel2.GetComponent<WheelFrontFace>().faceNumber == selectedLocker.wheel2Solution && selectedLocker.Wheel3.GetComponent<WheelFrontFace>().faceNumber == selectedLocker.wheel3Solution)
                 {
+                    solved = 1;
                     tmpTargetPosition = f_player.First().transform.position + Vector3.back * 3;
                     // depending of locker => unlock the right room
                     if (selectedLocker.tag == "LockIntro")
@@ -213,6 +219,19 @@ public class LockResolver : FSystem {
                     else
                         room3Unlocked = true;
                 }
+                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedWheel, new
+                {
+                    verb = "moved",
+                    objectType = "interactable",
+                    objectName = selectedWheel.name,
+                    activityExtensions = new Dictionary<string, List<string>>() {
+                        { "direction", new List<string>() { rotationDirection } },
+                        { "content", new List<string>() { selectedWheel.GetComponent<WheelFrontFace>().faceNumber.ToString() } }
+                    },
+                    result = true,
+                    success = solved,
+                    response = string.Concat(selectedLocker.Wheel1.GetComponent<WheelFrontFace>().faceNumber, selectedLocker.Wheel2.GetComponent<WheelFrontFace>().faceNumber, selectedLocker.Wheel3.GetComponent<WheelFrontFace>().faceNumber)
+                });
             }
         }
 
@@ -247,7 +266,13 @@ public class LockResolver : FSystem {
 
                     GameObjectManager.addComponent<ActionPerformed>(f_wallIntro.First(), new { name = "perform2", performedBy = "system" });
 
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new { verb = "completed", objectType = "interactable", objectName = selectedLocker.gameObject.name });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
+                    {
+                        verb = "completed",
+                        objectType = "interactable",
+                        objectName = selectedLocker.gameObject.name,
+                        activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { string.Concat(selectedLocker.wheel1Solution, selectedLocker.wheel2Solution, selectedLocker.wheel3Solution) } } }
+                    });
 
                     // disable the wall
                     GameObjectManager.setGameObjectState(f_wallIntro.First(), false);

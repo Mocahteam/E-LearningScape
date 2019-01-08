@@ -3,6 +3,7 @@
     "sessionDuration": 60,
     "trace": true,
     "traceToLRS": false,
+    "traceMovement": true,
     "virtualPuzzle": true,
     "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
     "tipsPath": "Data/Hints_LearningScape.txt",
@@ -13,7 +14,7 @@
         "Camille finit par s'endormir... C'est alors que les marchands de sable entrent en action pour aider Camille à structurer sa pensée pendant son sommeil."
     ],
     "storyTextransition": [
-        "Camille est tombée en sommeil paradoxal, et elle se met à rêver. L’université se transforme en jungle pleine de dangers. Les marchands de sable restent avec elle pour la protéger."
+        "Camille est tombée en sommeil paradoxal, et elle se met à rêver. L’université se transforme en jungle. Les marchands de sable restent avec elle pour la protéger."
     ],
     "storyTextEnd": [
         "Camille se réveille. Elle est en pleine forme, et tout est clair dans sa tête pour son premier enseignement. Elle a hâte de commencer.",

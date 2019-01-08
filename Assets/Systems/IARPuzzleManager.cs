@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
 
@@ -39,7 +40,13 @@ public class IARPuzzleManager : FSystem {
         }
         if (Input.GetMouseButtonUp(0) && tmpGo)
         {
-            GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new { verb = "released", objectType = "draggable", objectName = tmpGo.name });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
+            {
+                verb = "dropped",
+                objectType = "draggable",
+                objectName = tmpGo.name,
+                activityExtensions = new Dictionary<string, List<string>>() { { "position", new List<string>() { tmpGo.GetComponent<RectTransform>().position.ToString("G4") } } }
+            });
             tmpGo = null;
         }
         if (Input.GetMouseButton(0) && tmpGo)

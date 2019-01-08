@@ -127,7 +127,7 @@ public class IARGearsEnigma : FSystem
                 rotateGear = false; //initial value
                 if (Input.GetMouseButtonUp(0))  //when the gear is released
                 {
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(gearDragged, new { verb = "released", objectType = "draggable", objectName = gearDragged.name });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(gearDragged, new { verb = "dropped", objectType = "draggable", objectName = gearDragged.name });
                     GameObjectManager.setGameObjectState(transparentGear, false);
                     //if the gear is released in the center of the tablet (player answering)
                     if (gearDragged.transform.localPosition.x < 125 && gearDragged.transform.localPosition.x > -125 && gearDragged.transform.localPosition.y < 125f / 2 && gearDragged.transform.localPosition.x > -125f / 2)

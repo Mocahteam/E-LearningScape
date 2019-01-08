@@ -120,6 +120,7 @@ public class LoadGameContent : FSystem {
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace: ", gameContent.trace));
         SendStatements.instance.Pause = !gameContent.traceToLRS;
         SendStatements.shouldPause = !gameContent.traceToLRS;
+        MovingSystem.instance.traceMovement = gameContent.traceMovement;
         Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace to LRS: ", gameContent.traceToLRS));
         foreach (GameObject go in f_puzzles)
@@ -251,6 +252,8 @@ public class LoadGameContent : FSystem {
                     break;
             }
         }
+
+        LoginManager.passwordSolution = gameContent.mdpLogin;
 
         //Ball Box
         int nbBalls = f_balls.Count;
@@ -642,8 +645,6 @@ public class LoadGameContent : FSystem {
                     break;
             }
         }
-
-        LoginManager.passwordSolution = gameContent.mdpLogin;
 
         //Glasses
         BagImage bi = f_bagImage.First().GetComponent<BagImage>();

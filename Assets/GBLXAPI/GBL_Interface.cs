@@ -62,28 +62,63 @@ public static class GBL_Interface {
 	Here is where you will put functions to be called whenever you want to send a GBLxAPI statement.
 	 */
 	
-	public static void SendStatement(string verb, string activityType, string activityName)
+	public static void SendStatement(string verb, string activityType, string activityName, Dictionary<string, List<string>> activityExtensions = null)
     {
 		Agent statementActor = GBLXAPI.Instance.CreateActorStatement(userUUID, "https://www.lip6.fr/mocah/", playerName);
 		Verb statementVerb = GBLXAPI.Instance.CreateVerbStatement(verb);
 		Activity statementObject = GBLXAPI.Instance.CreateObjectActivityStatement(string.Concat("https://www.lip6.fr/mocah/invalidURI/",activityType,"/",activityName), activityType, activityName);
-		Result statementResult = null;
 
+        if(activityExtensions != null)
+        {
+            foreach(string field in activityExtensions.Keys)
+            {
+                List<JToken> jtList = new List<JToken>();
+                foreach (string value in activityExtensions[field])
+                    jtList.Add(GBLXAPI.Instance.CreateContextExtensionStatement(field, value));
+                GBLXAPI.Instance.PackExtension(field, jtList, statementObject.definition.extensions);
+            }
+        }
+
+		Result statementResult = null;
 		Context statementContext = null;
 
 		// QueueStatement(Agent statementActor, Verb statementVerb, Activity statementObject, Result statementResult, Context statementContext, StatementCallbackHandler sendCallback = null)
 		GBLXAPI.Instance.QueueStatement(statementActor, statementVerb, statementObject, statementResult, statementContext);
 	}
 	
-	public static void SendStatementWithResult(string verb, string activityType, string activityName, bool? completed, 
-        bool? success, string response = null, int? score = null, float duration = 0)
+	public static void SendStatementWithResult(string verb, string activityType, string activityName, Dictionary<string, List<string>> activityExtensions = null,
+        Dictionary<string, List<string>> resultExtensions = null, bool ? completed = null, bool? success = null, string response = null, int? score = null,
+        float duration = 0)
     {
 		Agent statementActor = GBLXAPI.Instance.CreateActorStatement(userUUID, "https://www.lip6.fr/mocah/", playerName);
 		Verb statementVerb = GBLXAPI.Instance.CreateVerbStatement(verb);
 		Activity statementObject = GBLXAPI.Instance.CreateObjectActivityStatement(string.Concat("https://www.lip6.fr/mocah/invalidURI/",activityType,"/",activityName), activityType, activityName);
+
+        if (activityExtensions != null)
+        {
+            foreach (string field in activityExtensions.Keys)
+            {
+                List<JToken> jtList = new List<JToken>();
+                foreach (string value in activityExtensions[field])
+                    jtList.Add(GBLXAPI.Instance.CreateContextExtensionStatement(field, value));
+                GBLXAPI.Instance.PackExtension(field, jtList, statementObject.definition.extensions);
+            }
+        }
+
         Result statementResult = GBLXAPI.Instance.CreateResultStatement(completed, success, duration, response, score);
 
-		Context statementContext = null;
+        if (resultExtensions != null)
+        {
+            foreach (string field in resultExtensions.Keys)
+            {
+                List<JToken> jtList = new List<JToken>();
+                foreach (string value in resultExtensions[field])
+                    jtList.Add(GBLXAPI.Instance.CreateContextExtensionStatement(field, value));
+                GBLXAPI.Instance.PackExtension(field, jtList, statementResult.extensions);
+            }
+        }
+
+        Context statementContext = null;
 
 		// QueueStatement(Agent statementActor, Verb statementVerb, Activity statementObject, Result statementResult, Context statementContext, StatementCallbackHandler sendCallback = null)
 		GBLXAPI.Instance.QueueStatement(statementActor, statementVerb, statementObject, statementResult, statementContext);

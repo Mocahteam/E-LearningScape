@@ -91,7 +91,7 @@ public class DreamFragmentCollecting : FSystem {
                 {
                     // Show fragment UI
                     selectedFragment = hit.transform.gameObject;
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "fragment", objectName = selectedFragment.name });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
                     GameObjectManager.setGameObjectState(dfUI, true);
                     tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
                     GameObjectManager.setGameObjectState(onlineButton, dreamFragmentsLinks.ContainsKey(selectedFragment.name) && dreamFragmentsLinks[selectedFragment.name] != "");
@@ -175,6 +175,7 @@ public class DreamFragmentCollecting : FSystem {
 
     private void CloseWindow()
     {
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "deactivated", objectType = "viewable", objectName = selectedFragment.name });
         if (selectedFragment.GetComponent<DreamFragment>().type != 2)
         {
             // disable particles
@@ -202,5 +203,12 @@ public class DreamFragmentCollecting : FSystem {
     private void OpenFragmentLink()
     {
         Application.OpenURL(dreamFragmentsLinks[selectedFragment.name]);
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new
+        {
+            verb = "accessed",
+            objectType = "viewable",
+            objectName = string.Concat(selectedFragment.name, "_Link"),
+            activityExtensions = new Dictionary<string, List<string>>() { { "link", new List<string>() { dreamFragmentsLinks[selectedFragment.name]  } } }
+        });
     }
 }

@@ -79,7 +79,20 @@ public class IARQueryEvaluator : FSystem {
             GameObjectManager.setGameObjectState(queries, false);
             // enable final code
             GameObjectManager.setGameObjectState(queries.transform.parent.GetChild(1).gameObject, true);
-            GameObjectManager.addComponent<ActionPerformedForLRS>(queries.transform.parent.gameObject, new { verb = "completed", objectType = "menu", objectName = queries.transform.parent.gameObject.name });
+
+            GameObjectManager.addComponent<ActionPerformedForLRS>(queries.transform.parent.gameObject, new
+            {
+                verb = "completed",
+                objectType = "menu",
+                objectName = queries.transform.parent.gameObject.name
+            });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(queries.transform.parent.GetChild(1).gameObject, new
+            {
+                verb = "accessed",
+                objectType = "viewable",
+                objectName = "Password_Room2",
+                activityExtensions = new Dictionary<string, List<string>>() { { "value", new List<string>() { queries.transform.parent.GetChild(1).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text } } }
+            });
         }
     }
 
@@ -198,6 +211,21 @@ public class IARQueryEvaluator : FSystem {
             // set final answer for third room
             if (query.tag == "Q-R3")
                 query.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = answer;
+
+            List<string> feedbackTexts = new List<string>();
+            foreach (Transform child in query.transform.GetChild(3))
+                feedbackTexts.Add(child.gameObject.GetComponent<TextMeshProUGUI>().text);
+            GameObjectManager.addComponent<ActionPerformedForLRS>(query, new
+            {
+                verb = "received",
+                objectType = "feedback",
+                objectName = string.Concat(query.name, "-", query.tag, "_feedback"),
+                activityExtensions = new Dictionary<string, List<string>>() {
+                    { "content", feedbackTexts },
+                    { "type", new List<string>() { "answer description" } }
+                }
+            });
+
             // if linked hide item in inventory
             foreach (LinkedWith item in query.GetComponents<LinkedWith>())
                 GameObjectManager.setGameObjectState(item.link, false);

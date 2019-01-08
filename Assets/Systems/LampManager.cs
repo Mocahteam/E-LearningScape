@@ -87,8 +87,8 @@ public class LampManager : FSystem {
                             objectName = tmpGo.name
                         });
                         GameObjectManager.addComponent<ActionPerformed>(tmpGo, new { name = "activate", performedBy = "player" });
+                        GameObjectManager.setGameObjectState(tmpGo, true);
                     }
-                    GameObjectManager.setGameObjectState(tmpGo, true);
                     //calculate the intersection between player direction and the wall
                     float d = Vector3.Dot((position - Camera.main.transform.position), tmpGo.transform.forward) / Vector3.Dot(Camera.main.transform.forward, tmpGo.transform.forward);
                     //move the mask to the calculated position

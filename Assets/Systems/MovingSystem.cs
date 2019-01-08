@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using FYFY;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ public class MovingSystem : FSystem
     private Family f_cursor = FamilyManager.getFamily(new AnyOfTags("Cursor"));
     private Family f_waterWalking = FamilyManager.getFamily(new AnyOfLayers(12), new AllOfComponents(typeof(Triggered3D))); // Layer 12 <=> WaterCollider
 
+    public bool traceMovement = false;
     private bool crouching = false; // true when the player is crouching
     private bool changingPose = false;
     private float crouchingSpeed;
@@ -40,6 +42,8 @@ public class MovingSystem : FSystem
     private float crouchSpeed = 1;
     private float standingSpeed = 5;
 
+    private float walkingTraceTimer = float.MaxValue;
+
     public static MovingSystem instance;
 
     public MovingSystem()
@@ -60,30 +64,30 @@ public class MovingSystem : FSystem
     private void onEnterWater(GameObject go)
     {
         walkInWater = true;
-        playerController.m_FootstepSounds[0] = audioBank.audioBank[4];
-        playerController.m_FootstepSounds[1] = audioBank.audioBank[5];
-        playerController.m_WalkSpeed = walkInWaterSpeed;
-        playerController.m_RunSpeed = walkInWaterSpeed;
+        playerController.FootstepSounds[0] = audioBank.audioBank[4];
+        playerController.FootstepSounds[1] = audioBank.audioBank[5];
+        playerController.WalkSpeed = walkInWaterSpeed;
+        playerController.RunSpeed = walkInWaterSpeed;
     }
 
     private void onExitWater(int instanceId)
     {
         walkInWater = false;
-        playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
-        playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
+        playerController.FootstepSounds[0] = audioBank.audioBank[2];
+        playerController.FootstepSounds[1] = audioBank.audioBank[3];
         if (crouching)
         {
-            playerController.m_WalkSpeed = crouchSpeed;
-            playerController.m_RunSpeed = crouchSpeed;
-            playerController.m_FootstepSounds[0] = audioBank.audioBank[6];
-            playerController.m_FootstepSounds[1] = audioBank.audioBank[7];
+            playerController.WalkSpeed = crouchSpeed;
+            playerController.RunSpeed = crouchSpeed;
+            playerController.FootstepSounds[0] = audioBank.audioBank[6];
+            playerController.FootstepSounds[1] = audioBank.audioBank[7];
         }
         else
         {
-            playerController.m_WalkSpeed = standingSpeed;
-            playerController.m_RunSpeed = standingSpeed;
-            playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
-            playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
+            playerController.WalkSpeed = standingSpeed;
+            playerController.RunSpeed = standingSpeed;
+            playerController.FootstepSounds[0] = audioBank.audioBank[2];
+            playerController.FootstepSounds[1] = audioBank.audioBank[3];
         }
     }
 
@@ -105,8 +109,8 @@ public class MovingSystem : FSystem
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
     {
-        playerController.m_MouseLook.m_CameraTargetRot = playerCamera.transform.localRotation;
-        playerController.m_MouseLook.m_CharacterTargetRot = f_player.First().transform.localRotation;
+        playerController.MouseLook.m_CameraTargetRot = playerCamera.transform.localRotation;
+        playerController.MouseLook.m_CharacterTargetRot = f_player.First().transform.localRotation;
         
         playerController.enabled = true;
         SetHUD(true);
@@ -132,30 +136,45 @@ public class MovingSystem : FSystem
     protected override void onProcess(int familiesUpdateCount)
     {
         SetHUD(f_endRoom.Count == 0);
+        if (traceMovement)
+        {
+            if (playerController.Input != Vector2.zero)
+            {
+                if (Time.time - walkingTraceTimer > 0.25f)
+                {
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new
+                    {
+                        verb = "moved",
+                        objectType = "avatar",
+                        objectName = "player",
+                        activityExtensions = new Dictionary<string, List<string>>() { { "position", new List<string>() { f_player.First().transform.position.ToString("G4") } } }
+                    });
+                    walkingTraceTimer = Time.time;
+                }
+            }
+            else
+                walkingTraceTimer = Time.time;
+        }
 
         crouchingSpeed = 70f * Time.deltaTime;
         // when control button or right click is pressed then the player can alternatively crouch and standing
         if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetMouseButtonDown(1)))
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-                GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "pressed", objectType = "key", objectName = "LeftControl" });
-            else if(Input.GetMouseButtonDown(1))
-                GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "pressed", objectType = "key", objectName = "RightClick" });
             changingPose = true; //true when the player is crouching or standing
             //change moving speed according to the stance
             if (crouching)
             {
                 if (walkInWater)
                 {
-                    playerController.m_WalkSpeed = walkInWaterSpeed;
-                    playerController.m_RunSpeed = walkInWaterSpeed;
+                    playerController.WalkSpeed = walkInWaterSpeed;
+                    playerController.RunSpeed = walkInWaterSpeed;
                 }
                 else
                 {
-                    playerController.m_WalkSpeed = standingSpeed;
-                    playerController.m_RunSpeed = standingSpeed;
-                    playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
-                    playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
+                    playerController.WalkSpeed = standingSpeed;
+                    playerController.RunSpeed = standingSpeed;
+                    playerController.FootstepSounds[0] = audioBank.audioBank[2];
+                    playerController.FootstepSounds[1] = audioBank.audioBank[3];
                 }
             }
             else
@@ -164,15 +183,15 @@ public class MovingSystem : FSystem
                     firstCrouchOccurs = true;
                 if (walkInWater)
                 {
-                    playerController.m_WalkSpeed = walkInWaterSpeed;
-                    playerController.m_RunSpeed = walkInWaterSpeed;
+                    playerController.WalkSpeed = walkInWaterSpeed;
+                    playerController.RunSpeed = walkInWaterSpeed;
                 }
                 else
                 {
-                    playerController.m_WalkSpeed = crouchSpeed;
-                    playerController.m_RunSpeed = crouchSpeed;
-                    playerController.m_FootstepSounds[0] = audioBank.audioBank[6];
-                    playerController.m_FootstepSounds[1] = audioBank.audioBank[7];
+                    playerController.WalkSpeed = crouchSpeed;
+                    playerController.RunSpeed = crouchSpeed;
+                    playerController.FootstepSounds[0] = audioBank.audioBank[6];
+                    playerController.FootstepSounds[1] = audioBank.audioBank[7];
                 }
             }
         }
@@ -191,11 +210,17 @@ public class MovingSystem : FSystem
             {
                 changingPose = false;
                 crouching = !crouching; //true when the player is crouching
-                
-                if(crouching)
+
+                if (crouching)
+                {
                     GameObjectManager.addComponent<ActionPerformed>(playerController.gameObject, new { name = "turnOn", performedBy = "player" });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "crouched", objectType = "avatar", objectName = "player" });
+                }
                 else
+                {
                     GameObjectManager.addComponent<ActionPerformed>(playerController.gameObject, new { name = "turnOff", performedBy = "player" });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "stood", objectType = "avatar", objectName = "player" });
+                }
             }
 
         }
@@ -241,7 +266,7 @@ public class MovingSystem : FSystem
                 showHUD = false;
             }
         }
-        playerIsWalking = playerController.m_Input.x != 0 || playerController.m_Input.y != 0;
+        playerIsWalking = playerController.Input.x != 0 || playerController.Input.y != 0;
         if (playerIsWalking && !playerWasWalking)
         {
             hideHUD = true;
