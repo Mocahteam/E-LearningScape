@@ -6,32 +6,32 @@ using Random = UnityEngine.Random;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
-    [RequireComponent(typeof (CharacterController))]
-    [RequireComponent(typeof (AudioSource))]
+    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(AudioSource))]
     public class FirstPersonController : MonoBehaviour
     {
         [SerializeField] private bool m_IsWalking;
-        [SerializeField] private float walkSpeed;
-        [SerializeField] private float runSpeed;
+        [SerializeField] public float m_WalkSpeed;
+        [SerializeField] public float m_RunSpeed;
         [SerializeField] [Range(0f, 1f)] private float m_RunstepLenghten;
         [SerializeField] private float m_JumpSpeed;
         [SerializeField] private float m_StickToGroundForce;
         [SerializeField] private float m_GravityMultiplier;
-        [SerializeField] private MouseLook mouseLook;
+        [SerializeField] public MouseLook m_MouseLook;
         [SerializeField] private bool m_UseFovKick;
         [SerializeField] private FOVKick m_FovKick = new FOVKick();
         [SerializeField] private bool m_UseHeadBob;
         [SerializeField] private CurveControlledBob m_HeadBob = new CurveControlledBob();
         [SerializeField] private LerpControlledBob m_JumpBob = new LerpControlledBob();
         [SerializeField] private float m_StepInterval;
-        [SerializeField] private AudioClip[] footstepSounds;    // an array of footstep sounds that will be randomly selected from.
+        [SerializeField] public AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
 
         private Camera m_Camera;
         private bool m_Jump;
         private float m_YRotation;
-        private Vector2 input;
+        public Vector2 m_Input;
         private Vector3 m_MoveDir = Vector3.zero;
         private CharacterController m_CharacterController;
         private CollisionFlags m_CollisionFlags;
@@ -41,66 +41,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
-
-        public Vector2 Input
-        {
-            get
-            {
-                return input;
-            }
-        }
-
-        public AudioClip[] FootstepSounds
-        {
-            get
-            {
-                return footstepSounds;
-            }
-
-            set
-            {
-                footstepSounds = value;
-            }
-        }
-
-        public float RunSpeed
-        {
-            get
-            {
-                return runSpeed;
-            }
-
-            set
-            {
-                runSpeed = value;
-            }
-        }
-
-        public float WalkSpeed
-        {
-            get
-            {
-                return walkSpeed;
-            }
-
-            set
-            {
-                walkSpeed = value;
-            }
-        }
-
-        public MouseLook MouseLook
-        {
-            get
-            {
-                return mouseLook;
-            }
-
-            set
-            {
-                mouseLook = value;
-            }
-        }
 
         // Use this for initialization
         private void Start()
@@ -118,10 +58,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_FovKick.Setup(m_Camera);
             m_HeadBob.Setup(m_Camera, m_StepInterval);
             m_StepCycle = 0f;
-            m_NextStep = m_StepCycle/2f;
+            m_NextStep = m_StepCycle / 2f;
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
-			MouseLook.Init(transform , m_Camera.transform);
+            m_MouseLook.Init(transform, m_Camera.transform);
         }
 
 
@@ -164,16 +104,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
             float speed;
             GetInput(out speed);
             // always move along the camera forward as it is the direction that it being aimed at
-            Vector3 desiredMove = transform.forward*Input.y + transform.right*Input.x;
+            Vector3 desiredMove = transform.forward * m_Input.y + transform.right * m_Input.x;
 
             // get a normal for the surface that is being touched to move along it
             RaycastHit hitInfo;
             Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
-                               m_CharacterController.height/2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
+                               m_CharacterController.height / 2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
             desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
 
-            m_MoveDir.x = desiredMove.x*speed;
-            m_MoveDir.z = desiredMove.z*speed;
+            m_MoveDir.x = desiredMove.x * speed;
+            m_MoveDir.z = desiredMove.z * speed;
 
 
             if (m_CharacterController.isGrounded)
@@ -190,14 +130,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
-                m_MoveDir += Physics.gravity*m_GravityMultiplier*Time.fixedDeltaTime;
+                m_MoveDir += Physics.gravity * m_GravityMultiplier * Time.fixedDeltaTime;
             }
-            m_CollisionFlags = m_CharacterController.Move(m_MoveDir*Time.fixedDeltaTime);
+            m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
 
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
 
-            MouseLook.UpdateCursorLock();
+            m_MouseLook.UpdateCursorLock();
         }
 
 
@@ -210,9 +150,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void ProgressStepCycle(float speed)
         {
-            if (m_CharacterController.velocity.sqrMagnitude > 0 && (Input.x != 0 || Input.y != 0))
+            if (m_CharacterController.velocity.sqrMagnitude > 0 && (m_Input.x != 0 || m_Input.y != 0))
             {
-                m_StepCycle += (m_CharacterController.velocity.magnitude + (speed*(m_IsWalking ? 1f : m_RunstepLenghten)))*
+                m_StepCycle += (m_CharacterController.velocity.magnitude + (speed * (m_IsWalking ? 1f : m_RunstepLenghten))) *
                              Time.fixedDeltaTime;
             }
 
@@ -235,12 +175,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             // pick & play a random footstep sound from the array,
             // excluding sound at index 0
-            int n = Random.Range(1, FootstepSounds.Length);
-            m_AudioSource.clip = FootstepSounds[n];
+            int n = Random.Range(1, m_FootstepSounds.Length);
+            m_AudioSource.clip = m_FootstepSounds[n];
             m_AudioSource.PlayOneShot(m_AudioSource.clip);
             // move picked sound to index 0 so it's not picked next time
-            FootstepSounds[n] = FootstepSounds[0];
-            FootstepSounds[0] = m_AudioSource.clip;
+            m_FootstepSounds[n] = m_FootstepSounds[0];
+            m_FootstepSounds[0] = m_AudioSource.clip;
         }
 
 
@@ -255,7 +195,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_Camera.transform.localPosition =
                     m_HeadBob.DoHeadBob(m_CharacterController.velocity.magnitude +
-                                      (speed*(m_IsWalking ? 1f : m_RunstepLenghten)));
+                                      (speed * (m_IsWalking ? 1f : m_RunstepLenghten)));
                 newCameraPosition = m_Camera.transform.localPosition;
                 newCameraPosition.y = m_Camera.transform.localPosition.y - m_JumpBob.Offset();
             }
@@ -279,16 +219,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
 #if !MOBILE_INPUT
             // On standalone builds, walk/run speed is modified by a key press.
             // keep track of whether or not the character is walking or running
-            m_IsWalking = !UnityEngine.Input.GetKey(KeyCode.LeftShift);
+            m_IsWalking = !Input.GetKey(KeyCode.LeftShift);
 #endif
             // set the desired speed to be walking or running
-            speed = m_IsWalking ? WalkSpeed : RunSpeed;
-            input = new Vector2(horizontal, vertical);
+            speed = m_IsWalking ? m_WalkSpeed : m_RunSpeed;
+            m_Input = new Vector2(horizontal, vertical);
 
             // normalize input if it exceeds 1 in combined length:
-            if (Input.sqrMagnitude > 1)
+            if (m_Input.sqrMagnitude > 1)
             {
-                Input.Normalize();
+                m_Input.Normalize();
             }
 
             // handle speed change to give an fov kick
@@ -303,7 +243,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void RotateView()
         {
-            MouseLook.LookRotation (transform, m_Camera.transform);
+            m_MouseLook.LookRotation(transform, m_Camera.transform);
         }
 
 
@@ -320,7 +260,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 return;
             }
-            body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
+            body.AddForceAtPosition(m_CharacterController.velocity * 0.1f, hit.point, ForceMode.Impulse);
         }
     }
 }

@@ -64,30 +64,30 @@ public class MovingSystem : FSystem
     private void onEnterWater(GameObject go)
     {
         walkInWater = true;
-        playerController.FootstepSounds[0] = audioBank.audioBank[4];
-        playerController.FootstepSounds[1] = audioBank.audioBank[5];
-        playerController.WalkSpeed = walkInWaterSpeed;
-        playerController.RunSpeed = walkInWaterSpeed;
+        playerController.m_FootstepSounds[0] = audioBank.audioBank[4];
+        playerController.m_FootstepSounds[1] = audioBank.audioBank[5];
+        playerController.m_WalkSpeed = walkInWaterSpeed;
+        playerController.m_RunSpeed = walkInWaterSpeed;
     }
 
     private void onExitWater(int instanceId)
     {
         walkInWater = false;
-        playerController.FootstepSounds[0] = audioBank.audioBank[2];
-        playerController.FootstepSounds[1] = audioBank.audioBank[3];
+        playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
+        playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
         if (crouching)
         {
-            playerController.WalkSpeed = crouchSpeed;
-            playerController.RunSpeed = crouchSpeed;
-            playerController.FootstepSounds[0] = audioBank.audioBank[6];
-            playerController.FootstepSounds[1] = audioBank.audioBank[7];
+            playerController.m_WalkSpeed = crouchSpeed;
+            playerController.m_RunSpeed = crouchSpeed;
+            playerController.m_FootstepSounds[0] = audioBank.audioBank[6];
+            playerController.m_FootstepSounds[1] = audioBank.audioBank[7];
         }
         else
         {
-            playerController.WalkSpeed = standingSpeed;
-            playerController.RunSpeed = standingSpeed;
-            playerController.FootstepSounds[0] = audioBank.audioBank[2];
-            playerController.FootstepSounds[1] = audioBank.audioBank[3];
+            playerController.m_WalkSpeed = standingSpeed;
+            playerController.m_RunSpeed = standingSpeed;
+            playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
+            playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
         }
     }
 
@@ -109,8 +109,8 @@ public class MovingSystem : FSystem
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
     {
-        playerController.MouseLook.m_CameraTargetRot = playerCamera.transform.localRotation;
-        playerController.MouseLook.m_CharacterTargetRot = f_player.First().transform.localRotation;
+        playerController.m_MouseLook.m_CameraTargetRot = playerCamera.transform.localRotation;
+        playerController.m_MouseLook.m_CharacterTargetRot = f_player.First().transform.localRotation;
         
         playerController.enabled = true;
         SetHUD(true);
@@ -138,7 +138,7 @@ public class MovingSystem : FSystem
         SetHUD(f_endRoom.Count == 0);
         if (traceMovement)
         {
-            if (playerController.Input != Vector2.zero)
+            if (playerController.m_Input != Vector2.zero)
             {
                 if (Time.time - walkingTraceTimer > 0.25f)
                 {
@@ -166,15 +166,15 @@ public class MovingSystem : FSystem
             {
                 if (walkInWater)
                 {
-                    playerController.WalkSpeed = walkInWaterSpeed;
-                    playerController.RunSpeed = walkInWaterSpeed;
+                    playerController.m_WalkSpeed = walkInWaterSpeed;
+                    playerController.m_RunSpeed = walkInWaterSpeed;
                 }
                 else
                 {
-                    playerController.WalkSpeed = standingSpeed;
-                    playerController.RunSpeed = standingSpeed;
-                    playerController.FootstepSounds[0] = audioBank.audioBank[2];
-                    playerController.FootstepSounds[1] = audioBank.audioBank[3];
+                    playerController.m_WalkSpeed = standingSpeed;
+                    playerController.m_RunSpeed = standingSpeed;
+                    playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
+                    playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
                 }
             }
             else
@@ -183,15 +183,15 @@ public class MovingSystem : FSystem
                     firstCrouchOccurs = true;
                 if (walkInWater)
                 {
-                    playerController.WalkSpeed = walkInWaterSpeed;
-                    playerController.RunSpeed = walkInWaterSpeed;
+                    playerController.m_WalkSpeed = walkInWaterSpeed;
+                    playerController.m_RunSpeed = walkInWaterSpeed;
                 }
                 else
                 {
-                    playerController.WalkSpeed = crouchSpeed;
-                    playerController.RunSpeed = crouchSpeed;
-                    playerController.FootstepSounds[0] = audioBank.audioBank[6];
-                    playerController.FootstepSounds[1] = audioBank.audioBank[7];
+                    playerController.m_WalkSpeed = crouchSpeed;
+                    playerController.m_RunSpeed = crouchSpeed;
+                    playerController.m_FootstepSounds[0] = audioBank.audioBank[6];
+                    playerController.m_FootstepSounds[1] = audioBank.audioBank[7];
                 }
             }
         }
@@ -266,7 +266,7 @@ public class MovingSystem : FSystem
                 showHUD = false;
             }
         }
-        playerIsWalking = playerController.Input.x != 0 || playerController.Input.y != 0;
+        playerIsWalking = playerController.m_Input.x != 0 || playerController.m_Input.y != 0;
         if (playerIsWalking && !playerWasWalking)
         {
             hideHUD = true;

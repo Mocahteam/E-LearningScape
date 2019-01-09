@@ -80,7 +80,6 @@ public class SendStatements : FSystem {
                     GBL_Interface.SendStatementWithResult(ap.verb, ap.objectType, ap.objectName, ap.activityExtensions, ap.resultExtensions,
                         completed, success, ap.response, ap.score, ap.duration);
                 }
-                GameObjectManager.removeComponent(ap);
             }
         }
         for (int i = nb - 1; i > -1; i--)

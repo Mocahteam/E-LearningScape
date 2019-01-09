@@ -106,8 +106,8 @@ public class DebugModeSystem : FSystem
                     nb = f_wallIntro.Count;
                     for (int i = 0; i < nb; i++)
                         f_wallIntro.getAt(i).transform.position += Vector3.back * 4;
-                    player.WalkSpeed = 5;
-                    player.RunSpeed = 5;
+                    player.m_WalkSpeed = 5;
+                    player.m_RunSpeed = 5;
                     canPause = true;
                     instance.Pause = true;
                     CheckDebugMode.canPause = false;
@@ -137,13 +137,13 @@ public class DebugModeSystem : FSystem
 
         if (running)
         {
-            player.WalkSpeed = 10;
-            player.RunSpeed = 10;
+            player.m_WalkSpeed = 10;
+            player.m_RunSpeed = 10;
         }
         else
         {
-            player.WalkSpeed = 5;
-            player.RunSpeed = 5;
+            player.m_WalkSpeed = 5;
+            player.m_RunSpeed = 5;
         }
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
