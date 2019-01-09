@@ -15,6 +15,8 @@ using System;
 using System.Text;	// encoding
 using System.Collections;	// coroutines
 using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TinCan;
 using TinCan.Json;
@@ -34,9 +36,44 @@ namespace TinCan {
 		public bool success { get; set; }
 		public string response { get; set; }
 
-		// ------------------------------------------------------------------------
-		// ------------------------------------------------------------------------
-		public void initLRS(List<LRSAddress> addresses){
+        private Queue<byte[]> unsentStatements;
+        private bool connexionFailed = false;
+        private float retryTimer = float.MaxValue;
+        private byte[] tmpByteArray = null;
+
+        public RemoteLRSAsync()
+        {
+            unsentStatements = new Queue<byte[]>();
+            if (File.Exists("Data/UnsentData.txt"))
+            {
+                string[] unsentStoredData = File.ReadAllLines("Data/UnsentData.txt");
+                for(int i = 0; i < unsentStoredData.Length; i++)
+                {
+                    tmpByteArray = Encoding.UTF8.GetBytes(unsentStoredData[i]);
+                    if (tmpByteArray != null)
+                        unsentStatements.Enqueue(tmpByteArray);
+                }
+            }
+        }
+
+        private void Update()
+        {
+            if (unsentStatements.Count > 0)
+                if ((connexionFailed && Time.time - retryTimer > 30) || !connexionFailed)
+                {
+                    connexionFailed = false;
+                    tmpByteArray = unsentStatements.Dequeue();
+                    SaveStatement(tmpByteArray);
+
+                    List<string> unsentStoredData = new List<string>(File.ReadAllLines("Data/UnsentData.txt"));
+                    unsentStoredData.Remove(Encoding.UTF8.GetString(tmpByteArray));
+                    File.WriteAllLines("Data/UnsentData.txt", unsentStoredData.ToArray());
+                }
+        }
+
+        // ------------------------------------------------------------------------
+        // ------------------------------------------------------------------------
+        public void initLRS(List<LRSAddress> addresses){
             
             lrsAddresses = new List<LRSAddress>(addresses);
 			this.version = TCAPIVersion.latest();
@@ -90,15 +127,55 @@ namespace TinCan {
 
                 // post via www
                 WWW www = new WWW(queryURL, formBytes, postHeader);
-                StartCoroutine(WaitForRequest(www));
+                StartCoroutine(WaitForRequest(www, formBytes));
             }
 		}
 
 		// ------------------------------------------------------------------------
 		// ------------------------------------------------------------------------
-		IEnumerator WaitForRequest(WWW data){
+		public void SaveStatement(byte[] formBytes)
+        {
+            foreach(LRSAddress address in lrsAddresses)
+            {
+                // reinit state
+                this.initState();
 
-			yield return data; // Wait until the download is done
+                // post header
+                Dictionary<string, string> postHeader = new Dictionary<string, string>();
+                postHeader.Add("Content-Type", "application/json");
+                postHeader.Add("X-Experience-API-Version", this.version.ToString());
+                postHeader.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Concat(address.lrsUser, ":", address.lrsPassword))));
+
+                string queryURL;
+                // endpoint should have trailing /
+                if (address.lrsURL[address.lrsURL.Length - 1] != '/')
+                    queryURL = address.lrsURL + "/statements";
+                else
+                    // https://learninglocker.dig-itgames.com/data/xAPI/statements?statementId=58098b7c-3353-4f9c-b812-1bddb08876fd
+                    queryURL = address.lrsURL + "statements";
+
+                /*
+                // debug
+                foreach (string key in postHeader.Keys){
+                    string val = postHeader[key];
+                    Debug.Log(key + ": " + val);
+                }
+                Debug.Log(statement.ToJSON());
+                Debug.Log("Starting WWW: " + queryURL + " FORM:" + Encoding.UTF8.GetString(formBytes));
+                */
+
+                // post via www
+                WWW www = new WWW(queryURL, formBytes, postHeader);
+                StartCoroutine(WaitForRequest(www, formBytes));
+            }
+		}
+
+		// ------------------------------------------------------------------------
+		// ------------------------------------------------------------------------
+		IEnumerator WaitForRequest(WWW data, byte[] formBytes)
+        {
+
+            yield return data; // Wait until the download is done
 
 			// ok
 			if (data.error == null){
@@ -108,7 +185,15 @@ namespace TinCan {
 			}
 			// fail
 			else {
-				this.success = false;
+                connexionFailed = true;
+                retryTimer = Time.time;
+                unsentStatements.Enqueue(formBytes);
+                if (!File.Exists("Data/UnsentData.txt"))
+                    File.WriteAllText("Data/UnsentData.txt", Encoding.UTF8.GetString(formBytes));
+                else
+                    File.AppendAllText("Data/UnsentData.txt", string.Concat(System.Environment.NewLine, Encoding.UTF8.GetString(formBytes)));
+
+                this.success = false;
 				this.response = data.error;
 			}
 

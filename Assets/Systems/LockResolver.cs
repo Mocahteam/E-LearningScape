@@ -224,10 +224,10 @@ public class LockResolver : FSystem {
                     verb = "moved",
                     objectType = "interactable",
                     objectName = selectedWheel.name,
-                    activityExtensions = new Dictionary<string, List<string>>() {
+                    /*activityExtensions = new Dictionary<string, List<string>>() {
                         { "direction", new List<string>() { rotationDirection } },
                         { "content", new List<string>() { selectedWheel.GetComponent<WheelFrontFace>().faceNumber.ToString() } }
-                    },
+                    },*/
                     result = true,
                     success = solved,
                     response = string.Concat(selectedLocker.Wheel1.GetComponent<WheelFrontFace>().faceNumber, selectedLocker.Wheel2.GetComponent<WheelFrontFace>().faceNumber, selectedLocker.Wheel3.GetComponent<WheelFrontFace>().faceNumber)
@@ -270,8 +270,8 @@ public class LockResolver : FSystem {
                     {
                         verb = "completed",
                         objectType = "interactable",
-                        objectName = selectedLocker.gameObject.name,
-                        activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { string.Concat(selectedLocker.wheel1Solution, selectedLocker.wheel2Solution, selectedLocker.wheel3Solution) } } }
+                        objectName = selectedLocker.gameObject.name
+                        //activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { string.Concat(selectedLocker.wheel1Solution, selectedLocker.wheel2Solution, selectedLocker.wheel3Solution) } } }
                     });
 
                     // disable the wall

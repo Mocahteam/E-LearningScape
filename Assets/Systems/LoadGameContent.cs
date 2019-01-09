@@ -118,8 +118,8 @@ public class LoadGameContent : FSystem {
         ActionsManager.instance.Pause = !gameContent.trace;
         Debug.Log(string.Concat("Trace: ", gameContent.trace));
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace: ", gameContent.trace));
-        SendStatements.instance.Pause = !gameContent.traceToLRS;
         SendStatements.shouldPause = !gameContent.traceToLRS;
+        SendStatements.instance.Pause = !gameContent.traceToLRS;
         MovingSystem.instance.traceMovement = gameContent.traceMovement;
         Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace to LRS: ", gameContent.traceToLRS));
@@ -821,7 +821,7 @@ public class LoadGameContent : FSystem {
             Debug.LogWarning("File containting internal hints not found. Default used.");
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting internal hints not found. Default used"));
         }
-
+        
         Debug.Log("Data loaded");
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));
     }

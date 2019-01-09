@@ -101,8 +101,8 @@ public class BallBoxManager : FSystem {
             {
                 verb = "read",
                 objectType = "interactable",
-                objectName = focusedBall.name,
-                activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { b.text } } }
+                objectName = focusedBall.name
+                //activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { b.text } } }
             });
         }
     }
@@ -262,11 +262,11 @@ public class BallBoxManager : FSystem {
                     {
                         verb = "interacted",
                         objectType = "interactable",
-                        objectName = selectedBall.name,
+                        objectName = selectedBall.name/*,
                         activityExtensions = new Dictionary<string, List<string>>() {
                             { "content", new List<string>() { focusedBall.GetComponent<Ball>().text } },
                             { "value", new List<string>() { focusedBall.GetComponent<Ball>().number.ToString() } }
-                        }
+                        }*/
                     });
                     Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = false;
 

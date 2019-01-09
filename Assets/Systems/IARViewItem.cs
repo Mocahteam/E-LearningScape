@@ -165,8 +165,8 @@ public class IARViewItem : FSystem {
             {
                 verb = "read",
                 objectType = "viewable",
-                objectName = string.Concat(currentView.name, "_Description"),
-                activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { descriptionContent.GetComponent<TextMeshProUGUI>().text } } }
+                objectName = string.Concat(currentView.name, "_Description")
+                //activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { descriptionContent.GetComponent<TextMeshProUGUI>().text } } }
             });
 
         // if item to display is not the last selection but this last selection is linked with antoher game object => we hide linked game object
@@ -256,8 +256,8 @@ public class IARViewItem : FSystem {
                         {
                             verb = "activated",
                             objectType = "item",
-                            objectName = go.name,
-                            activityExtensions = new Dictionary<string, List<string>>() { { "content", availableScrolls } }
+                            objectName = go.name
+                            //activityExtensions = new Dictionary<string, List<string>>() { { "content", availableScrolls } }
                         });
                     }
                     GameObjectManager.addComponent<SelectedInInventory>(go);

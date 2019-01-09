@@ -32,7 +32,6 @@ public class EndManager : FSystem {
             f_iarBackground.addExitCallback(onIARClosed);
 
             // Get singleton fading screen
-            fadingBackground = GameObject.Find("MenuFadingBackground").GetComponent<Image>();
         }
     }
 
