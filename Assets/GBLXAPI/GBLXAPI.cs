@@ -509,18 +509,27 @@ namespace DIG.GBLXAPI {
 			// appended null check catches invalid extensionName
 			JToken res = null;
 			try { res = this.standardsJson[extensionType][extensionName]; }
-			catch (NullReferenceException) {
+			catch (NullReferenceException)
+            {
+                //DARKAOUI ---
+                //Previously an error was throwed if the extension wasn't in the json file
+                //this verification was removed because we can't dynamicaly change the json with the game content modification
                 res = extensionName;
                 //this.ThrowVocabError("extension type", extensionType);
+                //---
             }
 
-			if (res == null)
+            if (res == null)
             {
+                //DARKAOUI ---
+                //Previously an error was throwed if the extension wasn't in the json file
+                //this verification was removed because we can't dynamicaly change the json with the game content modification
                 res = extensionName;
                 //this.ThrowVocabError("extension", extensionName);
+                //---
             }
 
-			return res;
+            return res;
 		}
 
 		// ------------------------------------------------------------------------
@@ -552,9 +561,13 @@ namespace DIG.GBLXAPI {
 			}
 			catch (NullReferenceException)
             {
-                Uri extURI = new Uri(string.Concat("https://www.lip6.fr/mocah/invalidURI/extensions/", extensionType));
+                //DARKAOUI ---
+                //Previously an error was throwed if the extension wasn't in the json file
+                //this verification was removed because we can't dynamicaly change the json with the game content modification
+                Uri extURI = new Uri(extensionType);
                 target.Add(extURI, JToken.FromObject(trackedStandards));
                 //this.ThrowVocabError("extension type", extensionType);
+                //---
             }
 		}
 
