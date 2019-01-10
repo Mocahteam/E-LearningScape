@@ -58,7 +58,7 @@ public class PlankAndWireManager : FSystem {
     private void onWordMouseEnter(GameObject go)
     {
         //if mouse over a word and word doesn't already clicked
-        if (go.GetComponent<TextMeshPro>().color != Color.red && f_iarBackground.Count == 0)
+        if (go.GetComponent<TextMeshPro>().color != Color.red && f_iarBackground.Count == 0 && selectedPlank != null)
         {
             //if the word isn't selected change its color to yellow
             go.GetComponent<TextMeshPro>().color = Color.yellow;
@@ -66,8 +66,8 @@ public class PlankAndWireManager : FSystem {
             {
                 verb = "highlighted",
                 objectType = "interactable",
-                objectName = go.name
-                //activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { go.GetComponent<TextMeshPro>().text } } }
+                objectName = go.name,
+                activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { go.GetComponent<TextMeshPro>().text } } }
             });
         }
         currentFocusedWord = go;
@@ -75,7 +75,7 @@ public class PlankAndWireManager : FSystem {
 
     private void onWordMouseExit(int instanceId)
     {
-        if (currentFocusedWord && currentFocusedWord.GetInstanceID() == instanceId && currentFocusedWord.GetComponent<TextMeshPro>().color != Color.red)
+        if (currentFocusedWord && currentFocusedWord.GetInstanceID() == instanceId && currentFocusedWord.GetComponent<TextMeshPro>().color != Color.red && selectedPlank != null)
         {
             //if the word isn't selected change its color to black
             currentFocusedWord.GetComponent<TextMeshPro>().color = Color.black;
@@ -83,8 +83,8 @@ public class PlankAndWireManager : FSystem {
             {
                 verb = "exitedHighlight",
                 objectType = "interactable",
-                objectName = currentFocusedWord.name
-                //activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { currentFocusedWord.GetComponent<TextMeshPro>().text } } }
+                objectName = currentFocusedWord.name,
+                activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { currentFocusedWord.GetComponent<TextMeshPro>().text } } }
             });
         }
         currentFocusedWord = null;
@@ -145,8 +145,8 @@ public class PlankAndWireManager : FSystem {
                             {
                                 verb = "deactivated",
                                 objectType = "interactable",
-                                objectName = tmpGO.name
-                                //activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { tmpGO.GetComponent<TextMeshPro>().text  } } }
+                                objectName = tmpGO.name,
+                                activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { tmpGO.GetComponent<TextMeshPro>().text  } } }
                             });
                         }
                         else
@@ -166,8 +166,8 @@ public class PlankAndWireManager : FSystem {
                                         {
                                             verb = "deactivated",
                                             objectType = "interactable",
-                                            objectName = w.name
-                                            //activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { w.GetComponent<TextMeshPro>().text } } }
+                                            objectName = w.name,
+                                            activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { w.GetComponent<TextMeshPro>().text } } }
                                         });
                                     }
                                     w.GetComponent<TextMeshPro>().color = Color.black;
@@ -184,7 +184,7 @@ public class PlankAndWireManager : FSystem {
                                 verb = "activated",
                                 objectType = "interactable",
                                 objectName = tmpGO.name,
-                                //activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { tmpGO.GetComponent<TextMeshPro>().text } } },
+                                activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { tmpGO.GetComponent<TextMeshPro>().text } } },
                                 result = true,
                                 success = 1
                             });
@@ -272,11 +272,11 @@ public class PlankAndWireManager : FSystem {
                             {
                                 verb = "attempted",
                                 objectType = "interactable",
-                                objectName = tmpGO.name/*,
+                                objectName = tmpGO.name,
                                 activityExtensions = new Dictionary<string, List<string>>() {
                                     { "content", new List<string>() { tmpGO.GetComponent<TextMeshPro>().text } },
                                     { "state", new List<string>() { "selected" } }
-                                }*/
+                                }
                             });
                         }
                         //if the word isn't selected
@@ -290,11 +290,11 @@ public class PlankAndWireManager : FSystem {
                             {
                                 verb = "attempted",
                                 objectType = "interactable",
-                                objectName = tmpGO.name/*,
+                                objectName = tmpGO.name,
                                 activityExtensions = new Dictionary<string, List<string>>() {
                                     { "content", new List<string>() { tmpGO.GetComponent<TextMeshPro>().text } },
                                     { "state", new List<string>() { "unselected" } }
-                                }*/
+                                }
                             });
                         }
                     }
@@ -316,10 +316,10 @@ public class PlankAndWireManager : FSystem {
                         {
                             verb = "deactivated",
                             objectType = "interactable",
-                            objectName = word.GetComponent<TextMeshPro>().text/*,
+                            objectName = word.GetComponent<TextMeshPro>().text,
                             activityExtensions = new Dictionary<string, List<string>>() {
                                 { "content", new List<string>() { word.GetComponent<TextMeshPro>().text } }
-                            }*/
+                            }
                         });
                         word.GetComponent<TextMeshPro>().color = Color.black;
                         lr.positionCount = 0;

@@ -90,8 +90,8 @@ public class IARQueryEvaluator : FSystem {
             {
                 verb = "accessed",
                 objectType = "viewable",
-                objectName = "Password_Room2"
-                //activityExtensions = new Dictionary<string, List<string>>() { { "value", new List<string>() { queries.transform.parent.GetChild(1).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text } } }
+                objectName = "Password_Room2",
+                activityExtensions = new Dictionary<string, List<string>>() { { "value", new List<string>() { queries.transform.parent.GetChild(1).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text } } }
             });
         }
     }
@@ -219,11 +219,11 @@ public class IARQueryEvaluator : FSystem {
             {
                 verb = "received",
                 objectType = "feedback",
-                objectName = string.Concat(query.name, "-", query.tag, "_feedback")/*,
+                objectName = string.Concat(query.name, "-", query.tag, "_feedback"),
                 activityExtensions = new Dictionary<string, List<string>>() {
                     { "content", feedbackTexts },
                     { "type", new List<string>() { "answer description" } }
-                }*/
+                }
             });
 
             // if linked hide item in inventory

@@ -113,8 +113,8 @@ public class StoryDisplaying : FSystem {
             {
                 verb = "reached",
                 objectType = "area",
-                objectName = "End_Door"
-                //activityExtensions = new Dictionary<string, List<string>>() { { "time", new List<string>() { string.Concat(hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")) } } }
+                objectName = "End_Door",
+                activityExtensions = new Dictionary<string, List<string>>() { { "time", new List<string>() { string.Concat(hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")) } } }
             });
             fadingImage.color = Color.white;
             background.color = Color.white;
@@ -227,8 +227,8 @@ public class StoryDisplaying : FSystem {
                 {
                     verb = "read",
                     objectType = "text",
-                    objectName = sdGo.name
-                    //activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { sdText.text } } }
+                    objectName = sdGo.name,
+                    activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { sdText.text } } }
                 });
             }
         }

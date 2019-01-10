@@ -120,7 +120,7 @@ public class LoadGameContent : FSystem {
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace: ", gameContent.trace));
         SendStatements.shouldPause = !gameContent.traceToLRS;
         SendStatements.instance.Pause = !gameContent.traceToLRS;
-        MovingSystem.instance.traceMovement = gameContent.traceMovement;
+        MovingSystem.instance.traceMovementFrequency = gameContent.traceMovementFrequency;
         Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace to LRS: ", gameContent.traceToLRS));
         foreach (GameObject go in f_puzzles)

@@ -16,7 +16,7 @@ public class MovingSystem : FSystem
     private Family f_cursor = FamilyManager.getFamily(new AnyOfTags("Cursor"));
     private Family f_waterWalking = FamilyManager.getFamily(new AnyOfLayers(12), new AllOfComponents(typeof(Triggered3D))); // Layer 12 <=> WaterCollider
 
-    public bool traceMovement = false;
+    public float traceMovementFrequency = 0;
     private bool crouching = false; // true when the player is crouching
     private bool changingPose = false;
     private float crouchingSpeed;
@@ -136,18 +136,18 @@ public class MovingSystem : FSystem
     protected override void onProcess(int familiesUpdateCount)
     {
         SetHUD(f_endRoom.Count == 0);
-        if (traceMovement)
+        if (traceMovementFrequency > 0)
         {
             if (playerController.m_Input != Vector2.zero)
             {
-                if (Time.time - walkingTraceTimer > 0.25f)
+                if (Time.time - walkingTraceTimer > traceMovementFrequency)
                 {
                     GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new
                     {
                         verb = "moved",
                         objectType = "avatar",
-                        objectName = "player"
-                        //activityExtensions = new Dictionary<string, List<string>>() { { "position", new List<string>() { f_player.First().transform.position.ToString("G4") } } }
+                        objectName = "player",
+                        activityExtensions = new Dictionary<string, List<string>>() { { "position", new List<string>() { f_player.First().transform.position.ToString("G4") } } }
                     });
                     walkingTraceTimer = Time.time;
                 }

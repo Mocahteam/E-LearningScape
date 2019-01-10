@@ -89,12 +89,13 @@ public class IARViewItem : FSystem {
         if (currentView && currentView != lastSelection && currentView.GetComponent<LinkedWith>() && currentView.GetComponent<SelectedInInventory>() && !currentView.name.Contains("Glasses"))
             GameObjectManager.setGameObjectState(currentView.GetComponent<LinkedWith>().link, false); // switch off the linked game object
 
-        GameObjectManager.addComponent<ActionPerformedForLRS>(currentView, new
-        {
-            verb = "exitedView",
-            objectType = "viewable",
-            objectName = string.Concat(currentView.name, "_Description")
-        });
+        if(currentView)
+            GameObjectManager.addComponent<ActionPerformedForLRS>(currentView, new
+            {
+                verb = "exitedView",
+                objectType = "viewable",
+                objectName = string.Concat(currentView.name, "_Description")
+            });
 
         currentView = null;
 
@@ -111,6 +112,13 @@ public class IARViewItem : FSystem {
         lastSelection = go;
         // display description of this new selection
         showDescription(go);
+        GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
+        {
+            verb = "read",
+            objectType = "viewable",
+            objectName = string.Concat(go.name, "_Description"),
+            activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { descriptionContent.GetComponent<TextMeshProUGUI>().text } } }
+        });
     }
 
     // when a selected game object leaves f_selected family, we update the last game object selected to the last game object of the family
@@ -160,14 +168,6 @@ public class IARViewItem : FSystem {
             }
             GameObjectManager.setGameObjectState(item.GetComponent<LinkedWith>().link, true); // switch on the linked game object
         }
-        else
-            GameObjectManager.addComponent<ActionPerformedForLRS>(currentView, new
-            {
-                verb = "read",
-                objectType = "viewable",
-                objectName = string.Concat(currentView.name, "_Description")
-                //activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { descriptionContent.GetComponent<TextMeshProUGUI>().text } } }
-            });
 
         // if item to display is not the last selection but this last selection is linked with antoher game object => we hide linked game object
         // of the last selection to avoid superpositions (except for glasses)
@@ -256,8 +256,8 @@ public class IARViewItem : FSystem {
                         {
                             verb = "activated",
                             objectType = "item",
-                            objectName = go.name
-                            //activityExtensions = new Dictionary<string, List<string>>() { { "content", availableScrolls } }
+                            objectName = go.name,
+                            activityExtensions = new Dictionary<string, List<string>>() { { "content", availableScrolls } }
                         });
                     }
                     GameObjectManager.addComponent<SelectedInInventory>(go);

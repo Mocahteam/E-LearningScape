@@ -75,6 +75,7 @@ public static class GBL_Interface {
                 List<JToken> jtList = new List<JToken>();
                 foreach (string value in activityExtensions[field])
                     jtList.Add(GBLXAPI.Instance.CreateContextExtensionStatement(field, value));
+                statementObject.definition.extensions = new TinCan.Extensions();
                 GBLXAPI.Instance.PackExtension(field, jtList, statementObject.definition.extensions);
             }
         }
@@ -101,6 +102,7 @@ public static class GBL_Interface {
                 List<JToken> jtList = new List<JToken>();
                 foreach (string value in activityExtensions[field])
                     jtList.Add(GBLXAPI.Instance.CreateContextExtensionStatement(field, value));
+                statementObject.definition.extensions = new TinCan.Extensions();
                 GBLXAPI.Instance.PackExtension(field, jtList, statementObject.definition.extensions);
             }
         }
@@ -114,6 +116,7 @@ public static class GBL_Interface {
                 List<JToken> jtList = new List<JToken>();
                 foreach (string value in resultExtensions[field])
                     jtList.Add(GBLXAPI.Instance.CreateContextExtensionStatement(field, value));
+                statementResult.extensions = new TinCan.Extensions();
                 GBLXAPI.Instance.PackExtension(field, jtList, statementResult.extensions);
             }
         }

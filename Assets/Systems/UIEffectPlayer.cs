@@ -59,11 +59,11 @@ public class UIEffectPlayer : FSystem {
                 {
                     verb = "received",
                     objectType = "feedback",
-                    objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback")/*,
+                    objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback"),
                     activityExtensions = new Dictionary<string, List<string>>() {
                         { "content", new List<string>() { "blink correct" } },
                         { "type", new List<string>() { "answer validation" } }
-                    }*/
+                    }
                 });
             }
             if (uiEffect.effectCode == 2)
@@ -74,11 +74,11 @@ public class UIEffectPlayer : FSystem {
                 {
                     verb = "received",
                     objectType = "feedback",
-                    objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback")/*,
+                    objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback"),
                     activityExtensions = new Dictionary<string, List<string>>() {
                         { "content", new List<string>() { "correct animation" } },
                         { "type", new List<string>() { "answer validation" } }
-                    }*/
+                    }
                 });
             }
         }
@@ -92,11 +92,11 @@ public class UIEffectPlayer : FSystem {
             {
                 verb = "received",
                 objectType = "feedback",
-                objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback")/*,
+                objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback"),
                 activityExtensions = new Dictionary<string, List<string>>() {
-                        { "content", new List<string>() { "blink wrong" } },
-                        { "type", new List<string>() { "answer validation" } }
-                    }*/
+                    { "content", new List<string>() { "blink wrong" } },
+                    { "type", new List<string>() { "answer validation" } }
+                }
             });
         }
 

@@ -650,7 +650,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 3
+  apiCompatibilityLevel: 2
   cloudProjectId: 69cdf881-0094-45aa-bfaa-dc8d08d1b207
   projectName: Pedagoscape
   organizationId: elbaf

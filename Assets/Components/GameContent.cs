@@ -10,7 +10,7 @@ public class GameContent {
     public float sessionDuration; //in minutes
     public bool trace = true;
     public bool traceToLRS = false;
-    public bool traceMovement = false;
+    public float traceMovementFrequency = 0;
     public bool virtualPuzzle = true;
     public string dreamFragmentLinksPath;
     public string hintsPath;

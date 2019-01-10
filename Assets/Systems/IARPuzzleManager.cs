@@ -44,8 +44,8 @@ public class IARPuzzleManager : FSystem {
             {
                 verb = "dropped",
                 objectType = "draggable",
-                objectName = tmpGo.name
-                //activityExtensions = new Dictionary<string, List<string>>() { { "position", new List<string>() { tmpGo.GetComponent<RectTransform>().position.ToString("G4") } } }
+                objectName = tmpGo.name,
+                activityExtensions = new Dictionary<string, List<string>>() { { "position", new List<string>() { tmpGo.GetComponent<RectTransform>().position.ToString("G4") } } }
             });
             tmpGo = null;
         }

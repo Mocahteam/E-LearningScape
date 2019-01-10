@@ -157,7 +157,7 @@ public class DreamFragmentCollecting : FSystem {
                             break;
                     }
 
-                    if (selectedFragment.transform.parent.gameObject.tag == "chair" && selectedFragment.transform.parent.gameObject.GetComponent<IsSolution>())
+                    if (selectedFragment.transform.parent.gameObject.tag == "Chair" && selectedFragment.transform.parent.gameObject.GetComponent<IsSolution>())
                     {
                         if(f_player.First().transform.localScale.x < 0.9f)
                             //if the player is crouching
@@ -207,8 +207,8 @@ public class DreamFragmentCollecting : FSystem {
         {
             verb = "accessed",
             objectType = "viewable",
-            objectName = string.Concat(selectedFragment.name, "_Link")
-            //activityExtensions = new Dictionary<string, List<string>>() { { "link", new List<string>() { dreamFragmentsLinks[selectedFragment.name]  } } }
+            objectName = string.Concat(selectedFragment.name, "_Link"),
+            activityExtensions = new Dictionary<string, List<string>>() { { "link", new List<string>() { dreamFragmentsLinks[selectedFragment.name]  } } }
         });
     }
 }

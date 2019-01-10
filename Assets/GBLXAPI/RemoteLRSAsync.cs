@@ -36,22 +36,26 @@ namespace TinCan {
 		public bool success { get; set; }
 		public string response { get; set; }
 
-        private Queue<byte[]> unsentStatements;
+        private Queue<string> unsentStatements;
+        private bool sendingFromQueue = false;
         private bool connexionFailed = false;
         private float retryTimer = float.MaxValue;
         private byte[] tmpByteArray = null;
 
         public RemoteLRSAsync()
         {
-            unsentStatements = new Queue<byte[]>();
+            unsentStatements = new Queue<string>();
             if (File.Exists("Data/UnsentData.txt"))
             {
-                string[] unsentStoredData = File.ReadAllLines("Data/UnsentData.txt");
-                for(int i = 0; i < unsentStoredData.Length; i++)
+                List<string> unsentStoredData = new List<string>(File.ReadAllLines("Data/UnsentData.txt"));
+                for(int i = unsentStoredData.Count - 1; i > -1; i--)
+                    if (unsentStoredData[i] == "")
+                        unsentStoredData.RemoveAt(i);
+                File.WriteAllLines("Data/UnsentData.txt", unsentStoredData.ToArray());
+                for (int i = 0; i < unsentStoredData.Count; i++)
                 {
-                    tmpByteArray = Encoding.UTF8.GetBytes(unsentStoredData[i]);
-                    if (tmpByteArray != null)
-                        unsentStatements.Enqueue(tmpByteArray);
+                    if (unsentStoredData[i] != "")
+                        unsentStatements.Enqueue(unsentStoredData[i]);
                 }
             }
         }
@@ -59,15 +63,12 @@ namespace TinCan {
         private void Update()
         {
             if (unsentStatements.Count > 0)
-                if ((connexionFailed && Time.time - retryTimer > 30) || !connexionFailed)
+                if (((connexionFailed && Time.time - retryTimer > 30) || !connexionFailed) && !sendingFromQueue)
                 {
                     connexionFailed = false;
-                    tmpByteArray = unsentStatements.Dequeue();
-                    SaveStatement(tmpByteArray);
-
-                    List<string> unsentStoredData = new List<string>(File.ReadAllLines("Data/UnsentData.txt"));
-                    unsentStoredData.Remove(Encoding.UTF8.GetString(tmpByteArray));
-                    File.WriteAllLines("Data/UnsentData.txt", unsentStoredData.ToArray());
+                    sendingFromQueue = true;
+                    tmpByteArray = Encoding.UTF8.GetBytes(unsentStatements.Peek());
+                    SaveStatement(tmpByteArray, true);
                 }
         }
 
@@ -127,13 +128,13 @@ namespace TinCan {
 
                 // post via www
                 WWW www = new WWW(queryURL, formBytes, postHeader);
-                StartCoroutine(WaitForRequest(www, formBytes));
+                StartCoroutine(WaitForRequest(www, formBytes, false));
             }
 		}
 
 		// ------------------------------------------------------------------------
 		// ------------------------------------------------------------------------
-		public void SaveStatement(byte[] formBytes)
+		public void SaveStatement(byte[] formBytes, bool statementFromQueue = false)
         {
             foreach(LRSAddress address in lrsAddresses)
             {
@@ -166,32 +167,45 @@ namespace TinCan {
 
                 // post via www
                 WWW www = new WWW(queryURL, formBytes, postHeader);
-                StartCoroutine(WaitForRequest(www, formBytes));
+                StartCoroutine(WaitForRequest(www, formBytes, statementFromQueue));
             }
 		}
 
 		// ------------------------------------------------------------------------
 		// ------------------------------------------------------------------------
-		IEnumerator WaitForRequest(WWW data, byte[] formBytes)
+		IEnumerator WaitForRequest(WWW data, byte[] formBytes, bool statementFromQueue)
         {
 
             yield return data; // Wait until the download is done
 
-			// ok
-			if (data.error == null){
+            // ok
+            if (data.error == null){
 				this.success = true;
 				JArray ids = JArray.Parse(data.text);
 				this.response = ids[0].ToString();
+                if (statementFromQueue)
+                {
+                    sendingFromQueue = false;
+                    unsentStatements.Dequeue();
+                    List<string> unsentStoredData = new List<string>(File.ReadAllLines("Data/UnsentData.txt"));
+                    unsentStoredData.Remove(Encoding.UTF8.GetString(tmpByteArray));
+                    File.WriteAllLines("Data/UnsentData.txt", unsentStoredData.ToArray());
+                }
 			}
 			// fail
 			else {
                 connexionFailed = true;
                 retryTimer = Time.time;
-                unsentStatements.Enqueue(formBytes);
-                if (!File.Exists("Data/UnsentData.txt"))
-                    File.WriteAllText("Data/UnsentData.txt", Encoding.UTF8.GetString(formBytes));
+                if (!statementFromQueue)
+                {
+                    unsentStatements.Enqueue(Encoding.UTF8.GetString(formBytes));
+                    if (!File.Exists("Data/UnsentData.txt") || File.ReadAllText("Data/UnsentData.txt") == "")
+                        File.WriteAllText("Data/UnsentData.txt", Encoding.UTF8.GetString(formBytes));
+                    else
+                        File.AppendAllText("Data/UnsentData.txt", string.Concat(System.Environment.NewLine, Encoding.UTF8.GetString(formBytes)));
+                }
                 else
-                    File.AppendAllText("Data/UnsentData.txt", string.Concat(System.Environment.NewLine, Encoding.UTF8.GetString(formBytes)));
+                    sendingFromQueue = false;
 
                 this.success = false;
 				this.response = data.error;

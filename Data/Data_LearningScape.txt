@@ -3,7 +3,7 @@
     "sessionDuration": 60,
     "trace": true,
     "traceToLRS": false,
-    "traceMovement": true,
+    "traceMovementFrequency": 0.25,
     "virtualPuzzle": true,
     "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
     "tipsPath": "Data/Hints_LearningScape.txt",

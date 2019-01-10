@@ -509,9 +509,16 @@ namespace DIG.GBLXAPI {
 			// appended null check catches invalid extensionName
 			JToken res = null;
 			try { res = this.standardsJson[extensionType][extensionName]; }
-			catch (NullReferenceException) { this.ThrowVocabError("extension type", extensionType); }
+			catch (NullReferenceException) {
+                res = extensionName;
+                //this.ThrowVocabError("extension type", extensionType);
+            }
 
-			if (res == null) { this.ThrowVocabError("extension", extensionName); }
+			if (res == null)
+            {
+                res = extensionName;
+                //this.ThrowVocabError("extension", extensionName);
+            }
 
 			return res;
 		}
@@ -543,7 +550,12 @@ namespace DIG.GBLXAPI {
 				Uri extURI = new Uri((string)this.standardsJson["extension"][extensionType]["id"]);
 				target.Add(extURI, JToken.FromObject(trackedStandards));
 			}
-			catch (NullReferenceException) { this.ThrowVocabError("extension type", extensionType); }
+			catch (NullReferenceException)
+            {
+                Uri extURI = new Uri(string.Concat("https://www.lip6.fr/mocah/invalidURI/extensions/", extensionType));
+                target.Add(extURI, JToken.FromObject(trackedStandards));
+                //this.ThrowVocabError("extension type", extensionType);
+            }
 		}
 
 		// ------------------------------------------------------------------------
