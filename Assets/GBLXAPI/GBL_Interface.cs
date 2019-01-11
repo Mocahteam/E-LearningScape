@@ -45,7 +45,7 @@ public static class GBL_Interface {
     // Fill in these fields for GBLxAPI setup.
     //Statements will be sent to all addresses in this list
     public static List<LRSAddress> lrsAddresses = new List<LRSAddress>() {
-        new LRSAddress("https://lrsmocah.lip6.fr/data/xAPI", "2da3ea73b1dcf6258c02649d1d3f7a9385b74d61", "90935a12c7eeb44d1d6acefd0f413e4d4c552467")    //default lip6 LRS
+        new LRSAddress("https://lrsmocah.lip6.fr/data/xAPI", "0cba1c6d1fb844993cec4ebc3ee458d271ad6d84", "6e4d81bb34ba308397943b8d1c40db389524b34a")    //default lip6 LRS
     };
 	public static string standardsConfigDefault = "data/GBLxAPI_Vocab_Default";
 	public static string standardsConfigUser = "data/GBLxAPI_Vocab_User";
