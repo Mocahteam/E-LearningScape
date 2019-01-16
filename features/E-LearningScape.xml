@@ -1,16 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
+  <transition id="Verrou Porte_perform_158" label="perform Verrou Porte" system="True" end="False" />
+  <transition id="GearsEnigma_perform_147" label="perform GearsEnigma" system="True" end="False" />
+  <transition id="LoginPanel_perform_149" label="perform LoginPanel" system="True" end="False" />
   <transition id="Q2_perform_145" label="perform Q2" system="True" end="False" />
   <transition id="Q2_perform_153" label="perform Q2" system="True" end="False" />
   <transition id="Q2_perform_161" label="perform Q2" system="True" end="False" />
-  <transition id="Verrou Porte_turnOff_158" label="turnOff Verrou Porte" system="False" end="False" />
-  <transition id="Verrou Porte_turnOn_158" label="turnOn Verrou Porte" system="False" end="False" />
-  <transition id="Verrou Porte_perform_159" label="perform Verrou Porte" system="False" end="False" />
   <transition id="Q1_perform_152" label="perform Q1" system="True" end="False" />
-  <transition id="LoginPanel_turnOff_149" label="turnOff LoginPanel" system="False" end="False" />
-  <transition id="LoginPanel_turnOn_149" label="turnOn LoginPanel" system="False" end="False" />
-  <transition id="LoginPanel_Correct_151" label="Correct LoginPanel" system="False" end="False" />
-  <transition id="LoginPanel_Wrong_151" label="Wrong LoginPanel" system="False" end="False" />
   <transition id="Q6_perform_157" label="perform Q6" system="True" end="False" />
   <transition id="Q1_perform_160" label="perform Q1" system="True" end="False" />
   <transition id="Q4_perform_163" label="perform Q4" system="True" end="False" />
@@ -21,7 +17,5 @@
   <transition id="Q4_perform_155" label="perform Q4" system="True" end="False" />
   <transition id="FPSController_perform_164" label="perform FPSController" system="True" end="False" />
   <transition id="Q3_perform_146" label="perform Q3" system="True" end="False" />
-  <transition id="GearsEnigma_Correct_148" label="Correct GearsEnigma" system="False" end="False" />
-  <transition id="GearsEnigma_Wrong_148" label="Wrong GearsEnigma" system="False" end="False" />
   <transition id="Q3_perform_162" label="perform Q3" system="True" end="False" />
 </transitions>

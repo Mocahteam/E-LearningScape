@@ -12,6 +12,8 @@ public class StoryDisplaying : FSystem {
     // This system manage displaying of the story
 
     private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
+    private Family f_timer = FamilyManager.getFamily(new AllOfComponents(typeof(Timer)));
+    private Family f_game = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
 
     // Camera is required in this system to switch menuCamera to fpsCamera during displaying story
     private Family menuCamera = FamilyManager.getFamily(new AllOfComponents(typeof(MenuCamera), typeof(Camera)));
@@ -37,7 +39,7 @@ public class StoryDisplaying : FSystem {
     private bool alphaToPlain = false;
     private bool fadingBackground = false;
 
-    private float startingTime;
+    private Timer timer;
 
     public static StoryDisplaying instance;
 
@@ -64,6 +66,8 @@ public class StoryDisplaying : FSystem {
             storyTexts.Add(new List<string>(st.intro));
             storyTexts.Add(new List<string>(st.transition));
             storyTexts.Add(new List<string>(st.end));
+
+            GameObjectManager.addComponent<Timer>(f_game.First());
 
             instance = this;
         }
@@ -97,14 +101,17 @@ public class StoryDisplaying : FSystem {
         if (st.storyProgression < storyTexts.Count - 1)
         {
             if (st.storyProgression == 0)
-                startingTime = Time.time;
+            {
+                timer = f_game.First().GetComponent<Timer>();
+                timer.startingTime = Time.time;
+            }
             fadingImage.color = Color.black;
             background.color = Color.black;
             sdText.color = Color.white;
         }
         else
         {
-            float duration = Time.time - startingTime;
+            float duration = Time.time - timer.startingTime;
             int hours = (int)duration / 3600;
             int minutes = (int)(duration % 3600) / 60;
             int seconds = (int)(duration % 3600) % 60;

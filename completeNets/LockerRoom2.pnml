@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-4354-76133-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>LockerRoom2</text>
+  </name>
+ <page id="g-4354-7613B-1">
+  <place id="p-4354-76140-2">
+  <name>
+   <text>Verrou Porte_end_167</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="535" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-4354-76159-3">
+  <name>
+   <text>Verrou Porte_off_159</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="69" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-4354-7615E-4">
+  <name>
+   <text>Verrou Porte_on_159</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="239" y="80"/>
+   </graphics>
+  </place>
+  <transition id="t-4354-7616F-5">
+  <name>
+   <text>Verrou Porte_perform2_167</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="465" y="80"/>
+   </graphics>
+  </transition>
+  <place id="p-4354-76172-6">
+  <name>
+   <text>Verrou Porte_start_167</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="385" y="80"/>
+   </graphics>
+  </place>
+  <transition id="t-4354-76176-7">
+  <name>
+   <text>Verrou Porte_turnOff_159</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="159" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-4354-76179-8">
+  <name>
+   <text>Verrou Porte_turnOn_159</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="159" y="140"/>
+   </graphics>
+  </transition>
+  <arc id="e-4354-76180-9" source="t-4354-7616F-5" target="p-4354-76140-2">
+  </arc>
+  <arc id="e-4354-76181-10" source="p-4354-76172-6" target="t-4354-7616F-5">
+  </arc>
+  <arc id="e-4354-76183-11" source="p-4354-7615E-4" target="t-4354-76176-7">
+  </arc>
+  <arc id="e-4354-76183-12" source="p-4354-76159-3" target="t-4354-76179-8">
+  </arc>
+  <arc id="e-4354-76184-13" source="t-4354-76179-8" target="p-4354-7615E-4">
+  </arc>
+  <arc id="e-4354-76185-14" source="t-4354-76176-7" target="p-4354-76159-3">
+  </arc>
+  <arc id="e-4354-76186-15" source="p-4354-7615E-4" target="t-4354-7616F-5">
+   <type value="test"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

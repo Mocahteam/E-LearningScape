@@ -322,6 +322,7 @@ public class LockResolver : FSystem {
                     GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(0).gameObject, false); // first child is locked tab
                     GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(1).gameObject, true); // second child is unlocked tab
                     IARScreenRoom3Unlocked = true;
+                    GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { name = "perform2", performedBy = "player" });
                     GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { name = "perform", performedBy = "player" });
                     GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new { verb = "completed",
                         objectType = "interactable", objectName = selectedLocker.gameObject.name });

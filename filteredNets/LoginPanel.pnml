@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-5F58-6491A-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>LoginPanel</text>
+  </name>
+ <page id="g-5F58-64922-1">
+  <place id="p-5F58-64925-2">
+  <name>
+   <text>LoginPanel_Answered_166</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="635" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-5F58-64942-3">
+  <name>
+   <text>LoginPanel_Answering_166</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="395" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-5F58-64946-4">
+  <name>
+   <text>LoginPanel_Correct_166</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="515" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-5F58-64958-5">
+  <name>
+   <text>LoginPanel_off_165</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="65" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-5F58-6495C-6">
+  <name>
+   <text>LoginPanel_on_165</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="235" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-5F58-6495F-7">
+  <name>
+   <text>LoginPanel_turnOff_165</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="155" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-5F58-64961-8">
+  <name>
+   <text>LoginPanel_turnOn_165</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="155" y="170"/>
+   </graphics>
+  </transition>
+  <arc id="e-5F58-64968-9" source="p-5F58-64942-3" target="t-5F58-64946-4">
+  </arc>
+  <arc id="e-5F58-6496A-10" source="t-5F58-64946-4" target="p-5F58-64925-2">
+  </arc>
+  <arc id="e-5F58-6496A-11" source="p-5F58-6495C-6" target="t-5F58-64946-4">
+   <type value="test"/>
+  </arc>
+  <arc id="e-5F58-6496E-12" source="t-5F58-6495F-7" target="p-5F58-64958-5">
+  </arc>
+  <arc id="e-5F58-6496F-13" source="t-5F58-64961-8" target="p-5F58-6495C-6">
+  </arc>
+  <arc id="e-5F58-64971-14" source="p-5F58-64958-5" target="t-5F58-64961-8">
+  </arc>
+  <arc id="e-5F58-64972-15" source="p-5F58-6495C-6" target="t-5F58-6495F-7">
+  </arc>
+ </page>
+ </net>
+</pnml>

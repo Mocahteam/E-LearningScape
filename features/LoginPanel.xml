@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="LoginPanel_Correct_166" label="Correct LoginPanel" system="False" end="True" />
+  <transition id="LoginPanel_Wrong_166" label="Wrong LoginPanel" system="False" end="False" />
+  <transition id="LoginPanel_turnOff_165" label="turnOff LoginPanel" system="False" end="False" />
+  <transition id="LoginPanel_turnOn_165" label="turnOn LoginPanel" system="False" end="False" />
+</transitions>

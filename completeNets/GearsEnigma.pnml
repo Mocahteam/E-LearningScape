@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-6480-D4EDE-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>GearsEnigma</text>
+  </name>
+ <page id="g-6480-D4EE8-1">
+  <place id="p-6480-D4EEB-2">
+  <name>
+   <text>GearsEnigma_Answered_151</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="350" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-6480-D4EF8-3">
+  <name>
+   <text>GearsEnigma_Answering_151</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="100" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-6480-D4EFD-4">
+  <name>
+   <text>GearsEnigma_Correct_151</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-6480-D4F01-5">
+  <name>
+   <text>GearsEnigma_Wrong_151</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="170"/>
+   </graphics>
+  </transition>
+  <place id="p-6480-D4F03-6">
+  <name>
+   <text>GearsEnigma_place_148</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="100" y="200"/>
+   </graphics>
+  </place>
+  <arc id="e-6480-D4F0A-7" source="p-6480-D4F03-6" target="t-6480-D4F01-5">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6480-D4F0D-8" source="t-6480-D4EFD-4" target="p-6480-D4EEB-2">
+  </arc>
+  <arc id="e-6480-D4F0E-9" source="p-6480-D4EF8-3" target="t-6480-D4EFD-4">
+  </arc>
+  <arc id="e-6480-D4F0F-10" source="p-6480-D4EF8-3" target="t-6480-D4F01-5">
+   <type value="test"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

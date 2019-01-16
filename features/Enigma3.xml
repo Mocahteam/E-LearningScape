@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
-  <transition id="equivWith_ToggleObject_f_wrongChair_turnOff_45" label="turnOff equivWith_ToggleObject_f_wrongChair" system="False" end="False" />
-  <transition id="equivWith_ToggleObject_f_wrongChair_turnOn_45" label="turnOn equivWith_ToggleObject_f_wrongChair" system="False" end="False" />
   <transition id="Fragment_souvenir_4_activate_48" label="activate Fragment_souvenir_4" system="False" end="False" />
   <transition id="Fragment_souvenir_chair_activate_43" label="activate Fragment_souvenir_chair" system="False" end="False" />
   <transition id="or0_Fragment_souvenir_chair_activate_43" label="activate Fragment_souvenir_chair" system="False" end="False" />
   <transition id="Fragment_souvenir_wall_activate_40" label="activate Fragment_souvenir_wall" system="False" end="False" />
+  <transition id="equivWith_ToggleObject_f_wrongChair_turnOff_45" label="turnOff equivWith_ToggleObject_f_wrongChair" system="False" end="False" />
+  <transition id="equivWith_ToggleObject_f_wrongChair_turnOn_45" label="turnOn equivWith_ToggleObject_f_wrongChair" system="False" end="False" />
   <transition id="Table_turnOff_39" label="turnOff Table" system="False" end="False" />
   <transition id="Table_turnOn_39" label="turnOn Table" system="False" end="False" />
   <transition id="Fragment_souvenir_tirroir_activate_42" label="activate Fragment_souvenir_tirroir" system="False" end="False" />

@@ -136,6 +136,7 @@ public class IARGearsEnigma : FSystem
                         if (gearDragged.GetComponent<Gear>().isSolution) //if answer is correct
                         {
                             GameObjectManager.addComponent<ActionPerformed>(gearsEnigma, new { name = "Correct", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformed>(gearsEnigma, new { name = "perform", performedBy = "system" });
                             GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma, new { verb = "answered", objectType = "question",
                                 objectName = gearsEnigma.name, result = true, success = 1, response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text });
                             GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma.transform.parent.gameObject, new { verb = "completed",

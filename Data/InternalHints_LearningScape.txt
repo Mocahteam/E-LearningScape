@@ -1,694 +1,623 @@
 {
   "1.1": {
-    "keyE03World.6": [
+    "keyE03World.5": [
       "Il reste des objets à trouver",
       "Il me manque des objets"
     ],
-    "keyE03Inventory.25": [
+    "keyE03Inventory.6": [
       "Il faut peut-être utiliser un objet"
-    ]
-  },
-  "1.2": {
-    "keyE03World.6": [
-      "Je dois trouver la clé"
     ],
-    "sphere1.8": [
-      "Il faut que j'identifie les bonnes sphères"
-    ],
-    "sphere2.9": [
-      "Il faut que j'identifie les bonnes sphères"
-    ],
-    "sphere8.15": [
-      "Il faut que j'identifie les bonnes sphères"
-    ]
-  },
-  "1.3": {
-    "keyE03Inventory.5": [
-      "Ouvrons cette boite"
-    ],
-    "keyE03World.6": [
-      "Ah! La clé est sur cette commode"
-    ],
-    "keyE03Inventory.25": [
-      "Maintenant il faut que j'utilise la clé"
-    ],
-    "questionBallBox.54": [
-      "Je crois avoir trouver les bonnes sphères pour répondre à la question"
-    ]
-  },
-  "2.1": {
     "wireWorld.26": [
       "Il reste des objets à trouver"
     ],
     "wireInventory.27": [
       "Il faut peut-être utiliser un objet"
     ],
-    "objectif.28": [
+    "wordSolution1.31": [
       "On dirait que je peux interagir avec ces mots"
     ],
-    "methodes.36": [
+    "wordSolution2.32": [
       "On dirait que je peux interagir avec ces mots"
     ],
-    "evaluation.38": [
+    "wordSolution3.33": [
       "On dirait que je peux interagir avec ces mots"
     ],
-    "fragment9.74": [
+    "fragment9.29": [
       "Peut-être que je peux trouver un indice dans la pièce"
     ],
-    "fragment17.75": [
+    "fragment17.30": [
       "Peut-être que je peux trouver un indice dans la pièce"
+    ],
+    "correctChair.38": [
+      "Peut-être qu'en bougeant les meubles..."
+    ],
+    "fragmentChair.43": [
+      "Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "playerCrouch.37": [
+      "Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "fragmentFurnitureDown.41": [
+      "Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "fragmentfurnitureUp.47": [
+      "Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "fragmentTable.46": [
+      "Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "table.39": [
+      "Peut-être qu'en bougeant les meubles..."
+    ],
+    "fragmentWall.40": [
+      "Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "fragmentTirroir.42": [
+      "Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "fragment4.48": [
+      "Il faut que je fouille tous les recoins de la pièce"
+    ],
+    "gearsEnigma.151": [
+      "Il faut que je glisse le bon engrenage au milieu dans le rêve 1"
     ]
   },
-  "2.2": {
+  "1.2": {
+    "keyE03World.5": [
+      "Je dois trouver la clé"
+    ],
+    "sphereSolution1.9": [
+      "Il faut que j'identifie les bonnes sphères"
+    ],
+    "sphereSolution2.10": [
+      "Il faut que j'identifie les bonnes sphères"
+    ],
+    "sphereSolution3.11": [
+      "Il faut que j'identifie les bonnes sphères"
+    ],
     "wireWorld.26": [
       "Je dois trouver une corde"
     ],
     "wireInventory.27": [
       "Et si j'essayais d'utiliser la corde"
     ],
-    "objectif.28": [
+    "wordSolutionWire1.31": [
       "Il faut que je relie les bons mots avec la corde"
     ],
-    "methodes.36": [
+    "wordSolutionWire2.32": [
       "Il faut que je relie les bons mots avec la corde"
     ],
-    "evaluation.38": [
+    "wordSolutionWire3.33": [
       "Il faut que je relie les bons mots avec la corde"
     ],
-    "fragment9.74": [
+    "fragment9.29": [
       "Il doit rester des fragments de rêve à trouver"
     ],
-    "fragment17.75": [
+    "fragment17.30": [
       "Il doit rester des fragments de rêve à trouver"
+    ],
+    "fragmentChair.43": [
+      "Il me reste des fragments verts à trouver"
+    ],
+    "correctChair.38": [
+      "Il reste des chaises à retourner"
+    ],
+    "fragmentFurnitureDown.41": [
+      "Il me reste des fragments verts à trouver"
+    ],
+    "fragmentfurnitureUp.47": [
+      "Il me reste des fragments verts à trouver"
+    ],
+    "fragmentTable.46": [
+      "Il me reste des fragments verts à trouver"
+    ],
+    "fragmentWall.40": [
+      "Il me reste des fragments verts à trouver"
+    ],
+    "fragmentTirroir.42": [
+      "Il me reste des fragments verts à trouver"
+    ],
+    "loginPanelAnswering.166": [
+      "Il est écrit que le hasard pourrait m'aider"
+    ],
+    "loginPanelActivation.165": [
+      "Je dois réessayer de me connecter"
     ]
   },
-  "2.3": {
-    "plankWire.24": [
+  "1.3": {
+    "keyE03Inventory.6": [
+      "Ouvrons cette boite avec la clé"
+    ],
+    "keyE03World.5": [
+      "Ah! La clé est sur cette commode"
+    ],
+    "keyE03Inventory.6": [
+      "Maintenant il faut que j'utilise la clé"
+    ],
+    "questionBallBox.24": [
+      "Je crois avoir trouver les bonnes sphères pour répondre à la question"
+    ],
+    "plankWire.28": [
       "Le texte sur ce tableau a l'air important"
     ],
     "wireWorld.26": [
       "Je vois une corde en bas de l'étagère"
     ],
-    "objectif.28": [
+    "wordSolutionWire1.31": [
       "Il semblerait que les fragments de rêves 9 et 17 soient liés au tableau"
     ],
-    "methodes.36": [
+    "wordSolutionWire2.32": [
       "Il semblerait que les fragments de rêves 9 et 17 soient liés au tableau"
     ],
-    "evaluation.38": [
+    "wordSolutionWire3.33": [
       "Il semblerait que les fragments de rêves 9 et 17 soient liés au tableau"
     ],
-    "questionPlankAndWire.55": [
+    "questionPlankAndWire.35": [
       "Maintenant que les mots sont reliés j'ai la réponse"
     ],
-    "fragment9.74": [
+    "fragment9.29": [
       "Je vois un fragment à droite de l'étagère"
     ],
-    "fragment17.75": [
+    "fragment17.30": [
       "On dirait qu'il y a quelque chose dans le tirroir de la commode"
-    ]
-  },
-  "3.1": {
-    "chair.43": [
-    	"Peut-être qu'en bougeant les meubles..."
     ],
-    "fragmentDe.42": [
-    	"Il faut que je fouille tous les recoins de la pièce"
+    "fragmentChair.43": [
+      "Il y a quelque chose sous cette chaise"
     ],
-    "playerCrouch.44": [
-    	"Il faut que je fouille tous les recoins de la pièce"
+    "playerCrouch.37": [
+      "Et si je me baissais"
     ],
-    "fragmentPosture.45": [
-    	"Il faut que je fouille tous les recoins de la pièce"
+    "fragmentFurnitureDown.41": [
+      "Quelque chose brille sous cette étagère"
     ],
-    "fragmentSavoir.46": [
-    	"Il faut que je fouille tous les recoins de la pièce"
+    "fragmentfurnitureUp.47": [
+      "Je vois un des fragments sur l'étagère"
     ],
-    "fragmentIl.47": [
-    	"Il faut que je fouille tous les recoins de la pièce"
+    "fragmentTable.46": [
+      "Il y a quelque chose sous la table"
     ],
-    "table.48": [
-    	"Peut-être qu'en bougeant les meubles..."
+    "table.39": [
+      "Il y a quelque chose sous la table"
     ],
-    "fragmentFaut.49": [
-    	"Il faut que je fouille tous les recoins de la pièce"
+    "fragmentWall.40": [
+      "Je vois un fragment sour la fenetre"
     ],
-    "fragmentChanger.50": [
-    	"Il faut que je fouille tous les recoins de la pièce"
+    "fragmentTirroir.42": [
+      "Quelque chose brille sous le tirroir"
     ],
-    "fragment4.51": [
-    	"Il faut que je fouille tous les recoins de la pièce"
-    ]
-  },
-  "3.2": {
-    "fragmentDe.42": [
-    	"Il me reste des fragments verts à trouver"
+    "fragment4.48": [
+      "On dirait que j'ai oublié un fragment dans les escaliers à l'entrée"
     ],
-    "chaise.43": [
-    	"Il reste des chaises à retourner"
-    ],
-    "fragmentPosture.45": [
-    	"Il me reste des fragments verts à trouver"
-    ],
-    "fragmentSavoir.46": [
-    	"Il me reste des fragments verts à trouver"
-    ],
-    "fragmentIl.47": [
-    	"Il me reste des fragments verts à trouver"
-    ],
-    "fragmentFaut.49": [
-    	"Il me reste des fragments verts à trouver"
-    ],
-    "fragmentChanger.50": [
-    	"Il me reste des fragments verts à trouver"
-    ]
-  },
-  "3.3": {
-    "fragmentDe.42": [
-    	"Il y a quelque chose sous cette chaise"
-    ],
-    "playerCrouch.44": [
-    	"Et si je me baissais"
-    ],
-    "fragmentPosture.45": [
-    	"Quelque chose brille sous cette étagère"
-    ],
-    "fragmentSavoir.46": [
-    	"Je vois un des fragments sur l'étagère"
-    ],
-    "fragmentIl.47": [
-    	"Il y a quelque chose sous la table"
-    ],
-    "table.48": [
-    	"Il y a quelque chose sous la table"
-    ],
-    "fragmentFaut.49": [
-    	"Je vois un fragment sour la fenetre"
-    ],
-    "fragmentChanger.50": [
-    	"Quelque chose brille sous le tirroir"
-    ],
-    "fragment4.51": [
-    	"On dirait que j'ai oublié un fragment dans les escaliers à l'entrée"
-    ],
-    "questionGreenFragments.52": [
+    "questionGreenFragments.50": [
       "J'ai rassemblés tout les fragments verts nécessaires pour répondre à la question"
     ],
-    "questionGreenFragments.52": [
+    "questionGreenFragments.50": [
       "On dirait que ces fragments vert on un lien avec le fragment de rêve 4"
     ]
   },
-  "4.1": {
-    "gearsEnigma.58": [
-    	"Il faut que je glisse le bon engrenage au milieu dans le rêve 1"
-    ]
-  },
-  "4.2": {
-    "loginPanelAnswering.59": [
-    	"Il est écrit que le hasard pourrait m'aider"
-    ],
-    "loginPanelActivation.60": [
-    	"Je dois réessayer de me connecter"
-    ]
-  },
-  "5.1": {
-    "keyE08World.66": [
+  "2.1": {
+    "keyE08World.55": [
     	"Il reste des objets à trouver"
     ],
-    "redGlassesWorld.68": [
+    "redGlassesWorld.51": [
     	"Il reste des objets à trouver"
     ],
-    "yellowGlassesWorld.70": [
+    "yellowGlassesWorld.53": [
     	"Il reste des objets à trouver"
+    ],
+    "fragment8.67": [
+      "Je crois qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "fragment5.66": [
+      "Je crois qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "fragment1.65": [
+      "Je crois qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "Scroll1.71": [
+      "J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "Scroll2.72": [
+      "J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "Scroll3.73": [
+      "J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "Scroll4.74": [
+      "J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "Scroll5.75": [
+      "J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "scrollInventory.70": [
+      "Je devrais essayer d'utiliser les objets de l'inventaire"
+    ],
+    "plankMirror.80": [
+      "Je n'ai pas encore terminé de fouiller la pièce"
+    ],
+    "mirrorWorld.78": [
+      "Je n'ai pas encore terminé de fouiller la pièce"
+    ],
+    "mirrorInventory.79": [
+      "Je devrais essayer d'utiliser les objets de l'inventaire"
+    ],
+    "fragment2.84": [
+      "Je crois qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "fragment3.87": [
+      "Je crois qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "fragment11.88": [
+      "Je crois qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "fragment12.89": [
+      "Je crois qu'il me reste des éléments à trouver dans la pièce"
     ]
   },
-  "5.2": {
-    "keyE08World.66": [
+  "2.2": {
+    "keyE08World.55": [
     	"Il est indiqué que la clé se trouve dans un vase se renversant"
     ],
-    "keyE08Inventory.67": [
+    "keyE08Inventory.56": [
     	"J'ai la clé pour ouvrir le sac"
     ],
-    "redGlassesWorld.68": [
+    "redGlassesWorld.51": [
     	"Peut-être que j'ai oublié un objet dans la première pièce"
     ],
-    "yellowGlassesWorld.70": [
+    "yellowGlassesWorld.53": [
     	"Je dois trouver la lunette jaune"
     ],
-    "satchel.72": [
+    "satchel.57": [
     	"Voyons ce qu'il y a dans ce sac"
+    ],
+    "fragment8.67": [
+      "Je dois encore trouver des fragments de rêve"
+    ],
+    "fragment5.66": [
+      "Je dois encore trouver des fragments de rêve"
+    ],
+    "fragment1.65": [
+      "Je dois encore trouver des fragments de rêve"
+    ],
+    "Scroll1.71": [
+      "Il me reste des parchemins à ramasser"
+    ],
+    "Scroll2.72": [
+      "Il me reste des parchemins à ramasser"
+    ],
+    "Scroll3.73": [
+      "Il me reste des parchemins à ramasser"
+    ],
+    "Scroll4.74": [
+      "Il me reste des parchemins à ramasser"
+    ],
+    "Scroll5.75": [
+      "Il me reste des parchemins à ramasser"
+    ],
+    "scrollInventory.70": [
+      "Il faut que je consulte les parchemins recoltés"
+    ],
+    "plankMirror.80": [
+      "Peut-être qu'un objet est dissimulé sur le sol"
+    ],
+    "fragment2.84": [
+      "Je dois encore trouver des fragments de rêve"
+    ],
+    "fragment3.87": [
+      "Je dois encore trouver des fragments de rêve"
+    ],
+    "fragment11.88": [
+      "Je dois encore trouver des fragments de rêve"
+    ],
+    "fragment12.89": [
+      "Je dois encore trouver des fragments de rêve"
     ]
   },
-  "5.3": {
-    "keyE08World.66": [
+  "2.3": {
+    "keyE08World.55": [
     	"Je vois la clé à droite du verrou"
     ],
-    "redGlassesWorld.68": [
+    "redGlassesWorld.51": [
     	"Je crois que la lunette rouge est en bas de l'étagère de la première pièce"
     ],
-    "redGlassesInventory.69": [
+    "redGlassesInventory.52": [
     	"Je devrais pouvoir décoder l'image du sac avec les lunettes"
     ],
-    "yellowGlassesWorld.70": [
+    "yellowGlassesWorld.53": [
     	"Je vois la lunette jaune devant le verrou"
     ],
-    "yellowGlassesInventory.71": [
+    "yellowGlassesInventory.54": [
     	"Je devrais pouvoir décoder l'image du sac avec les lunettes"
     ],
-    "questionGlasses.137": [
+    "questionGlasses.64": [
     	"J'ai pu déchiffrer le contenu du sac et je peux maintenant répondre à la question"
-    ]
-  },
-  "6.1": {
-    "fragment8.29": [
-    	"Je crois qu'il me reste des éléments à trouver dans la pièce"
     ],
-    "fragment5.30": [
-    	"Je crois qu'il me reste des éléments à trouver dans la pièce"
+    "fragment8.67": [
+      "Je vois des fragments de rêve sur les arbres"
     ],
-    "fragment1.31": [
-    	"Je crois qu'il me reste des éléments à trouver dans la pièce"
-    ]
-  },
-  "6.2": {
-    "fragment8.29": [
-    	"Je dois encore trouver des fragments de rêve"
+    "fragment5.66": [
+      "Je vois des fragments de rêve sur les arbres"
     ],
-    "fragment5.30": [
-    	"Je dois encore trouver des fragments de rêve"
-    ],
-    "fragment1.31": [
-    	"Je dois encore trouver des fragments de rêve"
-    ]
-  },
-  "6.3": {
-    "fragment8.29": [
-    	"Je vois des fragments de rêve sur les arbres"
-    ],
-    "fragment5.30": [
-    	"Je vois des fragments de rêve sur les arbres"
-    ],
-    "fragment1.31": [
+    "fragment1.65": [
       "Il y a un fragment de rêve près du sac"
     ],
     "questionEnigma6.32": [
       "Les fragments de rêve 1, 5 et 8 semblent être liés"
-    ]
-  },
-  "7.1": {
-    "S_Scroll.34": [
-    	"J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
     ],
-    "M_Scroll.35": [
-    	"J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
-    ],
-    "A_Scroll.37": [
-    	"J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
-    ],
-    "R_Scroll.39": [
-    	"J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
-    ],
-    "T_Scroll.40": [
-      "J'ai l'impression qu'il me reste des éléments à trouver dans la pièce"
-    ],
-    "scrollInventory.78": [
-      "Je devrais essayer d'utiliser les objets de l'inventaire"
-    ]
-  },
-  "7.2": {
-    "S_Scroll.34": [
-    	"Il me reste des parchemins à ramasser"
-    ],
-    "M_Scroll.35": [
-    	"Il me reste des parchemins à ramasser"
-    ],
-    "A_Scroll.37": [
-    	"Il me reste des parchemins à ramasser"
-    ],
-    "R_Scroll.39": [
-    	"Il me reste des parchemins à ramasser"
-    ],
-    "T_Scroll.40": [
-    	"Il me reste des parchemins à ramasser"
-    ],
-    "scrollInventory.78": [
-      "Il faut que je consulte les parchemins recoltés"
-    ]
-  },
-  "7.3": {
-    "S_Scroll.34": [
+    "Scroll1.71": [
       "Il y a un parchemin près du sac"
     ],
-    "M_Scroll.35": [
+    "Scroll2.72": [
       "Il y a un parchemin derrière le sac"
     ],
-    "A_Scroll.37": [
+    "Scroll3.73": [
       "Il y a  des parchemins près de l'abre"
     ],
-    "R_Scroll.39": [
+    "Scroll4.74": [
       "Je vois un parchemin derrière l'arbre"
     ],
-    "T_Scroll.40": [
+    "Scroll5.75": [
       "Il y a des parchemins près de l'abre"
     ],
-    "questionScrolls.79": [
+    "questionScrolls.70": [
       "J'ai trouvé tous les parchemins pour répondre à la question"
-    ]
-  },
-  "8.1": {
-    "plankMirror.81": [
-      "Je n'ai pas encore terminé de fouiller la pièce"
     ],
-    "mirrorWorld.82": [
-      "Je n'ai pas encore terminé de fouiller la pièce"
-    ],
-    "mirrorInventory.83": [
-      "Je devrais essayer d'utiliser les objets de l'inventaire"
-    ]
-  },
-  "8.2": {
-    "plankMirror.81": [
-      "Peut-être qu'un objet est dissimulé sur le sol"
-    ]
-  },
-  "8.3": {
-    "plankMirror.81": [
+    "plankMirror.80": [
       "On dirait que je peux interagir avec cette dalle"
     ],
-    "mirrorWorld.82": [
+    "mirrorWorld.78": [
       "Il y a un mirroir sur un pilier près de l'arbre"
     ],
-    "combinePlankAndMirror.84": [
+    "combinePlankAndMirror.81": [
       "Il faut que j'assemble le mirroir avec un objet de la pièce pour en voir le reflet"
     ],
-    "questionMirror.85": [
+    "questionMirror.83": [
       "En observant le reflet sur le mirroir je devrait pouvoir répondre à la question"
-    ]
-  },
-  "9.1": {
-    "fragment2.87": [
-      "Je crois qu'il me reste des éléments à trouver dans la pièce"
-    ]
-  },
-  "9.2": {
-    "fragment2.87": [
-      "Je dois encore trouver des fragments de rêve"
-    ]
-  },
-  "9.3": {
-    "fragment2.87": [
+    ],
+    "fragment2.84": [
       "Il y a un fragment de rêve sur l'arbre"
     ],
-    "questinoEnigma9.88": [
+    "questinoEnigma9.86": [
       "Le fragment de rêve 2 semble suffir pour répondre à une question"
-    ]
-  },
-  "10.1": {
-    "fragment3.61": [
-      "Je crois qu'il me reste des éléments à trouver dans la pièce"
     ],
-    "fragment11.62": [
-      "Je crois qu'il me reste des éléments à trouver dans la pièce"
-    ],
-    "fragment12.63": [
-      "Je crois qu'il me reste des éléments à trouver dans la pièce"
-    ]
-  },
-  "10.2": {
-    "fragment3.61": [
-      "Je dois encore trouver des fragments de rêve"
-    ],
-    "fragment11.62": [
-      "Je dois encore trouver des fragments de rêve"
-    ],
-    "fragment12.63": [
-      "Je dois encore trouver des fragments de rêve"
-    ]
-  },
-  "10.3": {
-    "fragment3.61": [
+    "fragment3.87": [
       "Il y a un fragment derrière le verrou"
     ],
-    "fragment11.62": [
+    "fragment11.88": [
       "Je vois des fragments de rêve sur l'arche à l'entrée"
     ],
-    "fragment12.63": [
+    "fragment12.89": [
       "Je vois des fragments de rêve sur l'arche à l'entrée"
     ],
-    "questionEnigma10.64": [
+    "questionEnigma10.91": [
       "On dirait que les fragments 3, 11 et 12 doivent être utilisés ensemble"
     ]
   },
-  "11_1.1": {
-    "puzzleSet1.96": [
+  "3.1": {
+    "puzzleSet1.93": [
       "Je crois qu'il me reste des éléments à trouver dans la deuxième pièce"
     ],
-    "puzzleSet3.97": [
+    "puzzleSet2.94": [
       "Je crois qu'il me reste des éléments à trouver dans la deuxième pièce"
     ],
-    "puzzleSet5.98": [
+    "puzzleSet3.95": [
       "Je crois qu'il me reste des éléments à trouver dans la deuxième pièce"
     ],
-    "puzzleSet2.99": [
+    "puzzleSet4.96": [
       "Je crois qu'il me reste des éléments à trouver dans la dernière pièce"
     ],
-    "puzzleSet4.100": [
+    "puzzleSet5.97": [
       "Je crois qu'il me reste des éléments à trouver dans la dernière pièce"
     ],
-    "puzzleInventory.102": [
+    "puzzleInventory.98": [
       "Je devrais essayer d'utiliser les objets de l'inventaire"
+    ],
+    "fragment7.103": [
+      "Je crois qu'il me reste des éléments à trouver dans la deuxième pièce"
+    ],
+    "fragment14.104": [
+      "Je crois qu'il me reste des éléments à trouver dans la deuxième pièce"
+    ],
+    "fragment15.105": [
+      "Je crois qu'il me reste des éléments à trouver dans la deuxième pièce"
+    ],
+    "fragment16.106": [
+      "Je crois qu'il me reste des éléments à trouver dans la dernière pièce"
+    ],
+    "fragment18.107": [
+      "Je crois qu'il me reste des éléments à trouver dans la dernière pièce"
+    ],
+    "fragment6.120": [
+      "Je crois qu'il me reste des éléments à trouver dans la deuxième pièce"
+    ],
+    "lampWorld.112": [
+      "Je crois qu'il me reste des éléments à trouver dans la pièce"
+    ],
+    "lampInventory.113": [
+      "Je devrais essayer d'utiliser les objets de l'inventaire"
+    ],
+    "fragment13.124": [
+      "Je crois qu'il me reste des éléments à trouver dans la deuxième pièce"
+    ],
+    "fragment10.123": [
+      "Je crois qu'il me reste des éléments à trouver dans la dernière pièce"
     ]
   },
-  "11_1.2": {
-    "puzzleSet1.96": [
+  "3.2": {
+    "puzzleSet1.93": [
       "Il reste des pièces de puzzle à trouver dans la deuxième pièce"
     ],
-    "puzzleSet3.97": [
+    "puzzleSet2.94": [
       "Il reste des pièces de puzzle à trouver dans la deuxième pièce"
     ],
-    "puzzleSet5.98": [
+    "puzzleSet3.95": [
       "Il reste des pièces de puzzle à trouver dans la deuxième pièce"
     ],
-    "puzzleSet2.99": [
+    "puzzleSet4.96": [
       "Il reste des pièces de puzzle à trouver dans la dernière pièce"
     ],
-    "puzzleSet4.100": [
+    "puzzleSet5.97": [
       "Il reste des pièces de puzzle à trouver dans la dernière pièce"
     ],
-    "puzzleInventory.102": [
+    "puzzleInventory.98": [
       "Il faut que j'assemble le puzzle"
     ],
-    "boxVirtualPuzzle.116": [
+    "boxVirtualPuzzle.92": [
       "Je me demande ce qu'il y a dans ce coffre"
-    ]
-  },
-  "11_1.3": {
-    "puzzleSet1.96": [
-      "Il y a des pièces de puzzle sous un muret"
     ],
-    "puzzleSet3.97": [
-      "Des pièces de puzzle sont dans les escaliers à l'entrée de la deuxième pièce"
-    ],
-    "puzzleSet5.98": [
-      "Des pièces de puzzle sont enterrées près du verrou"
-    ],
-    "puzzleSet2.99": [
-      "Le coffre contient des pièces de puzzle"
-    ],
-    "puzzleSet4.100": [
-      "Il y a des pièces de puzzle cachées derrière le pilier"
-    ],
-    "questionPuzzle.139": [
-      "Maintenant que j'ai toutes les pièces de puzzle il ne me reste plus qu'a l'assembler pour découvrir son message"
-    ]
-  },
-  "11_2.1": {
-    "fragment18.76": [
-      "Je crois qu'il me reste des éléments à trouver dans la deuxième pièce"
-    ],
-    "fragment15.92": [
-      "Je crois qu'il me reste des éléments à trouver dans la deuxième pièce"
-    ],
-    "fragment14.93": [
-      "Je crois qu'il me reste des éléments à trouver dans la deuxième pièce"
-    ],
-    "fragment7.94": [
-      "Je crois qu'il me reste des éléments à trouver dans la dernière pièce"
-    ],
-    "fragment16.95": [
-      "Je crois qu'il me reste des éléments à trouver dans la dernière pièce"
-    ]
-  },
-  "11_2.2": {
-    "fragment18.76": [
+    "fragment7.103": [
       "Il reste des fragments de rêve à trouver dans la deuxième pièce"
     ],
-    "fragment15.92": [
+    "fragment14.104": [
       "Il reste des fragments de rêve à trouver dans la deuxième pièce"
     ],
-    "fragment14.93": [
+    "fragment15.105": [
       "Il reste des fragments de rêve à trouver dans la deuxième pièce"
     ],
-    "fragment7.94": [
+    "fragment16.106": [
       "Il reste des fragments de rêve à trouver dans la dernière pièce"
     ],
-    "fragment16.95": [
+    "fragment18.107": [
       "Il reste des fragments de rêve à trouver dans la dernière pièce"
     ],
     "boxFragmentPuzzle.117": [
       "Je me demande ce qu'il y a dans ce coffre"
-    ]
-  },
-  "11_2.3": {
-    "fragment18.76": [
-      "Il y a un fragment de rêve sous un muret"
     ],
-    "fragment15.92": [
-      "Un fragment de rêve se trouve dans les escaliers à l'entrée de la deuxième pièce"
-    ],
-    "fragment14.93": [
-      "un fragment de rêve est enterré près du verrou"
-    ],
-    "fragment7.94": [
-      "Le coffre contient un fragment de rêve"
-    ],
-    "fragment16.95": [
-      "Il y a un fragment de rêve caché derrière le pilier"
-    ],
-    "questionPuzzle.107": [
-      "On dirait que les fragments de rêve 7, 14, 15, 16 et 18 doivent être utilisés ensemble"
-    ]
-  },
-  "12.1": {
-    "fragment6.112": [
-      "Je crois qu'il me reste des éléments à trouver dans la deuxième pièce"
-    ],
-    "lampWorld.113": [
-      "Je crois qu'il me reste des éléments à trouver dans la pièce"
-    ],
-    "lampInventory.114": [
-      "Je devrais essayer d'utiliser les objets de l'inventaire"
-    ]
-  },
-  "12.2": {
-    "fragment6.112": [
+    "fragment6.120": [
       "Il reste des fragments de rêve à trouver dans la deuxième pièce"
     ],
-    "lampInventory.114": [
+    "lampInventory.113": [
       "Cette Lampe permet surment de dévoiler des éléments invisibles à l'oeil nu"
     ],
-    "box.118": [
-      "Je me demande ce qu'il y a dans ce coffre"
-    ]
-  },
-  "12.3": {
-    "questionLamp.104": [
-      "Je dois pouvoir faire quelque chose avec le fragment de rêve 6 et les indices sur l'obélisque"
-    ],
-    "fragment6.112": [
-      "Je vois un fragment de rêve sur l'un des bambous sur la droite dans la deuxième pièce"
-    ],
-    "lampWorld.113": [
-      "Il y a une lampe torche dans le coffre"
-    ],
-    "box.118": [
+    "boxLamp.111": [
       "Je me demande ce qu'il y a dans ce coffre"
     ],
-    "E12_1.121": [
-      "Peut-être qu'en éclairant cet obélisque avec la lampe je toruverai quelque chose"
-    ],
-    "E12_2.122": [
-      "Peut-être qu'en éclairant cet obélisque avec la lampe je toruverai quelque chose"
-    ],
-    "E12_3.123": [
-      "Peut-être qu'en éclairant cet obélisque avec la lampe je toruverai quelque chose"
-    ],
-    "E12_4.124": [
-      "Peut-être qu'en éclairant cet obélisque avec la lampe je toruverai quelque chose"
-    ],
-    "E12_5.127": [
-      "Peut-être qu'en éclairant cet obélisque avec la lampe je toruverai quelque chose"
-    ],
-    "E12_6.128": [
-      "Peut-être qu'en éclairant cet obélisque avec la lampe je toruverai quelque chose"
-    ]
-  },
-  "13.1": {
-    "fragment13.119": [
-      "Je crois qu'il me reste des éléments à trouver dans la deuxième pièce"
-    ],
-    "fragment10.120": [
-      "Je crois qu'il me reste des éléments à trouver dans la dernière pièce"
-    ]
-  },
-  "13.2": {
-    "fragment13.119": [
+    "fragment13.124": [
       "Il reste des fragments de rêve à trouver dans la deuxième pièce"
     ],
-    "fragment10.120": [
+    "fragment10.123": [
       "Il reste des fragments de rêve à trouver dans la dernière pièce"
+    ],
+    "wordErasable.129": [
+      "Il y a des choses que je n'ai pas essayé d'effacer"
+    ],
+    "wordErasable.130": [
+      "Il y a des choses que je n'ai pas essayé d'effacer"
+    ],
+    "wordErasable.131": [
+      "Il y a des choses que je n'ai pas essayé d'effacer"
+    ],
+    "wordErasable.132": [
+      "Il y a des choses que je n'ai pas essayé d'effacer"
+    ],
+    "wordErasable.133": [
+      "Il y a des choses que je n'ai pas essayé d'effacer"
+    ],
+    "wordErasable.134": [
+      "Il y a des choses que je n'ai pas essayé d'effacer"
+    ],
+    "wordErasable.135": [
+      "Il y a des choses que je n'ai pas essayé d'effacer"
+    ],
+    "wordErasable.136": [
+      "Il y a des choses que je n'ai pas essayé d'effacer"
+    ],
+    "wordErasable.137": [
+      "Il y a des choses que je n'ai pas essayé d'effacer"
+    ],
+    "wordErasable.138": [
+      "Il y a des choses que je n'ai pas essayé d'effacer"
+    ],
+    "wordErasable.139": [
+      "Il y a des choses que je n'ai pas essayé d'effacer"
+    ],
+    "wordErasable.140": [
+      "Il y a des choses que je n'ai pas essayé d'effacer"
     ]
   },
-  "13.3": {
-    "fragment13.119": [
+  "3.3": {
+    "puzzleSet1.93": [
+      "Il y a des pièces de puzzle sous un muret"
+    ],
+    "puzzleSet2.94": [
+      "Le coffre contient des pièces de puzzle"
+    ],
+    "puzzleSet3.95": [
+      "Des pièces de puzzle sont dans les escaliers à l'entrée de la deuxième pièce"
+    ],
+    "puzzleSet4.96": [
+      "Il y a des pièces de puzzle cachées derrière le pilier"
+    ],
+    "puzzleSet5.97": [
+      "Des pièces de puzzle sont enterrées près du verrou"
+    ],
+    "questionPuzzle.101": [
+      "Maintenant que j'ai toutes les pièces de puzzle il ne me reste plus qu'a l'assembler pour découvrir son message"
+    ],
+    "fragment7.103": [
+      "Le coffre contient un fragment de rêve"
+    ],
+    "fragment14.104": [
+      "un fragment de rêve est enterré près du verrou"
+    ],
+    "fragment15.105": [
+      "Un fragment de rêve se trouve dans les escaliers à l'entrée de la deuxième pièce"
+    ],
+    "fragment16.106": [
+      "Il y a un fragment de rêve caché derrière le pilier"
+    ],
+    "fragment18.107": [
+      "Il y a un fragment de rêve sous un muret"
+    ],
+    "questionPuzzle.110": [
+      "On dirait que les fragments de rêve 7, 14, 15, 16 et 18 doivent être utilisés ensemble"
+    ],
+    "questionLamp.122": [
+      "Je dois pouvoir faire quelque chose avec le fragment de rêve 6 et les indices sur l'obélisque"
+    ],
+    "fragment6.120": [
+      "Je vois un fragment de rêve sur l'un des bambous sur la droite dans la deuxième pièce"
+    ],
+    "lampWorld.112": [
+      "Il y a une lampe torche dans le coffre"
+    ],
+    "boxLamp.111": [
+      "Je me demande ce qu'il y a dans ce coffre"
+    ],
+    "E12_1.114": [
+      "Peut-être qu'en éclairant cet obélisque avec la lampe je toruverai quelque chose"
+    ],
+    "E12_2.115": [
+      "Peut-être qu'en éclairant cet obélisque avec la lampe je toruverai quelque chose"
+    ],
+    "E12_3.116": [
+      "Peut-être qu'en éclairant cet obélisque avec la lampe je toruverai quelque chose"
+    ],
+    "E12_4.117": [
+      "Peut-être qu'en éclairant cet obélisque avec la lampe je toruverai quelque chose"
+    ],
+    "E12_5.118": [
+      "Peut-être qu'en éclairant cet obélisque avec la lampe je toruverai quelque chose"
+    ],
+    "E12_6.119": [
+      "Peut-être qu'en éclairant cet obélisque avec la lampe je toruverai quelque chose"
+    ],
+    "fragment13.124": [
       "Il y a un fragment de rêve sur le carillon suspendu à l'arbre"
     ],
-    "fragment10.120": [
+    "fragment10.123": [
       "Il y a un fragment de rêve sur la droite dans la dernière pièce"
     ],
-    "questionPuzzle.107": [
+    "questionPuzzle.126": [
       "On dirait que les fragments de rêve 10 et 13 vont ensemble"
-    ]
-  },
-  "14.1": {
-
-  },
-  "14.2": {
-    "word.129": [
-      "Il y a des choses que je n'ai pas essayé d'effacer"
     ],
-    "word.130": [
-      "Il y a des choses que je n'ai pas essayé d'effacer"
-    ],
-    "word.132": [
-      "Il y a des choses que je n'ai pas essayé d'effacer"
-    ],
-    "word.140": [
-      "Il y a des choses que je n'ai pas essayé d'effacer"
-    ],
-    "word.141": [
-      "Il y a des choses que je n'ai pas essayé d'effacer"
-    ],
-    "word.142": [
-      "Il y a des choses que je n'ai pas essayé d'effacer"
-    ],
-    "word.143": [
-      "Il y a des choses que je n'ai pas essayé d'effacer"
-    ],
-    "word.144": [
-      "Il y a des choses que je n'ai pas essayé d'effacer"
-    ],
-    "word.145": [
-      "Il y a des choses que je n'ai pas essayé d'effacer"
-    ],
-    "word.146": [
-      "Il y a des choses que je n'ai pas essayé d'effacer"
-    ],
-    "word.147": [
-      "Il y a des choses que je n'ai pas essayé d'effacer"
-    ],
-    "word.148": [
-      "Il y a des choses que je n'ai pas essayé d'effacer"
-    ]
-  },
-  "14.3": {
-    "questionWhiteBoard.106": [
+    "questionWhiteBoard.142": [
       "Le contenu non effacé du tableau devrait me guider vers la réponse"
     ],
-    "whiteBoard.125": [
+    "whiteBoard.127": [
       "Ce tableau à l'air important"
     ],
-    "eraser.126": [
+    "eraser.128": [
       "On dirait que je peux interagir avec l'effaceur"
     ]
   }

@@ -794,7 +794,15 @@ public class LoadGameContent : FSystem {
         if (File.Exists(gameContent.hintsPath))
         {
             GameHints gameHints = f_gameHints.First().GetComponent<GameHints>();
-            gameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>>(File.ReadAllText(gameContent.hintsPath));
+            try
+            {
+                gameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>>(File.ReadAllText(gameContent.hintsPath));
+            }
+            catch (Exception)
+            {
+                Debug.LogError("Invalid content in the file containting hints.");
+                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid content in the file containting hints"));
+            }
             if (gameHints.dictionary == null)
                 gameHints.dictionary = new Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>();
         }
@@ -807,12 +815,20 @@ public class LoadGameContent : FSystem {
         if (File.Exists(gameContent.internalHintsPath))
         {
             InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
-            internalGameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(File.ReadAllText(gameContent.internalHintsPath));
-            if (internalGameHints.dictionary == null)
+            try
             {
-                internalGameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalHintsJsonFile.text);
-                Debug.LogWarning("File containting internal hints empty. Default used.");
-                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting internal hints empty. Default used"));
+                internalGameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(File.ReadAllText(gameContent.internalHintsPath));
+                if (internalGameHints.dictionary == null || internalGameHints.dictionary.Count == 0)
+                {
+                    internalGameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalHintsJsonFile.text);
+                    Debug.LogWarning("File containting internal hints empty. Default used.");
+                    File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting internal hints empty. Default used"));
+                }
+            }
+            catch (Exception)
+            {
+                Debug.LogError("Invalid content in the file containting internal hints.");
+                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid content in the file containting internal hints"));
             }
         }
         else
