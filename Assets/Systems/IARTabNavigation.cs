@@ -63,7 +63,7 @@ public class IARTabNavigation : FSystem {
     {
         if (openedAtLeastOnce)
             GameObjectManager.setGameObjectState(f_HUD_A.First(), true); // display HUD "A"
-            //GameObjectManager.setGameObjectState(f_HUD_H.First(), true); // display HUD "H"
+            GameObjectManager.setGameObjectState(f_HUD_H.First(), true); // display HUD "H"
     }
 
     // Use to process your families.
@@ -130,7 +130,7 @@ public class IARTabNavigation : FSystem {
         // display HUD "A"
         GameObjectManager.setGameObjectState(f_HUD_A.First(), true);
         // display HUD "H"
-        //GameObjectManager.setGameObjectState(f_HUD_H.First(), true);
+        GameObjectManager.setGameObjectState(f_HUD_H.First(), true);
     }
 
     private void SwitchTab(GameObject newSelectedTab)

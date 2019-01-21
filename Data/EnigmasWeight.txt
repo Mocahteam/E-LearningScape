@@ -1,0 +1,17 @@
+{
+  "ballBox": 1.0,
+  "plankAndWire": 1.0,
+  "greenFragments": 1.0,
+  "gearsEnigma": 1.0,
+  "loginPanel": 1.0,
+  "glasses": 1.0,
+  "enigma6": 1.0,
+  "scrolls": 1.0,
+  "mirror": 1.0,
+  "enigma9": 1.0,
+  "enigma10": 1.0,
+  "puzzle": 1.0,
+  "enigma13": 1.0,
+  "lamp": 1.0,
+  "whiteBoard": 1.0
+}

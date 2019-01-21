@@ -56,7 +56,8 @@ public class LoadGameContent : FSystem {
     private FSystem instance;
 
     public static GameContent gameContent;
-    private DefaultGameContent defaultGameContent;
+    public static DefaultGameContent defaultGameContent;
+    public static Dictionary<string, float> enigmasWeight;
     private bool loadContent = true;
 
     private Texture2D tmpTex;
@@ -81,6 +82,8 @@ public class LoadGameContent : FSystem {
                 File.WriteAllText("Data/Data_LearningScape.txt", defaultGameContent.jsonFile.text);
                 File.WriteAllText("Data/LRSConfig.txt", defaultGameContent.lrsConfigFile.text);
                 File.WriteAllText("Data/Hints_LearningScape.txt", defaultGameContent.hintsJsonFile.text);
+                File.WriteAllText("Data/InternalHints_LearningScape.txt", defaultGameContent.internalHintsJsonFile.text);
+                File.WriteAllText("Data/EnigmasWeight.txt", defaultGameContent.enigmasWeight.text);
                 File.WriteAllText("Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
 
                 gameContent = new GameContent();
@@ -783,10 +786,12 @@ public class LoadGameContent : FSystem {
 
         #endregion
 
-        if (File.Exists("Data/LRSConfig.txt"))
+        if (File.Exists(gameContent.lrsConfigPath))
             GBL_Interface.lrsAddresses = JsonConvert.DeserializeObject<List<LRSAddress>>(File.ReadAllText("Data/LRSConfig.txt"));
         else
         {
+            if (!File.Exists("Data/LRSConfig.txt"))
+                File.WriteAllText("Data/LRSConfig.txt", defaultGameContent.lrsConfigFile.text);
             Debug.LogWarning("LRS configuration file not found. Default LRS used (Lip6).");
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - LRS configuration file not found. Default LRS used (Lip6)"));
         }
@@ -808,6 +813,8 @@ public class LoadGameContent : FSystem {
         }
         else
         {
+            if(!File.Exists("Data/Hints_LearningScape.txt"))
+                File.WriteAllText("Data/Hints_LearningScape.txt", defaultGameContent.hintsJsonFile.text);
             Debug.LogWarning("File containting hints not found.");
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting hints not found"));
         }
@@ -827,8 +834,11 @@ public class LoadGameContent : FSystem {
             }
             catch (Exception)
             {
-                Debug.LogError("Invalid content in the file containting internal hints.");
-                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid content in the file containting internal hints"));
+                if(!File.Exists("Data/InternalHints_LearningScape.txt"))
+                    File.WriteAllText("Data/InternalHints_LearningScape.txt", defaultGameContent.internalHintsJsonFile.text);
+                internalGameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalHintsJsonFile.text);
+                Debug.LogError("Invalid content in the file containting internal hints. Default used.");
+                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid content in the file containting internal hints. Default used"));
             }
         }
         else
@@ -836,6 +846,34 @@ public class LoadGameContent : FSystem {
             f_internalGameHints.First().GetComponent<InternalGameHints>().dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalHintsJsonFile.text);
             Debug.LogWarning("File containting internal hints not found. Default used.");
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting internal hints not found. Default used"));
+        }
+
+        if (File.Exists(gameContent.enigmasWeightPath))
+        {
+            try
+            {
+                enigmasWeight = JsonConvert.DeserializeObject<Dictionary<string, float>>(File.ReadAllText(gameContent.enigmasWeightPath));
+                if (enigmasWeight == null)
+                {
+                    enigmasWeight = JsonConvert.DeserializeObject<Dictionary<string, float>>(defaultGameContent.enigmasWeight.text);
+                    Debug.LogWarning("File containting enigmas weights empty. Default used.");
+                    File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting enigmas weights empty. Default used"));
+                }
+            }
+            catch (Exception)
+            {
+                if (!File.Exists("Data/EnigmasWeight.txt"))
+                    File.WriteAllText("Data/EnigmasWeight.txt", defaultGameContent.internalHintsJsonFile.text);
+                enigmasWeight = JsonConvert.DeserializeObject<Dictionary<string, float>>(defaultGameContent.enigmasWeight.text);
+                Debug.LogError("Invalid content in the file containting enigmas weights. Default used.");
+                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid content in the file containting enigmas weights. Default used"));
+            }
+        }
+        else
+        {
+            enigmasWeight = JsonConvert.DeserializeObject<Dictionary<string, float>>(defaultGameContent.enigmasWeight.text);
+            Debug.LogWarning("File containting enigmas weights not found. Default used.");
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting enigmas weights not found. Default used"));
         }
         
         Debug.Log("Data loaded");

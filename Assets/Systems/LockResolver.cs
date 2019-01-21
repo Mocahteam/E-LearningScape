@@ -22,6 +22,8 @@ public class LockResolver : FSystem {
 
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
+    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
+
     //information for animations
     private float speed;
     private float speedRotation;
@@ -281,6 +283,7 @@ public class LockResolver : FSystem {
                     GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(0).gameObject, false); // first child is locked tab
                     GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(1).gameObject, true); // second child is unlocked tab
                     GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new { verb = "unlocked", objectType = "menu", objectName = selectedLocker.IARScreenUnlock.name });
+                    f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 1;
                     // update flags
                     playerLookingAtDoor = false;
                     IARScreenRoom1Unlocked = true;
@@ -328,6 +331,7 @@ public class LockResolver : FSystem {
                         objectType = "interactable", objectName = selectedLocker.gameObject.name });
                     GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new { verb = "unlocked", objectType = "menu",
                         objectName = selectedLocker.IARScreenUnlock.name });
+                    f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 3;
                     closedBy = "system";
                     ExitLocker();
                 }

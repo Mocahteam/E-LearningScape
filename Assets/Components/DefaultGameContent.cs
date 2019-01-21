@@ -9,6 +9,7 @@ public class DefaultGameContent : MonoBehaviour {
 
     public TextAsset hintsJsonFile;
     public TextAsset internalHintsJsonFile;
+    public TextAsset enigmasWeight;
 
     public TextAsset dreamFragmentlinks;
 

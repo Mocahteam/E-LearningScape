@@ -67,9 +67,20 @@ public class DreamFragmentCollecting : FSystem {
             }
 
             if (File.Exists(LoadGameContent.gameContent.dreamFragmentLinksPath))
-                dreamFragmentsLinks = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(LoadGameContent.gameContent.dreamFragmentLinksPath));
+                try
+                {
+                    dreamFragmentsLinks = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(LoadGameContent.gameContent.dreamFragmentLinksPath));
+                }
+                catch (Exception)
+                {
+                    File.WriteAllText("Data/DreamFragmentLinks.txt", LoadGameContent.defaultGameContent.dreamFragmentlinks.text);
+                    Debug.LogWarning("Invalid content in the file containing dream fragment links. Default used");
+                    File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - Invalid content in the file containing dream fragment links. Default used"));
+                }
             else
             {
+                if(!File.Exists("Data/DreamFragmentLinks.txt"))
+                    File.WriteAllText("Data/DreamFragmentLinks.txt", LoadGameContent.defaultGameContent.dreamFragmentlinks.text);
                 Debug.LogWarning("Unable to load dream fragment links because no file found.");
                 File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - Unable to load dream fragment links because no file found"));
             }

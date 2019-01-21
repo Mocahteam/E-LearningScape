@@ -1,7 +1,11 @@
 {
   "1.2": {
-    "Trouver clé": [
-      "tipContent"
-    ]
+    "hintName.9999": {
+      "Key": "mylink",
+      "Value": [
+        "hint content 1",
+        "hint content 2"
+      ]
+    }
   }
 }

@@ -193,6 +193,7 @@ namespace DIG.GBLXAPI {
 			Statement statement = new Statement();
 			statement.actor = statementActor;
 			statement.verb = statementVerb;
+            statement.timestamp = DateTime.Now;
 			if (statementResult != null){ statement.result = statementResult; }
 			statement.target = statementObject;  // statement.target is the object (object is a reserved c# word)
 			if (statementContext != null){ statement.context = statementContext; }

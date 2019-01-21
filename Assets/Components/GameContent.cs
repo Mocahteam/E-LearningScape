@@ -12,9 +12,11 @@ public class GameContent {
     public bool traceToLRS = false;
     public float traceMovementFrequency = 0;
     public bool virtualPuzzle = true;
+    public string lrsConfigPath;
     public string dreamFragmentLinksPath;
     public string hintsPath;
     public string internalHintsPath;
+    public string enigmasWeightPath;
 
     //Texte intro, transition, fin
     public string[] storyTextIntro;

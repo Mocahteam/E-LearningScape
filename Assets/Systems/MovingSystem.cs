@@ -15,6 +15,7 @@ public class MovingSystem : FSystem
     private Family f_endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_cursor = FamilyManager.getFamily(new AnyOfTags("Cursor"));
     private Family f_waterWalking = FamilyManager.getFamily(new AnyOfLayers(12), new AllOfComponents(typeof(Triggered3D))); // Layer 12 <=> WaterCollider
+    private Family f_HUDInputs = FamilyManager.getFamily(new AnyOfTags("EnableOnFirstCrouch", "HUD_A", "HUD_H"), new AllOfComponents(typeof(Image)));
 
     public float traceMovementFrequency = 0;
     private bool crouching = false; // true when the player is crouching
@@ -231,7 +232,7 @@ public class MovingSystem : FSystem
         if (hideHUD)
         {
             float aCount = 1;
-            foreach (GameObject hud in f_linkedHud)
+            foreach (GameObject hud in f_HUDInputs)
             {
                 tmpImage = hud.GetComponent<Image>();
                 tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, tmpImage.color.a + hudHidingSpeed);
@@ -239,7 +240,7 @@ public class MovingSystem : FSystem
             }
             if (aCount < 0.3f)
             {
-                foreach (GameObject hud in f_linkedHud)
+                foreach (GameObject hud in f_HUDInputs)
                 {
                     tmpImage = hud.GetComponent<Image>();
                     tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, 0.3f);
@@ -250,7 +251,7 @@ public class MovingSystem : FSystem
         else if (showHUD)
         {
             float aCount = 0;
-            foreach (GameObject hud in f_linkedHud)
+            foreach (GameObject hud in f_HUDInputs)
             {
                 tmpImage = hud.GetComponent<Image>();
                 tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, tmpImage.color.a + hudShowingSpeed);
@@ -258,7 +259,7 @@ public class MovingSystem : FSystem
             }
             if (aCount >= 1f)
             {
-                foreach (GameObject hud in f_linkedHud)
+                foreach (GameObject hud in f_HUDInputs)
                 {
                     tmpImage = hud.GetComponent<Image>();
                     tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, 1f);
