@@ -28,7 +28,7 @@ public class GameContent {
     public string ballBoxQuestion;
     public string ballBoxPlaceHolder;
     public List<string> ballBoxAnswer;
-    public string[] ballTexts = new string[15];
+    public string[] ballTexts = new string[10];
 
     //Plank And Wire
     public string plankAndWireQuestion;

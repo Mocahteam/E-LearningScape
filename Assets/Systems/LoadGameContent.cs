@@ -293,8 +293,8 @@ public class LoadGameContent : FSystem {
             b.id = idList[(int)UnityEngine.Random.Range(0, idList.Count - 0.001f)];
             idList.Remove(b.id);
 
-            if(b.number - 1 < gameContent.ballTexts.Length)
-                b.text = gameContent.ballTexts[b.number - 1];
+            if(b.number < gameContent.ballTexts.Length)
+                b.text = gameContent.ballTexts[b.number];
         }
         //Exchange texts and numbers to set solution balls
         for(int j = 0; j < 3; j++)
@@ -302,9 +302,8 @@ public class LoadGameContent : FSystem {
             //If there is still unprocessed answers
             if (gameContent.ballBoxAnswer.Count > j)
             {
-                int.TryParse(gameContent.ballBoxAnswer[j], out answer);
                 //If the answer given was integer
-                if (answer != 0)
+                if (int.TryParse(gameContent.ballBoxAnswer[j], out answer))
                 {
                     //If the answer given is different than the default answer
                     if(answer != j + 1)

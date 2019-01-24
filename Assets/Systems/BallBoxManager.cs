@@ -134,7 +134,7 @@ public class BallBoxManager : FSystem {
 
     private Vector3 ballPosOnGrid (Ball ball)
     {
-        return Vector3.up * ((float)f_balls.Count / 16 - (float)(ball.id / 5) / 3) + Vector3.right * ((float)(ball.id % 5) * -2f / 4 + 1f) * 2 / 3 + Vector3.forward * 0.6f;
+        return Vector3.up * ((float)f_balls.Count / 11 - (float)(ball.id / 5) / 2) + Vector3.right * ((float)(ball.id % 5) * -2f / 4 + 1f) * 2 / 3 + Vector3.forward * 0.6f;
     }
 
     // Use this to update member variables when system pause. 
