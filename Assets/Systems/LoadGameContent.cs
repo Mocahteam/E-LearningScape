@@ -51,6 +51,7 @@ public class LoadGameContent : FSystem {
 
     private Family f_gameHints = FamilyManager.getFamily(new AllOfComponents(typeof(GameHints)));
     private Family f_internalGameHints = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameHints)));
+    private Family f_IARTab = FamilyManager.getFamily(new AnyOfTags("IARTab"));
 
 
     private FSystem instance;
@@ -121,6 +122,21 @@ public class LoadGameContent : FSystem {
         ActionsManager.instance.Pause = !gameContent.trace;
         Debug.Log(string.Concat("Trace: ", gameContent.trace));
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace: ", gameContent.trace));
+        HelpSystem.shouldPause = !gameContent.helpSystem;
+        HelpSystem.instance.Pause = !gameContent.helpSystem;
+        GameObject tmpGO = null;
+        for(int i = 0; i < f_IARTab.Count; i++)
+        {
+            tmpGO = f_IARTab.getAt(i);
+            if (tmpGO.transform.parent.gameObject.name == "HelpTab")
+            {
+                GameObjectManager.setGameObjectState(tmpGO.transform.parent.GetChild(0).gameObject, !gameContent.helpSystem);
+                GameObjectManager.setGameObjectState(tmpGO.transform.parent.GetChild(1).gameObject, gameContent.helpSystem);
+                break;
+            }
+        }
+        Debug.Log(string.Concat("Help system: ", gameContent.helpSystem));
+        File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Help system: ", gameContent.helpSystem));
         SendStatements.shouldPause = !gameContent.traceToLRS;
         SendStatements.instance.Pause = !gameContent.traceToLRS;
         MovingSystem.instance.traceMovementFrequency = gameContent.traceMovementFrequency;

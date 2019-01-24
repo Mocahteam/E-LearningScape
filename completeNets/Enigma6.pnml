@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-20E4-70F92-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-72E0-48ECF-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma6</text>
   </name>
- <page id="g-20E4-70F9C-1">
-  <place id="p-20E4-70F9E-2">
+ <page id="g-72E0-48ED8-1">
+  <place id="p-72E0-48EDB-2">
   <name>
    <text>Fragment_souvenir_1_ActivationCount_65</text>
     <graphics>
@@ -16,7 +16,7 @@
     <position x="230" y="50"/>
    </graphics>
   </place>
-  <transition id="t-20E4-70FAC-3">
+  <transition id="t-72E0-48EE8-3">
   <name>
    <text>Fragment_souvenir_1_activate_65</text>
     <graphics>
@@ -27,7 +27,7 @@
     <position x="110" y="50"/>
    </graphics>
   </transition>
-  <place id="p-20E4-70FB1-4">
+  <place id="p-72E0-48EED-4">
   <name>
    <text>Fragment_souvenir_5_ActivationCount_66</text>
     <graphics>
@@ -35,10 +35,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="220" y="130"/>
+    <position x="220" y="125"/>
    </graphics>
   </place>
-  <transition id="t-20E4-70FB5-5">
+  <transition id="t-72E0-48EF1-5">
   <name>
    <text>Fragment_souvenir_5_activate_66</text>
     <graphics>
@@ -46,10 +46,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="110" y="130"/>
+    <position x="110" y="125"/>
    </graphics>
   </transition>
-  <place id="p-20E4-70FB9-6">
+  <place id="p-72E0-48EF6-6">
   <name>
    <text>Fragment_souvenir_8_ActivationCount_67</text>
     <graphics>
@@ -57,10 +57,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="220" y="210"/>
+    <position x="220" y="195"/>
    </graphics>
   </place>
-  <transition id="t-20E4-70FBD-7">
+  <transition id="t-72E0-48EFB-7">
   <name>
    <text>Fragment_souvenir_8_activate_67</text>
     <graphics>
@@ -68,10 +68,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="110" y="210"/>
+    <position x="110" y="195"/>
    </graphics>
   </transition>
-  <place id="p-20E4-70FC0-8">
+  <place id="p-72E0-48F00-8">
   <name>
    <text>Q2_Answered_69</text>
     <graphics>
@@ -79,10 +79,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="715" y="120"/>
+    <position x="735" y="110"/>
    </graphics>
   </place>
-  <place id="p-20E4-70FC3-9">
+  <place id="p-72E0-48F02-9">
   <name>
    <text>Q2_Answering_69</text>
     <graphics>
@@ -93,10 +93,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="465" y="120"/>
+    <position x="485" y="110"/>
    </graphics>
   </place>
-  <transition id="t-20E4-70FC6-10">
+  <transition id="t-72E0-48F05-10">
   <name>
    <text>Q2_Correct_69</text>
     <graphics>
@@ -104,10 +104,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="595" y="60"/>
+    <position x="615" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-20E4-70FC9-11">
+  <transition id="t-72E0-48F09-11">
   <name>
    <text>Q2_Wrong_69</text>
     <graphics>
@@ -115,10 +115,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="595" y="180"/>
+    <position x="615" y="170"/>
    </graphics>
   </transition>
-  <place id="p-20E4-70FCB-12">
+  <place id="p-72E0-48F0B-12">
   <name>
    <text>Q2_place_68</text>
     <graphics>
@@ -126,23 +126,23 @@
     </graphics>
   </name>
    <graphics>
-    <position x="465" y="210"/>
+    <position x="485" y="195"/>
    </graphics>
   </place>
-  <arc id="e-20E4-70FD1-13" source="t-20E4-70FAC-3" target="p-20E4-70F9E-2">
+  <arc id="e-72E0-48F12-13" source="t-72E0-48EE8-3" target="p-72E0-48EDB-2">
   </arc>
-  <arc id="e-20E4-70FD2-14" source="t-20E4-70FB5-5" target="p-20E4-70FB1-4">
+  <arc id="e-72E0-48F15-14" source="t-72E0-48EF1-5" target="p-72E0-48EED-4">
   </arc>
-  <arc id="e-20E4-70FD4-15" source="t-20E4-70FBD-7" target="p-20E4-70FB9-6">
+  <arc id="e-72E0-48F16-15" source="t-72E0-48EFB-7" target="p-72E0-48EF6-6">
   </arc>
-  <arc id="e-20E4-70FD5-16" source="p-20E4-70FCB-12" target="t-20E4-70FC9-11">
+  <arc id="e-72E0-48F17-16" source="p-72E0-48F0B-12" target="t-72E0-48F09-11">
    <type value="test"/>
   </arc>
-  <arc id="e-20E4-70FD7-17" source="t-20E4-70FC6-10" target="p-20E4-70FC0-8">
+  <arc id="e-72E0-48F19-17" source="t-72E0-48F05-10" target="p-72E0-48F00-8">
   </arc>
-  <arc id="e-20E4-70FD8-18" source="p-20E4-70FC3-9" target="t-20E4-70FC6-10">
+  <arc id="e-72E0-48F1A-18" source="p-72E0-48F02-9" target="t-72E0-48F05-10">
   </arc>
-  <arc id="e-20E4-70FD9-19" source="p-20E4-70FC3-9" target="t-20E4-70FC9-11">
+  <arc id="e-72E0-48F1B-19" source="p-72E0-48F02-9" target="t-72E0-48F09-11">
    <type value="test"/>
   </arc>
  </page>

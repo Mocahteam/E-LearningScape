@@ -2,6 +2,7 @@
     "theme": "Pédagogie",
     "sessionDuration": 60,
     "trace": true,
+    "helpSystem": true,
     "traceToLRS": false,
     "traceMovementFrequency": 0.25,
     "virtualPuzzle": true,

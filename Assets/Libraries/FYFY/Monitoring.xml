@@ -254,6 +254,11 @@
         <member name="M:FYFY_plugins.Monitoring.MonitoringManager.#ctor">
             <summary> Set singleton instance of MonitoringManager </summary>
         </member>
+        <member name="F:FYFY_plugins.Monitoring.MonitoringManager.waitingForLaalys">
+            <summary>
+            This boolean is set to false when Laalys is connected or if an error occured while trying to launch Laalys
+            </summary>
+        </member>
         <member name="F:FYFY_plugins.Monitoring.MonitoringManager.PetriNetsName">
             <summary>List of Petri Nets name</summary>
         </member>

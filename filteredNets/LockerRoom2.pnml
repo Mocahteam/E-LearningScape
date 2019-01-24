@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-4354-76133-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-4854-DF81E-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>LockerRoom2</text>
   </name>
- <page id="g-4354-7613B-1">
-  <place id="p-4354-76140-2">
+ <page id="g-4854-DF828-1">
+  <place id="p-4854-DF82A-2">
   <name>
    <text>Verrou Porte_end_167</text>
     <graphics>
@@ -13,10 +13,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="535" y="80"/>
+    <position x="550" y="80"/>
    </graphics>
   </place>
-  <place id="p-4354-76159-3">
+  <place id="p-4854-DF837-3">
   <name>
    <text>Verrou Porte_off_159</text>
     <graphics>
@@ -27,10 +27,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="69" y="80"/>
+    <position x="71" y="80"/>
    </graphics>
   </place>
-  <place id="p-4354-7615E-4">
+  <place id="p-4854-DF83A-4">
   <name>
    <text>Verrou Porte_on_159</text>
     <graphics>
@@ -38,10 +38,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="239" y="80"/>
+    <position x="241" y="80"/>
    </graphics>
   </place>
-  <transition id="t-4354-7616F-5">
+  <transition id="t-4854-DF83E-5">
   <name>
    <text>Verrou Porte_perform2_167</text>
     <graphics>
@@ -49,10 +49,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="465" y="80"/>
+    <position x="480" y="80"/>
    </graphics>
   </transition>
-  <place id="p-4354-76172-6">
+  <place id="p-4854-DF841-6">
   <name>
    <text>Verrou Porte_start_167</text>
     <graphics>
@@ -63,10 +63,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="385" y="80"/>
+    <position x="400" y="80"/>
    </graphics>
   </place>
-  <transition id="t-4354-76176-7">
+  <transition id="t-4854-DF845-7">
   <name>
    <text>Verrou Porte_turnOff_159</text>
     <graphics>
@@ -74,10 +74,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="159" y="50"/>
+    <position x="161" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-4354-76179-8">
+  <transition id="t-4854-DF848-8">
   <name>
    <text>Verrou Porte_turnOn_159</text>
     <graphics>
@@ -85,22 +85,22 @@
     </graphics>
   </name>
    <graphics>
-    <position x="159" y="140"/>
+    <position x="161" y="140"/>
    </graphics>
   </transition>
-  <arc id="e-4354-76180-9" source="t-4354-7616F-5" target="p-4354-76140-2">
+  <arc id="e-4854-DF84F-9" source="t-4854-DF83E-5" target="p-4854-DF82A-2">
   </arc>
-  <arc id="e-4354-76181-10" source="p-4354-76172-6" target="t-4354-7616F-5">
+  <arc id="e-4854-DF850-10" source="p-4854-DF841-6" target="t-4854-DF83E-5">
   </arc>
-  <arc id="e-4354-76183-11" source="p-4354-7615E-4" target="t-4354-76176-7">
+  <arc id="e-4854-DF851-11" source="p-4854-DF83A-4" target="t-4854-DF845-7">
   </arc>
-  <arc id="e-4354-76183-12" source="p-4354-76159-3" target="t-4354-76179-8">
+  <arc id="e-4854-DF852-12" source="p-4854-DF837-3" target="t-4854-DF848-8">
   </arc>
-  <arc id="e-4354-76184-13" source="t-4354-76179-8" target="p-4354-7615E-4">
+  <arc id="e-4854-DF853-13" source="t-4854-DF848-8" target="p-4854-DF83A-4">
   </arc>
-  <arc id="e-4354-76185-14" source="t-4354-76176-7" target="p-4354-76159-3">
+  <arc id="e-4854-DF854-14" source="t-4854-DF845-7" target="p-4854-DF837-3">
   </arc>
-  <arc id="e-4354-76186-15" source="p-4354-7615E-4" target="t-4354-7616F-5">
+  <arc id="e-4854-DF855-15" source="p-4854-DF83A-4" target="t-4854-DF83E-5">
    <type value="test"/>
   </arc>
  </page>

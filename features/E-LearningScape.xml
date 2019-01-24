@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
-  <transition id="Verrou Porte_perform_158" label="perform Verrou Porte" system="True" end="False" />
-  <transition id="GearsEnigma_perform_147" label="perform GearsEnigma" system="True" end="False" />
-  <transition id="LoginPanel_perform_149" label="perform LoginPanel" system="True" end="False" />
+  <transition id="equivWith_ToggleObject_f_wrongChair_turnOff_45" label="turnOff equivWith_ToggleObject_f_wrongChair" system="False" end="False" />
+  <transition id="equivWith_ToggleObject_f_wrongChair_turnOn_45" label="turnOn equivWith_ToggleObject_f_wrongChair" system="False" end="False" />
   <transition id="Q2_perform_145" label="perform Q2" system="True" end="False" />
   <transition id="Q2_perform_153" label="perform Q2" system="True" end="False" />
-  <transition id="Q2_perform_161" label="perform Q2" system="True" end="False" />
+  <transition id="Verrou Porte_perform_158" label="perform Verrou Porte" system="True" end="False" />
+  <transition id="AnswersInput_perform_161" label="solveLamp AnswersInput" system="True" end="False" />
+  <transition id="AnswersInput_perform_160" label="solvePuzzle AnswersInput" system="True" end="False" />
+  <transition id="AnswersInput_perform_163" label="solveWhiteBoard AnswersInput" system="True" end="False" />
+  <transition id="AnswersInput_perform_162" label="solveEnigma13 AnswersInput" system="True" end="False" />
   <transition id="Q1_perform_152" label="perform Q1" system="True" end="False" />
+  <transition id="LoginPanel_perform_149" label="perform LoginPanel" system="True" end="False" />
   <transition id="Q6_perform_157" label="perform Q6" system="True" end="False" />
-  <transition id="Q1_perform_160" label="perform Q1" system="True" end="False" />
-  <transition id="Q4_perform_163" label="perform Q4" system="True" end="False" />
   <transition id="Q3_perform_154" label="perform Q3" system="True" end="False" />
   <transition id="Q1_perform_144" label="perform Q1" system="True" end="False" />
   <transition id="Q5_perform_156" label="perform Q5" system="True" end="False" />
   <transition id="WallIntro_perform2_143" label="perform2 WallIntro" system="True" end="False" />
   <transition id="Q4_perform_155" label="perform Q4" system="True" end="False" />
-  <transition id="FPSController_perform_164" label="perform FPSController" system="True" end="False" />
+  <transition id="FPSController_perform_164" label="perform FPSController" system="True" end="True" />
   <transition id="Q3_perform_146" label="perform Q3" system="True" end="False" />
-  <transition id="Q3_perform_162" label="perform Q3" system="True" end="False" />
+  <transition id="GearsEnigma_perform_147" label="perform GearsEnigma" system="True" end="False" />
 </transitions>

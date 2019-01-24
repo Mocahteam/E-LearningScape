@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-2D98-708F0-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-6B48-523A8-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma13</text>
   </name>
- <page id="g-2D98-7090C-1">
-  <place id="p-2D98-70910-2">
+ <page id="g-6B48-523B5-1">
+  <place id="p-6B48-523B9-2">
   <name>
    <text>AnswersInput_Answered_126</text>
     <graphics>
@@ -16,7 +16,7 @@
     <position x="715" y="110"/>
    </graphics>
   </place>
-  <place id="p-2D98-7092B-3">
+  <place id="p-6B48-523C6-3">
   <name>
    <text>AnswersInput_Answering_126</text>
     <graphics>
@@ -27,10 +27,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="465" y="110"/>
+    <position x="475" y="110"/>
    </graphics>
   </place>
-  <transition id="t-2D98-7093C-4">
+  <transition id="t-6B48-523C9-4">
   <name>
    <text>AnswersInput_Correct_126</text>
     <graphics>
@@ -41,7 +41,7 @@
     <position x="595" y="50"/>
    </graphics>
   </transition>
-  <place id="p-2D98-70940-5">
+  <place id="p-6B48-523CD-5">
   <name>
    <text>Fragment_souvenir_10_ActivationCount_123</text>
     <graphics>
@@ -49,10 +49,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="215" y="80"/>
+    <position x="235" y="80"/>
    </graphics>
   </place>
-  <transition id="t-2D98-70944-6">
+  <transition id="t-6B48-523D1-6">
   <name>
    <text>Fragment_souvenir_10_activate_123</text>
     <graphics>
@@ -63,7 +63,7 @@
     <position x="115" y="80"/>
    </graphics>
   </transition>
-  <place id="p-2D98-70948-7">
+  <place id="p-6B48-523D5-7">
   <name>
    <text>Fragment_souvenir_13_ActivationCount_124</text>
     <graphics>
@@ -74,7 +74,7 @@
     <position x="215" y="160"/>
    </graphics>
   </place>
-  <transition id="t-2D98-7094C-8">
+  <transition id="t-6B48-523D9-8">
   <name>
    <text>Fragment_souvenir_13_activate_124</text>
     <graphics>
@@ -85,19 +85,19 @@
     <position x="115" y="160"/>
    </graphics>
   </transition>
-  <arc id="e-2D98-70953-9" source="p-2D98-70948-7" target="t-2D98-7093C-4">
+  <arc id="e-6B48-523E0-9" source="p-6B48-523D5-7" target="t-6B48-523C9-4">
    <type value="test"/>
   </arc>
-  <arc id="e-2D98-70956-10" source="p-2D98-70940-5" target="t-2D98-7093C-4">
+  <arc id="e-6B48-523E3-10" source="p-6B48-523CD-5" target="t-6B48-523C9-4">
    <type value="test"/>
   </arc>
-  <arc id="e-2D98-70958-11" source="p-2D98-7092B-3" target="t-2D98-7093C-4">
+  <arc id="e-6B48-523E4-11" source="t-6B48-523D1-6" target="p-6B48-523CD-5">
   </arc>
-  <arc id="e-2D98-7095A-12" source="t-2D98-7093C-4" target="p-2D98-70910-2">
+  <arc id="e-6B48-523E6-12" source="p-6B48-523C6-3" target="t-6B48-523C9-4">
   </arc>
-  <arc id="e-2D98-7095B-13" source="t-2D98-7094C-8" target="p-2D98-70948-7">
+  <arc id="e-6B48-523E7-13" source="t-6B48-523C9-4" target="p-6B48-523B9-2">
   </arc>
-  <arc id="e-2D98-7095C-14" source="t-2D98-70944-6" target="p-2D98-70940-5">
+  <arc id="e-6B48-523E8-14" source="t-6B48-523D9-8" target="p-6B48-523D5-7">
   </arc>
  </page>
  </net>

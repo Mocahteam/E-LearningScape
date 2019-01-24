@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.PostProcessing;
 using FYFY;
+using FYFY_plugins.Monitoring;
 using UnityEngine.UI;
 using TMPro;
 using UnityStandardAssets.Characters.FirstPerson;
@@ -10,6 +12,8 @@ public class LogoDisplaying : FSystem {
     // This system manage displaying of the story
 
     private Family f_logo = FamilyManager.getFamily(new AllOfComponents(typeof(ImgBank)));
+    private Family f_fadingMenuElems = FamilyManager.getFamily(new AllOfComponents(typeof(FadingMenu)));
+    private Family f_loadingFragment = FamilyManager.getFamily(new AnyOfTags("LoadingFragment"));
 
     private GameObject logoGo;
     private Image fadingImage;
@@ -30,6 +34,13 @@ public class LogoDisplaying : FSystem {
     private bool showLogo = false;
     private bool closeLogo = false;
 
+    private GameObject loadingFragment;
+    private Material lfMat;
+    private Vector3 targetEmissionColor;
+    private Vector3 currentColor;
+    private bool menuFaded = false;
+    private bool motionBlurWasOn;
+
     public static LogoDisplaying instance;
 
     public LogoDisplaying()
@@ -46,6 +57,11 @@ public class LogoDisplaying : FSystem {
             }
 
             logo = logoGo.GetComponent<ImgBank>();
+
+            loadingFragment = f_loadingFragment.First();
+            lfMat = loadingFragment.transform.GetChild(0).GetComponent<Renderer>().material;
+            targetEmissionColor = Random.insideUnitSphere * 155 + Vector3.one * 100;
+            currentColor = new Vector3(0, 86, 255);
         }
         instance = this;
     }
@@ -53,77 +69,123 @@ public class LogoDisplaying : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
     {
-        // switch to next logo if mouse clicked or Escape pressed
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
-            // change to next logo
-            nextLogo++;
-
-        if (nextLogo != currentLogo)
+        if (MonitoringManager.Instance.waitingForLaalys)
         {
-            // make logo transparent (usefull in case of clicking)
-            fadingImage.color = new Color(1, 1, 1, 0);
-            // check if logo remaining
-            if (nextLogo >= logo.bank.Length)
+            if(!motionBlurWasOn)
+                motionBlurWasOn = loadingFragment.transform.parent.GetComponent<PostProcessingBehaviour>().profile.motionBlur.enabled;
+            loadingFragment.transform.parent.GetComponent<PostProcessingBehaviour>().profile.motionBlur.enabled = false;
+            //Loading animation
+            loadingFragment.transform.Rotate(0, 2, 0);
+            if (currentColor != targetEmissionColor)
+                currentColor = Vector3.MoveTowards(currentColor, targetEmissionColor, 20);
+            else
+                targetEmissionColor = Random.insideUnitSphere * 155 + Vector3.one * 100;
+            lfMat.SetColor("_EmissionColor", new Color(currentColor.x / 256, currentColor.y / 256, currentColor.z / 256) * Mathf.LinearToGammaSpace(2));
+        }
+        else
+        {
+            if (loadingFragment.activeSelf)
             {
-                if (!closeLogo)
+                GameObjectManager.setGameObjectState(loadingFragment, false);
+                GameObjectManager.setGameObjectState(logoGo.transform.GetChild(2).gameObject, false);
+                if(motionBlurWasOn)
+                    loadingFragment.transform.parent.GetComponent<PostProcessingBehaviour>().profile.motionBlur.enabled = true;
+            }
+            // switch to next logo if mouse clicked or Escape pressed
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
+                // change to next logo
+                nextLogo++;
+
+            if (nextLogo != currentLogo)
+            {
+                // make logo transparent (usefull in case of clicking)
+                fadingImage.color = new Color(1, 1, 1, 0);
+                // check if logo remaining
+                if (nextLogo >= logo.bank.Length)
                 {
-                    closeLogo = true;
+                    if (!closeLogo)
+                    {
+                        int nbFadinElems = f_fadingMenuElems.Count;
+                        for(int i = 0; i < nbFadinElems; i++)
+                            GameObjectManager.setGameObjectState(f_fadingMenuElems.getAt(i), true);
+                        closeLogo = true;
+                        readingTimer = Time.time;
+                        // Start main menu
+                        MenuSystem.instance.Pause = false;
+                    }
+                }
+                else
+                {
+                    currentLogo = nextLogo;
+                    fadingImage.sprite = logo.bank[currentLogo];
+                    fadingImage.preserveAspect = true;
+                    showLogo = true;
                     readingTimer = Time.time;
-                    // Start main menu
-                    MenuSystem.instance.Pause = false;
+                }
+
+            }
+
+            if (!closeLogo)
+            {
+                if (showLogo) // alpha to plain
+                {
+                    if (Time.time - readingTimer < fadeSpeed)
+                        // fade progress
+                        fadingImage.color = new Color(1, 1, 1, (Time.time - readingTimer) / fadeSpeed);
+                    else
+                    {
+                        // fade ends
+                        fadingImage.color = new Color(1, 1, 1, 1);
+                        showLogo = false;
+                        readingTimer = Time.time;
+                    }
+                }
+                else // plain to alpha
+                {
+                    if (Time.time - readingTimer < fadeSpeed)
+                        fadingImage.color = new Color(1, 1, 1, 1 - (Time.time - readingTimer) / fadeSpeed);
+                    else
+                    {
+                        fadingImage.color = new Color(1, 1, 1, 0);
+                        showLogo = true;
+                        readingTimer = Time.time;
+                        nextLogo++;
+                    }
                 }
             }
             else
             {
-                currentLogo = nextLogo;
-                fadingImage.sprite = logo.bank[currentLogo];
-                fadingImage.preserveAspect = true;
-                showLogo = true;
-                readingTimer = Time.time;
-            }
-
-        }
-
-        if (!closeLogo)
-        {
-            if (showLogo) // alpha to plain
-            {
                 if (Time.time - readingTimer < fadeSpeed)
-                    // fade progress
-                    fadingImage.color = new Color(1, 1, 1, (Time.time - readingTimer) / fadeSpeed);
-                else
                 {
-                    // fade ends
-                    fadingImage.color = new Color(1, 1, 1, 1);
-                    showLogo = false;
-                    readingTimer = Time.time;
+                    if (menuFaded)
+                    {
+                        int nbFadinElems = f_fadingMenuElems.Count;
+                        GameObject tmpGO = null;
+                        for (int i = 0; i < nbFadinElems; i++)
+                        {
+                            tmpGO = f_fadingMenuElems.getAt(i);
+                            if (tmpGO.GetComponent<Image>())
+                                tmpGO.GetComponent<Image>().color = new Color(1, 1, 1, tmpGO.GetComponent<FadingMenu>().finalAlpha/256 * (Time.time - readingTimer) / fadeSpeed);
+                            else
+                                tmpGO.GetComponent<Text>().color = new Color(1, 1, 1, tmpGO.GetComponent<FadingMenu>().finalAlpha / 256 * (Time.time - readingTimer) / fadeSpeed);
+                        }
+                    }
+                    else
+                        background.color = new Color(0, 0, 0, 1 - (Time.time - readingTimer) / fadeSpeed);
                 }
-            }
-            else // plain to alpha
-            {
-                if (Time.time - readingTimer < fadeSpeed)
-                    fadingImage.color = new Color(1, 1, 1, 1 - (Time.time - readingTimer) / fadeSpeed);
-                else
+                else // fade end
                 {
-                    fadingImage.color = new Color(1, 1, 1, 0);
-                    showLogo = true;
-                    readingTimer = Time.time;
-                    nextLogo++;
+                    if(menuFaded)
+                        // Pause this
+                        this.Pause = true;
+                    else
+                    {
+                        menuFaded = true;
+                        // Disable Logo
+                        GameObjectManager.setGameObjectState(logoGo, false);
+                        readingTimer = Time.time;
+                    }
                 }
-            }
-        }
-        else
-        {
-            if (Time.time - readingTimer < fadeSpeed)
-            {
-                background.color = new Color(0, 0, 0, 1 - (Time.time - readingTimer) / fadeSpeed);
-            }
-            else // fade end
-            {
-                // Pause this
-                this.Pause = true;
-                // Disable Logo
-                GameObjectManager.setGameObjectState(logoGo, false);
             }
         }
     }

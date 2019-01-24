@@ -68,6 +68,9 @@ TagManager:
   - PlankNumbers
   - Chair
   - HUD_H
+  - HelpDescriptionUI
+  - LoadingFragment
+  - AskHelpButton
   layers:
   - Default
   - TransparentFX

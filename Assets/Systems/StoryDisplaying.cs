@@ -86,7 +86,7 @@ public class StoryDisplaying : FSystem {
     {
         // Stop all systems except this and ActionManager
         foreach (FSystem syst in FSystemManager.updateSystems())
-            if (syst != this && syst != ActionsManager.instance && syst != SendStatements.instance)
+            if (syst != this && syst != ActionsManager.instance && syst != SendStatements.instance && syst != HelpSystem.instance)
                 syst.Pause = true;
         // Enable UI Story
         GameObjectManager.setGameObjectState(f_storyDisplayer.First(), true);
@@ -186,6 +186,7 @@ public class StoryDisplaying : FSystem {
                         MoveInFrontOf.instance.Pause = false;
                         UIEffectPlayer.instance.Pause = false;
                         ActionsManager.instance.Pause = !LoadGameContent.gameContent.trace;
+                        HelpSystem.instance.Pause = !LoadGameContent.gameContent.helpSystem;
                         SendStatements.instance.Pause = !LoadGameContent.gameContent.traceToLRS;
                     }
                     else

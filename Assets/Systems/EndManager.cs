@@ -111,6 +111,7 @@ public class EndManager : FSystem {
                 sys.Pause = true;
             ActionsManager.instance.Pause = !LoadGameContent.gameContent.trace;
             SendStatements.instance.Pause = false;
+            HelpSystem.instance.Pause = false;
             DreamFragmentCollecting.instance.Pause = false;
             MovingSystem.instance.Pause = false;
             this.Pause = false;

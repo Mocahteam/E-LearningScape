@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-1964-A3D9A-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-859C-72719-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma9</text>
   </name>
- <page id="g-1964-A3DA3-1">
-  <place id="p-1964-A3DA6-2">
+ <page id="g-859C-72722-1">
+  <place id="p-859C-72724-2">
   <name>
    <text>Fragment_souvenir_2_ActivationCount_84</text>
     <graphics>
@@ -16,7 +16,7 @@
     <position x="230" y="110"/>
    </graphics>
   </place>
-  <transition id="t-1964-A3DB3-3">
+  <transition id="t-859C-72732-3">
   <name>
    <text>Fragment_souvenir_2_activate_84</text>
     <graphics>
@@ -27,7 +27,7 @@
     <position x="110" y="110"/>
    </graphics>
   </transition>
-  <place id="p-1964-A3DB8-4">
+  <place id="p-859C-72737-4">
   <name>
    <text>Q5_Answered_86</text>
     <graphics>
@@ -35,10 +35,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="660" y="110"/>
+    <position x="680" y="110"/>
    </graphics>
   </place>
-  <place id="p-1964-A3DBC-5">
+  <place id="p-859C-7273A-5">
   <name>
    <text>Q5_Answering_86</text>
     <graphics>
@@ -49,10 +49,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="420" y="110"/>
+    <position x="440" y="110"/>
    </graphics>
   </place>
-  <transition id="t-1964-A3DBE-6">
+  <transition id="t-859C-7273C-6">
   <name>
    <text>Q5_Correct_86</text>
     <graphics>
@@ -60,17 +60,17 @@
     </graphics>
   </name>
    <graphics>
-    <position x="540" y="50"/>
+    <position x="560" y="50"/>
    </graphics>
   </transition>
-  <arc id="e-1964-A3DC5-7" source="p-1964-A3DA6-2" target="t-1964-A3DBE-6">
+  <arc id="e-859C-72743-7" source="p-859C-72724-2" target="t-859C-7273C-6">
    <type value="test"/>
   </arc>
-  <arc id="e-1964-A3DC8-8" source="p-1964-A3DBC-5" target="t-1964-A3DBE-6">
+  <arc id="e-859C-72747-8" source="p-859C-7273A-5" target="t-859C-7273C-6">
   </arc>
-  <arc id="e-1964-A3DC9-9" source="t-1964-A3DBE-6" target="p-1964-A3DB8-4">
+  <arc id="e-859C-72747-9" source="t-859C-7273C-6" target="p-859C-72737-4">
   </arc>
-  <arc id="e-1964-A3DCA-10" source="t-1964-A3DB3-3" target="p-1964-A3DA6-2">
+  <arc id="e-859C-72748-10" source="t-859C-72732-3" target="p-859C-72724-2">
   </arc>
  </page>
  </net>

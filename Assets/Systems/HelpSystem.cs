@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using FYFY;
 using FYFY_plugins.Monitoring;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -19,9 +21,14 @@ public class HelpSystem : FSystem {
     private Family f_actions = FamilyManager.getFamily(new AllOfComponents(typeof(ActionPerformed)));
     private Family f_actionsProcessed = FamilyManager.getFamily(new NoneOfComponents(typeof(ActionPerformed)));
     private Family f_componentMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
+    private Family f_askHelpButton = FamilyManager.getFamily(new AnyOfTags("AskHelpButton"), new AllOfComponents(typeof(Button)));
+
+    private Family f_scrollView = FamilyManager.getFamily(new AllOfComponents(typeof(ScrollRect), typeof(PrefabContainer)));
+    private Family f_description = FamilyManager.getFamily(new AnyOfTags("HelpDescriptionUI"));
 
     private Family f_debugDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(DebugDisplayer)));
     private DebugDisplayer debugDisplayer;
+    private Family f_wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"));
 
     private GameHints gameHints;
     private InternalGameHints internalGameHints;
@@ -32,7 +39,6 @@ public class HelpSystem : FSystem {
     private string highlightTag = "##HL##";
 
     private float sessionDuration = 3600; //in Seconds
-    private Timer timer;
     private float totalWeightedMetaActions = 0;
     private float playerHintCooldownDuration = 300;
     private float systemHintCooldownDuration = 15;
@@ -63,12 +69,28 @@ public class HelpSystem : FSystem {
 
     private Dictionary<string, float> weights;
 
+    private RectTransform scrollViewContent;
+    private TextMeshProUGUI hintTitle;
+    private TextMeshProUGUI hintText;
+    private GameObject hintButtonPrefab;
+    private List<GameObject> hintButtonsPool;
+    private Button selectedHint = null;
+    private ColorBlock colorHint;
+    private ColorBlock colorNewHint;
+    private ColorBlock colorSelectedHint;
+
+    private GameObject tmpGO;
+    private RectTransform tmpRT;
+    private HintContent tmpHC;
+    private KeyValuePair<string, List<string>> tmpPair;
+
     //store the gameObject, the name and the overrideName of the ActionPerformed
     //and processes it after the system ActionManager processed all ActionPerformed of the gameobject
     //Dictionary<GameObject, List<KeyValuePair<name, overrideName>>>
     private Dictionary<GameObject, List<KeyValuePair<string, string>>> actionPerformedHistory;
 
     public static HelpSystem instance;
+    public static bool shouldPause = true;
 
     public HelpSystem()
     {
@@ -91,16 +113,15 @@ public class HelpSystem : FSystem {
                     gameHints.dictionary[key1].Add(string.Concat(highlightTag, key2), new KeyValuePair<string, List<string>>("", internalGameHints.dictionary[key1][key2]));
                 }
             }
-            if (LoadGameContent.gameContent.virtualPuzzle)
-                RemoveHintsByPN("Enigma11_2");
-            else
-                RemoveHintsByPN("Enigma11_1");
             initialGameHints = new Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>(gameHints.dictionary);
+            File.WriteAllText("Data/dictionaryContent.txt", JsonConvert.SerializeObject(gameHints.dictionary, Formatting.Indented));
 
             availableComponentMonitoringIDs = new Dictionary<int, List<string>>();
             foreach(string key1 in gameHints.dictionary.Keys)
                 foreach(string key2 in gameHints.dictionary[key1].Keys)
                 {
+
+
                     int id = -1;
                     string[] tmpStringArray = key2.Split('.');
                     try
@@ -123,9 +144,16 @@ public class HelpSystem : FSystem {
                             availableComponentMonitoringIDs.Add(id, new List<string>() { key2 });
                     }
                 }
+            int nbHints = 0;
+            foreach (string key in gameHints.dictionary.Keys)
+                nbHints += gameHints.dictionary[key].Keys.Count;
+
+            if (LoadGameContent.gameContent.virtualPuzzle)
+                RemoveHintsByPN("Enigma11_2");
+            else
+                RemoveHintsByPN("Enigma11_1");
 
             sessionDuration = LoadGameContent.gameContent.sessionDuration * 60; //convert to seconds
-            timer = f_timer.First().GetComponent<Timer>();
 
             room = f_unlockedRoom.First().GetComponent<UnlockedRoom>();
             
@@ -138,9 +166,46 @@ public class HelpSystem : FSystem {
             foreach (string enigmaName in weights.Keys)
                 totalWeightedMetaActions += weights[enigmaName];
 
+            scrollViewContent = f_scrollView.First().transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+            hintTitle = f_description.First().transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            hintText = f_description.First().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            hintButtonPrefab = f_scrollView.First().GetComponent<PrefabContainer>().prefab;
+            //create a pool of int button right at the beginning and activate them when necessary rather than creating them during the game
+            if (!shouldPause)
+            {
+                hintButtonsPool = new List<GameObject>();
+                GameObject tmpGo;
+                Button b;
+                for (int i = 0; i < 300; i++)
+                {
+                    tmpGo = GameObject.Instantiate(hintButtonPrefab);
+                    tmpGo.transform.SetParent(scrollViewContent.transform);
+                    tmpGo.SetActive(false);
+                    GameObjectManager.bind(tmpGo);
+                    hintButtonsPool.Add(tmpGo);
+                }
+            }
+
             f_traces.addEntryCallback(OnNewTraces);
             f_actions.addEntryCallback(OnNewActionPerformed);
             f_actionsProcessed.addEntryCallback(OnActionsProcessed);
+            f_askHelpButton.First().GetComponent<Button>().onClick.AddListener(OnPlayerAskHelp);
+
+            actionPerformedHistory = new Dictionary<GameObject, List<KeyValuePair<string, string>>>();
+
+            colorHint = new ColorBlock();
+            colorHint.normalColor =  new Color(189,244,255,255) / 256;
+            colorHint.highlightedColor = new Color(137,235,255,255) / 256;
+            colorHint.pressedColor = new Color(98,182,199,255) / 256;
+            colorHint.disabledColor = new Color(137, 235, 255, 128) / 256;
+            colorHint.colorMultiplier = 1;
+            colorNewHint = new ColorBlock();
+            colorNewHint.normalColor = new Color(254,255,189,255) / 256;
+            colorNewHint.highlightedColor = new Color(248,255,137,255) / 256;
+            colorNewHint.pressedColor = new Color(199,192,98,255) / 256;
+            colorNewHint.disabledColor = new Color(253,255,137,128) / 256;
+            colorNewHint.colorMultiplier = 1;
+            colorSelectedHint = ColorBlock.defaultColorBlock;
 
             #region Debug Init
             debugDisplayer = f_debugDisplayer.First().GetComponent<DebugDisplayer>();
@@ -168,6 +233,7 @@ public class HelpSystem : FSystem {
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
     {
+        this.Pause = shouldPause;
     }
 
     // Use to process your families.
@@ -188,17 +254,78 @@ public class HelpSystem : FSystem {
 
         }
         #region Debug update
-        debugDisplayer.timer = Time.time - timer.startingTime;
+        debugDisplayer.timer = Time.time - f_timer.First().GetComponent<Timer>().startingTime;
         debugDisplayer.playerHintTimer = Time.time - playerHintTimer;
         debugDisplayer.systemHintTimer = Time.time - systemHintTimer;
         debugDisplayer.labelCount = labelCount;
         debugDisplayer.nbFeedBackGiven = nbFeedBackGiven;
-        debugDisplayer.enigmaRatio = (totalWeightedMetaActions - GetWeightedNumberEnigmasLeft()) / totalWeightedMetaActions;
+        //debugDisplayer.enigmaRatio = (totalWeightedMetaActions - GetWeightedNumberEnigmasLeft()) / totalWeightedMetaActions;
         debugDisplayer.timeRatio = (Time.time - f_timer.First().GetComponent<Timer>().startingTime) / sessionDuration;
         debugDisplayer.progressionRatio = debugDisplayer.enigmaRatio / debugDisplayer.timeRatio;
         debugDisplayer.availableComponentMonitoringIDs.Clear();
         debugDisplayer.availableComponentMonitoringIDs.AddRange(availableComponentMonitoringIDs.Keys);
         #endregion
+    }
+
+    private void OnNewTraces(GameObject go)
+    {
+        noActionTimer = Time.time;
+
+        if (Time.time - systemHintTimer > systemHintCooldownDuration)
+        {
+            float enigmaProgression = (totalWeightedMetaActions - GetWeightedNumberEnigmasLeft()) / totalWeightedMetaActions;
+            float timeProgression = (Time.time - f_timer.First().GetComponent<Timer>().startingTime) / sessionDuration;
+            //(nb enigma done / total nb enigma) / (current time / total duration)
+            float progressionRatio = enigmaProgression / timeProgression;
+
+            Trace[] traces = go.GetComponents<Trace>();
+            Trace tmpTrace = null;
+            int nbTraces = traces.Length;
+            int nbLabels = -1;
+
+            //increase/decrease labelCount depending on the labels
+            //give feedback if necessary
+            for (int i = 0; i < nbTraces; i++)
+            {
+                tmpTrace = traces[i];
+                nbLabels = tmpTrace.labels.Length;
+                for (int j = 0; j < nbLabels; j++)
+                {
+                    if (correctLabels.Contains(tmpTrace.labels[j]))
+                        labelCount += correctCoef / progressionRatio;
+                    else if (errorLabels.Contains(tmpTrace.labels[j]))
+                    {
+                        labelCount += errorCoef * progressionRatio;
+                        float numberFeedbackExpected = (sessionDuration - (Time.time - f_timer.First().GetComponent<Timer>().startingTime)) * nbFeedBackGiven / (Time.time - f_timer.First().GetComponent<Timer>().startingTime);
+                        float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
+
+                        int feedbackLevel = 2;
+                        if (feedbackRatio < feedbackStep1)
+                            feedbackLevel = 1;
+                        else if (feedbackRatio > feedbackStep2)
+                            feedbackLevel = 3;
+
+                        if (labelCount > errorStep)
+                            DisplayHint(room.roomNumber, feedbackLevel);
+                    }
+                    else if (otherLabels.Contains(tmpTrace.labels[j]))
+                    {
+                        labelCount += otherCoef * progressionRatio;
+                        float numberFeedbackExpected = (sessionDuration - (Time.time - f_timer.First().GetComponent<Timer>().startingTime)) * nbFeedBackGiven / (Time.time - f_timer.First().GetComponent<Timer>().startingTime);
+                        float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
+
+                        int feedbackLevel = 2;
+                        if (feedbackRatio < feedbackStep1)
+                            feedbackLevel = 1;
+                        else if (feedbackRatio > feedbackStep2)
+                            feedbackLevel = 3;
+
+                        if (labelCount > otherStep)
+                            DisplayHint(room.roomNumber, feedbackLevel);
+                    }
+                }
+            }
+        }
     }
 
     private void OnNewActionPerformed(GameObject go)
@@ -235,9 +362,9 @@ public class HelpSystem : FSystem {
                     if (!reachable)
                     {
                         bool allRemoved = RemoveHintsByComponentID(cm.Key.id);
-                        if (!allRemoved)
-                            Debug.LogWarning(string.Concat("Something went wrong with the removing of hints linked to the ComponentMonitoring with the id ", cm.Key.id, ".",
-                                System.Environment.NewLine, "Eiher the id isn't in the dictionary \"availableComponentMonitoringIDs\" or one of the hints isn't in \"gameHints.dictionary\"."));
+                        //if (!allRemoved)
+                        //    Debug.LogWarning(string.Concat("Something went wrong with the removing of hints linked to the ComponentMonitoring with the id ", cm.Key.id, ".",
+                        //        System.Environment.NewLine, "Either the id isn't in the dictionary \"availableComponentMonitoringIDs\" or one of the hints isn't in \"gameHints.dictionary\"."));
                     }
                     //if action performed is a player objective/end action, remove all hints linked to monitor of the same Petri net
                     if (cm.Value.isEndAction)
@@ -245,6 +372,39 @@ public class HelpSystem : FSystem {
                 }
             }
         }
+    }
+
+    private void OnClickHint(Button b)
+    {
+        if (selectedHint)
+            selectedHint.colors = colorHint;
+        selectedHint = b;
+        selectedHint.colors = colorSelectedHint;
+        tmpHC = selectedHint.GetComponent<HintContent>();
+        string[] tmpStringArray = tmpHC.hintName.Split('.');
+        string buttonName = tmpStringArray[0];
+        for (int i = 1; i < tmpStringArray.Length - 1; i++)
+            buttonName = string.Concat(buttonName, ".", tmpStringArray[i]);
+        hintTitle.text = tmpHC.hintName;
+        hintText.text = tmpHC.text;
+        if(tmpHC.link != "")
+        {
+            //display link button
+        }
+    }
+
+    private void OnPlayerAskHelp()
+    {
+        //TODO: check cooldown before sending hint
+        float numberFeedbackExpected = (sessionDuration - (Time.time - f_timer.First().GetComponent<Timer>().startingTime)) * nbFeedBackGiven / (Time.time - f_timer.First().GetComponent<Timer>().startingTime);
+        float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
+
+        int feedbackLevel = 2;
+        if (feedbackRatio < feedbackStep1)
+            feedbackLevel = 1;
+        else if (feedbackRatio > feedbackStep2)
+            feedbackLevel = 3;
+        DisplayHint(room.roomNumber, feedbackLevel);
     }
 
     /// <summary>
@@ -267,11 +427,12 @@ public class HelpSystem : FSystem {
                     if (gameHints.dictionary[key].ContainsKey(name))
                     {
                         gameHints.dictionary[key].Remove(name);
+                        File.WriteAllText("Data/dictionaryContent.txt", JsonConvert.SerializeObject(gameHints.dictionary, Formatting.Indented));
                         wordRemoved = true;
                         break;
                     }
-                    allRemoved = allRemoved ? wordRemoved : false;
                 }
+                allRemoved = allRemoved ? wordRemoved : false;
             }
             return allRemoved;
         }
@@ -347,110 +508,103 @@ public class HelpSystem : FSystem {
         return cMonitors;
     }
 
-    private void OnNewTraces(GameObject go)
-    {
-        noActionTimer = Time.time;
-
-        if (Time.time - systemHintTimer > systemHintCooldownDuration)
-        {
-            float enigmaProgression = (totalWeightedMetaActions - GetWeightedNumberEnigmasLeft()) / totalWeightedMetaActions;
-            float timeProgression = (Time.time - f_timer.First().GetComponent<Timer>().startingTime) / sessionDuration;
-            //(nb enigma done / total nb enigma) / (current time / total duration)
-            float progressionRatio = enigmaProgression / timeProgression;
-
-            Trace[] traces = go.GetComponents<Trace>();
-            Trace tmpTrace = null;
-            int nbTraces = traces.Length;
-            int nbLabels = -1;
-
-            //increase/decrease labelCount depending on the labels
-            //give feedback if necessary
-            for (int i = 0; i < nbTraces; i++)
-            {
-                tmpTrace = traces[i];
-                nbLabels = tmpTrace.labels.Length;
-                for (int j = 0; j < nbLabels; j++)
-                {
-                    if (correctLabels.Contains(tmpTrace.labels[j]))
-                        labelCount += correctCoef / progressionRatio;
-                    else if (errorLabels.Contains(tmpTrace.labels[j]))
-                    {
-                        labelCount += errorCoef * progressionRatio;
-                        float numberFeedbackExpected = (sessionDuration - (Time.time - timer.startingTime)) * nbFeedBackGiven / (Time.time - timer.startingTime);
-                        float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
-
-                        int feedbackLevel = 2;
-                        if (feedbackRatio < feedbackStep1)
-                            feedbackLevel = 1;
-                        else if (feedbackRatio > feedbackStep2)
-                            feedbackLevel = 3;
-
-                        if(labelCount > errorStep)
-                            DisplayHint(room.roomNumber, feedbackLevel);
-                    }
-                    else if (otherLabels.Contains(tmpTrace.labels[j]))
-                    {
-                        labelCount += otherCoef * progressionRatio;
-                        float numberFeedbackExpected = (sessionDuration - (Time.time - timer.startingTime)) * nbFeedBackGiven / (Time.time - timer.startingTime);
-                        float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
-
-                        int feedbackLevel = 2;
-                        if (feedbackRatio < feedbackStep1)
-                            feedbackLevel = 1;
-                        else if (feedbackRatio > feedbackStep2)
-                            feedbackLevel = 3;
-
-                        if (labelCount > otherStep)
-                            DisplayHint(room.roomNumber, feedbackLevel);
-                    }
-                }
-            }
-        }
-    }
-
     private void DisplayHint(int room, int feedbackLevel)
     {
         int availableFeedback = CheckAvailableFeedback(room, feedbackLevel);
         if(availableFeedback != -1)
         {
             string hintName = GetHintName(room, availableFeedback);
-            string key1 = string.Concat(room, ".", availableFeedback);
+            if (hintName != "")
+            {
+                string key1 = string.Concat(room, ".", availableFeedback);
 
-            int nbHintTexts = gameHints.dictionary[key1][hintName].Value.Count;
-            if (nbHintTexts > 0)
-            {
-                //change subtitle text tot display the hint
-                subtitles.text = gameHints.dictionary[key1][hintName].Value[(int)Random.Range(0, nbHintTexts - 0.01f)];
-                GameObjectManager.setGameObjectState(subtitles.gameObject, true);
-                subtitlesTimer = Time.time;
-            }
+                tmpPair = gameHints.dictionary[key1][hintName];
 
-            if (hintName.Substring(0, highlightTag.Length) == highlightTag)
-            {
-                //if hint name starts with the highlight tag, highlight the gameobject
-            }
+                bool hasHighlightTag = false;
+                if (hintName.Substring(0, highlightTag.Length) == highlightTag)
+                {
+                    hasHighlightTag = true;
+                    //if hint name starts with the highlight tag, highlight the gameobject
+                    hintName = hintName.Remove(0, highlightTag.Length);
+                }
 
-            //remove hint from dictionary
-            gameHints.dictionary[key1].Remove(hintName);
-            //remove hint from availableComponentMonitoringIDs
-            int id = -1;
-            string[] tmpStringArray = hintName.Split('.');
-            try
-            {
-                id = int.Parse(tmpStringArray[tmpStringArray.Length - 1]);
-            }
-            catch (System.Exception)
-            {
-            }
-            if (availableComponentMonitoringIDs.ContainsKey(id) && availableComponentMonitoringIDs[id].Contains(hintName))
-            {
-                availableComponentMonitoringIDs[id].Remove(hintName);
-                if (availableComponentMonitoringIDs[id].Count == 0)
-                    availableComponentMonitoringIDs.Remove(id);
-            }
+                //remove hint from availableComponentMonitoringIDs
+                int id = -1;
+                string[] tmpStringArray = hintName.Split('.');
+                try
+                {
+                    id = int.Parse(tmpStringArray[tmpStringArray.Length - 1]);
+                }
+                catch (System.Exception)
+                {
+                }
+                if (availableComponentMonitoringIDs.ContainsKey(id) && availableComponentMonitoringIDs[id].Contains(hintName))
+                {
+                    availableComponentMonitoringIDs[id].Remove(hintName);
+                    if (availableComponentMonitoringIDs[id].Count == 0)
+                        availableComponentMonitoringIDs.Remove(id);
+                }
 
-            systemHintTimer = Time.time;
-            nbFeedBackGiven++;
+                //show a button to see hint content in hint tab in IAR
+                if (hintButtonsPool.Count == 0)
+                {
+                    //create a new hint button if pool is empty
+                    GameObject tmpGo = GameObject.Instantiate(hintButtonPrefab);
+                    tmpGo.transform.SetParent(scrollViewContent.transform);
+                    tmpGo.SetActive(false);
+                    GameObjectManager.bind(tmpGo);
+                    Button b = tmpGo.GetComponent<Button>();
+                    b.onClick.AddListener(delegate { OnClickHint(b); });
+                    hintButtonsPool.Add(tmpGo);
+
+                    Debug.LogWarning("You should increase hintButtonsPool initial size");
+                    File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - You should increase hintButtonsPool initial size."));
+                }
+
+                tmpGO = hintButtonsPool[0];
+                hintButtonsPool.RemoveAt(0);
+                Button hintButton = tmpGO.GetComponent<Button>();
+                string buttonName = tmpStringArray[0];
+                for (int i = 1; i < tmpStringArray.Length - 1; i++)
+                    buttonName = string.Concat(buttonName, ".", tmpStringArray[i]);
+                tmpGO.transform.GetChild(0).GetComponent<Text>().text = buttonName;
+                hintButton.colors = colorNewHint;
+                GameObjectManager.setGameObjectState(tmpGO, true);
+                int nbActivatedHint = scrollViewContent.GetComponentsInChildren<Button>().Length;
+                scrollViewContent.sizeDelta = new Vector2(scrollViewContent.sizeDelta.x, (nbActivatedHint + 1) * hintButton.GetComponent<RectTransform>().sizeDelta.y);
+                tmpRT = tmpGO.GetComponent<RectTransform>();
+                tmpRT.localScale = Vector3.one;
+                tmpRT.offsetMin = new Vector2(0, tmpRT.offsetMin.y);
+                tmpRT.offsetMax = new Vector2(0, tmpRT.offsetMax.y);
+                tmpRT.anchoredPosition = new Vector2(0, -(nbActivatedHint + 0.5f) * hintButton.GetComponent<RectTransform>().sizeDelta.y);
+                tmpHC = tmpGO.GetComponent<HintContent>();
+                tmpHC.hintName = hintName;
+                int nbHintTexts = tmpPair.Value.Count;
+                if (nbHintTexts > 0)
+                {
+                    tmpHC.text = tmpPair.Value[(int)UnityEngine.Random.Range(0, nbHintTexts - 0.01f)];
+                    //change subtitle text tot display the hint
+                    //subtitles.text = tmpPair.Value[(int)UnityEngine.Random.Range(0, nbHintTexts - 0.01f)];
+                    //GameObjectManager.setGameObjectState(subtitles.gameObject, true);
+                    //subtitlesTimer = Time.time;
+                    tmpHC.link = tmpPair.Key;
+                }
+                if (id != -1)
+                    tmpHC.monitor = MonitoringManager.getMonitorById(id);
+                hintButton.onClick.AddListener(delegate { OnClickHint(hintButton); });
+
+                //remove hint from dictionary
+                if(hasHighlightTag)
+                    gameHints.dictionary[key1].Remove(string.Concat(highlightTag, hintName));
+                else
+                    gameHints.dictionary[key1].Remove(hintName);
+                //File.WriteAllText("Data/dictionaryContent.txt", JsonConvert.SerializeObject(gameHints.dictionary, Formatting.Indented));
+
+                systemHintTimer = Time.time;
+                nbFeedBackGiven++;
+            }
+            else
+                Debug.Log("No hint found.");
         }
         else
         {
@@ -652,8 +806,11 @@ public class HelpSystem : FSystem {
         else
             return "";
 
-        //return a name among the valid hints
-        return availableHintNames[(int)Random.Range(0, availableHintNames.Count - 0.001f)];
+        if (availableHintNames.Count > 0)
+            //return a name among the valid hints
+            return availableHintNames[(int)UnityEngine.Random.Range(0, availableHintNames.Count - 0.001f)];
+        else
+            return "";
     }
 
     private List<int> GetNextActions(int room)
@@ -665,7 +822,7 @@ public class HelpSystem : FSystem {
         switch (room)
         {
             case 2:
-                rdpIDs = new List<int>() { 0, 5, 6, 7, 8, 9, 10 };
+                rdpIDs = new List<int>() { 5, 6, 7, 8, 9, 10 };
                 break;
 
             case 3:
@@ -673,7 +830,7 @@ public class HelpSystem : FSystem {
                 break;
 
             default:
-                rdpIDs = new List<int>() { 0, 2, 3, 4 };
+                rdpIDs = new List<int>() { 2, 3, 4 };
                 break;
         }
 

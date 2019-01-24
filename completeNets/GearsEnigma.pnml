@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-6480-D4EDE-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-31D8-790DD-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>GearsEnigma</text>
   </name>
- <page id="g-6480-D4EE8-1">
-  <place id="p-6480-D4EEB-2">
+ <page id="g-31D8-790E6-1">
+  <place id="p-31D8-790E9-2">
   <name>
    <text>GearsEnigma_Answered_151</text>
     <graphics>
@@ -16,7 +16,7 @@
     <position x="350" y="110"/>
    </graphics>
   </place>
-  <place id="p-6480-D4EF8-3">
+  <place id="p-31D8-790F5-3">
   <name>
    <text>GearsEnigma_Answering_151</text>
     <graphics>
@@ -30,7 +30,7 @@
     <position x="100" y="110"/>
    </graphics>
   </place>
-  <transition id="t-6480-D4EFD-4">
+  <transition id="t-31D8-790FA-4">
   <name>
    <text>GearsEnigma_Correct_151</text>
     <graphics>
@@ -41,7 +41,7 @@
     <position x="230" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-6480-D4F01-5">
+  <transition id="t-31D8-790FE-5">
   <name>
    <text>GearsEnigma_Wrong_151</text>
     <graphics>
@@ -52,7 +52,7 @@
     <position x="230" y="170"/>
    </graphics>
   </transition>
-  <place id="p-6480-D4F03-6">
+  <place id="p-31D8-79100-6">
   <name>
    <text>GearsEnigma_place_148</text>
     <graphics>
@@ -60,17 +60,17 @@
     </graphics>
   </name>
    <graphics>
-    <position x="100" y="200"/>
+    <position x="100" y="195"/>
    </graphics>
   </place>
-  <arc id="e-6480-D4F0A-7" source="p-6480-D4F03-6" target="t-6480-D4F01-5">
+  <arc id="e-31D8-79107-7" source="p-31D8-79100-6" target="t-31D8-790FE-5">
    <type value="test"/>
   </arc>
-  <arc id="e-6480-D4F0D-8" source="t-6480-D4EFD-4" target="p-6480-D4EEB-2">
+  <arc id="e-31D8-7910A-8" source="t-31D8-790FA-4" target="p-31D8-790E9-2">
   </arc>
-  <arc id="e-6480-D4F0E-9" source="p-6480-D4EF8-3" target="t-6480-D4EFD-4">
+  <arc id="e-31D8-7910B-9" source="p-31D8-790F5-3" target="t-31D8-790FA-4">
   </arc>
-  <arc id="e-6480-D4F0F-10" source="p-6480-D4EF8-3" target="t-6480-D4F01-5">
+  <arc id="e-31D8-7910C-10" source="p-31D8-790F5-3" target="t-31D8-790FE-5">
    <type value="test"/>
   </arc>
  </page>

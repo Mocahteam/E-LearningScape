@@ -12,8 +12,11 @@ public class ButtonTextColor : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     // Use this for initialization
     void Start () {
-        buttonText = this.GetComponentInChildren<Text>();
-        initialColor = buttonText.color;
+        buttonText = this.transform.GetChild(0).GetComponent<Text>();
+        if (this.transform.GetChild(0).GetComponent<FadingMenu>())
+            initialColor = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, this.transform.GetChild(0).GetComponent<FadingMenu>().finalAlpha);
+        else
+            initialColor = buttonText.color;
 	}
 	
 	// Update is called once per frame

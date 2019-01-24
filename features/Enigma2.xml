@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
-  <transition id="Q2_Correct_35" label="Correct Q2" system="False" end="True" />
-  <transition id="Q2_Wrong_35" label="Wrong Q2" system="False" end="False" />
   <transition id="equivWith_PlankAndWireManager_f_wrongWords_turnOff_44" label="turnOff equivWith_PlankAndWireManager_f_wrongWords" system="False" end="False" />
   <transition id="equivWith_PlankAndWireManager_f_wrongWords_turnOn_44" label="turnOn equivWith_PlankAndWireManager_f_wrongWords" system="False" end="False" />
+  <transition id="Q2_Correct_35" label="Correct Q2" system="False" end="True" />
+  <transition id="Q2_Wrong_35" label="Wrong Q2" system="False" end="False" />
   <transition id="SolutionWord3_turnOff_33" label="turnOff SolutionWord3" system="False" end="False" />
   <transition id="SolutionWord3_turnOn_33" label="turnOn SolutionWord3" system="False" end="False" />
   <transition id="Fragment_souvenir_9_activate_29" label="activate Fragment_souvenir_9" system="False" end="False" />

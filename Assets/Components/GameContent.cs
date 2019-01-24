@@ -9,6 +9,7 @@ public class GameContent {
     public string theme;
     public float sessionDuration; //in minutes
     public bool trace = true;
+    public bool helpSystem = true;
     public bool traceToLRS = false;
     public float traceMovementFrequency = 0;
     public bool virtualPuzzle = true;

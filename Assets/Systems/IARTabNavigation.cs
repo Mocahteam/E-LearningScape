@@ -62,20 +62,24 @@ public class IARTabNavigation : FSystem {
     protected override void onResume(int currentFrame)
     {
         if (openedAtLeastOnce)
+        {
             GameObjectManager.setGameObjectState(f_HUD_A.First(), true); // display HUD "A"
             GameObjectManager.setGameObjectState(f_HUD_H.First(), true); // display HUD "H"
+        }
     }
 
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
         // Open/Close IAR with Escape and A keys
-        if (iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.Escape) || (Input.GetMouseButtonDown(0) && iarBackground.GetComponent<PointerOver>())))
+        if (iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.H) || Input.GetKeyDown(KeyCode.Escape) || (Input.GetMouseButtonDown(0) && iarBackground.GetComponent<PointerOver>())))
             closeIar();
-        else if (!iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.Escape)))
+        else if (!iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.H) || Input.GetKeyDown(KeyCode.Escape)))
         {
             if (Input.GetKeyDown(KeyCode.A))
                 openIar(0); // Open IAR on the first tab
+            else if (Input.GetKeyDown(KeyCode.H))
+                openIar(f_tabs.Count - 2); // Open IAR on the second last tab
             else
                 // Open IAR on the last tab only if player doesn't work on selectable enigm (Escape enables to exit the enigm)
                 if (f_atWork.Count == 0)
