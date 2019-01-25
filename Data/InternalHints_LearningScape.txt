@@ -1,4 +1,35 @@
 {
+  "0.1": {
+    "scrollIntroWorld.0": [
+      "Il reste des objets à trouver"
+    ],
+    "fragmentIntro.2": [
+      "Il reste des objets à trouver"
+    ]
+  },
+  "0.2": {
+    "verrouIntro.3": [
+      "Il faut que je trouve et que j'interragisse avec le verrou"
+    ],
+    "scrollIntroWorld.0": [
+      "Il faut que je trouve le parchemin"
+    ],
+    "fragmentIntro.2": [
+      "Il faut que je trouve le fragment de rêve"
+    ]
+  },
+  "0.3": {
+    "verrouIntro.3": [
+      "Il y a un verrou au bout du chemin"
+    ],
+    "##HL##scrollIntroWorld.0": [
+      "Je vois un parchemin au bout du chemin",
+      "Je vois un parchemin pres du verrou"
+    ],
+    "fragmentIntro.2": [
+      "Je vois un fragment de rêve au bout du chemin"
+    ]
+  },
   "1.1": {
     "keyE03World.5": [
       "Il reste des objets à trouver",

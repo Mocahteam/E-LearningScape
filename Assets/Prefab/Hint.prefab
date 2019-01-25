@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114334564373362096}
   - component: {fileID: 114229364843887230}
   - component: {fileID: 114275480252869768}
+  - component: {fileID: 114196413381209410}
   m_Layer: 5
   m_Name: Hint
   m_TagString: Untagged
@@ -47,6 +48,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114196413381209410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1607143122098594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbed03c5ae7b71547a46c4edbe4e3467, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114229364843887230
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -22,6 +22,7 @@ public class HelpSystem : FSystem {
     private Family f_actionsProcessed = FamilyManager.getFamily(new NoneOfComponents(typeof(ActionPerformed)));
     private Family f_componentMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
     private Family f_askHelpButton = FamilyManager.getFamily(new AnyOfTags("AskHelpButton"), new AllOfComponents(typeof(Button)));
+    private Family f_newHint = FamilyManager.getFamily(new AllOfComponents(typeof(NewHint)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
 
     private Family f_scrollView = FamilyManager.getFamily(new AllOfComponents(typeof(ScrollRect), typeof(PrefabContainer)));
     private Family f_description = FamilyManager.getFamily(new AnyOfTags("HelpDescriptionUI"));
@@ -43,6 +44,9 @@ public class HelpSystem : FSystem {
     private float playerHintCooldownDuration = 300;
     private float systemHintCooldownDuration = 15;
     private float playerHintTimer = float.MinValue;
+    private RectTransform cooldownRT;
+    private TextMeshProUGUI cooldownText;
+    private float cooldownInitialWidth;
     private float systemHintTimer = float.MinValue;
 
     private float labelCount = 0;
@@ -72,6 +76,8 @@ public class HelpSystem : FSystem {
     private RectTransform scrollViewContent;
     private TextMeshProUGUI hintTitle;
     private TextMeshProUGUI hintText;
+    private Button hintLinkButton;
+    private string hintLink;
     private GameObject hintButtonPrefab;
     private List<GameObject> hintButtonsPool;
     private Button selectedHint = null;
@@ -110,11 +116,10 @@ public class HelpSystem : FSystem {
                     gameHints.dictionary.Add(key1, new Dictionary<string, KeyValuePair<string, List<string>>>());
                 foreach (string key2 in internalGameHints.dictionary[key1].Keys)
                 {
-                    gameHints.dictionary[key1].Add(string.Concat(highlightTag, key2), new KeyValuePair<string, List<string>>("", internalGameHints.dictionary[key1][key2]));
+                    gameHints.dictionary[key1].Add(key2, new KeyValuePair<string, List<string>>("www.google.fr", internalGameHints.dictionary[key1][key2]));
                 }
             }
             initialGameHints = new Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>(gameHints.dictionary);
-            File.WriteAllText("Data/dictionaryContent.txt", JsonConvert.SerializeObject(gameHints.dictionary, Formatting.Indented));
 
             availableComponentMonitoringIDs = new Dictionary<int, List<string>>();
             foreach(string key1 in gameHints.dictionary.Keys)
@@ -169,6 +174,8 @@ public class HelpSystem : FSystem {
             scrollViewContent = f_scrollView.First().transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
             hintTitle = f_description.First().transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             hintText = f_description.First().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            hintLinkButton = f_description.First().transform.GetChild(2).GetComponent<Button>();
+            hintLinkButton.onClick.AddListener(OnClickHintLinkButton);
             hintButtonPrefab = f_scrollView.First().GetComponent<PrefabContainer>().prefab;
             //create a pool of int button right at the beginning and activate them when necessary rather than creating them during the game
             if (!shouldPause)
@@ -190,6 +197,9 @@ public class HelpSystem : FSystem {
             f_actions.addEntryCallback(OnNewActionPerformed);
             f_actionsProcessed.addEntryCallback(OnActionsProcessed);
             f_askHelpButton.First().GetComponent<Button>().onClick.AddListener(OnPlayerAskHelp);
+            cooldownRT = f_askHelpButton.First().transform.GetChild(1).GetComponent<RectTransform>();
+            cooldownInitialWidth = cooldownRT.sizeDelta.x;
+            cooldownText = f_askHelpButton.First().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
             actionPerformedHistory = new Dictionary<GameObject, List<KeyValuePair<string, string>>>();
 
@@ -252,6 +262,29 @@ public class HelpSystem : FSystem {
             float progressionRatio = ((totalWeightedMetaActions - GetWeightedNumberEnigmasLeft()) / totalWeightedMetaActions) / ((Time.time - f_timer.First().GetComponent<Timer>().startingTime) / sessionDuration);
             labelCount += otherCoef * progressionRatio;
 
+        }
+
+        if (Time.time - playerHintTimer < playerHintCooldownDuration)
+        {
+            cooldownRT.offsetMax = new Vector2(-(160 * (Time.time - playerHintTimer) / playerHintCooldownDuration), cooldownRT.offsetMax.y);
+            float timeLeft = playerHintCooldownDuration - (Time.time - playerHintTimer);
+            int hours = (int)timeLeft / 3600;
+            int minutes = (int)(timeLeft % 3600) / 60;
+            int seconds = (int)(timeLeft % 3600) % 60;
+            if (hours == 0)
+            {
+                if(minutes == 0)
+                    cooldownText.text = seconds.ToString();
+                else
+                    cooldownText.text = string.Concat(minutes, ":", seconds.ToString("D2"));
+            }
+            else
+                cooldownText.text = string.Concat(hours, ":", minutes.ToString("D2"), ":", seconds.ToString("D2"));
+        }
+        else if (cooldownRT.gameObject.activeSelf)
+        {
+            GameObjectManager.setGameObjectState(cooldownRT.gameObject, false);
+            cooldownText.text = "";
         }
         #region Debug update
         debugDisplayer.timer = Time.time - f_timer.First().GetComponent<Timer>().startingTime;
@@ -385,26 +418,43 @@ public class HelpSystem : FSystem {
         string buttonName = tmpStringArray[0];
         for (int i = 1; i < tmpStringArray.Length - 1; i++)
             buttonName = string.Concat(buttonName, ".", tmpStringArray[i]);
-        hintTitle.text = tmpHC.hintName;
+        hintTitle.text = buttonName;
         hintText.text = tmpHC.text;
         if(tmpHC.link != "")
         {
             //display link button
+            hintLink = tmpHC.link;
+            GameObjectManager.setGameObjectState(hintLinkButton.gameObject, true);
         }
+        else
+            GameObjectManager.setGameObjectState(hintLinkButton.gameObject, false);
+        GameObjectManager.removeComponent<NewHint>(selectedHint.gameObject);
     }
 
     private void OnPlayerAskHelp()
     {
-        //TODO: check cooldown before sending hint
-        float numberFeedbackExpected = (sessionDuration - (Time.time - f_timer.First().GetComponent<Timer>().startingTime)) * nbFeedBackGiven / (Time.time - f_timer.First().GetComponent<Timer>().startingTime);
-        float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
+        //check cooldown before sending hint
+        if(Time.time - playerHintTimer > playerHintCooldownDuration)
+        {
+            float numberFeedbackExpected = (sessionDuration - (Time.time - f_timer.First().GetComponent<Timer>().startingTime)) * nbFeedBackGiven / (Time.time - f_timer.First().GetComponent<Timer>().startingTime);
+            float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
 
-        int feedbackLevel = 2;
-        if (feedbackRatio < feedbackStep1)
-            feedbackLevel = 1;
-        else if (feedbackRatio > feedbackStep2)
-            feedbackLevel = 3;
-        DisplayHint(room.roomNumber, feedbackLevel);
+            int feedbackLevel = 2;
+            if (feedbackRatio < feedbackStep1)
+                feedbackLevel = 1;
+            else if (feedbackRatio > feedbackStep2)
+                feedbackLevel = 3;
+            if (DisplayHint(room.roomNumber, feedbackLevel))
+            {
+                playerHintTimer = Time.time;
+                GameObjectManager.setGameObjectState(cooldownRT.gameObject, true);
+            }
+        }
+    }
+
+    private void OnClickHintLinkButton()
+    {
+        Application.OpenURL(hintLink);
     }
 
     /// <summary>
@@ -427,7 +477,6 @@ public class HelpSystem : FSystem {
                     if (gameHints.dictionary[key].ContainsKey(name))
                     {
                         gameHints.dictionary[key].Remove(name);
-                        File.WriteAllText("Data/dictionaryContent.txt", JsonConvert.SerializeObject(gameHints.dictionary, Formatting.Indented));
                         wordRemoved = true;
                         break;
                     }
@@ -508,7 +557,7 @@ public class HelpSystem : FSystem {
         return cMonitors;
     }
 
-    private void DisplayHint(int room, int feedbackLevel)
+    private bool DisplayHint(int room, int feedbackLevel)
     {
         int availableFeedback = CheckAvailableFeedback(room, feedbackLevel);
         if(availableFeedback != -1)
@@ -598,17 +647,21 @@ public class HelpSystem : FSystem {
                     gameHints.dictionary[key1].Remove(string.Concat(highlightTag, hintName));
                 else
                     gameHints.dictionary[key1].Remove(hintName);
-                //File.WriteAllText("Data/dictionaryContent.txt", JsonConvert.SerializeObject(gameHints.dictionary, Formatting.Indented));
 
                 systemHintTimer = Time.time;
                 nbFeedBackGiven++;
+                return true;
             }
             else
+            {
                 Debug.Log("No hint found.");
+                return false;
+            }
         }
         else
         {
             Debug.Log(string.Concat("No hint found for the room ", room));
+            return false;
         }
     }
 
@@ -821,8 +874,15 @@ public class HelpSystem : FSystem {
         //get Petri nets ids depending on the room selected
         switch (room)
         {
+            //Ids in rpdIDs are the ids in PetriNetNames of MonitoringManager (Visible in inspector)
+            case 0:
+                rdpIDs = new List<int>() { 1 };
+                break;
+            case 1:
+                rdpIDs = new List<int>() { 2, 3, 4, 16, 17 };
+                break;
             case 2:
-                rdpIDs = new List<int>() { 5, 6, 7, 8, 9, 10 };
+                rdpIDs = new List<int>() { 5, 6, 7, 8, 9, 10, 18 };
                 break;
 
             case 3:
@@ -830,7 +890,7 @@ public class HelpSystem : FSystem {
                 break;
 
             default:
-                rdpIDs = new List<int>() { 2, 3, 4 };
+                rdpIDs = new List<int>();
                 break;
         }
 
