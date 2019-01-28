@@ -11,7 +11,7 @@ public class Highlighter : FSystem {
 	private Family f_highlitable = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(ToggleableGO), typeof(LinkedWith)));
 
     private Renderer[] tmpRendererList;
-
+    
     private GameObject previousHighlight = null;
     private Queue<Color> previousColor;
 

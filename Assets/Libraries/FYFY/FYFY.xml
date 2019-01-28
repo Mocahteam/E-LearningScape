@@ -197,6 +197,11 @@
             	Return a descriptor of this family
             </summary>
         </member>
+        <member name="M:FYFY.Family.getInlineDescriptor">
+            <summary>
+            	Return a descriptor of this family
+            </summary>
+        </member>
         <member name="M:FYFY.Family.First">
             <summary>
             	Get the first Game Object included into the family
@@ -567,7 +572,7 @@
             	It is composed of its type and the values on which it operates.
             </remarks>
         </member>
-        <member name="F:FYFY.ComponentMatcher._componentTypeIds">
+        <member name="F:FYFY.ComponentMatcher._componentTypeNames">
             <summary>
             	Targets used to match.
             </summary>
