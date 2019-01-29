@@ -18,6 +18,7 @@ public class GameContent {
     public string hintsPath;
     public string internalHintsPath;
     public string enigmasWeightPath;
+    public string labelWeightsPath;
 
     //Texte intro, transition, fin
     public string[] storyTextIntro;

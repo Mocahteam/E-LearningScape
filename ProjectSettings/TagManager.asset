@@ -71,6 +71,7 @@ TagManager:
   - HelpDescriptionUI
   - LoadingFragment
   - AskHelpButton
+  - HelpWarning
   layers:
   - Default
   - TransparentFX

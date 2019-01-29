@@ -22,26 +22,26 @@ public class HelpSystem : FSystem {
     private Family f_actionsProcessed = FamilyManager.getFamily(new NoneOfComponents(typeof(ActionPerformed)));
     private Family f_componentMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
     private Family f_askHelpButton = FamilyManager.getFamily(new AnyOfTags("AskHelpButton"), new AllOfComponents(typeof(Button)));
-    private Family f_newHint = FamilyManager.getFamily(new AllOfComponents(typeof(NewHint)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
+    private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
 
     private Family f_scrollView = FamilyManager.getFamily(new AllOfComponents(typeof(ScrollRect), typeof(PrefabContainer)));
     private Family f_description = FamilyManager.getFamily(new AnyOfTags("HelpDescriptionUI"));
 
-    private Family f_debugDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(DebugDisplayer)));
-    private DebugDisplayer debugDisplayer;
     private Family f_wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"));
 
     private GameHints gameHints;
     private InternalGameHints internalGameHints;
+    private Dictionary<string, float> labelWeights;
     private Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>> initialGameHints;
     //key: ComponentMonitoring id
     //value: list of hints names in gameHints.dictionary corresponding to the ComponentMonitoring
     private Dictionary<int, List<string>> availableComponentMonitoringIDs;
     private string highlightTag = "##HL##";
+    private Dictionary<int, ComponentMonitoring> checkEnigmaOrderMeta;
 
     private float sessionDuration = 3600; //in Seconds
     private float totalWeightedMetaActions = 0;
-    private float playerHintCooldownDuration = 300;
+    private float playerHintCooldownDuration = 0;
     private float systemHintCooldownDuration = 15;
     private float playerHintTimer = float.MinValue;
     private RectTransform cooldownRT;
@@ -53,14 +53,7 @@ public class HelpSystem : FSystem {
     private int nbFeedBackGiven = 0;
     private float feedbackStep1 = 0.75f;
     private float feedbackStep2 = 2;
-    private List<string> correctLabels;
-    private float correctCoef = -2;
-    private List<string> errorLabels;
-    private float errorCoef = 2;
-    private List<string> otherLabels;
-    private float otherCoef = 1;
-    private float errorStep = 50;
-    private float otherStep = 75;
+    private float step = 20;
 
     private UnlockedRoom room;
 
@@ -116,10 +109,16 @@ public class HelpSystem : FSystem {
                     gameHints.dictionary.Add(key1, new Dictionary<string, KeyValuePair<string, List<string>>>());
                 foreach (string key2 in internalGameHints.dictionary[key1].Keys)
                 {
-                    gameHints.dictionary[key1].Add(key2, new KeyValuePair<string, List<string>>("www.google.fr", internalGameHints.dictionary[key1][key2]));
+                    gameHints.dictionary[key1].Add(key2, new KeyValuePair<string, List<string>>("", internalGameHints.dictionary[key1][key2]));
                 }
             }
             initialGameHints = new Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>(gameHints.dictionary);
+            labelWeights = f_labelWeights.First().GetComponent<LabelWeights>().weights;
+
+            checkEnigmaOrderMeta = new Dictionary<int, ComponentMonitoring>() {
+                { 16, MonitoringManager.getMonitorById(147) },
+                { 17, MonitoringManager.getMonitorById(149) }
+            };
 
             availableComponentMonitoringIDs = new Dictionary<int, List<string>>();
             foreach(string key1 in gameHints.dictionary.Keys)
@@ -163,9 +162,6 @@ public class HelpSystem : FSystem {
             room = f_unlockedRoom.First().GetComponent<UnlockedRoom>();
             
             subtitles = f_subtitlesFamily.First().GetComponent<TextMeshProUGUI>();
-            correctLabels = new List<string>() { "correct" };
-            errorLabels = new List<string>() { "useless", "erroneous", "too-early" };
-            otherLabels = new List<string>() { "stagnation", "already-seen" };
 
             weights = LoadGameContent.enigmasWeight;
             foreach (string enigmaName in weights.Keys)
@@ -216,19 +212,6 @@ public class HelpSystem : FSystem {
             colorNewHint.disabledColor = new Color(253,255,137,128) / 256;
             colorNewHint.colorMultiplier = 1;
             colorSelectedHint = ColorBlock.defaultColorBlock;
-
-            #region Debug Init
-            debugDisplayer = f_debugDisplayer.First().GetComponent<DebugDisplayer>();
-            debugDisplayer.totalWeightedMetaActions = totalWeightedMetaActions;
-            debugDisplayer.feedbackStep1 = feedbackStep1;
-            debugDisplayer.feedbackStep2 = feedbackStep2;
-            debugDisplayer.correctCoef = correctCoef;
-            debugDisplayer.errorCoef = errorCoef;
-            debugDisplayer.otherCoef = otherCoef;
-            debugDisplayer.errorStep = errorStep;
-            debugDisplayer.otherStep = otherStep;
-            debugDisplayer.availableComponentMonitoringIDs = new List<int>();
-            #endregion
         }
         instance = this;
     }
@@ -260,7 +243,7 @@ public class HelpSystem : FSystem {
             noActionTimer = Time.time;
             //(nb enigma done / total nb enigma) / (current time / total duration)
             float progressionRatio = ((totalWeightedMetaActions - GetWeightedNumberEnigmasLeft()) / totalWeightedMetaActions) / ((Time.time - f_timer.First().GetComponent<Timer>().startingTime) / sessionDuration);
-            labelCount += otherCoef * progressionRatio;
+            labelCount += labelWeights["stagnation"] * progressionRatio;
 
         }
 
@@ -286,18 +269,6 @@ public class HelpSystem : FSystem {
             GameObjectManager.setGameObjectState(cooldownRT.gameObject, false);
             cooldownText.text = "";
         }
-        #region Debug update
-        debugDisplayer.timer = Time.time - f_timer.First().GetComponent<Timer>().startingTime;
-        debugDisplayer.playerHintTimer = Time.time - playerHintTimer;
-        debugDisplayer.systemHintTimer = Time.time - systemHintTimer;
-        debugDisplayer.labelCount = labelCount;
-        debugDisplayer.nbFeedBackGiven = nbFeedBackGiven;
-        //debugDisplayer.enigmaRatio = (totalWeightedMetaActions - GetWeightedNumberEnigmasLeft()) / totalWeightedMetaActions;
-        debugDisplayer.timeRatio = (Time.time - f_timer.First().GetComponent<Timer>().startingTime) / sessionDuration;
-        debugDisplayer.progressionRatio = debugDisplayer.enigmaRatio / debugDisplayer.timeRatio;
-        debugDisplayer.availableComponentMonitoringIDs.Clear();
-        debugDisplayer.availableComponentMonitoringIDs.AddRange(availableComponentMonitoringIDs.Keys);
-        #endregion
     }
 
     private void OnNewTraces(GameObject go)
@@ -324,37 +295,29 @@ public class HelpSystem : FSystem {
                 nbLabels = tmpTrace.labels.Length;
                 for (int j = 0; j < nbLabels; j++)
                 {
-                    if (correctLabels.Contains(tmpTrace.labels[j]))
-                        labelCount += correctCoef / progressionRatio;
-                    else if (errorLabels.Contains(tmpTrace.labels[j]))
+                    if (labelWeights.ContainsKey(tmpTrace.labels[j]))
                     {
-                        labelCount += errorCoef * progressionRatio;
-                        float numberFeedbackExpected = (sessionDuration - (Time.time - f_timer.First().GetComponent<Timer>().startingTime)) * nbFeedBackGiven / (Time.time - f_timer.First().GetComponent<Timer>().startingTime);
-                        float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
+                        if (labelWeights[tmpTrace.labels[j]] < 0)
+                        {
+                            labelCount += labelWeights[tmpTrace.labels[j]] / progressionRatio;
+                            if (labelCount < 0)
+                                labelCount = 0;
+                        }
+                        else
+                        {
+                            labelCount += labelWeights[tmpTrace.labels[j]] * progressionRatio;
+                            float numberFeedbackExpected = (sessionDuration - (Time.time - f_timer.First().GetComponent<Timer>().startingTime)) * nbFeedBackGiven / (Time.time - f_timer.First().GetComponent<Timer>().startingTime);
+                            float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
 
-                        int feedbackLevel = 2;
-                        if (feedbackRatio < feedbackStep1)
-                            feedbackLevel = 1;
-                        else if (feedbackRatio > feedbackStep2)
-                            feedbackLevel = 3;
+                            int feedbackLevel = 2;
+                            if (feedbackRatio < feedbackStep1)
+                                feedbackLevel = 1;
+                            else if (feedbackRatio > feedbackStep2)
+                                feedbackLevel = 3;
 
-                        if (labelCount > errorStep)
-                            DisplayHint(room.roomNumber, feedbackLevel);
-                    }
-                    else if (otherLabels.Contains(tmpTrace.labels[j]))
-                    {
-                        labelCount += otherCoef * progressionRatio;
-                        float numberFeedbackExpected = (sessionDuration - (Time.time - f_timer.First().GetComponent<Timer>().startingTime)) * nbFeedBackGiven / (Time.time - f_timer.First().GetComponent<Timer>().startingTime);
-                        float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
-
-                        int feedbackLevel = 2;
-                        if (feedbackRatio < feedbackStep1)
-                            feedbackLevel = 1;
-                        else if (feedbackRatio > feedbackStep2)
-                            feedbackLevel = 3;
-
-                        if (labelCount > otherStep)
-                            DisplayHint(room.roomNumber, feedbackLevel);
+                            if (labelCount > step)
+                                DisplayHint(room.roomNumber, feedbackLevel);
+                        }
                     }
                 }
             }
@@ -625,7 +588,11 @@ public class HelpSystem : FSystem {
                 tmpRT.localScale = Vector3.one;
                 tmpRT.offsetMin = new Vector2(0, tmpRT.offsetMin.y);
                 tmpRT.offsetMax = new Vector2(0, tmpRT.offsetMax.y);
-                tmpRT.anchoredPosition = new Vector2(0, -(nbActivatedHint + 0.5f) * hintButton.GetComponent<RectTransform>().sizeDelta.y);
+                RectTransform[] tmpRTArray = scrollViewContent.GetComponentsInChildren<RectTransform>();
+                for (int i = 0; i < tmpRTArray.Length; i++)
+                    if(tmpRTArray[i].GetComponent<Button>())
+                        tmpRTArray[i].anchoredPosition += Vector2.down * hintButton.GetComponent<RectTransform>().sizeDelta.y;
+                tmpRT.anchoredPosition = new Vector2(0, -0.5f * hintButton.GetComponent<RectTransform>().sizeDelta.y);
                 tmpHC = tmpGO.GetComponent<HintContent>();
                 tmpHC.hintName = hintName;
                 int nbHintTexts = tmpPair.Value.Count;
@@ -648,8 +615,15 @@ public class HelpSystem : FSystem {
                 else
                     gameHints.dictionary[key1].Remove(hintName);
 
+                if (gameHints.dictionary[key1].Count == 0)
+                {
+                    Debug.Log(key1 + " removed with size " + gameHints.dictionary[key1].Count);
+                    gameHints.dictionary.Remove(key1);
+                }
+
                 systemHintTimer = Time.time;
                 nbFeedBackGiven++;
+                labelCount = 0;
                 return true;
             }
             else
@@ -728,13 +702,21 @@ public class HelpSystem : FSystem {
             foreach (KeyValuePair<ComponentMonitoring, string> action in nextActions)
             {
                 weight = GetEnigmaWeight(action.Key);
-                if (weight >= 0)
+                if (weight > 0)
                     left += weight;
             }
 
             //Return the number action left multiplied by they weight to reach the last action of the meta Petri net
             return left;
         }
+        else
+            return -1;
+    }
+
+    private float GetNumberEnigmasLeft()
+    {
+        if (finalComponentMonitoring)
+            return MonitoringManager.getNextActionsToReach(finalComponentMonitoring, "perform", int.MaxValue).Count;
         else
             return -1;
     }
@@ -857,7 +839,10 @@ public class HelpSystem : FSystem {
             }
         }
         else
+        {
+            Debug.Log(key1 + " not in the dictionary");
             return "";
+        }
 
         if (availableHintNames.Count > 0)
             //return a name among the valid hints
@@ -898,9 +883,18 @@ public class HelpSystem : FSystem {
         
         for(int i = 0; i < triggerableActions.Count; i++)
         {
-            //add the ComponentMonitoring ID if his Petri net is in the list
-            if (rdpIDs.Contains(triggerableActions[i].Key.fullPnSelected))
-                actionsIDs.Add(triggerableActions[i].Key.id);
+            int pn = triggerableActions[i].Key.fullPnSelected;
+            if (checkEnigmaOrderMeta.ContainsKey(pn))
+            {
+                if (rdpIDs.Contains(pn) && triggerableActions.Contains(new KeyValuePair<ComponentMonitoring, string>(checkEnigmaOrderMeta[pn], "perform")))
+                    actionsIDs.Add(triggerableActions[i].Key.id);
+            }
+            else
+            {
+                //add the ComponentMonitoring ID if his Petri net is in the list
+                if (rdpIDs.Contains(pn))
+                    actionsIDs.Add(triggerableActions[i].Key.id);
+            }
         }
 
         return actionsIDs;

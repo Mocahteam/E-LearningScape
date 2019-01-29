@@ -51,6 +51,7 @@ public class LoadGameContent : FSystem {
 
     private Family f_gameHints = FamilyManager.getFamily(new AllOfComponents(typeof(GameHints)));
     private Family f_internalGameHints = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameHints)));
+    private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
     private Family f_IARTab = FamilyManager.getFamily(new AnyOfTags("IARTab"));
 
 
@@ -85,6 +86,7 @@ public class LoadGameContent : FSystem {
                 File.WriteAllText("Data/Hints_LearningScape.txt", defaultGameContent.hintsJsonFile.text);
                 File.WriteAllText("Data/InternalHints_LearningScape.txt", defaultGameContent.internalHintsJsonFile.text);
                 File.WriteAllText("Data/EnigmasWeight.txt", defaultGameContent.enigmasWeight.text);
+                File.WriteAllText("Data/LabelWeights.txt", defaultGameContent.labelWeights.text);
                 File.WriteAllText("Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
 
                 gameContent = new GameContent();
@@ -858,6 +860,8 @@ public class LoadGameContent : FSystem {
         }
         else
         {
+            if (!File.Exists("Data/InternalHints_LearningScape.txt"))
+                File.WriteAllText("Data/InternalHints_LearningScape.txt", defaultGameContent.internalHintsJsonFile.text);
             f_internalGameHints.First().GetComponent<InternalGameHints>().dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalHintsJsonFile.text);
             Debug.LogWarning("File containting internal hints not found. Default used.");
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting internal hints not found. Default used"));
@@ -886,11 +890,44 @@ public class LoadGameContent : FSystem {
         }
         else
         {
+            if (!File.Exists("Data/EnigmasWeight.txt"))
+                File.WriteAllText("Data/EnigmasWeight.txt", defaultGameContent.internalHintsJsonFile.text);
             enigmasWeight = JsonConvert.DeserializeObject<Dictionary<string, float>>(defaultGameContent.enigmasWeight.text);
             Debug.LogWarning("File containting enigmas weights not found. Default used.");
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting enigmas weights not found. Default used"));
         }
-        
+
+        if (File.Exists(gameContent.labelWeightsPath))
+        {
+            LabelWeights labelWeights = f_labelWeights.First().GetComponent<LabelWeights>();
+            try
+            {
+                labelWeights.weights = JsonConvert.DeserializeObject<Dictionary<string, float>>(File.ReadAllText(gameContent.labelWeightsPath));
+                if (labelWeights.weights == null || labelWeights.weights.Count == 0)
+                {
+                    labelWeights.weights = JsonConvert.DeserializeObject<Dictionary<string, float>>(defaultGameContent.labelWeights.text);
+                    Debug.LogWarning("File containting label weights empty. Default used.");
+                    File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting label weights empty. Default used"));
+                }
+            }
+            catch (Exception)
+            {
+                if (!File.Exists("Data/LabelWeights.txt"))
+                    File.WriteAllText("Data/LabelWeights.txt", defaultGameContent.labelWeights.text);
+                labelWeights.weights = JsonConvert.DeserializeObject<Dictionary<string, float>>(defaultGameContent.labelWeights.text);
+                Debug.LogError("Invalid content in the file containting label weights. Default used.");
+                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid content in the file containting label weights. Default used"));
+            }
+        }
+        else
+        {
+            if (!File.Exists("Data/LabelWeights.txt"))
+                File.WriteAllText("Data/LabelWeights.txt", defaultGameContent.labelWeights.text);
+            f_labelWeights.First().GetComponent<LabelWeights>().weights = JsonConvert.DeserializeObject<Dictionary<string, float>>(defaultGameContent.labelWeights.text);
+            Debug.LogWarning("File containting label weights not found. Default used.");
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting label weights not found. Default used"));
+        }
+
         Debug.Log("Data loaded");
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));
     }
