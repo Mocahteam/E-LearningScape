@@ -23,6 +23,7 @@ public class HelpSystem : FSystem {
     private Family f_componentMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
     private Family f_askHelpButton = FamilyManager.getFamily(new AnyOfTags("AskHelpButton"), new AllOfComponents(typeof(Button)));
     private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
+    private Family f_wrongAnswerInfo = FamilyManager.getFamily(new AllOfComponents(typeof(WrongAnswerInfo)));
 
     private Family f_scrollView = FamilyManager.getFamily(new AllOfComponents(typeof(ScrollRect), typeof(PrefabContainer)));
     private Family f_description = FamilyManager.getFamily(new AnyOfTags("HelpDescriptionUI"));
@@ -86,7 +87,7 @@ public class HelpSystem : FSystem {
     //store the gameObject, the name and the overrideName of the ActionPerformed
     //and processes it after the system ActionManager processed all ActionPerformed of the gameobject
     //Dictionary<GameObject, List<KeyValuePair<name, overrideName>>>
-    private Dictionary<GameObject, List<KeyValuePair<string, string>>> actionPerformedHistory;
+    private Dictionary<GameObject, Queue<KeyValuePair<string, string>>> actionPerformedHistory;
 
     public static HelpSystem instance;
     public static bool shouldPause = true;
@@ -116,8 +117,19 @@ public class HelpSystem : FSystem {
             labelWeights = f_labelWeights.First().GetComponent<LabelWeights>().weights;
 
             checkEnigmaOrderMeta = new Dictionary<int, ComponentMonitoring>() {
+                { 1, MonitoringManager.getMonitorById(143) },
+                { 2, MonitoringManager.getMonitorById(144) },
+                { 3, MonitoringManager.getMonitorById(145) },
+                { 4, MonitoringManager.getMonitorById(146) },
+                { 5, MonitoringManager.getMonitorById(152) },
+                { 6, MonitoringManager.getMonitorById(153) },
+                { 7, MonitoringManager.getMonitorById(154) },
+                { 8, MonitoringManager.getMonitorById(155) },
+                { 9, MonitoringManager.getMonitorById(156) },
+                { 10, MonitoringManager.getMonitorById(157) },
                 { 16, MonitoringManager.getMonitorById(147) },
-                { 17, MonitoringManager.getMonitorById(149) }
+                { 17, MonitoringManager.getMonitorById(149) },
+                { 18, MonitoringManager.getMonitorById(158) }
             };
 
             availableComponentMonitoringIDs = new Dictionary<int, List<string>>();
@@ -157,6 +169,24 @@ public class HelpSystem : FSystem {
             else
                 RemoveHintsByPN("Enigma11_1");
 
+            //format expected answers to be compared to formated answers from IARQueryEvaluator
+            List<string> tmpListString;
+            string tmpString;
+            Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>> tmpDictionary = new Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>(gameHints.wrongAnswerFeedbacks);
+            foreach (string key1 in gameHints.wrongAnswerFeedbacks.Keys)
+            {
+                tmpListString = new List<string>(gameHints.wrongAnswerFeedbacks[key1].Keys);
+                foreach(string key2 in tmpListString)
+                {
+                    tmpString = StringToAnswer(key2);
+                    if (!gameHints.wrongAnswerFeedbacks[key1].ContainsKey(tmpString))
+                    {
+                        gameHints.wrongAnswerFeedbacks[key1].Add(tmpString, gameHints.wrongAnswerFeedbacks[key1][key2]);
+                        gameHints.wrongAnswerFeedbacks[key1].Remove(key2);
+                    }
+                }
+            }
+
             sessionDuration = LoadGameContent.gameContent.sessionDuration * 60; //convert to seconds
 
             room = f_unlockedRoom.First().GetComponent<UnlockedRoom>();
@@ -192,12 +222,14 @@ public class HelpSystem : FSystem {
             f_traces.addEntryCallback(OnNewTraces);
             f_actions.addEntryCallback(OnNewActionPerformed);
             f_actionsProcessed.addEntryCallback(OnActionsProcessed);
+            f_wrongAnswerInfo.addEntryCallback(OnWrongAnswer);
             f_askHelpButton.First().GetComponent<Button>().onClick.AddListener(OnPlayerAskHelp);
+
             cooldownRT = f_askHelpButton.First().transform.GetChild(1).GetComponent<RectTransform>();
             cooldownInitialWidth = cooldownRT.sizeDelta.x;
             cooldownText = f_askHelpButton.First().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
-            actionPerformedHistory = new Dictionary<GameObject, List<KeyValuePair<string, string>>>();
+            actionPerformedHistory = new Dictionary<GameObject, Queue<KeyValuePair<string, string>>>();
 
             colorHint = new ColorBlock();
             colorHint.normalColor =  new Color(189,244,255,255) / 256;
@@ -328,11 +360,11 @@ public class HelpSystem : FSystem {
     {
         ActionPerformed[] actions = go.GetComponents<ActionPerformed>();
         if (!actionPerformedHistory.ContainsKey(go))
-            actionPerformedHistory.Add(go, new List<KeyValuePair<string, string>>());
+            actionPerformedHistory.Add(go, new Queue<KeyValuePair<string, string>>());
         for (int i = 0; i < actions.Length; i++)
         {
             ActionPerformed ap = actions[i];
-            actionPerformedHistory[go].Add(new KeyValuePair<string, string>(ap.name, ap.overrideName));
+            actionPerformedHistory[go].Enqueue(new KeyValuePair<string, string>(ap.name, ap.overrideName));
         }
     }
 
@@ -340,9 +372,11 @@ public class HelpSystem : FSystem {
     {
         if (actionPerformedHistory.ContainsKey(go))
         {
-            foreach(KeyValuePair<string, string> pair in actionPerformedHistory[go])
+            int historySize = actionPerformedHistory[go].Count;
+            for(int i = 0; i < historySize; i++)
             {
-                List<KeyValuePair<ComponentMonitoring, TransitionLink>> cMonitors = FindMonitors(go, pair.Key, pair.Value);
+                List<KeyValuePair<ComponentMonitoring, TransitionLink>> cMonitors = FindMonitors(go, actionPerformedHistory[go].Peek().Key, actionPerformedHistory[go].Peek().Value);
+                actionPerformedHistory[go].Dequeue();
                 foreach (KeyValuePair < ComponentMonitoring, TransitionLink > cm in cMonitors)
                 {
                     //delete hints linked to the ComponentMonitoring if it is not reachable anymore
@@ -417,7 +451,44 @@ public class HelpSystem : FSystem {
 
     private void OnClickHintLinkButton()
     {
-        Application.OpenURL(hintLink);
+        try
+        {
+            Application.OpenURL(hintLink);
+        }
+        catch (Exception)
+        {
+            Debug.LogError(string.Concat("Invalid hint link: \"", hintLink, "\""));
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid hint link: \"", hintLink, "\"."));
+        }
+    }
+
+    private void OnWrongAnswer(GameObject go)
+    {
+        WrongAnswerInfo[] wrongAnswerArray = go.GetComponents<WrongAnswerInfo>();
+        int nbWrongAnswer = wrongAnswerArray.Length;
+        int monitorID;
+        string[] tmpStringArray;
+        for (int i = 0; i < nbWrongAnswer; i++){
+            foreach(string key in gameHints.wrongAnswerFeedbacks.Keys)
+            {
+                tmpStringArray = key.Split('.');
+                if (int.TryParse(tmpStringArray[tmpStringArray.Length - 1], out monitorID))
+                {
+                    if(monitorID == wrongAnswerArray[i].componentMonitoringID && gameHints.wrongAnswerFeedbacks[key].ContainsKey(wrongAnswerArray[i].givenAnswer))
+                    {
+                        //display feedback in hint list in IAR
+                        string hintText = "";
+                        if (gameHints.wrongAnswerFeedbacks[key][wrongAnswerArray[i].givenAnswer].Value.Count > 0)
+                            hintText = gameHints.wrongAnswerFeedbacks[key][wrongAnswerArray[i].givenAnswer].Value[(int)UnityEngine.Random.Range(0, gameHints.wrongAnswerFeedbacks[key][wrongAnswerArray[i].givenAnswer].Value.Count - 0.01f)];
+                        CreateHintButton(key, hintText, monitorID, gameHints.wrongAnswerFeedbacks[key][wrongAnswerArray[i].givenAnswer].Key);
+                        break;
+                    }
+                }
+            }
+        }
+        //remove WrongAnswerInfo components
+        for (int i = wrongAnswerArray.Length - 1; i > -1; i--)
+            GameObjectManager.removeComponent(wrongAnswerArray[i]);
     }
 
     /// <summary>
@@ -573,41 +644,10 @@ public class HelpSystem : FSystem {
                     File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - You should increase hintButtonsPool initial size."));
                 }
 
-                tmpGO = hintButtonsPool[0];
-                hintButtonsPool.RemoveAt(0);
-                Button hintButton = tmpGO.GetComponent<Button>();
-                string buttonName = tmpStringArray[0];
-                for (int i = 1; i < tmpStringArray.Length - 1; i++)
-                    buttonName = string.Concat(buttonName, ".", tmpStringArray[i]);
-                tmpGO.transform.GetChild(0).GetComponent<Text>().text = buttonName;
-                hintButton.colors = colorNewHint;
-                GameObjectManager.setGameObjectState(tmpGO, true);
-                int nbActivatedHint = scrollViewContent.GetComponentsInChildren<Button>().Length;
-                scrollViewContent.sizeDelta = new Vector2(scrollViewContent.sizeDelta.x, (nbActivatedHint + 1) * hintButton.GetComponent<RectTransform>().sizeDelta.y);
-                tmpRT = tmpGO.GetComponent<RectTransform>();
-                tmpRT.localScale = Vector3.one;
-                tmpRT.offsetMin = new Vector2(0, tmpRT.offsetMin.y);
-                tmpRT.offsetMax = new Vector2(0, tmpRT.offsetMax.y);
-                RectTransform[] tmpRTArray = scrollViewContent.GetComponentsInChildren<RectTransform>();
-                for (int i = 0; i < tmpRTArray.Length; i++)
-                    if(tmpRTArray[i].GetComponent<Button>())
-                        tmpRTArray[i].anchoredPosition += Vector2.down * hintButton.GetComponent<RectTransform>().sizeDelta.y;
-                tmpRT.anchoredPosition = new Vector2(0, -0.5f * hintButton.GetComponent<RectTransform>().sizeDelta.y);
-                tmpHC = tmpGO.GetComponent<HintContent>();
-                tmpHC.hintName = hintName;
-                int nbHintTexts = tmpPair.Value.Count;
-                if (nbHintTexts > 0)
-                {
-                    tmpHC.text = tmpPair.Value[(int)UnityEngine.Random.Range(0, nbHintTexts - 0.01f)];
-                    //change subtitle text tot display the hint
-                    //subtitles.text = tmpPair.Value[(int)UnityEngine.Random.Range(0, nbHintTexts - 0.01f)];
-                    //GameObjectManager.setGameObjectState(subtitles.gameObject, true);
-                    //subtitlesTimer = Time.time;
-                    tmpHC.link = tmpPair.Key;
-                }
-                if (id != -1)
-                    tmpHC.monitor = MonitoringManager.getMonitorById(id);
-                hintButton.onClick.AddListener(delegate { OnClickHint(hintButton); });
+                string hintText = "";
+                if (tmpPair.Value.Count > 0)
+                    hintText = tmpPair.Value[(int)UnityEngine.Random.Range(0, tmpPair.Value.Count - 0.01f)];
+                CreateHintButton(hintName, hintText, id, tmpPair.Key);
 
                 //remove hint from dictionary
                 if(hasHighlightTag)
@@ -637,6 +677,49 @@ public class HelpSystem : FSystem {
             Debug.Log(string.Concat("No hint found for the room ", room));
             return false;
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="hintName">"name.monitorID"</param>
+    /// <param name="hintText"></param>
+    /// <param name="hintMonitorID"></param>
+    /// <param name="hintLink"></param>
+    private void CreateHintButton(string hintName, string hintText, int hintMonitorID, string hintLink = "")
+    {
+        tmpGO = hintButtonsPool[0];
+        hintButtonsPool.RemoveAt(0);
+        Button hintButton = tmpGO.GetComponent<Button>();
+        string[] tmpStringArray = hintName.Split('.');
+        string buttonName = tmpStringArray[0];
+        for (int i = 1; i < tmpStringArray.Length - 1; i++)
+            buttonName = string.Concat(buttonName, ".", tmpStringArray[i]);
+        tmpGO.transform.GetChild(0).GetComponent<Text>().text = buttonName;
+        hintButton.colors = colorNewHint;
+        GameObjectManager.setGameObjectState(tmpGO, true);
+        int nbActivatedHint = scrollViewContent.GetComponentsInChildren<Button>().Length;
+        scrollViewContent.sizeDelta = new Vector2(scrollViewContent.sizeDelta.x, (nbActivatedHint + 1) * hintButton.GetComponent<RectTransform>().sizeDelta.y);
+        tmpRT = tmpGO.GetComponent<RectTransform>();
+        tmpRT.localScale = Vector3.one;
+        tmpRT.offsetMin = new Vector2(0, tmpRT.offsetMin.y);
+        tmpRT.offsetMax = new Vector2(0, tmpRT.offsetMax.y);
+        RectTransform[] tmpRTArray = scrollViewContent.GetComponentsInChildren<RectTransform>();
+        for (int i = 0; i < tmpRTArray.Length; i++)
+            if (tmpRTArray[i].GetComponent<Button>())
+                tmpRTArray[i].anchoredPosition += Vector2.down * hintButton.GetComponent<RectTransform>().sizeDelta.y;
+        tmpRT.anchoredPosition = new Vector2(0, -0.5f * hintButton.GetComponent<RectTransform>().sizeDelta.y);
+        tmpHC = tmpGO.GetComponent<HintContent>();
+        tmpHC.hintName = hintName;
+        tmpHC.text = hintText;
+        //change subtitle text tot display the hint
+        //subtitles.text = tmpPair.Value[(int)UnityEngine.Random.Range(0, nbHintTexts - 0.01f)];
+        //GameObjectManager.setGameObjectState(subtitles.gameObject, true);
+        //subtitlesTimer = Time.time;
+        tmpHC.link = hintLink;
+        if (hintMonitorID != -1)
+            tmpHC.monitor = MonitoringManager.getMonitorById(hintMonitorID);
+        hintButton.onClick.AddListener(delegate { OnClickHint(hintButton); });
     }
 
     /// <summary>
@@ -881,18 +964,26 @@ public class HelpSystem : FSystem {
 
         List<int> actionsIDs = new List<int>();
         
-        for(int i = 0; i < triggerableActions.Count; i++)
+        for (int i = 0; i < triggerableActions.Count; i++)
         {
             int pn = triggerableActions[i].Key.fullPnSelected;
-            if (checkEnigmaOrderMeta.ContainsKey(pn))
+            //if the petri net is in the list
+            if (rdpIDs.Contains(pn))
             {
-                if (rdpIDs.Contains(pn) && triggerableActions.Contains(new KeyValuePair<ComponentMonitoring, string>(checkEnigmaOrderMeta[pn], "perform")))
-                    actionsIDs.Add(triggerableActions[i].Key.id);
-            }
-            else
-            {
-                //add the ComponentMonitoring ID if his Petri net is in the list
-                if (rdpIDs.Contains(pn))
+                if (checkEnigmaOrderMeta.ContainsKey(pn))
+                {
+                    //if the action corresponding to the enigma in the meta is triggerable, add the ComponentMonitoring id to the list
+                    for (int j = 0; j < triggerableActions.Count; j++)
+                    {
+                        if(triggerableActions[j].Key.fullPnSelected == 0)
+                        if (triggerableActions[j].Key.id == checkEnigmaOrderMeta[pn].id)
+                        {
+                            actionsIDs.Add(triggerableActions[i].Key.id);
+                            break;
+                        }
+                    }
+                }
+                else
                     actionsIDs.Add(triggerableActions[i].Key.id);
             }
         }
@@ -911,5 +1002,15 @@ public class HelpSystem : FSystem {
         foreach (string key in gameHints.dictionary.Keys)
             numberFeedback += gameHints.dictionary[key].Count;
         return numberFeedback;
+    }
+
+    private string StringToAnswer(string answer)
+    {
+        // format answer
+        answer = answer.Replace('é', 'e');
+        answer = answer.Replace('è', 'e');
+        answer = answer.Replace('à', 'a');
+        answer = answer.ToUpper();
+        return answer;
     }
 }

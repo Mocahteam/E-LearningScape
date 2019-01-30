@@ -10,6 +10,7 @@
     "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
     "hintsPath": "Data/Hints_LearningScape.txt",
     "internalHintsPath": "Data/InternalHints_LearningScape.txt",
+    "wrongAnswerFeedbacksPath": "Data/WrongAnswerFeedbacks.txt",
     "enigmasWeightPath": "Data/EnigmasWeight.txt",
     "labelWeightsPath": "Data/LabelWeights.txt",
     "storyTextIntro": [

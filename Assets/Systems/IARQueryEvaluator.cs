@@ -143,19 +143,80 @@ public class IARQueryEvaluator : FSystem {
                 if (availableOrSolutions.Contains(StringToAnswer(LoadGameContent.gameContent.puzzleAnswer)))
                 {
                     if (LoadGameContent.gameContent.virtualPuzzle)
+                    {
                         GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong11_1", performedBy = "player" });
+                        GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 101, givenAnswer = answer });
+                    }
                     else
+                    {
                         GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong11_2", performedBy = "player" });
+                        GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 110, givenAnswer = answer });
+                    }
                 }
                 if (availableOrSolutions.Contains(StringToAnswer(LoadGameContent.gameContent.lampAnswer)))
+                {
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong12", performedBy = "player" });
+                    GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 122, givenAnswer = answer });
+                }
                 if (availableOrSolutions.Contains(StringToAnswer(LoadGameContent.gameContent.enigma12Answer)))
+                {
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong13", performedBy = "player" });
+                    GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 126, givenAnswer = answer });
+                }
                 if (availableOrSolutions.Contains(StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer)))
+                {
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong14", performedBy = "player" });
+                    GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 142, givenAnswer = answer });
+                }
             }
             else
+            {
                 GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Wrong", performedBy = "player" });
+
+                if(query.tag == "Q-R1")
+                {
+                    if(query.name == "Q1")
+                        for (int i = 0; i < answer.Length; i++)
+                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 24, givenAnswer = answer[i] });
+                    else if (query.name == "Q2")
+                        for (int i = 0; i < answer.Length; i++)
+                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 35, givenAnswer = answer[i] });
+                    else
+                        GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 50, givenAnswer = answer });
+                }
+                else if (query.tag == "Q-R2")
+                {
+                    switch (query.name)
+                    {
+                        case "Q1":
+                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 64, givenAnswer = answer });
+                            break;
+
+                        case "Q2":
+                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 69, givenAnswer = answer });
+                            break;
+
+                        case "Q3":
+                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 77, givenAnswer = answer });
+                            break;
+
+                        case "Q4":
+                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 83, givenAnswer = answer });
+                            break;
+
+                        case "Q5":
+                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 86, givenAnswer = answer });
+                            break;
+
+                        case "Q6":
+                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 91, givenAnswer = answer });
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            }
             GameObjectManager.addComponent<ActionPerformedForLRS>(query, new { verb = "answered", objectType = "question",
                 objectName = string.Concat(query.name, "-", query.tag), result = true, success = -1, response = answer });
         }

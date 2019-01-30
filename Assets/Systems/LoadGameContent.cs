@@ -85,6 +85,7 @@ public class LoadGameContent : FSystem {
                 File.WriteAllText("Data/LRSConfig.txt", defaultGameContent.lrsConfigFile.text);
                 File.WriteAllText("Data/Hints_LearningScape.txt", defaultGameContent.hintsJsonFile.text);
                 File.WriteAllText("Data/InternalHints_LearningScape.txt", defaultGameContent.internalHintsJsonFile.text);
+                File.WriteAllText("Data/WrongAnswerFeedbacks.txt", defaultGameContent.wrongAnswerFeedbacks.text);
                 File.WriteAllText("Data/EnigmasWeight.txt", defaultGameContent.enigmasWeight.text);
                 File.WriteAllText("Data/LabelWeights.txt", defaultGameContent.labelWeights.text);
                 File.WriteAllText("Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
@@ -813,9 +814,9 @@ public class LoadGameContent : FSystem {
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - LRS configuration file not found. Default LRS used (Lip6)"));
         }
 
+        GameHints gameHints = f_gameHints.First().GetComponent<GameHints>();
         if (File.Exists(gameContent.hintsPath))
         {
-            GameHints gameHints = f_gameHints.First().GetComponent<GameHints>();
             try
             {
                 gameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>>(File.ReadAllText(gameContent.hintsPath));
@@ -865,6 +866,36 @@ public class LoadGameContent : FSystem {
             f_internalGameHints.First().GetComponent<InternalGameHints>().dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(defaultGameContent.internalHintsJsonFile.text);
             Debug.LogWarning("File containting internal hints not found. Default used.");
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting internal hints not found. Default used"));
+        }
+
+        if (File.Exists(gameContent.wrongAnswerFeedbacksPath))
+        {
+            try
+            {
+                gameHints.wrongAnswerFeedbacks = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>>(File.ReadAllText(gameContent.wrongAnswerFeedbacksPath));
+                if (gameHints.wrongAnswerFeedbacks == null || gameHints.wrongAnswerFeedbacks.Count == 0)
+                {
+                    gameHints.wrongAnswerFeedbacks = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>>(File.ReadAllText(defaultGameContent.wrongAnswerFeedbacks.text));
+                    Debug.LogWarning("File containting feedbacks for wrong answers empty. Default used.");
+                    File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting feedbacks for wrong answers empty. Default used"));
+                }
+            }
+            catch (Exception)
+            {
+                if(!File.Exists("Data/WrongAnswerFeedbacks.txt"))
+                    File.WriteAllText("Data/WrongAnswerFeedbacks.txt", defaultGameContent.wrongAnswerFeedbacks.text);
+                gameHints.wrongAnswerFeedbacks = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>>(File.ReadAllText(defaultGameContent.wrongAnswerFeedbacks.text));
+                Debug.LogError("Invalid content in the file containting feedbacks for wrong answers. Default used.");
+                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid content in the file containting feedbacks for wrong answers. Default used"));
+            }
+        }
+        else
+        {
+            if (!File.Exists("Data/WrongAnswerFeedbacks.txt"))
+                File.WriteAllText("Data/WrongAnswerFeedbacks.txt", defaultGameContent.wrongAnswerFeedbacks.text);
+            gameHints.wrongAnswerFeedbacks = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>>(File.ReadAllText(defaultGameContent.wrongAnswerFeedbacks.text));
+            Debug.LogWarning("File containting feedbacks for wrong answers not found. Default used.");
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting feedbacks for wrong answers not found. Default used"));
         }
 
         if (File.Exists(gameContent.enigmasWeightPath))

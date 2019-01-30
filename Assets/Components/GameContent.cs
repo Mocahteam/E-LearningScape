@@ -17,6 +17,7 @@ public class GameContent {
     public string dreamFragmentLinksPath;
     public string hintsPath;
     public string internalHintsPath;
+    public string wrongAnswerFeedbacksPath;
     public string enigmasWeightPath;
     public string labelWeightsPath;
 
