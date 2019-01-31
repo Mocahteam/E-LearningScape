@@ -28,7 +28,6 @@ public class CollectObject : FSystem {
                 if (f_inventoryElements.getAt(i).name == "Puzzle")
                 {
                     seenPuzzle = f_inventoryElements.getAt(i);
-                    GameObjectManager.addComponent<LinkLabel>(f_inventoryElements.getAt(i));
                     break;
                 }
             }
@@ -68,32 +67,6 @@ public class CollectObject : FSystem {
                     GameObject UIScroll = UI_metaScroll.GetComponent<LinkedWith>().link.transform.Find(collect.name).gameObject;
                     // enable it
                     GameObjectManager.setGameObjectState(UIScroll, true);
-
-                    switch (collect.name[collect.name.Length -1])
-                    {
-                        case '1':
-                            seenPuzzle.GetComponent<LinkLabel>().text = "l5";
-                            break;
-
-                        case '2':
-                            seenPuzzle.GetComponent<LinkLabel>().text = "l6";
-                            break;
-
-                        case '3':
-                            seenPuzzle.GetComponent<LinkLabel>().text = "l7";
-                            break;
-
-                        case '4':
-                            seenPuzzle.GetComponent<LinkLabel>().text = "l8";
-                            break;
-
-                        case '5':
-                            seenPuzzle.GetComponent<LinkLabel>().text = "l9";
-                            break;
-
-                        default:
-                            break;
-                    }
                 }
                 // disable in-game source
                 GameObjectManager.setGameObjectState(collect, false);

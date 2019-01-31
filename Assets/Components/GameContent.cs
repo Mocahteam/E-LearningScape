@@ -2,16 +2,43 @@
 using System.Collections.Generic;
 using System;
 
+/// <summary>
+/// Content of the game loaded from the file "Data/Data_LearningScape.txt" by the system "LaodGameContent".
+/// If the file is not found the default one set in "DefaultGameContent" is used
+/// </summary>
 [Serializable]
 public class GameContent {
     // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
-
+    
+    /// <summary>
+    /// The pedagogic theme of the game content
+    /// </summary>
     public string theme;
+    /// <summary>
+    /// If true, traces with MonitoringManager and Laalys will be enabled
+    /// </summary>
     public bool trace = true;
+    /// <summary>
+    /// If true, HelpSystem will be enabled
+    /// </summary>
     public bool helpSystem = true;
+    /// <summary>
+    /// If true, traces will be sent to LRS
+    /// </summary>
     public bool traceToLRS = false;
+    /// <summary>
+    /// Frequency to which movement statements will be sent to LRS.
+    /// If 0 or negative, no statment about movement sent
+    /// </summary>
     public float traceMovementFrequency = 0;
+    /// <summary>
+    /// If true, puzzles will be included in the game.
+    /// Else dream fragments will replace collectable puzzles
+    /// </summary>
     public bool virtualPuzzle = true;
+
+    //Paths for other config files
+    #region Config Files Paths
     public string lrsConfigPath;
     public string dreamFragmentLinksPath;
     public string hintsPath;
@@ -20,6 +47,7 @@ public class GameContent {
     public string enigmasWeightPath;
     public string labelWeightsPath;
     public string helpSystemConfigPath;
+    #endregion
 
     //Texte intro, transition, fin
     public string[] storyTextIntro;
@@ -108,6 +136,6 @@ public class GameContent {
     public string lampAnswer;
 
     //White Board
-    public string[] whiteBoardWords = new string [12]; //"AMENAGER L'ESPAC##E##"
+    public string[] whiteBoardWords = new string [12];
     public string whiteBoardAnswer;
 }

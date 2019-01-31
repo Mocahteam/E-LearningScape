@@ -104,6 +104,16 @@ public class StoryDisplaying : FSystem {
             {
                 timer = f_game.First().GetComponent<Timer>();
                 timer.startingTime = Time.time;
+
+                GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
+                {
+                    verb = "started",
+                    objectType = "serious-game",
+                    objectName = "E-LearningScape",
+                    activityExtensions = new Dictionary<string, List<string>>() {
+                    { "content", new List<string>() { LoadGameContent.gameContent.theme } }
+                }
+                });
             }
             fadingImage.color = Color.black;
             background.color = Color.black;
@@ -118,10 +128,13 @@ public class StoryDisplaying : FSystem {
             storyTexts[st.storyProgression].Add(string.Concat("<align=\"center\">", LoadGameContent.gameContent.scoreText, Environment.NewLine, hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")));
             GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
             {
-                verb = "reached",
-                objectType = "area",
-                objectName = "End_Door",
-                activityExtensions = new Dictionary<string, List<string>>() { { "time", new List<string>() { string.Concat(hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")) } } }
+                verb = "completed",
+                objectType = "serious-game",
+                objectName = "E-LearningScape",
+                activityExtensions = new Dictionary<string, List<string>>() {
+                    { "content", new List<string>() { LoadGameContent.gameContent.theme } },
+                    { "time", new List<string>() { string.Concat(hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")) } }
+                }
             });
             fadingImage.color = Color.white;
             background.color = Color.white;
