@@ -49,6 +49,7 @@ public class HelpSystem : FSystem {
 
     private float labelCount = 0;
     private int nbFeedBackGiven = 0;
+    private bool playerAskedHelp = false;
 
     private UnlockedRoom room;
 
@@ -421,6 +422,17 @@ public class HelpSystem : FSystem {
         else
             GameObjectManager.setGameObjectState(hintLinkButton.gameObject, false);
         GameObjectManager.removeComponent<NewHint>(selectedHint.gameObject);
+
+        GameObjectManager.addComponent<ActionPerformedForLRS>(b.gameObject, new
+        {
+            verb = "read",
+            objectType = "feedback",
+            objectName = string.Concat("hint_", b.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text),
+            activityExtensions = new Dictionary<string, List<string>>() {
+                { "type", new List<string>() { "hint" } },
+                { "content", new List<string>() { b.GetComponent<HintContent>().text } }
+            }
+        });
     }
 
     private void OnPlayerAskHelp()
@@ -436,6 +448,8 @@ public class HelpSystem : FSystem {
                 feedbackLevel = 1;
             else if (feedbackRatio > config.feedbackStep2)
                 feedbackLevel = 3;
+
+            playerAskedHelp = true;
             if (DisplayHint(room.roomNumber, feedbackLevel))
             {
                 playerHintTimer = Time.time;
@@ -449,6 +463,16 @@ public class HelpSystem : FSystem {
         try
         {
             Application.OpenURL(hintLink);
+
+            GameObjectManager.addComponent<ActionPerformedForLRS>(hintLinkButton.gameObject, new
+            {
+                verb = "read",
+                objectType = "viewable",
+                objectName = "hintLink",
+                activityExtensions = new Dictionary<string, List<string>>() {
+                    { "link", new List<string>() { hintLink } }
+                }
+            });
         }
         catch (Exception)
         {
@@ -475,7 +499,20 @@ public class HelpSystem : FSystem {
                         string hintText = "";
                         if (gameHints.wrongAnswerFeedbacks[key][wrongAnswerArray[i].givenAnswer].Value.Count > 0)
                             hintText = gameHints.wrongAnswerFeedbacks[key][wrongAnswerArray[i].givenAnswer].Value[(int)UnityEngine.Random.Range(0, gameHints.wrongAnswerFeedbacks[key][wrongAnswerArray[i].givenAnswer].Value.Count - 0.01f)];
-                        CreateHintButton(key, hintText, monitorID, gameHints.wrongAnswerFeedbacks[key][wrongAnswerArray[i].givenAnswer].Key);
+                        Button hintButton = CreateHintButton(key, hintText, monitorID, gameHints.wrongAnswerFeedbacks[key][wrongAnswerArray[i].givenAnswer].Key);
+
+
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(hintButton.gameObject, new
+                        {
+                            verb = "received",
+                            objectType = "feedback",
+                            objectName = string.Concat("hint_", hintButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text),
+                            activityExtensions = new Dictionary<string, List<string>>() {
+                                { "type", new List<string>() { "wrongAnwserHint" } },
+                                { "from", new List<string>() { "system" } },
+                                { "content", new List<string>() { hintButton.GetComponent<HintContent>().text } }
+                            }
+                        });
                         break;
                     }
                 }
@@ -623,29 +660,25 @@ public class HelpSystem : FSystem {
                         availableComponentMonitoringIDs.Remove(id);
                 }
 
-                //show a button to see hint content in hint tab in IAR
-                if (hintButtonsPool.Count == 0)
-                {
-                    //create a new hint button if pool is empty
-                    GameObject tmpGo = GameObject.Instantiate(hintButtonPrefab);
-                    tmpGo.transform.SetParent(scrollViewContent.transform);
-                    tmpGo.SetActive(false);
-                    GameObjectManager.bind(tmpGo);
-                    Button b = tmpGo.GetComponent<Button>();
-                    b.onClick.AddListener(delegate { OnClickHint(b); });
-                    hintButtonsPool.Add(tmpGo);
-
-                    Debug.LogWarning("You should increase hintButtonsPool initial size");
-                    File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - You should increase hintButtonsPool initial size."));
-                }
-
                 string hintText = "";
                 if (tmpPair.Value.Count > 0)
                     hintText = tmpPair.Value[(int)UnityEngine.Random.Range(0, tmpPair.Value.Count - 0.01f)];
-                CreateHintButton(hintName, hintText, id, tmpPair.Key);
+                Button hintButton = CreateHintButton(hintName, hintText, id, tmpPair.Key);
+
+                GameObjectManager.addComponent<ActionPerformedForLRS>(hintButton.gameObject, new
+                {
+                    verb = "received",
+                    objectType = "feedback",
+                    objectName = string.Concat("hint_", hintButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text),
+                    activityExtensions = new Dictionary<string, List<string>>() {
+                        { "type", new List<string>() { "hint" } },
+                        { "from", new List<string>() { playerAskedHelp ? "button" : "system" } },
+                        { "content", new List<string>() { hintButton.GetComponent<HintContent>().text } }
+                    }
+                });
 
                 //remove hint from dictionary
-                if(hasHighlightTag)
+                if (hasHighlightTag)
                     gameHints.dictionary[key1].Remove(string.Concat(highlightTag, hintName));
                 else
                     gameHints.dictionary[key1].Remove(hintName);
@@ -659,17 +692,20 @@ public class HelpSystem : FSystem {
                 systemHintTimer = Time.time;
                 nbFeedBackGiven++;
                 labelCount = 0;
+                playerAskedHelp = false;
                 return true;
             }
             else
             {
                 Debug.Log("No hint found.");
+                playerAskedHelp = false;
                 return false;
             }
         }
         else
         {
             Debug.Log(string.Concat("No hint found for the room ", room));
+            playerAskedHelp = false;
             return false;
         }
     }
@@ -681,8 +717,24 @@ public class HelpSystem : FSystem {
     /// <param name="hintText"></param>
     /// <param name="hintMonitorID"></param>
     /// <param name="hintLink"></param>
-    private void CreateHintButton(string hintName, string hintText, int hintMonitorID, string hintLink = "")
+    private Button CreateHintButton(string hintName, string hintText, int hintMonitorID, string hintLink = "")
     {
+        //show a button to see hint content in hint tab in IAR
+        if (hintButtonsPool.Count == 0)
+        {
+            //create a new hint button if pool is empty
+            tmpGO = GameObject.Instantiate(hintButtonPrefab);
+            tmpGO.transform.SetParent(scrollViewContent.transform);
+            tmpGO.SetActive(false);
+            GameObjectManager.bind(tmpGO);
+            Button b = tmpGO.GetComponent<Button>();
+            b.onClick.AddListener(delegate { OnClickHint(b); });
+            hintButtonsPool.Add(tmpGO);
+
+            Debug.LogWarning("You should increase hintButtonsPool initial size");
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - You should increase hintButtonsPool initial size."));
+        }
+
         tmpGO = hintButtonsPool[0];
         hintButtonsPool.RemoveAt(0);
         Button hintButton = tmpGO.GetComponent<Button>();
@@ -715,6 +767,7 @@ public class HelpSystem : FSystem {
         if (hintMonitorID != -1)
             tmpHC.monitor = MonitoringManager.getMonitorById(hintMonitorID);
         hintButton.onClick.AddListener(delegate { OnClickHint(hintButton); });
+        return hintButton;
     }
 
     /// <summary>

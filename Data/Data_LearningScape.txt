@@ -27,6 +27,7 @@
         "Ce jeu est une adaptation du LearningScape créé par Sapiens et le CRI, soutenu d'un financement du projet IDEFI IIFR",
         "Mounswif Darkaoui (Développement)\nSimon Giraud (Graphismes et sons)\nBasile Pesin (Réalité virtuelle)\nThomas Planques (Supervision artistique et game design)\nMathieu Muratet (Supervision développement et développement)\nBerni Hasenknopf (Initiateur du projet)"
     ],
+    "scoreText": "Vous avez mis: ",
     "ballBoxQuestion": "Que faire pour rendre actifs mes étudiants ?",
     "ballBoxPlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
     "ballBoxAnswer": [

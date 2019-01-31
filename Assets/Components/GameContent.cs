@@ -25,6 +25,7 @@ public class GameContent {
     public string[] storyTextIntro;
     public string[] storyTextransition;
     public string[] storyTextEnd;
+    public string scoreText;
 
     //Ball Box
     public string ballBoxQuestion;

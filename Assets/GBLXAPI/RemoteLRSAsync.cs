@@ -103,7 +103,12 @@ namespace TinCan {
                 Dictionary<string, string> postHeader = new Dictionary<string, string>();
                 postHeader.Add("Content-Type", "application/json");
                 postHeader.Add("X-Experience-API-Version", this.version.ToString());
-                postHeader.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Concat(address.lrsUser, ":", address.lrsPassword))));
+                if( address.lrsUser != "" && address.lrsPassword == "")
+                    postHeader.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(address.lrsUser)));
+                else if( address.lrsUser == "" && address.lrsPassword != "")
+                    postHeader.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(address.lrsPassword)));
+                else if( address.lrsUser != "" && address.lrsPassword != "")
+                    postHeader.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Concat(address.lrsUser, ":", address.lrsPassword))));
 
                 // form data
                 byte[] formBytes = Encoding.UTF8.GetBytes(statement.ToJSON(this.version));
@@ -145,7 +150,12 @@ namespace TinCan {
                 Dictionary<string, string> postHeader = new Dictionary<string, string>();
                 postHeader.Add("Content-Type", "application/json");
                 postHeader.Add("X-Experience-API-Version", this.version.ToString());
-                postHeader.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Concat(address.lrsUser, ":", address.lrsPassword))));
+                if (address.lrsUser != "" && address.lrsPassword == "")
+                    postHeader.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(address.lrsUser)));
+                else if (address.lrsUser == "" && address.lrsPassword != "")
+                    postHeader.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(address.lrsPassword)));
+                else if (address.lrsUser != "" && address.lrsPassword != "")
+                    postHeader.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Concat(address.lrsUser, ":", address.lrsPassword))));
 
                 string queryURL;
                 // endpoint should have trailing /

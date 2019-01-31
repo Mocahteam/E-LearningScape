@@ -233,22 +233,22 @@ public class IARQueryEvaluator : FSystem {
                         GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct11_1", performedBy = "player" });
                     else
                         GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct11_2", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = "solvePuzzle", performedBy = "system" });
+                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "solvePuzzle", performedBy = "system" });
                 }
                 else if (answer == StringToAnswer(LoadGameContent.gameContent.lampAnswer))
                 {
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct12", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = "solveLamp", performedBy = "system" });
+                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "solveLamp", performedBy = "system" });
                 }
                 else if (answer == StringToAnswer(LoadGameContent.gameContent.enigma12Answer))
                 {
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct13", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = "solveEnigma13", performedBy = "system" });
+                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "solveEnigma13", performedBy = "system" });
                 }
                 else if (answer == StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer))
                 {
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct14", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = "solveWhiteBoard", performedBy = "system" });
+                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "solveWhiteBoard", performedBy = "system" });
                 }
             }
             else if(query.tag == "Q-R2" && query.name == "Q1")
