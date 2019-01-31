@@ -69,7 +69,7 @@ public class LogoDisplaying : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
     {
-        if (MonitoringManager.Instance.waitingForLaalys && false)
+        if (MonitoringManager.Instance.waitingForLaalys)
         {
             if(!motionBlurWasOn)
                 motionBlurWasOn = loadingFragment.transform.parent.GetComponent<PostProcessingBehaviour>().profile.motionBlur.enabled;

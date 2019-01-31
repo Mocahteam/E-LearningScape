@@ -13,6 +13,8 @@ public class DefaultGameContent : MonoBehaviour {
     public TextAsset enigmasWeight;
     public TextAsset labelWeights;
 
+    public TextAsset helpSystemConfig;
+
     public TextAsset dreamFragmentlinks;
 
     public Texture2D[] glassesPictures;

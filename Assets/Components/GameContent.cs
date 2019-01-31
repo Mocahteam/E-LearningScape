@@ -7,7 +7,6 @@ public class GameContent {
     // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
 
     public string theme;
-    public float sessionDuration; //in minutes
     public bool trace = true;
     public bool helpSystem = true;
     public bool traceToLRS = false;
@@ -20,6 +19,7 @@ public class GameContent {
     public string wrongAnswerFeedbacksPath;
     public string enigmasWeightPath;
     public string labelWeightsPath;
+    public string helpSystemConfigPath;
 
     //Texte intro, transition, fin
     public string[] storyTextIntro;

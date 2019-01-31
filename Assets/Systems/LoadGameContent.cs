@@ -54,6 +54,8 @@ public class LoadGameContent : FSystem {
     private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
     private Family f_IARTab = FamilyManager.getFamily(new AnyOfTags("IARTab"));
 
+    private Family f_helpSystemConfig = FamilyManager.getFamily(new AllOfComponents(typeof(HelpSystemConfig)));
+
 
     private FSystem instance;
 
@@ -89,6 +91,7 @@ public class LoadGameContent : FSystem {
                 File.WriteAllText("Data/EnigmasWeight.txt", defaultGameContent.enigmasWeight.text);
                 File.WriteAllText("Data/LabelWeights.txt", defaultGameContent.labelWeights.text);
                 File.WriteAllText("Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
+                File.WriteAllText("Data/HelpSystemConfig.txt", defaultGameContent.helpSystemConfig.text);
 
                 gameContent = new GameContent();
                 gameContent = JsonUtility.FromJson<GameContent>(defaultGameContent.jsonFile.text);
@@ -957,6 +960,36 @@ public class LoadGameContent : FSystem {
             f_labelWeights.First().GetComponent<LabelWeights>().weights = JsonConvert.DeserializeObject<Dictionary<string, float>>(defaultGameContent.labelWeights.text);
             Debug.LogWarning("File containting label weights not found. Default used.");
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - File containting label weights not found. Default used"));
+        }
+
+        if (File.Exists(gameContent.helpSystemConfigPath))
+        {
+            try
+            {
+                HelpSystem.config = JsonConvert.DeserializeObject<HelpSystemConfig>(File.ReadAllText(gameContent.helpSystemConfigPath));
+                if (HelpSystem.config == null)
+                {
+                    HelpSystem.config = JsonConvert.DeserializeObject<HelpSystemConfig>(defaultGameContent.helpSystemConfig.text);
+                    Debug.LogWarning("HelpSystem config file empty. Default used.");
+                    File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - HelpSystem config file empty empty. Default used"));
+                }
+            }
+            catch (Exception)
+            {
+                if (!File.Exists("Data/HelpSystemConfig.txt"))
+                    File.WriteAllText("Data/HelpSystemConfig.txt", defaultGameContent.helpSystemConfig.text);
+                HelpSystem.config = JsonConvert.DeserializeObject<HelpSystemConfig>(defaultGameContent.helpSystemConfig.text);
+                Debug.LogError("Invalid content in the HelpSystem config file. Default used.");
+                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid content in the HelpSystem config file. Default used"));
+            }
+        }
+        else
+        {
+            if (!File.Exists("Data/HelpSystemConfig.txt"))
+                File.WriteAllText("Data/HelpSystemConfig.txt", defaultGameContent.helpSystemConfig.text);
+            HelpSystem.config = JsonConvert.DeserializeObject<HelpSystemConfig>(defaultGameContent.helpSystemConfig.text);
+            Debug.LogWarning("HelpSystem config file not found. Default used.");
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - HelpSystem config file not found. Default used"));
         }
 
         Debug.Log("Data loaded");

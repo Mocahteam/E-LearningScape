@@ -1,6 +1,5 @@
 {
     "theme": "Pédagogie",
-    "sessionDuration": 60,
     "trace": true,
     "helpSystem": true,
     "traceToLRS": false,
@@ -13,6 +12,7 @@
     "wrongAnswerFeedbacksPath": "Data/WrongAnswerFeedbacks.txt",
     "enigmasWeightPath": "Data/EnigmasWeight.txt",
     "labelWeightsPath": "Data/LabelWeights.txt",
+    "helpSystemConfigPath": "Data/HelpSystemConfig.txt",
     "storyTextIntro": [
         "Il est déjà tard le soir, Camille reste inquiète pour son premier enseignement à Sorbonne Université. Ce n’est pas la première fois qu’elle enseigne, mais maintenant elle est Maître de Conférences, son premier poste permanent.",
         "En se brossant les dents, elle révise la matière qu'elle devra enseigner demain en TD. Puis elle se couche, et plein de questions tournent dans sa tête : et si j’ai un blanc ? et si les étudiants ne sont pas motivés ? et s’il n’y a pas de craie ?",
