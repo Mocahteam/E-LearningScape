@@ -807,6 +807,7 @@ public class LoadGameContent : FSystem {
 
         #endregion
 
+        #region File Loading
         if (File.Exists(gameContent.lrsConfigPath))
             GBL_Interface.lrsAddresses = JsonConvert.DeserializeObject<List<LRSAddress>>(File.ReadAllText("Data/LRSConfig.txt"));
         else
@@ -991,6 +992,7 @@ public class LoadGameContent : FSystem {
             Debug.LogWarning("HelpSystem config file not found. Default used.");
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - HelpSystem config file not found. Default used"));
         }
+        #endregion
 
         Debug.Log("Data loaded");
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));
@@ -1006,6 +1008,10 @@ public class LoadGameContent : FSystem {
         return answer;
     }
 
+    /// <summary>
+    /// Convert "##" codes to removable/unremovable texts
+    /// </summary>
+    /// <param name="text"></param>
     private void ConvertBoardText(string text)
     {
         if(convertedBoardText == null)

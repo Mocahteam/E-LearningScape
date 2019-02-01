@@ -65,9 +65,14 @@ public class LogoDisplaying : FSystem {
         }
         instance = this;
     }
+    
+    protected override void onPause(int currentFrame)
+    {
+        GameObjectManager.setGameObjectState(logoGo, false);
+    }
 
-	// Use to process your families.
-	protected override void onProcess(int familiesUpdateCount)
+    // Use to process your families.
+    protected override void onProcess(int familiesUpdateCount)
     {
         if (MonitoringManager.Instance.waitingForLaalys)
         {

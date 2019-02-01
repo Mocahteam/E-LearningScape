@@ -29,7 +29,11 @@ public class DreamFragmentCollecting : FSystem {
     private bool allPuzzleFragmentsCollected = false;
     private GameObject tmpGo;
 
+    //key: dream fragment name, value: link
+    //this dictionary contains links to get more info about a dream fragment
+    //if a link is given, a button to open the link will appear in the dream fragment UI
     private Dictionary<string, string> dreamFragmentsLinks;
+    //button in dream fragment UI to open the link
     private GameObject onlineButton;
 
     public static DreamFragmentCollecting instance;
@@ -66,6 +70,7 @@ public class DreamFragmentCollecting : FSystem {
                 }
             }
 
+            //Load dream fragment links (should be done in LoadGameContent)
             if (File.Exists(LoadGameContent.gameContent.dreamFragmentLinksPath))
                 try
                 {
@@ -213,7 +218,16 @@ public class DreamFragmentCollecting : FSystem {
 
     private void OpenFragmentLink()
     {
-        Application.OpenURL(dreamFragmentsLinks[selectedFragment.name]);
+        //when onlineButton is clicked
+        try
+        {
+            Application.OpenURL(dreamFragmentsLinks[selectedFragment.name]);
+        }
+        catch (Exception)
+        {
+            Debug.LogError(string.Concat("Invalid dream fragment link: ", dreamFragmentsLinks[selectedFragment.name]));
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid dream fragment link: ", dreamFragmentsLinks[selectedFragment.name]));
+        }
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new
         {
             verb = "accessed",

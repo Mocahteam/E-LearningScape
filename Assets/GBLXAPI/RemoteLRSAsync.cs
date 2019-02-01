@@ -45,6 +45,7 @@ namespace TinCan {
         public RemoteLRSAsync()
         {
             unsentStatements = new Queue<string>();
+            //Send all unsent data stored
             if (File.Exists("Data/UnsentData.txt"))
             {
                 List<string> unsentStoredData = new List<string>(File.ReadAllLines("Data/UnsentData.txt"));
@@ -62,6 +63,7 @@ namespace TinCan {
 
         private void Update()
         {
+            //if there are unsent statement, try to send them every 30 seconds
             if (unsentStatements.Count > 0)
                 if (((connexionFailed && Time.time - retryTimer > 30) || !connexionFailed) && !sendingFromQueue)
                 {
@@ -94,6 +96,7 @@ namespace TinCan {
 		// ------------------------------------------------------------------------
 		// ------------------------------------------------------------------------
 		public void SaveStatement(Statement statement){
+            //send statements to each address in the LRS config file
             foreach(LRSAddress address in lrsAddresses)
             {
                 // reinit state
@@ -141,7 +144,8 @@ namespace TinCan {
 		// ------------------------------------------------------------------------
 		public void SaveStatement(byte[] formBytes, bool statementFromQueue = false)
         {
-            foreach(LRSAddress address in lrsAddresses)
+            //send statements to each address in the LRS config file
+            foreach (LRSAddress address in lrsAddresses)
             {
                 // reinit state
                 this.initState();
@@ -208,6 +212,7 @@ namespace TinCan {
                 retryTimer = Time.time;
                 if (!statementFromQueue)
                 {
+                    //if the sending failed and the statement wasn't in the waiting queue, add the statement to the queue and save it in the file
                     unsentStatements.Enqueue(Encoding.UTF8.GetString(formBytes));
                     if (!File.Exists("Data/UnsentData.txt") || File.ReadAllText("Data/UnsentData.txt") == "")
                         File.WriteAllText("Data/UnsentData.txt", Encoding.UTF8.GetString(formBytes));

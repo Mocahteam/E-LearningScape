@@ -70,6 +70,7 @@ public static class GBL_Interface {
 
         if(activityExtensions != null)
         {
+            //set extensions
             foreach(string field in activityExtensions.Keys)
             {
                 List<JToken> jtList = new List<JToken>();
@@ -97,6 +98,7 @@ public static class GBL_Interface {
 
         if (activityExtensions != null)
         {
+            //set extensions
             foreach (string field in activityExtensions.Keys)
             {
                 List<JToken> jtList = new List<JToken>();
@@ -111,6 +113,7 @@ public static class GBL_Interface {
 
         if (resultExtensions != null)
         {
+            //set extensions
             foreach (string field in resultExtensions.Keys)
             {
                 List<JToken> jtList = new List<JToken>();

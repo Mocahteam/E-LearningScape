@@ -16,12 +16,12 @@ public class HelpSystemConfig {
     /// </summary>
     public float systemHintCooldownDuration = 15;
 
-    /* The system calculates the number of feedback expected based on the number given, the time spent and the time left
-     * Then it compares the ratio numberFeedbackExpected / numberFeedbackLeft to the 2 following steps
-     * ratio < step1 : feedbackLevel = 1
-     * step1 < ratio < step2 : feedbackLevel = 2
-     * ratio > step2 : feedbackLevel = 3
-     */
+    //The system calculates the number of feedback expected based on the number given, the time spent and the time left
+    //Then it compares the ratio numberFeedbackExpected / numberFeedbackLeft to the 2 following steps
+    //ratio<step1 : feedbackLevel = 1
+    //step1<ratio<step2 : feedbackLevel = 2
+    //ratio> step2 : feedbackLevel = 3
+
     /// <summary>
     /// numberFeedbackExpected / numberFeedbackLeft compered to this step to calculate the feedback level (more info in HelpSystemConfig)
     /// </summary>
@@ -35,4 +35,9 @@ public class HelpSystemConfig {
     /// When the label count reaches labelCountStep it is reset to 0 and a hint is given to the player
     /// </summary>
     public float labelCountStep = 20;
+    /// <summary>
+    /// The HelpSystem count the time spent without any action (no traces from Laalys)
+    /// Every time the timer reaches noActionFrequency, "stagntion" weight is added to labelCount and the timer is reset
+    /// </summary>
+    public float noActionFrequency = 10;
 }
