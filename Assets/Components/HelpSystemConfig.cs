@@ -4,7 +4,6 @@
 /// Class containing HelpSystem parameters
 /// </summary>
 public class HelpSystemConfig {
-    // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
     public float sessionDuration = 60; //in minutes
 
     /// <summary>

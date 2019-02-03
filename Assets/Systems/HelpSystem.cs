@@ -24,6 +24,8 @@ public class HelpSystem : FSystem {
     private Family f_askHelpButton = FamilyManager.getFamily(new AnyOfTags("AskHelpButton"), new AllOfComponents(typeof(Button)));
     private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
     private Family f_wrongAnswerInfo = FamilyManager.getFamily(new AllOfComponents(typeof(WrongAnswerInfo)));
+    private Family f_IARTab = FamilyManager.getFamily(new AnyOfTags("IARTab"));
+    private Family f_HUD_H = FamilyManager.getFamily(new AnyOfTags("HUD_H"));
 
     private Family f_scrollView = FamilyManager.getFamily(new AllOfComponents(typeof(ScrollRect), typeof(PrefabContainer)));
     private Family f_description = FamilyManager.getFamily(new AnyOfTags("HelpDescriptionUI"));
@@ -186,36 +188,39 @@ public class HelpSystem : FSystem {
     {
         if (Application.isPlaying)
         {
-            //get game hints filled with tips loaded from "Data/Hints_LearningScape.txt"
-            gameHints = f_gameHints.First().GetComponent<GameHints>();
-            //get internal game hints
-            internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
-            //Get the last monitor in the meta Petri net
-            finalComponentMonitoring = MonitoringManager.getMonitorById(164);
-
-            //add internal game hints to the dictionary of the component GameHints
-            //if the key2 already exists in gameHints.dictionary and gameHints.dictionary[key1][key2].Value isn't empty internalGameHints.dictionary[key1][key2] isn't added
-            foreach (string key1 in internalGameHints.dictionary.Keys)
+            if (!shouldPause)
             {
-                if (!gameHints.dictionary.ContainsKey(key1))
-                    gameHints.dictionary.Add(key1, new Dictionary<string, KeyValuePair<string, List<string>>>());
-                foreach (string key2 in internalGameHints.dictionary[key1].Keys)
-                {
-                    if (gameHints.dictionary[key1].ContainsKey(key2)){
-                        if(gameHints.dictionary[key1][key2].Value == null || gameHints.dictionary[key1][key2].Value.Count == 0)
-                        {
-                            gameHints.dictionary[key1][key2].Value.AddRange(internalGameHints.dictionary[key1][key2]);
-                        }
-                    }
-                    else
-                        gameHints.dictionary[key1].Add(key2, new KeyValuePair<string, List<string>>("", internalGameHints.dictionary[key1][key2]));
-                }
-            }
-            labelWeights = f_labelWeights.First().GetComponent<LabelWeights>().weights;
+                //get game hints filled with tips loaded from "Data/Hints_LearningScape.txt"
+                gameHints = f_gameHints.First().GetComponent<GameHints>();
+                //get internal game hints
+                internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
+                //Get the last monitor in the meta Petri net
+                finalComponentMonitoring = MonitoringManager.getMonitorById(164);
 
-            //Initialize checkEnigmaOrderMeta with the Petri net id and the corresponding ComponentMonitoring int the meta Petri net
-            //has to be changed if ComponentMonitoring ids are modified
-            checkEnigmaOrderMeta = new Dictionary<int, ComponentMonitoring>() {
+                //add internal game hints to the dictionary of the component GameHints
+                //if the key2 already exists in gameHints.dictionary and gameHints.dictionary[key1][key2].Value isn't empty internalGameHints.dictionary[key1][key2] isn't added
+                foreach (string key1 in internalGameHints.dictionary.Keys)
+                {
+                    if (!gameHints.dictionary.ContainsKey(key1))
+                        gameHints.dictionary.Add(key1, new Dictionary<string, KeyValuePair<string, List<string>>>());
+                    foreach (string key2 in internalGameHints.dictionary[key1].Keys)
+                    {
+                        if (gameHints.dictionary[key1].ContainsKey(key2))
+                        {
+                            if (gameHints.dictionary[key1][key2].Value == null || gameHints.dictionary[key1][key2].Value.Count == 0)
+                            {
+                                gameHints.dictionary[key1][key2].Value.AddRange(internalGameHints.dictionary[key1][key2]);
+                            }
+                        }
+                        else
+                            gameHints.dictionary[key1].Add(key2, new KeyValuePair<string, List<string>>("", internalGameHints.dictionary[key1][key2]));
+                    }
+                }
+                labelWeights = f_labelWeights.First().GetComponent<LabelWeights>().weights;
+
+                //Initialize checkEnigmaOrderMeta with the Petri net id and the corresponding ComponentMonitoring int the meta Petri net
+                //has to be changed if ComponentMonitoring ids are modified
+                checkEnigmaOrderMeta = new Dictionary<int, ComponentMonitoring>() {
                 { 1, MonitoringManager.getMonitorById(143) },
                 { 2, MonitoringManager.getMonitorById(144) },
                 { 3, MonitoringManager.getMonitorById(145) },
@@ -231,93 +236,91 @@ public class HelpSystem : FSystem {
                 { 18, MonitoringManager.getMonitorById(158) }
             };
 
-            //initialize availableComponentMonitoringIDs
-            availableComponentMonitoringIDs = new Dictionary<int, List<string>>();
-            List<string> keys1 = new List<string>(gameHints.dictionary.Keys);
-            foreach (string key1 in keys1)
-            {
-                List<string> keys2 = new List<string>(gameHints.dictionary[key1].Keys);
-                foreach (string key2 in keys2)
+                //initialize availableComponentMonitoringIDs
+                availableComponentMonitoringIDs = new Dictionary<int, List<string>>();
+                List<string> keys1 = new List<string>(gameHints.dictionary.Keys);
+                foreach (string key1 in keys1)
                 {
+                    List<string> keys2 = new List<string>(gameHints.dictionary[key1].Keys);
+                    foreach (string key2 in keys2)
+                    {
 
 
-                    int id = -1;
-                    string[] tmpStringArray = key2.Split('.');
-                    try
-                    {
-                        id = int.Parse(tmpStringArray[tmpStringArray.Length - 1]);
-                    }
-                    catch (System.Exception)
-                    {
-                    }
-                    if (id != -1)
-                    {
-                        //initialize availableComponentMonitoringIDs
-                        if (availableComponentMonitoringIDs.ContainsKey(id))
+                        int id = -1;
+                        string[] tmpStringArray = key2.Split('.');
+                        try
                         {
-                            if (availableComponentMonitoringIDs[id] == null)
-                                availableComponentMonitoringIDs[id] = new List<string>();
-                            availableComponentMonitoringIDs[id].Add(key2);
+                            id = int.Parse(tmpStringArray[tmpStringArray.Length - 1]);
                         }
-                        else
-                            availableComponentMonitoringIDs.Add(id, new List<string>() { key2 });
-                    }
+                        catch (System.Exception)
+                        {
+                        }
+                        if (id != -1)
+                        {
+                            //initialize availableComponentMonitoringIDs
+                            if (availableComponentMonitoringIDs.ContainsKey(id))
+                            {
+                                if (availableComponentMonitoringIDs[id] == null)
+                                    availableComponentMonitoringIDs[id] = new List<string>();
+                                availableComponentMonitoringIDs[id].Add(key2);
+                            }
+                            else
+                                availableComponentMonitoringIDs.Add(id, new List<string>() { key2 });
+                        }
 
-                    if (MonitoringManager.getMonitorById(id) == null)
-                    {
-                        gameHints.dictionary[key1].Remove(key2);
-                        if (gameHints.dictionary[key1].Count == 0)
-                            gameHints.dictionary.Remove(key1);
+                        if (MonitoringManager.getMonitorById(id) == null)
+                        {
+                            gameHints.dictionary[key1].Remove(key2);
+                            if (gameHints.dictionary[key1].Count == 0)
+                                gameHints.dictionary.Remove(key1);
+                        }
                     }
                 }
-            }
 
-            //Removes hints of the unused puzzle Petri net
-            if (LoadGameContent.gameContent.virtualPuzzle)
-                RemoveHintsByPN("Enigma11_2");
-            else
-                RemoveHintsByPN("Enigma11_1");
+                //Removes hints of the unused puzzle Petri net
+                if (LoadGameContent.gameContent.virtualPuzzle)
+                    RemoveHintsByPN("Enigma11_2");
+                else
+                    RemoveHintsByPN("Enigma11_1");
 
-            //format expected answers to be compared to formated answers from IARQueryEvaluator
-            List<string> tmpListString;
-            string tmpString;
-            Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>> tmpDictionary = new Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>(gameHints.wrongAnswerFeedbacks);
-            foreach (string key1 in gameHints.wrongAnswerFeedbacks.Keys)
-            {
-                tmpListString = new List<string>(gameHints.wrongAnswerFeedbacks[key1].Keys);
-                foreach(string key2 in tmpListString)
+                //format expected answers to be compared to formated answers from IARQueryEvaluator
+                List<string> tmpListString;
+                string tmpString;
+                Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>> tmpDictionary = new Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>(gameHints.wrongAnswerFeedbacks);
+                foreach (string key1 in gameHints.wrongAnswerFeedbacks.Keys)
                 {
-                    tmpString = StringToAnswer(key2);
-                    if (!gameHints.wrongAnswerFeedbacks[key1].ContainsKey(tmpString))
+                    tmpListString = new List<string>(gameHints.wrongAnswerFeedbacks[key1].Keys);
+                    foreach (string key2 in tmpListString)
                     {
-                        gameHints.wrongAnswerFeedbacks[key1].Add(tmpString, gameHints.wrongAnswerFeedbacks[key1][key2]);
-                        gameHints.wrongAnswerFeedbacks[key1].Remove(key2);
+                        tmpString = StringToAnswer(key2);
+                        if (!gameHints.wrongAnswerFeedbacks[key1].ContainsKey(tmpString))
+                        {
+                            gameHints.wrongAnswerFeedbacks[key1].Add(tmpString, gameHints.wrongAnswerFeedbacks[key1][key2]);
+                            gameHints.wrongAnswerFeedbacks[key1].Remove(key2);
+                        }
                     }
                 }
-            }
 
-            config.sessionDuration *= 60; //convert to seconds
+                config.sessionDuration *= 60; //convert to seconds
 
-            room = f_unlockedRoom.First().GetComponent<UnlockedRoom>();
-            
-            subtitles = f_subtitlesFamily.First().GetComponent<TextMeshProUGUI>();
+                room = f_unlockedRoom.First().GetComponent<UnlockedRoom>();
 
-            weights = LoadGameContent.enigmasWeight;
-            //count the total weighted meta actions
-            foreach (string enigmaName in weights.Keys)
-                totalWeightedMetaActions += weights[enigmaName];
+                subtitles = f_subtitlesFamily.First().GetComponent<TextMeshProUGUI>();
 
-            //get help UI components
-            scrollViewContent = f_scrollView.First().transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
-            hintTitle = f_description.First().transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            hintText = f_description.First().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-            hintLinkButton = f_description.First().transform.GetChild(2).GetComponent<Button>();
-            hintLinkButton.onClick.AddListener(OnClickHintLinkButton);
-            hintButtonPrefab = f_scrollView.First().GetComponent<PrefabContainer>().prefab;
+                weights = LoadGameContent.enigmasWeight;
+                //count the total weighted meta actions
+                foreach (string enigmaName in weights.Keys)
+                    totalWeightedMetaActions += weights[enigmaName];
 
-            //create a pool of int button right at the beginning and activate them when necessary rather than creating them during the game
-            if (!shouldPause)
-            {
+                //get help UI components
+                scrollViewContent = f_scrollView.First().transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+                hintTitle = f_description.First().transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+                hintText = f_description.First().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+                hintLinkButton = f_description.First().transform.GetChild(2).GetComponent<Button>();
+                hintLinkButton.onClick.AddListener(OnClickHintLinkButton);
+                hintButtonPrefab = f_scrollView.First().GetComponent<PrefabContainer>().prefab;
+
+                //create a pool of int button right at the beginning and activate them when necessary rather than creating them during the game
                 hintButtonsPool = new List<GameObject>();
                 GameObject tmpGo;
                 for (int i = 0; i < 300; i++)
@@ -328,42 +331,60 @@ public class HelpSystem : FSystem {
                     GameObjectManager.bind(tmpGo);
                     hintButtonsPool.Add(tmpGo);
                 }
+
+                f_traces.addEntryCallback(OnNewTraces);
+
+                // The information store in OnNewActionPerformed is used only when the ActionManager processed ActionPerformed data
+                // because else actions are not performed in Petri nets yet.
+                // The information has to be stored because once processed, the ActionPerformed component is removed by ActionManager
+                // OnActionsProcessed callback has to be set before OnNewActionPerformed callback because
+                // else OnActionsProcessed will process data stored by OnNewActionPerformed and not processed by ActionManager yet
+                f_actionsProcessed.addEntryCallback(OnActionsProcessed);
+                f_actions.addEntryCallback(OnNewActionPerformed);
+
+                f_wrongAnswerInfo.addEntryCallback(OnWrongAnswer);
+                f_askHelpButton.First().GetComponent<Button>().onClick.AddListener(OnPlayerAskHelp);
+
+                //set player cooldown UI components
+                cooldownRT = f_askHelpButton.First().transform.GetChild(1).GetComponent<RectTransform>();
+                cooldownInitialWidth = cooldownRT.sizeDelta.x;
+                cooldownText = f_askHelpButton.First().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+                actionPerformedHistory = new Dictionary<GameObject, Queue<KeyValuePair<string, string>>>();
+
+                //set hint button colors values
+                colorHint = new ColorBlock();
+                colorHint.normalColor = new Color(189, 244, 255, 255) / 256;
+                colorHint.highlightedColor = new Color(137, 235, 255, 255) / 256;
+                colorHint.pressedColor = new Color(98, 182, 199, 255) / 256;
+                colorHint.disabledColor = new Color(137, 235, 255, 128) / 256;
+                colorHint.colorMultiplier = 1;
+                colorNewHint = new ColorBlock();
+                colorNewHint.normalColor = new Color(254, 255, 189, 255) / 256;
+                colorNewHint.highlightedColor = new Color(248, 255, 137, 255) / 256;
+                colorNewHint.pressedColor = new Color(199, 192, 98, 255) / 256;
+                colorNewHint.disabledColor = new Color(253, 255, 137, 128) / 256;
+                colorNewHint.colorMultiplier = 1;
+                colorSelectedHint = ColorBlock.defaultColorBlock;
             }
-
-            f_traces.addEntryCallback(OnNewTraces);
-
-            // The information store in OnNewActionPerformed is used only when the ActionManager processed ActionPerformed data
-            // because else actions are not performed in Petri nets yet.
-            // The information has to be stored because once processed, the ActionPerformed component is removed by ActionManager
-            // OnActionsProcessed callback has to be set before OnNewActionPerformed callback because
-            // else OnActionsProcessed will process data stored by OnNewActionPerformed and not processed by ActionManager yet
-            f_actionsProcessed.addEntryCallback(OnActionsProcessed);
-            f_actions.addEntryCallback(OnNewActionPerformed);
-
-            f_wrongAnswerInfo.addEntryCallback(OnWrongAnswer);
-            f_askHelpButton.First().GetComponent<Button>().onClick.AddListener(OnPlayerAskHelp);
-
-            //set player cooldown UI components
-            cooldownRT = f_askHelpButton.First().transform.GetChild(1).GetComponent<RectTransform>();
-            cooldownInitialWidth = cooldownRT.sizeDelta.x;
-            cooldownText = f_askHelpButton.First().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-
-            actionPerformedHistory = new Dictionary<GameObject, Queue<KeyValuePair<string, string>>>();
-
-            //set hint button colors values
-            colorHint = new ColorBlock();
-            colorHint.normalColor =  new Color(189,244,255,255) / 256;
-            colorHint.highlightedColor = new Color(137,235,255,255) / 256;
-            colorHint.pressedColor = new Color(98,182,199,255) / 256;
-            colorHint.disabledColor = new Color(137, 235, 255, 128) / 256;
-            colorHint.colorMultiplier = 1;
-            colorNewHint = new ColorBlock();
-            colorNewHint.normalColor = new Color(254,255,189,255) / 256;
-            colorNewHint.highlightedColor = new Color(248,255,137,255) / 256;
-            colorNewHint.pressedColor = new Color(199,192,98,255) / 256;
-            colorNewHint.disabledColor = new Color(253,255,137,128) / 256;
-            colorNewHint.colorMultiplier = 1;
-            colorSelectedHint = ColorBlock.defaultColorBlock;
+            else
+            {
+                // Remove HUD H
+                GameObjectManager.unbind(f_HUD_H.First());
+                GameObject.Destroy(f_HUD_H.First());
+                // Disable IAR tab
+                GameObject tmpGO = null;
+                for (int i = 0; i < f_IARTab.Count; i++)
+                {
+                    tmpGO = f_IARTab.getAt(i);
+                    if (tmpGO.transform.parent.gameObject.name == "HelpTab")
+                    {
+                        GameObjectManager.setGameObjectState(tmpGO.transform.parent.GetChild(0).gameObject, true);
+                        GameObjectManager.setGameObjectState(tmpGO.transform.parent.GetChild(1).gameObject, false);
+                        break;
+                    }
+                }
+            }
         }
         instance = this;
     }
@@ -378,7 +399,7 @@ public class HelpSystem : FSystem {
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
     {
-        this.Pause = shouldPause;
+        this.Pause = shouldPause; // stay in pause if required
         if (!this.Pause)
             noActionTimer = Time.time;
     }

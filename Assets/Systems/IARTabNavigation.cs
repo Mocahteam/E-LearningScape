@@ -54,7 +54,8 @@ public class IARTabNavigation : FSystem {
     protected override void onPause(int currentFrame)
     {
         GameObjectManager.setGameObjectState(f_HUD_A.First(), false); // hide HUD "A"
-        GameObjectManager.setGameObjectState(f_HUD_H.First(), false); // hide HUD "H"
+        if (f_HUD_H.Count > 0)
+            GameObjectManager.setGameObjectState(f_HUD_H.First(), false); // hide HUD "H"
     }
 
     // Use this to update member variables when system resume.
@@ -64,7 +65,8 @@ public class IARTabNavigation : FSystem {
         if (openedAtLeastOnce)
         {
             GameObjectManager.setGameObjectState(f_HUD_A.First(), true); // display HUD "A"
-            GameObjectManager.setGameObjectState(f_HUD_H.First(), true); // display HUD "H"
+            if (f_HUD_H.Count > 0)
+                GameObjectManager.setGameObjectState(f_HUD_H.First(), true); // display HUD "H"
         }
     }
 
@@ -72,13 +74,13 @@ public class IARTabNavigation : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         // Open/Close IAR with Escape and A keys
-        if (iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.H) || Input.GetKeyDown(KeyCode.Escape) || (Input.GetMouseButtonDown(0) && iarBackground.GetComponent<PointerOver>())))
+        if (iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape) || (Input.GetMouseButtonDown(0) && iarBackground.GetComponent<PointerOver>())))
             closeIar();
-        else if (!iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.H) || Input.GetKeyDown(KeyCode.Escape)))
+        else if (!iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape)))
         {
             if (Input.GetKeyDown(KeyCode.A))
                 openIar(0); // Open IAR on the first tab
-            else if (Input.GetKeyDown(KeyCode.H))
+            else if (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause)
                 openIar(f_tabs.Count - 2); // Open IAR on the second last tab
             else
                 // Open IAR on the last tab only if player doesn't work on selectable enigm (Escape enables to exit the enigm)
@@ -92,7 +94,8 @@ public class IARTabNavigation : FSystem {
         GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "activated", objectType = "menu", objectName = iar.name });
         openedAtLeastOnce = true;
         GameObjectManager.setGameObjectState(f_HUD_A.First(), false); // hide HUD "A"
-        GameObjectManager.setGameObjectState(f_HUD_H.First(), false); // hide HUD "H"
+        if (f_HUD_H.Count > 0)
+            GameObjectManager.setGameObjectState(f_HUD_H.First(), false); // hide HUD "H"
         GameObjectManager.setGameObjectState(iar, true); // open IAR
         SwitchTab(f_tabs.getAt(tabId)); // switch to the first tab
         systemsStates.Clear();
@@ -134,7 +137,8 @@ public class IARTabNavigation : FSystem {
         // display HUD "A"
         GameObjectManager.setGameObjectState(f_HUD_A.First(), true);
         // display HUD "H"
-        GameObjectManager.setGameObjectState(f_HUD_H.First(), true);
+        if (f_HUD_H.Count > 0)
+            GameObjectManager.setGameObjectState(f_HUD_H.First(), true);
     }
 
     private void SwitchTab(GameObject newSelectedTab)

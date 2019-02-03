@@ -21,20 +21,25 @@ public class IARNewHintAvailable : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        if (f_newHint.Count > 0 && helpWarning.transform.parent.gameObject.activeSelf)
+        if (f_helpWarning.Count <= 0)
+            this.Pause = true;
+        else
         {
-            if (Time.time - (int)Time.time > 0.5f && !helpWarning.activeSelf)
+            if (f_newHint.Count > 0 && helpWarning.transform.parent.gameObject.activeSelf)
             {
-                // display warning
-                GameObjectManager.setGameObjectState(helpWarning, true);
+                if (Time.time - (int)Time.time > 0.5f && !helpWarning.activeSelf)
+                {
+                    // display warning
+                    GameObjectManager.setGameObjectState(helpWarning, true);
+                }
+                else if (Time.time - (int)Time.time < 0.5f && helpWarning.activeSelf)
+                {
+                    // disable warning
+                    GameObjectManager.setGameObjectState(helpWarning, false);
+                }
             }
-            else if (Time.time - (int)Time.time < 0.5f && helpWarning.activeSelf)
-            {
-                // disable warning
+            else if (helpWarning.activeSelf)
                 GameObjectManager.setGameObjectState(helpWarning, false);
-            }
         }
-        else if (helpWarning.activeSelf)
-            GameObjectManager.setGameObjectState(helpWarning, false);
 	}
 }

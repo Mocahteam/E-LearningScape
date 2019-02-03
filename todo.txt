@@ -1,6 +1,3 @@
-Bug définir le link quand on clique quand on sélectionne le fragment de rêve sous la chaises
-
-Mettre une tempo sur le bouton de demande d'aide
 Panneau de login quand on valide avec Entrée la méthode CheckConnection du LoginManager.cs est appelée deux fois !!!
 vérifier que l'eraser passe sur les mots
 	en fonction du nombre de caractère et de la taille de la police (au lieu de la taille du champ) WhiteBoardManager.cs (changer les attributs de l'appel de PointsFromCenter dans le constructeur)
@@ -11,7 +8,6 @@ xml pour changer le contenu du jeu
 HelpSystem
 	pour l'ajout des composant WrongAnswerInfo mettre l'id du ComponentMonitoring dynamiquement plutot que direcement dans le code? (HelpSystem.cs Constructeur)
 	ne pas redonner un feedback pour une mauvaise réponse s'il a déjà été donné? (pour le moment oui => remis dans la liste dans l'IAR)
-	changer les touches "A" pour aide et "E" pour l'inventaire ?
 Envoyer les traces sur un LRS
 	Documentation sur le format des statements de LearningScape
 	sortir le systeme "SendStatements.cs", le composant "ActionPerformedForLRS.cs" et les dépendences (Dossier "GBLXAPI") du projet pour en faire une lib FYFY
