@@ -182,6 +182,11 @@
             <param name="label">The label of the transition to find.</param>
             <return> If a transition with appropriate label exists, returns this transition and links. Returns null otherwise. </return>
         </member>
+        <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.getPossibleSetOfLinks(System.String)">
+            <summary>
+            Each list element is a set of AND links, then the main list model OR set of links.
+            </summary>
+        </member>
         <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.OnBeforeSerialize">
             <summary>
             This fonction is called by Unity right before it serializes data from every component

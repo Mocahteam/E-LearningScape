@@ -545,11 +545,15 @@ public class HelpSystem : FSystem {
                     bool reachable = false;
                     foreach(TransitionLink tl in cm.Key.transitionLinks)
                     {
-                        if(MonitoringManager.getNextActionsToReach(cm.Key, tl.transition.label, int.MaxValue).Count > 0)
+                        foreach (List<string> linksConcerned in cm.Key.getPossibleSetOfLinks(tl.transition.label))
                         {
-                            reachable = true;
-                            break;
+                            if (MonitoringManager.getNextActionsToReach(cm.Key, tl.transition.label, int.MaxValue, linksConcerned.ToArray()).Count > 0)
+                            {
+                                reachable = true;
+                                break;
+                            }
                         }
+                        if (reachable) break;
                     }
                     if (!reachable)
                     {
