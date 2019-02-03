@@ -1,7 +1,9 @@
+Bug définir le link quand on clique quand on sélectionne le fragment de rêve sous la chaises
+
+Mettre une tempo sur le bouton de demande d'aide
 Panneau de login quand on valide avec Entrée la méthode CheckConnection du LoginManager.cs est appelée deux fois !!!
 vérifier que l'eraser passe sur les mots
 	en fonction du nombre de caractère et de la taille de la police (au lieu de la taille du champ) WhiteBoardManager.cs (changer les attributs de l'appel de PointsFromCenter dans le constructeur)
-Wrong du login était appelée 2 fois 
 vérifier dans le code et dans les PNML l'association entre "enigma12"/ "enigma13" et lamp/braille
 xml pour changer le contenu du jeu
 	Faire un document pour expliquer chaque champ
