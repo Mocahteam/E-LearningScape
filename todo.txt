@@ -1,4 +1,5 @@
 Panneau de login quand on valide avec Entrée la méthode CheckConnection du LoginManager.cs est appelée deux fois !!!
+Implémenter le mécanisme du ##HL## pour faire briller un objet dans la scène sur le déclenchement d'un indice (voir InternalHints_LearningScape.txt et HelpSystem.cs)
 vérifier que l'eraser passe sur les mots
 	en fonction du nombre de caractère et de la taille de la police (au lieu de la taille du champ) WhiteBoardManager.cs (changer les attributs de l'appel de PointsFromCenter dans le constructeur)
 vérifier dans le code et dans les PNML l'association entre "enigma12"/ "enigma13" et lamp/braille

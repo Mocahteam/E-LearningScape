@@ -53,12 +53,8 @@ public class LoadGameContent : FSystem {
     private Family f_internalGameHints = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameHints)));
     private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
 
-    private Family f_helpSystemConfig = FamilyManager.getFamily(new AllOfComponents(typeof(HelpSystemConfig)));
 
-    private Family f_monitoringManager = FamilyManager.getFamily(new AllOfComponents(typeof(MonitoringManager)));
-
-
-    private FSystem instance;
+    public FSystem instance;
 
     public static GameContent gameContent;
     public static DefaultGameContent defaultGameContent;

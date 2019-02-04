@@ -17,9 +17,9 @@ public class HelpSystemConfig {
 
     //The system calculates the number of feedback expected based on the number given, the time spent and the time left
     //Then it compares the ratio numberFeedbackExpected / numberFeedbackLeft to the 2 following steps
-    //ratio<step1 : feedbackLevel = 1
-    //step1<ratio<step2 : feedbackLevel = 2
-    //ratio> step2 : feedbackLevel = 3
+    //ratio<step1 : feedbackLevel = 1 => general feedback
+    //step1<ratio<step2 : feedbackLevel = 2 => intermediate feedback
+    //ratio> step2 : feedbackLevel = 3 => precise feedback
 
     /// <summary>
     /// numberFeedbackExpected / numberFeedbackLeft compered to this step to calculate the feedback level (more info in HelpSystemConfig)
@@ -36,7 +36,7 @@ public class HelpSystemConfig {
     public float labelCountStep = 20;
     /// <summary>
     /// The HelpSystem count the time spent without any action (no traces from Laalys)
-    /// Every time the timer reaches noActionFrequency, "stagntion" weight is added to labelCount and the timer is reset
+    /// Every time the timer reaches noActionFrequency, "stagnation" weight is added to labelCount and the timer is reset
     /// </summary>
     public float noActionFrequency = 10;
 }

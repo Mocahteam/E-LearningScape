@@ -4,6 +4,6 @@
   "systemHintCooldownDuration": 15.0,
   "feedbackStep1": 0.75,
   "feedbackStep2": 2.0,
-  "labelCountStep": 20.0,
+  "labelCountStep": 4.0,
   "noActionFrequency": 10.0
 }

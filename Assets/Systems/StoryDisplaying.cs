@@ -12,7 +12,6 @@ public class StoryDisplaying : FSystem {
     // This system manage displaying of the story
 
     private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
-    private Family f_timer = FamilyManager.getFamily(new AllOfComponents(typeof(Timer)));
     private Family f_game = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
 
     // Camera is required in this system to switch menuCamera to fpsCamera during displaying story

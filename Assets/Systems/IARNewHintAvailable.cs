@@ -7,6 +7,7 @@ public class IARNewHintAvailable : FSystem {
     private Family f_helpWarning = FamilyManager.getFamily(new AnyOfTags("HelpWarning"));
 
     private GameObject helpWarning;
+    private bool HUD_neverDisplayed = true;
 
     public static IARNewHintAvailable instance;
 
@@ -25,6 +26,13 @@ public class IARNewHintAvailable : FSystem {
             this.Pause = true;
         else
         {
+            if (f_newHint.Count > 0 && HUD_neverDisplayed)
+            {
+                // enable parent
+                GameObjectManager.setGameObjectState(f_helpWarning.First().transform.parent.gameObject, true);
+                HUD_neverDisplayed = false;
+            }
+
             if (f_newHint.Count > 0 && helpWarning.transform.parent.gameObject.activeSelf)
             {
                 if (Time.time - (int)Time.time > 0.5f && !helpWarning.activeSelf)

@@ -15,7 +15,6 @@ public class HelpSystem : FSystem {
     private Family f_traces = FamilyManager.getFamily(new AllOfComponents(typeof(Trace)));
     private Family f_gameHints = FamilyManager.getFamily(new AllOfComponents(typeof(GameHints)));
     private Family f_internalGameHints = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameHints)));
-    private Family f_defaultGameContent = FamilyManager.getFamily(new AllOfComponents(typeof(DefaultGameContent)));
     private Family f_timer = FamilyManager.getFamily(new AllOfComponents(typeof(Timer)));
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
     private Family f_actions = FamilyManager.getFamily(new AllOfComponents(typeof(ActionPerformed)));
@@ -29,8 +28,6 @@ public class HelpSystem : FSystem {
 
     private Family f_scrollView = FamilyManager.getFamily(new AllOfComponents(typeof(ScrollRect), typeof(PrefabContainer)));
     private Family f_description = FamilyManager.getFamily(new AnyOfTags("HelpDescriptionUI"));
-
-    private Family f_wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"));
 
     /// <summary>
     /// Contains hints about the pedagogic content of the game (hints about enigmas and feedback when the player gives a wrong answer)
@@ -74,7 +71,6 @@ public class HelpSystem : FSystem {
     /// </summary>
     private RectTransform cooldownRT;
     private TextMeshProUGUI cooldownText;
-    private float cooldownInitialWidth;
     /// <summary>
     /// used to count the time spent since the system last gave a hint to the player with labelCount
     /// </summary>
@@ -286,7 +282,6 @@ public class HelpSystem : FSystem {
                 //format expected answers to be compared to formated answers from IARQueryEvaluator
                 List<string> tmpListString;
                 string tmpString;
-                Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>> tmpDictionary = new Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>(gameHints.wrongAnswerFeedbacks);
                 foreach (string key1 in gameHints.wrongAnswerFeedbacks.Keys)
                 {
                     tmpListString = new List<string>(gameHints.wrongAnswerFeedbacks[key1].Keys);
@@ -347,7 +342,6 @@ public class HelpSystem : FSystem {
 
                 //set player cooldown UI components
                 cooldownRT = f_askHelpButton.First().transform.GetChild(1).GetComponent<RectTransform>();
-                cooldownInitialWidth = cooldownRT.sizeDelta.x;
                 cooldownText = f_askHelpButton.First().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
                 actionPerformedHistory = new Dictionary<GameObject, Queue<KeyValuePair<string, string>>>();
@@ -410,6 +404,18 @@ public class HelpSystem : FSystem {
             noActionTimer = Time.time;
     }
 
+    private float computeProgressionRatio()
+    {
+        //enigma done / total enigma
+        float enigmaProgression = (totalWeightedMetaActions - GetWeightedNumberEnigmasLeft()) / totalWeightedMetaActions;
+        //time spent / session duration
+        float timeProgression = (Time.time - f_timer.First().GetComponent<Timer>().startingTime) / config.sessionDuration;
+        //(nb enigma done / total nb enigma) / (current time / total duration)
+        // if time simulation is ahead of enigma resolution then progressionRation is < 1 and then will boost label weight
+        // if enigma resolution is ahead of time simulation then progressionRation is > 1 and then will reduce label weight
+        return enigmaProgression / timeProgression;
+    }
+
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount) {
         if (subtitles.gameObject.activeSelf && Time.time - subtitlesTimer > 2)
@@ -423,9 +429,11 @@ public class HelpSystem : FSystem {
         {
             noActionTimer = Time.time;
             //(nb enigma done / total nb enigma) / (current time / total duration)
-            float progressionRatio = ((totalWeightedMetaActions - GetWeightedNumberEnigmasLeft()) / totalWeightedMetaActions) / ((Time.time - f_timer.First().GetComponent<Timer>().startingTime) / config.sessionDuration);
-            labelCount += labelWeights["stagnation"] * progressionRatio;
-
+            float progressionRatio = computeProgressionRatio();
+            if (progressionRatio == 0)
+                labelCount += labelWeights["stagnation"];
+            else
+                labelCount += labelWeights["stagnation"] / progressionRatio;
         }
 
         //check the time spent since the last time the player asked help
@@ -467,23 +475,8 @@ public class HelpSystem : FSystem {
         if (systemHintTimer < 0)
             systemHintTimer = Time.time;
 
-        Debug.Log((Time.time - systemHintTimer) + " ?> " + config.systemHintCooldownDuration + " == " + (Time.time - systemHintTimer > config.systemHintCooldownDuration));
-        Debug.Log("enigmaProgression = " + totalWeightedMetaActions + " ?> " + config.systemHintCooldownDuration + " == " + (Time.time - systemHintTimer > config.systemHintCooldownDuration));
-
-        //enigma done / total enigma
-        float enigmaProgression = (totalWeightedMetaActions - GetWeightedNumberEnigmasLeft()) / totalWeightedMetaActions;
-        if (enigmaProgression == 0)
-            enigmaProgression = 0.01f;
-        Debug.Log("enigmaProgression == "+ enigmaProgression + " == (" + totalWeightedMetaActions + " - " + GetWeightedNumberEnigmasLeft() + ") / "+ totalWeightedMetaActions);
-        //time spent / session duration
-        float timeProgression = (Time.time - f_timer.First().GetComponent<Timer>().startingTime) / config.sessionDuration;
-        Debug.Log("timeProgression == " + timeProgression + " == (" + Time.time + " - " + f_timer.First().GetComponent<Timer>().startingTime + ") / " + config.sessionDuration);
-        //(nb enigma done / total nb enigma) / (current time / total duration)
-        float progressionRatio = enigmaProgression / timeProgression;
-        Debug.Log("progressionRatio == " + progressionRatio + " == " + enigmaProgression + " / " + timeProgression);
-
-        Debug.Log(enigmaProgression + " " + timeProgression + " " + progressionRatio);
-
+        float progressionRatio = computeProgressionRatio();
+        
         Trace[] traces = go.GetComponents<Trace>();
         Trace tmpTrace = null;
         int nbTraces = traces.Length;
@@ -500,37 +493,17 @@ public class HelpSystem : FSystem {
             {
                 if (labelWeights.ContainsKey(tmpTrace.labels[j]))
                 {
-                    //if label weight is negative, simply add it (negative -> correct actions)
-                    if (labelWeights[tmpTrace.labels[j]] < 0)
-                    {
+                    if (progressionRatio != 0)
                         labelCount += labelWeights[tmpTrace.labels[j]] / progressionRatio;
-                        //labelCount can't be negative
-                        if (labelCount < 0)
-                            labelCount = 0;
-                    }
                     else
-                    {
-                        //if label weight isn't negative, add it and check if labelCount > config.labelCountStep
-                        labelCount += labelWeights[tmpTrace.labels[j]] * progressionRatio;
+                        labelCount += labelWeights[tmpTrace.labels[j]];
+                    //labelCount can't be negative
+                    if (labelCount < 0)
+                        labelCount = 0;
 
-                        //if labelCount reached the step calculate the feedback level and ask a hint and the time spent since the last time the system gave a feedback reached countLabel to know if it can give another one
-                        Debug.Log("A " + labelCount + " > " + config.labelCountStep + " == " + (labelCount > config.labelCountStep));
-                        if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration)
-                        {
-                            //calculate numberFeedbackExpected to be proportional to the number of feedback given, the time spent and the time left
-                            float numberFeedbackExpected = (config.sessionDuration - (Time.time - f_timer.First().GetComponent<Timer>().startingTime)) * nbFeedBackGiven / (Time.time - f_timer.First().GetComponent<Timer>().startingTime);
-                            float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
-
-                            //compare feedback ratio to feedback steps to know which feedback level to use
-                            int feedbackLevel = 2;
-                            if (feedbackRatio < config.feedbackStep1)
-                                feedbackLevel = 1;
-                            else if (feedbackRatio > config.feedbackStep2)
-                                feedbackLevel = 3;
-
-                            DisplayHint(room.roomNumber, feedbackLevel);
-                        }
-                    }
+                    //if labelCount reached the step calculate the feedback level and ask a hint and the time spent since the last time the system gave a feedback reached countLabel to know if it can give another one
+                    if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration)
+                        DisplayHint(room.roomNumber, getFeedbackLevel());
                 }
             }
             GameObjectManager.removeComponent(tmpTrace);
@@ -595,7 +568,8 @@ public class HelpSystem : FSystem {
                     }
                     if (!reachable)
                     {
-                        bool allRemoved = RemoveHintsByComponentID(cm.Key.id);
+                        RemoveHintsByComponentID(cm.Key.id);
+                        //bool allRemoved = RemoveHintsByComponentID(cm.Key.id);
                         //if (!allRemoved)
                         //    Debug.LogWarning(string.Concat("Something went wrong with the removing of hints linked to the ComponentMonitoring with the id ", cm.Key.id, ".",
                         //        System.Environment.NewLine, "Either the id isn't in the dictionary \"availableComponentMonitoringIDs\" or one of the hints isn't in \"gameHints.dictionary\"."));
@@ -653,6 +627,21 @@ public class HelpSystem : FSystem {
         });
     }
 
+    private int getFeedbackLevel()
+    {
+        //calculate numberFeedbackExpected to be proportional to the number of feedback given, the time spent and the time left
+        float numberFeedbackExpected = (config.sessionDuration - (Time.time - f_timer.First().GetComponent<Timer>().startingTime)) * nbFeedBackGiven / (Time.time - f_timer.First().GetComponent<Timer>().startingTime);
+        float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
+
+        //compare feedback ratio to feedback steps to know which feedback level to use
+        int feedbackLevel = 2;
+        if (feedbackRatio < config.feedbackStep1)
+            feedbackLevel = 1;
+        else if (feedbackRatio > config.feedbackStep2)
+            feedbackLevel = 3;
+        return feedbackLevel;
+    }
+
     /// <summary>
     /// If the player can receive an hint, calculate the feedback level needed
     /// and ask to display an hint corresponding to the feedback level and the last room unlocked
@@ -662,19 +651,8 @@ public class HelpSystem : FSystem {
         //check cooldown before sending hint
         if(Time.time - playerHintTimer > config.playerHintCooldownDuration)
         {
-            //calculate numberFeedbackExpected to be proportional to the number of feedback given, the time spent and the time left
-            float numberFeedbackExpected = (config.sessionDuration - (Time.time - f_timer.First().GetComponent<Timer>().startingTime)) * nbFeedBackGiven / (Time.time - f_timer.First().GetComponent<Timer>().startingTime);
-            float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
-
-            //compare feedback ratio to feedback steps to know which feedback level to use
-            int feedbackLevel = 2;
-            if (feedbackRatio < config.feedbackStep1)
-                feedbackLevel = 1;
-            else if (feedbackRatio > config.feedbackStep2)
-                feedbackLevel = 3;
-
             playerAskedHelp = true;
-            if (DisplayHint(room.roomNumber, feedbackLevel))
+            if (DisplayHint(room.roomNumber, getFeedbackLevel()))
             {
                 //if the player received an hint, start the cooldown
                 playerHintTimer = Time.time;
@@ -879,6 +857,7 @@ public class HelpSystem : FSystem {
     /// <returns></returns>
     private bool DisplayHint(int room, int feedbackLevel)
     {
+        Debug.Log("Wanting hint for room " + room + " with feedback level to " + feedbackLevel);
         //check which feedback level contains hints
         int availableFeedback = CheckAvailableFeedback(room, feedbackLevel);
         //if the feedback level is valid
@@ -954,14 +933,14 @@ public class HelpSystem : FSystem {
             }
             else
             {
-                //Debug.Log("No hint found.");
+                Debug.Log("No hint found.");
                 playerAskedHelp = false;
                 return false;
             }
         }
         else
         {
-            //Debug.Log(string.Concat("No hint found for the room ", room));
+            Debug.Log(string.Concat("No hint found for the room ", room));
             playerAskedHelp = false;
             return false;
         }

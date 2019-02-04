@@ -11,27 +11,13 @@ public class CollectObject : FSystem {
     // We process only Highlighted game objects (this component is dynamically added by Highlight system)
     private Family f_collectableObjects = FamilyManager.getFamily(new AllOfComponents(typeof(LinkedWith), typeof(Highlighted)), new NoneOfLayers(5), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_pressA = FamilyManager.getFamily(new AnyOfTags("PressA"));
-    private Family f_inventoryElements = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
 
     public static CollectObject instance;
 
     private GameObject seenScroll;
-    private GameObject seenPuzzle;
 
     public CollectObject()
     {
-        if (Application.isPlaying)
-        {
-            int nbElem = f_inventoryElements.Count;
-            for(int i = 0; i < nbElem; i++)
-            {
-                if (f_inventoryElements.getAt(i).name == "Puzzle")
-                {
-                    seenPuzzle = f_inventoryElements.getAt(i);
-                    break;
-                }
-            }
-        }
         instance = this;
     }
 
@@ -70,7 +56,7 @@ public class CollectObject : FSystem {
                 }
                 // disable in-game source
                 GameObjectManager.setGameObjectState(collect, false);
-                // particular case of collecting Intro_scroll game object => show HUD "A"
+                // particular case of collecting Intro_scroll game object => show ingame "Press A" notification
                 if (collect.name == "Intro_Scroll")
                 {
                     GameObjectManager.setGameObjectState(f_pressA.First(), true);
