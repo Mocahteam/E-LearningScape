@@ -78,7 +78,7 @@ public class HelpSystem : FSystem {
     /// <summary>
     /// used to count the time spent since the system last gave a hint to the player with labelCount
     /// </summary>
-    private float systemHintTimer = float.MinValue;
+    private float systemHintTimer = -1;
 
     /// <summary>
     /// When a label is received from Laalys, its weight is added to labelCount.
@@ -354,18 +354,24 @@ public class HelpSystem : FSystem {
 
                 //set hint button colors values
                 colorHint = new ColorBlock();
-                colorHint.normalColor = new Color(189, 244, 255, 255) / 256;
-                colorHint.highlightedColor = new Color(137, 235, 255, 255) / 256;
-                colorHint.pressedColor = new Color(98, 182, 199, 255) / 256;
-                colorHint.disabledColor = new Color(137, 235, 255, 128) / 256;
+                colorHint.normalColor = new Color(200, 200, 200, 255) / 256;
+                colorHint.highlightedColor = new Color(200, 200, 235, 255) / 256;
+                colorHint.pressedColor = new Color(150, 150, 150, 255) / 256;
+                colorHint.disabledColor = new Color(130, 130, 130, 130) / 256;
                 colorHint.colorMultiplier = 1;
-                colorNewHint = new ColorBlock();
-                colorNewHint.normalColor = new Color(254, 255, 189, 255) / 256;
+                colorNewHint = ColorBlock.defaultColorBlock;
+                /*colorNewHint.normalColor = new Color(254, 255, 189, 255) / 256;
                 colorNewHint.highlightedColor = new Color(248, 255, 137, 255) / 256;
                 colorNewHint.pressedColor = new Color(199, 192, 98, 255) / 256;
                 colorNewHint.disabledColor = new Color(253, 255, 137, 128) / 256;
-                colorNewHint.colorMultiplier = 1;
+                colorNewHint.colorMultiplier = 1;*/
                 colorSelectedHint = ColorBlock.defaultColorBlock;
+                colorSelectedHint = new ColorBlock();
+                colorSelectedHint.normalColor = new Color(254, 255, 189, 255) / 256;
+                colorSelectedHint.highlightedColor = new Color(248, 255, 137, 255) / 256;
+                colorSelectedHint.pressedColor = new Color(199, 192, 98, 255) / 256;
+                colorSelectedHint.disabledColor = new Color(253, 255, 137, 128) / 256;
+                colorSelectedHint.colorMultiplier = 1;
             }
             else
             {
@@ -458,65 +464,76 @@ public class HelpSystem : FSystem {
         //reset no action timer every time an action is traced
         noActionTimer = Time.time;
 
-        //check the time spent since the last time the system gave a feedback with countLabel to know if it can give another one
-        if (Time.time - systemHintTimer > config.systemHintCooldownDuration)
+        if (systemHintTimer < 0)
+            systemHintTimer = Time.time;
+
+        Debug.Log((Time.time - systemHintTimer) + " ?> " + config.systemHintCooldownDuration + " == " + (Time.time - systemHintTimer > config.systemHintCooldownDuration));
+        Debug.Log("enigmaProgression = " + totalWeightedMetaActions + " ?> " + config.systemHintCooldownDuration + " == " + (Time.time - systemHintTimer > config.systemHintCooldownDuration));
+
+        //enigma done / total enigma
+        float enigmaProgression = (totalWeightedMetaActions - GetWeightedNumberEnigmasLeft()) / totalWeightedMetaActions;
+        if (enigmaProgression == 0)
+            enigmaProgression = 0.01f;
+        Debug.Log("enigmaProgression == "+ enigmaProgression + " == (" + totalWeightedMetaActions + " - " + GetWeightedNumberEnigmasLeft() + ") / "+ totalWeightedMetaActions);
+        //time spent / session duration
+        float timeProgression = (Time.time - f_timer.First().GetComponent<Timer>().startingTime) / config.sessionDuration;
+        Debug.Log("timeProgression == " + timeProgression + " == (" + Time.time + " - " + f_timer.First().GetComponent<Timer>().startingTime + ") / " + config.sessionDuration);
+        //(nb enigma done / total nb enigma) / (current time / total duration)
+        float progressionRatio = enigmaProgression / timeProgression;
+        Debug.Log("progressionRatio == " + progressionRatio + " == " + enigmaProgression + " / " + timeProgression);
+
+        Debug.Log(enigmaProgression + " " + timeProgression + " " + progressionRatio);
+
+        Trace[] traces = go.GetComponents<Trace>();
+        Trace tmpTrace = null;
+        int nbTraces = traces.Length;
+        int nbLabels = -1;
+
+        //increase/decrease labelCount depending on the labels
+        //give feedback if necessary
+        for (int i = 0; i < nbTraces; i++)
         {
-            //enigma done / total enigma
-            float enigmaProgression = (totalWeightedMetaActions - GetWeightedNumberEnigmasLeft()) / totalWeightedMetaActions;
-            //time spent / session duration
-            float timeProgression = (Time.time - f_timer.First().GetComponent<Timer>().startingTime) / config.sessionDuration;
-            //(nb enigma done / total nb enigma) / (current time / total duration)
-            float progressionRatio = enigmaProgression / timeProgression;
-
-            Trace[] traces = go.GetComponents<Trace>();
-            Trace tmpTrace = null;
-            int nbTraces = traces.Length;
-            int nbLabels = -1;
-
-            //increase/decrease labelCount depending on the labels
-            //give feedback if necessary
-            for (int i = 0; i < nbTraces; i++)
+            tmpTrace = traces[i];
+            nbLabels = tmpTrace.labels.Length;
+            //add the weight of each label to labelCount
+            for (int j = 0; j < nbLabels; j++)
             {
-                tmpTrace = traces[i];
-                nbLabels = tmpTrace.labels.Length;
-                //add the weight of each label to labelCount
-                for (int j = 0; j < nbLabels; j++)
+                if (labelWeights.ContainsKey(tmpTrace.labels[j]))
                 {
-                    if (labelWeights.ContainsKey(tmpTrace.labels[j]))
+                    //if label weight is negative, simply add it (negative -> correct actions)
+                    if (labelWeights[tmpTrace.labels[j]] < 0)
                     {
-                        //if label weight is negative, simply add it (negative -> correct actions)
-                        if (labelWeights[tmpTrace.labels[j]] < 0)
+                        labelCount += labelWeights[tmpTrace.labels[j]] / progressionRatio;
+                        //labelCount can't be negative
+                        if (labelCount < 0)
+                            labelCount = 0;
+                    }
+                    else
+                    {
+                        //if label weight isn't negative, add it and check if labelCount > config.labelCountStep
+                        labelCount += labelWeights[tmpTrace.labels[j]] * progressionRatio;
+
+                        //if labelCount reached the step calculate the feedback level and ask a hint and the time spent since the last time the system gave a feedback reached countLabel to know if it can give another one
+                        Debug.Log("A " + labelCount + " > " + config.labelCountStep + " == " + (labelCount > config.labelCountStep));
+                        if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration)
                         {
-                            labelCount += labelWeights[tmpTrace.labels[j]] / progressionRatio;
-                            //labelCount can't be negative
-                            if (labelCount < 0)
-                                labelCount = 0;
-                        }
-                        else
-                        {
-                            //if label weight isn't negative, add it and check if labelCount > config.labelCountStep
-                            labelCount += labelWeights[tmpTrace.labels[j]] * progressionRatio;
+                            //calculate numberFeedbackExpected to be proportional to the number of feedback given, the time spent and the time left
+                            float numberFeedbackExpected = (config.sessionDuration - (Time.time - f_timer.First().GetComponent<Timer>().startingTime)) * nbFeedBackGiven / (Time.time - f_timer.First().GetComponent<Timer>().startingTime);
+                            float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
 
-                            //if labelCount reached the step calculate the feedback level and ask a hint
-                            if (labelCount > config.labelCountStep)
-                            {
-                                //calculate numberFeedbackExpected to be proportional to the number of feedback given, the time spent and the time left
-                                float numberFeedbackExpected = (config.sessionDuration - (Time.time - f_timer.First().GetComponent<Timer>().startingTime)) * nbFeedBackGiven / (Time.time - f_timer.First().GetComponent<Timer>().startingTime);
-                                float feedbackRatio = numberFeedbackExpected / GetNumberFeedbackLeft();
+                            //compare feedback ratio to feedback steps to know which feedback level to use
+                            int feedbackLevel = 2;
+                            if (feedbackRatio < config.feedbackStep1)
+                                feedbackLevel = 1;
+                            else if (feedbackRatio > config.feedbackStep2)
+                                feedbackLevel = 3;
 
-                                //compare feedback ratio to feedback steps to know which feedback level to use
-                                int feedbackLevel = 2;
-                                if (feedbackRatio < config.feedbackStep1)
-                                    feedbackLevel = 1;
-                                else if (feedbackRatio > config.feedbackStep2)
-                                    feedbackLevel = 3;
-
-                                DisplayHint(room.roomNumber, feedbackLevel);
-                            }
+                            DisplayHint(room.roomNumber, feedbackLevel);
                         }
                     }
                 }
             }
+            GameObjectManager.removeComponent(tmpTrace);
         }
     }
 
@@ -1138,7 +1155,7 @@ public class HelpSystem : FSystem {
                     break;
 
                 default:
-                    return 1;
+                    return 0;
             }
         }
         else if(monitor.gameObject.name == "AnswersInput")
@@ -1167,7 +1184,7 @@ public class HelpSystem : FSystem {
                 }
             }
             if (key == "")
-                return 1;
+                return 0;
         }
         else if (monitor.gameObject.tag == "Login")
             key = "loginPanel";
@@ -1179,7 +1196,7 @@ public class HelpSystem : FSystem {
         if (weights.ContainsKey(key))
             return weights[key];
         else
-            return 1;
+            return 0;
     } 
 
     /// <summary>
