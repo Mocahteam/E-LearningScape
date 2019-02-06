@@ -27,7 +27,6 @@ public class HelpSystem : FSystem {
     private Family f_HUD_H = FamilyManager.getFamily(new AnyOfTags("HUD_H"));
 
     private Family f_scrollView = FamilyManager.getFamily(new AllOfComponents(typeof(ScrollRect), typeof(PrefabContainer)));
-    private Family f_description = FamilyManager.getFamily(new AnyOfTags("HelpDescriptionUI"));
 
     /// <summary>
     /// Contains hints about the pedagogic content of the game (hints about enigmas and feedback when the player gives a wrong answer)
@@ -124,19 +123,6 @@ public class HelpSystem : FSystem {
     /// </summary>
     private RectTransform scrollViewContent;
     /// <summary>
-    /// Description of the selected hint in IAR (right part of help tab in IAR)
-    /// </summary>
-    private TextMeshProUGUI hintTitle;
-    private TextMeshProUGUI hintText;
-    /// <summary>
-    /// used to open a link to get more info about a hint (disabled if link is empty)
-    /// </summary>
-    private Button hintLinkButton;
-    /// <summary>
-    /// contains the link of the last selected hint and used to open the link when the hintLinkButton is clicked
-    /// </summary>
-    private string hintLink;
-    /// <summary>
     /// prefab used to instantiate hint buttons
     /// </summary>
     private GameObject hintButtonPrefab;
@@ -144,20 +130,6 @@ public class HelpSystem : FSystem {
     /// pool of disabled hint buttons used to enable a button when a hint is received rather then instantiating a one (optimisation)
     /// </summary>
     private List<GameObject> hintButtonsPool;
-    private Button selectedHint = null;
-
-    /// <summary>
-    /// color of a hint button
-    /// </summary>
-    private ColorBlock colorHint;
-    /// <summary>
-    /// color of a new hint button
-    /// </summary>
-    private ColorBlock colorNewHint;
-    /// <summary>
-    /// color of the selected hint button
-    /// </summary>
-    private ColorBlock colorSelectedHint;
 
     private GameObject tmpGO;
     private RectTransform tmpRT;
@@ -309,10 +281,6 @@ public class HelpSystem : FSystem {
 
                 //get help UI components
                 scrollViewContent = f_scrollView.First().transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
-                hintTitle = f_description.First().transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                hintText = f_description.First().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-                hintLinkButton = f_description.First().transform.GetChild(2).GetComponent<Button>();
-                hintLinkButton.onClick.AddListener(OnClickHintLinkButton);
                 hintButtonPrefab = f_scrollView.First().GetComponent<PrefabContainer>().prefab;
 
                 //create a pool of int button right at the beginning and activate them when necessary rather than creating them during the game
@@ -345,27 +313,6 @@ public class HelpSystem : FSystem {
                 cooldownText = f_askHelpButton.First().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
                 actionPerformedHistory = new Dictionary<GameObject, Queue<KeyValuePair<string, string>>>();
-
-                //set hint button colors values
-                colorHint = new ColorBlock();
-                colorHint.normalColor = new Color(200, 200, 200, 255) / 256;
-                colorHint.highlightedColor = new Color(200, 200, 235, 255) / 256;
-                colorHint.pressedColor = new Color(150, 150, 150, 255) / 256;
-                colorHint.disabledColor = new Color(130, 130, 130, 130) / 256;
-                colorHint.colorMultiplier = 1;
-                colorNewHint = ColorBlock.defaultColorBlock;
-                /*colorNewHint.normalColor = new Color(254, 255, 189, 255) / 256;
-                colorNewHint.highlightedColor = new Color(248, 255, 137, 255) / 256;
-                colorNewHint.pressedColor = new Color(199, 192, 98, 255) / 256;
-                colorNewHint.disabledColor = new Color(253, 255, 137, 128) / 256;
-                colorNewHint.colorMultiplier = 1;*/
-                colorSelectedHint = ColorBlock.defaultColorBlock;
-                colorSelectedHint = new ColorBlock();
-                colorSelectedHint.normalColor = new Color(254, 255, 189, 255) / 256;
-                colorSelectedHint.highlightedColor = new Color(248, 255, 137, 255) / 256;
-                colorSelectedHint.pressedColor = new Color(199, 192, 98, 255) / 256;
-                colorSelectedHint.disabledColor = new Color(253, 255, 137, 128) / 256;
-                colorSelectedHint.colorMultiplier = 1;
             }
             else
             {
@@ -532,7 +479,7 @@ public class HelpSystem : FSystem {
     }
 
     /// <summary>
-    /// Called when an ActionPerformed component has been processed and removed by ActionManager 
+    /// Called when all ActionPerformed components have been processed and removed by ActionManager 
     /// and uses the stored information to remove hint about actions that can't be reached anymore in Petri nets.
     /// This information is used only when the ActionManager processed this data because else actions are not performed in Petri nets yet.
     /// The information has to be stored because once processed, the ActionPerformed component is removed by ActionManager
@@ -582,51 +529,6 @@ public class HelpSystem : FSystem {
         }
     }
 
-    /// <summary>
-    /// Called when the player click on a hint button in the hint list in help tab of IAR
-    /// </summary>
-    /// <param name="b">The clicked button</param>
-    private void OnClickHint(Button b)
-    {
-        if (selectedHint)
-            //change the color of the previousliy selected button
-            selectedHint.colors = colorHint;
-
-        selectedHint = b;
-        selectedHint.colors = colorSelectedHint;
-        tmpHC = selectedHint.GetComponent<HintContent>();
-        //hint name format is "name.MonitorID" so put only the "name" part in buttonName
-        string[] tmpStringArray = tmpHC.hintName.Split('.');
-        string buttonName = tmpStringArray[0];
-        for (int i = 1; i < tmpStringArray.Length - 1; i++)
-            buttonName = string.Concat(buttonName, ".", tmpStringArray[i]);
-        //display hint info on the right part of the help tab in IAR
-        hintTitle.text = buttonName;
-        hintText.text = tmpHC.text;
-        if(tmpHC.link != "")
-        {
-            //if link filled, display link button
-            hintLink = tmpHC.link;
-            GameObjectManager.setGameObjectState(hintLinkButton.gameObject, true);
-        }
-        else
-            GameObjectManager.setGameObjectState(hintLinkButton.gameObject, false);
-
-        if(selectedHint.GetComponent<NewHint>())
-            GameObjectManager.removeComponent<NewHint>(selectedHint.gameObject);
-
-        GameObjectManager.addComponent<ActionPerformedForLRS>(b.gameObject, new
-        {
-            verb = "read",
-            objectType = "feedback",
-            objectName = string.Concat("hint_", b.transform.GetChild(0).GetComponent<Text>().text),
-            activityExtensions = new Dictionary<string, List<string>>() {
-                { "type", new List<string>() { "hint" } },
-                { "content", new List<string>() { b.GetComponent<HintContent>().text } }
-            }
-        });
-    }
-
     private int getFeedbackLevel()
     {
         //calculate numberFeedbackExpected to be proportional to the number of feedback given, the time spent and the time left
@@ -658,33 +560,6 @@ public class HelpSystem : FSystem {
                 playerHintTimer = Time.time;
                 GameObjectManager.setGameObjectState(cooldownRT.gameObject, true);
             }
-        }
-    }
-
-    /// <summary>
-    /// Called when the link button of an hint on the right part of help tab in IAR is pressed
-    /// and open the link of the hint
-    /// </summary>
-    private void OnClickHintLinkButton()
-    {
-        try
-        {
-            Application.OpenURL(hintLink);
-
-            GameObjectManager.addComponent<ActionPerformedForLRS>(hintLinkButton.gameObject, new
-            {
-                verb = "read",
-                objectType = "viewable",
-                objectName = "hintLink",
-                activityExtensions = new Dictionary<string, List<string>>() {
-                    { "link", new List<string>() { hintLink } }
-                }
-            });
-        }
-        catch (Exception)
-        {
-            Debug.LogError(string.Concat("Invalid hint link: \"", hintLink, "\""));
-            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid hint link: \"", hintLink, "\"."));
         }
     }
 
@@ -857,7 +732,6 @@ public class HelpSystem : FSystem {
     /// <returns></returns>
     private bool DisplayHint(int room, int feedbackLevel)
     {
-        Debug.Log("Wanting hint for room " + room + " with feedback level to " + feedbackLevel);
         //check which feedback level contains hints
         int availableFeedback = CheckAvailableFeedback(room, feedbackLevel);
         //if the feedback level is valid
@@ -963,8 +837,6 @@ public class HelpSystem : FSystem {
             tmpGO.transform.SetParent(scrollViewContent.transform);
             tmpGO.SetActive(false);
             GameObjectManager.bind(tmpGO);
-            Button b = tmpGO.GetComponent<Button>();
-            b.onClick.AddListener(delegate { OnClickHint(b); });
             hintButtonsPool.Add(tmpGO);
 
             Debug.LogWarning("You should increase hintButtonsPool initial size");
@@ -974,35 +846,19 @@ public class HelpSystem : FSystem {
         tmpGO = hintButtonsPool[0];
         hintButtonsPool.RemoveAt(0);
         Button hintButton = tmpGO.GetComponent<Button>();
-        string[] tmpStringArray = hintName.Split('.');
-        string buttonName = tmpStringArray[0];
-        for (int i = 1; i < tmpStringArray.Length - 1; i++)
-            buttonName = string.Concat(buttonName, ".", tmpStringArray[i]);
-        tmpGO.transform.GetChild(0).GetComponent<Text>().text = buttonName;
-        hintButton.colors = colorNewHint;
         GameObjectManager.setGameObjectState(tmpGO, true);
-        int nbActivatedHint = scrollViewContent.GetComponentsInChildren<Button>().Length;
-        scrollViewContent.sizeDelta = new Vector2(scrollViewContent.sizeDelta.x, (nbActivatedHint + 1) * hintButton.GetComponent<RectTransform>().sizeDelta.y);
-        tmpRT = tmpGO.GetComponent<RectTransform>();
-        tmpRT.localScale = Vector3.one;
-        tmpRT.offsetMin = new Vector2(0, tmpRT.offsetMin.y);
-        tmpRT.offsetMax = new Vector2(0, tmpRT.offsetMax.y);
-        RectTransform[] tmpRTArray = scrollViewContent.GetComponentsInChildren<RectTransform>();
-        for (int i = 0; i < tmpRTArray.Length; i++)
-            if (tmpRTArray[i].GetComponent<Button>())
-                tmpRTArray[i].anchoredPosition += Vector2.down * hintButton.GetComponent<RectTransform>().sizeDelta.y;
-        tmpRT.anchoredPosition = new Vector2(0, -0.5f * hintButton.GetComponent<RectTransform>().sizeDelta.y);
+
         tmpHC = tmpGO.GetComponent<HintContent>();
         tmpHC.hintName = hintName;
         tmpHC.text = hintText;
-        //change subtitle text tot display the hint
-        //subtitles.text = tmpPair.Value[(int)UnityEngine.Random.Range(0, nbHintTexts - 0.01f)];
-        //GameObjectManager.setGameObjectState(subtitles.gameObject, true);
-        //subtitlesTimer = Time.time;
         tmpHC.link = hintLink;
         if (hintMonitorID != -1)
             tmpHC.monitor = MonitoringManager.getMonitorById(hintMonitorID);
-        hintButton.onClick.AddListener(delegate { OnClickHint(hintButton); });
+
+        //change subtitle text to display the hint
+        //subtitles.text = tmpPair.Value[(int)UnityEngine.Random.Range(0, nbHintTexts - 0.01f)];
+        //GameObjectManager.setGameObjectState(subtitles.gameObject, true);
+        //subtitlesTimer = Time.time;
         return hintButton;
     }
 

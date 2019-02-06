@@ -72,6 +72,7 @@ TagManager:
   - LoadingFragment
   - AskHelpButton
   - HelpWarning
+  - HelpTabContent
   layers:
   - Default
   - TransparentFX

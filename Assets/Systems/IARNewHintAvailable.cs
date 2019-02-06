@@ -5,6 +5,7 @@ public class IARNewHintAvailable : FSystem {
 
     private Family f_newHint = FamilyManager.getFamily(new AllOfComponents(typeof(NewHint)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_helpWarning = FamilyManager.getFamily(new AnyOfTags("HelpWarning"));
+    private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private GameObject helpWarning;
     private bool HUD_neverDisplayed = true;
@@ -26,7 +27,7 @@ public class IARNewHintAvailable : FSystem {
             this.Pause = true;
         else
         {
-            if (f_newHint.Count > 0 && HUD_neverDisplayed)
+            if (f_newHint.Count > 0 && HUD_neverDisplayed && f_iarBackground.Count <= 0)
             {
                 // enable parent
                 GameObjectManager.setGameObjectState(f_helpWarning.First().transform.parent.gameObject, true);

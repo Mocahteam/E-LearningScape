@@ -97,7 +97,7 @@ public class IARTabNavigation : FSystem {
         if (f_HUD_H.Count > 0)
             GameObjectManager.setGameObjectState(f_HUD_H.First(), false); // hide HUD "H"
         GameObjectManager.setGameObjectState(iar, true); // open IAR
-        SwitchTab(f_tabs.getAt(tabId)); // switch to the first tab
+        SwitchTab(f_tabs.getAt(tabId)); // switch to the desired tab
         systemsStates.Clear();
         // save systems states
         foreach (FSystem sys in FSystemManager.fixedUpdateSystems())

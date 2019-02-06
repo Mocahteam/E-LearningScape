@@ -1,3 +1,4 @@
+Crash click "Début du rêve"
 Panneau de login quand on valide avec Entrée la méthode CheckConnection du LoginManager.cs est appelée deux fois !!!
 Implémenter le mécanisme du ##HL## pour faire briller un objet dans la scène sur le déclenchement d'un indice (voir InternalHints_LearningScape.txt et HelpSystem.cs)
 vérifier que l'eraser passe sur les mots
