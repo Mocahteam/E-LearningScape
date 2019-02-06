@@ -23,6 +23,7 @@ public class IARNewHintAvailable : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
+        // f_helpWarning will be empty if monitoring module is not enabled in config file => then pause this system
         if (f_helpWarning.Count <= 0)
             this.Pause = true;
         else

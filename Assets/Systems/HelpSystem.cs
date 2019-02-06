@@ -189,20 +189,20 @@ public class HelpSystem : FSystem {
                 //Initialize checkEnigmaOrderMeta with the Petri net id and the corresponding ComponentMonitoring int the meta Petri net
                 //has to be changed if ComponentMonitoring ids are modified
                 checkEnigmaOrderMeta = new Dictionary<int, ComponentMonitoring>() {
-                { 1, MonitoringManager.getMonitorById(143) },
-                { 2, MonitoringManager.getMonitorById(144) },
-                { 3, MonitoringManager.getMonitorById(145) },
-                { 4, MonitoringManager.getMonitorById(146) },
-                { 5, MonitoringManager.getMonitorById(152) },
-                { 6, MonitoringManager.getMonitorById(153) },
-                { 7, MonitoringManager.getMonitorById(154) },
-                { 8, MonitoringManager.getMonitorById(155) },
-                { 9, MonitoringManager.getMonitorById(156) },
-                { 10, MonitoringManager.getMonitorById(157) },
-                { 16, MonitoringManager.getMonitorById(147) },
-                { 17, MonitoringManager.getMonitorById(149) },
-                { 18, MonitoringManager.getMonitorById(158) }
-            };
+                    { 1, MonitoringManager.getMonitorById(143) },
+                    { 2, MonitoringManager.getMonitorById(144) },
+                    { 3, MonitoringManager.getMonitorById(145) },
+                    { 4, MonitoringManager.getMonitorById(146) },
+                    { 5, MonitoringManager.getMonitorById(152) },
+                    { 6, MonitoringManager.getMonitorById(153) },
+                    { 7, MonitoringManager.getMonitorById(154) },
+                    { 8, MonitoringManager.getMonitorById(155) },
+                    { 9, MonitoringManager.getMonitorById(156) },
+                    { 10, MonitoringManager.getMonitorById(157) },
+                    { 16, MonitoringManager.getMonitorById(147) },
+                    { 17, MonitoringManager.getMonitorById(149) },
+                    { 18, MonitoringManager.getMonitorById(158) }
+                };
 
                 //initialize availableComponentMonitoringIDs
                 availableComponentMonitoringIDs = new Dictionary<int, List<string>>();
