@@ -33,7 +33,7 @@ public class CollectObject : FSystem {
                 GameObjectManager.setGameObjectState(collect.GetComponent<LinkedWith>().link, true);
                 GameObjectManager.addComponent<ActionPerformed>(collect, new { name = "perform", performedBy = "player"});
                 // particular case of collecting room2 scrolls
-                if (collect.name.Contains("_Scroll") && collect.name.Length == 7)
+                if (collect.name.Contains("Scroll") && collect.name.Length == 7)
                 {
                     // find link into IAR left screen
                     GameObject UI_metaScroll = collect.GetComponent<LinkedWith>().link;
