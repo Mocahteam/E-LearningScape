@@ -143,13 +143,6 @@
             	Add monitoring functionalities to a Game Object
             </summary>
         </member>
-        <member name="F:FYFY_plugins.Monitoring.ComponentMonitoring.canFreeUniqueId">
-            <summary>
-            If true, when the garbage collector will be called this component ID will be removed from the list of IDs int he MonitoringManager
-            By default it is set to true
-            It is set to false right before the MonitoringManager clears the monitors lists and is set back to true each time the constructor is called
-            </summary>
-        </member>
         <member name="F:FYFY_plugins.Monitoring.ComponentMonitoring.PnmlFile">
             <summary> Pnml File associated to the monitor </summary>
         </member>
@@ -172,21 +165,6 @@
             At runtime: called when a new component is created
             </summary>
         </member>
-        <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.Finalize">
-            <summary>
-            Destructor of ComponentMonitoring called by the Garbage Collector after the destruction of the component
-            </summary>
-        </member>
-        <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.getTransitionLinkByTransitionLabel(System.String)">
-            <summary> Look for a transition matching with label influenced by links </summary>
-            <param name="label">The label of the transition to find.</param>
-            <return> If a transition with appropriate label exists, returns this transition and links. Returns null otherwise. </return>
-        </member>
-        <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.getPossibleSetOfLinks(System.String)">
-            <summary>
-            Each list element is a set of AND links, then the main list model OR set of links.
-            </summary>
-        </member>
         <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.OnBeforeSerialize">
             <summary>
             This fonction is called by Unity right before it serializes data from every component
@@ -197,6 +175,16 @@
             <summary>
             This fonction is called by Unity right after it serializes data from every component
             We set the ComponentMonitoring to ready when it is done
+            </summary>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.getTransitionLinkByTransitionLabel(System.String)">
+            <summary> Look for a transition matching with label influenced by links </summary>
+            <param name="label">The label of the transition to find.</param>
+            <return> If a transition with appropriate label exists, returns this transition and links. Returns null otherwise. </return>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.getPossibleSetOfLinks(System.String)">
+            <summary>
+            Each list element is a set of AND links, then the main list model OR set of links.
             </summary>
         </member>
         <member name="P:FYFY_plugins.Monitoring.ComponentMonitoring.PetriNet">
@@ -250,15 +238,6 @@
             	This component trigger the building of PetriNets and Features and write traces when the game is over.
             </summary>
         </member>
-        <member name="F:FYFY_plugins.Monitoring.MonitoringManager.Instance">
-            <summary>
-            Instance of the singleton MonitoringManager
-            The value is set in the constructor
-            </summary>
-        </member>
-        <member name="M:FYFY_plugins.Monitoring.MonitoringManager.#ctor">
-            <summary> Set singleton instance of MonitoringManager </summary>
-        </member>
         <member name="F:FYFY_plugins.Monitoring.MonitoringManager.waitingForLaalys">
             <summary>
             This boolean is set to false when Laalys is connected or if an error occured while trying to launch Laalys
@@ -284,6 +263,15 @@
         </member>
         <member name="F:FYFY_plugins.Monitoring.MonitoringManager.laalysPath">
             <summary>Path to the jar file of Laalys</summary>
+        </member>
+        <member name="F:FYFY_plugins.Monitoring.MonitoringManager.Instance">
+            <summary>
+            Instance of the singleton MonitoringManager
+            The value is set in the constructor
+            </summary>
+        </member>
+        <member name="M:FYFY_plugins.Monitoring.MonitoringManager.#ctor">
+            <summary> Set singleton instance of MonitoringManager </summary>
         </member>
         <member name="M:FYFY_plugins.Monitoring.MonitoringManager.getMonitorById(System.Int32)">
             <summary>
