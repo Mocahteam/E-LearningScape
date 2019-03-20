@@ -7,11 +7,13 @@ public class AccessibilitySystem : FSystem {
 
     //creation de famille qui recupere tous les components type Accessibility_settings
     private Family accessibilitySettings_f = FamilyManager.getFamily(new AllOfComponents(typeof(Accessibility_settings)));
+    private Family accessibilityButton_f = FamilyManager.getFamily(new AllOfComponents(typeof(AccessibilityButton)));
 
     //creation de famille qui recupere tous les components type Text; TextMeshPro et TextMeshProUGUI
     private Family text_f = FamilyManager.getFamily(new AnyOfComponents(typeof(Text), typeof(TextMeshPro), typeof(TextMeshProUGUI)));
 
     private Accessibility_settings accessSettings;
+    private AccessibilityButton accessButton;
 
     public AccessibilitySystem ()
     {
@@ -19,7 +21,7 @@ public class AccessibilitySystem : FSystem {
         {
             //recuparation du tout premier component type Accessibility_settings
             accessSettings = accessibilitySettings_f.First().GetComponent<Accessibility_settings>();
-            if (accessSettings.enableFont) //Si enableFont de Accessibility_Settings est selectionnee
+            if (accessButton.buttonOn) //Si enableFont de Accessibility_Settings est selectionnee
             {
                 foreach (GameObject go in text_f) //parcours de tous les GO de la famille text_f
                 {
