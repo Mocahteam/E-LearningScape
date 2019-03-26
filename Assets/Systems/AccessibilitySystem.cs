@@ -55,7 +55,7 @@ public class AccessibilitySystem : FSystem {
             if (tm != null)
             {
                 tm.font = TM_Font;
-                //GameObjectManager.addComponent<TaillePolice>(textGo);
+                
             }
                 
             
@@ -63,7 +63,7 @@ public class AccessibilitySystem : FSystem {
             if (tmGUI != null)
             {
                 tmGUI.font = accessSettings.accessibleFontTMPro;
-                //GameObjectManager.addComponent<TaillePolice>(textGo);
+               
             }
                 
         }
