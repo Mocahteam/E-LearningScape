@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SfxTest : MonoBehaviour {
-    public AudioSource soundObject;
- 
+    public AudioSource soundObjectMouse;
+    public AudioSource soundObjectClic;
+
 
     private void OnMouseDown()
     {
         Debug.Log("Clicked on the dream fragment");
-        soundObject.Play();
+        soundObjectClic.Play();
     }
 
     private void OnMouseEnter()
     {
         Debug.Log("Passage Souris on dream fragment");
-        soundObject.Play();
+        soundObjectMouse.Play();
     }
     
 }
