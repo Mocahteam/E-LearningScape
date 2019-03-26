@@ -5,7 +5,8 @@ using TMPro;
 
 public class TaillePolice : MonoBehaviour {
     private TMP_Text TM_Police;
-    private float tm_FontSize = 14.0f;
+    private float tm_FontSize = 16.0f;
+
     // Use this for initialization
     void Start () {
         TM_Police = GetComponent<TMP_Text>();
