@@ -18,12 +18,12 @@ MonoBehaviour:
   m_fontInfo:
     Name: Accessible DfA
     PointSize: 92
-    Scale: 0
+    Scale: 1
     CharacterCount: 241
     LineHeight: 127.5
     Baseline: 0
     Ascender: 92.0625
-    CapHeight: 0
+    CapHeight: 66.9375
     Descender: -35.5
     CenterLine: 0
     SuperscriptOffset: 92.0625
@@ -33,7 +33,7 @@ MonoBehaviour:
     UnderlineThickness: 5.390625
     strikethrough: 20.568182
     strikethroughThickness: 5.390625
-    TabWidth: 0
+    TabWidth: 315
     Padding: 5
     AtlasWidth: 1024
     AtlasHeight: 1024
@@ -42,10 +42,10 @@ MonoBehaviour:
   - id: 32
     x: 6
     y: 1029
-    width: 0
-    height: 0
+    width: 31.5
+    height: 127.5625
     xOffset: 0
-    yOffset: 0
+    yOffset: 92.0625
     xAdvance: 31.5
     scale: 1
   - id: 33
@@ -2357,7 +2357,7 @@ Material:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
-    - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
+    - _GlowColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}

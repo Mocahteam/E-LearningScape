@@ -7,24 +7,23 @@ public class AccessibilitySystem : FSystem {
 
     //creation de famille qui recupere tous les components type Accessibility_settings
     private Family needUpdate_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFont), typeof(Accessibility_settings)));
-
+    
     //creation de famille qui recupere tous les components type Text; TextMeshPro et TextMeshProUGUI
     private Family text_f = FamilyManager.getFamily(new AnyOfComponents(typeof(Text), typeof(TextMeshPro), typeof(TextMeshProUGUI)));
-
+    
     public AccessibilitySystem ()
     {
         if (Application.isPlaying)
         {
-            //recuparation du tout premier component type Accessibility_settings
-            
             needUpdate_f.addEntryCallback(onNeedUpdate); //Ecouteur qui regarde quand un nouvel element rentre dans la famille et dans ce cas appel la méthode onNeedUpdate
         }
     }
 
+    
     private void onNeedUpdate(GameObject go)
     {
         Accessibility_settings accessSettings = go.GetComponent<Accessibility_settings>();
-
+        
         Font textFont;
         TMP_FontAsset TM_Font;
         if (accessSettings.enableFont) //Si la case est cochée alors changement de toutes les polices
@@ -54,14 +53,23 @@ public class AccessibilitySystem : FSystem {
             }
             TextMeshPro tm = textGo.GetComponent<TextMeshPro>();
             if (tm != null)
+            {
                 tm.font = TM_Font;
+                //GameObjectManager.addComponent<TaillePolice>(textGo);
+            }
+                
+            
             TextMeshProUGUI tmGUI = textGo.GetComponent<TextMeshProUGUI>();
             if (tmGUI != null)
+            {
                 tmGUI.font = accessSettings.accessibleFontTMPro;
+                //GameObjectManager.addComponent<TaillePolice>(textGo);
+            }
+                
         }
-
+        
         GameObjectManager.removeComponent<UpdateFont>(go); //tuer updatefont sinon pas de possibilité de changer de police car tous les éléments seront déjà dans la famille
-
+        
     }
 
     // Use to process your families.
