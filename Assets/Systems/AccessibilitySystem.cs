@@ -62,7 +62,7 @@ public class AccessibilitySystem : FSystem {
             TextMeshProUGUI tmGUI = textGo.GetComponent<TextMeshProUGUI>();
             if (tmGUI != null)
             {
-                tmGUI.font = accessSettings.accessibleFontTMPro;
+                tmGUI.font = TM_Font;
                
             }
                 
