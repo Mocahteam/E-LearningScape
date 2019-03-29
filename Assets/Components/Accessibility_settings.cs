@@ -24,4 +24,11 @@ public class Accessibility_settings : MonoBehaviour {
         GameObjectManager.addComponent<UpdateFontSize>(this.gameObject, new { newFontSize = size });
     }
 
+    public void onSliderFontOutlineUpdate(float size)
+    {
+        GameObjectManager.addComponent<UpdateFontOutline>(this.gameObject, new { newWidthContour = size });
+    }
+
+    
+
 }
