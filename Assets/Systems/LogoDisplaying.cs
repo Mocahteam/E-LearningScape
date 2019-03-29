@@ -172,7 +172,7 @@ public class LogoDisplaying : FSystem {
                             if (tmpGO.GetComponent<Image>())
                                 tmpGO.GetComponent<Image>().color = new Color(1, 1, 1, tmpGO.GetComponent<FadingMenu>().finalAlpha/256 * (Time.time - readingTimer) / fadeSpeed);
                             else
-                                tmpGO.GetComponent<Text>().color = new Color(1, 1, 1, tmpGO.GetComponent<FadingMenu>().finalAlpha / 256 * (Time.time - readingTimer) / fadeSpeed);
+                                tmpGO.GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, tmpGO.GetComponent<FadingMenu>().finalAlpha / 256 * (Time.time - readingTimer) / fadeSpeed);
                         }
                     }
                     else
