@@ -23,7 +23,6 @@ public class SoundEffectObjet : FSystem {
                 f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[8]);
             }
         }
-        GameObjectManager.removeComponent<Highlighted>(go);
     }
 
 	// Use to process your families.
