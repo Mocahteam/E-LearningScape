@@ -5,6 +5,8 @@ public class SoundEffectObjet : FSystem {
     private Family f_soundObj = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank), typeof(AudioSource)));
     private Family f_lightIndiceObjet = FamilyManager.getFamily(new AllOfComponents(typeof(Highlighted)));
     private Family f_selectLightIndiceObjet = FamilyManager.getFamily(new AllOfComponents(typeof(Highlighted), typeof(LinkedWith)));
+
+    public static SoundEffectObjet instance; 
     
     public SoundEffectObjet()
     {
@@ -12,6 +14,7 @@ public class SoundEffectObjet : FSystem {
         {
             f_lightIndiceObjet.addEntryCallback(onNeedHighlighted);
         }
+        instance = this; 
     }
 
     public void onNeedHighlighted(GameObject go)
@@ -29,8 +32,10 @@ public class SoundEffectObjet : FSystem {
     
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount) {
+        Debug.Log("a");
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("b");
             foreach (GameObject selectObjHightLight in f_selectLightIndiceObjet)
             {
                 Debug.Log("Clicked on hightlighted object");
