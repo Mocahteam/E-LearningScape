@@ -21,6 +21,7 @@ public class SoundEffectObjet : FSystem {
         {
             foreach (GameObject lightClues in f_lightIndiceObjet)
             {
+                Debug.Log("Passage Souris on obj");
                 f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[8]);
             }
         }
@@ -32,9 +33,11 @@ public class SoundEffectObjet : FSystem {
         {
             foreach (GameObject selectObjHightLight in f_selectLightIndiceObjet)
             {
+                Debug.Log("Clicked on hightlighted object");
                 f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[10]);
             }
             
         }
+
     }
 }
