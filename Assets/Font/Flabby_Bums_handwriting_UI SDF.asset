@@ -1742,7 +1742,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Flabby_Bums_handwriting SDF Material
   m_Shader: {fileID: 4800000, guid: 4a7755d6b5b67874f89c85f56f95fe97, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: UNDERLAY_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -1799,7 +1799,7 @@ Material:
     - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
-    - _OutlineWidth: 0
+    - _OutlineWidth: 0.181
     - _Padding: 0
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10

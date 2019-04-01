@@ -196,6 +196,7 @@ public class StoryDisplaying : FSystem {
                         MirrorSystem.instance.Pause = false;
                         ToggleObject.instance.Pause = false;
                         CollectObject.instance.Pause = false;
+                        SoundEffectObjet.instance.Pause = false;
                         MoveInFrontOf.instance.Pause = false;
                         UIEffectPlayer.instance.Pause = false;
                         ActionsManager.instance.Pause = !LoadGameContent.gameContent.trace;

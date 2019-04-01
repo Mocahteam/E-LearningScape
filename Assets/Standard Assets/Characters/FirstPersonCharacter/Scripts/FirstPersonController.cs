@@ -101,7 +101,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void FixedUpdate()
         {
-            float speed;
+            float speed = 10f;
             GetInput(out speed);
             // always move along the camera forward as it is the direction that it being aimed at
             Vector3 desiredMove = transform.forward * m_Input.y + transform.right * m_Input.x;
@@ -140,7 +140,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_MouseLook.UpdateCursorLock();
         }
 
+        public float speed = 10f;
+        public void AdjustSpeedMouseLook(float newSpeed)
+        {
+            speed = newSpeed;
+        }
 
+        
         private void PlayJumpSound()
         {
             m_AudioSource.clip = m_JumpSound;
@@ -246,6 +252,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_MouseLook.LookRotation(transform, m_Camera.transform);
         }
 
+        
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
