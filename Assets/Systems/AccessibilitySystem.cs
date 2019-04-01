@@ -28,13 +28,20 @@ public class AccessibilitySystem : FSystem {
         }
     }
 
-    // Script pour modifier l'épaisseur contour des text pour chaque nouveau TMP s'activant (voir commentaire fonction "onNeedUpdateFontOutlineWidth") our gérer le cas des TMPGUI
+    // Script pour modifier l'épaisseur contour des text pour chaque nouveau TMP s'activant (voir commentaire fonction "onNeedUpdateFontOutlineWidth") pour gérer le cas des TMPGUI
     // non actifs au moment où le slider est déplacé
     private void onNewTextMeshProEnabled(GameObject go)
     {
         Slider slider = countourSlider_f.First().GetComponent<Slider>();
         TMP_Text thickness = go.GetComponent<TMP_Text>();
         thickness.outlineWidth = slider.value;
+        thickness.fontSharedMaterial.SetFloat(ShaderUtilities.ID_FaceDilate, slider.value);
+        
+        
+        /*TextMeshPro contour = go.GetComponent<TextMeshPro>();
+        contour.fontSharedMaterial.SetFloat(ShaderUtilities.ID_FaceDilate, 0f); */
+        
+       
     }
 
     //Script pour modifier l'épaisseur contour des text
@@ -48,6 +55,7 @@ public class AccessibilitySystem : FSystem {
         {
             TMP_Text thickness = textFontOutline.GetComponent<TMP_Text>();
             thickness.outlineWidth = ufo.newWidthContour;
+            thickness.fontSharedMaterial.SetFloat(ShaderUtilities.ID_FaceDilate, ufo.newWidthContour);
         }
         GameObjectManager.removeComponent<UpdateFontOutline>(go);
     }
