@@ -73,6 +73,7 @@ TagManager:
   - AskHelpButton
   - HelpWarning
   - HelpTabContent
+  - TMP_Contour
   layers:
   - Default
   - TransparentFX
