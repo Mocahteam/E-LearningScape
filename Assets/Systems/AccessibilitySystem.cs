@@ -37,11 +37,6 @@ public class AccessibilitySystem : FSystem {
         thickness.outlineWidth = slider.value;
         thickness.fontSharedMaterial.SetFloat(ShaderUtilities.ID_FaceDilate, slider.value);
         
-        
-        /*TextMeshPro contour = go.GetComponent<TextMeshPro>();
-        contour.fontSharedMaterial.SetFloat(ShaderUtilities.ID_FaceDilate, 0f); */
-        
-       
     }
 
     //Script pour modifier l'épaisseur contour des text
