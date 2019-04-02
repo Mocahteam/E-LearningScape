@@ -21,7 +21,6 @@ public class SoundEffectObjet : FSystem {
     
     public void onNeedHighlighted(GameObject go)
     {
-        //Highlighted light = go.GetComponent<Highlighted>();
         if (go.GetComponent<Highlighted>())
         {
             foreach (GameObject lightClues in f_lightIndiceObjet)
