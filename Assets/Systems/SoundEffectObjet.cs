@@ -5,6 +5,7 @@ public class SoundEffectObjet : FSystem {
     private Family f_soundObj = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank), typeof(AudioSource)));
     private Family f_lightIndiceObjet = FamilyManager.getFamily(new AllOfComponents(typeof(Highlighted)));
     private Family f_selectLightIndiceObjet = FamilyManager.getFamily(new AllOfComponents(typeof(Highlighted), typeof(LinkedWith)));
+    private Family f_findFragmentReve = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
 
     public static SoundEffectObjet instance; 
     
@@ -17,6 +18,7 @@ public class SoundEffectObjet : FSystem {
         instance = this; 
     }
 
+    
     public void onNeedHighlighted(GameObject go)
     {
         //Highlighted light = go.GetComponent<Highlighted>();
@@ -36,13 +38,37 @@ public class SoundEffectObjet : FSystem {
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("b");
+            
             foreach (GameObject selectObjHightLight in f_selectLightIndiceObjet)
             {
                 Debug.Log("Clicked on hightlighted object");
                 f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[10]);
             }
-            
         }
+
+        if (DreamFragmentCollecting.instance.Pause == false)
+        {
+
+            Debug.Log("aaa");
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("bbb");
+                if (DreamFragmentCollecting.instance.Pause && IARTabNavigation.instance.Pause)
+                {
+                    Debug.Log("c");
+                    foreach (GameObject selectDreamFragment in f_findFragmentReve)
+                    {
+                        Debug.Log("Clicked on dream fragment");
+                        f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[9]);
+
+                    }
+                }
+            }
+
+        }    
+            
+        
+        
 
     }
 }
