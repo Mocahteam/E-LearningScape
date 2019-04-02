@@ -16,7 +16,7 @@ public class AccessibilitySystem : FSystem {
     //creation de famille qui recupere tous les components type Text; TextMeshPro et TextMeshProUGUI
     private Family text_f = FamilyManager.getFamily(new AnyOfComponents (typeof(TextMeshPro), typeof(TextMeshProUGUI)));
     private Family textContour_f = FamilyManager.getFamily(new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-
+    
     public AccessibilitySystem ()
     {
         if (Application.isPlaying)
@@ -28,6 +28,7 @@ public class AccessibilitySystem : FSystem {
         }
     }
 
+    
     // Script pour modifier l'épaisseur contour des text pour chaque nouveau TMP s'activant (voir commentaire fonction "onNeedUpdateFontOutlineWidth") pour gérer le cas des TMPGUI
     // non actifs au moment où le slider est déplacé
     private void onNewTextMeshProEnabled(GameObject go)
