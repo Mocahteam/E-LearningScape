@@ -139,14 +139,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             m_MouseLook.UpdateCursorLock();
         }
-
-        public float speed = 10f;
-        public void AdjustSpeedMouseLook(float newSpeed)
-        {
-            speed = newSpeed;
-        }
-
         
+
         private void PlayJumpSound()
         {
             m_AudioSource.clip = m_JumpSound;
@@ -244,6 +238,22 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 StopAllCoroutines();
                 StartCoroutine(!m_IsWalking ? m_FovKick.FOVKickUp() : m_FovKick.FOVKickDown());
             }
+        }
+
+        
+        //Method call by sliderWalkSpeed in popupSettings to allow player to change walk speed 
+        public void SetWalkSpeed (float speedW)
+        {
+            m_WalkSpeed = speedW;
+            m_RunSpeed = speedW;
+        }
+
+
+        //Method call by sliderMouseLookSpeed in popupSettings to allow player to change MouseLook speed 
+        public void SetMouseLookSpeed (float speedMouse)
+        {
+            m_MouseLook.XSensitivity = speedMouse;
+            m_MouseLook.YSensitivity = speedMouse;
         }
 
 
