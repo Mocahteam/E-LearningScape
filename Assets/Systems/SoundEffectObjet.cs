@@ -5,7 +5,11 @@ public class SoundEffectObjet : FSystem {
     private Family f_soundObj = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank), typeof(AudioSource)));
     private Family f_lightIndiceObjet = FamilyManager.getFamily(new AllOfComponents(typeof(Highlighted)));
     private Family f_selectLightIndiceObjet = FamilyManager.getFamily(new AllOfComponents(typeof(Highlighted), typeof(LinkedWith)));
-    private Family f_findFragmentReve = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
+    private Family f_findDreamFragment = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
+
+    //Il faut une famille qui comprend tout ce qui est taggé DreamFragmentUI et ceux-ci ne s'activent que quand la popup du fragment s'ouvre 
+    //Donc on précise en plus qu'il faut qu'ils soient actifs dans la hiérarchie
+    private Family f_dreamFragmentOpenned = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY)); 
 
     public static SoundEffectObjet instance; 
     
@@ -14,11 +18,12 @@ public class SoundEffectObjet : FSystem {
         if (Application.isPlaying)
         {
             f_lightIndiceObjet.addEntryCallback(onNeedHighlighted);
+            f_dreamFragmentOpenned.addEntryCallback(onDreamFragmentOpenned);
         }
         instance = this; 
     }
 
-    
+    //On joue le son 8 quand la souris passe sur un objet qui s'illumine en jaune 
     public void onNeedHighlighted(GameObject go)
     {
         if (go.GetComponent<Highlighted>())
@@ -30,11 +35,18 @@ public class SoundEffectObjet : FSystem {
             }
         }
     }
-    
+
+    //On joue le son 9 quand on clique sur un dream fragment et que sa popup s'ouvre
+    //Pas de besoin de préciser input.getMouseButtonDown puisque le composant ne rentre dans la famille que quand la popup s'ouvre et elle s'ouvre quand on a cliqué dessus
+    public void onDreamFragmentOpenned(GameObject go)
+    {
+        f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[9]);
+    }
+
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount) {
         Debug.Log("a");
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) //Si on clique sur un objet lumineux alors on joue le son 10 
         {
             Debug.Log("b");
             
@@ -45,29 +57,14 @@ public class SoundEffectObjet : FSystem {
             }
         }
 
-        if (DreamFragmentCollecting.instance.Pause == false)
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
         {
-
-            Debug.Log("aaa");
-            if (Input.GetMouseButtonDown(0))
+            // try to find a fragment touched by the raycast
+            if (f_dreamFragments.contains(hit.transform.gameObject.GetInstanceID()))
             {
-                Debug.Log("bbb");
-                if (DreamFragmentCollecting.instance.Pause && IARTabNavigation.instance.Pause)
-                {
-                    Debug.Log("c");
-                    foreach (GameObject selectDreamFragment in f_findFragmentReve)
-                    {
-                        Debug.Log("Clicked on dream fragment");
-                        f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[9]);
 
-                    }
-                }
+
+
+
             }
-
-        }    
-            
-        
-        
-
-    }
 }
