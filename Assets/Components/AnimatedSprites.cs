@@ -8,4 +8,10 @@ public class AnimatedSprites : MonoBehaviour {
     public bool disableWhenFinished = false;
     public bool stopable = false;
     public int usedSpriteID;
+
+    public void optionAnimation(bool newState)
+    {
+        animate = newState;
+        
+    }
 }
