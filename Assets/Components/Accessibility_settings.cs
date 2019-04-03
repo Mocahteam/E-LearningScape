@@ -12,7 +12,7 @@ public class Accessibility_settings : MonoBehaviour {
     public TMP_FontAsset accessibleFontTMPro; //dans unity et accessibleFontTMPro est glisee la police souhaitee. Police dys Accessible dfa
     public Font defaultFont; //dans unity et accessibleFont est glisee la police souhaitee. Police du jeu Flabby
     public TMP_FontAsset defaultFontTMPro; //dans unity et accessibleFontTMPro est glisee la police souhaitee. Flabby 
-    public bool animate = true;
+    
     //public Font standarFont; //Arial
     //public TMP_FontAsset standartFontTMPro; // Arial
 
@@ -46,12 +46,6 @@ public class Accessibility_settings : MonoBehaviour {
     public void onSliderFontOutlineUpdate(float size)
     {
         GameObjectManager.addComponent<UpdateFontOutline>(this.gameObject, new { newWidthContour = size });
-    }
-
-    public void optionAnimation(bool newState)
-    {
-        SpritesAnimator.instance.Pause = !newState;
-
     }
 
 }
