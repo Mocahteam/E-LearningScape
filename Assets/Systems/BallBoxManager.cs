@@ -19,6 +19,8 @@ public class BallBoxManager : FSystem {
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
 
+    private Family f_soundObj = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank), typeof(AudioSource)));
+
     //information for animations
     private float speed;
     private float speedRotation = 200f;
@@ -145,7 +147,11 @@ public class BallBoxManager : FSystem {
 	// Use this to update member variables when system resume.
 	// Advice: avoid to update your families inside this function.
 	protected override void onResume(int currentFrame){
-	}
+        if (!boxPadlock.activeSelf)
+        {
+            f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[14]);
+        }
+    }
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
@@ -182,6 +188,8 @@ public class BallBoxManager : FSystem {
                         GameObjectManager.setGameObjectState(boxPadlock, false);
                         //remove key from inventory
                         GameObjectManager.setGameObjectState(keySelected(), false);
+                        // Play sound to open cover
+                        f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[14]);
 
                         GameObjectManager.addComponent<ActionPerformed>(boxPadlock, new { name = "perform", performedBy = "system" });
                         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "unlocked", objectType = "interactable", objectName = selectedBox.name });
