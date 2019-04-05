@@ -13,19 +13,17 @@ public class ZoomCamera : MonoBehaviour {
 
     private void Update()
     {
-        
-        if (Input.GetKeyDown(KeyCode.P))
+        //Zoom avant de 10 en 10
+        if (Input.GetKeyDown(KeyCode.Space))
             viewCam.fieldOfView -= 10;
-        if (viewCam.fieldOfView == 10)
-            viewCam.fieldOfView = 10;
 
-        if (Input.GetKeyDown(KeyCode.M))
+        //Zoom arrière de 10 en 10
+        if (Input.GetKeyDown(KeyCode.B))
             viewCam.fieldOfView += 10;
-    }
 
-    /*public void zoomCam (float loupe)
-    {
-        zoom = loupe;
-    }*/
+        //Zoom par défaut
+        if (Input.GetKeyDown(KeyCode.C))
+            viewCam.fieldOfView = 60;
+    }
     
 }
