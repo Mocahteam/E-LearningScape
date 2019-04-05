@@ -13,25 +13,6 @@ public class Accessibility_settings : MonoBehaviour {
     public Font defaultFont; //dans unity et accessibleFont est glisee la police souhaitee. Police du jeu Flabby
     public TMP_FontAsset defaultFontTMPro; //dans unity et accessibleFontTMPro est glisee la police souhaitee. Flabby 
     
-    //public Font standarFont; //Arial
-    //public TMP_FontAsset standartFontTMPro; // Arial
-
-    /*public Dropdown dropdown;
-    public TextMeshProUGUI policeName;
-    
-    List<string> m_PoliceOptions = new List<string> { "Flabby Bums handwriting", "Dys Accessible DfA", "LibaerationSANS" };
-        
-    public void Dropdown_Index(int index)
-    {
-        policeName.text = m_PoliceOptions[index];
-    }
-
-    public void policeList()
-    {
-        dropdown.AddOptions(m_PoliceOptions);
-    }*/
-   
-    
     public void toggleAccessibleSettings(bool newState)
     {
         enableFont = newState;
