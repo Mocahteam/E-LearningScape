@@ -18,12 +18,12 @@ MonoBehaviour:
   m_fontInfo:
     Name: Accessible DfA
     PointSize: 92
-    Scale: 1
+    Scale: 0
     CharacterCount: 241
     LineHeight: 127.5
     Baseline: 0
     Ascender: 92.0625
-    CapHeight: 66.9375
+    CapHeight: 0
     Descender: -35.5
     CenterLine: 0
     SuperscriptOffset: 92.0625
@@ -33,19 +33,19 @@ MonoBehaviour:
     UnderlineThickness: 5.390625
     strikethrough: 20.568182
     strikethroughThickness: 5.390625
-    TabWidth: 315
+    TabWidth: 0
     Padding: 5
     AtlasWidth: 1024
     AtlasHeight: 1024
-  atlas: {fileID: 28000469196509272}
+  atlas: {fileID: 28333733366218192}
   m_glyphInfoList:
   - id: 32
     x: 6
     y: 1029
-    width: 31.5
-    height: 127.5625
+    width: 0
+    height: 0
     xOffset: 0
-    yOffset: 92.0625
+    yOffset: 0
     xAdvance: 31.5
     scale: 1
   - id: 33
@@ -2296,7 +2296,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 28000469196509272}
+        m_Texture: {fileID: 28333733366218192}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
@@ -2314,7 +2314,7 @@ Material:
     - _BumpOutline: 0
     - _ColorMask: 15
     - _Diffuse: 0.5
-    - _FaceDilate: 1
+    - _FaceDilate: 0
     - _FaceUVSpeedX: 0
     - _FaceUVSpeedY: 0
     - _GlowInner: 0.05
@@ -2331,9 +2331,9 @@ Material:
     - _OutlineWidth: 1
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
-    - _ScaleRatioA: 0.26143792
-    - _ScaleRatioB: 0
-    - _ScaleRatioC: 0
+    - _ScaleRatioA: 0.3809524
+    - _ScaleRatioB: 0.6770833
+    - _ScaleRatioC: 0.6770833
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
@@ -2364,7 +2364,7 @@ Material:
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!28 &28000469196509272
+--- !u!28 &28333733366218192
 Texture2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}

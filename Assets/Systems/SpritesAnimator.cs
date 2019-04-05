@@ -7,9 +7,13 @@ public class SpritesAnimator : FSystem {
     // This system play Sprites animation
 
     private Family f_animatedSprites = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(Image)), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-
+    //private Family f_animatedSpritesObjectInventory = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(Image)), new AnyOfTags("InventoryElements"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    //private Family f_soundObj = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank), typeof(AudioSource)));
     private AnimatedSprites tmpAS;
     private float lastChangeTime = -Mathf.Infinity;
+    /*bool playedActiveSound;
+    bool playedDesactiveSound;
+    int idInventoryObject; */
 
     public static SpritesAnimator instance;
 
@@ -23,6 +27,12 @@ public class SpritesAnimator : FSystem {
             {
                 f_animatedSprites.getAt(i).GetComponent<AnimatedSprites>().usedSpriteID = 0;
             }
+
+            /*int nbInvent = f_animatedSpritesObjectInventory.Count;
+            for (int i = 0; i < nbInvent; i++)
+            {
+                f_animatedSpritesObjectInventory.getAt(i).GetComponent<AnimatedSprites>().usedSpriteID = 0;
+            }*/
         }
         instance = this;
     }
@@ -36,6 +46,7 @@ public class SpritesAnimator : FSystem {
             tmpAS = f_animatedSprites.getAt(i).GetComponent<AnimatedSprites>();
             if (tmpAS.animate)
             {
+                
                 if (Time.time - lastChangeTime > 1f / 10)
                 {
                     tmpAS.usedSpriteID++;
@@ -54,6 +65,59 @@ public class SpritesAnimator : FSystem {
                     }
                     // Swicth to the current frame
                     tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[tmpAS.usedSpriteID];
+                    
+                }
+
+                // in case of animation is stoppable
+                if (tmpAS.stopable && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return)))
+                {
+                    tmpAS.animate = false;
+                    tmpAS.usedSpriteID = 0;
+                    tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[0];
+                    GameObjectManager.setGameObjectState(tmpAS.gameObject, false);
+                    
+                }
+            }
+        }
+        if (Time.time - lastChangeTime > 1f / 10)
+            lastChangeTime = Time.time;
+
+        /*int nbInvent = f_animatedSpritesObjectInventory.Count;
+        for (int i = 0; i < nbInvent; i++)
+        {
+            tmpAS = f_animatedSpritesObjectInventory.getAt(i).GetComponent<AnimatedSprites>();
+            if (tmpAS.animate)
+            {
+
+                if (Time.time - lastChangeTime > 1f / 10)
+                {
+                    tmpAS.usedSpriteID++;
+                    // if last animation frame is reached
+                    if (tmpAS.usedSpriteID == tmpAS.sprites.Length)
+                    {
+                        // restart to the first one
+                        tmpAS.usedSpriteID = 0;
+                        
+                        if (playedActiveSound == false)
+                        {
+                            f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[11]);
+                            playedActiveSound = true;
+                            playedDesactiveSound = false;
+                        }
+                        
+                        // if loop is disable => stop animation
+                        if (!tmpAS.loop)
+                        {
+                            tmpAS.animate = false;
+                            playedDesactiveSound = true;
+                            if (tmpAS.disableWhenFinished)
+                                GameObjectManager.setGameObjectState(tmpAS.gameObject, false);
+                        }
+                    }
+
+                    // Swicth to the current frame
+                    tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[tmpAS.usedSpriteID];
+
                 }
 
                 // in case of animation is stoppable
@@ -67,6 +131,7 @@ public class SpritesAnimator : FSystem {
             }
         }
         if (Time.time - lastChangeTime > 1f / 10)
-            lastChangeTime = Time.time;
-	}
+            lastChangeTime = Time.time;*/
+        
+    }
 }

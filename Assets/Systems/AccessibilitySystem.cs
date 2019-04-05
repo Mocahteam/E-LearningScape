@@ -9,14 +9,17 @@ public class AccessibilitySystem : FSystem {
     private Family needUpdateFont_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFont), typeof(Accessibility_settings)));
 
     private Family needUpdateFontSize_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontSize)));
-
     private Family needUpdateFontOutlineWidth_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontOutline)));
     private Family countourSlider_f = FamilyManager.getFamily(new AllOfComponents(typeof(Slider)), new AnyOfTags("TMP_Contour"));
 
     //creation de famille qui recupere tous les components type Text; TextMeshPro et TextMeshProUGUI
     private Family text_f = FamilyManager.getFamily(new AnyOfComponents (typeof(TextMeshPro), typeof(TextMeshProUGUI)));
     private Family textContour_f = FamilyManager.getFamily(new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    
+
+
+    //Ne comprend que ce qui le tag DreamFragmentUI
+    private Family checkTags_f = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"));
+
     public AccessibilitySystem ()
     {
         if (Application.isPlaying)
@@ -25,6 +28,14 @@ public class AccessibilitySystem : FSystem {
             needUpdateFontSize_f.addEntryCallback(onNeedUpdateFontSize); //A chaque fois qu'on touche à la sliderBar taille police, on est rentré dans la famille needUpdateFontSize_f
             needUpdateFontOutlineWidth_f.addEntryCallback(onNeedUpdateFontOutlineWidth);
             textContour_f.addEntryCallback(onNewTextMeshProEnabled);
+
+            //Permet de filtrer et d'identifier dans la console tous les objets qui ont le tag DreamFragmentUI
+            Debug.Log("Tag Filter Start");
+            foreach (GameObject go in checkTags_f)
+            {
+                Debug.Log(go.name);
+            }
+            Debug.Log("Tag Filter End");
         }
     }
 
