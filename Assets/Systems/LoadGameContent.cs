@@ -368,17 +368,30 @@ public class LoadGameContent : FSystem {
         //Plank and Wire
         int nbWrongWords = f_wrongWords.Count;
         int nbCorrectWords = f_correctWords.Count;
+        // Set Wrong words in a random position
+        System.Random random = new System.Random();
+        List<string> words = new List<string>(gameContent.plankOtherWords);
         for (int i = 0; i < nbWrongWords; i++)
-            f_wrongWords.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankOtherWords[i];
+        {
+            int randPos = random.Next(words.Count);
+            f_wrongWords.getAt(i).GetComponent<TextMeshPro>().text = words[randPos];
+            words.RemoveAt(randPos);
+        }
+        // Set Correct word in a random position
+        words = new List<string>(gameContent.plankAndWireCorrectWords);
         for (int i = 0; i < nbCorrectWords; i++)
-            f_correctWords.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankAndWireCorrectWords[i];
+        {
+            int randPos = random.Next(words.Count);
+            f_correctWords.getAt(i).GetComponent<TextMeshPro>().text = words[randPos];
+            words.RemoveAt(randPos);
+        }
         f_plankAndWireRule.First().GetComponent<TextMeshPro>().text = gameContent.plankAndWireQuestion;
         int nbPlankNumbers = f_plankNumbers.Count;
         int countCorrectNb = 0;
         int countWrongNb = 0;
         for (int i = 0; i < nbPlankNumbers; i++)
         {
-            if (f_plankNumbers.getAt(i).name == "4" || f_plankNumbers.getAt(i).name == "5" || f_plankNumbers.getAt(i).name == "9")
+            if (f_plankNumbers.getAt(i).name == "SolutionNumberA" || f_plankNumbers.getAt(i).name == "SolutionNumberB" || f_plankNumbers.getAt(i).name == "SolutionNumberC")
             {
                 f_plankNumbers.getAt(i).GetComponent<TextMeshPro>().text = gameContent.plankAndWireCorrectNumbers[countCorrectNb].ToString();
                 countCorrectNb++;
@@ -390,28 +403,11 @@ public class LoadGameContent : FSystem {
             }
         }
         forGO = f_wrongWords.First().transform.parent.parent.gameObject;
-        List<float> validAngles = new List<float>();
-        #region Add valid angles to list
-        int from, to;
-        from = 0;
-        to = 4;
-        for (int i = from; i <= to; i++)
-            validAngles.Add(i);
-        validAngles.Add(52);
-        from = 147;
-        to = 161;
-        for (int i = from; i <= to; i++)
-            validAngles.Add(i);
-        from = 325;
-        to = 341;
-        for (int i = from; i <= to; i++)
-            validAngles.Add(i);
-        from = 356;
-        to = 360;
-        for (int i = from; i <= to; i++)
-            validAngles.Add(i);
-        #endregion
-        float angle = validAngles[(int)(UnityEngine.Random.value * validAngles.Count - 0.001f)];
+
+        // Two valid rotations to avoid words and numbers overlaping
+        float angle = 0f;
+        if (UnityEngine.Random.value > 0.5f)
+            angle = 158f;
         forGO.transform.Rotate(0, angle, 0);
         foreach (Transform child in forGO.transform)
             if (child.name != "Numbers")
@@ -1059,10 +1055,13 @@ public class LoadGameContent : FSystem {
 
 	// Use this to update member variables when system resume.
 	// Advice: avoid to update your families inside this function.
-	protected override void onResume(int currentFrame){
-	}
+	protected override void onResume(int currentFrame)
+    {   
+        
+    }
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-	}
+
+    }
 }
