@@ -12,6 +12,7 @@ public class Accessibility_settings : MonoBehaviour {
     public TMP_FontAsset accessibleFontTMPro; //dans unity et accessibleFontTMPro est glisee la police souhaitee. Police dys Accessible dfa
     public Font defaultFont; //dans unity et accessibleFont est glisee la police souhaitee. Police du jeu Flabby
     public TMP_FontAsset defaultFontTMPro; //dans unity et accessibleFontTMPro est glisee la police souhaitee. Flabby 
+    public bool animate = true;
     
     public void toggleAccessibleSettings(bool newState)
     {
@@ -28,5 +29,17 @@ public class Accessibility_settings : MonoBehaviour {
     {
         GameObjectManager.addComponent<UpdateFontOutline>(this.gameObject, new { newWidthContour = size });
     }
+
+    public void onSliderColorA (float a)
+    {
+        GameObjectManager.addComponent<UpdateOpacity>(this.gameObject, new { newColorAlpha = a });
+    }
+
+    public void toggleAnimations (bool newState)
+    {
+        animate = newState;
+        GameObjectManager.addComponent<UpdateAnimation>(this.gameObject);
+    }
+
 
 }

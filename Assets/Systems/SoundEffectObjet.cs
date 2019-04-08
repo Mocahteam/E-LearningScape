@@ -66,11 +66,8 @@ public class SoundEffectObjet : FSystem {
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
-        Debug.Log("a");
         if (Input.GetMouseButtonDown(0)) //Si on clique sur un objet lumineux alors on joue le son 10 
         {
-            Debug.Log("b");
-
             foreach (GameObject selectObjHightLight in f_selectLightIndiceObjet)
             {
                 Debug.Log("Clicked on hightlighted object");
