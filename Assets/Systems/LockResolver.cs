@@ -24,6 +24,8 @@ public class LockResolver : FSystem {
 
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
+    private Family f_LockArrows = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver)), new AnyOfTags("LockArrow"));
+
     //information for animations
     private float speed;
     private float speedRotation;
@@ -80,7 +82,8 @@ public class LockResolver : FSystem {
                             }
                         }
                     }
-                    else if (child.gameObject.name == "UpDown")
+
+                    /*else if (child.gameObject.name == "UpDown")
                     {
                         foreach (Transform c in child)
                         {
@@ -97,7 +100,7 @@ public class LockResolver : FSystem {
                                 });
                             }
                         }
-                    }
+                    }*/
                 }
             }
             gameAudioSource = f_audioSourceFamily.First().GetComponent<AudioSource>();
@@ -170,14 +173,22 @@ public class LockResolver : FSystem {
                     }
 
                     // process hotkeys to move the wheels
-                    if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z))
+                    if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Z)) && !lockRotationUp && !lockRotationDown)
                         moveWheelUp(selectedWheel);
-                    else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+                    else if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && !lockRotationUp && !lockRotationDown)
                         moveWheelDown(selectedWheel);
                     else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Q))
                         SelectLeftWheel(ref selectedWheel, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, selectedLocker.UpDownControl);
                     else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
                         SelectRightWheel(ref selectedWheel, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, selectedLocker.UpDownControl);
+                    //Process mouse arrow
+                    if (Input.GetMouseButton(0) && f_LockArrows.Count != 0 && !lockRotationUp && !lockRotationDown)
+                    {
+                        if (f_LockArrows.First().name == "Down")
+                            moveWheelDown(selectedWheel);
+                        else
+                            moveWheelUp(selectedWheel);
+                    }
                 }
             }
         }
@@ -201,16 +212,17 @@ public class LockResolver : FSystem {
                 {
                     rotationDirection = "up";
                     //après ça avant c'était :
-                    //selectedWheel.transform.Rotate(36 - wheelRotationCount, 0, 0);
-                    //lockRotationUp = false;
-                    if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z))
+                    selectedWheel.transform.Rotate(36 - wheelRotationCount, 0, 0);
+                    lockRotationUp = false;
+                    
+                    /*if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z))
                     {
                         selectedWheel.transform.Rotate(36 - wheelRotationCount, 0, 0);
                         lockRotationUp = true;
                     }
                        
                     if (Input.GetKeyDown(KeyCode.U))
-                        lockRotationUp = false;
+                        lockRotationUp = false;*/
                 }
                 else
                 {

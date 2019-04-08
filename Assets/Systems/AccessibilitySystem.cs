@@ -2,6 +2,7 @@
 using FYFY;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class AccessibilitySystem : FSystem {
 
@@ -12,13 +13,22 @@ public class AccessibilitySystem : FSystem {
     private Family needUpdateFontOutlineWidth_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontOutline)));
     private Family countourSlider_f = FamilyManager.getFamily(new AllOfComponents(typeof(Slider)), new AnyOfTags("TMP_Contour"));
 
+    private Family UIColorAlpha_f = FamilyManager.getFamily(new AnyOfTags("UI_colorAlpha", "DreamFragmentUI"), new AllOfComponents(typeof(Image)));
+    private Family needUpdateColorAlpha_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateOpacity)));
+
     //creation de famille qui recupere tous les components type Text; TextMeshPro et TextMeshProUGUI
     private Family text_f = FamilyManager.getFamily(new AnyOfComponents (typeof(TextMeshPro), typeof(TextMeshProUGUI)));
-    private Family textContour_f = FamilyManager.getFamily(new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family textWithMax_f = FamilyManager.getFamily(new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)), new AllOfComponents(typeof(MaxFontSize)));
+    private Family textContour_f = FamilyManager.getFamily(new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)), new
+        AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
+    private Family needUpdateAnimation_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateAnimation), typeof(Accessibility_settings)));
+    private Family AnimatedObject_f = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites)), new NoneOfTags("PlankE09", "InventoryElements", "UIEffect", "LockArrow"), new NoneOfComponents(typeof(Button)));
 
     //Ne comprend que ce qui le tag DreamFragmentUI
     private Family checkTags_f = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"));
+
+    //private Dictionary 
 
     public AccessibilitySystem ()
     {
@@ -28,6 +38,13 @@ public class AccessibilitySystem : FSystem {
             needUpdateFontSize_f.addEntryCallback(onNeedUpdateFontSize); //A chaque fois qu'on touche à la sliderBar taille police, on est rentré dans la famille needUpdateFontSize_f
             needUpdateFontOutlineWidth_f.addEntryCallback(onNeedUpdateFontOutlineWidth);
             textContour_f.addEntryCallback(onNewTextMeshProEnabled);
+            needUpdateColorAlpha_f.addEntryCallback(onNeedUpdateAlpha);
+            needUpdateAnimation_f.addEntryCallback(onNeedUpdateAnimation);
+
+            foreach (GameObject go in textWithMax_f)
+            {
+                go.GetComponent<MaxFontSize>().defaultSize = go.GetComponent<TMP_Text>().fontSize; 
+            }
 
             //Permet de filtrer et d'identifier dans la console tous les objets qui ont le tag DreamFragmentUI
             Debug.Log("Tag Filter Start");
@@ -39,7 +56,17 @@ public class AccessibilitySystem : FSystem {
         }
     }
 
-    
+    private void onNeedUpdateAlpha (GameObject go)
+    {
+        UpdateOpacity uo = go.GetComponent<UpdateOpacity>();
+        foreach (GameObject alpha in UIColorAlpha_f)
+        {
+            Image ImageAlpha = alpha.GetComponent<Image>();
+            ImageAlpha.color = new Color(ImageAlpha.color.r, ImageAlpha.color.g, ImageAlpha.color.b, uo.newColorAlpha);
+        }
+        GameObjectManager.removeComponent<UpdateOpacity>(go);
+    }
+
     // Script pour modifier l'épaisseur contour des text pour chaque nouveau TMP s'activant (voir commentaire fonction "onNeedUpdateFontOutlineWidth") pour gérer le cas des TMPGUI
     // non actifs au moment où le slider est déplacé
     private void onNewTextMeshProEnabled(GameObject go)
@@ -71,10 +98,12 @@ public class AccessibilitySystem : FSystem {
     private void onNeedUpdateFontSize (GameObject go)
     {
         UpdateFontSize ufs = go.GetComponent<UpdateFontSize>();
-        foreach (GameObject textSize in text_f)
+        MaxFontSize mfs;
+        foreach (GameObject textSize in textWithMax_f)
         {
             TMP_Text tmFontSize = textSize.GetComponent<TMP_Text>();
-            tmFontSize.fontSize = ufs.newFontSize;
+            mfs = textSize.GetComponent<MaxFontSize>();
+            tmFontSize.fontSize = Mathf.Min(mfs.defaultSize + ufs.newFontSize, mfs.maxSize);
        
         }
         GameObjectManager.removeComponent<UpdateFontSize>(go);
@@ -107,6 +136,17 @@ public class AccessibilitySystem : FSystem {
         
     }
 
+    private void onNeedUpdateAnimation(GameObject go)
+    {
+        Accessibility_settings accessSettings = go.GetComponent<Accessibility_settings>();
+
+        foreach (GameObject objAnimated in AnimatedObject_f) //parcours de tous les GO de la famille text_f
+        {
+            objAnimated.GetComponent<AnimatedSprites>().animate = accessSettings.animate;
+        }
+
+        GameObjectManager.removeComponent<UpdateAnimation>(go); 
+    }
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {

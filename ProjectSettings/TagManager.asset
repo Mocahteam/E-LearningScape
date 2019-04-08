@@ -74,6 +74,8 @@ TagManager:
   - HelpWarning
   - HelpTabContent
   - TMP_Contour
+  - UI_colorAlpha
+  - LockArrow
   layers:
   - Default
   - TransparentFX
