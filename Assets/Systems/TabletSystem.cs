@@ -59,6 +59,23 @@ public class TabletSystem : FSystem {
           t.isAnswered = true;
         }
       }
+      TabletR3 t3 = go.GetComponent<TabletR3>();
+      if(t3 && !t3.isAnswered) {
+        bool allAnswered = true;
+        foreach(Question q in t3.questions) allAnswered &= q.isAnswered;
+        if(allAnswered)
+        {
+          Door d = t3.opens;
+          d.isOpened = true;
+
+          if(d.loadsOnOpen) d.loadsOnOpen.SetActive(true);
+
+          AudioSource audio = d.gameObject.GetComponent<AudioSource>();
+          audio.clip = d.openAudio;
+          audio.Play();
+          t3.isAnswered = true;
+        }
+      }
     }
   }
 
