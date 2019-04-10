@@ -197,13 +197,11 @@ public class LockResolver : FSystem {
         if (lockRotationUp || lockRotationDown)
         {
             if (lockRotationUp)
-                selectedWheel.transform.Rotate(Time.deltaTime * 50, 0, 0);
-                //selectedWheel.transform.Rotate(Time.deltaTime * 200, 0, 0);
-                //Remplacer les 50 par 200
+                selectedWheel.transform.Rotate(Time.deltaTime * 80, 0, 0);
             
             else
-                selectedWheel.transform.Rotate(-Time.deltaTime * 50, 0, 0);
-            wheelRotationCount += Time.deltaTime * 50;
+                selectedWheel.transform.Rotate(-Time.deltaTime * 80, 0, 0);
+            wheelRotationCount += Time.deltaTime * 80;
 
             // is rotation finished ?
             if (wheelRotationCount > 36)
@@ -211,18 +209,8 @@ public class LockResolver : FSystem {
                 if (lockRotationUp)
                 {
                     rotationDirection = "up";
-                    //après ça avant c'était :
                     selectedWheel.transform.Rotate(36 - wheelRotationCount, 0, 0);
                     lockRotationUp = false;
-                    
-                    /*if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z))
-                    {
-                        selectedWheel.transform.Rotate(36 - wheelRotationCount, 0, 0);
-                        lockRotationUp = true;
-                    }
-                       
-                    if (Input.GetKeyDown(KeyCode.U))
-                        lockRotationUp = false;*/
                 }
                 else
                 {
