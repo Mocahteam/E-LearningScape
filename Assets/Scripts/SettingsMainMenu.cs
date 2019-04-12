@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using FYFY;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,10 +9,10 @@ public class SettingsMainMenu : MonoBehaviour {
 
 	public void Show ()
     {
-        window.SetActive(true);
+        GameObjectManager.setGameObjectState(window, true);
     }
     public void Hide ()
     {
-        window.SetActive(false);
+        GameObjectManager.setGameObjectState(window, false);
     }
 }
