@@ -3,6 +3,7 @@ using FYFY;
 using UnityEngine.UI;
 using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
+using TMPro;
 
 public class IARTabNavigation : FSystem {
 
@@ -148,12 +149,12 @@ public class IARTabNavigation : FSystem {
         foreach (GameObject oldTab in f_tabs)
         {
             oldTab.GetComponent<Image>().sprite = defaultTabSprite;
-            oldTab.GetComponentInChildren<Text>().fontStyle = FontStyle.Normal;
+            oldTab.GetComponentInChildren<TMP_Text>().fontStyle = FontStyles.Normal;
             GameObjectManager.setGameObjectState(oldTab.GetComponent<LinkedWith>().link, false);
         }
         // set new tab text and image
         newSelectedTab.GetComponent<Image>().sprite = selectedTabSprite;
-        newSelectedTab.GetComponentInChildren<Text>().fontStyle = FontStyle.Bold;
+        newSelectedTab.GetComponentInChildren<TMP_Text>().fontStyle = FontStyles.Bold;
         // enable new content
         GameObjectManager.setGameObjectState(newSelectedTab.GetComponent<LinkedWith>().link, true);
         GameObjectManager.addComponent<ActionPerformedForLRS>(newSelectedTab.GetComponent<LinkedWith>().link, new { verb = "accessed", objectType = "menu", objectName = newSelectedTab.GetComponent<LinkedWith>().link.name });

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class AnimatedSprites : MonoBehaviour {
     // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
@@ -8,5 +9,6 @@ public class AnimatedSprites : MonoBehaviour {
     public bool disableWhenFinished = false;
     public bool stopable = false;
     public int usedSpriteID;
+    
 
 }

@@ -155,11 +155,12 @@ public class StoryDisplaying : FSystem {
                 if (fadingBackground)
                     background.color = new Color(background.color.r, background.color.g, background.color.b, (Time.time - readingTimer) / fadeSpeed);
                 // stop fading if mouse clicked
-                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
+                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.RightArrow))
                 {
                     readingTimer = Time.time - (fadeSpeed + 1);
                     GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
                 }
+                //Essayer rajouter script pour permettre le retour en arrière avec flèche ou bouton 
             }
             else
             {
@@ -217,7 +218,7 @@ public class StoryDisplaying : FSystem {
                 fadingImage.color = new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, 1 - (Time.time - readingTimer) / fadeSpeed);
                 if (fadingBackground)
                     background.color = new Color(background.color.r, background.color.g, background.color.b, 1 - (Time.time - readingTimer) / fadeSpeed);
-                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
+                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.RightArrow))
                 {
                     readingTimer = Time.time - (fadeSpeed + 1);
                     GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
@@ -241,7 +242,7 @@ public class StoryDisplaying : FSystem {
         }
         else
         {
-            if (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 alphaToPlain = true;
                 readingTimer = Time.time;

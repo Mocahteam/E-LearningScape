@@ -11,9 +11,11 @@ public class SpritesAnimator : FSystem {
     //private Family f_soundObj = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank), typeof(AudioSource)));
     private AnimatedSprites tmpAS;
     private float lastChangeTime = -Mathf.Infinity;
+
     /*bool playedActiveSound;
     bool playedDesactiveSound;
     int idInventoryObject; */
+    
 
     public static SpritesAnimator instance;
 
@@ -33,6 +35,7 @@ public class SpritesAnimator : FSystem {
             {
                 f_animatedSpritesObjectInventory.getAt(i).GetComponent<AnimatedSprites>().usedSpriteID = 0;
             }*/
+
         }
         instance = this;
     }
@@ -46,7 +49,7 @@ public class SpritesAnimator : FSystem {
             tmpAS = f_animatedSprites.getAt(i).GetComponent<AnimatedSprites>();
             if (tmpAS.animate)
             {
-                
+               
                 if (Time.time - lastChangeTime > 1f / 10)
                 {
                     tmpAS.usedSpriteID++;

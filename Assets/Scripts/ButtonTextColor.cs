@@ -8,12 +8,12 @@ using TMPro;
 public class ButtonTextColor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
     public Color pointerOverColor;
-    private TextMeshProUGUI buttonText;
+    private TMP_Text buttonText;
     private Color initialColor;
 
     // Use this for initialization
     void Start () {
-        buttonText = this.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        buttonText = this.transform.GetChild(0).GetComponent<TMP_Text>();
         if (this.transform.GetChild(0).GetComponent<FadingMenu>())
             initialColor = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, this.transform.GetChild(0).GetComponent<FadingMenu>().finalAlpha);
         else

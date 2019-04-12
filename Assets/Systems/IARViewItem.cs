@@ -18,6 +18,8 @@ public class IARViewItem : FSystem {
     private Family f_collectedPuzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_selectedBag = FamilyManager.getFamily(new AnyOfTags("Bag"), new AllOfComponents(typeof(ReadyToWork)));
 
+    private Family f_soundObj = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank), typeof(AudioSource)));
+
     private GameObject descriptionUI;
     private GameObject descriptionTitle;
     private GameObject descriptionContent;
@@ -112,6 +114,8 @@ public class IARViewItem : FSystem {
         lastSelection = go;
         // display description of this new selection
         showDescription(go);
+        //Play sound effect when object is activate 
+        f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[11]);
         GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
         {
             verb = "read",
@@ -124,8 +128,10 @@ public class IARViewItem : FSystem {
     // when a selected game object leaves f_selected family, we update the last game object selected to the last game object of the family
     private void onSelectionRemoved(int instanceId)
     {
+        //Play sound effect when object is desactivate
+        f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[12]);
         if (f_selected.Count > 0)
-            lastSelection = f_selected.getAt(f_selected.Count - 1);
+            lastSelection = f_selected.getAt(f_selected.Count - 1);            
         else
             lastSelection = null;
 
@@ -139,6 +145,7 @@ public class IARViewItem : FSystem {
     // return true if UI with name "name" is selected into inventory
     private GameObject isSelected(string name)
     {
+        Debug.Log("obj selected");
         foreach (GameObject go in f_selected)
             if (go.name == name)
                 return go;
@@ -167,12 +174,14 @@ public class IARViewItem : FSystem {
                 GameObjectManager.setGameObjectState(descriptionInfo, false); // switch off the info
             }
             GameObjectManager.setGameObjectState(item.GetComponent<LinkedWith>().link, true); // switch on the linked game object
+            
         }
 
         // if item to display is not the last selection but this last selection is linked with antoher game object => we hide linked game object
         // of the last selection to avoid superpositions (except for glasses)
         if (item != lastSelection && lastSelection && lastSelection.GetComponent<LinkedWith>() && !lastSelection.name.Contains("Glasses"))
             GameObjectManager.setGameObjectState(lastSelection.GetComponent<LinkedWith>().link, false); // switch off the linked game object
+        
     }
 
     // Use this to update member variables when system pause. 

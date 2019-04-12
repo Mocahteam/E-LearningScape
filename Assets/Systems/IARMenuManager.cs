@@ -15,8 +15,9 @@ public class IARMenuManager : FSystem {
         if (Application.isPlaying)
         {
             f_buttons.getAt(0).GetComponentInChildren<Button>().onClick.AddListener(Resume);
-            f_buttons.getAt(1).GetComponentInChildren<Button>().onClick.AddListener(Restart);
-            f_buttons.getAt(2).GetComponentInChildren<Button>().onClick.AddListener(ExitGame);
+            //getAt(1) is game setting button and it doesn't need of IARMenuManager. It's just position at the second place 
+            f_buttons.getAt(2).GetComponentInChildren<Button>().onClick.AddListener(Restart);
+            f_buttons.getAt(3).GetComponentInChildren<Button>().onClick.AddListener(ExitGame);
         }
     }
 
