@@ -9,6 +9,7 @@ public class AccessibilitySystem : FSystem {
     //creation de famille qui recupere tous les components type Accessibility_settings
     private Family needUpdateFont_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFont), typeof(Accessibility_settings)));
 
+    private Family needUpdateFontColor_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontColor), typeof(Accessibility_settings)));
     private Family needUpdateFontSize_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontSize)));
     private Family needUpdateFontOutlineWidth_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontOutline)));
     private Family countourSlider_f = FamilyManager.getFamily(new AllOfComponents(typeof(Slider)), new AnyOfTags("TMP_Contour"));
@@ -41,6 +42,7 @@ public class AccessibilitySystem : FSystem {
             textContour_f.addEntryCallback(onNewTextMeshProEnabled);
             needUpdateColorAlpha_f.addEntryCallback(onNeedUpdateAlpha);
             needUpdateAnimation_f.addEntryCallback(onNeedUpdateAnimation);
+            needUpdateFontColor_f.addEntryCallback(onNeedUpdateFontColor);
 
             foreach (GameObject go in textWithMax_f)
             {
@@ -109,7 +111,42 @@ public class AccessibilitySystem : FSystem {
         }
         GameObjectManager.removeComponent<UpdateFontSize>(go);
     }
-    
+
+    private void onNeedUpdateFontColor (GameObject go)
+    {
+        Accessibility_settings accessSettings = go.GetComponent<Accessibility_settings>();
+        Color textFontColor;
+
+        if (!accessSettings.enableFontColor)
+            textFontColor = accessSettings.defaultFontColor;
+        else
+        {
+            textFontColor = accessSettings.couleur1;
+            /*foreach (Transform child in go.transform)
+            {
+                if (child.gameObject.name == "FontColor")
+                {
+                    foreach (Transform c in child)
+                    {
+                        if (c.gameObject.name == "jaune")
+                            textFontColor = accessSettings.color[0];
+                        
+                        if (c.gameObject.name == "rouge")
+                            textFontColor = accessSettings.color[1];
+                    }
+                }
+            }*/
+
+        }
+        foreach (GameObject textColor in text_f)
+        {
+            TMP_Text tmFontColor = textColor.GetComponent<TMP_Text>();
+            tmFontColor.color = textFontColor;
+        }
+        //}
+        GameObjectManager.removeComponent<UpdateFontColor>(go);
+    }
+
     //Script pour switcher entre police par défaut et police accessible 
     private void onNeedUpdateFont(GameObject go)
     {
