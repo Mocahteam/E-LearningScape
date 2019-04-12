@@ -7,10 +7,6 @@
 public class WrongAnswerInfo : MonoBehaviour {
     // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
     /// <summary>
-    /// ID of the ComponentMonitoring on which the action "Wrong" was performed
-    /// </summary>
-    public int componentMonitoringID = -1;
-    /// <summary>
     /// The wrong answer given by the player
     /// </summary>
     public string givenAnswer;

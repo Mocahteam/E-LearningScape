@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.IO;
 using FYFY_plugins.Monitoring;
 using Newtonsoft.Json;
+using System.Text;
+using System.Globalization;
 
 public class LoadGameContent : FSystem {
     
@@ -258,7 +260,7 @@ public class LoadGameContent : FSystem {
                     }
                     forGO.GetComponent<QuerySolution>().andSolutions = new List<string>();
                     foreach (string s in gameContent.greenFragmentAnswer)
-                        forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(StringToAnswer(s)));
+                        forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
                     break;
 
                 default:
@@ -807,7 +809,7 @@ public class LoadGameContent : FSystem {
         {
             try
             {
-                gameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>>(File.ReadAllText(gameContent.hintsPath));
+                gameHints.dictionary = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<KeyValuePair<string, List<string>>>>>>(File.ReadAllText(gameContent.hintsPath));
             }
             catch (Exception)
             {
@@ -815,7 +817,7 @@ public class LoadGameContent : FSystem {
                 File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid content in the file containting hints"));
             }
             if (gameHints.dictionary == null)
-                gameHints.dictionary = new Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>>();
+                gameHints.dictionary = new Dictionary<string, Dictionary<string, List<KeyValuePair<string, List<string>>>>>();
         }
         else
         {
@@ -982,14 +984,22 @@ public class LoadGameContent : FSystem {
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));
     }
 
-    private string StringToAnswer(string answer)
+    public static string StringToAnswer(string answer)
     {
-        // format answer
-        answer = answer.Replace('é', 'e');
-        answer = answer.Replace('è', 'e');
-        answer = answer.Replace('à', 'a');
-        answer = answer.ToUpper();
-        return answer;
+        // format answer, remove accents and upper case
+        var normalizedString = answer.Normalize(NormalizationForm.FormD);
+        var stringBuilder = new StringBuilder();
+
+        foreach (var c in normalizedString)
+        {
+            var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+            if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+            {
+                stringBuilder.Append(c);
+            }
+        }
+
+        return stringBuilder.ToString().Normalize(NormalizationForm.FormC).ToUpper();
     }
 
     /// <summary>

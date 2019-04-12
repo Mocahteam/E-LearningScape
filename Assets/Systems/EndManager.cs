@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using FYFY;
 using FYFY_plugins.Monitoring;
+using System.Collections.Generic;
 
 public class EndManager : FSystem {
 
@@ -44,7 +45,7 @@ public class EndManager : FSystem {
         {
             switchToEndRoom = true;
 
-            GameObjectManager.addComponent<ActionPerformed>(f_player.First(), new { name = "perform", performedBy = "system" });
+            GameObjectManager.addComponent<ActionPerformed>(f_player.First(), new { overrideName = "teleportToFinalScene", performedBy = "system" });
             GameObjectManager.addComponent<ActionPerformedForLRS>(f_questionR3.First().transform.parent.parent.gameObject, new
             {
                 verb = "completed",
@@ -102,19 +103,13 @@ public class EndManager : FSystem {
                 if (child.gameObject.GetComponent<MeshRenderer>())
                     child.gameObject.GetComponent<MeshRenderer>().allowOcclusionWhenDynamic = false;
 
-            // disable all systems except DreamFragmentCollect, MovingSystem and this
-            foreach (FSystem sys in FSystemManager.fixedUpdateSystems())
-                sys.Pause = true;
-            foreach (FSystem sys in FSystemManager.updateSystems())
-                sys.Pause = true;
-            foreach (FSystem sys in FSystemManager.lateUpdateSystems())
-                sys.Pause = true;
-            ActionsManager.instance.Pause = !LoadGameContent.gameContent.trace;
-            SendStatements.instance.Pause = false;
-            HelpSystem.instance.Pause = false;
-            DreamFragmentCollecting.instance.Pause = false;
-            MovingSystem.instance.Pause = false;
-            this.Pause = false;
+            // disable all systems except this, DreamFragmentCollect, MovingSystem, SendStatements and ActionsManager
+            List<FSystem> allSystems = new List<FSystem>(FSystemManager.fixedUpdateSystems());
+            allSystems.AddRange(FSystemManager.updateSystems());
+            allSystems.AddRange(FSystemManager.lateUpdateSystems());
+            foreach (FSystem syst in allSystems)
+                if (syst != this && syst != DreamFragmentCollecting.instance && syst != MovingSystem.instance && syst != SendStatements.instance && syst != ActionsManager.instance)
+                    syst.Pause = true;
         }
 
         if (whiteToAlpha && Time.time - fadingStart < fadingTimer)

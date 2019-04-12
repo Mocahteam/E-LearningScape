@@ -83,8 +83,11 @@ public class StoryDisplaying : FSystem {
 	// Advice: avoid to update your families inside this function.
 	protected override void onResume(int currentFrame)
     {
-        // Stop all systems except this and ActionManager
-        foreach (FSystem syst in FSystemManager.updateSystems())
+        // Stop all systems except this, ActionManager, SendStatements and HelpSystem
+        List<FSystem> allSystems = new List<FSystem>(FSystemManager.fixedUpdateSystems());
+        allSystems.AddRange(FSystemManager.updateSystems());
+        allSystems.AddRange(FSystemManager.lateUpdateSystems());
+        foreach (FSystem syst in allSystems)
             if (syst != this && syst != ActionsManager.instance && syst != SendStatements.instance && syst != HelpSystem.instance)
                 syst.Pause = true;
         // Enable UI Story

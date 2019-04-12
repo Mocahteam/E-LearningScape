@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-7900-9235F-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-7108-26684-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma1</text>
   </name>
- <page id="g-7900-92367-1">
-  <place id="p-7900-9236A-2">
+ <page id="g-7108-2668E-1">
+  <place id="p-7108-26691-2">
   <name>
    <text>BallBox_off_7</text>
     <graphics>
@@ -16,10 +16,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="345" y="150"/>
+    <position x="335" y="150"/>
    </graphics>
   </place>
-  <place id="p-7900-92377-3">
+  <place id="p-7108-2669D-3">
   <name>
    <text>BallBox_on_7</text>
     <graphics>
@@ -27,10 +27,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="505" y="150"/>
+    <position x="495" y="150"/>
    </graphics>
   </place>
-  <transition id="t-7900-9237A-4">
+  <transition id="t-7108-266A0-4">
   <name>
    <text>BallBox_turnOff_7</text>
     <graphics>
@@ -38,10 +38,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="425" y="120"/>
+    <position x="415" y="120"/>
    </graphics>
   </transition>
-  <transition id="t-7900-9237D-5">
+  <transition id="t-7108-266A4-5">
   <name>
    <text>BallBox_turnOn_7</text>
     <graphics>
@@ -49,10 +49,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="425" y="210"/>
+    <position x="415" y="210"/>
    </graphics>
   </transition>
-  <place id="p-7900-92380-6">
+  <place id="p-7108-266A6-6">
   <name>
    <text>KeyE03_end_5</text>
     <graphics>
@@ -60,10 +60,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="205" y="400"/>
+    <position x="195" y="400"/>
    </graphics>
   </place>
-  <place id="p-7900-92383-7">
+  <place id="p-7108-266AA-7">
   <name>
    <text>KeyE03_off_6</text>
     <graphics>
@@ -77,7 +77,7 @@
     <position x="335" y="340"/>
    </graphics>
   </place>
-  <place id="p-7900-92384-8">
+  <place id="p-7108-266AC-8">
   <name>
    <text>KeyE03_on_6</text>
     <graphics>
@@ -88,7 +88,7 @@
     <position x="515" y="340"/>
    </graphics>
   </place>
-  <transition id="t-7900-92387-9">
+  <transition id="t-7108-266AF-9">
   <name>
    <text>KeyE03_perform_5</text>
     <graphics>
@@ -96,10 +96,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="135" y="400"/>
+    <position x="130" y="385"/>
    </graphics>
   </transition>
-  <place id="p-7900-92389-10">
+  <place id="p-7108-266B2-10">
   <name>
    <text>KeyE03_start_5</text>
     <graphics>
@@ -113,7 +113,7 @@
     <position x="55" y="400"/>
    </graphics>
   </place>
-  <transition id="t-7900-9238D-11">
+  <transition id="t-7108-266B5-11">
   <name>
    <text>KeyE03_turnOn_6</text>
     <graphics>
@@ -121,10 +121,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="425" y="400"/>
+    <position x="415" y="400"/>
    </graphics>
   </transition>
-  <place id="p-7900-9238F-12">
+  <place id="p-7108-266B7-12">
   <name>
    <text>Padlock_end_8</text>
     <graphics>
@@ -132,10 +132,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="765" y="250"/>
+    <position x="755" y="250"/>
    </graphics>
   </place>
-  <transition id="t-7900-92392-13">
+  <transition id="t-7108-266BA-13">
   <name>
    <text>Padlock_perform_8</text>
     <graphics>
@@ -143,10 +143,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="685" y="250"/>
+    <position x="675" y="235"/>
    </graphics>
   </transition>
-  <place id="p-7900-92395-14">
+  <place id="p-7108-266BD-14">
   <name>
    <text>Padlock_start_8</text>
     <graphics>
@@ -157,10 +157,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="605" y="250"/>
+    <position x="595" y="250"/>
    </graphics>
   </place>
-  <place id="p-7900-92397-15">
+  <place id="p-7108-266C0-15">
   <name>
    <text>Q1_Answered_24</text>
     <graphics>
@@ -168,10 +168,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1565" y="110"/>
+    <position x="1555" y="110"/>
    </graphics>
   </place>
-  <place id="p-7900-9239A-16">
+  <place id="p-7108-266C3-16">
   <name>
    <text>Q1_Answering_24</text>
     <graphics>
@@ -182,10 +182,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="1305" y="110"/>
+    <position x="1295" y="110"/>
    </graphics>
   </place>
-  <transition id="t-7900-9239C-17">
+  <transition id="t-7108-266C5-17">
   <name>
    <text>Q1_Correct_24</text>
     <graphics>
@@ -193,10 +193,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1445" y="50"/>
+    <position x="1435" y="50"/>
    </graphics>
   </transition>
-  <place id="p-7900-9239F-18">
+  <place id="p-7108-266C8-18">
   <name>
    <text>SphereSolution01_ActivationCount_9</text>
     <graphics>
@@ -204,10 +204,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1125" y="90"/>
+    <position x="1115" y="90"/>
    </graphics>
   </place>
-  <transition id="t-7900-923DD-19">
+  <transition id="t-7108-26716-19">
   <name>
    <text>SphereSolution01_activate_9</text>
     <graphics>
@@ -215,10 +215,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1005" y="90"/>
+    <position x="995" y="75"/>
    </graphics>
   </transition>
-  <place id="p-7900-923E1-20">
+  <place id="p-7108-2671B-20">
   <name>
    <text>SphereSolution02_ActivationCount_10</text>
     <graphics>
@@ -226,10 +226,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1125" y="170"/>
+    <position x="1115" y="170"/>
    </graphics>
   </place>
-  <transition id="t-7900-923E5-21">
+  <transition id="t-7108-2671F-21">
   <name>
    <text>SphereSolution02_activate_10</text>
     <graphics>
@@ -237,10 +237,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1005" y="170"/>
+    <position x="995" y="155"/>
    </graphics>
   </transition>
-  <place id="p-7900-923E8-22">
+  <place id="p-7108-26722-22">
   <name>
    <text>SphereSolution03_ActivationCount_11</text>
     <graphics>
@@ -248,10 +248,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1105" y="250"/>
+    <position x="1095" y="250"/>
    </graphics>
   </place>
-  <transition id="t-7900-923ED-23">
+  <transition id="t-7108-26726-23">
   <name>
    <text>SphereSolution03_activate_11</text>
     <graphics>
@@ -259,74 +259,74 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1005" y="250"/>
+    <position x="995" y="240"/>
    </graphics>
   </transition>
-  <arc id="e-7900-923F3-24" source="p-7900-923E8-22" target="t-7900-9239C-17">
+  <arc id="e-7108-2672E-24" source="t-7108-266BA-13" target="p-7108-266B7-12">
+  </arc>
+  <arc id="e-7108-26730-25" source="t-7108-266A0-4" target="p-7108-26691-2">
+  </arc>
+  <arc id="e-7108-26733-26" source="p-7108-266A6-6" target="t-7108-266B5-11">
    <type value="test"/>
   </arc>
-  <arc id="e-7900-923F7-25" source="p-7900-92395-14" target="t-7900-92392-13">
+  <arc id="e-7108-26736-27" source="p-7108-266AA-7" target="t-7108-266B5-11">
   </arc>
-  <arc id="e-7900-923F8-26" source="p-7900-92377-3" target="t-7900-92392-13">
+  <arc id="e-7108-26737-28" source="t-7108-266B5-11" target="p-7108-266AC-8">
+  </arc>
+  <arc id="e-7108-26737-29" source="p-7108-266B7-12" target="t-7108-26726-23">
    <type value="test"/>
   </arc>
-  <arc id="e-7900-923F9-27" source="p-7900-92384-8" target="t-7900-92392-13">
+  <arc id="e-7108-26739-30" source="p-7108-2669D-3" target="t-7108-26726-23">
    <type value="test"/>
   </arc>
-  <arc id="e-7900-923FA-28" source="t-7900-923DD-19" target="p-7900-9239F-18">
-  </arc>
-  <arc id="e-7900-923FB-29" source="p-7900-92377-3" target="t-7900-923DD-19">
+  <arc id="e-7108-2673A-31" source="p-7108-2671B-20" target="t-7108-266C5-17">
    <type value="test"/>
   </arc>
-  <arc id="e-7900-923FD-30" source="p-7900-9238F-12" target="t-7900-923DD-19">
+  <arc id="e-7108-2673B-32" source="t-7108-26726-23" target="p-7108-26722-22">
+  </arc>
+  <arc id="e-7108-2673C-33" source="p-7108-266B7-12" target="t-7108-2671F-21">
    <type value="test"/>
   </arc>
-  <arc id="e-7900-923FD-31" source="t-7900-923E5-21" target="p-7900-923E1-20">
-  </arc>
-  <arc id="e-7900-923FE-32" source="p-7900-92377-3" target="t-7900-923E5-21">
+  <arc id="e-7108-2673D-34" source="p-7108-2669D-3" target="t-7108-2671F-21">
    <type value="test"/>
   </arc>
-  <arc id="e-7900-92400-33" source="p-7900-9238F-12" target="t-7900-923E5-21">
+  <arc id="e-7108-26740-35" source="p-7108-266B2-10" target="t-7108-266AF-9">
+  </arc>
+  <arc id="e-7108-26741-36" source="t-7108-2671F-21" target="p-7108-2671B-20">
+  </arc>
+  <arc id="e-7108-26742-37" source="p-7108-266B7-12" target="t-7108-26716-19">
    <type value="test"/>
   </arc>
-  <arc id="e-7900-92402-34" source="t-7900-923ED-23" target="p-7900-923E8-22">
-  </arc>
-  <arc id="e-7900-92403-35" source="p-7900-923E1-20" target="t-7900-9239C-17">
+  <arc id="e-7108-26743-38" source="p-7108-2669D-3" target="t-7108-26716-19">
    <type value="test"/>
   </arc>
-  <arc id="e-7900-92403-36" source="p-7900-92377-3" target="t-7900-923ED-23">
+  <arc id="e-7108-26744-39" source="t-7108-26716-19" target="p-7108-266C8-18">
+  </arc>
+  <arc id="e-7108-26745-40" source="p-7108-266AC-8" target="t-7108-266BA-13">
    <type value="test"/>
   </arc>
-  <arc id="e-7900-92405-37" source="p-7900-9238F-12" target="t-7900-923ED-23">
+  <arc id="e-7108-26746-41" source="p-7108-2669D-3" target="t-7108-266BA-13">
    <type value="test"/>
   </arc>
-  <arc id="e-7900-92406-38" source="t-7900-9238D-11" target="p-7900-92384-8">
+  <arc id="e-7108-26747-42" source="p-7108-266BD-14" target="t-7108-266BA-13">
   </arc>
-  <arc id="e-7900-92406-39" source="p-7900-92383-7" target="t-7900-9238D-11">
-  </arc>
-  <arc id="e-7900-92407-40" source="p-7900-92380-6" target="t-7900-9238D-11">
+  <arc id="e-7108-26748-43" source="p-7108-26722-22" target="t-7108-266C5-17">
    <type value="test"/>
   </arc>
-  <arc id="e-7900-92408-41" source="t-7900-9237A-4" target="p-7900-9236A-2">
+  <arc id="e-7108-2674B-44" source="t-7108-266AF-9" target="p-7108-266A6-6">
   </arc>
-  <arc id="e-7900-92409-42" source="t-7900-9237D-5" target="p-7900-92377-3">
+  <arc id="e-7108-2674B-45" source="t-7108-266C5-17" target="p-7108-266C0-15">
   </arc>
-  <arc id="e-7900-9240B-43" source="p-7900-9236A-2" target="t-7900-9237D-5">
+  <arc id="e-7108-2674C-46" source="p-7108-266C3-16" target="t-7108-266C5-17">
   </arc>
-  <arc id="e-7900-9240C-44" source="p-7900-9239F-18" target="t-7900-9239C-17">
+  <arc id="e-7108-2674D-47" source="p-7108-2669D-3" target="t-7108-266A0-4">
+  </arc>
+  <arc id="e-7108-2674F-48" source="p-7108-266C8-18" target="t-7108-266C5-17">
    <type value="test"/>
   </arc>
-  <arc id="e-7900-9240D-45" source="p-7900-92377-3" target="t-7900-9237A-4">
+  <arc id="e-7108-2674F-49" source="p-7108-26691-2" target="t-7108-266A4-5">
   </arc>
-  <arc id="e-7900-9240E-46" source="p-7900-9239A-16" target="t-7900-9239C-17">
-  </arc>
-  <arc id="e-7900-9240F-47" source="t-7900-9239C-17" target="p-7900-92397-15">
-  </arc>
-  <arc id="e-7900-92410-48" source="t-7900-92387-9" target="p-7900-92380-6">
-  </arc>
-  <arc id="e-7900-92411-49" source="p-7900-92389-10" target="t-7900-92387-9">
-  </arc>
-  <arc id="e-7900-92412-50" source="t-7900-92392-13" target="p-7900-9238F-12">
+  <arc id="e-7108-26750-50" source="t-7108-266A4-5" target="p-7108-2669D-3">
   </arc>
  </page>
  </net>
