@@ -64,7 +64,9 @@ public class StoryDisplaying : FSystem {
             storyTexts = new List<List<string>>();
             storyTexts.Add(new List<string>(st.intro));
             storyTexts.Add(new List<string>(st.transition));
-            storyTexts.Add(new List<string>(st.end));
+            List<string> epilog = new List<string>(st.end);
+            epilog.AddRange(st.credit);
+            storyTexts.Add(epilog);
 
             GameObjectManager.addComponent<Timer>(f_game.First());
 

@@ -8,7 +8,7 @@ using FYFY_plugins.Monitoring;
 
 public class LoginManager : FSystem {
 
-    // this system manage the login panel
+    // this system manage the login panel (mastermind)
 
     private Family f_focusedLogin = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(ReadyToWork)));
     private Family f_closeLogin = FamilyManager.getFamily(new AnyOfTags("Login", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
@@ -63,30 +63,23 @@ public class LoginManager : FSystem {
         if (Application.isPlaying)
         {
             f_mainWindow.First().GetComponentInChildren<Button>().onClick.AddListener(CheckConnection);
-            foreach (InputField inputField in f_mainWindow.First().GetComponentsInChildren<InputField>())
-            {
-                if (inputField.gameObject.name == "Password")
-                {
-                    // Add listeners
-                    inputField.onEndEdit.AddListener(delegate {
-                        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                        {
-                            CheckConnection();
-                        }
-                    });
+            InputField inputField = f_mainWindow.First().GetComponentInChildren<InputField>();
+            // Add listeners
+            inputField.onEndEdit.AddListener(delegate {
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                    CheckConnection();
+            });
 
-                    ifConnectionR2 = inputField;
+            ifConnectionR2 = inputField;
 
-                    // get fourth child of the password and backup answer UI notifications
-                    GameObject answerCheck = inputField.gameObject.transform.GetChild(3).gameObject;
-                    connectionAnswerCheck1 = answerCheck.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                    cacGreen = connectionAnswerCheck1.color;
-                    connectionAnswerCheck2 = answerCheck.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-                    cacOrange = connectionAnswerCheck2.color;
-                    connectionAnswerCheck3 = answerCheck.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-                    cacRed = connectionAnswerCheck3.color;
-                }
-            }
+            // get fourth child of the password and backup answer UI notifications
+            GameObject answerCheck = inputField.gameObject.transform.GetChild(3).gameObject;
+            connectionAnswerCheck1 = answerCheck.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            cacGreen = connectionAnswerCheck1.color;
+            connectionAnswerCheck2 = answerCheck.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            cacOrange = connectionAnswerCheck2.color;
+            connectionAnswerCheck3 = answerCheck.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+            cacRed = connectionAnswerCheck3.color;
 
             f_loginUnlocked.addEntryCallback(onLoginUnlocked);
             f_focusedLogin.addEntryCallback(onReadyToWorkOnLogin);
@@ -137,8 +130,6 @@ public class LoginManager : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
     {
-        if(f_pointerOver.Count > 0)
-            Debug.Log(f_pointerOver.First().name);
         if (selectedLoginPanel)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed (because Escape close IAR)
@@ -225,6 +216,8 @@ public class LoginManager : FSystem {
     {
         int answer;
         int.TryParse(ifConnectionR2.text, out answer);
+        if (ifConnectionR2.text == "")
+            answer = -1;
 
         if (answer == passwordSolution) //if the answer is correct
         {
@@ -267,12 +260,12 @@ public class LoginManager : FSystem {
             ifConnectionR2.ActivateInputField();
             //else, feedback following the rules of mastermind ('O' correct, '?' right number but wrong place, 'X' wrong number)
             f_mainWindow.First().GetComponentInChildren<InputField>().ActivateInputField();
-            if (answer / 100 == passwordSolution / 100)
+            if (answer >= 100 && answer / 100 == passwordSolution / 100)
             {
                 connectionAnswerCheck1.text = "O";
                 connectionAnswerCheck1.color = cacGreen;
             }
-            else if (passwordSolution.ToString().Contains((answer / 100).ToString()))
+            else if (answer >= 100 && passwordSolution.ToString().Contains((answer / 100).ToString()))
             {
                 connectionAnswerCheck1.text = "?";
                 connectionAnswerCheck1.color = cacOrange;
@@ -283,12 +276,12 @@ public class LoginManager : FSystem {
                 connectionAnswerCheck1.color = cacRed;
             }
 
-            if (answer / 10 % 10 == passwordSolution / 10 % 10)
+            if (answer >= 10 && answer / 10 % 10 == passwordSolution / 10 % 10)
             {
                 connectionAnswerCheck2.text = "O";
                 connectionAnswerCheck2.color = cacGreen;
             }
-            else if (passwordSolution.ToString().Contains((answer / 10 % 10).ToString()))
+            else if (answer >= 10 && passwordSolution.ToString().Contains((answer / 10 % 10).ToString()))
             {
                 connectionAnswerCheck2.text = "?";
                 connectionAnswerCheck2.color = cacOrange;
@@ -299,12 +292,12 @@ public class LoginManager : FSystem {
                 connectionAnswerCheck2.color = cacRed;
             }
 
-            if (answer % 10 == passwordSolution % 10)
+            if (answer >= 0 && answer % 10 == passwordSolution % 10)
             {
                 connectionAnswerCheck3.text = "O";
                 connectionAnswerCheck3.color = cacGreen;
             }
-            else if (passwordSolution.ToString().Contains((answer % 10).ToString()))
+            else if (answer >= 10 && passwordSolution.ToString().Contains((answer % 10).ToString()))
             {
                 connectionAnswerCheck3.text = "?";
                 connectionAnswerCheck3.color = cacOrange;

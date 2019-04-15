@@ -197,7 +197,7 @@ public class HelpSystem : FSystem {
                 labelWeights = f_labelWeights.First().GetComponent<LabelWeights>().weights;
 
 
-                TODO: Revoir tout ça pour être plus générique
+                //TODO: Revoir tout ça pour être plus générique
 
                 //Initialize checkEnigmaOrderMeta with the Petri net id and the corresponding ComponentMonitoring int the meta Petri net
                 //has to be changed if ComponentMonitoring ids are modified
@@ -622,7 +622,7 @@ public class HelpSystem : FSystem {
                 if (int.TryParse(tmpStringArray[tmpStringArray.Length - 1], out monitorID))
                 {
                     //if the monitor id of the wrong answer and the given answer are in the dictionary
-                    if(monitorID == wrongAnswerArray[i].componentMonitoringID && gameHints.wrongAnswerFeedbacks[key].ContainsKey(wrongAnswerArray[i].givenAnswer))
+                    //if(monitorID == wrongAnswerArray[i].componentMonitoringID && gameHints.wrongAnswerFeedbacks[key].ContainsKey(wrongAnswerArray[i].givenAnswer))
                     {
                         //display feedback in hint list in IAR
                         string hintText = "";
@@ -940,7 +940,7 @@ public class HelpSystem : FSystem {
     {
         string key = "";
 
-        TODO: Revoir tout ça pour être plus générique
+        //TODO: Revoir tout ça pour être plus générique
 
         if (monitor.gameObject.tag.Contains("Q-R"))
         {
@@ -1095,7 +1095,7 @@ public class HelpSystem : FSystem {
         List<KeyValuePair<ComponentMonitoring, string>> triggerableActions = MonitoringManager.getTriggerableActions();
         List<int> rdpIDs = null;
 
-        TODO: Revoir le switch dessous pour être plus générique
+        //TODO: Revoir le switch dessous pour être plus générique
 
         //get Petri nets ids depending on the room selected
         switch (room)

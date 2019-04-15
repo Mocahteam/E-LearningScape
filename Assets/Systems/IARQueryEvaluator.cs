@@ -96,21 +96,11 @@ public class IARQueryEvaluator : FSystem {
         }
     }
 
-    private string StringToAnswer(string answer)
-    {
-        // format answer
-        answer = answer.Replace('é', 'e');
-        answer = answer.Replace('è', 'e');
-        answer = answer.Replace('à', 'a');
-        answer = answer.ToUpper();
-        return answer;
-    }
-
     private void CheckAnswer(GameObject query)
     {
         string answer = query.GetComponentInChildren<InputField>().text; //player's answer
         // format answer
-        answer = StringToAnswer(answer);
+        answer = LoadGameContent.StringToAnswer(answer);
         // get query
         QuerySolution qs = query.GetComponent<QuerySolution>();
         // Check mandatory solution
@@ -136,26 +126,37 @@ public class IARQueryEvaluator : FSystem {
                 }
             }
         }
+
+        GameObjectManager.addComponent<ActionPerformedForLRS>(query, new
+        {
+            verb = "answered",
+            objectType = "question",
+            objectName = string.Concat(query.name, "-", query.tag),
+            result = true,
+            success = error ? -1 : 1,
+            response = answer
+        });
+
         if (error)
         {
             // notify player error
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 1 });
             GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Wrong", performedBy = "player" });
 
-            Dans le système qui gère les WrongAnswerInfo prendre en compte le cas des réponses où l'ordre n'importe pas
+            //Dans le système qui gère les WrongAnswerInfo prendre en compte le cas des réponses où l'ordre n'importe pas
             GameObjectManager.addComponent<WrongAnswerInfo>(query, new { givenAnswer = answer });
 
-            Normalement ici je ne devrais à faire que 
+            /*Normalement ici je ne devrais à faire que 
                 1 Action perform sur la question avec l'action Wrong => le ActionPerformed requiert un ComponentMonitoring ce qui n'est pas le cas pour les dernières questions
 
                 Transformer les réseaux de Petri
                     Pour chaque enigme faire un rx dont l'action finale sera de dire si l'énigme a été résolue => permet de connaitre les actions à faire pour terminer cette énigme
-                    Faire un Rdp pour chaque question => chacun contient l'action Wrong et le succès est connecté à une place qui est alimentée par quatres transitions qui modélisent si la bonne réponse d'une question a été trouvée. Si le Wrong est tiré on peut ainsi savoir quelle énigme il reste à résoudre. Si le joueur répond correctement à une question il faut donc exécuté la validation de l'énigme dans le réseau propre à chaque énigme et aussi valider l'execution de l'énigme dans chacun des Rdp des énigmes...
+                    Faire un Rdp pour chaque question => chacun contient l'action Wrong et le succès est connecté à une place qui est alimentée par quatres transitions qui modélisent si la bonne réponse d'une question a été trouvée. Si le Wrong est tiré on peut ainsi savoir quelle énigme il reste à résoudre. Si le joueur répond correctement à une question il faut donc exécuté la validation de l'énigme dans le réseau propre à chaque énigme et aussi valider l'execution de l'énigme dans chacun des Rdp des énigmes...*/
 
 
             if (query.tag == "Q-R3")
             {
-                if (availableOrSolutions.Contains(StringToAnswer(LoadGameContent.gameContent.puzzleAnswer)))
+                if (availableOrSolutions.Contains(LoadGameContent.StringToAnswer(LoadGameContent.gameContent.puzzleAnswer)))
                 {
                     if (LoadGameContent.gameContent.virtualPuzzle)
                     {
@@ -168,17 +169,17 @@ public class IARQueryEvaluator : FSystem {
                         GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 110, givenAnswer = answer });
                     }
                 }
-                if (availableOrSolutions.Contains(StringToAnswer(LoadGameContent.gameContent.lampAnswer)))
+                if (availableOrSolutions.Contains(LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer)))
                 {
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong12", performedBy = "player" });
                     GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 122, givenAnswer = answer });
                 }
-                if (availableOrSolutions.Contains(StringToAnswer(LoadGameContent.gameContent.enigma12Answer)))
+                if (availableOrSolutions.Contains(LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma12Answer)))
                 {
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong13", performedBy = "player" });
                     GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 126, givenAnswer = answer });
                 }
-                if (availableOrSolutions.Contains(StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer)))
+                if (availableOrSolutions.Contains(LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer)))
                 {
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong14", performedBy = "player" });
                     GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 142, givenAnswer = answer });
@@ -220,8 +221,6 @@ public class IARQueryEvaluator : FSystem {
                     }
                 }
             }
-            GameObjectManager.addComponent<ActionPerformedForLRS>(query, new { verb = "answered", objectType = "question",
-                objectName = string.Concat(query.name, "-", query.tag), result = true, success = -1, response = answer });
         }
         else
         {
@@ -230,34 +229,25 @@ public class IARQueryEvaluator : FSystem {
 
             GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });
             GameObjectManager.addComponent<ActionPerformed>(query, new { name = "perform", performedBy = "system" }); // meta
-            GameObjectManager.addComponent<ActionPerformedForLRS>(query, new
-            {
-                verb = "answered",
-                objectType = "question",
-                objectName = string.Concat(query.name, "-", query.tag),
-                result = true,
-                success = 1,
-                response = answer
-            });
 
             if (query.tag == "Q-R3")
             {
-                if(answer == StringToAnswer(LoadGameContent.gameContent.puzzleAnswer))
+                if(answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.puzzleAnswer))
                 {
                     if (LoadGameContent.gameContent.virtualPuzzle)
                         GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct11_1", performedBy = "player" });
                     else
                         GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct11_2", performedBy = "player" });
                 }
-                else if (answer == StringToAnswer(LoadGameContent.gameContent.lampAnswer))
+                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer))
                 {
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct12", performedBy = "player" });
                 }
-                else if (answer == StringToAnswer(LoadGameContent.gameContent.enigma12Answer))
+                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma12Answer))
                 {
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct13", performedBy = "player" });
                 }
-                else if (answer == StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer))
+                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer))
                 {
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct14", performedBy = "player" });
                 }
@@ -270,30 +260,40 @@ public class IARQueryEvaluator : FSystem {
                     GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = "orCorrect", performedBy = "player" });
             }
 
+            // set final answer for third room (due to OR options)
+            if (query.tag == "Q-R3")
+                query.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = answer;
+
             // Toggle UI element (hide input text and button and show answer)
             for (int i = 1; i < query.transform.childCount; i++)
             {
                 GameObject child = query.transform.GetChild(i).gameObject;
                 GameObjectManager.setGameObjectState(child, !child.activeSelf);
-
-            }
-            // set final answer for third room
-            if (query.tag == "Q-R3")
-                query.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = answer;
-
-            List<string> feedbackTexts = new List<string>();
-            foreach (Transform child in query.transform.GetChild(3))
-                feedbackTexts.Add(child.gameObject.GetComponent<TextMeshProUGUI>().text);
-            GameObjectManager.addComponent<ActionPerformedForLRS>(query, new
-            {
-                verb = "received",
-                objectType = "feedback",
-                objectName = string.Concat(query.name, "-", query.tag, "_feedback"),
-                activityExtensions = new Dictionary<string, List<string>>() {
-                    { "content", feedbackTexts },
-                    { "type", new List<string>() { "answer description" } }
+                // Trace to LRS displayed immediate feedback
+                if (i == 3)
+                {
+                    List<string> feedbackTexts = new List<string>();
+                    foreach (Transform grandSon in child.transform)
+                    {
+                        TextMeshProUGUI tmp = grandSon.gameObject.GetComponent<TextMeshProUGUI>();
+                        if (tmp && tmp.text != "")
+                            feedbackTexts.Add(grandSon.gameObject.GetComponent<TextMeshProUGUI>().text);
+                    }
+                    if (feedbackTexts.Count > 0)
+                    {
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(query, new
+                        {
+                            verb = "received",
+                            objectType = "feedback",
+                            objectName = string.Concat(query.name, "-", query.tag, "_feedback"),
+                            activityExtensions = new Dictionary<string, List<string>>() {
+                                { "content", feedbackTexts },
+                                { "type", new List<string>() { "answer description" } }
+                            }
+                        });
+                    }
                 }
-            });
+            }
 
             // if linked hide item in inventory
             foreach (LinkedWith item in query.GetComponents<LinkedWith>())
