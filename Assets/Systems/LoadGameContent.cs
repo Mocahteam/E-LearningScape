@@ -100,6 +100,7 @@ public class LoadGameContent : FSystem {
                 gameContent = new GameContent();
                 gameContent = JsonUtility.FromJson<GameContent>(defaultGameContent.jsonFile.text);
 
+                File.WriteAllBytes(string.Concat("Data/", defaultGameContent.mastermindPicture.name, ".png"), defaultGameContent.mastermindPicture.EncodeToPNG());
                 int l = defaultGameContent.glassesPictures.Length;
                 for(int i = 0; i < l; i++)
                 {

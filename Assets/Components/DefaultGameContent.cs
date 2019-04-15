@@ -47,6 +47,10 @@ public class DefaultGameContent : MonoBehaviour {
     public TextAsset dreamFragmentlinks;
 
     /// <summary>
+    /// Picture for the Login panel (mastermind)
+    /// </summary>
+    public Texture2D mastermindPicture;
+    /// <summary>
     /// Pictures for the glasses enigma
     /// </summary>
     public Texture2D[] glassesPictures;
