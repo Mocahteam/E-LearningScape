@@ -2,6 +2,7 @@
 using FYFY;
 using UnityEngine.UI;
 using UnityEngine.PostProcessing;
+using System.Collections.Generic;
 
 public class MenuSystem : FSystem {
 
@@ -118,9 +119,12 @@ public class MenuSystem : FSystem {
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
     {
-        // Pause all systems except this
-        foreach (FSystem syst in FSystemManager.updateSystems())
-            if (syst != this && syst != LogoDisplaying.instance && syst != SendStatements.instance)
+        // Pause all systems except this, LogoDisplaying, SendStatements and HelpSystem
+        List<FSystem> allSystems = new List<FSystem>(FSystemManager.fixedUpdateSystems());
+        allSystems.AddRange(FSystemManager.updateSystems());
+        allSystems.AddRange(FSystemManager.lateUpdateSystems());
+        foreach (FSystem syst in allSystems)
+            if (syst != this && syst != LogoDisplaying.instance && syst != SendStatements.instance && syst != HelpSystem.instance)
                 syst.Pause = true;
         // Set particular effects
         RenderSettings.fogDensity = 0.005f;

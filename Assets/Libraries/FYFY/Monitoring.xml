@@ -322,6 +322,14 @@
             <param name="linksConcerned">links label concerned by this action. You can leave empty if only "*" operators are used in logic expression. Must be defined if logic expression associated to the action include "+" operators. For instance, if logic expression is "(l0+l1)*l3" you have to indicate which links to use to look for the trace: l0 and l3 OR l1 and l3 =&gt; <code>MonitoringManager.getNextActionToReach(..., "l0", "l3");</code> OR <code>MonitoringManager.getNextActionToReach(..., "l1", "l3");</code></param>
             <return>List of Pairs including a ComponentMonitoring and its associated game action useful to reach the targeted action, the number of actions returned is less or equal to maxActions parameters.</return>
         </member>
+        <member name="M:FYFY_plugins.Monitoring.MonitoringManager.getNextActionsToReachPlayerObjective(System.String,System.Int32)">
+            <summary>
+            	Get next actions to perform in order to reach the player objective of the Petri net.
+            </summary>
+            <param name="pnName">The Petri net name to process.</param>
+            <param name="maxActions">Maximum number of actions returned.</param>
+            <return>List of Pairs including a ComponentMonitoring and its associated game action useful to reach the player objective, the number of actions returned is less or equal to maxActions parameters.</return>
+        </member>
         <member name="M:FYFY_plugins.Monitoring.MonitoringManager.getTriggerableActions">
             <summary>Ask to Laalys to provide all triggerable actions</summary>
             <return>List of Pairs including a ComponentMonitoring and its associated game action that may be triggered.</return>
@@ -334,6 +342,11 @@
         </member>
         <member name="F:FYFY_plugins.Monitoring.MonitoringManager.Source.PLAYER">
             <summary></summary>
+        </member>
+        <member name="T:ReadOnlyAttribute">
+            <summary>
+            	Add [ReadOnly] meta tag to avoid to modify property in Inspector
+            </summary>
         </member>
         <member name="T:FYFY_plugins.Monitoring.TransitionLink">
             <summary>
