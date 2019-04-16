@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-5944-CC9E8-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-A334-EEA94-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma6</text>
   </name>
- <page id="g-5944-CC9F2-1">
-  <place id="p-5944-CC9F4-2">
+ <page id="g-A334-EEA9E-1">
+  <place id="p-A334-EEAA1-2">
   <name>
    <text>Fragment_souvenir_1_ActivationCount_65</text>
     <graphics>
@@ -13,10 +13,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="230" y="50"/>
+    <position x="230" y="60"/>
    </graphics>
   </place>
-  <transition id="t-5944-CCA01-3">
+  <transition id="t-A334-EEAAF-3">
   <name>
    <text>Fragment_souvenir_1_activate_65</text>
     <graphics>
@@ -27,7 +27,7 @@
     <position x="110" y="50"/>
    </graphics>
   </transition>
-  <place id="p-5944-CCA06-4">
+  <place id="p-A334-EEAB4-4">
   <name>
    <text>Fragment_souvenir_5_ActivationCount_66</text>
     <graphics>
@@ -35,10 +35,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="220" y="120"/>
+    <position x="220" y="130"/>
    </graphics>
   </place>
-  <transition id="t-5944-CCA0A-5">
+  <transition id="t-A334-EEAB8-5">
   <name>
    <text>Fragment_souvenir_5_activate_66</text>
     <graphics>
@@ -49,7 +49,7 @@
     <position x="110" y="120"/>
    </graphics>
   </transition>
-  <place id="p-5944-CCA0E-6">
+  <place id="p-A334-EEABC-6">
   <name>
    <text>Fragment_souvenir_8_ActivationCount_67</text>
     <graphics>
@@ -57,10 +57,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="220" y="200"/>
+    <position x="220" y="210"/>
    </graphics>
   </place>
-  <transition id="t-5944-CCA12-7">
+  <transition id="t-A334-EEAC0-7">
   <name>
    <text>Fragment_souvenir_8_activate_67</text>
     <graphics>
@@ -71,7 +71,7 @@
     <position x="110" y="200"/>
    </graphics>
   </transition>
-  <place id="p-5944-CCA16-8">
+  <place id="p-A334-EEAC4-8">
   <name>
    <text>Q2_Answered_69</text>
     <graphics>
@@ -79,10 +79,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="740" y="110"/>
+    <position x="740" y="120"/>
    </graphics>
   </place>
-  <place id="p-5944-CCA17-9">
+  <place id="p-A334-EEAC7-9">
   <name>
    <text>Q2_Answering_69</text>
     <graphics>
@@ -93,10 +93,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="480" y="110"/>
+    <position x="480" y="120"/>
    </graphics>
   </place>
-  <transition id="t-5944-CCA1B-10">
+  <transition id="t-A334-EEACA-10">
   <name>
    <text>Q2_Correct_69</text>
     <graphics>
@@ -104,27 +104,27 @@
     </graphics>
   </name>
    <graphics>
-    <position x="620" y="50"/>
+    <position x="620" y="60"/>
    </graphics>
   </transition>
-  <arc id="e-5944-CCA20-11" source="p-5944-CCA0E-6" target="t-5944-CCA1B-10">
+  <arc id="e-A334-EEACF-11" source="t-A334-EEAAF-3" target="p-A334-EEAA1-2">
+  </arc>
+  <arc id="e-A334-EEAD1-12" source="t-A334-EEAB8-5" target="p-A334-EEAB4-4">
+  </arc>
+  <arc id="e-A334-EEAD3-13" source="t-A334-EEAC0-7" target="p-A334-EEABC-6">
+  </arc>
+  <arc id="e-A334-EEAD4-14" source="t-A334-EEACA-10" target="p-A334-EEAC4-8">
+  </arc>
+  <arc id="e-A334-EEAD5-15" source="p-A334-EEAC7-9" target="t-A334-EEACA-10">
+  </arc>
+  <arc id="e-A334-EEAD6-16" source="p-A334-EEAA1-2" target="t-A334-EEACA-10">
    <type value="test"/>
   </arc>
-  <arc id="e-5944-CCA23-12" source="p-5944-CCA06-4" target="t-5944-CCA1B-10">
+  <arc id="e-A334-EEAD9-17" source="p-A334-EEAB4-4" target="t-A334-EEACA-10">
    <type value="test"/>
   </arc>
-  <arc id="e-5944-CCA26-13" source="p-5944-CC9F4-2" target="t-5944-CCA1B-10">
+  <arc id="e-A334-EEADA-18" source="p-A334-EEABC-6" target="t-A334-EEACA-10">
    <type value="test"/>
-  </arc>
-  <arc id="e-5944-CCA27-14" source="p-5944-CCA17-9" target="t-5944-CCA1B-10">
-  </arc>
-  <arc id="e-5944-CCA28-15" source="t-5944-CCA1B-10" target="p-5944-CCA16-8">
-  </arc>
-  <arc id="e-5944-CCA28-16" source="t-5944-CCA12-7" target="p-5944-CCA0E-6">
-  </arc>
-  <arc id="e-5944-CCA29-17" source="t-5944-CCA0A-5" target="p-5944-CCA06-4">
-  </arc>
-  <arc id="e-5944-CCA2B-18" source="t-5944-CCA01-3" target="p-5944-CC9F4-2">
   </arc>
  </page>
  </net>

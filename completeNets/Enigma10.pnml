@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-5160-EEE0E-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-80DC-58714-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
   <name>
    <text>Enigma10</text>
   </name>
- <page id="g-5160-EEE17-1">
-  <place id="p-5160-EEE19-2">
+ <page id="g-80DC-5871F-1">
+  <place id="p-80DC-58723-2">
   <name>
    <text>Fragment_souvenir_11_ActivationCount_88</text>
     <graphics>
@@ -13,10 +12,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="230" y="125"/>
+    <position x="235" y="130"/>
    </graphics>
   </place>
-  <transition id="t-5160-EEE26-3">
+  <transition id="t-80DC-58748-3">
   <name>
    <text>Fragment_souvenir_11_activate_88</text>
     <graphics>
@@ -24,10 +23,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="110" y="125"/>
+    <position x="115" y="120"/>
    </graphics>
   </transition>
-  <place id="p-5160-EEE2B-4">
+  <place id="p-80DC-58753-4">
   <name>
    <text>Fragment_souvenir_12_ActivationCount_89</text>
     <graphics>
@@ -35,10 +34,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="220" y="200"/>
+    <position x="225" y="210"/>
    </graphics>
   </place>
-  <transition id="t-5160-EEE2F-5">
+  <transition id="t-80DC-5875A-5">
   <name>
    <text>Fragment_souvenir_12_activate_89</text>
     <graphics>
@@ -49,7 +48,7 @@
     <position x="110" y="200"/>
    </graphics>
   </transition>
-  <place id="p-5160-EEE33-6">
+  <place id="p-80DC-5875F-6">
   <name>
    <text>Fragment_souvenir_3_ActivationCount_87</text>
     <graphics>
@@ -57,10 +56,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="230" y="50"/>
+    <position x="235" y="60"/>
    </graphics>
   </place>
-  <transition id="t-5160-EEE37-7">
+  <transition id="t-80DC-58766-7">
   <name>
    <text>Fragment_souvenir_3_activate_87</text>
     <graphics>
@@ -68,10 +67,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="110" y="50"/>
+    <position x="115" y="50"/>
    </graphics>
   </transition>
-  <place id="p-5160-EEE3B-8">
+  <place id="p-80DC-5876A-8">
   <name>
    <text>Q6_Answered_91</text>
     <graphics>
@@ -79,10 +78,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="740" y="110"/>
+    <position x="745" y="120"/>
    </graphics>
   </place>
-  <place id="p-5160-EEE3E-9">
+  <place id="p-80DC-5876C-9">
   <name>
    <text>Q6_Answering_91</text>
     <graphics>
@@ -93,10 +92,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="480" y="110"/>
+    <position x="485" y="120"/>
    </graphics>
   </place>
-  <transition id="t-5160-EEE41-10">
+  <transition id="t-80DC-58770-10">
   <name>
    <text>Q6_Correct_91</text>
     <graphics>
@@ -104,10 +103,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="620" y="50"/>
+    <position x="625" y="60"/>
    </graphics>
   </transition>
-  <transition id="t-5160-EEE44-11">
+  <transition id="t-80DC-58773-11">
   <name>
    <text>Q6_Wrong_91</text>
     <graphics>
@@ -115,35 +114,31 @@
     </graphics>
   </name>
    <graphics>
-    <position x="620" y="170"/>
+    <position x="625" y="180"/>
    </graphics>
   </transition>
-  <place id="p-5160-EEE45-12">
+  <place id="p-80DC-58776-12">
   <name>
-   <text>Q6_place_90</text>
+   <text>Q6_locker_91</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="480" y="190"/>
+    <position x="485" y="200"/>
    </graphics>
   </place>
-  <arc id="e-5160-EEE5A-13" source="p-5160-EEE45-12" target="t-5160-EEE44-11">
-   <type value="test"/>
+  <arc id="e-80DC-5877B-13" source="p-80DC-58776-12" target="t-80DC-58773-11">
   </arc>
-  <arc id="e-5160-EEE6B-14" source="t-5160-EEE41-10" target="p-5160-EEE3B-8">
+  <arc id="e-80DC-5877E-14" source="t-80DC-58766-7" target="p-80DC-5875F-6">
   </arc>
-  <arc id="e-5160-EEE6C-15" source="p-5160-EEE3E-9" target="t-5160-EEE41-10">
+  <arc id="e-80DC-5877F-15" source="t-80DC-58748-3" target="p-80DC-58723-2">
   </arc>
-  <arc id="e-5160-EEE6D-16" source="p-5160-EEE3E-9" target="t-5160-EEE44-11">
-   <type value="test"/>
+  <arc id="e-80DC-58780-16" source="t-80DC-5875A-5" target="p-80DC-58753-4">
   </arc>
-  <arc id="e-5160-EEE6E-17" source="t-5160-EEE2F-5" target="p-5160-EEE2B-4">
+  <arc id="e-80DC-58782-17" source="p-80DC-5876C-9" target="t-80DC-58770-10">
   </arc>
-  <arc id="e-5160-EEE6F-18" source="t-5160-EEE26-3" target="p-5160-EEE19-2">
-  </arc>
-  <arc id="e-5160-EEE6F-19" source="t-5160-EEE37-7" target="p-5160-EEE33-6">
+  <arc id="e-80DC-58783-18" source="t-80DC-58770-10" target="p-80DC-5876A-8">
   </arc>
  </page>
  </net>

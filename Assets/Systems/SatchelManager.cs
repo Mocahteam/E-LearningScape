@@ -14,6 +14,7 @@ public class SatchelManager : FSystem {
     private Family f_closeBag = FamilyManager.getFamily(new AnyOfTags("Bag", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
+    private Family f_itemUnselected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new NoneOfComponents(typeof(SelectedInInventory)));
 
     private float speed;
     private float dist;
@@ -37,22 +38,23 @@ public class SatchelManager : FSystem {
     private bool getOutPaper = false;
     private bool paperOut = false;
 
+    private int currentPaperViews = 0; // 0 means no glasses, 1 means glass 1 is on, 2 means glass 2 is on, 3 means both glasses are on
+
     public static SatchelManager instance;
 
     public SatchelManager()
     {
         if (Application.isPlaying)
         {
-
             bagPaperInitialPos = f_bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition;
             paper = f_bag.First().transform.GetChild(1).gameObject;
             bagPadlock = f_bag.First().transform.GetChild(3).gameObject;
             paperImg = f_bag.First().GetComponentInChildren<Image>();
-            paperImgRef = f_bag.First().GetComponentInChildren<BagImage>();
+            paperImgRef = f_bag.First().GetComponentInChildren<BagImage>(); 
 
             f_selectedBag.addEntryCallback(onReadyToWorkOnSatchel);
             f_itemSelected.addEntryCallback(onItemSelectedInInventory);
-            f_itemSelected.addExitCallback(onItemUnselectedInInventory);
+            f_itemUnselected.addEntryCallback(onItemUnselectedInInventory);
         }
         instance = this;
     }
@@ -74,26 +76,52 @@ public class SatchelManager : FSystem {
         GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
     }
 
-    private void onItemSelectedInInventory(GameObject go)
+    private void updatePictures()
     {
         // switch appropriate image depending on glasses worn
-        if (isSelected("Glasses1") || isSelected("Glasses2"))
+        switch (currentPaperViews)
         {
-            if (isSelected("Glasses1") && isSelected("Glasses2"))
-                paperImg.sprite = paperImgRef.image4;
-            else if (isSelected("Glasses1"))
-                paperImg.sprite = paperImgRef.image3;
-            else
+            case 0:
+                paperImg.sprite = paperImgRef.image0;
+                break;
+            case 1:
+                paperImg.sprite = paperImgRef.image1;
+                break;
+            case 2:
                 paperImg.sprite = paperImgRef.image2;
+                break;
+            default:
+                paperImg.sprite = paperImgRef.image3;
+                break;
         }
-        else
-            paperImg.sprite = paperImgRef.image1;
+        GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = ("activatePaper"+currentPaperViews), performedBy = "system" });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new { verb = "accessed", objectType = "interactable", objectName = ("paper"+ currentPaperViews) });
     }
 
-    private void onItemUnselectedInInventory(int instanceId)
+    private void onItemSelectedInInventory(GameObject go)
     {
-        // same process as on item selected
-        onItemSelectedInInventory(null);
+        if (go.name == "Glasses1" || go.name == "Glasses2")
+        {
+            if (go.name == "Glasses1")
+                currentPaperViews = currentPaperViews + 1;
+            else
+                currentPaperViews = currentPaperViews + 2;
+            if (paperOut)
+                updatePictures();
+        }
+    }
+
+    private void onItemUnselectedInInventory(GameObject go)
+    {
+        if (go.name == "Glasses1" || go.name == "Glasses2")
+        {
+            if (go.name == "Glasses1")
+                currentPaperViews = currentPaperViews - 1;
+            else
+                currentPaperViews = currentPaperViews - 2;
+            if (paperOut)
+                updatePictures();
+        }
     }
 
     // return true if UI with name "name" is selected into inventory
@@ -180,6 +208,7 @@ public class SatchelManager : FSystem {
                             checkPadLock = false;
                             showBagPaper = true;
                             getOutPaper = true;
+                            updatePictures();
 
                             GameObjectManager.addComponent<ActionPerformed>(bagPadlock, new { name = "perform", performedBy = "system" });
                             GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBag, new { verb = "unlocked", objectType = "interactable", objectName = selectedBag.name });
@@ -191,6 +220,7 @@ public class SatchelManager : FSystem {
                     checkPadLock = false;
                     showBagPaper = true;
                     getOutPaper = true;
+                    updatePictures();
                 }
             }
 
@@ -210,27 +240,6 @@ public class SatchelManager : FSystem {
                         paper.transform.position = selectedBag.transform.TransformPoint(bagPaperInitialPos) + Vector3.up * 0.8f;
                         
                         paperOut = true;
-
-                        if(isSelected("Glasses1") && isSelected("Glasses2"))
-                        {
-                            GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = "activate4", performedBy = "player" });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new { verb = "accessed", objectType = "interactable", objectName = "paper4" });
-                        }
-                        else if (isSelected("Glasses1"))
-                        {
-                            GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = "activate2", performedBy = "player" });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new { verb = "accessed", objectType = "interactable", objectName = "paper2" });
-                        }
-                        else if (isSelected("Glasses2"))
-                        {
-                            GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = "activate3", performedBy = "player" });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new { verb = "accessed", objectType = "interactable", objectName = "paper3" });
-                        }
-                        else
-                        {
-                            GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = "activate", performedBy = "player" });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new { verb = "accessed", objectType = "interactable", objectName = "paper1" });
-                        }
                     }
                 }
             }

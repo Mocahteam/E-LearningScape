@@ -29,6 +29,8 @@ public class PlankAndMirrorManager : FSystem {
     private bool discovered = false; // true if the plank on the floor was discovered (selected at least once)
     private bool prepareClosing = false;
 
+    private int rotationCount = 0;
+
     public static PlankAndMirrorManager instance;
 
     public PlankAndMirrorManager()
@@ -44,6 +46,18 @@ public class PlankAndMirrorManager : FSystem {
     private void rotatePlank(int way)
     {
         plankRotation.transform.Rotate(Vector3.up, way * 50 * Time.deltaTime);
+        rotationCount += way;
+        // trace only each 10°
+        if (rotationCount % 10 == 0)
+        {
+            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new
+            {
+                verb = "moved",
+                objectType = "interactable",
+                objectName = selectedPlank.name,
+                activityExtensions = new Dictionary<string, List<string>>() { { "direction", new List<string>() { way < 0 ? "right" : "left" } } }
+            });
+        }
     }
 
     private void onReadyToWorkOnPlank(GameObject go)
@@ -153,55 +167,15 @@ public class PlankAndMirrorManager : FSystem {
             if (!movePlank)
             {
                 if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.Q))
-                {
                     rotatePlank(1);
-                    if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Q))
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new
-                        {
-                            verb = "moved",
-                            objectType = "interactable",
-                            objectName = selectedPlank.name,
-                            activityExtensions = new Dictionary<string, List<string>>() { { "direction", new List<string>() { "left" } } }
-                        });
-                }
                 if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-                {
                     rotatePlank(-1);
-                    if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new
-                        {
-                            verb = "moved",
-                            objectType = "interactable",
-                            objectName = selectedPlank.name,
-                            activityExtensions = new Dictionary<string, List<string>>() { { "direction", new List<string>() { "right" } } }
-                        });
-                }
                 if (Input.GetMouseButton(0) && f_arrows.Count > 0)
                 {
                     if (f_arrows.First().name == "Left")
-                    {
                         rotatePlank(1);
-                        if (Input.GetMouseButtonDown(0))
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new
-                            {
-                                verb = "moved",
-                                objectType = "interactable",
-                                objectName = selectedPlank.name,
-                                activityExtensions = new Dictionary<string, List<string>>() { { "direction", new List<string>() { "left" } } }
-                            });
-                    }
                     else
-                    {
                         rotatePlank(-1);
-                        if (Input.GetMouseButtonDown(0))
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new
-                            {
-                                verb = "moved",
-                                objectType = "interactable",
-                                objectName = selectedPlank.name,
-                                activityExtensions = new Dictionary<string, List<string>>() { { "direction", new List<string>() { "right" } } }
-                            });
-                    }
                 }
             }
         }

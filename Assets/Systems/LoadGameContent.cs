@@ -493,33 +493,28 @@ public class LoadGameContent : FSystem {
                 tmpTex = new Texture2D(1, 1);
                 tmpFileData = File.ReadAllBytes(gameContent.glassesPicturesPath[i]);
                 if (tmpTex.LoadImage(tmpFileData))
-                {
                     mySprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
-                }
             }
             switch (i)
             {
                 case 0:
-                    bi.image1 = mySprite;
+                    bi.image0 = mySprite;
                     break;
 
                 case 1:
-                    bi.image2 = mySprite;
+                    bi.image1 = mySprite;
                     break;
 
                 case 2:
-                    bi.image3 = mySprite;
-                    break;
-
-                case 3:
-                    bi.image4 = mySprite;
+                    bi.image2 = mySprite;
                     break;
 
                 default:
+                    bi.image3 = mySprite;
                     break;
             }
         }
-        bi.gameObject.GetComponent<Image>().sprite = bi.image1;
+        bi.gameObject.GetComponent<Image>().sprite = bi.image0;
 
         //Scrolls
         int nbScroll = gameContent.scrollsWords.Length < f_scrollUI.Count ? gameContent.scrollsWords.Length : f_scrollUI.Count;

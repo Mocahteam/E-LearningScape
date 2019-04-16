@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-67DC-E52E-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-9D48-8D502-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma3</text>
   </name>
- <page id="g-67DC-E537-1">
-  <place id="p-67DC-E53A-2">
+ <page id="g-9D48-8D512-1">
+  <place id="p-9D48-8D518-2">
   <name>
    <text>CorrectChair_off_38</text>
     <graphics>
@@ -19,7 +19,7 @@
     <position x="65" y="50"/>
    </graphics>
   </place>
-  <place id="p-67DC-E547-3">
+  <place id="p-9D48-8D532-3">
   <name>
    <text>CorrectChair_on_38</text>
     <graphics>
@@ -30,7 +30,7 @@
     <position x="245" y="50"/>
    </graphics>
   </place>
-  <transition id="t-67DC-E54B-4">
+  <transition id="t-9D48-8D53A-4">
   <name>
    <text>CorrectChair_turnOn_38</text>
     <graphics>
@@ -41,7 +41,7 @@
     <position x="165" y="110"/>
    </graphics>
   </transition>
-  <place id="p-67DC-E54E-5">
+  <place id="p-9D48-8D544-5">
   <name>
    <text>FPSController_off_37</text>
     <graphics>
@@ -55,7 +55,7 @@
     <position x="85" y="270"/>
    </graphics>
   </place>
-  <place id="p-67DC-E551-6">
+  <place id="p-9D48-8D54D-6">
   <name>
    <text>FPSController_on_37</text>
     <graphics>
@@ -66,7 +66,7 @@
     <position x="245" y="270"/>
    </graphics>
   </place>
-  <transition id="t-67DC-E555-7">
+  <transition id="t-9D48-8D553-7">
   <name>
    <text>FPSController_turnOff_37</text>
     <graphics>
@@ -77,7 +77,7 @@
     <position x="165" y="230"/>
    </graphics>
   </transition>
-  <transition id="t-67DC-E557-8">
+  <transition id="t-9D48-8D55C-8">
   <name>
    <text>FPSController_turnOn_37</text>
     <graphics>
@@ -88,7 +88,7 @@
     <position x="165" y="330"/>
    </graphics>
   </transition>
-  <place id="p-67DC-E55A-9">
+  <place id="p-9D48-8D56A-9">
   <name>
    <text>Fragment_souvenir_4_ActivationCount_48</text>
     <graphics>
@@ -96,10 +96,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="565" y="650"/>
+    <position x="565" y="660"/>
    </graphics>
   </place>
-  <transition id="t-67DC-E55E-10">
+  <transition id="t-9D48-8D576-10">
   <name>
    <text>Fragment_souvenir_4_activate_48</text>
     <graphics>
@@ -110,7 +110,7 @@
     <position x="445" y="650"/>
    </graphics>
   </transition>
-  <place id="p-67DC-E561-11">
+  <place id="p-9D48-8D584-11">
   <name>
    <text>Fragment_souvenir_chair_ActivationCount_43</text>
     <graphics>
@@ -118,10 +118,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="645" y="50"/>
+    <position x="645" y="60"/>
    </graphics>
   </place>
-  <transition id="t-67DC-E566-12">
+  <transition id="t-9D48-8D593-12">
   <name>
    <text>Fragment_souvenir_chair_activate_43</text>
     <graphics>
@@ -132,7 +132,7 @@
     <position x="525" y="50"/>
    </graphics>
   </transition>
-  <place id="p-67DC-E56A-13">
+  <place id="p-9D48-8D5A4-13">
   <name>
    <text>Fragment_souvenir_furnitureDown_ActivationCount_41</text>
     <graphics>
@@ -140,10 +140,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="645" y="270"/>
+    <position x="645" y="280"/>
    </graphics>
   </place>
-  <transition id="t-67DC-E56F-14">
+  <transition id="t-9D48-8D5AE-14">
   <name>
    <text>Fragment_souvenir_furnitureDown_activate_41</text>
     <graphics>
@@ -154,7 +154,7 @@
     <position x="525" y="270"/>
    </graphics>
   </transition>
-  <place id="p-67DC-E573-15">
+  <place id="p-9D48-8D5B9-15">
   <name>
    <text>Fragment_souvenir_furnitureUp_ActivationCount_47</text>
     <graphics>
@@ -162,10 +162,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="555" y="570"/>
+    <position x="565" y="580"/>
    </graphics>
   </place>
-  <transition id="t-67DC-E577-16">
+  <transition id="t-9D48-8D5C3-16">
   <name>
    <text>Fragment_souvenir_furnitureUp_activate_47</text>
     <graphics>
@@ -176,7 +176,7 @@
     <position x="445" y="570"/>
    </graphics>
   </transition>
-  <place id="p-67DC-E57B-17">
+  <place id="p-9D48-8D5CD-17">
   <name>
    <text>Fragment_souvenir_table_ActivationCount_46</text>
     <graphics>
@@ -184,10 +184,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="555" y="490"/>
+    <position x="565" y="500"/>
    </graphics>
   </place>
-  <transition id="t-67DC-E5B7-18">
+  <transition id="t-9D48-8D670-18">
   <name>
    <text>Fragment_souvenir_table_activate_46</text>
     <graphics>
@@ -198,7 +198,7 @@
     <position x="445" y="490"/>
    </graphics>
   </transition>
-  <place id="p-67DC-E5BD-19">
+  <place id="p-9D48-8D67A-19">
   <name>
    <text>Fragment_souvenir_tirroir_ActivationCount_42</text>
     <graphics>
@@ -206,10 +206,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="645" y="340"/>
+    <position x="645" y="350"/>
    </graphics>
   </place>
-  <transition id="t-67DC-E5C2-20">
+  <transition id="t-9D48-8D683-20">
   <name>
    <text>Fragment_souvenir_tirroir_activate_42</text>
     <graphics>
@@ -220,7 +220,7 @@
     <position x="525" y="340"/>
    </graphics>
   </transition>
-  <place id="p-67DC-E5C6-21">
+  <place id="p-9D48-8D689-21">
   <name>
    <text>Fragment_souvenir_wall_ActivationCount_40</text>
     <graphics>
@@ -228,10 +228,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="645" y="190"/>
+    <position x="645" y="200"/>
    </graphics>
   </place>
-  <transition id="t-67DC-E5CA-22">
+  <transition id="t-9D48-8D68F-22">
   <name>
    <text>Fragment_souvenir_wall_activate_40</text>
     <graphics>
@@ -242,7 +242,7 @@
     <position x="525" y="190"/>
    </graphics>
   </transition>
-  <place id="p-67DC-E5CE-23">
+  <place id="p-9D48-8D695-23">
   <name>
    <text>Q3_Answered_50</text>
     <graphics>
@@ -253,7 +253,7 @@
     <position x="1345" y="290"/>
    </graphics>
   </place>
-  <place id="p-67DC-E5CF-24">
+  <place id="p-9D48-8D698-24">
   <name>
    <text>Q3_Answering_50</text>
     <graphics>
@@ -267,7 +267,7 @@
     <position x="1105" y="290"/>
    </graphics>
   </place>
-  <transition id="t-67DC-E5D3-25">
+  <transition id="t-9D48-8D69E-25">
   <name>
    <text>Q3_Correct_50</text>
     <graphics>
@@ -278,7 +278,7 @@
     <position x="1225" y="230"/>
    </graphics>
   </transition>
-  <place id="p-67DC-E5D5-26">
+  <place id="p-9D48-8D6A1-26">
   <name>
    <text>Table_off_39</text>
     <graphics>
@@ -292,7 +292,7 @@
     <position x="65" y="570"/>
    </graphics>
   </place>
-  <place id="p-67DC-E5D8-27">
+  <place id="p-9D48-8D6A6-27">
   <name>
    <text>Table_on_39</text>
     <graphics>
@@ -303,7 +303,7 @@
     <position x="245" y="570"/>
    </graphics>
   </place>
-  <transition id="t-67DC-E5DA-28">
+  <transition id="t-9D48-8D6A8-28">
   <name>
    <text>Table_turnOn_39</text>
     <graphics>
@@ -311,10 +311,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="155" y="630"/>
+    <position x="165" y="630"/>
    </graphics>
   </transition>
-  <transition id="t-67DC-E5DD-29">
+  <transition id="t-9D48-8D6AE-29">
   <name>
    <text>or0_Fragment_souvenir_chair_activate_43</text>
     <graphics>
@@ -325,80 +325,80 @@
     <position x="525" y="90"/>
    </graphics>
   </transition>
-  <arc id="e-67DC-E5E5-30" source="p-67DC-E55A-9" target="t-67DC-E5D3-25">
+  <arc id="e-9D48-8D6BA-30" source="p-9D48-8D54D-6" target="t-9D48-8D553-7">
+  </arc>
+  <arc id="e-9D48-8D6BC-31" source="t-9D48-8D553-7" target="p-9D48-8D544-5">
+  </arc>
+  <arc id="e-9D48-8D6BE-32" source="p-9D48-8D518-2" target="t-9D48-8D53A-4">
+  </arc>
+  <arc id="e-9D48-8D6C0-33" source="t-9D48-8D53A-4" target="p-9D48-8D532-3">
+  </arc>
+  <arc id="e-9D48-8D6C1-34" source="p-9D48-8D6A6-27" target="t-9D48-8D670-18">
    <type value="test"/>
   </arc>
-  <arc id="e-67DC-E5E8-31" source="t-67DC-E577-16" target="p-67DC-E573-15">
+  <arc id="e-9D48-8D6C8-35" source="t-9D48-8D670-18" target="p-9D48-8D5CD-17">
   </arc>
-  <arc id="e-67DC-E5E9-32" source="p-67DC-E5CF-24" target="t-67DC-E5D3-25">
-  </arc>
-  <arc id="e-67DC-E5EA-33" source="t-67DC-E5D3-25" target="p-67DC-E5CE-23">
-  </arc>
-  <arc id="e-67DC-E5EC-34" source="t-67DC-E55E-10" target="p-67DC-E55A-9">
-  </arc>
-  <arc id="e-67DC-E5ED-35" source="t-67DC-E566-12" target="p-67DC-E561-11">
-  </arc>
-  <arc id="e-67DC-E5EE-36" source="p-67DC-E547-3" target="t-67DC-E566-12">
+  <arc id="e-9D48-8D6C9-36" source="p-9D48-8D54D-6" target="t-9D48-8D683-20">
    <type value="test"/>
   </arc>
-  <arc id="e-67DC-E5F0-37" source="t-67DC-E5DD-29" target="p-67DC-E561-11">
+  <arc id="e-9D48-8D6CC-37" source="t-9D48-8D683-20" target="p-9D48-8D67A-19">
   </arc>
-  <arc id="e-67DC-E5F1-38" source="p-67DC-E551-6" target="t-67DC-E5DD-29">
+  <arc id="e-9D48-8D6CE-38" source="t-9D48-8D5AE-14" target="p-9D48-8D5A4-13">
+  </arc>
+  <arc id="e-9D48-8D6D0-39" source="p-9D48-8D6A1-26" target="t-9D48-8D6A8-28">
+  </arc>
+  <arc id="e-9D48-8D6D1-40" source="t-9D48-8D6A8-28" target="p-9D48-8D6A6-27">
+  </arc>
+  <arc id="e-9D48-8D6D3-41" source="p-9D48-8D544-5" target="t-9D48-8D55C-8">
+  </arc>
+  <arc id="e-9D48-8D6D5-42" source="p-9D48-8D5B9-15" target="t-9D48-8D69E-25">
    <type value="test"/>
   </arc>
-  <arc id="e-67DC-E5F2-39" source="t-67DC-E5CA-22" target="p-67DC-E5C6-21">
-  </arc>
-  <arc id="e-67DC-E5F3-40" source="p-67DC-E551-6" target="t-67DC-E5CA-22">
+  <arc id="e-9D48-8D718-43" source="p-9D48-8D54D-6" target="t-9D48-8D68F-22">
    <type value="test"/>
   </arc>
-  <arc id="e-67DC-E5F4-41" source="p-67DC-E573-15" target="t-67DC-E5D3-25">
+  <arc id="e-9D48-8D71D-44" source="t-9D48-8D68F-22" target="p-9D48-8D689-21">
+  </arc>
+  <arc id="e-9D48-8D71F-45" source="p-9D48-8D54D-6" target="t-9D48-8D6AE-29">
    <type value="test"/>
   </arc>
-  <arc id="e-67DC-E5F5-42" source="t-67DC-E5DA-28" target="p-67DC-E5D8-27">
+  <arc id="e-9D48-8D722-46" source="t-9D48-8D6AE-29" target="p-9D48-8D584-11">
   </arc>
-  <arc id="e-67DC-E61D-43" source="p-67DC-E5D5-26" target="t-67DC-E5DA-28">
-  </arc>
-  <arc id="e-67DC-E61E-44" source="t-67DC-E56F-14" target="p-67DC-E56A-13">
-  </arc>
-  <arc id="e-67DC-E61F-45" source="t-67DC-E5C2-20" target="p-67DC-E5BD-19">
-  </arc>
-  <arc id="e-67DC-E621-46" source="p-67DC-E551-6" target="t-67DC-E5C2-20">
+  <arc id="e-9D48-8D723-47" source="p-9D48-8D532-3" target="t-9D48-8D593-12">
    <type value="test"/>
   </arc>
-  <arc id="e-67DC-E622-47" source="t-67DC-E5B7-18" target="p-67DC-E57B-17">
+  <arc id="e-9D48-8D725-48" source="t-9D48-8D593-12" target="p-9D48-8D584-11">
   </arc>
-  <arc id="e-67DC-E623-48" source="p-67DC-E5D8-27" target="t-67DC-E5B7-18">
+  <arc id="e-9D48-8D727-49" source="t-9D48-8D576-10" target="p-9D48-8D56A-9">
+  </arc>
+  <arc id="e-9D48-8D729-50" source="t-9D48-8D69E-25" target="p-9D48-8D695-23">
+  </arc>
+  <arc id="e-9D48-8D72B-51" source="p-9D48-8D698-24" target="t-9D48-8D69E-25">
+  </arc>
+  <arc id="e-9D48-8D72C-52" source="p-9D48-8D584-11" target="t-9D48-8D69E-25">
    <type value="test"/>
   </arc>
-  <arc id="e-67DC-E624-49" source="t-67DC-E54B-4" target="p-67DC-E547-3">
+  <arc id="e-9D48-8D730-53" source="t-9D48-8D5C3-16" target="p-9D48-8D5B9-15">
   </arc>
-  <arc id="e-67DC-E625-50" source="p-67DC-E53A-2" target="t-67DC-E54B-4">
-  </arc>
-  <arc id="e-67DC-E626-51" source="t-67DC-E555-7" target="p-67DC-E54E-5">
-  </arc>
-  <arc id="e-67DC-E628-52" source="p-67DC-E57B-17" target="t-67DC-E5D3-25">
+  <arc id="e-9D48-8D732-54" source="p-9D48-8D56A-9" target="t-9D48-8D69E-25">
    <type value="test"/>
   </arc>
-  <arc id="e-67DC-E629-53" source="t-67DC-E557-8" target="p-67DC-E551-6">
-  </arc>
-  <arc id="e-67DC-E62A-54" source="p-67DC-E551-6" target="t-67DC-E56F-14">
+  <arc id="e-9D48-8D733-55" source="p-9D48-8D689-21" target="t-9D48-8D69E-25">
    <type value="test"/>
   </arc>
-  <arc id="e-67DC-E62B-55" source="p-67DC-E5BD-19" target="t-67DC-E5D3-25">
+  <arc id="e-9D48-8D734-56" source="p-9D48-8D5A4-13" target="t-9D48-8D69E-25">
    <type value="test"/>
   </arc>
-  <arc id="e-67DC-E62C-56" source="p-67DC-E56A-13" target="t-67DC-E5D3-25">
+  <arc id="e-9D48-8D736-57" source="p-9D48-8D67A-19" target="t-9D48-8D69E-25">
    <type value="test"/>
   </arc>
-  <arc id="e-67DC-E62D-57" source="p-67DC-E5C6-21" target="t-67DC-E5D3-25">
+  <arc id="e-9D48-8D738-58" source="p-9D48-8D54D-6" target="t-9D48-8D5AE-14">
    <type value="test"/>
   </arc>
-  <arc id="e-67DC-E62E-58" source="p-67DC-E561-11" target="t-67DC-E5D3-25">
+  <arc id="e-9D48-8D73A-59" source="t-9D48-8D55C-8" target="p-9D48-8D54D-6">
+  </arc>
+  <arc id="e-9D48-8D73C-60" source="p-9D48-8D5CD-17" target="t-9D48-8D69E-25">
    <type value="test"/>
-  </arc>
-  <arc id="e-67DC-E62F-59" source="p-67DC-E54E-5" target="t-67DC-E557-8">
-  </arc>
-  <arc id="e-67DC-E630-60" source="p-67DC-E551-6" target="t-67DC-E555-7">
   </arc>
  </page>
  </net>

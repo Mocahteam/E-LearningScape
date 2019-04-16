@@ -143,15 +143,15 @@ public class IARQueryEvaluator : FSystem {
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 1 });
             GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Wrong", performedBy = "player" });
 
-            //Dans le système qui gère les WrongAnswerInfo prendre en compte le cas des réponses où l'ordre n'importe pas
+            Dans le système qui gère les WrongAnswerInfo prendre en compte le cas des réponses où l'ordre n'importe pas
             GameObjectManager.addComponent<WrongAnswerInfo>(query, new { givenAnswer = answer });
 
-            /*Normalement ici je ne devrais à faire que 
+            Normalement ici je ne devrais à faire que 
                 1 Action perform sur la question avec l'action Wrong => le ActionPerformed requiert un ComponentMonitoring ce qui n'est pas le cas pour les dernières questions
 
                 Transformer les réseaux de Petri
                     Pour chaque enigme faire un rx dont l'action finale sera de dire si l'énigme a été résolue => permet de connaitre les actions à faire pour terminer cette énigme
-                    Faire un Rdp pour chaque question => chacun contient l'action Wrong et le succès est connecté à une place qui est alimentée par quatres transitions qui modélisent si la bonne réponse d'une question a été trouvée. Si le Wrong est tiré on peut ainsi savoir quelle énigme il reste à résoudre. Si le joueur répond correctement à une question il faut donc exécuté la validation de l'énigme dans le réseau propre à chaque énigme et aussi valider l'execution de l'énigme dans chacun des Rdp des énigmes...*/
+                    Faire un Rdp pour chaque question => chacun contient l'action Wrong et le succès est connecté à une place qui est alimentée par quatres transitions qui modélisent si la bonne réponse d'une question a été trouvée. Si le Wrong est tiré on peut ainsi savoir quelle énigme il reste à résoudre. Si le joueur répond correctement à une question il faut donc exécuté la validation de l'énigme dans le réseau propre à chaque énigme et aussi valider l'execution de l'énigme dans chacun des Rdp des énigmes...
 
 
             if (query.tag == "Q-R3")
@@ -185,42 +185,6 @@ public class IARQueryEvaluator : FSystem {
                     GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 142, givenAnswer = answer });
                 }
             }
-            else
-            {
-
-                if (query.tag == "Q-R2")
-                {
-                    switch (query.name)
-                    {
-                        case "Q1":
-                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 64, givenAnswer = answer });
-                            break;
-
-                        case "Q2":
-                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 69, givenAnswer = answer });
-                            break;
-
-                        case "Q3":
-                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 77, givenAnswer = answer });
-                            break;
-
-                        case "Q4":
-                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 83, givenAnswer = answer });
-                            break;
-
-                        case "Q5":
-                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 86, givenAnswer = answer });
-                            break;
-
-                        case "Q6":
-                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 91, givenAnswer = answer });
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-            }
         }
         else
         {
@@ -251,13 +215,6 @@ public class IARQueryEvaluator : FSystem {
                 {
                     GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct14", performedBy = "player" });
                 }
-            }
-            else if(query.tag == "Q-R2" && query.name == "Q1")
-            {
-                if(isSelected("Glasses1") && isSelected("Glasses2"))
-                    GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });
-                else
-                    GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = "orCorrect", performedBy = "player" });
             }
 
             // set final answer for third room (due to OR options)

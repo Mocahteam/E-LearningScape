@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-24F0-21BB6-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-9C38-BA73E-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
   <name>
    <text>Enigma7</text>
   </name>
- <page id="g-24F0-21BBF-1">
-  <place id="p-24F0-21BC1-2">
+ <page id="g-9C38-BA749-1">
+  <place id="p-9C38-BA74B-2">
   <name>
    <text>Q3_Answered_77</text>
     <graphics>
@@ -13,10 +12,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="985" y="320"/>
+    <position x="980" y="320"/>
    </graphics>
   </place>
-  <place id="p-24F0-21BCD-3">
+  <place id="p-9C38-BA758-3">
   <name>
    <text>Q3_Answering_77</text>
     <graphics>
@@ -27,10 +26,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="745" y="320"/>
+    <position x="740" y="320"/>
    </graphics>
   </place>
-  <transition id="t-24F0-21BD1-4">
+  <transition id="t-9C38-BA75D-4">
   <name>
    <text>Q3_Correct_77</text>
     <graphics>
@@ -38,10 +37,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="865" y="260"/>
+    <position x="860" y="260"/>
    </graphics>
   </transition>
-  <transition id="t-24F0-21BD5-5">
+  <transition id="t-9C38-BA75F-5">
   <name>
    <text>Q3_Wrong_77</text>
     <graphics>
@@ -49,21 +48,21 @@
     </graphics>
   </name>
    <graphics>
-    <position x="865" y="380"/>
+    <position x="860" y="380"/>
    </graphics>
   </transition>
-  <place id="p-24F0-21BD7-6">
+  <place id="p-9C38-BA762-6">
   <name>
-   <text>Q3_place_76</text>
+   <text>Q3_locker_77</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="745" y="395"/>
+    <position x="740" y="400"/>
    </graphics>
   </place>
-  <place id="p-24F0-21BD9-7">
+  <place id="p-9C38-BA765-7">
   <name>
    <text>Scroll1_end_71</text>
     <graphics>
@@ -74,7 +73,7 @@
     <position x="220" y="200"/>
    </graphics>
   </place>
-  <transition id="t-24F0-21BDC-8">
+  <transition id="t-9C38-BA766-8">
   <name>
    <text>Scroll1_perform_71</text>
     <graphics>
@@ -82,10 +81,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="140" y="200"/>
+    <position x="140" y="190"/>
    </graphics>
   </transition>
-  <place id="p-24F0-21BDF-9">
+  <place id="p-9C38-BA76A-9">
   <name>
    <text>Scroll1_start_71</text>
     <graphics>
@@ -99,7 +98,7 @@
     <position x="60" y="200"/>
    </graphics>
   </place>
-  <place id="p-24F0-21BE1-10">
+  <place id="p-9C38-BA76E-10">
   <name>
    <text>Scroll2_end_72</text>
     <graphics>
@@ -110,7 +109,7 @@
     <position x="210" y="270"/>
    </graphics>
   </place>
-  <transition id="t-24F0-21BE4-11">
+  <transition id="t-9C38-BA76F-11">
   <name>
    <text>Scroll2_perform_72</text>
     <graphics>
@@ -118,10 +117,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="140" y="270"/>
+    <position x="140" y="260"/>
    </graphics>
   </transition>
-  <place id="p-24F0-21BE6-12">
+  <place id="p-9C38-BA773-12">
   <name>
    <text>Scroll2_start_72</text>
     <graphics>
@@ -135,7 +134,7 @@
     <position x="60" y="270"/>
    </graphics>
   </place>
-  <place id="p-24F0-21BEA-13">
+  <place id="p-9C38-BA775-13">
   <name>
    <text>Scroll3_end_73</text>
     <graphics>
@@ -146,7 +145,7 @@
     <position x="220" y="340"/>
    </graphics>
   </place>
-  <transition id="t-24F0-21BED-14">
+  <transition id="t-9C38-BA779-14">
   <name>
    <text>Scroll3_perform_73</text>
     <graphics>
@@ -154,10 +153,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="140" y="340"/>
+    <position x="140" y="330"/>
    </graphics>
   </transition>
-  <place id="p-24F0-21BEF-15">
+  <place id="p-9C38-BA77B-15">
   <name>
    <text>Scroll3_start_73</text>
     <graphics>
@@ -171,7 +170,7 @@
     <position x="60" y="340"/>
    </graphics>
   </place>
-  <place id="p-24F0-21BF2-16">
+  <place id="p-9C38-BA77E-16">
   <name>
    <text>Scroll4_end_74</text>
     <graphics>
@@ -182,7 +181,7 @@
     <position x="210" y="410"/>
    </graphics>
   </place>
-  <transition id="t-24F0-21BF4-17">
+  <transition id="t-9C38-BA781-17">
   <name>
    <text>Scroll4_perform_74</text>
     <graphics>
@@ -190,10 +189,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="140" y="410"/>
+    <position x="140" y="400"/>
    </graphics>
   </transition>
-  <place id="p-24F0-21BF7-18">
+  <place id="p-9C38-BA783-18">
   <name>
    <text>Scroll4_start_74</text>
     <graphics>
@@ -207,7 +206,7 @@
     <position x="60" y="410"/>
    </graphics>
   </place>
-  <place id="p-24F0-21C34-19">
+  <place id="p-9C38-BA7C9-19">
   <name>
    <text>Scroll5_end_75</text>
     <graphics>
@@ -218,7 +217,7 @@
     <position x="210" y="480"/>
    </graphics>
   </place>
-  <transition id="t-24F0-21C37-20">
+  <transition id="t-9C38-BA7CD-20">
   <name>
    <text>Scroll5_perform_75</text>
     <graphics>
@@ -226,10 +225,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="140" y="480"/>
+    <position x="140" y="470"/>
    </graphics>
   </transition>
-  <place id="p-24F0-21C3A-21">
+  <place id="p-9C38-BA7D0-21">
   <name>
    <text>Scroll5_start_75</text>
     <graphics>
@@ -243,7 +242,7 @@
     <position x="60" y="480"/>
    </graphics>
   </place>
-  <place id="p-24F0-21C3C-22">
+  <place id="p-9C38-BA7D3-22">
   <name>
    <text>Scroll_ActivationCount_70</text>
     <graphics>
@@ -254,7 +253,7 @@
     <position x="550" y="190"/>
    </graphics>
   </place>
-  <place id="p-24F0-21C3F-23">
+  <place id="p-9C38-BA7D6-23">
   <name>
    <text>Scroll_off_70</text>
     <graphics>
@@ -268,7 +267,7 @@
     <position x="370" y="70"/>
    </graphics>
   </place>
-  <place id="p-24F0-21C43-24">
+  <place id="p-9C38-BA7D9-24">
   <name>
    <text>Scroll_on_70</text>
     <graphics>
@@ -279,7 +278,7 @@
     <position x="550" y="70"/>
    </graphics>
   </place>
-  <transition id="t-24F0-21C44-25">
+  <transition id="t-9C38-BA7DC-25">
   <name>
    <text>Scroll_turnOff_70</text>
     <graphics>
@@ -290,7 +289,7 @@
     <position x="450" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-24F0-21C48-26">
+  <transition id="t-9C38-BA7DE-26">
   <name>
    <text>Scroll_turnOn_70</text>
     <graphics>
@@ -301,45 +300,41 @@
     <position x="450" y="130"/>
    </graphics>
   </transition>
-  <arc id="e-24F0-21C4D-27" source="p-24F0-21BD7-6" target="t-24F0-21BD5-5">
-   <type value="test"/>
+  <arc id="e-9C38-BA7E5-27" source="p-9C38-BA762-6" target="t-9C38-BA75F-5">
   </arc>
-  <arc id="e-24F0-21C51-28" source="p-24F0-21BE6-12" target="t-24F0-21BE4-11">
+  <arc id="e-9C38-BA7E7-28" source="p-9C38-BA783-18" target="t-9C38-BA781-17">
   </arc>
-  <arc id="e-24F0-21C54-29" source="t-24F0-21BE4-11" target="p-24F0-21BE1-10">
+  <arc id="e-9C38-BA7E8-29" source="t-9C38-BA779-14" target="p-9C38-BA775-13">
   </arc>
-  <arc id="e-24F0-21C55-30" source="p-24F0-21C3A-21" target="t-24F0-21C37-20">
+  <arc id="e-9C38-BA7E9-30" source="p-9C38-BA77B-15" target="t-9C38-BA779-14">
   </arc>
-  <arc id="e-24F0-21C56-31" source="t-24F0-21C37-20" target="p-24F0-21C34-19">
+  <arc id="e-9C38-BA7EA-31" source="t-9C38-BA766-8" target="p-9C38-BA765-7">
   </arc>
-  <arc id="e-24F0-21C56-32" source="p-24F0-21BDF-9" target="t-24F0-21BDC-8">
+  <arc id="e-9C38-BA7EB-32" source="p-9C38-BA76A-9" target="t-9C38-BA766-8">
   </arc>
-  <arc id="e-24F0-21C58-33" source="t-24F0-21BDC-8" target="p-24F0-21BD9-7">
+  <arc id="e-9C38-BA7ED-33" source="t-9C38-BA7CD-20" target="p-9C38-BA7C9-19">
   </arc>
-  <arc id="e-24F0-21C59-34" source="p-24F0-21BEF-15" target="t-24F0-21BED-14">
+  <arc id="e-9C38-BA7EE-34" source="p-9C38-BA7D0-21" target="t-9C38-BA7CD-20">
   </arc>
-  <arc id="e-24F0-21C5A-35" source="t-24F0-21BED-14" target="p-24F0-21BEA-13">
+  <arc id="e-9C38-BA7EF-35" source="t-9C38-BA76F-11" target="p-9C38-BA76E-10">
   </arc>
-  <arc id="e-24F0-21C5B-36" source="p-24F0-21BF7-18" target="t-24F0-21BF4-17">
+  <arc id="e-9C38-BA7F1-36" source="p-9C38-BA773-12" target="t-9C38-BA76F-11">
   </arc>
-  <arc id="e-24F0-21C5C-37" source="t-24F0-21BF4-17" target="p-24F0-21BF2-16">
+  <arc id="e-9C38-BA7F2-37" source="t-9C38-BA7DC-25" target="p-9C38-BA7D6-23">
   </arc>
-  <arc id="e-24F0-21C5F-38" source="t-24F0-21BD1-4" target="p-24F0-21BC1-2">
+  <arc id="e-9C38-BA7F3-38" source="t-9C38-BA7DE-26" target="p-9C38-BA7D9-24">
   </arc>
-  <arc id="e-24F0-21C61-39" source="p-24F0-21BCD-3" target="t-24F0-21BD1-4">
+  <arc id="e-9C38-BA7F4-39" source="p-9C38-BA7D6-23" target="t-9C38-BA7DE-26">
   </arc>
-  <arc id="e-24F0-21C62-40" source="p-24F0-21BCD-3" target="t-24F0-21BD5-5">
-   <type value="test"/>
+  <arc id="e-9C38-BA7F5-40" source="p-9C38-BA7D9-24" target="t-9C38-BA7DC-25">
   </arc>
-  <arc id="e-24F0-21C63-41" source="t-24F0-21C48-26" target="p-24F0-21C3C-22">
+  <arc id="e-9C38-BA7F6-41" source="t-9C38-BA7DE-26" target="p-9C38-BA7D3-22">
   </arc>
-  <arc id="e-24F0-21C64-42" source="p-24F0-21C43-24" target="t-24F0-21C44-25">
+  <arc id="e-9C38-BA7F7-42" source="p-9C38-BA758-3" target="t-9C38-BA75D-4">
   </arc>
-  <arc id="e-24F0-21C65-43" source="p-24F0-21C3F-23" target="t-24F0-21C48-26">
+  <arc id="e-9C38-BA7F9-43" source="t-9C38-BA75D-4" target="p-9C38-BA74B-2">
   </arc>
-  <arc id="e-24F0-21C66-44" source="t-24F0-21C48-26" target="p-24F0-21C43-24">
-  </arc>
-  <arc id="e-24F0-21C67-45" source="t-24F0-21C44-25" target="p-24F0-21C3F-23">
+  <arc id="e-9C38-BA7FA-44" source="t-9C38-BA781-17" target="p-9C38-BA77E-16">
   </arc>
  </page>
  </net>
