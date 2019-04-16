@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class ActionPerformedForLRS : MonoBehaviour {
     // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
 
-    public string verb;
+    public  string verb;
     public string objectType;
     public string objectName;
 
