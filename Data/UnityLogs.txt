@@ -207,3 +207,7 @@
 [2019.04.17.09.58] Log - Help system: True
 [2019.04.17.09.58] Log - Trace to LRS: False
 [2019.04.17.09.58] Log - Data loaded
+[2019.04.17.11.05] Log - Trace: True
+[2019.04.17.11.05] Log - Help system: True
+[2019.04.17.11.05] Log - Trace to LRS: False
+[2019.04.17.11.05] Log - Data loaded
