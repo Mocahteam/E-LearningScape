@@ -105,9 +105,9 @@ public class DreamFragmentCollecting : FSystem {
                 // try to find a fragment touched by the raycast
                 if (f_dreamFragments.contains(hit.transform.gameObject.GetInstanceID()))
                 {
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
                     // Show fragment UI
                     selectedFragment = hit.transform.gameObject;
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
                     GameObjectManager.setGameObjectState(dfUI, true);
                     tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
                     GameObjectManager.setGameObjectState(onlineButton, dreamFragmentsLinks.ContainsKey(selectedFragment.name) && dreamFragmentsLinks[selectedFragment.name] != "");
