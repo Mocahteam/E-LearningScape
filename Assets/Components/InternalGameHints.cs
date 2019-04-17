@@ -8,8 +8,8 @@ public class InternalGameHints : MonoBehaviour {
 
     /// <summary>
     /// Dictionary used to store hints
-    /// The first parameter asked is a string of the format "x.y" with x the room number and y the feedback level
-    /// The second parameter is a string of the format "x.y" with x the name of the hint and y the ComponentMonitoring id
+    /// The first key is a string of the format "x.y.z" with x the room number, y the name of the hint and z the ComponentMonitoring id
+    /// The second key is the feedback level
     /// Once a hint is identified, a list of different way to formulate the hint is given
     /// </summary>
     public Dictionary<string, Dictionary<string, List<string>>> dictionary;

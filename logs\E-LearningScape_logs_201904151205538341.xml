@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <map id="E-LearningScape_201904151205538341">
+    <transition time="201904151203532725" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201904151203543045" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+    <transition time="201904151204091453" pnName="Enigma2" action="Wire_perform_26" origin="player" />
+    <transition time="201904151205330810" pnName="Enigma5" action="Glasses1_perform_51" origin="player" />
+  </map>
+</data>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <map id="E-LearningScape_201903191755497396">
+    <transition time="201903191734538591" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201903191734591300" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+    <transition time="201903191735102230" pnName="Intro" action="Fragment_souvenir_0_activate_2" origin="player" />
+    <transition time="201903191735145292" pnName="Intro" action="Intro_Scroll_perform_0" origin="player" />
+    <transition time="201903191735229808" pnName="Intro" action="Verrou Mur_turnOn_3" origin="player" />
+    <transition time="201903191735391426" pnName="Intro" action="WallIntro_perform_4" origin="player" />
+    <transition time="201903191735391427" pnName="E-LearningScape" action="WallIntro_perform2_143" origin="system" />
+    <transition time="201903191735391433" pnName="Intro" action="Verrou Mur_turnOff_3" origin="system" />
+    <transition time="201903191736456726" pnName="Enigma3" action="Table_turnOn_39" origin="player" />
+    <transition time="201903191736597868" pnName="Enigma3" action="Fragment_souvenir_table_activate_46" origin="player" />
+    <transition time="201903191737482110" pnName="Enigma1" action="KeyE03_perform_5" origin="player" />
+    <transition time="201903191737569815" pnName="Enigma1" action="KeyE03_turnOn_6" origin="player" />
+    <transition time="201903191738210824" pnName="Enigma1" action="BallBox_turnOn_7" origin="player" />
+    <transition time="201903191738224925" pnName="Enigma1" action="Padlock_perform_8" origin="system" />
+    <transition time="201903191738392640" pnName="Enigma1" action="BallBox_turnOff_7" origin="player" />
+    <transition time="201903191738538946" pnName="Enigma1" action="BallBox_turnOn_7" origin="player" />
+    <transition time="201903191738584269" pnName="Enigma1" action="BallBox_turnOff_7" origin="player" />
+    <transition time="201903191739153136" pnName="Enigma11_1" action="PuzzleSet_03_perform_95" origin="player" />
+    <transition time="201903191740000616" pnName="Enigma7" action="Scroll2_perform_72" origin="player" />
+    <transition time="201903191740029338" pnName="Enigma7" action="Scroll_turnOn_70" origin="player" />
+    <transition time="201903191740119265" pnName="Enigma8" action="Mirror_perform_78" origin="player" />
+    <transition time="201903191740340984" pnName="Enigma8" action="Plank_turnOn_80" origin="player" />
+    <transition time="201903191740391073" pnName="Enigma8" action="Mirror_turnOn_79" origin="player" />
+    <transition time="201903191740395961" pnName="Enigma8" action="Plank_perform_81" origin="system" />
+    <transition time="201903191740547110" pnName="Enigma8" action="Plank_turnOff_80" origin="player" />
+    <transition time="201903191741021964" pnName="LockerRoom2" action="Verrou Porte_turnOn_159" origin="player" />
+    <transition time="201903191741118804" pnName="LockerRoom2" action="Verrou Porte_perform2_167" origin="player" />
+    <transition time="201903191741118805" pnName="E-LearningScape" action="Verrou Porte_perform_158" origin="player" />
+    <transition time="201903191741118806" pnName="LockerRoom2" action="Verrou Porte_turnOff_159" origin="system" />
+    <transition time="201903191741255784" pnName="Enigma11_1" action="boite_turnOn_92" origin="player" />
+    <transition time="201903191741255786" pnName="Enigma12" action="boite_turnOn_111" origin="player" />
+    <transition time="201903191741308739" pnName="Enigma12" action="Lamp_perform_112" origin="player" />
+    <transition time="201903191741498049" pnName="Enigma12" action="Lamp_turnOn_113" origin="player" />
+    <transition time="201903191741518104" pnName="Enigma12" action="E12_2_activate_115" origin="player" />
+    <transition time="201903191741519790" pnName="Enigma12" action="E12_1_activate_114" origin="player" />
+    <transition time="201903191741524189" pnName="Enigma12" action="E12_5_activate_118" origin="player" />
+    <transition time="201903191741537133" pnName="Enigma12" action="E12_2_activate_115" origin="player" />
+    <transition time="201903191741537909" pnName="Enigma12" action="E12_4_activate_117" origin="player" />
+    <transition time="201903191754441445" pnName="Enigma6" action="Fragment_souvenir_1_activate_65" origin="player" />
+    <transition time="201903191754480180" pnName="Enigma12" action="E12_2_activate_115" origin="player" />
+    <transition time="201903191754480434" pnName="Enigma12" action="E12_3_activate_116" origin="player" />
+    <transition time="201903191754480447" pnName="Enigma12" action="E12_4_activate_117" origin="player" />
+    <transition time="201903191754480458" pnName="Enigma12" action="E12_5_activate_118" origin="player" />
+  </map>
+</data>

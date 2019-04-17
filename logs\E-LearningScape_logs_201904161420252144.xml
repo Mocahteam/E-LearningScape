@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <map id="E-LearningScape_201904161420252144">
+    <transition time="201904161418422679" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201904161418464804" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+    <transition time="201904161418490111" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201904161418501652" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+    <transition time="201904161418569314" pnName="Intro" action="Fragment_souvenir_0_activate_2" origin="player" />
+    <transition time="201904161419022093" pnName="Intro" action="Intro_Scroll_perform_0" origin="player" />
+    <transition time="201904161419077942" pnName="Intro" action="Verrou Mur_turnOn_3" origin="player" />
+    <transition time="201904161419127748" pnName="Intro" action="Verrou Mur_turnOff_3" origin="player" />
+    <transition time="201904161419250886" pnName="Enigma1" action="KeyE03_perform_5" origin="player" />
+    <transition time="201904161419375822" pnName="Enigma1" action="KeyE03_turnOn_6" origin="player" />
+    <transition time="201904161419382863" pnName="Enigma1" action="KeyE03_turnOff_6" origin="player" />
+    <transition time="201904161419389398" pnName="Enigma1" action="KeyE03_turnOn_6" origin="player" />
+    <transition time="201904161419395079" pnName="Enigma1" action="KeyE03_turnOff_6" origin="player" />
+    <transition time="201904161419406332" pnName="Intro" action="ScrollIntro_activate_1" origin="player" />
+    <transition time="201904161419421691" pnName="Intro" action="ScrollIntro_activate_1" origin="player" />
+    <transition time="201904161419499064" pnName="Enigma2" action="Fragment_souvenir_17_activate_30" origin="player" />
+    <transition time="201904161419544026" pnName="Enigma3" action="Table_turnOn_39" origin="player" />
+    <transition time="201904161419560737" pnName="Enigma3" action="Fragment_souvenir_table_activate_46" origin="player" />
+    <transition time="201904161419572340" pnName="Enigma3" action="Fragment_souvenir_table_activate_46" origin="player" />
+    <transition time="201904161419594674" pnName="Enigma3" action="Fragment_souvenir_table_activate_46" origin="player" />
+    <transition time="201904161420007979" pnName="Enigma3" action="Fragment_souvenir_table_activate_46" origin="player" />
+    <transition time="201904161420059835" pnName="Enigma3" action="Fragment_souvenir_table_activate_46" origin="player" />
+  </map>
+</data>

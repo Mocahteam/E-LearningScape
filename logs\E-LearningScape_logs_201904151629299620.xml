@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <map id="E-LearningScape_201904151629299620">
+    <transition time="201904151626533808" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201904151626546367" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+    <transition time="201904151627138260" pnName="Enigma2" action="Wire_perform_26" origin="player" />
+    <transition time="201904151627167212" pnName="Enigma2" action="Wire_turnOn_27" origin="player" />
+    <transition time="201904151627537439" pnName="Enigma2" action="Wire_turnOff_27" origin="player" />
+    <transition time="201904151627546621" pnName="Enigma2" action="Wire_turnOn_27" origin="player" />
+    <transition time="201904151628254778" pnName="Enigma2" action="Wire_turnOff_27" origin="player" />
+    <transition time="201904151628299759" pnName="Enigma2" action="Wire_turnOn_27" origin="player" />
+    <transition time="201904151628308810" pnName="Enigma2" action="Wire_turnOff_27" origin="player" />
+    <transition time="201904151629163871" pnName="Enigma2" action="Wire_turnOn_27" origin="player" />
+  </map>
+</data>

@@ -1,11 +1,13 @@
 {
-  "1.2": {
-    "hintName.9999": {
-      "Key": "mylink",
-      "Value": [
-        "hint content 1",
-        "hint content 2"
-      ]
-    }
-  }
+	"[roomID].[hintName].[ComponentMonitoringId]": {
+		"[hintLevel]": [
+			{
+				"Key": "[myLink]",
+				"Value": [
+					"hint content 1",
+					"hint content 2"
+				]
+			}
+		]
+	}
 }

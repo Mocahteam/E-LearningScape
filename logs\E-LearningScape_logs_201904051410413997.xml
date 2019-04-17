@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <map id="E-LearningScape_201904051410413997">
+    <transition time="201904051405044792" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201904051405124388" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+    <transition time="201904051407328171" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201904051407335648" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+    <transition time="201904051407443891" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201904051407467096" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+    <transition time="201904051407550069" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201904051407573634" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+    <transition time="201904051407584661" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201904051407594583" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+    <transition time="201904051408029408" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201904051408034474" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+    <transition time="201904051408043064" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201904051408127187" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+  </map>
+</data>

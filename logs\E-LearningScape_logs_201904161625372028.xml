@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <map id="E-LearningScape_201904161625372028">
+    <transition time="201904161619358417" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201904161619372971" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+    <transition time="201904161619453082" pnName="Intro" action="Verrou Mur_turnOn_3" origin="player" />
+    <transition time="201904161620093014" pnName="Intro" action="WallIntro_perform_4" origin="player" />
+    <transition time="201904161620093017" pnName="E-LearningScape" action="WallIntro_perform2_143" origin="system" />
+    <transition time="201904161620093025" pnName="Intro" action="Verrou Mur_turnOff_3" origin="system" />
+    <transition time="201904161620208416" pnName="Enigma1" action="Q1_Correct_24" origin="player" />
+    <transition time="201904161620208418" pnName="E-LearningScape" action="Q1_perform_144" origin="system" />
+    <transition time="201904161620247681" pnName="Enigma2" action="Q2_Correct_35" origin="player" />
+    <transition time="201904161620247683" pnName="E-LearningScape" action="Q2_perform_145" origin="system" />
+    <transition time="201904161620322913" pnName="Enigma3" action="Q3_Correct_50" origin="player" />
+    <transition time="201904161620322915" pnName="E-LearningScape" action="Q3_perform_146" origin="system" />
+    <transition time="201904161620403506" pnName="GearsEnigma" action="GearsEnigma_Correct_151" origin="player" />
+    <transition time="201904161620403507" pnName="E-LearningScape" action="GearsEnigma_perform_147" origin="system" />
+    <transition time="201904161620471523" pnName="LoginPanel" action="LoginPanel_turnOn_165" origin="system" />
+    <transition time="201904161620516073" pnName="LoginPanel" action="LoginPanel_Correct_166" origin="player" />
+    <transition time="201904161620516075" pnName="E-LearningScape" action="LoginPanel_perform_149" origin="system" />
+    <transition time="201904161620599591" pnName="LoginPanel" action="LoginPanel_turnOff_165" origin="system" />
+    <transition time="201904161621321724" pnName="Enigma7" action="Q3_Correct_77" origin="player" />
+    <transition time="201904161621321725" pnName="E-LearningScape" action="Q3_perform_154" origin="system" />
+    <transition time="201904161621407462" pnName="Enigma8" action="Q4_Wrong_83" origin="player" />
+    <transition time="201904161621477221" pnName="Enigma8" action="Q4_Correct_83" origin="player" />
+    <transition time="201904161621477222" pnName="E-LearningScape" action="Q4_perform_155" origin="system" />
+    <transition time="201904161621568470" pnName="Enigma10" action="Q6_Correct_91" origin="player" />
+    <transition time="201904161621568471" pnName="E-LearningScape" action="Q6_perform_157" origin="system" />
+    <transition time="201904161622197506" pnName="Enigma5" action="Q1_transition_150" origin="player" />
+    <transition time="201904161622197507" pnName="E-LearningScape" action="Q1_perform_152" origin="system" />
+    <transition time="201904161622235347" pnName="Enigma6" action="Q2_Correct_69" origin="player" />
+    <transition time="201904161622235348" pnName="E-LearningScape" action="Q2_perform_153" origin="system" />
+    <transition time="201904161622525008" pnName="Enigma9" action="Q5_Correct_86" origin="player" />
+    <transition time="201904161622525009" pnName="E-LearningScape" action="Q5_perform_156" origin="system" />
+    <transition time="201904161623099256" pnName="LockerRoom2" action="Verrou Porte_turnOn_159" origin="player" />
+    <transition time="201904161623333535" pnName="LockerRoom2" action="Verrou Porte_perform2_167" origin="player" />
+    <transition time="201904161623333536" pnName="E-LearningScape" action="Verrou Porte_perform_158" origin="player" />
+    <transition time="201904161623333537" pnName="LockerRoom2" action="Verrou Porte_turnOff_159" origin="system" />
+    <transition time="201904161623554535" pnName="Enigma1" action="KeyE03_perform_5" origin="player" />
+  </map>
+</data>

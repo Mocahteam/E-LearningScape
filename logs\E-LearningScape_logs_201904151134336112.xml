@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <map id="E-LearningScape_201904151134336112">
+    <transition time="201904151130561524" pnName="Enigma3" action="FPSController_turnOn_37" origin="player" />
+    <transition time="201904151130572754" pnName="Enigma3" action="FPSController_turnOff_37" origin="player" />
+    <transition time="201904151131153935" pnName="Enigma2" action="Wire_perform_26" origin="player" />
+    <transition time="201904151131199953" pnName="Enigma5" action="Glasses1_perform_51" origin="player" />
+    <transition time="201904151131223762" pnName="Enigma2" action="Wire_turnOn_27" origin="player" />
+    <transition time="201904151131262079" pnName="Enigma2" action="Wire_turnOff_27" origin="player" />
+    <transition time="201904151131269383" pnName="Enigma2" action="Wire_turnOn_27" origin="player" />
+    <transition time="201904151131430127" pnName="Enigma5" action="Glasses1_turnOn_52" origin="player" />
+    <transition time="201904151131465839" pnName="Enigma2" action="Wire_turnOff_27" origin="player" />
+    <transition time="201904151131479058" pnName="Enigma5" action="Glasses1_turnOff_52" origin="player" />
+    <transition time="201904151131491319" pnName="Enigma2" action="Wire_turnOn_27" origin="player" />
+    <transition time="201904151132371682" pnName="Enigma2" action="Wire_turnOff_27" origin="player" />
+    <transition time="201904151132425393" pnName="Enigma2" action="Wire_turnOn_27" origin="player" />
+    <transition time="201904151134135640" pnName="Enigma2" action="Wire_turnOff_27" origin="player" />
+    <transition time="201904151134144693" pnName="Enigma2" action="Wire_turnOn_27" origin="player" />
+    <transition time="201904151134298333" pnName="Enigma2" action="Wire_turnOff_27" origin="player" />
+  </map>
+</data>
