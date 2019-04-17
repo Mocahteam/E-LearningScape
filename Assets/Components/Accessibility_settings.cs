@@ -25,7 +25,7 @@ public class Accessibility_settings : MonoBehaviour {
 
     public void onSliderFontSizeUpdate(float size)
     {
-        GameObjectManager.addComponent<UpdateFontSize>(this.gameObject, new { newFontSizeMax = size });
+        GameObjectManager.addComponent<UpdateFontSize>(this.gameObject, new { newFontSize = size });
     }
 
     public void onSliderFontOutlineUpdate(float size)
