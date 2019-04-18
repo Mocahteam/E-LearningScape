@@ -43,7 +43,7 @@ public class IARViewItem : FSystem {
             // cache UI elements
             descriptionUI = f_descriptionUI.First();
             descriptionTitle = descriptionUI.transform.GetChild(0).gameObject; // the first child is the title
-            descriptionContent = descriptionUI.transform.GetChild(1).gameObject; // the second child is the content of the description
+            descriptionContent = descriptionUI.transform.GetChild(1).GetChild(0).GetChild(1).gameObject; // the second child contain a GO and his second child is the content of the description
             descriptionInfo = descriptionUI.transform.GetChild(2).gameObject; // the third child is the usable info of the description
 
             // add callback on families
