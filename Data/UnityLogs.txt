@@ -211,3 +211,23 @@
 [2019.04.17.11.05] Log - Help system: True
 [2019.04.17.11.05] Log - Trace to LRS: False
 [2019.04.17.11.05] Log - Data loaded
+[2019.04.17.03.29] Log - Trace: True
+[2019.04.17.03.29] Log - Help system: True
+[2019.04.17.03.29] Log - Trace to LRS: False
+[2019.04.17.03.29] Log - Data loaded
+[2019.04.17.03.44] Log - Trace: True
+[2019.04.17.03.44] Log - Help system: True
+[2019.04.17.03.44] Log - Trace to LRS: False
+[2019.04.17.03.44] Log - Data loaded
+[2019.04.17.03.58] Log - Trace: True
+[2019.04.17.03.58] Log - Help system: True
+[2019.04.17.03.58] Log - Trace to LRS: False
+[2019.04.17.03.58] Log - Data loaded
+[2019.04.17.05.34] Log - Trace: True
+[2019.04.17.05.34] Log - Help system: True
+[2019.04.17.05.34] Log - Trace to LRS: False
+[2019.04.17.05.34] Log - Data loaded
+[2019.04.17.05.35] Log - Trace: True
+[2019.04.17.05.35] Log - Help system: True
+[2019.04.17.05.35] Log - Trace to LRS: False
+[2019.04.17.05.35] Log - Data loaded
