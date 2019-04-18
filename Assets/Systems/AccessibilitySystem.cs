@@ -45,7 +45,7 @@ public class AccessibilitySystem : FSystem {
 
             foreach (GameObject go in textWithMax_f)
             {
-                go.GetComponent<MaxFontSize>().defaultMaxSize = go.GetComponent<TMP_Text>().fontSizeMax; 
+				go.GetComponent<MaxFontSize> ().defaultMaxSize = go.GetComponent<TMP_Text> ().fontSizeMax; 
             }
 
             //Permet de filtrer et d'identifier dans la console tous les objets qui ont le tag DreamFragmentUI
@@ -105,7 +105,7 @@ public class AccessibilitySystem : FSystem {
         {
             TMP_Text tmFontSize = textSize.GetComponent<TMP_Text>();
             mfs = textSize.GetComponent<MaxFontSize>();
-            tmFontSize.fontSizeMax = Mathf.Min(mfs.defaultMaxSize + ufs.newFontSizeMax, mfs.maxSize);
+			tmFontSize.fontSizeMax = Mathf.Min(mfs.defaultMaxSize + ufs.newFontSizeMax, mfs.maxSize);
        
         }
         GameObjectManager.removeComponent<UpdateFontSize>(go);
