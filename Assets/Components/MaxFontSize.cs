@@ -8,8 +8,8 @@ public class MaxFontSize : MonoBehaviour {
     public float defaultMaxSize; //Valeur renseignée dans le max size qui a permis de définir la taille de la police de départ
 
     public TMP_Text message;
-
-    public void Start()
+    
+    public void Start ()
     {
         //Initiate property value because it was alway iniated at 2.5 and 1 when game is actived 
         message.outlineWidth = 0;
