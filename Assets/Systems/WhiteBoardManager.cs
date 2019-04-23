@@ -165,17 +165,17 @@ public class WhiteBoardManager : FSystem {
                 ExitWhiteBoard();
             else
             {
-                if (eraser.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
+                if (eraser.GetComponent<PointerOver>() && Input.GetMouseButton(0))
                 {
                     //start dragging eraser when it s clicked
                     eraserDragged = true;
-
                     GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "turnOn", performedBy = "player" });
                     GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "dragged", objectType = "draggable", objectName = eraser.name });
                 }
+
                 if (eraserDragged)
                 {
-                    if (Input.GetMouseButtonUp(0))
+                    if (Input.GetMouseButton(1))
                     {
                         //stop dragging eraser when the click is released
                         eraserDragged = false;

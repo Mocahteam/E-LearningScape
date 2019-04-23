@@ -117,15 +117,15 @@ public class AccessibilitySystem : FSystem {
     {
         Accessibility_settings accessSettings = go.GetComponent<Accessibility_settings>();
         
-        Font textFont;
+        //Font textFont;
         TMP_FontAsset TM_Font;
         if (accessSettings.enableFont) //Si la case est cochée alors changement de toutes les polices
         {
-            textFont = accessSettings.accessibleFont;//attribution de la police defini dans Accessibility_settings à txt
+            //textFont = accessSettings.accessibleFont;//attribution de la police defini dans Accessibility_settings à txt
             TM_Font = accessSettings.accessibleFontTMPro;
         } else //sinon mettre les polices par défaut
         {
-            textFont = accessSettings.defaultFont;
+            //textFont = accessSettings.defaultFont;
             TM_Font = accessSettings.defaultFontTMPro;
         }
 
