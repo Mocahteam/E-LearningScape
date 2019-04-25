@@ -75,7 +75,6 @@ public class AccessibilitySystem : FSystem {
         Slider slider = countourSlider_f.First().GetComponent<Slider>();
         TMP_Text thickness = go.GetComponent<TMP_Text>();
         thickness.outlineWidth = slider.value;
-        Debug.Log("mmmmmm" + slider.value);
         thickness.fontSharedMaterial.SetFloat(ShaderUtilities.ID_FaceDilate, slider.value);
         
     }
