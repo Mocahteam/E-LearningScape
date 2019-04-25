@@ -6,8 +6,5 @@ public class MaxFontSize : MonoBehaviour {
     public int maxSize; //Valeur renseignée dans le max size jusqu'où le texte peut grossir au max
     [HideInInspector]
     public float defaultMaxSize; //Valeur renseignée dans le max size qui a permis de définir la taille de la police de départ
-
-    public TMP_Text message;
-    
     
 }
