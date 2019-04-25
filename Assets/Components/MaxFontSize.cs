@@ -9,11 +9,5 @@ public class MaxFontSize : MonoBehaviour {
 
     public TMP_Text message;
     
-    public void Start ()
-    {
-        //Initiate property value because it was alway iniated at 2.5 and 1 when game is actived 
-        message.outlineWidth = 0;
-        message.fontSharedMaterial.SetFloat(ShaderUtilities.ID_FaceDilate, 0);
-    }
     
 }
