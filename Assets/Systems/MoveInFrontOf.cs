@@ -13,7 +13,7 @@ public class MoveInFrontOf : FSystem {
 
     private Family f_quitEnigma = FamilyManager.getFamily(new AnyOfTags("QuitEnigma"));
 
-    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
+	private Family f_player = FamilyManager.getFamily (new AnyOfTags ("Player"), new AllOfComponents(typeof(SwitchPerso))); // rajouter allofcomponent SwitchPerso f_player.First().getComponent<SwitchPerso>().bool
 
     //information for animations
     private float speed;
@@ -94,8 +94,13 @@ public class MoveInFrontOf : FSystem {
 
         if (!moveInFrontOf && (Input.GetMouseButtonDown(0) || emulateClickOn != null))
         {
-            if (Input.GetMouseButtonDown(0))
-                focusedGO = f_focused.First();
+			if (Input.GetMouseButtonDown (0)) {
+				//If player is in third person cam view when he click on object player will be in First person cam view 
+				f_player.First ().GetComponent<SwitchPerso> ().ThirdCamera.enabled = false;
+				f_player.First ().GetComponent<SwitchPerso> ().FirstCamera.enabled = true;
+				focusedGO = f_focused.First ();
+
+			}
             else
             {
                 focusedGO = emulateClickOn;
@@ -115,6 +120,7 @@ public class MoveInFrontOf : FSystem {
 
                 // save player scale (crouch or not) in order to reset it when player exit the focused GameObject
                 playerLocalScale = f_player.First().transform.localScale;
+
                 // be sure the player standing in front of the selected game object
                 f_player.First().transform.localScale = Vector3.one;
                 // compute target position and orientation in front of the focused GameObject
@@ -125,6 +131,7 @@ public class MoveInFrontOf : FSystem {
                 camNewDir = selectable.standingOrientation;
                 angleRotation = Vector3.Angle(Camera.main.transform.forward, camNewDir);
                 moveInFrontOf = true; // start animation to move the player in front of the selected GameObject
+
             }
         }
 
