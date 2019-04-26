@@ -15,11 +15,16 @@ public class navigationKeybord : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetAxisRaw ("Vertical") != 0 && buttonSelected == false)
+		/*if (Input.GetAxisRaw ("Vertical") != 0 && buttonSelected == false)
         {
             eventSystem.SetSelectedGameObject(selectedObject);
             buttonSelected = true;
-        }
+        }*/
+		if (Input.GetAxisRaw ("Vertical") == 0 && buttonSelected == false)
+		{
+			eventSystem.SetSelectedGameObject(selectedObject);
+			buttonSelected = true;
+		}
 
 	}
 
@@ -27,4 +32,5 @@ public class navigationKeybord : MonoBehaviour {
     {
         buttonSelected = false;
     }
+
 }

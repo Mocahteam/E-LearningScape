@@ -95,7 +95,7 @@ public class MoveInFrontOf : FSystem {
         if (!moveInFrontOf && (Input.GetMouseButtonDown(0) || emulateClickOn != null))
         {
 			if (Input.GetMouseButtonDown (0)) {
-				//If player is in third person cam view when he click on object player will be in First person cam view 
+				//If player is in third person view so when he click on object player will be in First person cam view
 				f_player.First ().GetComponent<SwitchPerso> ().ThirdCamera.enabled = false;
 				f_player.First ().GetComponent<SwitchPerso> ().FirstCamera.enabled = true;
 				focusedGO = f_focused.First ();
