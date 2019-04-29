@@ -15,7 +15,6 @@ public class IARViewItem : FSystem {
     private Family f_selected = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedInInventory), typeof(Collected), typeof(AnimatedSprites)), new AnyOfTags("InventoryElements"));
     private Family f_descriptionUI = FamilyManager.getFamily(new AnyOfTags("DescriptionUI"));
     private Family f_viewable = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
-    private Family f_collectedPuzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
 
     private GameObject descriptionUI;
     private GameObject descriptionTitle;

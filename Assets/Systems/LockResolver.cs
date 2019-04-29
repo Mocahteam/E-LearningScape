@@ -266,7 +266,7 @@ public class LockResolver : FSystem {
                 {
                     GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock", performedBy = "player" });
 
-                    GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock_meta", performedBy = "system" });
+                    GameObjectManager.addComponent<ActionPerformed>(f_wallIntro.First(), new { overrideName = "unlock_meta", performedBy = "system" });
 
                     GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
                     {
@@ -326,7 +326,7 @@ public class LockResolver : FSystem {
                     GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(1).gameObject, true); // second child is unlocked tab
                     IARScreenRoom3Unlocked = true;
                     GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { name = "unlock", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { name = "unlock_meta", performedBy = "system" });
+                    GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { name = "unlock_meta", performedBy = "player" });
                     GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new { verb = "completed",
                         objectType = "interactable", objectName = selectedLocker.gameObject.name });
                     GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new { verb = "unlocked", objectType = "menu",

@@ -15,18 +15,13 @@ public class DreamFragmentCollecting : FSystem {
     private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
     private Family f_dreamFragmentUI = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AnyOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD));
     private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
-    private Family f_inventoryElements = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
-    private Family f_collectedPuzzleFragments = FamilyManager.getFamily(new AllOfComponents(typeof(PuzzleFragmentSeen)));
 
     private GameObject dfUI;
     private TextMeshProUGUI FragmentText;
     private RaycastHit hit;
     private GameObject selectedFragment;
     private DreamFragment tmpDFComponent;
-    private bool[] fragmentsSeen;
     private bool backupIARNavigationState;
-    private GameObject puzzleLeftUI;
-    private bool allPuzzleFragmentsCollected = false;
     private GameObject tmpGo;
 
     //key: dream fragment name, value: link
@@ -56,19 +51,6 @@ public class DreamFragmentCollecting : FSystem {
             }
             // Get child text area
             FragmentText = dfUI.GetComponentInChildren<TextMeshProUGUI>();
-
-            fragmentsSeen = new bool[6];
-            for(int i = 0; i < fragmentsSeen.Length; i++)
-                fragmentsSeen[i] = false;
-            int nbInvetoryElems = f_inventoryElements.Count;
-            for(int i = 0; i < nbInvetoryElems; i++)
-            {
-                if(f_inventoryElements.getAt(i).name == "Puzzle")
-                {
-                    puzzleLeftUI = f_inventoryElements.getAt(i);
-                    break;
-                }
-            }
 
             //Load dream fragment links (should be done in LoadGameContent)
             if (File.Exists(LoadGameContent.gameContent.dreamFragmentLinksPath))
@@ -105,9 +87,9 @@ public class DreamFragmentCollecting : FSystem {
                 // try to find a fragment touched by the raycast
                 if (f_dreamFragments.contains(hit.transform.gameObject.GetInstanceID()))
                 {
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
                     // Show fragment UI
                     selectedFragment = hit.transform.gameObject;
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
                     GameObjectManager.setGameObjectState(dfUI, true);
                     tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
                     GameObjectManager.setGameObjectState(onlineButton, dreamFragmentsLinks.ContainsKey(selectedFragment.name) && dreamFragmentsLinks[selectedFragment.name] != "");
@@ -121,57 +103,6 @@ public class DreamFragmentCollecting : FSystem {
                     MovingSystem.instance.Pause = true;
                     backupIARNavigationState = IARTabNavigation.instance.Pause;
                     IARTabNavigation.instance.Pause = true;
-
-                    switch (selectedFragment.name)
-                    {
-                        case "Fragment_souvenir_7":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if(!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        case "Fragment_souvenir_14":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        case "Fragment_souvenir_15":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        case "Fragment_souvenir_16":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        case "Fragment_souvenir_18":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        default:
-                            break;
-                    }
 
                     if (selectedFragment.transform.parent.gameObject.tag == "Chair" && selectedFragment.transform.parent.gameObject.GetComponent<IsSolution>())
                     {
