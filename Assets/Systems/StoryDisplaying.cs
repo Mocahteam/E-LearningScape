@@ -31,6 +31,7 @@ public class StoryDisplaying : FSystem {
     StoryText st;
 
     private int fadeSpeed = 1;
+    private int way = 1;
 
     private float readingTimer = -Mathf.Infinity;
     private int textCount = -1;
@@ -160,7 +161,7 @@ public class StoryDisplaying : FSystem {
                 if (fadingBackground)
                     background.color = new Color(background.color.r, background.color.g, background.color.b, (Time.time - readingTimer) / fadeSpeed);
                 // stop fading if mouse clicked
-                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.RightArrow))
+                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     readingTimer = Time.time - (fadeSpeed + 1);
                     GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
@@ -180,7 +181,9 @@ public class StoryDisplaying : FSystem {
                 }
                 alphaToPlain = false;
                 // pass to the next text
-                textCount++;
+                textCount += way;
+                textCount = textCount < 0 ? 0 : textCount;
+
                 if (textCount < readTexts.Length)
                     sdText.text = readTexts[textCount];
                 else
@@ -247,9 +250,13 @@ public class StoryDisplaying : FSystem {
         }
         else
         {
-            if (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 alphaToPlain = true;
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    way = -1;
+                else
+                    way = 1;
                 readingTimer = Time.time;
                 GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
                 {

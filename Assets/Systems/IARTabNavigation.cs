@@ -15,6 +15,7 @@ public class IARTabNavigation : FSystem {
     private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
     private Family f_HUD_H = FamilyManager.getFamily(new AnyOfTags("HUD_H"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
+    private Family f_settingsOpened = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private Sprite selectedTabSprite;
     private Sprite defaultTabSprite;
@@ -75,7 +76,7 @@ public class IARTabNavigation : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         // Open/Close IAR with Escape and A keys
-        if (iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape) || (Input.GetMouseButtonDown(0) && iarBackground.GetComponent<PointerOver>())))
+        if (iar.activeInHierarchy && f_settingsOpened.Count == 0 && (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape) || (Input.GetMouseButtonDown(0) && iarBackground.GetComponent<PointerOver>())))
             closeIar();
         else if (!iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape)))
         {
