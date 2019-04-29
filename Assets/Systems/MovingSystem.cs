@@ -97,6 +97,7 @@ public class MovingSystem : FSystem
     protected override void onPause(int currentFrame)
     {
         playerController.enabled = false;
+        f_player.First().GetComponentInChildren<testCamera>().enabled = false;
         SetHUD(false);
         // Show mouse cursor
         Cursor.lockState = CursorLockMode.None;
@@ -114,6 +115,7 @@ public class MovingSystem : FSystem
         playerController.m_MouseLook.m_CharacterTargetRot = f_player.First().transform.localRotation;
         
         playerController.enabled = true;
+        f_player.First().GetComponentInChildren<testCamera>().enabled = true;
         SetHUD(true);
         // hide mouse cursor
         Cursor.lockState = CursorLockMode.None;

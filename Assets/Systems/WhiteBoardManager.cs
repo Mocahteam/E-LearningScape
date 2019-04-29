@@ -165,45 +165,44 @@ public class WhiteBoardManager : FSystem {
                 ExitWhiteBoard();
             else
             {
-                if (eraser.GetComponent<PointerOver>() && Input.GetMouseButton(0))
+                if (eraser.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
                 {
-                    //start dragging eraser when it s clicked
-                    eraserDragged = true;
-                    GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "turnOn", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "dragged", objectType = "draggable", objectName = eraser.name });
-                }
-
-                if (eraserDragged)
-                {
-                    if (Input.GetMouseButton(1))
+                    if (!eraserDragged)
+                    {
+                        //start dragging eraser when it s clicked
+                        eraserDragged = true;
+                        GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "turnOn", performedBy = "player" });
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "dragged", objectType = "draggable", objectName = eraser.name });
+                    }
+                    else
                     {
                         //stop dragging eraser when the click is released
                         eraserDragged = false;
                         GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "turnOff", performedBy = "player" });
                         GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "dropped", objectType = "draggable", objectName = eraser.name });
                     }
-                    else
+                }
+                if (eraserDragged)
+                {
+                    //move eraser to mouse position
+                    Vector3 mousePos = selectedBoard.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distToBoard)));
+                    eraser.transform.localPosition = new Vector3(mousePos.x, eraser.transform.localPosition.y, mousePos.z);
+                    //prevent eraser from going out of the board
+                    if (eraser.transform.localPosition.x > 0.021f)
                     {
-                        //move eraser to mouse position
-                        Vector3 mousePos = selectedBoard.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distToBoard)));
-                        eraser.transform.localPosition = new Vector3(mousePos.x, eraser.transform.localPosition.y, mousePos.z);
-                        //prevent eraser from going out of the board
-                        if (eraser.transform.localPosition.x > 0.021f)
-                        {
-                            eraser.transform.localPosition += Vector3.right * (0.021f - eraser.transform.localPosition.x);
-                        }
-                        else if (eraser.transform.localPosition.x < -0.021f)
-                        {
-                            eraser.transform.localPosition += Vector3.right * (-0.021f - eraser.transform.localPosition.x);
-                        }
-                        if (eraser.transform.localPosition.z > 0.016f)
-                        {
-                            eraser.transform.localPosition += Vector3.forward * (0.016f - eraser.transform.localPosition.z);
-                        }
-                        else if (eraser.transform.localPosition.z < -0.016f)
-                        {
-                            eraser.transform.localPosition += Vector3.forward * (-0.016f - eraser.transform.localPosition.z);
-                        }
+                        eraser.transform.localPosition += Vector3.right * (0.021f - eraser.transform.localPosition.x);
+                    }
+                    else if (eraser.transform.localPosition.x < -0.021f)
+                    {
+                        eraser.transform.localPosition += Vector3.right * (-0.021f - eraser.transform.localPosition.x);
+                    }
+                    if (eraser.transform.localPosition.z > 0.016f)
+                    {
+                        eraser.transform.localPosition += Vector3.forward * (0.016f - eraser.transform.localPosition.z);
+                    }
+                    else if (eraser.transform.localPosition.z < -0.016f)
+                    {
+                        eraser.transform.localPosition += Vector3.forward * (-0.016f - eraser.transform.localPosition.z);
                     }
                 }
             }

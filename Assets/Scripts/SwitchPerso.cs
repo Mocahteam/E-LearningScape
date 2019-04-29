@@ -6,7 +6,7 @@ public class SwitchPerso : MonoBehaviour {
 
     public Camera ThirdCamera;
     public Camera FirstCamera;
-    bool fpsCam = true;
+    public bool fpsCam = true;
 
     private void Start()
     {
@@ -18,10 +18,13 @@ public class SwitchPerso : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.L))
         {
             fpsCam = !fpsCam;
-            FirstCamera.enabled = fpsCam;
-            ThirdCamera.enabled = !fpsCam;
+            forceUpdate();
         }
 	}
    
-
+    public void forceUpdate()
+    {
+        FirstCamera.enabled = fpsCam;
+        ThirdCamera.enabled = !fpsCam;
+    }
 }

@@ -57,6 +57,8 @@ public class MoveInFrontOf : FSystem {
         {
             // reset intial player scale
             f_player.First().transform.localScale = playerLocalScale;
+            //reset player camera
+            f_player.First().GetComponent<SwitchPerso>().forceUpdate();
             // enable systems
             MovingSystem.instance.Pause = false;
             Highlighter.instance.Pause = false;
@@ -74,6 +76,8 @@ public class MoveInFrontOf : FSystem {
             WhiteBoardManager.instance.Pause = true;
             // hide help overlay
             GameObjectManager.setGameObjectState(f_quitEnigma.First(), false);
+
+
         }
     }
 

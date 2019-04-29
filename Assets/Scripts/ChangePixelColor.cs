@@ -30,8 +30,7 @@ public class ChangePixelColor : MonoBehaviour {
 
     private void OnGUI()
     {
-        Event evt = Event.current;
-        if (evt.isMouse && Input.GetMouseButton(0) && WhiteBoardManager.eraserDragged)
+        if (WhiteBoardManager.eraserDragged)
         {
             // Send a ray to collide with the plane
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

@@ -76,6 +76,7 @@ TagManager:
   - TMP_Contour
   - UI_colorAlpha
   - LockArrow
+  - WheelSpeedSlider
   layers:
   - Default
   - TransparentFX

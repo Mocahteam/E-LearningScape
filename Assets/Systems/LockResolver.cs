@@ -24,6 +24,8 @@ public class LockResolver : FSystem {
 
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
+    private Family wheelSpeedSlider_f = FamilyManager.getFamily(new AllOfComponents(typeof(Slider)), new AnyOfTags("WheelSpeedSlider"));
+
     private Family f_LockArrows = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver)), new AnyOfTags("LockArrow"));
 
     //information for animations
@@ -197,11 +199,10 @@ public class LockResolver : FSystem {
         if (lockRotationUp || lockRotationDown)
         {
             if (lockRotationUp)
-                selectedWheel.transform.Rotate(Time.deltaTime * 80, 0, 0);
-            
+                selectedWheel.transform.Rotate(Time.deltaTime * wheelSpeedSlider_f.First().GetComponent<Slider>().value, 0, 0);
             else
-                selectedWheel.transform.Rotate(-Time.deltaTime * 80, 0, 0);
-            wheelRotationCount += Time.deltaTime * 80;
+                selectedWheel.transform.Rotate(-Time.deltaTime * wheelSpeedSlider_f.First().GetComponent<Slider>().value, 0, 0);
+            wheelRotationCount += Time.deltaTime * wheelSpeedSlider_f.First().GetComponent<Slider>().value;
 
             // is rotation finished ?
             if (wheelRotationCount > 36)
