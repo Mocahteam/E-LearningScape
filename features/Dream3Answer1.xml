@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Q1_choice1_36" label="WhiteBoard_Solved Q1" system="False" end="False" />
+  <transition id="Q1_choice2_36" label="WhiteBoard_Locked Q1" system="False" end="False" />
+  <transition id="Q1_choice1_25" label="Enigma12_Solved Q1" system="False" end="False" />
+  <transition id="Q1_choice2_25" label="Enigma12_Locked Q1" system="False" end="False" />
+  <transition id="Q1_choice1_19" label="Lamp_Solved Q1" system="False" end="False" />
+  <transition id="Q1_choice2_19" label="Lamp_Locked Q1" system="False" end="False" />
+  <transition id="Q1_choice1_18" label="Puzzle_Solved Q1" system="False" end="False" />
+  <transition id="Q1_choice2_18" label="Puzzle_Locked Q1" system="False" end="False" />
+  <transition id="Q1_Correct_12" label="Correct Q1" system="False" end="True" />
+  <transition id="Q1_Wrong_12" label="Wrong Q1" system="False" end="False" />
+</transitions>

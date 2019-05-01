@@ -1,78 +1,101 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-31D8-790DD-0" type ="http://www.laas.fr/tina/tpn">
-  <name>
-   <text>GearsEnigma</text>
-  </name>
- <page id="g-31D8-790E6-1">
-  <place id="p-31D8-790E9-2">
-  <name>
-   <text>GearsEnigma_Answered_151</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="350" y="110"/>
-   </graphics>
-  </place>
-  <place id="p-31D8-790F5-3">
-  <name>
-   <text>GearsEnigma_Answering_151</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <initialMarking>
-    <text>1</text>
-   </initialMarking>
-   <graphics>
-    <position x="100" y="110"/>
-   </graphics>
-  </place>
-  <transition id="t-31D8-790FA-4">
-  <name>
-   <text>GearsEnigma_Correct_151</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="230" y="50"/>
-   </graphics>
-  </transition>
-  <transition id="t-31D8-790FE-5">
-  <name>
-   <text>GearsEnigma_Wrong_151</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="230" y="170"/>
-   </graphics>
-  </transition>
-  <place id="p-31D8-79100-6">
-  <name>
-   <text>GearsEnigma_place_148</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="100" y="195"/>
-   </graphics>
-  </place>
-  <arc id="e-31D8-79107-7" source="p-31D8-79100-6" target="t-31D8-790FE-5">
-   <type value="test"/>
-  </arc>
-  <arc id="e-31D8-7910A-8" source="t-31D8-790FA-4" target="p-31D8-790E9-2">
-  </arc>
-  <arc id="e-31D8-7910B-9" source="p-31D8-790F5-3" target="t-31D8-790FA-4">
-  </arc>
-  <arc id="e-31D8-7910C-10" source="p-31D8-790F5-3" target="t-31D8-790FE-5">
-   <type value="test"/>
-  </arc>
- </page>
- </net>
+  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
+    <name>
+      <text>gen0</text>
+    </name>
+    <page id="A-A-1">
+      <transition id="GearsEnigma_Correct_151">
+        <name>
+          <text>GearsEnigma_Correct_151</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="170" y="50" />
+        </graphics>
+      </transition>
+      <transition id="GearsEnigma_Wrong_151">
+        <name>
+          <text>GearsEnigma_Wrong_151</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="170" y="140" />
+        </graphics>
+      </transition>
+      <place id="GearsEnigma_Answered_151">
+        <name>
+          <text>GearsEnigma_Answered_151</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="290" y="65" />
+        </graphics>
+      </place>
+      <place id="GearsEnigma_Answering_151">
+        <name>
+          <text>GearsEnigma_Answering_151</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="40" y="65" />
+        </graphics>
+      </place>
+      <place id="GearsEnigma_locker_151">
+        <name>
+          <text>GearsEnigma_locker_151</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="40" y="155" />
+        </graphics>
+      </place>
+      <arc id="6" source="GearsEnigma_Answering_151" target="GearsEnigma_Correct_151">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="7" source="GearsEnigma_Correct_151" target="GearsEnigma_Answered_151">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="8" source="GearsEnigma_locker_151" target="GearsEnigma_Wrong_151">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+    </page>
+  </net>
 </pnml>

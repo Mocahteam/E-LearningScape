@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-6B48-523A8-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-A658-EC253-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma13</text>
   </name>
- <page id="g-6B48-523B5-1">
-  <place id="p-6B48-523B9-2">
+ <page id="g-A658-EC263-1">
+  <place id="p-A658-EC268-2">
   <name>
-   <text>AnswersInput_Answered_126</text>
+   <text>AnswersInput_end_126</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="715" y="110"/>
+    <position x="555" y="100"/>
    </graphics>
   </place>
-  <place id="p-6B48-523C6-3">
+  <transition id="t-A658-EC286-3">
   <name>
-   <text>AnswersInput_Answering_126</text>
+   <text>AnswersInput_perform_126</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="475" y="80"/>
+   </graphics>
+  </transition>
+  <place id="p-A658-EC28F-4">
+  <name>
+   <text>AnswersInput_start_126</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -27,21 +38,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="475" y="110"/>
+    <position x="395" y="100"/>
    </graphics>
   </place>
-  <transition id="t-6B48-523C9-4">
-  <name>
-   <text>AnswersInput_Correct_126</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="595" y="50"/>
-   </graphics>
-  </transition>
-  <place id="p-6B48-523CD-5">
+  <place id="p-A658-EC296-5">
   <name>
    <text>Fragment_souvenir_10_ActivationCount_123</text>
     <graphics>
@@ -49,10 +49,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="235" y="80"/>
+    <position x="235" y="60"/>
    </graphics>
   </place>
-  <transition id="t-6B48-523D1-6">
+  <transition id="t-A658-EC29F-6">
   <name>
    <text>Fragment_souvenir_10_activate_123</text>
     <graphics>
@@ -60,10 +60,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="115" y="80"/>
+    <position x="115" y="50"/>
    </graphics>
   </transition>
-  <place id="p-6B48-523D5-7">
+  <place id="p-A658-EC2A6-7">
   <name>
    <text>Fragment_souvenir_13_ActivationCount_124</text>
     <graphics>
@@ -71,10 +71,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="215" y="160"/>
+    <position x="235" y="130"/>
    </graphics>
   </place>
-  <transition id="t-6B48-523D9-8">
+  <transition id="t-A658-EC2AC-8">
   <name>
    <text>Fragment_souvenir_13_activate_124</text>
     <graphics>
@@ -82,22 +82,22 @@
     </graphics>
   </name>
    <graphics>
-    <position x="115" y="160"/>
+    <position x="115" y="120"/>
    </graphics>
   </transition>
-  <arc id="e-6B48-523E0-9" source="p-6B48-523D5-7" target="t-6B48-523C9-4">
+  <arc id="e-A658-EC2B7-9" source="p-A658-EC2A6-7" target="t-A658-EC286-3">
    <type value="test"/>
   </arc>
-  <arc id="e-6B48-523E3-10" source="p-6B48-523CD-5" target="t-6B48-523C9-4">
+  <arc id="e-A658-EC2BC-10" source="p-A658-EC296-5" target="t-A658-EC286-3">
    <type value="test"/>
   </arc>
-  <arc id="e-6B48-523E4-11" source="t-6B48-523D1-6" target="p-6B48-523CD-5">
+  <arc id="e-A658-EC2BF-11" source="t-A658-EC286-3" target="p-A658-EC268-2">
   </arc>
-  <arc id="e-6B48-523E6-12" source="p-6B48-523C6-3" target="t-6B48-523C9-4">
+  <arc id="e-A658-EC2C0-12" source="t-A658-EC2AC-8" target="p-A658-EC2A6-7">
   </arc>
-  <arc id="e-6B48-523E7-13" source="t-6B48-523C9-4" target="p-6B48-523B9-2">
+  <arc id="e-A658-EC2C3-13" source="t-A658-EC29F-6" target="p-A658-EC296-5">
   </arc>
-  <arc id="e-6B48-523E8-14" source="t-6B48-523D9-8" target="p-6B48-523D5-7">
+  <arc id="e-A658-EC2C4-14" source="p-A658-EC28F-4" target="t-A658-EC286-3">
   </arc>
  </page>
  </net>

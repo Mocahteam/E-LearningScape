@@ -1,10 +1,10 @@
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-7388-2F223-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+ <net id="n-BDB4-4E0AE-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
   <name>
    <text>Enigma9</text>
   </name>
- <page id="g-7388-2F23A-1">
-  <place id="p-7388-2F253-2">
+ <page id="g-BDB4-4E0BF-1">
+  <place id="p-BDB4-4E0C2-2">
   <name>
    <text>Fragment_souvenir_2_ActivationCount_84</text>
     <graphics>
@@ -12,10 +12,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="230" y="110"/>
+    <position x="230" y="130"/>
    </graphics>
   </place>
-  <transition id="t-7388-2F268-3">
+  <transition id="t-BDB4-4E0D0-3">
   <name>
    <text>Fragment_souvenir_2_activate_84</text>
     <graphics>
@@ -23,10 +23,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="110" y="100"/>
+    <position x="110" y="120"/>
    </graphics>
   </transition>
-  <place id="p-7388-2F270-4">
+  <place id="p-BDB4-4E0D5-4">
   <name>
    <text>Q5_Answered_86</text>
     <graphics>
@@ -34,10 +34,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="680" y="110"/>
+    <position x="575" y="60"/>
    </graphics>
   </place>
-  <place id="p-7388-2F274-5">
+  <place id="p-BDB4-4E0D7-5">
   <name>
    <text>Q5_Answering_86</text>
     <graphics>
@@ -48,10 +48,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="440" y="110"/>
+    <position x="315" y="60"/>
    </graphics>
   </place>
-  <transition id="t-7388-2F28E-6">
+  <transition id="t-BDB4-4E0DF-6">
   <name>
    <text>Q5_Correct_86</text>
     <graphics>
@@ -59,10 +59,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="560" y="50"/>
+    <position x="455" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-7388-2F2AE-7">
+  <transition id="t-BDB4-4E0E1-7">
   <name>
    <text>Q5_Wrong_86</text>
     <graphics>
@@ -70,27 +70,27 @@
     </graphics>
   </name>
    <graphics>
-    <position x="560" y="170"/>
+    <position x="455" y="140"/>
    </graphics>
   </transition>
-  <place id="p-7388-2F2B7-8">
+  <place id="p-BDB4-4E0E8-8">
   <name>
-   <text>Q5_holder_86</text>
+   <text>Q5_locker_86</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="200"/>
+    <position x="315" y="160"/>
    </graphics>
   </place>
-  <arc id="e-7388-2F2E0-9" source="p-7388-2F2B7-8" target="t-7388-2F2AE-7">
+  <arc id="e-BDB4-4E0ED-9" source="p-BDB4-4E0D7-5" target="t-BDB4-4E0DF-6">
   </arc>
-  <arc id="e-7388-2F309-10" source="p-7388-2F274-5" target="t-7388-2F28E-6">
+  <arc id="e-BDB4-4E0EE-10" source="t-BDB4-4E0D0-3" target="p-BDB4-4E0C2-2">
   </arc>
-  <arc id="e-7388-2F30F-11" source="t-7388-2F28E-6" target="p-7388-2F270-4">
+  <arc id="e-BDB4-4E0F0-11" source="p-BDB4-4E0E8-8" target="t-BDB4-4E0E1-7">
   </arc>
-  <arc id="e-7388-2F311-12" source="t-7388-2F268-3" target="p-7388-2F253-2">
+  <arc id="e-BDB4-4E0F2-12" source="t-BDB4-4E0DF-6" target="p-BDB4-4E0D5-4">
   </arc>
  </page>
  </net>

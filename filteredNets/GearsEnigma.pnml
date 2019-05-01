@@ -1,10 +1,10 @@
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-74C0-B8ED9-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+ <net id="n-BE5C-8FB4-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
   <name>
    <text>GearsEnigma</text>
   </name>
- <page id="g-74C0-B8EE7-1">
-  <place id="p-74C0-B8EEA-2">
+ <page id="g-BE5C-8FC1-1">
+  <place id="p-BE5C-8FC4-2">
   <name>
    <text>GearsEnigma_Answered_151</text>
     <graphics>
@@ -12,10 +12,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="350" y="110"/>
+    <position x="350" y="60"/>
    </graphics>
   </place>
-  <place id="p-74C0-B8EF7-3">
+  <place id="p-BE5C-8FD1-3">
   <name>
    <text>GearsEnigma_Answering_151</text>
     <graphics>
@@ -26,10 +26,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="100" y="110"/>
+    <position x="100" y="60"/>
    </graphics>
   </place>
-  <transition id="t-74C0-B8EFA-4">
+  <transition id="t-BE5C-8FD4-4">
   <name>
    <text>GearsEnigma_Correct_151</text>
     <graphics>
@@ -40,9 +40,9 @@
     <position x="230" y="50"/>
    </graphics>
   </transition>
-  <arc id="e-74C0-B8F01-5" source="p-74C0-B8EF7-3" target="t-74C0-B8EFA-4">
+  <arc id="e-BE5C-8FDC-5" source="t-BE5C-8FD4-4" target="p-BE5C-8FC4-2">
   </arc>
-  <arc id="e-74C0-B8F03-6" source="t-74C0-B8EFA-4" target="p-74C0-B8EEA-2">
+  <arc id="e-BE5C-8FDD-6" source="p-BE5C-8FD1-3" target="t-BE5C-8FD4-4">
   </arc>
  </page>
  </net>

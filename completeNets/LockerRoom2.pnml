@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-5320-555FA-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-9F98-CA943-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>LockerRoom2</text>
   </name>
- <page id="g-5320-55604-1">
-  <place id="p-5320-55608-2">
+ <page id="g-9F98-CA950-1">
+  <place id="p-9F98-CA956-2">
   <name>
    <text>Verrou Porte_end_167</text>
     <graphics>
@@ -13,10 +13,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="550" y="80"/>
+    <position x="390" y="175"/>
    </graphics>
   </place>
-  <place id="p-5320-55614-3">
+  <place id="p-9F98-CA966-3">
   <name>
    <text>Verrou Porte_off_159</text>
     <graphics>
@@ -30,7 +30,7 @@
     <position x="70" y="80"/>
    </graphics>
   </place>
-  <place id="p-5320-5561A-4">
+  <place id="p-9F98-CA96E-4">
   <name>
    <text>Verrou Porte_on_159</text>
     <graphics>
@@ -38,10 +38,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="240" y="80"/>
+    <position x="235" y="80"/>
    </graphics>
   </place>
-  <transition id="t-5320-5561D-5">
+  <transition id="t-9F98-CA974-5">
   <name>
    <text>Verrou Porte_perform_167</text>
     <graphics>
@@ -49,10 +49,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="480" y="65"/>
+    <position x="320" y="165"/>
    </graphics>
   </transition>
-  <place id="p-5320-55621-6">
+  <place id="p-9F98-CA979-6">
   <name>
    <text>Verrou Porte_start_167</text>
     <graphics>
@@ -63,10 +63,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="400" y="80"/>
+    <position x="240" y="175"/>
    </graphics>
   </place>
-  <transition id="t-5320-55625-7">
+  <transition id="t-9F98-CA980-7">
   <name>
    <text>Verrou Porte_turnOff_159</text>
     <graphics>
@@ -74,10 +74,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="160" y="50"/>
+    <position x="150" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-5320-55629-8">
+  <transition id="t-9F98-CA986-8">
   <name>
    <text>Verrou Porte_turnOn_159</text>
     <graphics>
@@ -85,23 +85,23 @@
     </graphics>
   </name>
    <graphics>
-    <position x="160" y="140"/>
+    <position x="150" y="140"/>
    </graphics>
   </transition>
-  <arc id="e-5320-5562E-9" source="p-5320-5561A-4" target="t-5320-5561D-5">
+  <arc id="e-9F98-CA98F-9" source="p-9F98-CA979-6" target="t-9F98-CA974-5">
+  </arc>
+  <arc id="e-9F98-CA993-10" source="t-9F98-CA974-5" target="p-9F98-CA956-2">
+  </arc>
+  <arc id="e-9F98-CA995-11" source="p-9F98-CA96E-4" target="t-9F98-CA980-7">
+  </arc>
+  <arc id="e-9F98-CA997-12" source="p-9F98-CA966-3" target="t-9F98-CA986-8">
+  </arc>
+  <arc id="e-9F98-CA999-13" source="t-9F98-CA986-8" target="p-9F98-CA96E-4">
+  </arc>
+  <arc id="e-9F98-CA99B-14" source="t-9F98-CA980-7" target="p-9F98-CA966-3">
+  </arc>
+  <arc id="e-9F98-CA99D-15" source="p-9F98-CA96E-4" target="t-9F98-CA974-5">
    <type value="test"/>
-  </arc>
-  <arc id="e-5320-55634-10" source="t-5320-55625-7" target="p-5320-55614-3">
-  </arc>
-  <arc id="e-5320-55635-11" source="t-5320-55629-8" target="p-5320-5561A-4">
-  </arc>
-  <arc id="e-5320-55636-12" source="p-5320-55614-3" target="t-5320-55629-8">
-  </arc>
-  <arc id="e-5320-55637-13" source="p-5320-5561A-4" target="t-5320-55625-7">
-  </arc>
-  <arc id="e-5320-55638-14" source="p-5320-55621-6" target="t-5320-5561D-5">
-  </arc>
-  <arc id="e-5320-55639-15" source="t-5320-5561D-5" target="p-5320-55608-2">
   </arc>
  </page>
  </net>

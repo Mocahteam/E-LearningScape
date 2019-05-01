@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-3668-BAD71-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-BF6C-B05F5-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma11_1</text>
   </name>
- <page id="g-3668-BAD84-1">
-  <place id="p-3668-BAD8A-2">
+ <page id="g-BF6C-B0603-1">
+  <place id="p-BF6C-B0606-2">
   <name>
-   <text>AnswersInput_Answered_101</text>
+   <text>AnswersInput_end_101</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1035" y="365"/>
+    <position x="820" y="355"/>
    </graphics>
   </place>
-  <place id="p-3668-BAD9B-3">
+  <transition id="t-BF6C-B0612-3">
   <name>
-   <text>AnswersInput_Answering_101</text>
+   <text>AnswersInput_perform_101</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="750" y="345"/>
+   </graphics>
+  </transition>
+  <place id="p-BF6C-B0617-4">
+  <name>
+   <text>AnswersInput_start_101</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -27,43 +38,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="775" y="365"/>
+    <position x="670" y="355"/>
    </graphics>
   </place>
-  <transition id="t-3668-BADA3-4">
-  <name>
-   <text>AnswersInput_Correct_101</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="915" y="305"/>
-   </graphics>
-  </transition>
-  <transition id="t-3668-BADAB-5">
-  <name>
-   <text>AnswersInput_Wrong_101</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="915" y="425"/>
-   </graphics>
-  </transition>
-  <place id="p-3668-BADB0-6">
-  <name>
-   <text>AnswersInput_place_100</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="775" y="445"/>
-   </graphics>
-  </place>
-  <place id="p-3668-BADB5-7">
+  <place id="p-BF6C-B061C-5">
   <name>
    <text>PuzzleSet_01_end_93</text>
     <graphics>
@@ -71,10 +49,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="545" y="160"/>
+    <position x="460" y="165"/>
    </graphics>
   </place>
-  <transition id="t-3668-BADBA-8">
+  <transition id="t-BF6C-B0621-6">
   <name>
    <text>PuzzleSet_01_perform_93</text>
     <graphics>
@@ -82,10 +60,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="465" y="160"/>
+    <position x="380" y="155"/>
    </graphics>
   </transition>
-  <place id="p-3668-BADBF-9">
+  <place id="p-BF6C-B0625-7">
   <name>
    <text>PuzzleSet_01_start_93</text>
     <graphics>
@@ -96,10 +74,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="385" y="160"/>
+    <position x="300" y="165"/>
    </graphics>
   </place>
-  <place id="p-3668-BADC4-10">
+  <place id="p-BF6C-B062D-8">
   <name>
    <text>PuzzleSet_02_end_94</text>
     <graphics>
@@ -107,10 +85,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="525" y="240"/>
+    <position x="450" y="235"/>
    </graphics>
   </place>
-  <transition id="t-3668-BADCA-11">
+  <transition id="t-BF6C-B0635-9">
   <name>
    <text>PuzzleSet_02_perform_94</text>
     <graphics>
@@ -118,10 +96,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="465" y="240"/>
+    <position x="380" y="225"/>
    </graphics>
   </transition>
-  <place id="p-3668-BADD0-12">
+  <place id="p-BF6C-B063B-10">
   <name>
    <text>PuzzleSet_02_start_94</text>
     <graphics>
@@ -132,10 +110,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="385" y="240"/>
+    <position x="300" y="235"/>
    </graphics>
   </place>
-  <place id="p-3668-BADD6-13">
+  <place id="p-BF6C-B0641-11">
   <name>
    <text>PuzzleSet_03_end_95</text>
     <graphics>
@@ -143,10 +121,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="525" y="320"/>
+    <position x="450" y="305"/>
    </graphics>
   </place>
-  <transition id="t-3668-BADDB-14">
+  <transition id="t-BF6C-B0646-12">
   <name>
    <text>PuzzleSet_03_perform_95</text>
     <graphics>
@@ -154,10 +132,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="465" y="320"/>
+    <position x="380" y="295"/>
    </graphics>
   </transition>
-  <place id="p-3668-BADE0-15">
+  <place id="p-BF6C-B064B-13">
   <name>
    <text>PuzzleSet_03_start_95</text>
     <graphics>
@@ -168,10 +146,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="385" y="320"/>
+    <position x="300" y="305"/>
    </graphics>
   </place>
-  <place id="p-3668-BADE6-16">
+  <place id="p-BF6C-B0652-14">
   <name>
    <text>PuzzleSet_04_end_96</text>
     <graphics>
@@ -179,10 +157,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="545" y="390"/>
+    <position x="455" y="375"/>
    </graphics>
   </place>
-  <transition id="t-3668-BADEA-17">
+  <transition id="t-BF6C-B0657-15">
   <name>
    <text>PuzzleSet_04_perform_96</text>
     <graphics>
@@ -190,10 +168,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="465" y="390"/>
+    <position x="375" y="365"/>
    </graphics>
   </transition>
-  <place id="p-3668-BADF1-18">
+  <place id="p-BF6C-B065C-16">
   <name>
    <text>PuzzleSet_04_start_96</text>
     <graphics>
@@ -204,10 +182,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="385" y="390"/>
+    <position x="295" y="375"/>
    </graphics>
   </place>
-  <place id="p-3668-BAE6D-19">
+  <place id="p-BF6C-B0660-17">
   <name>
    <text>PuzzleSet_05_end_97</text>
     <graphics>
@@ -215,10 +193,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="525" y="460"/>
+    <position x="440" y="445"/>
    </graphics>
   </place>
-  <transition id="t-3668-BAE73-20">
+  <transition id="t-BF6C-B06D4-18">
   <name>
    <text>PuzzleSet_05_perform_97</text>
     <graphics>
@@ -226,10 +204,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="465" y="460"/>
+    <position x="370" y="435"/>
    </graphics>
   </transition>
-  <place id="p-3668-BAE7A-21">
+  <place id="p-BF6C-B06DD-19">
   <name>
    <text>PuzzleSet_05_start_97</text>
     <graphics>
@@ -240,10 +218,21 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="385" y="460"/>
+    <position x="290" y="445"/>
    </graphics>
   </place>
-  <place id="p-3668-BAE80-22">
+  <place id="p-BF6C-B06E3-20">
+  <name>
+   <text>Puzzle_ActivationCount_98</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="785" y="190"/>
+   </graphics>
+  </place>
+  <place id="p-BF6C-B06EA-21">
   <name>
    <text>Puzzle_off_98</text>
     <graphics>
@@ -254,10 +243,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="665" y="80"/>
+    <position x="615" y="70"/>
    </graphics>
   </place>
-  <place id="p-3668-BAE84-23">
+  <place id="p-BF6C-B06F2-22">
   <name>
    <text>Puzzle_on_98</text>
     <graphics>
@@ -265,10 +254,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="825" y="80"/>
+    <position x="785" y="70"/>
    </graphics>
   </place>
-  <place id="p-3668-BAE89-24">
+  <place id="p-BF6C-B06F8-23">
   <name>
    <text>Puzzle_place_17</text>
     <graphics>
@@ -276,21 +265,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="565" y="70"/>
+    <position x="520" y="70"/>
    </graphics>
   </place>
-  <place id="p-3668-BAE8E-25">
-  <name>
-   <text>Puzzle_place_19</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="880" y="140"/>
-   </graphics>
-  </place>
-  <transition id="t-3668-BAE93-26">
+  <transition id="t-BF6C-B06FD-24">
   <name>
    <text>Puzzle_turnOff_98</text>
     <graphics>
@@ -298,10 +276,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="745" y="50"/>
+    <position x="695" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-3668-BAE99-27">
+  <transition id="t-BF6C-B0701-25">
   <name>
    <text>Puzzle_turnOn_98</text>
     <graphics>
@@ -309,10 +287,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="745" y="140"/>
+    <position x="695" y="130"/>
    </graphics>
   </transition>
-  <place id="p-3668-BAE9D-28">
+  <place id="p-BF6C-B0707-26">
   <name>
    <text>boite_off_92</text>
     <graphics>
@@ -323,10 +301,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="45" y="320"/>
+    <position x="45" y="350"/>
    </graphics>
   </place>
-  <place id="p-3668-BAEA3-29">
+  <place id="p-BF6C-B070D-27">
   <name>
    <text>boite_on_92</text>
     <graphics>
@@ -334,10 +312,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="225" y="320"/>
+    <position x="205" y="350"/>
    </graphics>
   </place>
-  <transition id="t-3668-BAEA5-30">
+  <transition id="t-BF6C-B0710-28">
   <name>
    <text>boite_turnOff_92</text>
     <graphics>
@@ -345,10 +323,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="145" y="280"/>
+    <position x="125" y="320"/>
    </graphics>
   </transition>
-  <transition id="t-3668-BAEAE-31">
+  <transition id="t-BF6C-B0716-29">
   <name>
    <text>boite_turnOn_92</text>
     <graphics>
@@ -356,75 +334,69 @@
     </graphics>
   </name>
    <graphics>
-    <position x="145" y="380"/>
+    <position x="125" y="410"/>
    </graphics>
   </transition>
-  <arc id="e-3668-BAEC1-32" source="t-3668-BAE99-27" target="p-3668-BAE8E-25">
+  <arc id="e-BF6C-B0720-30" source="t-BF6C-B0621-6" target="p-BF6C-B06F8-23">
   </arc>
-  <arc id="e-3668-BAEC6-33" source="t-3668-BADDB-14" target="p-3668-BAE89-24">
+  <arc id="e-BF6C-B0722-31" source="t-BF6C-B06FD-24" target="p-BF6C-B06EA-21">
   </arc>
-  <arc id="e-3668-BAEC8-34" source="p-3668-BAE9D-28" target="t-3668-BAEAE-31">
+  <arc id="e-BF6C-B0725-32" source="t-BF6C-B06D4-18" target="p-BF6C-B06F8-23">
   </arc>
-  <arc id="e-3668-BAECA-35" source="t-3668-BAEAE-31" target="p-3668-BAEA3-29">
+  <arc id="e-BF6C-B0729-33" source="p-BF6C-B06DD-19" target="t-BF6C-B06D4-18">
   </arc>
-  <arc id="e-3668-BAECC-36" source="t-3668-BAEA5-30" target="p-3668-BAE9D-28">
+  <arc id="e-BF6C-B072B-34" source="t-BF6C-B06D4-18" target="p-BF6C-B0660-17">
   </arc>
-  <arc id="e-3668-BAECD-37" source="t-3668-BADBA-8" target="p-3668-BADB5-7">
+  <arc id="e-BF6C-B072D-35" source="p-BF6C-B070D-27" target="t-BF6C-B0710-28">
   </arc>
-  <arc id="e-3668-BAECF-38" source="p-3668-BAEA3-29" target="t-3668-BADCA-11">
+  <arc id="e-BF6C-B072E-36" source="p-BF6C-B0707-26" target="t-BF6C-B0716-29">
+  </arc>
+  <arc id="e-BF6C-B0730-37" source="t-BF6C-B0716-29" target="p-BF6C-B070D-27">
+  </arc>
+  <arc id="e-BF6C-B0732-38" source="t-BF6C-B0710-28" target="p-BF6C-B0707-26">
+  </arc>
+  <arc id="e-BF6C-B0733-39" source="t-BF6C-B0635-9" target="p-BF6C-B06F8-23">
+  </arc>
+  <arc id="e-BF6C-B0735-40" source="p-BF6C-B070D-27" target="t-BF6C-B0635-9">
    <type value="test"/>
   </arc>
-  <arc id="e-3668-BAED4-39" source="p-3668-BADD0-12" target="t-3668-BADCA-11">
+  <arc id="e-BF6C-B0739-41" source="p-BF6C-B0625-7" target="t-BF6C-B0621-6">
   </arc>
-  <arc id="e-3668-BAED5-40" source="t-3668-BADCA-11" target="p-3668-BADC4-10">
+  <arc id="e-BF6C-B073D-42" source="p-BF6C-B063B-10" target="t-BF6C-B0635-9">
   </arc>
-  <arc id="e-3668-BAF19-41" source="p-3668-BADB0-6" target="t-3668-BADAB-5">
+  <arc id="e-BF6C-B073E-43" source="t-BF6C-B0635-9" target="p-BF6C-B062D-8">
+  </arc>
+  <arc id="e-BF6C-B0740-44" source="t-BF6C-B0612-3" target="p-BF6C-B0606-2">
+  </arc>
+  <arc id="e-BF6C-B0796-45" source="p-BF6C-B0617-4" target="t-BF6C-B0612-3">
+  </arc>
+  <arc id="e-BF6C-B0798-46" source="t-BF6C-B0657-15" target="p-BF6C-B06F8-23">
+  </arc>
+  <arc id="e-BF6C-B079A-47" source="p-BF6C-B065C-16" target="t-BF6C-B0657-15">
+  </arc>
+  <arc id="e-BF6C-B079C-48" source="t-BF6C-B0657-15" target="p-BF6C-B0652-14">
+  </arc>
+  <arc id="e-BF6C-B079E-49" source="t-BF6C-B0646-12" target="p-BF6C-B06F8-23">
+  </arc>
+  <arc id="e-BF6C-B07A0-50" source="p-BF6C-B064B-13" target="t-BF6C-B0646-12">
+  </arc>
+  <arc id="e-BF6C-B07A2-51" source="t-BF6C-B0646-12" target="p-BF6C-B0641-11">
+  </arc>
+  <arc id="e-BF6C-B07A6-52" source="t-BF6C-B0621-6" target="p-BF6C-B061C-5">
+  </arc>
+  <arc id="e-BF6C-B07A7-53" source="p-BF6C-B06F8-23" target="t-BF6C-B0701-25">
    <type value="test"/>
   </arc>
-  <arc id="e-3668-BAF1E-42" source="t-3668-BADA3-4" target="p-3668-BAD8A-2">
-  </arc>
-  <arc id="e-3668-BAF20-43" source="p-3668-BAE89-24" target="t-3668-BAE93-26">
+  <arc id="e-BF6C-B07A9-54" source="p-BF6C-B06F8-23" target="t-BF6C-B06FD-24">
    <type value="test"/>
   </arc>
-  <arc id="e-3668-BAF23-44" source="p-3668-BAD9B-3" target="t-3668-BADA3-4">
+  <arc id="e-BF6C-B07AB-55" source="t-BF6C-B0701-25" target="p-BF6C-B06E3-20">
   </arc>
-  <arc id="e-3668-BAF25-45" source="t-3668-BADEA-17" target="p-3668-BAE89-24">
+  <arc id="e-BF6C-B07AD-56" source="p-BF6C-B06F2-22" target="t-BF6C-B06FD-24">
   </arc>
-  <arc id="e-3668-BAF27-46" source="p-3668-BAD9B-3" target="t-3668-BADAB-5">
-   <type value="test"/>
+  <arc id="e-BF6C-B07AE-57" source="p-BF6C-B06EA-21" target="t-BF6C-B0701-25">
   </arc>
-  <arc id="e-3668-BAF28-47" source="p-3668-BADF1-18" target="t-3668-BADEA-17">
-  </arc>
-  <arc id="e-3668-BAF2A-48" source="t-3668-BADEA-17" target="p-3668-BADE6-16">
-  </arc>
-  <arc id="e-3668-BAF2C-49" source="p-3668-BADE0-15" target="t-3668-BADDB-14">
-  </arc>
-  <arc id="e-3668-BAF2F-50" source="p-3668-BAE84-23" target="t-3668-BAE93-26">
-  </arc>
-  <arc id="e-3668-BAF33-51" source="t-3668-BADDB-14" target="p-3668-BADD6-13">
-  </arc>
-  <arc id="e-3668-BAF35-52" source="p-3668-BAE80-22" target="t-3668-BAE99-27">
-  </arc>
-  <arc id="e-3668-BAF37-53" source="t-3668-BAE99-27" target="p-3668-BAE84-23">
-  </arc>
-  <arc id="e-3668-BAF39-54" source="p-3668-BAE89-24" target="t-3668-BAE99-27">
-   <type value="test"/>
-  </arc>
-  <arc id="e-3668-BAF3B-55" source="t-3668-BAE93-26" target="p-3668-BAE80-22">
-  </arc>
-  <arc id="e-3668-BAF3D-56" source="t-3668-BAE73-20" target="p-3668-BAE89-24">
-  </arc>
-  <arc id="e-3668-BAF3F-57" source="t-3668-BADBA-8" target="p-3668-BAE89-24">
-  </arc>
-  <arc id="e-3668-BAF41-58" source="t-3668-BADCA-11" target="p-3668-BAE89-24">
-  </arc>
-  <arc id="e-3668-BAF44-59" source="p-3668-BADBF-9" target="t-3668-BADBA-8">
-  </arc>
-  <arc id="e-3668-BAF47-60" source="p-3668-BAE7A-21" target="t-3668-BAE73-20">
-  </arc>
-  <arc id="e-3668-BAF49-61" source="t-3668-BAE73-20" target="p-3668-BAE6D-19">
-  </arc>
-  <arc id="e-3668-BAF4B-62" source="p-3668-BAEA3-29" target="t-3668-BAEA5-30">
+  <arc id="e-BF6C-B07B0-58" source="t-BF6C-B0701-25" target="p-BF6C-B06F2-22">
   </arc>
  </page>
  </net>

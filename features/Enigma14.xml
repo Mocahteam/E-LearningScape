@@ -6,8 +6,7 @@
   <transition id="BoardRemovable_perform_132" label="perform BoardRemovable" system="False" end="False" />
   <transition id="BoardRemovable_perform_140" label="perform BoardRemovable" system="False" end="False" />
   <transition id="BoardRemovable_perform_134" label="perform BoardRemovable" system="False" end="False" />
-  <transition id="AnswersInput_Correct_142" label="Correct14 AnswersInput" system="False" end="True" />
-  <transition id="AnswersInput_Wrong_142" label="Wrong14 AnswersInput" system="False" end="False" />
+  <transition id="AnswersInput_perform_142" label="ReadyToSolve_WhiteBoard AnswersInput" system="False" end="True" />
   <transition id="BoardRemovable_perform_135" label="perform BoardRemovable" system="False" end="False" />
   <transition id="BoardRemovable_perform_129" label="perform BoardRemovable" system="False" end="False" />
   <transition id="BoardRemovable_perform_131" label="perform BoardRemovable" system="False" end="False" />

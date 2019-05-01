@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-35C0-501E5-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-AD60-9635B-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>LoginPanel</text>
   </name>
- <page id="g-35C0-50200-1">
-  <place id="p-35C0-50212-2">
+ <page id="g-AD60-96367-1">
+  <place id="p-AD60-9636A-2">
   <name>
-   <text>LoginPanel_Answered_166</text>
+   <text>MasterMindPanel_Answered_166</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="670" y="110"/>
+    <position x="635" y="60"/>
    </graphics>
   </place>
-  <place id="p-35C0-50221-3">
+  <place id="p-AD60-96378-3">
   <name>
-   <text>LoginPanel_Answering_166</text>
+   <text>MasterMindPanel_Answering_166</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -27,34 +27,45 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="420" y="110"/>
+    <position x="385" y="60"/>
    </graphics>
   </place>
-  <transition id="t-35C0-50226-4">
+  <transition id="t-AD60-96381-4">
   <name>
-   <text>LoginPanel_Correct_166</text>
+   <text>MasterMindPanel_Correct_166</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="550" y="50"/>
+    <position x="515" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-35C0-50229-5">
+  <transition id="t-AD60-9638A-5">
   <name>
-   <text>LoginPanel_Wrong_166</text>
+   <text>MasterMindPanel_Wrong_166</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="550" y="170"/>
+    <position x="515" y="140"/>
    </graphics>
   </transition>
-  <place id="p-35C0-5022D-6">
+  <place id="p-AD60-9638E-6">
   <name>
-   <text>LoginPanel_off_165</text>
+   <text>MasterMindPanel_locker_166</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="385" y="160"/>
+   </graphics>
+  </place>
+  <place id="p-AD60-96392-7">
+  <name>
+   <text>MasterMindPanel_off_165</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -63,62 +74,61 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="66" y="110"/>
+    <position x="85" y="100"/>
    </graphics>
   </place>
-  <place id="p-35C0-50231-7">
+  <place id="p-AD60-96396-8">
   <name>
-   <text>LoginPanel_on_165</text>
+   <text>MasterMindPanel_on_165</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="236" y="110"/>
+    <position x="275" y="100"/>
    </graphics>
   </place>
-  <transition id="t-35C0-50233-8">
+  <transition id="t-AD60-96399-9">
   <name>
-   <text>LoginPanel_turnOff_165</text>
+   <text>MasterMindPanel_turnOff_165</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="156" y="80"/>
+    <position x="180" y="65"/>
    </graphics>
   </transition>
-  <transition id="t-35C0-50236-9">
+  <transition id="t-AD60-9639B-10">
   <name>
-   <text>LoginPanel_turnOn_165</text>
+   <text>MasterMindPanel_turnOn_165</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="156" y="170"/>
+    <position x="180" y="155"/>
    </graphics>
   </transition>
-  <arc id="e-35C0-5023D-10" source="p-35C0-50221-3" target="t-35C0-50229-5">
+  <arc id="e-AD60-963A2-11" source="p-AD60-96396-8" target="t-AD60-96399-9">
+  </arc>
+  <arc id="e-AD60-963A4-12" source="p-AD60-96392-7" target="t-AD60-9639B-10">
+  </arc>
+  <arc id="e-AD60-963A5-13" source="t-AD60-9639B-10" target="p-AD60-96396-8">
+  </arc>
+  <arc id="e-AD60-963A7-14" source="t-AD60-96399-9" target="p-AD60-96392-7">
+  </arc>
+  <arc id="e-AD60-963A8-15" source="p-AD60-96396-8" target="t-AD60-9638A-5">
    <type value="test"/>
   </arc>
-  <arc id="e-35C0-50240-11" source="p-35C0-50231-7" target="t-35C0-50233-8">
-  </arc>
-  <arc id="e-35C0-50241-12" source="p-35C0-5022D-6" target="t-35C0-50236-9">
-  </arc>
-  <arc id="e-35C0-50242-13" source="t-35C0-50236-9" target="p-35C0-50231-7">
-  </arc>
-  <arc id="e-35C0-50243-14" source="t-35C0-50233-8" target="p-35C0-5022D-6">
-  </arc>
-  <arc id="e-35C0-50244-15" source="p-35C0-50231-7" target="t-35C0-50229-5">
+  <arc id="e-AD60-963AB-16" source="p-AD60-96396-8" target="t-AD60-96381-4">
    <type value="test"/>
   </arc>
-  <arc id="e-35C0-50245-16" source="p-35C0-50231-7" target="t-35C0-50226-4">
-   <type value="test"/>
+  <arc id="e-AD60-963AD-17" source="p-AD60-9638E-6" target="t-AD60-9638A-5">
   </arc>
-  <arc id="e-35C0-50246-17" source="t-35C0-50226-4" target="p-35C0-50212-2">
+  <arc id="e-AD60-963AD-18" source="t-AD60-96381-4" target="p-AD60-9636A-2">
   </arc>
-  <arc id="e-35C0-50247-18" source="p-35C0-50221-3" target="t-35C0-50226-4">
+  <arc id="e-AD60-963AF-19" source="p-AD60-96378-3" target="t-AD60-96381-4">
   </arc>
  </page>
  </net>

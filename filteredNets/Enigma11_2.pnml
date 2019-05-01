@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-50EC-4A4F1-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-BDAC-B1665-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma11_2</text>
   </name>
- <page id="g-50EC-4A4FF-1">
-  <place id="p-50EC-4A505-2">
+ <page id="g-BDAC-B1672-1">
+  <place id="p-BDAC-B1676-2">
   <name>
-   <text>AnswersInput_Answered_110</text>
+   <text>AnswersInput_end_110</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="965" y="310"/>
+    <position x="800" y="180"/>
    </graphics>
   </place>
-  <place id="p-50EC-4A516-3">
+  <transition id="t-BDAC-B1687-3">
   <name>
-   <text>AnswersInput_Answering_110</text>
+   <text>AnswersInput_perform_110</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="720" y="160"/>
+   </graphics>
+  </transition>
+  <place id="p-BDAC-B168D-4">
+  <name>
+   <text>AnswersInput_start_110</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -27,21 +38,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="715" y="310"/>
+    <position x="640" y="180"/>
    </graphics>
   </place>
-  <transition id="t-50EC-4A51E-4">
-  <name>
-   <text>AnswersInput_Correct_110</text>
-    <graphics>
-     <offset x="0" y="-10" />
-    </graphics>
-  </name>
-   <graphics>
-    <position x="845" y="250"/>
-   </graphics>
-  </transition>
-  <place id="p-50EC-4A525-5">
+  <place id="p-BDAC-B1692-5">
   <name>
    <text>Fragment_souvenir_14_ActivationCount_104</text>
     <graphics>
@@ -49,10 +49,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="510" y="120"/>
+    <position x="440" y="130"/>
    </graphics>
   </place>
-  <transition id="t-50EC-4A52D-6">
+  <transition id="t-BDAC-B169A-6">
   <name>
    <text>Fragment_souvenir_14_activate_104</text>
     <graphics>
@@ -60,10 +60,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="400" y="120"/>
+    <position x="320" y="120"/>
    </graphics>
   </transition>
-  <place id="p-50EC-4A534-7">
+  <place id="p-BDAC-B169F-7">
   <name>
    <text>Fragment_souvenir_15_ActivationCount_105</text>
     <graphics>
@@ -71,10 +71,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="520" y="200"/>
+    <position x="440" y="200"/>
    </graphics>
   </place>
-  <transition id="t-50EC-4A53B-8">
+  <transition id="t-BDAC-B16A6-8">
   <name>
    <text>Fragment_souvenir_15_activate_105</text>
     <graphics>
@@ -82,10 +82,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="400" y="200"/>
+    <position x="320" y="190"/>
    </graphics>
   </transition>
-  <place id="p-50EC-4A542-9">
+  <place id="p-BDAC-B16AB-9">
   <name>
    <text>Fragment_souvenir_16_ActivationCount_106</text>
     <graphics>
@@ -93,10 +93,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="520" y="260"/>
+    <position x="440" y="270"/>
    </graphics>
   </place>
-  <transition id="t-50EC-4A549-10">
+  <transition id="t-BDAC-B16B7-10">
   <name>
    <text>Fragment_souvenir_16_activate_106</text>
     <graphics>
@@ -104,10 +104,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="400" y="260"/>
+    <position x="320" y="260"/>
    </graphics>
   </transition>
-  <place id="p-50EC-4A54F-11">
+  <place id="p-BDAC-B16BF-11">
   <name>
    <text>Fragment_souvenir_18_ActivationCount_107</text>
     <graphics>
@@ -115,10 +115,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="510" y="340"/>
+    <position x="440" y="340"/>
    </graphics>
   </place>
-  <transition id="t-50EC-4A556-12">
+  <transition id="t-BDAC-B16C5-12">
   <name>
    <text>Fragment_souvenir_18_activate_107</text>
     <graphics>
@@ -126,10 +126,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="400" y="340"/>
+    <position x="320" y="320"/>
    </graphics>
   </transition>
-  <place id="p-50EC-4A55D-13">
+  <place id="p-BDAC-B16CC-13">
   <name>
    <text>Fragment_souvenir_7_ActivationCount_103</text>
     <graphics>
@@ -137,10 +137,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="510" y="50"/>
+    <position x="440" y="60"/>
    </graphics>
   </place>
-  <transition id="t-50EC-4A564-14">
+  <transition id="t-BDAC-B16D3-14">
   <name>
    <text>Fragment_souvenir_7_activate_103</text>
     <graphics>
@@ -148,10 +148,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="400" y="50"/>
+    <position x="330" y="50"/>
    </graphics>
   </transition>
-  <place id="p-50EC-4A56B-15">
+  <place id="p-BDAC-B16DF-15">
   <name>
    <text>boite_off_102</text>
     <graphics>
@@ -162,10 +162,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="50" y="200"/>
+    <position x="50" y="170"/>
    </graphics>
   </place>
-  <place id="p-50EC-4A574-16">
+  <place id="p-BDAC-B16E4-16">
   <name>
    <text>boite_on_102</text>
     <graphics>
@@ -173,10 +173,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="220" y="200"/>
+    <position x="220" y="170"/>
    </graphics>
   </place>
-  <transition id="t-50EC-4A578-17">
+  <transition id="t-BDAC-B16E8-17">
   <name>
    <text>boite_turnOn_102</text>
     <graphics>
@@ -184,44 +184,44 @@
     </graphics>
   </name>
    <graphics>
-    <position x="130" y="260"/>
+    <position x="140" y="220"/>
    </graphics>
   </transition>
-  <arc id="e-50EC-4A603-18" source="p-50EC-4A54F-11" target="t-50EC-4A51E-4">
+  <arc id="e-BDAC-B1757-18" source="p-BDAC-B16BF-11" target="t-BDAC-B1687-3">
    <type value="test"/>
   </arc>
-  <arc id="e-50EC-4A60A-19" source="p-50EC-4A56B-15" target="t-50EC-4A578-17">
+  <arc id="e-BDAC-B175D-19" source="t-BDAC-B16D3-14" target="p-BDAC-B16CC-13">
   </arc>
-  <arc id="e-50EC-4A60C-20" source="t-50EC-4A578-17" target="p-50EC-4A574-16">
-  </arc>
-  <arc id="e-50EC-4A60E-21" source="t-50EC-4A51E-4" target="p-50EC-4A505-2">
-  </arc>
-  <arc id="e-50EC-4A610-22" source="p-50EC-4A516-3" target="t-50EC-4A51E-4">
-  </arc>
-  <arc id="e-50EC-4A612-23" source="p-50EC-4A574-16" target="t-50EC-4A564-14">
+  <arc id="e-BDAC-B175F-20" source="p-BDAC-B16E4-16" target="t-BDAC-B16D3-14">
    <type value="test"/>
   </arc>
-  <arc id="e-50EC-4A616-24" source="t-50EC-4A53B-8" target="p-50EC-4A534-7">
+  <arc id="e-BDAC-B1761-21" source="t-BDAC-B16B7-10" target="p-BDAC-B16AB-9">
   </arc>
-  <arc id="e-50EC-4A619-25" source="p-50EC-4A542-9" target="t-50EC-4A51E-4">
+  <arc id="e-BDAC-B1763-22" source="t-BDAC-B16A6-8" target="p-BDAC-B169F-7">
+  </arc>
+  <arc id="e-BDAC-B1765-23" source="p-BDAC-B168D-4" target="t-BDAC-B1687-3">
+  </arc>
+  <arc id="e-BDAC-B1767-24" source="t-BDAC-B16C5-12" target="p-BDAC-B16BF-11">
+  </arc>
+  <arc id="e-BDAC-B1769-25" source="p-BDAC-B16AB-9" target="t-BDAC-B1687-3">
    <type value="test"/>
   </arc>
-  <arc id="e-50EC-4A61C-26" source="p-50EC-4A534-7" target="t-50EC-4A51E-4">
+  <arc id="e-BDAC-B176B-26" source="p-BDAC-B169F-7" target="t-BDAC-B1687-3">
    <type value="test"/>
   </arc>
-  <arc id="e-50EC-4A61E-27" source="p-50EC-4A525-5" target="t-50EC-4A51E-4">
+  <arc id="e-BDAC-B176F-27" source="p-BDAC-B1692-5" target="t-BDAC-B1687-3">
    <type value="test"/>
   </arc>
-  <arc id="e-50EC-4A620-28" source="p-50EC-4A55D-13" target="t-50EC-4A51E-4">
+  <arc id="e-BDAC-B1771-28" source="p-BDAC-B16CC-13" target="t-BDAC-B1687-3">
    <type value="test"/>
   </arc>
-  <arc id="e-50EC-4A622-29" source="t-50EC-4A549-10" target="p-50EC-4A542-9">
+  <arc id="e-BDAC-B1772-29" source="t-BDAC-B1687-3" target="p-BDAC-B1676-2">
   </arc>
-  <arc id="e-50EC-4A624-30" source="t-50EC-4A564-14" target="p-50EC-4A55D-13">
+  <arc id="e-BDAC-B1774-30" source="t-BDAC-B16E8-17" target="p-BDAC-B16E4-16">
   </arc>
-  <arc id="e-50EC-4A626-31" source="t-50EC-4A556-12" target="p-50EC-4A54F-11">
+  <arc id="e-BDAC-B1776-31" source="p-BDAC-B16DF-15" target="t-BDAC-B16E8-17">
   </arc>
-  <arc id="e-50EC-4A628-32" source="t-50EC-4A52D-6" target="p-50EC-4A525-5">
+  <arc id="e-BDAC-B1777-32" source="t-BDAC-B169A-6" target="p-BDAC-B1692-5">
   </arc>
  </page>
  </net>
