@@ -109,23 +109,27 @@ public class IARGearsEnigma : FSystem
         //if the player is playing enigma04 and didn't answer
         if (gearsEnigma.activeSelf)
         {
-            int nbGears = f_gears.Count;
-            for (int i = 0; i < nbGears; i++)
+            if (gearDragged == null) //if no gear is dragged
             {
-                tmpGO = f_gears.getAt(i);
-                //if a gear is dragged
-                if (tmpGO.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
+                int nbGears = f_gears.Count;
+                for (int i = 0; i < nbGears; i++)
                 {
-                    gearDragged = tmpGO; //save the dragged gear
-                    GameObjectManager.setGameObjectState(question, false);
-                    GameObjectManager.setGameObjectState(transparentGear, true);
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(gearDragged, new { verb = "dragged", objectType = "draggable", objectName = gearDragged.name });
+                    tmpGO = f_gears.getAt(i);
+                    //if a gear is dragged
+                    if (tmpGO.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
+                    {
+                        gearDragged = tmpGO; //save the dragged gear
+                        GameObjectManager.setGameObjectState(question, false);
+                        GameObjectManager.setGameObjectState(transparentGear, true);
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(gearDragged, new { verb = "dragged", objectType = "draggable", objectName = gearDragged.name });
+                        return; //stop system to avoid that next GetMouseButtonDown is called in the same frame
+                    }
                 }
             }
-            if (gearDragged != null) //if a gear is dragged
+            else //if a gear is dragged
             {
                 rotateGear = false; //initial value
-                if (Input.GetMouseButtonUp(0))  //when the gear is released
+                if (Input.GetMouseButtonDown(0))  //when the gear is released
                 {
                     GameObjectManager.addComponent<ActionPerformedForLRS>(gearDragged, new { verb = "dropped", objectType = "draggable", objectName = gearDragged.name });
                     GameObjectManager.setGameObjectState(transparentGear, false);
@@ -137,10 +141,21 @@ public class IARGearsEnigma : FSystem
                         {
                             GameObjectManager.addComponent<ActionPerformed>(gearsEnigma, new { name = "Correct", performedBy = "player" });
                             GameObjectManager.addComponent<ActionPerformed>(gearsEnigma, new { name = "perform", performedBy = "system" });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma, new { verb = "answered", objectType = "question",
-                                objectName = gearsEnigma.name, result = true, success = 1, response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma.transform.parent.gameObject, new { verb = "completed",
-                                objectType = "menu", objectName = gearsEnigma.transform.parent.gameObject.name });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma, new
+                            {
+                                verb = "answered",
+                                objectType = "question",
+                                objectName = gearsEnigma.name,
+                                result = true,
+                                success = 1,
+                                response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text
+                            });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma.transform.parent.gameObject, new
+                            {
+                                verb = "completed",
+                                objectType = "menu",
+                                objectName = gearsEnigma.transform.parent.gameObject.name
+                            });
 
                             //start audio and animation for "Right answer"
 
@@ -168,7 +183,7 @@ public class IARGearsEnigma : FSystem
                             GameObjectManager.setGameObjectState(question, true);
                             //start audio and animation for "Wrong answer"
                             GameObjectManager.addComponent<PlayUIEffect>(gearDragged, new { effectCode = 1 });
-                            
+
                             GameObjectManager.addComponent<WrongAnswerInfo>(gearsEnigma, new { componentMonitoringID = 151, givenAnswer = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text });
                             gearDragged.transform.localPosition = gearDragged.GetComponent<Gear>().initialPosition; //set gear position to initial position
                         }
@@ -185,9 +200,9 @@ public class IARGearsEnigma : FSystem
                 {
                     // move the gear to mouse position
                     // compute mouse position from screen center
-                    Vector3 pos = (Input.mousePosition.x / Screen.width -0.5f) * Vector3.right + (Input.mousePosition.y / Screen.height - 0.5f) * Vector3.up;
+                    Vector3 pos = (Input.mousePosition.x / Screen.width - 0.5f) * Vector3.right + (Input.mousePosition.y / Screen.height - 0.5f) * Vector3.up;
                     // correct position depending on canvas scale (0.6) and screen size comparing to reference size (800:500 => 16:10 screen ratio)
-                    gearDragged.transform.localPosition = Vector3.Scale(pos, iarRectTransform.sizeDelta/0.6f);
+                    gearDragged.transform.localPosition = Vector3.Scale(pos, iarRectTransform.sizeDelta / 0.6f);
                 }
             }
         }
