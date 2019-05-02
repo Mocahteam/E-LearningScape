@@ -170,7 +170,7 @@ public class IARViewItem : FSystem {
             // replace description UI by linked game Object (exception for glasses)
             if (!item.name.Contains("Glasses"))
             {
-                GameObjectManager.setGameObjectState(descriptionContent, false); // switch off the description
+                GameObjectManager.setGameObjectState(descriptionContent.transform.parent.parent.parent.gameObject, false); // switch off the description
                 GameObjectManager.setGameObjectState(descriptionInfo, false); // switch off the info
             }
             GameObjectManager.setGameObjectState(item.GetComponent<LinkedWith>().link, true); // switch on the linked game object
