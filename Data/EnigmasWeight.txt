@@ -1,17 +1,20 @@
 {
-  "ballBox": 1.0,
-  "plankAndWire": 1.0,
-  "greenFragments": 1.0,
-  "gearsEnigma": 1.0,
-  "loginPanel": 1.0,
-  "glasses": 1.0,
-  "enigma6": 1.0,
-  "scrolls": 1.0,
-  "mirror": 1.0,
-  "enigma9": 1.0,
-  "enigma10": 1.0,
-  "puzzle": 1.0,
-  "enigma13": 1.0,
-  "lamp": 1.0,
-  "whiteBoard": 1.0
+	1: 0.5, // IntroEnigma => Verrou Mur:45
+	2: 1.0, // BallboxEnigma => Q1:144
+	3: 1.0, // WireEnigma => Q2:145
+	4: 1.0, // CrouchEnigma => Q3:146
+	5: 0.2, // GearsEnigma => Gears:147
+	6: 0.4, // MasterMindEnigma => MasterMindPanel:149
+	7: 1.0, // GlassesEnigma => Q1:152
+	8: 1.0, // Enigma08 => Q2:153
+	9: 1.0, // ScrollsEnigma => Q3:154
+	10: 1.0, // MirrorEnigma => Q4:155
+	11: 1.0, // Enigma11 => Q5:156
+	12: 1.0, // Enigma12 => Q6:157
+	13: 0.2, // GridEnigma => Verrou Porte:158
+	14: 1.0, // VirtualPuzzleEnigma => Q1:0; Q2:4; Q3:21; Q4:99
+	15: 1.0, // PhysicalPuzzleEnigma => Q1:0; Q2:4; Q3:21; Q4:99
+	16: 1.0, // LampEnigma => Q1:0; Q2:4; Q3:21; Q4:99
+	17: 1.0, // Enigma16 =>  Q1:0; Q2:4; Q3:21; Q4:99
+	18: 1.0, // WhiteBoardEnigma => Q1:0; Q2:4; Q3:21; Q4:99
 }

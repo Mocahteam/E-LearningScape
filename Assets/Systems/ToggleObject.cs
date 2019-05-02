@@ -109,10 +109,10 @@ public class ToggleObject : FSystem {
                         {
                             openingChest = true;
                             // puzzle enigma require chest opened
-                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = LoadGameContent.gameContent.virtualPuzzle ? "turnOn_11_1" : "turnOn_11_2", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = LoadGameContent.gameContent.virtualPuzzle ? "turnOn_VirtualPuzzleEnigma" : "turnOn_PhysicalPuzzleEnigma", performedBy = "player" });
 
                             // lamp enigma require chest opened also
-                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOn_12", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOn_LampEnigma", performedBy = "player" });
                         }
                         else
                             closingChest = true;
@@ -246,8 +246,8 @@ public class ToggleObject : FSystem {
                 chestLid.transform.parent.gameObject.GetComponent<ToggleableGO>().toggled = false;
 
                 // When the chest is closed, we have to propagate informayion both in puzzle and lamp enigmas
-                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = LoadGameContent.gameContent.virtualPuzzle ? "turnOff_11_1" : "turnOff_11_2", performedBy = "player" });
-                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOff_12", performedBy = "player" });
+                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = LoadGameContent.gameContent.virtualPuzzle ? "turnOff_VirtualPuzzleEnigma" : "turnOff_PhysicalPuzzleEnigma", performedBy = "player" });
+                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOff_LampEnigma", performedBy = "player" });
             }
         }
     }

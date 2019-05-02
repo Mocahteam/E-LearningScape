@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Globalization;
 using System.Threading;
+using UnityEngine.SceneManagement;
 
 public class HelpSystem : FSystem {
 
@@ -28,6 +29,9 @@ public class HelpSystem : FSystem {
     private Family f_wrongAnswerInfo = FamilyManager.getFamily(new AllOfComponents(typeof(WrongAnswerInfo)));
     private Family f_IARTab = FamilyManager.getFamily(new AnyOfTags("IARTab"));
     private Family f_HUD_H = FamilyManager.getFamily(new AnyOfTags("HUD_H"));
+
+    private Family f_puzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)), new AllOfComponents(typeof(ComponentMonitoring)));
+    private Family f_puzzlesFragment = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new AllOfComponents(typeof(DreamFragment), typeof(ComponentMonitoring)));
 
     private Family f_scrollView = FamilyManager.getFamily(new AllOfComponents(typeof(ScrollRect), typeof(PrefabContainer)));
     private Family f_enabledHintsIAR = FamilyManager.getFamily(new AllOfComponents(typeof(HintContent)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
@@ -194,10 +198,12 @@ public class HelpSystem : FSystem {
                         gameHints.dictionary[key1][key2].Add(new KeyValuePair<string, List<string>>("", internalGameHints.dictionary[key1][key2]));
                     }
                 }
+
+                // Get labels weight
                 labelWeights = f_labelWeights.First().GetComponent<LabelWeights>().weights;
 
 
-                TODO: Revoir tout ça pour être plus générique
+                //TODO: Revoir tout ça pour être plus générique
 
                 //Initialize checkEnigmaOrderMeta with the Petri net id and the corresponding ComponentMonitoring int the meta Petri net
                 //has to be changed if ComponentMonitoring ids are modified
@@ -223,19 +229,16 @@ public class HelpSystem : FSystem {
                 pnNetsCompletion = new Dictionary<string, int>();
                 foreach (string pnName in MonitoringManager.Instance.PetriNetsName)
                     pnNetsCompletion.Add(pnName, 0);
-                // Removes meta Petri net
-                pnNetsCompletion.Remove("E-LearningScape");
+                // Removes meta Petri net corresponding to the scene name
+                pnNetsCompletion.Remove(SceneManager.GetActiveScene().name);
                 //Removes hints of the unused puzzle Petri net
+                int pnSelected = -1;
                 if (LoadGameContent.gameContent.virtualPuzzle)
-                {
-                    RemoveHintsByPN("Enigma11_2");
-                    pnNetsCompletion.Remove("Enigma11_1");
-                }
+                    pnSelected = f_puzzlesFragment.First().GetComponent<ComponentMonitoring>().fullPnSelected;
                 else
-                {
-                    RemoveHintsByPN("Enigma11_1");
-                    pnNetsCompletion.Remove("Enigma11_1");
-                }
+                    pnSelected = f_puzzles.First().GetComponent<ComponentMonitoring>().fullPnSelected;
+                RemoveHintsByPN(pnSelected);
+                pnNetsCompletion.Remove(MonitoringManager.Instance.PetriNetsName[pnSelected]);
 
                 //format expected answers to be compared to formated answers from IARQueryEvaluator
                 List<string> tmpListString;
@@ -622,7 +625,7 @@ public class HelpSystem : FSystem {
                 if (int.TryParse(tmpStringArray[tmpStringArray.Length - 1], out monitorID))
                 {
                     //if the monitor id of the wrong answer and the given answer are in the dictionary
-                    if(monitorID == wrongAnswerArray[i].componentMonitoringID && gameHints.wrongAnswerFeedbacks[key].ContainsKey(wrongAnswerArray[i].givenAnswer))
+                    //if(monitorID == wrongAnswerArray[i].componentMonitoringID && gameHints.wrongAnswerFeedbacks[key].ContainsKey(wrongAnswerArray[i].givenAnswer))
                     {
                         //display feedback in hint list in IAR
                         string hintText = "";
@@ -940,7 +943,7 @@ public class HelpSystem : FSystem {
     {
         string key = "";
 
-        TODO: Revoir tout ça pour être plus générique
+        //TODO: Revoir tout ça pour être plus générique
 
         if (monitor.gameObject.tag.Contains("Q-R"))
         {
@@ -964,7 +967,7 @@ public class HelpSystem : FSystem {
                     break;
 
                 case 22:
-                    key = "enigma6";
+                    key = "enigma08";
                     break;
 
                 case 23:
@@ -976,11 +979,11 @@ public class HelpSystem : FSystem {
                     break;
 
                 case 25:
-                    key = "enigma9";
+                    key = "enigma11";
                     break;
 
                 case 26:
-                    key = "enigma10";
+                    key = "enigma12";
                     break;
 
                 default:
@@ -1001,9 +1004,9 @@ public class HelpSystem : FSystem {
                     key = "lamp";
                     break;
                 }
-                else if (tl.transition.overridedLabel == "solveEnigma13")
+                else if (tl.transition.overridedLabel == "solveEnigma16")
                 {
-                    key = "enigma13";
+                    key = "enigma16";
                     break;
                 }
                 else if (tl.transition.overridedLabel == "solveWhiteBoard")
@@ -1095,7 +1098,7 @@ public class HelpSystem : FSystem {
         List<KeyValuePair<ComponentMonitoring, string>> triggerableActions = MonitoringManager.getTriggerableActions();
         List<int> rdpIDs = null;
 
-        TODO: Revoir le switch dessous pour être plus générique
+        //TODO: Revoir le switch dessous pour être plus générique 
 
         //get Petri nets ids depending on the room selected
         switch (room)

@@ -458,7 +458,7 @@ public class LoadGameContent : FSystem {
                     break;
 
                 case "Q2":
-                    loadIARQuestion(forGO, gameContent.enigma6Question, gameContent.enigma6AnswerFeedback, gameContent.enigma6AnswerFeedbackDesc, gameContent.enigma6PlaceHolder, gameContent.enigma6Answer);
+                    loadIARQuestion(forGO, gameContent.enigma08Question, gameContent.enigma08AnswerFeedback, gameContent.enigma08AnswerFeedbackDesc, gameContent.enigma08PlaceHolder, gameContent.enigma08Answer);
                     break;
 
                 case "Q3":
@@ -470,11 +470,11 @@ public class LoadGameContent : FSystem {
                     break;
 
                 case "Q5":
-                    loadIARQuestion(forGO, gameContent.enigma9Question, gameContent.enigma9AnswerFeedback, gameContent.enigma9AnswerFeedbackDesc, gameContent.enigma9PlaceHolder, gameContent.enigma9Answer);
+                    loadIARQuestion(forGO, gameContent.enigma11Question, gameContent.enigma11AnswerFeedback, gameContent.enigma11AnswerFeedbackDesc, gameContent.enigma11PlaceHolder, gameContent.enigma11Answer);
                     break;
 
                 case "Q6":
-                    loadIARQuestion(forGO, gameContent.enigma10Question, gameContent.enigma10AnswerFeedback, gameContent.enigma10AnswerFeedbackDesc, gameContent.enigma10PlaceHolder, gameContent.enigma10Answer);
+                    loadIARQuestion(forGO, gameContent.enigma12Question, gameContent.enigma12AnswerFeedback, gameContent.enigma12AnswerFeedbackDesc, gameContent.enigma12PlaceHolder, gameContent.enigma12Answer);
                     break;
 
                 default:
@@ -552,7 +552,7 @@ public class LoadGameContent : FSystem {
             qs = f_queriesR3.getAt(i).GetComponent<QuerySolution>();
             qs.orSolutions = new List<string>();
             qs.orSolutions.Add(StringToAnswer(gameContent.puzzleAnswer));
-            qs.orSolutions.Add(StringToAnswer(gameContent.enigma12Answer));
+            qs.orSolutions.Add(StringToAnswer(gameContent.enigma16Answer));
             qs.orSolutions.Add(StringToAnswer(gameContent.lampAnswer));
             qs.orSolutions.Add(StringToAnswer(gameContent.whiteBoardAnswer));
         }

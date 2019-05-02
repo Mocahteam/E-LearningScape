@@ -1,0 +1,97 @@
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-BABC-71115-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+  <name>
+   <text>Enigma13</text>
+  </name>
+ <page id="g-BABC-71123-1">
+  <place id="p-BABC-71129-2">
+  <name>
+   <text>AnswersInput_end_126</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="560" y="95"/>
+   </graphics>
+  </place>
+  <transition id="t-BABC-7113A-3">
+  <name>
+   <text>AnswersInput_perform_126</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="480" y="85"/>
+   </graphics>
+  </transition>
+  <place id="p-BABC-71143-4">
+  <name>
+   <text>AnswersInput_start_126</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="400" y="95"/>
+   </graphics>
+  </place>
+  <place id="p-BABC-7114D-5">
+  <name>
+   <text>Fragment_souvenir_10_ActivationCount_123</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="235" y="60"/>
+   </graphics>
+  </place>
+  <transition id="t-BABC-71158-6">
+  <name>
+   <text>Fragment_souvenir_10_activate_123</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-BABC-71165-7">
+  <name>
+   <text>Fragment_souvenir_13_ActivationCount_124</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="235" y="130"/>
+   </graphics>
+  </place>
+  <transition id="t-BABC-7116D-8">
+  <name>
+   <text>Fragment_souvenir_13_activate_124</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="125" y="120"/>
+   </graphics>
+  </transition>
+  <arc id="e-BABC-71179-9" source="p-BABC-71143-4" target="t-BABC-7113A-3">
+  </arc>
+  <arc id="e-BABC-7117C-10" source="t-BABC-71158-6" target="p-BABC-7114D-5">
+  </arc>
+  <arc id="e-BABC-7117E-11" source="t-BABC-7116D-8" target="p-BABC-71165-7">
+  </arc>
+  <arc id="e-BABC-71180-12" source="t-BABC-7113A-3" target="p-BABC-71129-2">
+  </arc>
+ </page>
+ </net>
+</pnml>

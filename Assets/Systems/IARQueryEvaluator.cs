@@ -162,8 +162,8 @@ public class IARQueryEvaluator : FSystem {
                     context = LoadGameContent.gameContent.virtualPuzzle ? "VirtualPuzzle" : "PhysicalPuzzle";
                 else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer))
                     context = "Lamp";
-                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma12Answer))
-                    context = "Enigma13";
+                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma16Answer))
+                    context = "Enigma16";
                 else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer))
                     context = "WhiteBoard";
                 // mark associated enigma ready to solve

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Verrou Mur_turnOff_3" label="turnOff Verrou Mur" system="False" end="False" />
+  <transition id="Verrou Mur_turnOn_3" label="turnOn Verrou Mur" system="False" end="False" />
+  <transition id="Verrou Mur_perform_44" label="unlock Verrou Mur" system="False" end="True" />
+  <transition id="Intro_Scroll_perform_108" label="perform Intro_Scroll" system="False" end="False" />
+  <transition id="Fragment_souvenir_0_activate_2" label="activate Fragment_souvenir_0" system="False" end="False" />
+  <transition id="ScrollIntro_turnOff_1" label="turnOff ScrollIntro" system="False" end="False" />
+  <transition id="ScrollIntro_turnOn_1" label="turnOn ScrollIntro" system="False" end="False" />
+</transitions>

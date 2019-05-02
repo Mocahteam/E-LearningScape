@@ -1,23 +1,23 @@
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-BE5C-8FB4-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+ <net id="n-BCF0-AF747-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
   <name>
    <text>GearsEnigma</text>
   </name>
- <page id="g-BE5C-8FC1-1">
-  <place id="p-BE5C-8FC4-2">
+ <page id="g-BCF0-AF753-1">
+  <place id="p-BCF0-AF756-2">
   <name>
-   <text>GearsEnigma_Answered_151</text>
+   <text>Gears_Answered_151</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="350" y="60"/>
+    <position x="325" y="60"/>
    </graphics>
   </place>
-  <place id="p-BE5C-8FD1-3">
+  <place id="p-BCF0-AF764-3">
   <name>
-   <text>GearsEnigma_Answering_151</text>
+   <text>Gears_Answering_151</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -26,23 +26,23 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="100" y="60"/>
+    <position x="75" y="60"/>
    </graphics>
   </place>
-  <transition id="t-BE5C-8FD4-4">
+  <transition id="t-BCF0-AF768-4">
   <name>
-   <text>GearsEnigma_Correct_151</text>
+   <text>Gears_Correct_151</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="230" y="50"/>
+    <position x="205" y="50"/>
    </graphics>
   </transition>
-  <arc id="e-BE5C-8FDC-5" source="t-BE5C-8FD4-4" target="p-BE5C-8FC4-2">
+  <arc id="e-BCF0-AF76F-5" source="p-BCF0-AF764-3" target="t-BCF0-AF768-4">
   </arc>
-  <arc id="e-BE5C-8FDD-6" source="p-BE5C-8FD1-3" target="t-BE5C-8FD4-4">
+  <arc id="e-BCF0-AF770-6" source="t-BCF0-AF768-4" target="p-BCF0-AF756-2">
   </arc>
  </page>
  </net>

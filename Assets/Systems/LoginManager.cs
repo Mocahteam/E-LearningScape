@@ -20,7 +20,6 @@ public class LoginManager : FSystem {
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family f_gameRooms = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("GameRooms"));
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
-    private Family f_pointerOver = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver)));
 
     // Selectable Component is dynamically added by IARGearsEnigma when this enigma is solved => this is a sure condition to know that login is unlocked
     private Family f_loginUnlocked = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(Selectable)));

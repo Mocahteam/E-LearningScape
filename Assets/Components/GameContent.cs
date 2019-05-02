@@ -109,11 +109,11 @@ public class GameContent {
     public string[] glassesPicturesPath = new string[4];
 
     //Enigma 6 (3 dream fragments)
-    public string enigma6Question;
-    public string enigma6PlaceHolder;
-    public List<string> enigma6Answer;
-    public string enigma6AnswerFeedback;
-    public string enigma6AnswerFeedbackDesc;
+    public string enigma08Question;
+    public string enigma08PlaceHolder;
+    public List<string> enigma08Answer;
+    public string enigma08AnswerFeedback;
+    public string enigma08AnswerFeedbackDesc;
 
     //Scrolls
     public string scrollsQuestion;
@@ -132,18 +132,18 @@ public class GameContent {
     public string mirrorPicturePath;
 
     //Enigma 9 (1 dream fragment)
-    public string enigma9Question;
-    public string enigma9PlaceHolder;
-    public List<string> enigma9Answer;
-    public string enigma9AnswerFeedback;
-    public string enigma9AnswerFeedbackDesc;
+    public string enigma11Question;
+    public string enigma11PlaceHolder;
+    public List<string> enigma11Answer;
+    public string enigma11AnswerFeedback;
+    public string enigma11AnswerFeedbackDesc;
 
     //Enigma 10 (3 dream fragments)
-    public string enigma10Question;
-    public string enigma10PlaceHolder;
-    public List<string> enigma10Answer;
-    public string enigma10AnswerFeedback;
-    public string enigma10AnswerFeedbackDesc;
+    public string enigma12Question;
+    public string enigma12PlaceHolder;
+    public List<string> enigma12Answer;
+    public string enigma12AnswerFeedback;
+    public string enigma12AnswerFeedbackDesc;
 
     //Lock Room 2
     public int lockRoom2Password;
@@ -152,8 +152,8 @@ public class GameContent {
     public string puzzleAnswer;
     public string puzzlePicturePath;
 
-    //Enigma 12 (2 dream fragments)
-    public string enigma12Answer;
+    //Enigma 13 (2 dream fragments)
+    public string enigma16Answer;
 
     //Lamp
     public string lampAnswer;

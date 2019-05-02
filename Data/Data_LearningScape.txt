@@ -129,20 +129,20 @@
     "glassesAnswerFeedback": "Contrat Pédagogique",
     "glassesAnswerFeedbackDesc": "",
     "glassesPicturesPath": [
-        "Data/contrat01.png",
-        "Data/contrat02.png",
-        "Data/contrat03.png",
-        "Data/contrat04.png"
+        "Data/glasses01.png",
+        "Data/glasses02.png",
+        "Data/glasses03.png",
+        "Data/glasses04.png"
     ],
 	
-    "enigma6Question": "A quoi Berthiaume nous conseille-t-il de faire attention ?",
-    "enigma6PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
-    "enigma6Answer": [
+    "enigma08Question": "A quoi Berthiaume nous conseille-t-il de faire attention ?",
+    "enigma08PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+    "enigma08Answer": [
         "9",
         "14"
     ],
-    "enigma6AnswerFeedback": "9 - 14",
-    "enigma6AnswerFeedbackDesc": "Feedbacks constructifs",
+    "enigma08AnswerFeedback": "9 - 14",
+    "enigma08AnswerFeedbackDesc": "Feedbacks constructifs",
     
 	"scrollsQuestion": "Cet acronyme anglais décrit des objectifs clairs",
     "scrollsPlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
@@ -168,40 +168,41 @@
 	"mirrorAnswerFeedbackDesc": "",
     "mirrorPicturePath": "Data/Plank.png",
 	
-    "enigma9Question": "L'utilisation d'une grille critériée est la solution",
-    "enigma9PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
-    "enigma9Answer": [
+    "enigma11Question": "L'utilisation d'une grille critériée est la solution",
+    "enigma11PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+    "enigma11Answer": [
         "3",
         "1",
         "2"
     ],
-	"enigma9AnswerFeedback": "3 - 1 - 2",
-	"enigma9AnswerFeedbackDesc": "",
+	"enigma11AnswerFeedback": "3 - 1 - 2",
+	"enigma11AnswerFeedbackDesc": "",
 	
-    "enigma10Question": "Seul, vous ne sortirez pas de ce labyrinthe",
-    "enigma10PlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
-    "enigma10Answer": [
+    "enigma12Question": "Seul, vous ne sortirez pas de ce labyrinthe",
+    "enigma12PlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
+    "enigma12Answer": [
         "Collaboration"
     ],
-	"enigma10AnswerFeedback": "Collaboration",
-	"enigma10AnswerFeedbackDesc": "",
+	"enigma12AnswerFeedback": "Collaboration",
+	"enigma12AnswerFeedbackDesc": "",
 	
     "lockRoom2Password": 703,
 
     "puzzleAnswer": "planification",
     "puzzlePicturePath": "Data/Puzzle_Complet.png",
 	
-    "enigma12Answer": "Contraintes",
 	
     "lampAnswer": "Ressources",
     "lampPicturesPath": [
-        "Data/E12_C.png",
-        "Data/E12_S.png",
-        "Data/E12_O.png",
-        "Data/E12_E.png",
-        "Data/E12_U.png",
-        "Data/E12_R.png"
+        "Data/lamp01.png",
+        "Data/lamp02.png",
+        "Data/lamp03.png",
+        "Data/lamp04.png",
+        "Data/lamp05.png",
+        "Data/lamp06.png"
     ],
+	
+    "enigma16Answer": "Contraintes",
 	
     "whiteBoardAnswer": "Contenu",
     "whiteBoardWords": [
