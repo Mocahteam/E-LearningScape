@@ -168,6 +168,8 @@ public class IARQueryEvaluator : FSystem {
                     context = "WhiteBoard";
                 // mark associated enigma ready to solve
                 GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "ReadyToSolve_"+context, performedBy = "player" });
+                // propagate information inside Meta (special case for Puzzle, we have to remove Virtual/Physical to avoid to manage or links)
+                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "ReadyToSolve_" + (context.Contains("Puzzle") ? "Puzzle" : context) + "_Meta", performedBy = "system" });
                 // validate associated enigma to this query and disable associated enigma to other queries
                 foreach (GameObject go in f_queriesRoom3)
                     if (go == query)

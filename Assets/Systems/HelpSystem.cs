@@ -48,12 +48,13 @@ public class HelpSystem : FSystem {
     /// Contains weights for each Laalys labels used to increase/decrease labelCount
     /// </summary>
     private Dictionary<string, float> labelWeights;
+
     /// <summary>
-    /// key: Petri net id, value: ComponentMonitoring corresponding to the enigma in the meta Petri net.
-    /// This dictionary is used to filter the hint that can be given to the player.
-    /// The hint can be given if its enigma is triggerable in the meta Petri net
+    /// Key: room id
+    /// value:  Dictionary<Key: Petri net id, Value: ComponentMonitoring corresponding to the enigma in the meta Petri net.>
+    /// This dictionary is used to get from room id the ComponentMonitorings associated to each enigma of the room
     /// </summary>
-    private Dictionary<int, ComponentMonitoring> checkEnigmaOrderMeta;
+    private Dictionary<int, Dictionary<int, ComponentMonitoring>> rooms2Enigmas;
 
     /// <summary>
     /// Associate for each Petri net name the number of remaining action to reach a player objective in this Petri net
@@ -180,8 +181,6 @@ public class HelpSystem : FSystem {
                 gameHints = f_gameHints.First().GetComponent<GameHints>();
                 //get internal game hints
                 internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
-                //Get the last monitor in the meta Petri net
-                finalComponentMonitoring = MonitoringManager.getMonitorById(164);
 
                 //add internal game hints to the dictionary of the component GameHints
                 //if the key2 already exists in gameHints.dictionary and gameHints.dictionary[key1][key2].Value isn't empty internalGameHints.dictionary[key1][key2] isn't added
@@ -201,27 +200,6 @@ public class HelpSystem : FSystem {
 
                 // Get labels weight
                 labelWeights = f_labelWeights.First().GetComponent<LabelWeights>().weights;
-
-
-                //TODO: Revoir tout ça pour être plus générique
-
-                //Initialize checkEnigmaOrderMeta with the Petri net id and the corresponding ComponentMonitoring int the meta Petri net
-                //has to be changed if ComponentMonitoring ids are modified
-                checkEnigmaOrderMeta = new Dictionary<int, ComponentMonitoring>() {
-                    { 1, MonitoringManager.getMonitorById(143) },
-                    { 2, MonitoringManager.getMonitorById(144) },
-                    { 3, MonitoringManager.getMonitorById(145) },
-                    { 4, MonitoringManager.getMonitorById(146) },
-                    { 5, MonitoringManager.getMonitorById(152) },
-                    { 6, MonitoringManager.getMonitorById(153) },
-                    { 7, MonitoringManager.getMonitorById(154) },
-                    { 8, MonitoringManager.getMonitorById(155) },
-                    { 9, MonitoringManager.getMonitorById(156) },
-                    { 10, MonitoringManager.getMonitorById(157) },
-                    { 16, MonitoringManager.getMonitorById(147) },
-                    { 17, MonitoringManager.getMonitorById(149) },
-                    { 18, MonitoringManager.getMonitorById(158) }
-                };
 
                 requiredSteps = 0;
 
@@ -304,6 +282,62 @@ public class HelpSystem : FSystem {
                 cooldownText = f_askHelpButton.First().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
                 actionPerformedHistory = new Dictionary<GameObject, Queue<KeyValuePair<string, string>>>();
+
+                // WARNING: Before building the game, be sure that following ComponentMonitoring are properly set
+                //Get the last monitor in the meta Petri net
+                finalComponentMonitoring = MonitoringManager.getMonitorById(164);
+                // Init dictionary to know for each rooms [0, 3] which petrinet id is concerned (petri net id is the index of petri net in MonitoringManager). And for each of these petrinet define the ComponentMonitoring associated inside Meta petri net
+                rooms2Enigmas = new Dictionary<int, Dictionary<int, ComponentMonitoring>>()
+                {
+                    {
+                        // room 0
+                        0, new Dictionary<int, ComponentMonitoring>()
+                        {
+                            // room 0 is concerned by only one petri net, the second inside MonitoringManager and the ComponentMonitoring modeling this petri net inside the Meta petri net is the one this specified id
+                            {1, MonitoringManager.getMonitorById(45)}
+                        }
+                    },
+                    {
+                        // room 1
+                        1, new Dictionary<int, ComponentMonitoring>()
+                        {
+                            // room 1 is concerned by the 5 following petri nets and the ComponentMonitoring modeling these petri nets inside Meta petri net are those specified
+                            {2, MonitoringManager.getMonitorById(144)},
+                            {3, MonitoringManager.getMonitorById(145)},
+                            {4, MonitoringManager.getMonitorById(146)},
+                            {5, MonitoringManager.getMonitorById(147)},
+                            {6, MonitoringManager.getMonitorById(149)}
+                        }
+                    },
+                    {
+                        // room 2 is concerned by blablabla (see previous comments, is the same)
+                        2, new Dictionary<int, ComponentMonitoring>()
+                        {
+                            {7, MonitoringManager.getMonitorById(152)},
+                            {8, MonitoringManager.getMonitorById(153)},
+                            {9, MonitoringManager.getMonitorById(154)},
+                            {10, MonitoringManager.getMonitorById(155)},
+                            {11, MonitoringManager.getMonitorById(156)},
+                            {12, MonitoringManager.getMonitorById(157)},
+                            {13, MonitoringManager.getMonitorById(158)}
+                        }
+                    },
+                    {
+                        // room 3 is concerned by blablabla (see previous comments, is the same)
+                        3, new Dictionary<int, ComponentMonitoring>()
+                        {
+                            {14, MonitoringManager.getMonitorById(141)}, // both 14th and 15th petri net have the same ComponentMonitoring id inside Meta Pn (the puzzle) 
+                            {15, MonitoringManager.getMonitorById(141)}, // both 14th and 15th petri net have the same ComponentMonitoring id inside Meta Pn (the puzzle)
+                            {16, MonitoringManager.getMonitorById(168)},
+                            {17, MonitoringManager.getMonitorById(169)},
+                            {18, MonitoringManager.getMonitorById(170)},
+                            {19, MonitoringManager.getMonitorById(0)},
+                            {20, MonitoringManager.getMonitorById(4)},
+                            {21, MonitoringManager.getMonitorById(21)},
+                            {22, MonitoringManager.getMonitorById(99)}
+                        }
+                    }
+                };
             }
             else
             {
@@ -941,89 +975,26 @@ public class HelpSystem : FSystem {
 
     private float GetEnigmaWeight(ComponentMonitoring monitor)
     {
-        string key = "";
-
-        //TODO: Revoir tout ça pour être plus générique
-
-        if (monitor.gameObject.tag.Contains("Q-R"))
+        // Look for petri net id associated to this meta monitor
+        int petriNetId = -1;
+        foreach (Dictionary<int, ComponentMonitoring> pn2cm in rooms2Enigmas.Values)
         {
-            int questionID = int.Parse(string.Concat(monitor.gameObject.tag[monitor.gameObject.tag.Length-1], monitor.gameObject.name[monitor.gameObject.name.Length-1]));
-            switch (questionID)
+            foreach (KeyValuePair<int, ComponentMonitoring> entry in pn2cm)
             {
-                case 11:
-                    key = "ballBox";
+                if (entry.Value.id == monitor.id)
+                {
+                    petriNetId = entry.Key;
                     break;
-
-                case 12:
-                    key = "plankAndWire";
+                }
+                if (petriNetId != -1)
                     break;
-
-                case 13:
-                    key = "greenFragments";
-                    break;
-
-                case 21:
-                    key = "glasses";
-                    break;
-
-                case 22:
-                    key = "enigma08";
-                    break;
-
-                case 23:
-                    key = "scrolls";
-                    break;
-
-                case 24:
-                    key = "mirror";
-                    break;
-
-                case 25:
-                    key = "enigma11";
-                    break;
-
-                case 26:
-                    key = "enigma12";
-                    break;
-
-                default:
-                    return 0;
             }
         }
-        else if(monitor.gameObject.name == "AnswersInput")
-        {
-            foreach(TransitionLink tl in monitor.transitionLinks)
-            {
-                if(tl.transition.overridedLabel == "solvePuzzle")
-                {
-                    key = "puzzle";
-                    break;
-                }
-                else if (tl.transition.overridedLabel == "solveLamp")
-                {
-                    key = "lamp";
-                    break;
-                }
-                else if (tl.transition.overridedLabel == "solveEnigma16")
-                {
-                    key = "enigma16";
-                    break;
-                }
-                else if (tl.transition.overridedLabel == "solveWhiteBoard")
-                {
-                    key = "whiteBoard";
-                    break;
-                }
-            }
-            if (key == "")
-                return 0;
-        }
-        else if (monitor.gameObject.tag == "Login")
-            key = "loginPanel";
-        else if (monitor.gameObject.tag == "Gears")
-            key = "gearsEnigma";
-        else if (monitor.gameObject.tag == "LockRoom2")
+        // if no petri nets found, return 0
+        if (petriNetId == -1)
             return 0;
+
+        string key = MonitoringManager.Instance.PetriNetsName[petriNetId];
 
         if (weights.ContainsKey(key))
             return weights[key];
@@ -1096,56 +1067,38 @@ public class HelpSystem : FSystem {
     private List<int> GetNextActions(int room)
     {
         List<KeyValuePair<ComponentMonitoring, string>> triggerableActions = MonitoringManager.getTriggerableActions();
-        List<int> rdpIDs = null;
-
-        //TODO: Revoir le switch dessous pour être plus générique 
-
-        //get Petri nets ids depending on the room selected
-        switch (room)
+        if (!rooms2Enigmas.ContainsKey(room))
         {
-            //Ids in rpdIDs are the ids in PetriNetNames of MonitoringManager (Visible in inspector)
-            case 0:
-                rdpIDs = new List<int>() { 1 };
-                break;
-            case 1:
-                rdpIDs = new List<int>() { 2, 3, 4, 16, 17 };
-                break;
-            case 2:
-                rdpIDs = new List<int>() { 5, 6, 7, 8, 9, 10, 18 };
-                break;
-
-            case 3:
-                rdpIDs = new List<int>() { 11, 12, 13, 14, 15 };
-                break;
-
-            default:
-                rdpIDs = new List<int>();
-                break;
+            Debug.LogWarning("Room " + room + " doesn't contain any petri net.");
+            return new List<int>();
         }
+        // Get list of petri nets associated to this room
+        Dictionary<int, ComponentMonitoring> pn2cm = rooms2Enigmas[room];
 
         List<int> actionsIDs = new List<int>();
         
+        // Parse all triggerable actions
         for (int i = 0; i < triggerableActions.Count; i++)
         {
+            // Check if this action is part of the set of petri nets of this room, if not ignore this action because it is not linked to the room we are interested in
             int pn = triggerableActions[i].Key.fullPnSelected;
-            //if the petri net is in the list
-            if (rdpIDs.Contains(pn))
+            if (pn2cm.ContainsKey(pn))
             {
-                if (checkEnigmaOrderMeta.ContainsKey(pn))
+                // Check if Meta ComponentMonitoring associated to the petri net of the current action is steal fireable, if not ingore this action because it is part of a solved enigma
+                // Parse all triggerable action
+                for (int iMeta = 0; iMeta < triggerableActions.Count; iMeta++)
                 {
-                    //if the action corresponding to the enigma in the meta is triggerable, add the ComponentMonitoring id to the list
-                    for (int j = 0; j < triggerableActions.Count; j++)
+                    // filter only those that are part of meta petri net
+                    if (triggerableActions[iMeta].Key.fullPnSelected == 0)
                     {
-                        if(triggerableActions[j].Key.fullPnSelected == 0)
-                        if (triggerableActions[j].Key.id == checkEnigmaOrderMeta[pn].id)
+                        // Check if ComponentMonitoring of this meta action is the one expected for the petri net of the action to filter (the one of the first loop)
+                        if (triggerableActions[iMeta].Key.id == pn2cm[pn].id)
                         {
                             actionsIDs.Add(triggerableActions[i].Key.id);
                             break;
                         }
                     }
                 }
-                else
-                    actionsIDs.Add(triggerableActions[i].Key.id);
             }
         }
 

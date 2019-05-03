@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
+  <transition id="AnswersInput_perform_170" label="ReadyToSolve_WhiteBoard_Meta AnswersInput" system="True" end="False" />
+  <transition id="AnswersInput_perform_169" label="ReadyToSolve_Enigma16_Meta AnswersInput" system="True" end="False" />
+  <transition id="AnswersInput_perform_168" label="ReadyToSolve_Lamp_Meta AnswersInput" system="True" end="False" />
+  <transition id="AnswersInput_perform_141" label="ReadyToSolve_Puzzle_Meta AnswersInput" system="True" end="False" />
   <transition id="Q2_perform_145" label="perform Q2" system="True" end="False" />
   <transition id="Q2_perform_153" label="perform Q2" system="True" end="False" />
   <transition id="Q2_perform_4" label="perform Q2" system="True" end="False" />

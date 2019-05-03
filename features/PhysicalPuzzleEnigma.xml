@@ -3,8 +3,8 @@
   <transition id="Fragment_souvenir_16_activate_106" label="activate Fragment_souvenir_16" system="False" end="False" />
   <transition id="Fragment_souvenir_15_activate_105" label="activate Fragment_souvenir_15" system="False" end="False" />
   <transition id="AnswersInput_perform_110" label="ReadyToSolve_PhysicalPuzzle AnswersInput" system="False" end="True" />
-  <transition id="boite_turnOff_102" label="turnOff_11_2 boite" system="False" end="False" />
-  <transition id="boite_turnOn_102" label="turnOn_11_2 boite" system="False" end="False" />
+  <transition id="boite_turnOff_102" label="turnOff_PhysicalPuzzleEnigma boite" system="False" end="False" />
+  <transition id="boite_turnOn_102" label="turnOn_PhysicalPuzzleEnigma boite" system="False" end="False" />
   <transition id="Fragment_souvenir_14_activate_104" label="activate Fragment_souvenir_14" system="False" end="False" />
   <transition id="Fragment_souvenir_7_activate_103" label="activate Fragment_souvenir_7" system="False" end="False" />
   <transition id="Fragment_souvenir_18_activate_107" label="activate Fragment_souvenir_18" system="False" end="False" />
