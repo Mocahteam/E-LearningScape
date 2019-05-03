@@ -18,6 +18,7 @@ public class IARPuzzleManager : FSystem {
         {
             f_puzzle.addEntryCallback(onPuzzleEnabled);
             f_puzzle.addExitCallback(onPuzzleDisabled);
+            tmpGo = null;
         }
     }
 
@@ -33,12 +34,12 @@ public class IARPuzzleManager : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        if (Input.GetMouseButtonDown(0) && f_puzzleUI.First())
+        if (tmpGo == null && Input.GetMouseButtonDown(0) && f_puzzleUI.First())
         {
             tmpGo = f_puzzleUI.First();
             GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new { verb = "dragged", objectType = "draggable", objectName = tmpGo.name });
         }
-        if (Input.GetMouseButtonUp(0) && tmpGo)
+        else if (Input.GetMouseButtonDown(0) && tmpGo)
         {
             GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
             {
@@ -49,7 +50,7 @@ public class IARPuzzleManager : FSystem {
             });
             tmpGo = null;
         }
-        if (Input.GetMouseButton(0) && tmpGo)
+        if (tmpGo)
         {
             tmpGo.transform.position = Input.mousePosition;
             float puzzleScale = tmpGo.GetComponent<RectTransform>().localScale.x;
