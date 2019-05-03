@@ -159,7 +159,7 @@ public class IARViewItem : FSystem {
         // Shows title and description
         GameObjectManager.setGameObjectState(descriptionUI, true);
         descriptionTitle.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().itemName;
-        GameObjectManager.setGameObjectState(descriptionContent, true); // switch on the description
+        GameObjectManager.setGameObjectState(descriptionContent.transform.parent.parent.parent.gameObject, true); // switch on the description
         descriptionContent.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().description;
         GameObjectManager.setGameObjectState(descriptionInfo, true); // switch on the info
         descriptionInfo.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().info;
