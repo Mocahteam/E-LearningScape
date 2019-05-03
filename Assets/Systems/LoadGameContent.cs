@@ -231,7 +231,7 @@ public class LoadGameContent : FSystem {
         // init question text and position
         TextMeshProUGUI textMP = f_login.First().transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
         textMP.text = gameContent.mastermindQuestion;
-        textMP.transform.localPosition = new Vector3(textMP.transform.position.x, gameContent.mastermindQuestionYPos, textMP.transform.position.z);
+        textMP.transform.localPosition = new Vector3(textMP.transform.localPosition.x, gameContent.mastermindQuestionYPos, textMP.transform.localPosition.z);
         LoginManager.passwordSolution = gameContent.mastermindAnswer;
 
 

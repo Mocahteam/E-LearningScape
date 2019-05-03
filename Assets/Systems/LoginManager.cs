@@ -93,7 +93,7 @@ public class LoginManager : FSystem {
     {
         // launch animation of login protection
         loginCover = go.transform.GetChild(0).gameObject; // the first child is the cover
-        coverTargetPosition = go.transform.position - (Vector3.up); 
+        coverTargetPosition = loginCover.transform.position - (Vector3.up); 
         playerGoBackPosition = go.transform.position + (Vector3.left*3f) - (Vector3.up);
         door = f_door.First();
         doorOpennedPosition = door.transform.position + (Vector3.up*4f);

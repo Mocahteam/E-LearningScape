@@ -169,7 +169,7 @@ public class IARGearsEnigma : FSystem
                             //start audio and animation for "Wrong answer"
                             GameObjectManager.addComponent<PlayUIEffect>(gearDragged, new { effectCode = 1 });
                             
-                            GameObjectManager.addComponent<WrongAnswerInfo>(gears, new { componentMonitoringID = 151, givenAnswer = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text });
+                            GameObjectManager.addComponent<WrongAnswerInfo>(gears, new { givenAnswer = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text });
                             gearDragged.transform.localPosition = gearDragged.GetComponent<Gear>().initialPosition; //set gear position to initial position
                         }
                         gearDragged = null; //initial value

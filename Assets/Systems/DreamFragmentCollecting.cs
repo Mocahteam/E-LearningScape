@@ -79,6 +79,13 @@ public class DreamFragmentCollecting : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
+        foreach(GameObject go in f_dreamFragments)
+        {
+            DreamFragment df = go.GetComponent<DreamFragment>();
+            if (!df.viewed && df.type != 1)
+                go.transform.Rotate(new Vector3(0, 20*Time.deltaTime, 0));
+        }
+
         // Compute Raycast only when mouse is clicked
         if (Input.GetMouseButtonDown(0))
         {
@@ -113,7 +120,7 @@ public class DreamFragmentCollecting : FSystem {
                             GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "chairDown" } });
 
                     }
-                    else
+                    else if (tmpDFComponent.type != 2)
                         GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player" });
                 }
             }
@@ -137,6 +144,7 @@ public class DreamFragmentCollecting : FSystem {
                     break;
                 }
             }
+            selectedFragment.GetComponent<DreamFragment>().viewed = true;
         }
         selectedFragment = null;
         // close UI

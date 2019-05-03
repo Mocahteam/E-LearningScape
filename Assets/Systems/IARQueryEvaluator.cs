@@ -173,9 +173,9 @@ public class IARQueryEvaluator : FSystem {
                 // validate associated enigma to this query and disable associated enigma to other queries
                 foreach (GameObject go in f_queriesRoom3)
                     if (go == query)
-                        GameObjectManager.addComponent<ActionPerformed>(go, new { overrideName = context + "_Solved", performedBy = "player" });
+                        GameObjectManager.addComponent<ActionPerformed>(go, new { overrideName = (context.Contains("Puzzle") ? "Puzzle" : context) + "_Solved", performedBy = "player" });
                     else
-                        GameObjectManager.addComponent<ActionPerformed>(go, new { overrideName = context + "_Locked", performedBy = "player" });
+                        GameObjectManager.addComponent<ActionPerformed>(go, new { overrideName = (context.Contains("Puzzle") ? "Puzzle" : context) + "_Locked", performedBy = "player" });
             }
 
             GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });

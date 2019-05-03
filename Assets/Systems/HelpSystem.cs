@@ -26,7 +26,7 @@ public class HelpSystem : FSystem {
     private Family f_componentMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
     private Family f_askHelpButton = FamilyManager.getFamily(new AnyOfTags("AskHelpButton"), new AllOfComponents(typeof(Button)));
     private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
-    private Family f_wrongAnswerInfo = FamilyManager.getFamily(new AllOfComponents(typeof(WrongAnswerInfo)));
+    private Family f_wrongAnswerInfo = FamilyManager.getFamily(new AllOfComponents(typeof(WrongAnswerInfo), typeof(ComponentMonitoring)));
     private Family f_IARTab = FamilyManager.getFamily(new AnyOfTags("IARTab"));
     private Family f_HUD_H = FamilyManager.getFamily(new AnyOfTags("HUD_H"));
 
@@ -647,50 +647,58 @@ public class HelpSystem : FSystem {
     /// <param name="go"></param>
     private void OnWrongAnswer(GameObject go)
     {
-        WrongAnswerInfo[] wrongAnswerArray = go.GetComponents<WrongAnswerInfo>();
-        int nbWrongAnswer = wrongAnswerArray.Length;
-        int monitorID;
-        string[] tmpStringArray;
-        for (int i = 0; i < nbWrongAnswer; i++){
-            //foreach wrong answer, check if the given answer is in the gameHints.wrongAnswerFeedbacks dictionary
+        // Check if wrong answers are defined for each the monitor of this game object
+        foreach (ComponentMonitoring cm in go.GetComponents<ComponentMonitoring>())
+        {
+            // Parse all wrongAnswerFeedback
             foreach (string key in gameHints.wrongAnswerFeedbacks.Keys)
             {
-                tmpStringArray = key.Split('.');
-                if (int.TryParse(tmpStringArray[tmpStringArray.Length - 1], out monitorID))
+                // Check if this feedback match with current ComponentMonitoring
+                if (key.EndsWith("."+cm.id))
                 {
-                    //if the monitor id of the wrong answer and the given answer are in the dictionary
-                    //if(monitorID == wrongAnswerArray[i].componentMonitoringID && gameHints.wrongAnswerFeedbacks[key].ContainsKey(wrongAnswerArray[i].givenAnswer))
+                    // We found a feedback for this ComponentMonitoring => Parse all wrong answers defined to check if it is part of player answer
+                    foreach(string wrongAnswer in gameHints.wrongAnswerFeedbacks[key].Keys)
                     {
-                        //display feedback in hint list in IAR
-                        string hintText = "";
-                        List<string> availableFeedbacks = gameHints.wrongAnswerFeedbacks[key][wrongAnswerArray[i].givenAnswer].Value;
-                        if (availableFeedbacks.Count > 0)
+                        // Parse all wrong answers given by the player
+                        foreach (WrongAnswerInfo wai in go.GetComponents<WrongAnswerInfo>())
                         {
-                            // Choose random hint
-                            int randomPos = new System.Random().Next(availableFeedbacks.Count);
-                            hintText = availableFeedbacks[randomPos];
-                            // Add new hint button
-                            Button hintButton = CreateHintButton(key, hintText, monitorID, gameHints.wrongAnswerFeedbacks[key][wrongAnswerArray[i].givenAnswer].Key);
-                            // Remove this hint
-                            availableFeedbacks.RemoveAt(randomPos);
-
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(hintButton.gameObject, new
+                            // Check if the current wrong answer is part of the player answer
+                            if (wai.givenAnswer.Contains(wrongAnswer))
                             {
-                                verb = "received",
-                                objectType = "feedback",
-                                objectName = string.Concat("hint_", hintButton.transform.GetChild(0).GetComponent<Text>().text),
-                                activityExtensions = new Dictionary<string, List<string>>() {
-                                { "type", new List<string>() { "wrongAnwserHint" } },
-                                { "from", new List<string>() { "system" } },
-                                { "content", new List<string>() { hintButton.GetComponent<HintContent>().text } }
+                                //display feedback in hint list in IAR
+                                string hintText = "";
+                                List<string> availableFeedbacks = gameHints.wrongAnswerFeedbacks[key][wrongAnswer].Value;
+                                if (availableFeedbacks.Count > 0)
+                                {
+                                    // Choose random hint
+                                    int randomPos = new System.Random().Next(availableFeedbacks.Count);
+                                    hintText = availableFeedbacks[randomPos];
+                                    // Add new hint button
+                                    Button hintButton = CreateHintButton(key, hintText, cm.id, gameHints.wrongAnswerFeedbacks[key][wrongAnswer].Key);
+                                    // Remove this hint
+                                    availableFeedbacks.RemoveAt(randomPos);
+
+                                    GameObjectManager.addComponent<ActionPerformedForLRS>(hintButton.gameObject, new
+                                    {
+                                        verb = "received",
+                                        objectType = "feedback",
+                                        objectName = string.Concat("hint_", hintButton.transform.GetChild(0).GetComponent<Text>().text),
+                                        activityExtensions = new Dictionary<string, List<string>>() {
+                                            { "type", new List<string>() { "wrongAnwserHint" } },
+                                            { "from", new List<string>() { "system" } },
+                                            { "content", new List<string>() { hintButton.GetComponent<HintContent>().text } }
+                                        }
+                                    });
+                                    break;
+                                }
                             }
-                            });
-                            break;
                         }
                     }
                 }
             }
         }
+
+        WrongAnswerInfo[] wrongAnswerArray = go.GetComponents<WrongAnswerInfo>();
         //remove WrongAnswerInfo components
         for (int i = wrongAnswerArray.Length - 1; i > -1; i--)
             GameObjectManager.removeComponent(wrongAnswerArray[i]);
