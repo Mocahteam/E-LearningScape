@@ -59,6 +59,18 @@ public class GameContent {
     public string[] additionalCredit;
     public string scoreText;
 
+    //Inventory texts
+    public List<string> inventoryScrollIntro;
+    public List<string> inventoryKeyBallBox;
+    public List<string> inventoryWire;
+    public List<string> inventoryKeySatchel;
+    public List<string> inventoryScrolls;
+    public List<string> inventoryGlasses1;
+    public List<string> inventoryGlasses2;
+    public List<string> inventoryMirror;
+    public List<string> inventoryLamp;
+    public List<string> inventoryPuzzle;
+
     //Ball Box
     public string ballBoxQuestion;
     public string ballBoxPlaceHolder;
@@ -108,7 +120,7 @@ public class GameContent {
     public string glassesAnswerDescription;
     public string[] glassesPicturesPath = new string[4];
 
-    //Enigma 6 (3 dream fragments)
+    //Enigma 8 (3 dream fragments)
     public string enigma08Question;
     public string enigma08PlaceHolder;
     public List<string> enigma08Answer;
@@ -131,14 +143,14 @@ public class GameContent {
     public string mirrorAnswerFeedbackDesc;
     public string mirrorPicturePath;
 
-    //Enigma 9 (1 dream fragment)
+    //Enigma 11 (1 dream fragment)
     public string enigma11Question;
     public string enigma11PlaceHolder;
     public List<string> enigma11Answer;
     public string enigma11AnswerFeedback;
     public string enigma11AnswerFeedbackDesc;
 
-    //Enigma 10 (3 dream fragments)
+    //Enigma 12 (3 dream fragments)
     public string enigma12Question;
     public string enigma12PlaceHolder;
     public List<string> enigma12Answer;

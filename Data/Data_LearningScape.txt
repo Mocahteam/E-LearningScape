@@ -31,6 +31,57 @@
 	"additionalCredit": [],
     "scoreText": "Vous avez mis: ",
 	
+	"inventoryScrollIntro": [
+		"Parchemin",
+		"Il y a des inscriptions inscrites à l’encre sur ce parchemin. Le message semble pour autant incomplet. Ces informations pourraient être utiles pour la suite.",
+		"Cliquez sur le parchemin pour l'ouvrir/le refermer"
+	],
+	"inventoryKeyBallBox": [
+		"Clé",
+		"C’est une clé, sans aucune distinction particulière. Elle ouvre certainement une porte ou un cadenas...",
+		"Cliquez sur la clé pour l'activer/la désactiver"
+	],
+	"inventoryWire": [
+		"Corde",
+		"Cette corde n’est pas très longue mais elle semble assez solide et en bon état. Elle permet sans doute de lier des éléments ensembles.",
+		"Cliquez sur la corde pour l'activer/la désactiver"
+	],
+	"inventoryKeySatchel": [
+		"Clé",
+		"Cette clé a été trouvée dans le vase se renversant. Elle ouvre certainement une porte ou un cadenas...",
+		"Cliquez sur la clé pour l'activer/la désactiver"
+	],
+	"inventoryScrolls": [
+		"Parchemins",
+		"Il y a des inscriptions inscrites à l’encre sur ce parchemin. Ces informations pourraient être utiles pour la suite.",
+		"Cliquez sur le parchemin pour l'ouvrir/le refermer"
+	],
+	"inventoryGlasses1": [
+		"Lunette Filtrante",
+		"La branche droite d'une paire de lunette ? Il doit certainement manquer l’autre moitié... La lentille est tintée en rouge.",
+		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
+	],
+	"inventoryGlasses2": [
+		"Lunette Filtrante",
+		"La branche gauche d'une paire de lunette ? Il doit certainement manquer l’autre moitié... La lentille est tintée en jaune.",
+		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
+	],
+	"inventoryMirror": [
+		"Mirroir",
+		"Un miroir cylindrique constitué d'une seule pièce d'aluminium poli. Le reflet est d'une grande qualité.",
+		"Cliquez sur le mirroir pour l'activer/le désactiver"
+	],
+	"inventoryLamp": [
+		"Lumière noire",
+		"Cette lampe dispose d’une ampoule particulière à vapeur de mercure constituée d'un revêtement particulier: le verre de Wood. Ce verre possède la particularité d'être riche en oxydes de nickel et de fer, ne laissant passer que les rayons UltraViolet : la lumière noire.",
+		"Cliquez sur la lampe pour l'allumer/l'éteindre"
+	],
+	"inventoryPuzzle": [
+		"Pièces de puzzle",
+		"Se sont des pièces d'un puzzle, tout simplement.",
+		"Cliquez pour manipuler les pièces"
+	],
+	
     "ballBoxQuestion": "Que faire pour rendre actifs mes étudiants ?",
     "ballBoxPlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
 	"ballBoxAnswerFeedback": "1 - 2 - 8",

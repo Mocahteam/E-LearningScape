@@ -51,7 +51,7 @@ public class LoadGameContent : FSystem {
     private Family f_puzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)));
     private Family f_puzzlesFragment = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new AllOfComponents(typeof(DreamFragment)));
 
-    private Family f_lampPictures = FamilyManager.getFamily(new AllOfComponents(typeof(E12_Symbol)));
+    private Family f_lampPictures = FamilyManager.getFamily(new AllOfComponents(typeof(Lamp_Symbol)));
 
     private Family f_boardUnremovable = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
     private Family f_boardRemovable = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
@@ -59,6 +59,8 @@ public class LoadGameContent : FSystem {
     private Family f_gameHints = FamilyManager.getFamily(new AllOfComponents(typeof(GameHints)));
     private Family f_internalGameHints = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameHints)));
     private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
+
+    private Family f_inventoryElements = FamilyManager.getFamily(new AllOfComponents(typeof(Collected)));
 
 
     public FSystem instance;
@@ -194,6 +196,35 @@ public class LoadGameContent : FSystem {
             List<string> newCredits = new List<string>(st.credit);
             newCredits.AddRange(gameContent.additionalCredit);
             st.credit = newCredits.ToArray();
+        }
+        #endregion
+
+        #region InventoryTexts
+        Dictionary<string, List<string>> inventoryTexts = new Dictionary<string, List<string>>()
+        {
+            {"ScrollIntro", gameContent.inventoryScrollIntro},
+            {"KeyBallBox", gameContent.inventoryKeyBallBox },
+            {"Wire", gameContent.inventoryWire },
+            {"KeySatchel", gameContent.inventoryKeySatchel },
+            {"Scrolls", gameContent.inventoryScrolls },
+            {"Glasses1", gameContent.inventoryGlasses1 },
+            {"Glasses2", gameContent.inventoryGlasses2 },
+            {"Mirror", gameContent.inventoryMirror },
+            {"Lamp", gameContent.inventoryLamp },
+            {"Puzzle", gameContent.inventoryPuzzle }
+        };
+        foreach (GameObject inventoryGo in f_inventoryElements)
+        {
+            if (inventoryTexts.ContainsKey(inventoryGo.name)){
+                Collected coll = inventoryGo.GetComponent<Collected>();
+                coll.itemName = inventoryTexts[inventoryGo.name][0];
+                coll.description = inventoryTexts[inventoryGo.name][1];
+                coll.info = inventoryTexts[inventoryGo.name][2];
+            }
+            else
+            {
+                Debug.LogWarning("No content found in config file for " + inventoryGo.name + " GameObject");
+            }
         }
         #endregion
 
