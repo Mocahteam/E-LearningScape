@@ -213,7 +213,7 @@ public class LoadGameContent : FSystem {
                     break;
 
                 case "Q3":
-                    loadIARQuestion(forGO, gameContent.greenFragmentsQuestion, gameContent.greenFragmentAnswerFeedback, gameContent.greenFragmentAnswerFeedbackDesc, gameContent.greenFragmentPlaceHolder, gameContent.greenFragmentAnswer);
+                    loadIARQuestion(forGO, gameContent.crouchQuestion, gameContent.crouchAnswerFeedback, gameContent.crouchAnswerFeedbackDesc, gameContent.crouchPlaceHolder, gameContent.crouchAnswer);
                     break;
 
                 default:
@@ -391,7 +391,7 @@ public class LoadGameContent : FSystem {
             tmpDF = f_dreamFragments.getAt(i).GetComponent<DreamFragment>();
             if (tmpDF.type == 1)
             {
-                tmpDF.itemName = gameContent.greenFragmentsWords[nbGreenFragments];
+                tmpDF.itemName = gameContent.crouchWords[nbGreenFragments];
                 nbGreenFragments++;
                 if (nbGreenFragments > 5)
                     break;

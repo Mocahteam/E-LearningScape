@@ -80,9 +80,9 @@
         7,
         8
     ],
-    "greenFragmentsQuestion": "Comment favoriser mon innovation pédagogique ?",
-    "greenFragmentPlaceHolder": "     Tapez votre réponse ici (10 chiffres)...",
-    "greenFragmentsWords": [
+    "crouchQuestion": "Comment favoriser mon innovation pédagogique ?",
+    "crouchPlaceHolder": "     Tapez votre réponse ici (10 chiffres)...",
+    "crouchWords": [
         "il",
         "faut",
         "savoir",
@@ -90,7 +90,7 @@
         "de",
         "posture"
     ],
-    "greenFragmentAnswer": [
+    "crouchAnswer": [
         "1023810149"
     ],
     "gearsQuestion": "Sur quels facteurs est-ce que je peux agir pour motiver mes étudiants ?",

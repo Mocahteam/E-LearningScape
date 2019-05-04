@@ -89,14 +89,14 @@
         "8"
     ],
 	
-    "greenFragmentsQuestion": "Comment favoriser mon innovation pédagogique ?",
-    "greenFragmentPlaceHolder": "     Tapez votre réponse ici (10 chiffres)...",
-    "greenFragmentAnswer": [
+    "crouchQuestion": "Comment favoriser mon innovation pédagogique ?",
+    "crouchPlaceHolder": "     Tapez votre réponse ici (10 chiffres)...",
+    "crouchAnswer": [
         "1023810149"
     ],
-    "greenFragmentAnswerFeedback": "Il faut savoir changer de posture",
-    "greenFragmentAnswerFeedbackDesc": "",
-    "greenFragmentsWords": [
+    "crouchAnswerFeedback": "Il faut savoir changer de posture",
+    "crouchAnswerFeedbackDesc": "",
+    "crouchWords": [
         "il",
         "faut",
         "savoir",
@@ -190,7 +190,6 @@
 
     "puzzleAnswer": "planification",
     "puzzlePicturePath": "Data/Puzzle_Complet.png",
-	
 	
     "lampAnswer": "Ressources",
     "lampPicturesPath": [

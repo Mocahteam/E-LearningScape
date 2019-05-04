@@ -78,13 +78,13 @@ public class GameContent {
     public string[] plankOtherWords = new string[10];
     public List<string> plankAndWireOtherNumbers;
 
-    //Green Fragments
-    public string greenFragmentsQuestion;
-    public string greenFragmentPlaceHolder;
-    public List<string> greenFragmentAnswer;
-    public string greenFragmentAnswerFeedback;
-    public string greenFragmentAnswerFeedbackDesc;
-    public string[] greenFragmentsWords = new string[6];
+    //Crouch enigma
+    public string crouchQuestion;
+    public string crouchPlaceHolder;
+    public List<string> crouchAnswer;
+    public string crouchAnswerFeedback;
+    public string crouchAnswerFeedbackDesc;
+    public string[] crouchWords = new string[6];
 
     //Gears
     public string gearsQuestion;
