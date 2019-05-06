@@ -193,7 +193,7 @@ public class SatchelManager : FSystem {
             {
                 if (bagPadlock.activeSelf)
                 {
-                    if (isSelected("KeyE08"))
+                    if (isSelected("KeySatchel"))
                     {
                         //move up and rotate the padlock
                         dist = 2f - bagPadlock.transform.position.y;
@@ -204,7 +204,7 @@ public class SatchelManager : FSystem {
                             //stop animation when the padlock reaches a certain height
                             GameObjectManager.setGameObjectState(bagPadlock, false);
                             //remove key from inventory
-                            GameObjectManager.setGameObjectState(isSelected("KeyE08"), false);
+                            GameObjectManager.setGameObjectState(isSelected("KeySatchel"), false);
                             checkPadLock = false;
                             showBagPaper = true;
                             getOutPaper = true;

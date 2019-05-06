@@ -127,7 +127,7 @@ public class BallBoxManager : FSystem {
     private GameObject keySelected()
     {
         foreach (GameObject go in f_itemSelected)
-            if (go.name == "KeyE03")
+            if (go.name == "KeyBallBox")
                 return go;
         return null;
     }
