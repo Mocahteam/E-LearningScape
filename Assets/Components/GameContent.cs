@@ -59,7 +59,7 @@ public class GameContent {
     public string[] additionalCredit;
     public string scoreText;
 
-    //Inventory texts
+    //Inventory texts 
     public List<string> inventoryScrollIntro;
     public List<string> inventoryKeyBallBox;
     public List<string> inventoryWire;
