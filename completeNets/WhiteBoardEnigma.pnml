@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-BD5C-48931-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma14</text>
+  </name>
+ <page id="g-BD5C-48942-1">
+  <place id="p-BD5C-48948-2">
+  <name>
+   <text>AnswersInput_end_142</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1160" y="465"/>
+   </graphics>
+  </place>
+  <transition id="t-BD5C-48959-3">
+  <name>
+   <text>AnswersInput_perform_142</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1090" y="455"/>
+   </graphics>
+  </transition>
+  <place id="p-BD5C-48961-4">
+  <name>
+   <text>AnswersInput_start_142</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1010" y="465"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48968-5">
+  <name>
+   <text>BoardRemovable_end_129</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="820" y="60"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-4896D-6">
+  <name>
+   <text>BoardRemovable_end_130</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="825" y="130"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48972-7">
+  <name>
+   <text>BoardRemovable_end_131</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="825" y="200"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48978-8">
+  <name>
+   <text>BoardRemovable_end_132</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="815" y="270"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-4897F-9">
+  <name>
+   <text>BoardRemovable_end_133</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="820" y="340"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48983-10">
+  <name>
+   <text>BoardRemovable_end_134</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="820" y="410"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48988-11">
+  <name>
+   <text>BoardRemovable_end_135</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="810" y="480"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-4898E-12">
+  <name>
+   <text>BoardRemovable_end_136</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="810" y="550"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48994-13">
+  <name>
+   <text>BoardRemovable_end_137</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="810" y="620"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48998-14">
+  <name>
+   <text>BoardRemovable_end_138</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="800" y="690"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-4899D-15">
+  <name>
+   <text>BoardRemovable_end_139</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="805" y="760"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-489A3-16">
+  <name>
+   <text>BoardRemovable_end_140</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="795" y="830"/>
+   </graphics>
+  </place>
+  <transition id="t-BD5C-489A7-17">
+  <name>
+   <text>BoardRemovable_perform_129</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="740" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-BD5C-489AD-18">
+  <name>
+   <text>BoardRemovable_perform_130</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="745" y="120"/>
+   </graphics>
+  </transition>
+  <transition id="t-BD5C-48A30-19">
+  <name>
+   <text>BoardRemovable_perform_131</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="745" y="190"/>
+   </graphics>
+  </transition>
+  <transition id="t-BD5C-48A38-20">
+  <name>
+   <text>BoardRemovable_perform_132</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="745" y="260"/>
+   </graphics>
+  </transition>
+  <transition id="t-BD5C-48A3F-21">
+  <name>
+   <text>BoardRemovable_perform_133</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="740" y="330"/>
+   </graphics>
+  </transition>
+  <transition id="t-BD5C-48A44-22">
+  <name>
+   <text>BoardRemovable_perform_134</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="740" y="400"/>
+   </graphics>
+  </transition>
+  <transition id="t-BD5C-48A49-23">
+  <name>
+   <text>BoardRemovable_perform_135</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="740" y="470"/>
+   </graphics>
+  </transition>
+  <transition id="t-BD5C-48A50-24">
+  <name>
+   <text>BoardRemovable_perform_136</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="730" y="540"/>
+   </graphics>
+  </transition>
+  <transition id="t-BD5C-48A55-25">
+  <name>
+   <text>BoardRemovable_perform_137</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="730" y="610"/>
+   </graphics>
+  </transition>
+  <transition id="t-BD5C-48A5C-26">
+  <name>
+   <text>BoardRemovable_perform_138</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="730" y="680"/>
+   </graphics>
+  </transition>
+  <transition id="t-BD5C-48A62-27">
+  <name>
+   <text>BoardRemovable_perform_139</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="725" y="750"/>
+   </graphics>
+  </transition>
+  <transition id="t-BD5C-48A66-28">
+  <name>
+   <text>BoardRemovable_perform_140</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="725" y="820"/>
+   </graphics>
+  </transition>
+  <place id="p-BD5C-48A71-29">
+  <name>
+   <text>BoardRemovable_start_129</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="660" y="60"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48A7C-30">
+  <name>
+   <text>BoardRemovable_start_130</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="665" y="130"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48A82-31">
+  <name>
+   <text>BoardRemovable_start_131</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="665" y="200"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48A89-32">
+  <name>
+   <text>BoardRemovable_start_132</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="665" y="270"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48A8D-33">
+  <name>
+   <text>BoardRemovable_start_133</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="660" y="340"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48A94-34">
+  <name>
+   <text>BoardRemovable_start_134</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="660" y="410"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48A9A-35">
+  <name>
+   <text>BoardRemovable_start_135</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="660" y="480"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48AE5-36">
+  <name>
+   <text>BoardRemovable_start_136</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="650" y="550"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48AEC-37">
+  <name>
+   <text>BoardRemovable_start_137</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="650" y="620"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48AF1-38">
+  <name>
+   <text>BoardRemovable_start_138</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="650" y="690"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48AF7-39">
+  <name>
+   <text>BoardRemovable_start_139</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="645" y="760"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48AFE-40">
+  <name>
+   <text>BoardRemovable_start_140</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="645" y="830"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48B04-41">
+  <name>
+   <text>Board_off_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="50" y="495"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48B08-42">
+  <name>
+   <text>Board_on_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="215" y="495"/>
+   </graphics>
+  </place>
+  <transition id="t-BD5C-48B0E-43">
+  <name>
+   <text>Board_turnOff_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="130" y="465"/>
+   </graphics>
+  </transition>
+  <transition id="t-BD5C-48B12-44">
+  <name>
+   <text>Board_turnOn_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="130" y="555"/>
+   </graphics>
+  </transition>
+  <place id="p-BD5C-48B18-45">
+  <name>
+   <text>Eraser_ActivationCount_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="480" y="615"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48B1E-46">
+  <name>
+   <text>Eraser_off_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="480" y="505"/>
+   </graphics>
+  </place>
+  <place id="p-BD5C-48B21-47">
+  <name>
+   <text>Eraser_on_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="320" y="500"/>
+   </graphics>
+  </place>
+  <transition id="t-BD5C-48B27-48">
+  <name>
+   <text>Eraser_turnOff_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="400" y="475"/>
+   </graphics>
+  </transition>
+  <transition id="t-BD5C-48B2B-49">
+  <name>
+   <text>Eraser_turnOn_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="400" y="555"/>
+   </graphics>
+  </transition>
+  <arc id="e-BD5C-48B37-50" source="p-BD5C-48B18-45" target="t-BD5C-48A3F-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48B3D-51" source="t-BD5C-48B27-48" target="p-BD5C-48B1E-46">
+  </arc>
+  <arc id="e-BD5C-48B3F-52" source="p-BD5C-48B18-45" target="t-BD5C-48A62-27">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48B41-53" source="p-BD5C-48AF7-39" target="t-BD5C-48A62-27">
+  </arc>
+  <arc id="e-BD5C-48B62-54" source="t-BD5C-48A62-27" target="p-BD5C-4899D-15">
+  </arc>
+  <arc id="e-BD5C-48B65-55" source="p-BD5C-48B18-45" target="t-BD5C-489AD-18">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48B68-56" source="p-BD5C-48A7C-30" target="t-BD5C-489AD-18">
+  </arc>
+  <arc id="e-BD5C-48B6B-57" source="t-BD5C-489AD-18" target="p-BD5C-4896D-6">
+  </arc>
+  <arc id="e-BD5C-48B6E-58" source="p-BD5C-48B08-42" target="t-BD5C-48B0E-43">
+  </arc>
+  <arc id="e-BD5C-48B70-59" source="p-BD5C-48B04-41" target="t-BD5C-48B12-44">
+  </arc>
+  <arc id="e-BD5C-48B72-60" source="t-BD5C-48B12-44" target="p-BD5C-48B08-42">
+  </arc>
+  <arc id="e-BD5C-48B74-61" source="p-BD5C-48A8D-33" target="t-BD5C-48A3F-21">
+  </arc>
+  <arc id="e-BD5C-48B76-62" source="t-BD5C-48B0E-43" target="p-BD5C-48B04-41">
+  </arc>
+  <arc id="e-BD5C-48B7A-63" source="p-BD5C-48B18-45" target="t-BD5C-48A30-19">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48B7C-64" source="p-BD5C-48A82-31" target="t-BD5C-48A30-19">
+  </arc>
+  <arc id="e-BD5C-48B7E-65" source="t-BD5C-48A30-19" target="p-BD5C-48972-7">
+  </arc>
+  <arc id="e-BD5C-48B80-66" source="p-BD5C-48B18-45" target="t-BD5C-489A7-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48B83-67" source="p-BD5C-48A71-29" target="t-BD5C-489A7-17">
+  </arc>
+  <arc id="e-BD5C-48B85-68" source="t-BD5C-489A7-17" target="p-BD5C-48968-5">
+  </arc>
+  <arc id="e-BD5C-48B87-69" source="p-BD5C-48B18-45" target="t-BD5C-48A49-23">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48B8A-70" source="p-BD5C-48A9A-35" target="t-BD5C-48A49-23">
+  </arc>
+  <arc id="e-BD5C-48B8C-71" source="t-BD5C-48A49-23" target="p-BD5C-48988-11">
+  </arc>
+  <arc id="e-BD5C-48B90-72" source="t-BD5C-48A3F-21" target="p-BD5C-4897F-9">
+  </arc>
+  <arc id="e-BD5C-48B92-73" source="t-BD5C-48959-3" target="p-BD5C-48948-2">
+  </arc>
+  <arc id="e-BD5C-48B95-74" source="p-BD5C-48961-4" target="t-BD5C-48959-3">
+  </arc>
+  <arc id="e-BD5C-48B97-75" source="p-BD5C-48B18-45" target="t-BD5C-48A44-22">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48B99-76" source="p-BD5C-48A94-34" target="t-BD5C-48A44-22">
+  </arc>
+  <arc id="e-BD5C-48B9B-77" source="t-BD5C-48A44-22" target="p-BD5C-48983-10">
+  </arc>
+  <arc id="e-BD5C-48B9F-78" source="p-BD5C-48B18-45" target="t-BD5C-48A66-28">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48BA1-79" source="p-BD5C-48AFE-40" target="t-BD5C-48A66-28">
+  </arc>
+  <arc id="e-BD5C-48BA3-80" source="t-BD5C-48A66-28" target="p-BD5C-489A3-16">
+  </arc>
+  <arc id="e-BD5C-48BA6-81" source="p-BD5C-48B18-45" target="t-BD5C-48A38-20">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48BAB-82" source="p-BD5C-48A89-32" target="t-BD5C-48A38-20">
+  </arc>
+  <arc id="e-BD5C-48BAD-83" source="p-BD5C-48B08-42" target="t-BD5C-48B2B-49">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48BB0-84" source="t-BD5C-48A38-20" target="p-BD5C-48978-8">
+  </arc>
+  <arc id="e-BD5C-48BB3-85" source="p-BD5C-48B18-45" target="t-BD5C-48A55-25">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48BB5-86" source="p-BD5C-48AEC-37" target="t-BD5C-48A55-25">
+  </arc>
+  <arc id="e-BD5C-48BB7-87" source="t-BD5C-48A55-25" target="p-BD5C-48994-13">
+  </arc>
+  <arc id="e-BD5C-48BB9-88" source="p-BD5C-48B18-45" target="t-BD5C-48A50-24">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48BBC-89" source="p-BD5C-48AE5-36" target="t-BD5C-48A50-24">
+  </arc>
+  <arc id="e-BD5C-48BBF-90" source="t-BD5C-48A50-24" target="p-BD5C-4898E-12">
+  </arc>
+  <arc id="e-BD5C-48BC3-91" source="p-BD5C-48B18-45" target="t-BD5C-48A5C-26">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48BC5-92" source="p-BD5C-48AF1-38" target="t-BD5C-48A5C-26">
+  </arc>
+  <arc id="e-BD5C-48BC8-93" source="t-BD5C-48A5C-26" target="p-BD5C-48998-14">
+  </arc>
+  <arc id="e-BD5C-48BCA-94" source="p-BD5C-48B08-42" target="t-BD5C-48B27-48">
+   <type value="test"/>
+  </arc>
+  <arc id="e-BD5C-48BCC-95" source="t-BD5C-48B2B-49" target="p-BD5C-48B18-45">
+  </arc>
+  <arc id="e-BD5C-48BCE-96" source="p-BD5C-48B21-47" target="t-BD5C-48B27-48">
+  </arc>
+  <arc id="e-BD5C-48C0E-97" source="p-BD5C-48B1E-46" target="t-BD5C-48B2B-49">
+  </arc>
+  <arc id="e-BD5C-48C10-98" source="t-BD5C-48B2B-49" target="p-BD5C-48B21-47">
+  </arc>
+ </page>
+ </net>
+</pnml>

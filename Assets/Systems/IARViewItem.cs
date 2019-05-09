@@ -15,8 +15,6 @@ public class IARViewItem : FSystem {
     private Family f_selected = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedInInventory), typeof(Collected), typeof(AnimatedSprites)), new AnyOfTags("InventoryElements"));
     private Family f_descriptionUI = FamilyManager.getFamily(new AnyOfTags("DescriptionUI"));
     private Family f_viewable = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
-    private Family f_collectedPuzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
-    private Family f_selectedBag = FamilyManager.getFamily(new AnyOfTags("Bag"), new AllOfComponents(typeof(ReadyToWork)));
 
     private Family f_soundObj = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank), typeof(AudioSource)));
 
@@ -142,16 +140,6 @@ public class IARViewItem : FSystem {
             onExitItem(-1);
     }
 
-    // return true if UI with name "name" is selected into inventory
-    private GameObject isSelected(string name)
-    {
-        Debug.Log("obj selected");
-        foreach (GameObject go in f_selected)
-            if (go.name == name)
-                return go;
-        return null;
-    }
-
     // Show title and description of a game object
     // if this gameobject is linked with another one and is selected, the description area is replaced by its linked game object (except for glasses)
     private void showDescription(GameObject item)
@@ -218,32 +206,9 @@ public class IARViewItem : FSystem {
                 {
                     GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOff", performedBy = "player" });
                     GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "deactivated", objectType = "item", objectName = go.name });
+
                     GameObjectManager.removeComponent<SelectedInInventory>(go);
 
-                    if (go.name.Contains("Glasses"))
-                    {
-                        if (f_selectedBag.Count > 0)
-                        {
-                            if (isSelected("Glasses1"))
-                            {
-                                GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate2", performedBy = "player" });
-                                if(f_selectedBag.Count > 0)
-                                    GameObjectManager.addComponent<ActionPerformedForLRS>(f_selectedBag.First().transform.GetChild(1).gameObject, new { verb = "accessed", objectType = "interactable", objectName = "paper2" });
-                            }
-                            else if (isSelected("Glasses2"))
-                            {
-                                GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate3", performedBy = "player" });
-                                if (f_selectedBag.Count > 0)
-                                    GameObjectManager.addComponent<ActionPerformedForLRS>(f_selectedBag.First().transform.GetChild(1).gameObject, new { verb = "accessed", objectType = "interactable", objectName = "paper3" });
-                            }
-                            else
-                            {
-                                GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate", performedBy = "player" });
-                                if (f_selectedBag.Count > 0)
-                                    GameObjectManager.addComponent<ActionPerformedForLRS>(f_selectedBag.First().transform.GetChild(1).gameObject, new { verb = "accessed", objectType = "interactable", objectName = "paper1" });
-                            }
-                        }
-                    }
                     // this game object is unselected and it contains a linked game object => we hide the linked game object
                     if (go.GetComponent<LinkedWith>())
                         GameObjectManager.setGameObjectState(go.GetComponent<LinkedWith>().link, false); // switch off the view of the last selection
@@ -254,32 +219,6 @@ public class IARViewItem : FSystem {
                     GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "activated", objectType = "item", objectName = go.name });
 
                     GameObjectManager.addComponent<SelectedInInventory>(go);
-                    
-                    
-                    if(go.name.Contains("Glasses"))
-                    {
-                        if(f_selectedBag.Count > 0)
-                        {
-                            if (isSelected("Glasses1") && isSelected("Glasses2"))
-                            {
-                                GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate4", performedBy = "player" });
-                                if (f_selectedBag.Count > 0)
-                                    GameObjectManager.addComponent<ActionPerformedForLRS>(f_selectedBag.First().transform.GetChild(1).gameObject, new { verb = "accessed", objectType = "interactable", objectName = "paper4" });
-                            }
-                            else if (isSelected("Glasses1"))
-                            {
-                                GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate2", performedBy = "player" });
-                                if (f_selectedBag.Count > 0)
-                                    GameObjectManager.addComponent<ActionPerformedForLRS>(f_selectedBag.First().transform.GetChild(1).gameObject, new { verb = "accessed", objectType = "interactable", objectName = "paper2" });
-                            }
-                            else if (isSelected("Glasses2"))
-                            {
-                                GameObjectManager.addComponent<ActionPerformed>(f_selectedBag.First().transform.GetChild(1).gameObject, new { overrideName = "activate3", performedBy = "player" });
-                                if (f_selectedBag.Count > 0)
-                                    GameObjectManager.addComponent<ActionPerformedForLRS>(f_selectedBag.First().transform.GetChild(1).gameObject, new { verb = "accessed", objectType = "interactable", objectName = "paper3" });
-                            }
-                        }
-                    }
                 }
             }
         }

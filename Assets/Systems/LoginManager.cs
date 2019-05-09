@@ -20,7 +20,6 @@ public class LoginManager : FSystem {
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family f_gameRooms = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("GameRooms"));
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
-    private Family f_pointerOver = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver)));
 
     // Selectable Component is dynamically added by IARGearsEnigma when this enigma is solved => this is a sure condition to know that login is unlocked
     private Family f_loginUnlocked = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(Selectable)));
@@ -94,7 +93,7 @@ public class LoginManager : FSystem {
     {
         // launch animation of login protection
         loginCover = go.transform.GetChild(0).gameObject; // the first child is the cover
-        coverTargetPosition = go.transform.position - (Vector3.up); 
+        coverTargetPosition = loginCover.transform.position - (Vector3.up); 
         playerGoBackPosition = go.transform.position + (Vector3.left*3f) - (Vector3.up);
         door = f_door.First();
         doorOpennedPosition = door.transform.position + (Vector3.up*4f);

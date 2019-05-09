@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-A658-EC253-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma13</text>
+  </name>
+ <page id="g-A658-EC263-1">
+  <place id="p-A658-EC268-2">
+  <name>
+   <text>AnswersInput_end_126</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="555" y="100"/>
+   </graphics>
+  </place>
+  <transition id="t-A658-EC286-3">
+  <name>
+   <text>AnswersInput_perform_126</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="475" y="80"/>
+   </graphics>
+  </transition>
+  <place id="p-A658-EC28F-4">
+  <name>
+   <text>AnswersInput_start_126</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="395" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-A658-EC296-5">
+  <name>
+   <text>Fragment_souvenir_10_ActivationCount_123</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="235" y="60"/>
+   </graphics>
+  </place>
+  <transition id="t-A658-EC29F-6">
+  <name>
+   <text>Fragment_souvenir_10_activate_123</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-A658-EC2A6-7">
+  <name>
+   <text>Fragment_souvenir_13_ActivationCount_124</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="235" y="130"/>
+   </graphics>
+  </place>
+  <transition id="t-A658-EC2AC-8">
+  <name>
+   <text>Fragment_souvenir_13_activate_124</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="120"/>
+   </graphics>
+  </transition>
+  <arc id="e-A658-EC2B7-9" source="p-A658-EC2A6-7" target="t-A658-EC286-3">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A658-EC2BC-10" source="p-A658-EC296-5" target="t-A658-EC286-3">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A658-EC2BF-11" source="t-A658-EC286-3" target="p-A658-EC268-2">
+  </arc>
+  <arc id="e-A658-EC2C0-12" source="t-A658-EC2AC-8" target="p-A658-EC2A6-7">
+  </arc>
+  <arc id="e-A658-EC2C3-13" source="t-A658-EC29F-6" target="p-A658-EC296-5">
+  </arc>
+  <arc id="e-A658-EC2C4-14" source="p-A658-EC28F-4" target="t-A658-EC286-3">
+  </arc>
+ </page>
+ </net>
+</pnml>

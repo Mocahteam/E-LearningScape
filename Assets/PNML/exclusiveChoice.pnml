@@ -1,0 +1,49 @@
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-4774-9153B-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+  <name>
+   <text>exclusiveChoice</text>
+  </name>
+ <page id="g-4774-91548-1">
+  <transition id="t-4774-9154C-2">
+  <name>
+   <text>choice1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="105" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-4774-9155A-3">
+  <name>
+   <text>choice2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="105" y="130"/>
+   </graphics>
+  </transition>
+  <place id="p-4774-91560-4">
+  <name>
+   <text>start</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="30" y="85"/>
+   </graphics>
+  </place>
+  <arc id="e-4774-91568-5" source="p-4774-91560-4" target="t-4774-9155A-3">
+  </arc>
+  <arc id="e-4774-91569-6" source="p-4774-91560-4" target="t-4774-9154C-2">
+  </arc>
+ </page>
+ </net>
+</pnml>
