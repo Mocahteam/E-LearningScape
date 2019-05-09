@@ -12,7 +12,7 @@ public class IARTabNavigation : FSystem {
     private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
     private Family f_fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)));
-    private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
+	private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
     private Family f_HUD_H = FamilyManager.getFamily(new AnyOfTags("HUD_H"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
     private Family f_settingsOpened = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
@@ -80,8 +80,9 @@ public class IARTabNavigation : FSystem {
             closeIar();
         else if (!iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape)))
         {
-            if (Input.GetKeyDown(KeyCode.A))
-                openIar(0); // Open IAR on the first tab
+			if (Input.GetKeyDown (KeyCode.A))
+				openIar(0); // Open IAR on the first tab
+			
             else if (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause)
                 openIar(f_tabs.Count - 2); // Open IAR on the second last tab
             else
@@ -112,7 +113,7 @@ public class IARTabNavigation : FSystem {
         MovingSystem.instance.Pause = true;
         DreamFragmentCollecting.instance.Pause = true;
         SoundEffectObjet.instance.Pause = false;
-        Highlighter.instance.Pause = true;
+        Highlighter.instance.Pause = true; 
         MirrorSystem.instance.Pause = true;
         ToggleObject.instance.Pause = true;
         CollectObject.instance.Pause = true;
