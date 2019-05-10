@@ -33,27 +33,25 @@ public class SoundEffectObjet : FSystem {
 
     public void onNeedLockHighlighted (GameObject go)
     {
-        if (go.GetComponent<Highlighted>())
+        
+        foreach (GameObject lightLock in f_lightVerrouObj)
         {
-            foreach (GameObject lightLock in f_lightVerrouObj)
-            {
-                Debug.Log("Passage Souris on lock obj");
-                f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[13]);
-            }
+            Debug.Log("Passage Souris on lock obj");
+            f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[13]);
         }
+        
     }
 
     //On joue le son 8 quand la souris passe sur un objet qui s'illumine en jaune 
     public void onNeedHighlighted(GameObject go)
     {
-        if (go.GetComponent<Highlighted>())
+        
+        foreach (GameObject lightClues in f_lightIndiceObjet)
         {
-            foreach (GameObject lightClues in f_lightIndiceObjet)
-            {
-                Debug.Log("Passage Souris on obj");
-                f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[8]);
-            }
+            Debug.Log("Passage Souris on obj");
+            f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[8]);
         }
+        
     }
 
     //On joue le son 9 quand on clique sur un dream fragment et que sa popup s'ouvre

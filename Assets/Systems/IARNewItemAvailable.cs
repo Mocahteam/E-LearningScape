@@ -105,14 +105,21 @@ public class IARNewItemAvailable : FSystem {
                 GameObjectManager.setGameObjectState(f_inventoryWarning.First(), false);
                 warningNewItem = true;
             }
+			//f_inventoryWarning.First ().transform.parent.gameObject.GetComponent<Animator> ().enabled = true;
         }
         else
         {
-            if (!warningNewItem)
+			GameObject warn = f_inventoryWarning.First ();
+			if (!warningNewItem)
             {
-                GameObjectManager.setGameObjectState(f_inventoryWarning.First(), false);
+				GameObjectManager.setGameObjectState(warn, false);
                 warningNewItem = true;
             }
+			GameObject HUD_A = warn.transform.parent.gameObject;
+			//HUD_A.GetComponent<Animator> ().enabled = false;
+			HUD_A.transform.position = new Vector3 (HUD_A.transform.position.x, 60, HUD_A.transform.position.z);
+
+
         }
     }
 

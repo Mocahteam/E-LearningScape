@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using FYFY;
 using System.Collections.Generic;
+using FYFY_plugins.PointerManager;
+using UnityEngine.UI;
 
 public class Highlighter : FSystem {
 
@@ -9,6 +11,10 @@ public class Highlighter : FSystem {
     //all in game interactive objects
     // in game element linked whith UI game object are collectable and so highlightable
 	private Family f_highlitable = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(ToggleableGO), typeof(LinkedWith)));
+	//IAR element highlightable
+	private Family f_IARHighlightable = FamilyManager.getFamily (new AnyOfComponents(typeof(Button), typeof(InputField), typeof(Collected)), new AllOfComponents (typeof(PointerOver)));
+	private Family f_IARNonHighlightable = FamilyManager.getFamily (new AnyOfComponents(typeof(Button), typeof(InputField), typeof(Collected)), new AllOfComponents(typeof(Highlighted)), new NoneOfComponents (typeof(PointerOver)));
+
 
     private Renderer[] tmpRendererList;
     
@@ -19,35 +25,46 @@ public class Highlighter : FSystem {
 
     public Highlighter()
     {
-        if (Application.isPlaying)
-            previousColor = new Queue<Color>();
+		if (Application.isPlaying) {
+			f_IARHighlightable.addEntryCallback (highlight);
+			f_IARNonHighlightable.addEntryCallback (unhighlight);
+			previousColor = new Queue<Color> ();
+		}
         instance = this;
     }
 
-    private void unhighlight(GameObject currentHighlight)
+	private void unhighlight (GameObject go){
+		if (go.GetComponent<Selectable>())
+			GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "exitedHighlight", objectType = "interactable", objectName = go.name });
+		else if (go.GetComponent<ToggleableGO>())
+			GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "exitedHighlight", objectType = "toggable", objectName = go.name });
+		else
+			GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "exitedHighlight", objectType = "item", objectName = go.name });
+		tmpRendererList = go.GetComponentsInChildren<Renderer>();
+		int nb = tmpRendererList.Length;
+		for (int i = 0; i < nb; i++)
+		{
+			if (tmpRendererList [i].material.HasProperty ("_EmissionColor")) {
+				Color c = previousColor.Dequeue();
+				// avoid to change fragments color
+				if (!tmpRendererList [i].GetComponentInParent<DreamFragment> ())
+					tmpRendererList [i].material.SetColor ("_EmissionColor", c);
+			}
+		}
+		if (nb <= 0 && go.GetComponent<Image>() != null) {
+			Image img = go.GetComponent<Image> ();
+			img.color = previousColor.Dequeue();
+		}			
+		// Remove Highlighted component to this GameObject
+		GameObjectManager.removeComponent<Highlighted>(go);
+		previousHighlight = null;
+	}
+
+    private void prepareUnhighlight(GameObject currentHighlight)
     {
         if (previousHighlight != null)
         {
-            if (previousHighlight.GetComponent<Selectable>())
-                GameObjectManager.addComponent<ActionPerformedForLRS>(previousHighlight, new { verb = "exitedHighlight", objectType = "interactable", objectName = previousHighlight.name });
-            else if (previousHighlight.GetComponent<ToggleableGO>())
-                GameObjectManager.addComponent<ActionPerformedForLRS>(previousHighlight, new { verb = "exitedHighlight", objectType = "toggable", objectName = previousHighlight.name });
-            else
-                GameObjectManager.addComponent<ActionPerformedForLRS>(previousHighlight, new { verb = "exitedHighlight", objectType = "item", objectName = previousHighlight.name });
-            tmpRendererList = previousHighlight.GetComponentsInChildren<Renderer>();
-            int nb = tmpRendererList.Length;
-            for (int i = 0; i < nb; i++)
-            {
-                if (tmpRendererList[i].material.HasProperty("_EmissionColor"))
-                {
-                    Color c = previousColor.Dequeue();
-                    // avoid to change fragments color
-                    if (!tmpRendererList[i].GetComponentInParent<DreamFragment>())
-                        tmpRendererList[i].material.SetColor("_EmissionColor", c);
-                }
-            }
-            // Remove Highlighted component to this GameObject
-            GameObjectManager.removeComponent<Highlighted>(previousHighlight);
+			unhighlight (previousHighlight);
         }
         previousHighlight = currentHighlight;
     }
@@ -65,20 +82,26 @@ public class Highlighter : FSystem {
         // Update renderer and highlight game object
         tmpRendererList = currentHighlight.GetComponentsInChildren<Renderer>();
         int nb = tmpRendererList.Length;
-        for (int i = 0; i < nb; i++)
-        {
-            if (tmpRendererList[i].material.HasProperty("_EmissionColor"))
-            {
-                // Save current emission color
-                previousColor.Enqueue(tmpRendererList[i].material.GetColor("_EmissionColor"));
-                // Enable emission and hightlight target (avoid to change fragments color)
-                if (!tmpRendererList[i].GetComponentInParent<DreamFragment>() && tmpRendererList[i].gameObject.name != ("BoardTexture"))
-                {
-                    tmpRendererList[i].material.EnableKeyword("_EMISSION");
-                    tmpRendererList[i].material.SetColor("_EmissionColor", Color.yellow * Mathf.LinearToGammaSpace(0.8f));
-                }
-            }
-        }
+		
+		for (int i = 0; i < nb; i++) {
+			if (tmpRendererList [i].material.HasProperty ("_EmissionColor")) {
+				// Save current emission color
+				previousColor.Enqueue (tmpRendererList [i].material.GetColor ("_EmissionColor"));
+				// Enable emission and hightlight target (avoid to change fragments color)
+				if (!tmpRendererList [i].GetComponentInParent<DreamFragment> () && tmpRendererList [i].gameObject.name != ("BoardTexture")) {
+					tmpRendererList [i].material.EnableKeyword ("_EMISSION");
+					tmpRendererList [i].material.SetColor ("_EmissionColor", Color.yellow * Mathf.LinearToGammaSpace (0.8f));
+				}
+
+			} 
+		}
+		
+		if (nb <= 0 && currentHighlight.GetComponent<Image>() != null) {
+			Image img = currentHighlight.GetComponent<Image> ();
+			previousColor.Enqueue (img.color);
+			img.color = Color.yellow * Mathf.LinearToGammaSpace (0.8f);
+		}
+			
         // Add Highlighted component to this GameObject
         GameObjectManager.addComponent<Highlighted>(currentHighlight);
     }
@@ -87,7 +110,7 @@ public class Highlighter : FSystem {
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame)
     {
-        unhighlight(null);
+        prepareUnhighlight(null);
     }
 
     // Use this to update member variables when system resume.
@@ -137,6 +160,6 @@ public class Highlighter : FSystem {
 
         // if a previous one exists and it's different from the new one => reset default emission color
         if (previousHighlight != null && currentHighlight != previousHighlight)
-            unhighlight(currentHighlight);
+            prepareUnhighlight(currentHighlight);
     }
 }
