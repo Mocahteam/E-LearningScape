@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-A3E4-90134-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma2</text>
+  </name>
+ <page id="g-A3E4-90142-1">
+  <place id="p-A3E4-90148-2">
+  <name>
+   <text>Fragment_souvenir_17_ActivationCount_30</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="470" y="180"/>
+   </graphics>
+  </place>
+  <transition id="t-A3E4-9015C-3">
+  <name>
+   <text>Fragment_souvenir_17_activate_30</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="350" y="170"/>
+   </graphics>
+  </transition>
+  <place id="p-A3E4-90163-4">
+  <name>
+   <text>Fragment_souvenir_9_ActivationCount_29</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="470" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-A3E4-9016A-5">
+  <name>
+   <text>Fragment_souvenir_9_activate_29</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="350" y="100"/>
+   </graphics>
+  </transition>
+  <place id="p-A3E4-90171-6">
+  <name>
+   <text>Plank_end_34</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1060" y="445"/>
+   </graphics>
+  </place>
+  <place id="p-A3E4-90175-7">
+  <name>
+   <text>Plank_off_28</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="325" y="505"/>
+   </graphics>
+  </place>
+  <place id="p-A3E4-9017A-8">
+  <name>
+   <text>Plank_on_28</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="490" y="505"/>
+   </graphics>
+  </place>
+  <transition id="t-A3E4-9017E-9">
+  <name>
+   <text>Plank_perform_34</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="980" y="435"/>
+   </graphics>
+  </transition>
+  <place id="p-A3E4-90183-10">
+  <name>
+   <text>Plank_start_34</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="900" y="445"/>
+   </graphics>
+  </place>
+  <transition id="t-A3E4-90187-11">
+  <name>
+   <text>Plank_turnOff_28</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="405" y="470"/>
+   </graphics>
+  </transition>
+  <transition id="t-A3E4-9018D-12">
+  <name>
+   <text>Plank_turnOn_28</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="405" y="560"/>
+   </graphics>
+  </transition>
+  <place id="p-A3E4-90192-13">
+  <name>
+   <text>Q2_Answered_35</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1435" y="575"/>
+   </graphics>
+  </place>
+  <place id="p-A3E4-90196-14">
+  <name>
+   <text>Q2_Answering_35</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1185" y="575"/>
+   </graphics>
+  </place>
+  <transition id="t-A3E4-9019B-15">
+  <name>
+   <text>Q2_Correct_35</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1315" y="565"/>
+   </graphics>
+  </transition>
+  <transition id="t-A3E4-9019F-16">
+  <name>
+   <text>Q2_Wrong_35</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1315" y="655"/>
+   </graphics>
+  </transition>
+  <place id="p-A3E4-901A4-17">
+  <name>
+   <text>Q2_locker_35</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1185" y="675"/>
+   </graphics>
+  </place>
+  <place id="p-A3E4-901A8-18">
+  <name>
+   <text>SolutionWord1_off_31</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="645" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-A3E4-90232-19">
+  <name>
+   <text>SolutionWord1_on_31</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="815" y="95"/>
+   </graphics>
+  </place>
+  <transition id="t-A3E4-90239-20">
+  <name>
+   <text>SolutionWord1_turnOff_31</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="735" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-A3E4-9023D-21">
+  <name>
+   <text>SolutionWord1_turnOn_31</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="735" y="150"/>
+   </graphics>
+  </transition>
+  <place id="p-A3E4-90244-22">
+  <name>
+   <text>SolutionWord2_off_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="905" y="115"/>
+   </graphics>
+  </place>
+  <place id="p-A3E4-90249-23">
+  <name>
+   <text>SolutionWord2_on_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1080" y="120"/>
+   </graphics>
+  </place>
+  <transition id="t-A3E4-9024E-24">
+  <name>
+   <text>SolutionWord2_turnOff_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="990" y="75"/>
+   </graphics>
+  </transition>
+  <transition id="t-A3E4-90257-25">
+  <name>
+   <text>SolutionWord2_turnOn_32</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="990" y="165"/>
+   </graphics>
+  </transition>
+  <place id="p-A3E4-9025D-26">
+  <name>
+   <text>SolutionWord3_off_33</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1165" y="105"/>
+   </graphics>
+  </place>
+  <place id="p-A3E4-90263-27">
+  <name>
+   <text>SolutionWord3_on_33</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1350" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-A3E4-90267-28">
+  <name>
+   <text>SolutionWord3_turnOff_33</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1260" y="60"/>
+   </graphics>
+  </transition>
+  <transition id="t-A3E4-9026D-29">
+  <name>
+   <text>SolutionWord3_turnOn_33</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1260" y="150"/>
+   </graphics>
+  </transition>
+  <place id="p-A3E4-90272-30">
+  <name>
+   <text>Wire_end_26</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="210" y="665"/>
+   </graphics>
+  </place>
+  <place id="p-A3E4-90276-31">
+  <name>
+   <text>Wire_off_27</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="310" y="670"/>
+   </graphics>
+  </place>
+  <place id="p-A3E4-9027B-32">
+  <name>
+   <text>Wire_on_27</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="485" y="660"/>
+   </graphics>
+  </place>
+  <transition id="t-A3E4-9027F-33">
+  <name>
+   <text>Wire_perform_26</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="130" y="655"/>
+   </graphics>
+  </transition>
+  <place id="p-A3E4-90284-34">
+  <name>
+   <text>Wire_start_26</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="50" y="665"/>
+   </graphics>
+  </place>
+  <transition id="t-A3E4-90288-35">
+  <name>
+   <text>Wire_turnOff_27</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="405" y="630"/>
+   </graphics>
+  </transition>
+  <transition id="t-A3E4-902CC-36">
+  <name>
+   <text>Wire_turnOn_27</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="405" y="720"/>
+   </graphics>
+  </transition>
+  <place id="p-A3E4-902D3-37">
+  <name>
+   <text>equivWith_PlankAndWireManager_f_wrongWords_off_121</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="390" y="325"/>
+   </graphics>
+  </place>
+  <place id="p-A3E4-902DB-38">
+  <name>
+   <text>equivWith_PlankAndWireManager_f_wrongWords_on_121</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="580" y="325"/>
+   </graphics>
+  </place>
+  <transition id="t-A3E4-902E2-39">
+  <name>
+   <text>equivWith_PlankAndWireManager_f_wrongWords_turnOff_121</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="490" y="285"/>
+   </graphics>
+  </transition>
+  <transition id="t-A3E4-902EC-40">
+  <name>
+   <text>equivWith_PlankAndWireManager_f_wrongWords_turnOn_121</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="490" y="375"/>
+   </graphics>
+  </transition>
+  <arc id="e-A3E4-902F9-41" source="p-A3E4-90272-30" target="t-A3E4-902CC-36">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-902FE-42" source="p-A3E4-9027B-32" target="t-A3E4-9024E-24">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90301-43" source="p-A3E4-9017A-8" target="t-A3E4-9024E-24">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90303-44" source="p-A3E4-90249-23" target="t-A3E4-9024E-24">
+  </arc>
+  <arc id="e-A3E4-90306-45" source="p-A3E4-90244-22" target="t-A3E4-90257-25">
+  </arc>
+  <arc id="e-A3E4-90309-46" source="t-A3E4-90257-25" target="p-A3E4-90249-23">
+  </arc>
+  <arc id="e-A3E4-9030A-47" source="t-A3E4-9024E-24" target="p-A3E4-90244-22">
+  </arc>
+  <arc id="e-A3E4-9030C-48" source="p-A3E4-9027B-32" target="t-A3E4-9023D-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-9030E-49" source="p-A3E4-9017A-8" target="t-A3E4-9023D-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90311-50" source="p-A3E4-9027B-32" target="t-A3E4-90239-20">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90312-51" source="p-A3E4-9017A-8" target="t-A3E4-90239-20">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90314-52" source="p-A3E4-90272-30" target="t-A3E4-90288-35">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90316-53" source="p-A3E4-90232-19" target="t-A3E4-90239-20">
+  </arc>
+  <arc id="e-A3E4-9031A-54" source="p-A3E4-901A8-18" target="t-A3E4-9023D-21">
+  </arc>
+  <arc id="e-A3E4-9031C-55" source="t-A3E4-9023D-21" target="p-A3E4-90232-19">
+  </arc>
+  <arc id="e-A3E4-9031D-56" source="t-A3E4-90239-20" target="p-A3E4-901A8-18">
+  </arc>
+  <arc id="e-A3E4-9031F-57" source="p-A3E4-90284-34" target="t-A3E4-9027F-33">
+  </arc>
+  <arc id="e-A3E4-90321-58" source="t-A3E4-9027F-33" target="p-A3E4-90272-30">
+  </arc>
+  <arc id="e-A3E4-90323-59" source="p-A3E4-90263-27" target="t-A3E4-9017E-9">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90325-60" source="p-A3E4-90249-23" target="t-A3E4-9017E-9">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90327-61" source="p-A3E4-90232-19" target="t-A3E4-9017E-9">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90329-62" source="p-A3E4-90183-10" target="t-A3E4-9017E-9">
+  </arc>
+  <arc id="e-A3E4-9032D-63" source="p-A3E4-9027B-32" target="t-A3E4-90288-35">
+  </arc>
+  <arc id="e-A3E4-9032F-64" source="t-A3E4-9017E-9" target="p-A3E4-90171-6">
+  </arc>
+  <arc id="e-A3E4-90330-65" source="p-A3E4-9017A-8" target="t-A3E4-90187-11">
+  </arc>
+  <arc id="e-A3E4-90332-66" source="p-A3E4-90175-7" target="t-A3E4-9018D-12">
+  </arc>
+  <arc id="e-A3E4-90334-67" source="t-A3E4-9018D-12" target="p-A3E4-9017A-8">
+  </arc>
+  <arc id="e-A3E4-90336-68" source="t-A3E4-90187-11" target="p-A3E4-90175-7">
+  </arc>
+  <arc id="e-A3E4-90354-69" source="t-A3E4-9016A-5" target="p-A3E4-90163-4">
+  </arc>
+  <arc id="e-A3E4-90356-70" source="p-A3E4-9027B-32" target="t-A3E4-9026D-29">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90359-71" source="p-A3E4-9017A-8" target="t-A3E4-9026D-29">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-9035D-72" source="p-A3E4-9027B-32" target="t-A3E4-90267-28">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-9035E-73" source="p-A3E4-9017A-8" target="t-A3E4-90267-28">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90360-74" source="p-A3E4-90276-31" target="t-A3E4-902CC-36">
+  </arc>
+  <arc id="e-A3E4-90362-75" source="p-A3E4-90263-27" target="t-A3E4-90267-28">
+  </arc>
+  <arc id="e-A3E4-90365-76" source="p-A3E4-9025D-26" target="t-A3E4-9026D-29">
+  </arc>
+  <arc id="e-A3E4-90366-77" source="t-A3E4-9026D-29" target="p-A3E4-90263-27">
+  </arc>
+  <arc id="e-A3E4-90368-78" source="t-A3E4-90267-28" target="p-A3E4-9025D-26">
+  </arc>
+  <arc id="e-A3E4-9036A-79" source="p-A3E4-901A4-17" target="t-A3E4-9019F-16">
+  </arc>
+  <arc id="e-A3E4-9036C-80" source="t-A3E4-9019B-15" target="p-A3E4-90192-13">
+  </arc>
+  <arc id="e-A3E4-90370-81" source="p-A3E4-90196-14" target="t-A3E4-9019B-15">
+  </arc>
+  <arc id="e-A3E4-90371-82" source="p-A3E4-9017A-8" target="t-A3E4-902EC-40">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90374-83" source="p-A3E4-9017A-8" target="t-A3E4-902E2-39">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90376-84" source="p-A3E4-902DB-38" target="t-A3E4-902E2-39">
+  </arc>
+  <arc id="e-A3E4-90379-85" source="t-A3E4-902CC-36" target="p-A3E4-9027B-32">
+  </arc>
+  <arc id="e-A3E4-9037A-86" source="p-A3E4-902D3-37" target="t-A3E4-902EC-40">
+  </arc>
+  <arc id="e-A3E4-9037D-87" source="t-A3E4-902EC-40" target="p-A3E4-902DB-38">
+  </arc>
+  <arc id="e-A3E4-9037F-88" source="t-A3E4-902E2-39" target="p-A3E4-902D3-37">
+  </arc>
+  <arc id="e-A3E4-90381-89" source="t-A3E4-90288-35" target="p-A3E4-90276-31">
+  </arc>
+  <arc id="e-A3E4-90385-90" source="t-A3E4-9015C-3" target="p-A3E4-90148-2">
+  </arc>
+  <arc id="e-A3E4-90387-91" source="p-A3E4-9027B-32" target="t-A3E4-90257-25">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A3E4-90389-92" source="p-A3E4-9017A-8" target="t-A3E4-90257-25">
+   <type value="test"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

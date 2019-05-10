@@ -15,18 +15,13 @@ public class DreamFragmentCollecting : FSystem {
     private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
     private Family f_dreamFragmentUI = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AnyOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD));
     private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
-    private Family f_inventoryElements = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
-    private Family f_collectedPuzzleFragments = FamilyManager.getFamily(new AllOfComponents(typeof(PuzzleFragmentSeen)));
 
     private GameObject dfUI;
     private TextMeshProUGUI FragmentText;
     private RaycastHit hit;
     private GameObject selectedFragment;
     private DreamFragment tmpDFComponent;
-    private bool[] fragmentsSeen;
     private bool backupIARNavigationState;
-    private GameObject puzzleLeftUI;
-    private bool allPuzzleFragmentsCollected = false;
     private GameObject tmpGo;
 
     //key: dream fragment name, value: link
@@ -57,19 +52,6 @@ public class DreamFragmentCollecting : FSystem {
             // Get child text area
             FragmentText = dfUI.GetComponentInChildren<TextMeshProUGUI>();
 
-            fragmentsSeen = new bool[6];
-            for(int i = 0; i < fragmentsSeen.Length; i++)
-                fragmentsSeen[i] = false;
-            int nbInvetoryElems = f_inventoryElements.Count;
-            for(int i = 0; i < nbInvetoryElems; i++)
-            {
-                if(f_inventoryElements.getAt(i).name == "Puzzle")
-                {
-                    puzzleLeftUI = f_inventoryElements.getAt(i);
-                    break;
-                }
-            }
-
             //Load dream fragment links (should be done in LoadGameContent)
             if (File.Exists(LoadGameContent.gameContent.dreamFragmentLinksPath))
                 try
@@ -97,6 +79,13 @@ public class DreamFragmentCollecting : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
+        foreach(GameObject go in f_dreamFragments)
+        {
+            DreamFragment df = go.GetComponent<DreamFragment>();
+            if (!df.viewed && df.type != 1)
+                go.transform.Rotate(new Vector3(0, 20*Time.deltaTime, 0));
+        }
+
         // Compute Raycast only when mouse is clicked
         if (Input.GetMouseButtonDown(0))
         {
@@ -122,67 +111,16 @@ public class DreamFragmentCollecting : FSystem {
                     backupIARNavigationState = IARTabNavigation.instance.Pause;
                     IARTabNavigation.instance.Pause = true;
 
-                    switch (selectedFragment.name)
-                    {
-                        case "Fragment_souvenir_7":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if(!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        case "Fragment_souvenir_14":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        case "Fragment_souvenir_15":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        case "Fragment_souvenir_16":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        case "Fragment_souvenir_18":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        default:
-                            break;
-                    }
-
                     if (selectedFragment.transform.parent.gameObject.tag == "Chair" && selectedFragment.transform.parent.gameObject.GetComponent<IsSolution>())
                     {
                         if(f_player.First().transform.localScale.x < 0.9f)
                             //if the player is crouching
-                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "l21"} });
+                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "crouch"} });
                         else
-                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "l20" } });
+                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "chairDown" } });
 
                     }
-                    else
+                    else if (tmpDFComponent.type != 2)
                         GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player" });
                 }
             }
@@ -206,6 +144,7 @@ public class DreamFragmentCollecting : FSystem {
                     break;
                 }
             }
+            selectedFragment.GetComponent<DreamFragment>().viewed = true;
         }
         selectedFragment = null;
         // close UI

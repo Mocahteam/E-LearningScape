@@ -73,12 +73,7 @@ public class ToggleObject : FSystem {
                             //all objects in this list will be toggled down
                             togglingChairsDown[togglingChairsDownCount] = tmpGO;
                             togglingChairsDownCount++;
-                            if(tmpGO.GetComponent<IsSolution>())
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player" });
-                            else
-                            {
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", family = f_wrongChair });
-                            }
+                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", family = tmpGO.GetComponent<IsSolution>() ? null : f_wrongChair });
                         }
                         else if (tmpGO.transform.rotation.eulerAngles.x > 89.9999f) //if chair down
                         {
@@ -100,9 +95,7 @@ public class ToggleObject : FSystem {
                         tableTarget = new Vector3(table.transform.position.x, heightBeforeTableToggle + 1, table.transform.position.z); //a point above the table
                         //start toggling table up/down depending on its current state (0 or 180)
                         if (tmpGO.transform.rotation.eulerAngles.z > 90)
-                        {
                             toggleTableUp = true;
-                        }
                         else
                         {
                             toggleTableDown = true;
@@ -115,11 +108,11 @@ public class ToggleObject : FSystem {
                         if (chestLid.transform.localRotation.eulerAngles.x < 1)
                         {
                             openingChest = true;
-                            if(LoadGameContent.gameContent.virtualPuzzle)
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOn_11_1", performedBy = "player" });
-                            else
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOn_11_2", performedBy = "player" });
-                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOn_12", performedBy = "player" });
+                            // puzzle enigma require chest opened
+                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = LoadGameContent.gameContent.virtualPuzzle ? "turnOn_VirtualPuzzleEnigma" : "turnOn_PhysicalPuzzleEnigma", performedBy = "player" });
+
+                            // lamp enigma require chest opened also
+                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOn_LampEnigma", performedBy = "player" });
                         }
                         else
                             closingChest = true;
@@ -151,10 +144,7 @@ public class ToggleObject : FSystem {
             togglingChairsUp[i].transform.rotation = Quaternion.RotateTowards(togglingChairsUp[i].transform.rotation, Quaternion.Euler(0, togglingChairsUp[i].transform.rotation.eulerAngles.y, togglingChairsUp[i].transform.rotation.eulerAngles.z), 10 * speed);
             if (togglingChairsUp[i].transform.rotation.eulerAngles.x < 0.0001f)
             {
-                if(togglingChairsUp[i].GetComponent<IsSolution>())
-                    GameObjectManager.addComponent<ActionPerformed>(togglingChairsUp[i], new { name = "turnOff", performedBy = "player" });
-                else
-                    GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player", family = f_wrongChair });
+                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player", family = togglingChairsUp[i].GetComponent<IsSolution>() ? null : f_wrongChair });
                 //stop animation when the final position is reached
                 togglingChairsUp[i].GetComponent<ToggleableGO>().toggled = false;
                 togglingChairsUp[i] = togglingChairsUp[togglingChairsUpCount - 1];
@@ -255,11 +245,9 @@ public class ToggleObject : FSystem {
                 closingChest = false;
                 chestLid.transform.parent.gameObject.GetComponent<ToggleableGO>().toggled = false;
 
-                if (LoadGameContent.gameContent.virtualPuzzle)
-                    GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOff_11_1", performedBy = "player" });
-                else
-                    GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOff_11_2", performedBy = "player" });
-                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOff_12", performedBy = "player" });
+                // When the chest is closed, we have to propagate informayion both in puzzle and lamp enigmas
+                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = LoadGameContent.gameContent.virtualPuzzle ? "turnOff_VirtualPuzzleEnigma" : "turnOff_PhysicalPuzzleEnigma", performedBy = "player" });
+                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOff_LampEnigma", performedBy = "player" });
             }
         }
     }

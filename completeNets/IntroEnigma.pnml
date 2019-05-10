@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-6CA0-AB0A-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Intro</text>
+  </name>
+ <page id="g-6CA0-AB1A-1">
+  <place id="p-6CA0-AB1F-2">
+  <name>
+   <text>Fragment_souvenir_0_ActivationCount_2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="465" y="430"/>
+   </graphics>
+  </place>
+  <transition id="t-6CA0-AB37-3">
+  <name>
+   <text>Fragment_souvenir_0_activate_2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="345" y="420"/>
+   </graphics>
+  </transition>
+  <place id="p-6CA0-AB41-4">
+  <name>
+   <text>Intro_Scroll_end_108</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="225" y="240"/>
+   </graphics>
+  </place>
+  <transition id="t-6CA0-AB4A-5">
+  <name>
+   <text>Intro_Scroll_perform_108</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="155" y="230"/>
+   </graphics>
+  </transition>
+  <place id="p-6CA0-AB52-6">
+  <name>
+   <text>Intro_Scroll_start_108</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="75" y="240"/>
+   </graphics>
+  </place>
+  <place id="p-6CA0-AB5A-7">
+  <name>
+   <text>ScrollIntro_ActivationCount_1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="480" y="345"/>
+   </graphics>
+  </place>
+  <place id="p-6CA0-AB61-8">
+  <name>
+   <text>ScrollIntro_off_1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="320" y="225"/>
+   </graphics>
+  </place>
+  <place id="p-6CA0-AB68-9">
+  <name>
+   <text>ScrollIntro_on_1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="480" y="225"/>
+   </graphics>
+  </place>
+  <transition id="t-6CA0-AB6E-10">
+  <name>
+   <text>ScrollIntro_turnOff_1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="400" y="205"/>
+   </graphics>
+  </transition>
+  <transition id="t-6CA0-AB78-11">
+  <name>
+   <text>ScrollIntro_turnOn_1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="400" y="285"/>
+   </graphics>
+  </transition>
+  <place id="p-6CA0-AB80-12">
+  <name>
+   <text>Verrou Mur_end_44</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="770" y="185"/>
+   </graphics>
+  </place>
+  <place id="p-6CA0-AB87-13">
+  <name>
+   <text>Verrou Mur_off_3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="305" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-6CA0-AB8E-14">
+  <name>
+   <text>Verrou Mur_on_3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="490" y="85"/>
+   </graphics>
+  </place>
+  <transition id="t-6CA0-AB95-15">
+  <name>
+   <text>Verrou Mur_perform_44</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="690" y="175"/>
+   </graphics>
+  </transition>
+  <place id="p-6CA0-AB9A-16">
+  <name>
+   <text>Verrou Mur_start_44</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="610" y="185"/>
+   </graphics>
+  </place>
+  <transition id="t-6CA0-ABA1-17">
+  <name>
+   <text>Verrou Mur_turnOff_3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="400" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-6CA0-ABA9-18">
+  <name>
+   <text>Verrou Mur_turnOn_3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="400" y="140"/>
+   </graphics>
+  </transition>
+  <arc id="e-6CA0-AC58-19" source="p-6CA0-AB41-4" target="t-6CA0-AB78-11">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6CA0-AC5E-20" source="t-6CA0-AB4A-5" target="p-6CA0-AB41-4">
+  </arc>
+  <arc id="e-6CA0-AC62-21" source="p-6CA0-AB8E-14" target="t-6CA0-AB95-15">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6CA0-AC66-22" source="p-6CA0-AB9A-16" target="t-6CA0-AB95-15">
+  </arc>
+  <arc id="e-6CA0-AC69-23" source="t-6CA0-AB95-15" target="p-6CA0-AB80-12">
+  </arc>
+  <arc id="e-6CA0-AC6C-24" source="p-6CA0-AB8E-14" target="t-6CA0-ABA1-17">
+  </arc>
+  <arc id="e-6CA0-AC6F-25" source="p-6CA0-AB87-13" target="t-6CA0-ABA9-18">
+  </arc>
+  <arc id="e-6CA0-AC71-26" source="t-6CA0-ABA9-18" target="p-6CA0-AB8E-14">
+  </arc>
+  <arc id="e-6CA0-AC72-27" source="t-6CA0-ABA1-17" target="p-6CA0-AB87-13">
+  </arc>
+  <arc id="e-6CA0-AC74-28" source="p-6CA0-AB41-4" target="t-6CA0-AB6E-10">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6CA0-AC79-29" source="t-6CA0-AB78-11" target="p-6CA0-AB5A-7">
+  </arc>
+  <arc id="e-6CA0-AC7C-30" source="p-6CA0-AB68-9" target="t-6CA0-AB6E-10">
+  </arc>
+  <arc id="e-6CA0-AC81-31" source="p-6CA0-AB61-8" target="t-6CA0-AB78-11">
+  </arc>
+  <arc id="e-6CA0-AC82-32" source="t-6CA0-AB78-11" target="p-6CA0-AB68-9">
+  </arc>
+  <arc id="e-6CA0-AC85-33" source="t-6CA0-AB6E-10" target="p-6CA0-AB61-8">
+  </arc>
+  <arc id="e-6CA0-AC88-34" source="t-6CA0-AB37-3" target="p-6CA0-AB1F-2">
+  </arc>
+  <arc id="e-6CA0-AC8A-35" source="p-6CA0-AB52-6" target="t-6CA0-AB4A-5">
+  </arc>
+ </page>
+ </net>
+</pnml>

@@ -15,6 +15,7 @@ public class IARQueryEvaluator : FSystem {
 
     private Family f_queriesRoom2 = FamilyManager.getFamily(new AnyOfTags("Q-R2"));
     private Family f_answerRoom2 = FamilyManager.getFamily(new AnyOfTags("A-R2"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not displayed for the second room
+    private Family f_queriesRoom3 = FamilyManager.getFamily(new AnyOfTags("Q-R3"));
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
 
@@ -143,126 +144,42 @@ public class IARQueryEvaluator : FSystem {
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 1 });
             GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Wrong", performedBy = "player" });
 
-            //Dans le système qui gère les WrongAnswerInfo prendre en compte le cas des réponses où l'ordre n'importe pas
             GameObjectManager.addComponent<WrongAnswerInfo>(query, new { givenAnswer = answer });
-
-            /*Normalement ici je ne devrais à faire que 
-                1 Action perform sur la question avec l'action Wrong => le ActionPerformed requiert un ComponentMonitoring ce qui n'est pas le cas pour les dernières questions
-
-                Transformer les réseaux de Petri
-                    Pour chaque enigme faire un rx dont l'action finale sera de dire si l'énigme a été résolue => permet de connaitre les actions à faire pour terminer cette énigme
-                    Faire un Rdp pour chaque question => chacun contient l'action Wrong et le succès est connecté à une place qui est alimentée par quatres transitions qui modélisent si la bonne réponse d'une question a été trouvée. Si le Wrong est tiré on peut ainsi savoir quelle énigme il reste à résoudre. Si le joueur répond correctement à une question il faut donc exécuté la validation de l'énigme dans le réseau propre à chaque énigme et aussi valider l'execution de l'énigme dans chacun des Rdp des énigmes...*/
-
-
-            if (query.tag == "Q-R3")
-            {
-                if (availableOrSolutions.Contains(LoadGameContent.StringToAnswer(LoadGameContent.gameContent.puzzleAnswer)))
-                {
-                    if (LoadGameContent.gameContent.virtualPuzzle)
-                    {
-                        GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong11_1", performedBy = "player" });
-                        GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 101, givenAnswer = answer });
-                    }
-                    else
-                    {
-                        GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong11_2", performedBy = "player" });
-                        GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 110, givenAnswer = answer });
-                    }
-                }
-                if (availableOrSolutions.Contains(LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer)))
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong12", performedBy = "player" });
-                    GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 122, givenAnswer = answer });
-                }
-                if (availableOrSolutions.Contains(LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma12Answer)))
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong13", performedBy = "player" });
-                    GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 126, givenAnswer = answer });
-                }
-                if (availableOrSolutions.Contains(LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer)))
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Wrong14", performedBy = "player" });
-                    GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 142, givenAnswer = answer });
-                }
-            }
-            else
-            {
-
-                if (query.tag == "Q-R2")
-                {
-                    switch (query.name)
-                    {
-                        case "Q1":
-                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 64, givenAnswer = answer });
-                            break;
-
-                        case "Q2":
-                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 69, givenAnswer = answer });
-                            break;
-
-                        case "Q3":
-                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 77, givenAnswer = answer });
-                            break;
-
-                        case "Q4":
-                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 83, givenAnswer = answer });
-                            break;
-
-                        case "Q5":
-                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 86, givenAnswer = answer });
-                            break;
-
-                        case "Q6":
-                            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { componentMonitoringID = 91, givenAnswer = answer });
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-            }
         }
         else
         {
             // notify player success
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 2 });
 
-            GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });
-            GameObjectManager.addComponent<ActionPerformed>(query, new { name = "perform", performedBy = "system" }); // meta
-
-            if (query.tag == "Q-R3")
-            {
-                if(answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.puzzleAnswer))
-                {
-                    if (LoadGameContent.gameContent.virtualPuzzle)
-                        GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct11_1", performedBy = "player" });
-                    else
-                        GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct11_2", performedBy = "player" });
-                }
-                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer))
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct12", performedBy = "player" });
-                }
-                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma12Answer))
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct13", performedBy = "player" });
-                }
-                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer))
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "Correct14", performedBy = "player" });
-                }
-            }
-            else if(query.tag == "Q-R2" && query.name == "Q1")
-            {
-                if(isSelected("Glasses1") && isSelected("Glasses2"))
-                    GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });
-                else
-                    GameObjectManager.addComponent<ActionPerformed>(query, new { overrideName = "orCorrect", performedBy = "player" });
-            }
-
             // set final answer for third room (due to OR options)
             if (query.tag == "Q-R3")
+            {
                 query.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = answer;
+
+                // Prepare correct trace
+                string context = "";
+                if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.puzzleAnswer))
+                    context = LoadGameContent.gameContent.virtualPuzzle ? "VirtualPuzzle" : "PhysicalPuzzle";
+                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer))
+                    context = "Lamp";
+                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma16Answer))
+                    context = "Enigma16";
+                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer))
+                    context = "WhiteBoard";
+                // mark associated enigma ready to solve
+                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "ReadyToSolve_"+context, performedBy = "player" });
+                // propagate information inside Meta (special case for Puzzle, we have to remove Virtual/Physical to avoid to manage or links)
+                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "ReadyToSolve_" + (context.Contains("Puzzle") ? "Puzzle" : context) + "_Meta", performedBy = "system" });
+                // validate associated enigma to this query and disable associated enigma to other queries
+                foreach (GameObject go in f_queriesRoom3)
+                    if (go == query)
+                        GameObjectManager.addComponent<ActionPerformed>(go, new { overrideName = (context.Contains("Puzzle") ? "Puzzle" : context) + "_Solved", performedBy = "player" });
+                    else
+                        GameObjectManager.addComponent<ActionPerformed>(go, new { overrideName = (context.Contains("Puzzle") ? "Puzzle" : context) + "_Locked", performedBy = "player" });
+            }
+
+            GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });
+            GameObjectManager.addComponent<ActionPerformed>(query, new { name = "perform", performedBy = "system" }); // meta
 
             // Toggle UI element (hide input text and button and show answer)
             for (int i = 1; i < query.transform.childCount; i++)

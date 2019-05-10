@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-9914-E4E8A-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma5</text>
+  </name>
+ <page id="g-9914-E4E97-1">
+  <place id="p-9914-E4E9D-2">
+  <name>
+   <text>Glasses1_end_51</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="225" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-9914-E4EAD-3">
+  <name>
+   <text>Glasses1_off_52</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="345" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-9914-E4EB5-4">
+  <name>
+   <text>Glasses1_on_52</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="505" y="80"/>
+   </graphics>
+  </place>
+  <transition id="t-9914-E4EBB-5">
+  <name>
+   <text>Glasses1_perform_51</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="155" y="80"/>
+   </graphics>
+  </transition>
+  <place id="p-9914-E4EBF-6">
+  <name>
+   <text>Glasses1_start_51</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="75" y="80"/>
+   </graphics>
+  </place>
+  <transition id="t-9914-E4EC5-7">
+  <name>
+   <text>Glasses1_turnOff_52</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-9914-E4EC9-8">
+  <name>
+   <text>Glasses1_turnOn_52</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="140"/>
+   </graphics>
+  </transition>
+  <place id="p-9914-E4ED0-9">
+  <name>
+   <text>Glasses2_end_53</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="225" y="240"/>
+   </graphics>
+  </place>
+  <place id="p-9914-E4ED5-10">
+  <name>
+   <text>Glasses2_off_54</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="335" y="240"/>
+   </graphics>
+  </place>
+  <place id="p-9914-E4ED9-11">
+  <name>
+   <text>Glasses2_on_54</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="515" y="230"/>
+   </graphics>
+  </place>
+  <transition id="t-9914-E4EDE-12">
+  <name>
+   <text>Glasses2_perform_53</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="155" y="220"/>
+   </graphics>
+  </transition>
+  <place id="p-9914-E4EE3-13">
+  <name>
+   <text>Glasses2_start_53</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="65" y="240"/>
+   </graphics>
+  </place>
+  <transition id="t-9914-E4EE9-14">
+  <name>
+   <text>Glasses2_turnOff_54</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="200"/>
+   </graphics>
+  </transition>
+  <transition id="t-9914-E4EEE-15">
+  <name>
+   <text>Glasses2_turnOn_54</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="290"/>
+   </graphics>
+  </transition>
+  <place id="p-9914-E4EF3-16">
+  <name>
+   <text>KeyE08_end_55</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="245" y="590"/>
+   </graphics>
+  </place>
+  <place id="p-9914-E4EF9-17">
+  <name>
+   <text>KeyE08_off_56</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="345" y="580"/>
+   </graphics>
+  </place>
+  <place id="p-9914-E4EFF-18">
+  <name>
+   <text>KeyE08_on_56</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="505" y="580"/>
+   </graphics>
+  </place>
+  <transition id="t-9914-E4F6C-19">
+  <name>
+   <text>KeyE08_perform_55</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="165" y="580"/>
+   </graphics>
+  </transition>
+  <place id="p-9914-E4F71-20">
+  <name>
+   <text>KeyE08_start_55</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="85" y="590"/>
+   </graphics>
+  </place>
+  <transition id="t-9914-E4F78-21">
+  <name>
+   <text>KeyE08_turnOn_56</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="630"/>
+   </graphics>
+  </transition>
+  <place id="p-9914-E4F7E-22">
+  <name>
+   <text>Padlock_end_58</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="715" y="500"/>
+   </graphics>
+  </place>
+  <transition id="t-9914-E4F82-23">
+  <name>
+   <text>Padlock_perform_58</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="645" y="490"/>
+   </graphics>
+  </transition>
+  <place id="p-9914-E4F87-24">
+  <name>
+   <text>Padlock_start_58</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="565" y="500"/>
+   </graphics>
+  </place>
+  <place id="p-9914-E4F8C-25">
+  <name>
+   <text>Paper_ActivationCount_59</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="865" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-9914-E4F93-26">
+  <name>
+   <text>Paper_ActivationCount_60</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="855" y="160"/>
+   </graphics>
+  </place>
+  <place id="p-9914-E4F9A-27">
+  <name>
+   <text>Paper_ActivationCount_61</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="845" y="220"/>
+   </graphics>
+  </place>
+  <place id="p-9914-E4F9F-28">
+  <name>
+   <text>Paper_ActivationCount_62</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="845" y="290"/>
+   </graphics>
+  </place>
+  <transition id="t-9914-E4FA3-29">
+  <name>
+   <text>Paper_activate_59</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="745" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-9914-E4FA9-30">
+  <name>
+   <text>Paper_activate_60</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="745" y="150"/>
+   </graphics>
+  </transition>
+  <transition id="t-9914-E4FAF-31">
+  <name>
+   <text>Paper_activate_61</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="745" y="220"/>
+   </graphics>
+  </transition>
+  <transition id="t-9914-E4FB3-32">
+  <name>
+   <text>Paper_activate_62</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="745" y="280"/>
+   </graphics>
+  </transition>
+  <place id="p-9914-E4FB8-33">
+  <name>
+   <text>Q1_Answered_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1245" y="420"/>
+   </graphics>
+  </place>
+  <place id="p-9914-E4FBC-34">
+  <name>
+   <text>Q1_Answering_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="985" y="420"/>
+   </graphics>
+  </place>
+  <transition id="t-9914-E4FC4-35">
+  <name>
+   <text>Q1_Correct_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1125" y="410"/>
+   </graphics>
+  </transition>
+  <place id="p-9914-E500A-36">
+  <name>
+   <text>Satchel_off_57</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="335" y="420"/>
+   </graphics>
+  </place>
+  <place id="p-9914-E500F-37">
+  <name>
+   <text>Satchel_on_57</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="515" y="420"/>
+   </graphics>
+  </place>
+  <transition id="t-9914-E5014-38">
+  <name>
+   <text>Satchel_turnOff_57</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="380"/>
+   </graphics>
+  </transition>
+  <transition id="t-9914-E501A-39">
+  <name>
+   <text>Satchel_turnOn_57</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="480"/>
+   </graphics>
+  </transition>
+  <arc id="e-9914-E5024-40" source="p-9914-E4F9A-27" target="t-9914-E4FC4-35">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E5029-41" source="t-9914-E4EE9-14" target="p-9914-E4ED5-10">
+  </arc>
+  <arc id="e-9914-E502B-42" source="t-9914-E4EEE-15" target="p-9914-E4ED9-11">
+  </arc>
+  <arc id="e-9914-E502D-43" source="p-9914-E4ED5-10" target="t-9914-E4EEE-15">
+  </arc>
+  <arc id="e-9914-E502F-44" source="p-9914-E4ED9-11" target="t-9914-E4EE9-14">
+  </arc>
+  <arc id="e-9914-E5030-45" source="t-9914-E4F78-21" target="p-9914-E4EFF-18">
+  </arc>
+  <arc id="e-9914-E5033-46" source="p-9914-E4ED0-9" target="t-9914-E4EE9-14">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E5035-47" source="p-9914-E4ED0-9" target="t-9914-E4EEE-15">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E5036-48" source="t-9914-E4F82-23" target="p-9914-E4F7E-22">
+  </arc>
+  <arc id="e-9914-E5038-49" source="p-9914-E4F87-24" target="t-9914-E4F82-23">
+  </arc>
+  <arc id="e-9914-E5039-50" source="p-9914-E500F-37" target="t-9914-E4F82-23">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E503B-51" source="p-9914-E4F93-26" target="t-9914-E4FC4-35">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E503F-52" source="p-9914-E4EFF-18" target="t-9914-E4F82-23">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E5041-53" source="t-9914-E4FB3-32" target="p-9914-E4F9F-28">
+  </arc>
+  <arc id="e-9914-E5043-54" source="p-9914-E4EB5-4" target="t-9914-E4FB3-32">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E5048-55" source="p-9914-E4ED9-11" target="t-9914-E4FB3-32">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E5049-56" source="p-9914-E4F7E-22" target="t-9914-E4FB3-32">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E504C-57" source="p-9914-E4EF9-17" target="t-9914-E4F78-21">
+  </arc>
+  <arc id="e-9914-E504F-58" source="p-9914-E500F-37" target="t-9914-E4FB3-32">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E5051-59" source="t-9914-E4FB3-32" target="p-9914-E4F93-26">
+  </arc>
+  <arc id="e-9914-E5054-60" source="t-9914-E4FB3-32" target="p-9914-E4F9A-27">
+  </arc>
+  <arc id="e-9914-E5058-61" source="t-9914-E4FA9-30" target="p-9914-E4F93-26">
+  </arc>
+  <arc id="e-9914-E505A-62" source="p-9914-E4EBF-6" target="t-9914-E4EBB-5">
+  </arc>
+  <arc id="e-9914-E505C-63" source="p-9914-E4EB5-4" target="t-9914-E4FA9-30">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E5062-64" source="p-9914-E4ED5-10" target="t-9914-E4FA9-30">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E5065-65" source="p-9914-E4F7E-22" target="t-9914-E4FA9-30">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E5066-66" source="p-9914-E500F-37" target="t-9914-E4FA9-30">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E5067-67" source="t-9914-E4FA3-29" target="p-9914-E4F8C-25">
+  </arc>
+  <arc id="e-9914-E5068-68" source="p-9914-E4EAD-3" target="t-9914-E4FA3-29">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E5069-69" source="p-9914-E4ED5-10" target="t-9914-E4FA3-29">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E506B-70" source="p-9914-E4F7E-22" target="t-9914-E4FA3-29">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E5092-71" source="p-9914-E500F-37" target="t-9914-E4FA3-29">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E509B-72" source="t-9914-E4FAF-31" target="p-9914-E4F9A-27">
+  </arc>
+  <arc id="e-9914-E509E-73" source="t-9914-E4EDE-12" target="p-9914-E4ED0-9">
+  </arc>
+  <arc id="e-9914-E509F-74" source="p-9914-E4EAD-3" target="t-9914-E4FAF-31">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E50A1-75" source="p-9914-E4ED9-11" target="t-9914-E4FAF-31">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E50A3-76" source="p-9914-E4F7E-22" target="t-9914-E4FAF-31">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E50A5-77" source="p-9914-E500F-37" target="t-9914-E4FAF-31">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E50A6-78" source="t-9914-E4F6C-19" target="p-9914-E4EF3-16">
+  </arc>
+  <arc id="e-9914-E50A9-79" source="p-9914-E4F71-20" target="t-9914-E4F6C-19">
+  </arc>
+  <arc id="e-9914-E50AC-80" source="t-9914-E4EC5-7" target="p-9914-E4EAD-3">
+  </arc>
+  <arc id="e-9914-E50B0-81" source="t-9914-E4EC9-8" target="p-9914-E4EB5-4">
+  </arc>
+  <arc id="e-9914-E50B1-82" source="p-9914-E4EAD-3" target="t-9914-E4EC9-8">
+  </arc>
+  <arc id="e-9914-E50B2-83" source="p-9914-E4EB5-4" target="t-9914-E4EC5-7">
+  </arc>
+  <arc id="e-9914-E50B3-84" source="p-9914-E4EE3-13" target="t-9914-E4EDE-12">
+  </arc>
+  <arc id="e-9914-E50B4-85" source="p-9914-E4E9D-2" target="t-9914-E4EC5-7">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E50B5-86" source="p-9914-E4E9D-2" target="t-9914-E4EC9-8">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E50B6-87" source="p-9914-E4FBC-34" target="t-9914-E4FC4-35">
+  </arc>
+  <arc id="e-9914-E50B8-88" source="t-9914-E4FC4-35" target="p-9914-E4FB8-33">
+  </arc>
+  <arc id="e-9914-E50B9-89" source="t-9914-E4EBB-5" target="p-9914-E4E9D-2">
+  </arc>
+  <arc id="e-9914-E50BB-90" source="p-9914-E4EF3-16" target="t-9914-E4F78-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-9914-E50C3-91" source="t-9914-E5014-38" target="p-9914-E500A-36">
+  </arc>
+  <arc id="e-9914-E50C5-92" source="t-9914-E501A-39" target="p-9914-E500F-37">
+  </arc>
+  <arc id="e-9914-E50C6-93" source="p-9914-E500A-36" target="t-9914-E501A-39">
+  </arc>
+  <arc id="e-9914-E50C8-94" source="p-9914-E500F-37" target="t-9914-E5014-38">
+  </arc>
+ </page>
+ </net>
+</pnml>

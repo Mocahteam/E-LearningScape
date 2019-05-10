@@ -51,7 +51,7 @@ public class LoadGameContent : FSystem {
     private Family f_puzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)));
     private Family f_puzzlesFragment = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new AllOfComponents(typeof(DreamFragment)));
 
-    private Family f_lampPictures = FamilyManager.getFamily(new AllOfComponents(typeof(E12_Symbol)));
+    private Family f_lampPictures = FamilyManager.getFamily(new AllOfComponents(typeof(Lamp_Symbol)));
 
     private Family f_boardUnremovable = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
     private Family f_boardRemovable = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
@@ -59,6 +59,8 @@ public class LoadGameContent : FSystem {
     private Family f_gameHints = FamilyManager.getFamily(new AllOfComponents(typeof(GameHints)));
     private Family f_internalGameHints = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameHints)));
     private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
+
+    private Family f_inventoryElements = FamilyManager.getFamily(new AllOfComponents(typeof(Collected)));
 
 
     public FSystem instance;
@@ -197,6 +199,35 @@ public class LoadGameContent : FSystem {
         }
         #endregion
 
+        #region InventoryTexts
+        Dictionary<string, List<string>> inventoryTexts = new Dictionary<string, List<string>>()
+        {
+            {"ScrollIntro", gameContent.inventoryScrollIntro},
+            {"KeyBallBox", gameContent.inventoryKeyBallBox },
+            {"Wire", gameContent.inventoryWire },
+            {"KeySatchel", gameContent.inventoryKeySatchel },
+            {"Scrolls", gameContent.inventoryScrolls },
+            {"Glasses1", gameContent.inventoryGlasses1 },
+            {"Glasses2", gameContent.inventoryGlasses2 },
+            {"Mirror", gameContent.inventoryMirror },
+            {"Lamp", gameContent.inventoryLamp },
+            {"Puzzle", gameContent.inventoryPuzzle }
+        };
+        foreach (GameObject inventoryGo in f_inventoryElements)
+        {
+            if (inventoryTexts.ContainsKey(inventoryGo.name)){
+                Collected coll = inventoryGo.GetComponent<Collected>();
+                coll.itemName = inventoryTexts[inventoryGo.name][0];
+                coll.description = inventoryTexts[inventoryGo.name][1];
+                coll.info = inventoryTexts[inventoryGo.name][2];
+            }
+            else
+            {
+                Debug.LogWarning("No content found in config file for " + inventoryGo.name + " GameObject");
+            }
+        }
+        #endregion
+
         #region Room 1
         int nbQueries = f_queriesR1.Count;
         for (int i = 0; i < nbQueries; i++)
@@ -213,7 +244,7 @@ public class LoadGameContent : FSystem {
                     break;
 
                 case "Q3":
-                    loadIARQuestion(forGO, gameContent.greenFragmentsQuestion, gameContent.greenFragmentAnswerFeedback, gameContent.greenFragmentAnswerFeedbackDesc, gameContent.greenFragmentPlaceHolder, gameContent.greenFragmentAnswer);
+                    loadIARQuestion(forGO, gameContent.crouchQuestion, gameContent.crouchAnswerFeedback, gameContent.crouchAnswerFeedbackDesc, gameContent.crouchPlaceHolder, gameContent.crouchAnswer);
                     break;
 
                 default:
@@ -231,7 +262,7 @@ public class LoadGameContent : FSystem {
         // init question text and position
         TextMeshProUGUI textMP = f_login.First().transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
         textMP.text = gameContent.mastermindQuestion;
-        textMP.transform.localPosition = new Vector3(textMP.transform.position.x, gameContent.mastermindQuestionYPos, textMP.transform.position.z);
+        textMP.transform.localPosition = new Vector3(textMP.transform.localPosition.x, gameContent.mastermindQuestionYPos, textMP.transform.localPosition.z);
         LoginManager.passwordSolution = gameContent.mastermindAnswer;
 
 
@@ -391,7 +422,7 @@ public class LoadGameContent : FSystem {
             tmpDF = f_dreamFragments.getAt(i).GetComponent<DreamFragment>();
             if (tmpDF.type == 1)
             {
-                tmpDF.itemName = gameContent.greenFragmentsWords[nbGreenFragments];
+                tmpDF.itemName = gameContent.crouchWords[nbGreenFragments];
                 nbGreenFragments++;
                 if (nbGreenFragments > 5)
                     break;
@@ -458,7 +489,7 @@ public class LoadGameContent : FSystem {
                     break;
 
                 case "Q2":
-                    loadIARQuestion(forGO, gameContent.enigma6Question, gameContent.enigma6AnswerFeedback, gameContent.enigma6AnswerFeedbackDesc, gameContent.enigma6PlaceHolder, gameContent.enigma6Answer);
+                    loadIARQuestion(forGO, gameContent.enigma08Question, gameContent.enigma08AnswerFeedback, gameContent.enigma08AnswerFeedbackDesc, gameContent.enigma08PlaceHolder, gameContent.enigma08Answer);
                     break;
 
                 case "Q3":
@@ -470,11 +501,11 @@ public class LoadGameContent : FSystem {
                     break;
 
                 case "Q5":
-                    loadIARQuestion(forGO, gameContent.enigma9Question, gameContent.enigma9AnswerFeedback, gameContent.enigma9AnswerFeedbackDesc, gameContent.enigma9PlaceHolder, gameContent.enigma9Answer);
+                    loadIARQuestion(forGO, gameContent.enigma11Question, gameContent.enigma11AnswerFeedback, gameContent.enigma11AnswerFeedbackDesc, gameContent.enigma11PlaceHolder, gameContent.enigma11Answer);
                     break;
 
                 case "Q6":
-                    loadIARQuestion(forGO, gameContent.enigma10Question, gameContent.enigma10AnswerFeedback, gameContent.enigma10AnswerFeedbackDesc, gameContent.enigma10PlaceHolder, gameContent.enigma10Answer);
+                    loadIARQuestion(forGO, gameContent.enigma12Question, gameContent.enigma12AnswerFeedback, gameContent.enigma12AnswerFeedbackDesc, gameContent.enigma12PlaceHolder, gameContent.enigma12Answer);
                     break;
 
                 default:
@@ -493,33 +524,28 @@ public class LoadGameContent : FSystem {
                 tmpTex = new Texture2D(1, 1);
                 tmpFileData = File.ReadAllBytes(gameContent.glassesPicturesPath[i]);
                 if (tmpTex.LoadImage(tmpFileData))
-                {
                     mySprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
-                }
             }
             switch (i)
             {
                 case 0:
-                    bi.image1 = mySprite;
+                    bi.image0 = mySprite;
                     break;
 
                 case 1:
-                    bi.image2 = mySprite;
+                    bi.image1 = mySprite;
                     break;
 
                 case 2:
-                    bi.image3 = mySprite;
-                    break;
-
-                case 3:
-                    bi.image4 = mySprite;
+                    bi.image2 = mySprite;
                     break;
 
                 default:
+                    bi.image3 = mySprite;
                     break;
             }
         }
-        bi.gameObject.GetComponent<Image>().sprite = bi.image1;
+        bi.gameObject.GetComponent<Image>().sprite = bi.image0;
 
         //Scrolls
         int nbScroll = gameContent.scrollsWords.Length < f_scrollUI.Count ? gameContent.scrollsWords.Length : f_scrollUI.Count;
@@ -557,7 +583,7 @@ public class LoadGameContent : FSystem {
             qs = f_queriesR3.getAt(i).GetComponent<QuerySolution>();
             qs.orSolutions = new List<string>();
             qs.orSolutions.Add(StringToAnswer(gameContent.puzzleAnswer));
-            qs.orSolutions.Add(StringToAnswer(gameContent.enigma12Answer));
+            qs.orSolutions.Add(StringToAnswer(gameContent.enigma16Answer));
             qs.orSolutions.Add(StringToAnswer(gameContent.lampAnswer));
             qs.orSolutions.Add(StringToAnswer(gameContent.whiteBoardAnswer));
         }

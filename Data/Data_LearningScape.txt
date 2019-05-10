@@ -31,6 +31,57 @@
 	"additionalCredit": [],
     "scoreText": "Vous avez mis: ",
 	
+	"inventoryScrollIntro": [
+		"Parchemin",
+		"Il y a des inscriptions inscrites à l’encre sur ce parchemin. Le message semble pour autant incomplet. Ces informations pourraient être utiles pour la suite.",
+		"Cliquez sur le parchemin pour l'ouvrir/le refermer"
+	],
+	"inventoryKeyBallBox": [
+		"Clé",
+		"C’est une clé, sans aucune distinction particulière. Elle ouvre certainement une porte ou un cadenas...",
+		"Cliquez sur la clé pour l'activer/la désactiver"
+	],
+	"inventoryWire": [
+		"Corde",
+		"Cette corde n’est pas très longue mais elle semble assez solide et en bon état. Elle permet sans doute de lier des éléments ensembles.",
+		"Cliquez sur la corde pour l'activer/la désactiver"
+	],
+	"inventoryKeySatchel": [
+		"Clé",
+		"Cette clé a été trouvée dans le vase se renversant. Elle ouvre certainement une porte ou un cadenas...",
+		"Cliquez sur la clé pour l'activer/la désactiver"
+	],
+	"inventoryScrolls": [
+		"Parchemins",
+		"Il y a des inscriptions inscrites à l’encre sur ce parchemin. Ces informations pourraient être utiles pour la suite.",
+		"Cliquez sur le parchemin pour l'ouvrir/le refermer"
+	],
+	"inventoryGlasses1": [
+		"Lunette Filtrante",
+		"La branche droite d'une paire de lunette ? Il doit certainement manquer l’autre moitié... La lentille est tintée en rouge.",
+		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
+	],
+	"inventoryGlasses2": [
+		"Lunette Filtrante",
+		"La branche gauche d'une paire de lunette ? Il doit certainement manquer l’autre moitié... La lentille est tintée en jaune.",
+		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
+	],
+	"inventoryMirror": [
+		"Mirroir",
+		"Un miroir cylindrique constitué d'une seule pièce d'aluminium poli. Le reflet est d'une grande qualité.",
+		"Cliquez sur le mirroir pour l'activer/le désactiver"
+	],
+	"inventoryLamp": [
+		"Lumière noire",
+		"Cette lampe dispose d’une ampoule particulière à vapeur de mercure constituée d'un revêtement particulier: le verre de Wood. Ce verre possède la particularité d'être riche en oxydes de nickel et de fer, ne laissant passer que les rayons UltraViolet : la lumière noire.",
+		"Cliquez sur la lampe pour l'allumer/l'éteindre"
+	],
+	"inventoryPuzzle": [
+		"Pièces de puzzle",
+		"Se sont des pièces d'un puzzle, tout simplement.",
+		"Cliquez pour manipuler les pièces"
+	],
+	
     "ballBoxQuestion": "Que faire pour rendre actifs mes étudiants ?",
     "ballBoxPlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
 	"ballBoxAnswerFeedback": "1 - 2 - 8",
@@ -89,14 +140,14 @@
         "8"
     ],
 	
-    "greenFragmentsQuestion": "Comment favoriser mon innovation pédagogique ?",
-    "greenFragmentPlaceHolder": "     Tapez votre réponse ici (10 chiffres)...",
-    "greenFragmentAnswer": [
+    "crouchQuestion": "Comment favoriser mon innovation pédagogique ?",
+    "crouchPlaceHolder": "     Tapez votre réponse ici (10 chiffres)...",
+    "crouchAnswer": [
         "1023810149"
     ],
-    "greenFragmentAnswerFeedback": "Il faut savoir changer de posture",
-    "greenFragmentAnswerFeedbackDesc": "",
-    "greenFragmentsWords": [
+    "crouchAnswerFeedback": "Il faut savoir changer de posture",
+    "crouchAnswerFeedbackDesc": "",
+    "crouchWords": [
         "il",
         "faut",
         "savoir",
@@ -129,20 +180,20 @@
     "glassesAnswerFeedback": "Contrat Pédagogique",
     "glassesAnswerFeedbackDesc": "",
     "glassesPicturesPath": [
-        "Data/contrat01.png",
-        "Data/contrat02.png",
-        "Data/contrat03.png",
-        "Data/contrat04.png"
+        "Data/glasses01.png",
+        "Data/glasses02.png",
+        "Data/glasses03.png",
+        "Data/glasses04.png"
     ],
 	
-    "enigma6Question": "A quoi Berthiaume nous conseille-t-il de faire attention ?",
-    "enigma6PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
-    "enigma6Answer": [
+    "enigma08Question": "A quoi Berthiaume nous conseille-t-il de faire attention ?",
+    "enigma08PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+    "enigma08Answer": [
         "9",
         "14"
     ],
-    "enigma6AnswerFeedback": "9 - 14",
-    "enigma6AnswerFeedbackDesc": "Feedbacks constructifs",
+    "enigma08AnswerFeedback": "9 - 14",
+    "enigma08AnswerFeedbackDesc": "Feedbacks constructifs",
     
 	"scrollsQuestion": "Cet acronyme anglais décrit des objectifs clairs",
     "scrollsPlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
@@ -168,40 +219,40 @@
 	"mirrorAnswerFeedbackDesc": "",
     "mirrorPicturePath": "Data/Plank.png",
 	
-    "enigma9Question": "L'utilisation d'une grille critériée est la solution",
-    "enigma9PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
-    "enigma9Answer": [
+    "enigma11Question": "L'utilisation d'une grille critériée est la solution",
+    "enigma11PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+    "enigma11Answer": [
         "3",
         "1",
         "2"
     ],
-	"enigma9AnswerFeedback": "3 - 1 - 2",
-	"enigma9AnswerFeedbackDesc": "",
+	"enigma11AnswerFeedback": "3 - 1 - 2",
+	"enigma11AnswerFeedbackDesc": "",
 	
-    "enigma10Question": "Seul, vous ne sortirez pas de ce labyrinthe",
-    "enigma10PlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
-    "enigma10Answer": [
+    "enigma12Question": "Seul, vous ne sortirez pas de ce labyrinthe",
+    "enigma12PlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
+    "enigma12Answer": [
         "Collaboration"
     ],
-	"enigma10AnswerFeedback": "Collaboration",
-	"enigma10AnswerFeedbackDesc": "",
+	"enigma12AnswerFeedback": "Collaboration",
+	"enigma12AnswerFeedbackDesc": "",
 	
     "lockRoom2Password": 703,
 
     "puzzleAnswer": "planification",
     "puzzlePicturePath": "Data/Puzzle_Complet.png",
 	
-    "enigma12Answer": "Contraintes",
-	
     "lampAnswer": "Ressources",
     "lampPicturesPath": [
-        "Data/E12_C.png",
-        "Data/E12_S.png",
-        "Data/E12_O.png",
-        "Data/E12_E.png",
-        "Data/E12_U.png",
-        "Data/E12_R.png"
+        "Data/lamp01.png",
+        "Data/lamp02.png",
+        "Data/lamp03.png",
+        "Data/lamp04.png",
+        "Data/lamp05.png",
+        "Data/lamp06.png"
     ],
+	
+    "enigma16Answer": "Contraintes",
 	
     "whiteBoardAnswer": "Contenu",
     "whiteBoardWords": [

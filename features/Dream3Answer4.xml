@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Q4_choice1_163" label="WhiteBoard_Solved Q4" system="False" end="False" />
+  <transition id="Q4_choice2_163" label="WhiteBoard_Locked Q4" system="False" end="False" />
+  <transition id="Q4_choice1_162" label="Enigma12_Solved Q4" system="False" end="False" />
+  <transition id="Q4_choice2_162" label="Enigma12_Locked Q4" system="False" end="False" />
+  <transition id="Q4_choice1_161" label="Lamp_Solved Q4" system="False" end="False" />
+  <transition id="Q4_choice2_161" label="Lamp_Locked Q4" system="False" end="False" />
+  <transition id="Q4_choice1_160" label="Puzzle_Solved Q4" system="False" end="False" />
+  <transition id="Q4_choice2_160" label="Puzzle_Locked Q4" system="False" end="False" />
+  <transition id="Q4_Correct_150" label="Correct Q4" system="False" end="True" />
+  <transition id="Q4_Wrong_150" label="Wrong Q4" system="False" end="False" />
+</transitions>

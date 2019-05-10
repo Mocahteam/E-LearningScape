@@ -1,24 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-31D8-790DD-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-8818-4BFBC-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
   <name>
    <text>GearsEnigma</text>
   </name>
- <page id="g-31D8-790E6-1">
-  <place id="p-31D8-790E9-2">
+ <page id="g-8818-4BFCD-1">
+  <place id="p-8818-4BFD2-2">
   <name>
-   <text>GearsEnigma_Answered_151</text>
+   <text>Gears_Answered_151</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="350" y="110"/>
+    <position x="325" y="60"/>
    </graphics>
   </place>
-  <place id="p-31D8-790F5-3">
+  <place id="p-8818-4BFE4-3">
   <name>
-   <text>GearsEnigma_Answering_151</text>
+   <text>Gears_Answering_151</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -27,51 +26,47 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="100" y="110"/>
+    <position x="75" y="60"/>
    </graphics>
   </place>
-  <transition id="t-31D8-790FA-4">
+  <transition id="t-8818-4BFF7-4">
   <name>
-   <text>GearsEnigma_Correct_151</text>
+   <text>Gears_Correct_151</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="230" y="50"/>
+    <position x="205" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-31D8-790FE-5">
+  <transition id="t-8818-4C000-5">
   <name>
-   <text>GearsEnigma_Wrong_151</text>
+   <text>Gears_Wrong_151</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="230" y="170"/>
+    <position x="205" y="140"/>
    </graphics>
   </transition>
-  <place id="p-31D8-79100-6">
+  <place id="p-8818-4C003-6">
   <name>
-   <text>GearsEnigma_place_148</text>
+   <text>Gears_locker_151</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="100" y="195"/>
+    <position x="75" y="160"/>
    </graphics>
   </place>
-  <arc id="e-31D8-79107-7" source="p-31D8-79100-6" target="t-31D8-790FE-5">
-   <type value="test"/>
+  <arc id="e-8818-4C014-7" source="p-8818-4C003-6" target="t-8818-4C000-5">
   </arc>
-  <arc id="e-31D8-7910A-8" source="t-31D8-790FA-4" target="p-31D8-790E9-2">
+  <arc id="e-8818-4C017-8" source="t-8818-4BFF7-4" target="p-8818-4BFD2-2">
   </arc>
-  <arc id="e-31D8-7910B-9" source="p-31D8-790F5-3" target="t-31D8-790FA-4">
-  </arc>
-  <arc id="e-31D8-7910C-10" source="p-31D8-790F5-3" target="t-31D8-790FE-5">
-   <type value="test"/>
+  <arc id="e-8818-4C018-9" source="p-8818-4BFE4-3" target="t-8818-4BFF7-4">
   </arc>
  </page>
  </net>

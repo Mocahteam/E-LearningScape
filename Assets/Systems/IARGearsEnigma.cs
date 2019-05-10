@@ -27,7 +27,7 @@ public class IARGearsEnigma : FSystem
     private bool unlockLogin = false;
     private bool rotateGear;
 
-    private GameObject gearsEnigma;
+    private GameObject gears;
     private GameObject tmpGO;
     private GameObject gearDragged;
     private GameObject transparentGear;
@@ -52,9 +52,9 @@ public class IARGearsEnigma : FSystem
             f_uiEffects.addEntryCallback(onUiEffectFinished);
             f_iarBackground.addExitCallback(onIARClosed);
 
-            gearsEnigma = f_gearsSet.First();
-            question = gearsEnigma.transform.GetChild(0).gameObject; // first child is the question text
-            transparentGear = gearsEnigma.transform.GetChild(7).gameObject; // eight child is the transparent gear
+            gears = f_gearsSet.First();
+            question = gears.transform.GetChild(0).gameObject; // first child is the question text
+            transparentGear = gears.transform.GetChild(7).gameObject; // eight child is the transparent gear
 
             int nbCanvas = f_canvas.Count;
             for(int i = 0; i < nbCanvas; i++)
@@ -82,9 +82,9 @@ public class IARGearsEnigma : FSystem
         if (switchToGears)
         {
             // Show gears
-            GameObjectManager.setGameObjectState(gearsEnigma, true);
+            GameObjectManager.setGameObjectState(gears, true);
             // Hide queries
-            GameObjectManager.setGameObjectState(gearsEnigma.GetComponent<LinkedWith>().link, false);
+            GameObjectManager.setGameObjectState(gears.GetComponent<LinkedWith>().link, false);
 
             switchToGears = false;
         }
@@ -107,7 +107,7 @@ public class IARGearsEnigma : FSystem
     protected override void onProcess(int familiesUpdateCount)
     {
         //if the player is playing enigma04 and didn't answer
-        if (gearsEnigma.activeSelf)
+        if (gears.activeSelf)
         {
             if (gearDragged == null) //if no gear is dragged
             {
@@ -139,23 +139,12 @@ public class IARGearsEnigma : FSystem
                         gearDragged.transform.localPosition = Vector3.zero; //place the gear at the center
                         if (gearDragged.GetComponent<Gear>().isSolution) //if answer is correct
                         {
-                            GameObjectManager.addComponent<ActionPerformed>(gearsEnigma, new { name = "Correct", performedBy = "player" });
-                            GameObjectManager.addComponent<ActionPerformed>(gearsEnigma, new { name = "perform", performedBy = "system" });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma, new
-                            {
-                                verb = "answered",
-                                objectType = "question",
-                                objectName = gearsEnigma.name,
-                                result = true,
-                                success = 1,
-                                response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text
-                            });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma.transform.parent.gameObject, new
-                            {
-                                verb = "completed",
-                                objectType = "menu",
-                                objectName = gearsEnigma.transform.parent.gameObject.name
-                            });
+                            GameObjectManager.addComponent<ActionPerformed>(gears, new { name = "Correct", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformed>(gears, new { name = "perform", performedBy = "system" });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(gears, new { verb = "answered", objectType = "question",
+                                objectName = gears.name, result = true, success = 1, response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(gears.transform.parent.gameObject, new { verb = "completed",
+                                objectType = "menu", objectName = gears.transform.parent.gameObject.name });
 
                             //start audio and animation for "Right answer"
 
@@ -169,12 +158,12 @@ public class IARGearsEnigma : FSystem
                         }
                         else //if answer is wrong
                         {
-                            GameObjectManager.addComponent<ActionPerformed>(gearsEnigma, new { name = "Wrong", performedBy = "player" });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(gearsEnigma, new
+                            GameObjectManager.addComponent<ActionPerformed>(gears, new { name = "Wrong", performedBy = "player" });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(gears, new
                             {
                                 verb = "answered",
                                 objectType = "question",
-                                objectName = gearsEnigma.name,
+                                objectName = gears.name,
                                 result = true,
                                 success = -1,
                                 response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text
@@ -184,7 +173,7 @@ public class IARGearsEnigma : FSystem
                             //start audio and animation for "Wrong answer"
                             GameObjectManager.addComponent<PlayUIEffect>(gearDragged, new { effectCode = 1 });
 
-                            GameObjectManager.addComponent<WrongAnswerInfo>(gearsEnigma, new { componentMonitoringID = 151, givenAnswer = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text });
+                            GameObjectManager.addComponent<WrongAnswerInfo>(gears, new { givenAnswer = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text });
                             gearDragged.transform.localPosition = gearDragged.GetComponent<Gear>().initialPosition; //set gear position to initial position
                         }
                         gearDragged = null; //initial value

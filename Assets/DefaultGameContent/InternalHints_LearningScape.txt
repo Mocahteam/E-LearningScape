@@ -341,7 +341,7 @@
     "fragment1.65": [
       "Il y a un fragment de rêve près du sac"
     ],
-    "questionEnigma6.32": [
+    "questionEnigma08.32": [
       "Les fragments de rêve 1, 5 et 8 semblent être liés"
     ],
     "Scroll1.71": [
@@ -377,7 +377,7 @@
     "fragment2.84": [
       "Il y a un fragment de rêve sur l'arbre"
     ],
-    "questinoEnigma9.86": [
+    "questinoEnigma11.86": [
       "Le fragment de rêve 2 semble suffir pour répondre à une question"
     ],
     "fragment3.87": [
@@ -389,7 +389,7 @@
     "fragment12.89": [
       "Je vois des fragments de rêve sur l'arche à l'entrée"
     ],
-    "questionEnigma10.91": [
+    "questionEnigma12.91": [
       "On dirait que les fragments 3, 11 et 12 doivent être utilisés ensemble"
     ]
   },
