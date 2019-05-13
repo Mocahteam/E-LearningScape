@@ -14,7 +14,7 @@ public class AccessibilitySystem : FSystem {
     private Family needUpdateFontOutlineWidth_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontOutline)));
     private Family countourSlider_f = FamilyManager.getFamily(new AllOfComponents(typeof(Slider)), new AnyOfTags("TMP_Contour"));
 
-    private Family UIColorAlpha_f = FamilyManager.getFamily(new AnyOfTags("UI_colorAlpha", "DreamFragmentUI"), new AllOfComponents(typeof(Image)));
+    private Family UIColorAlpha_f = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(RawImage)));
     private Family needUpdateColorAlpha_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateOpacity)));
 
     //creation de famille qui recupere tous les components type Text; TextMeshPro et TextMeshProUGUI
@@ -62,8 +62,8 @@ public class AccessibilitySystem : FSystem {
         UpdateOpacity uo = go.GetComponent<UpdateOpacity>();
         foreach (GameObject alpha in UIColorAlpha_f)
         {
-            Image ImageAlpha = alpha.GetComponent<Image>();
-            ImageAlpha.color = new Color(ImageAlpha.color.r, ImageAlpha.color.g, ImageAlpha.color.b, uo.newColorAlpha);
+            RawImage IARalpha = alpha.GetComponent<RawImage>();
+            IARalpha.color = new Color(IARalpha.color.r, IARalpha.color.g, IARalpha.color.b, uo.newColorAlpha);
         }
         GameObjectManager.removeComponent<UpdateOpacity>(go);
     }

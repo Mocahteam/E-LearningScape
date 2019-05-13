@@ -117,7 +117,7 @@ public class IARNewItemAvailable : FSystem {
             }
 			GameObject HUD_A = warn.transform.parent.gameObject;
 			HUD_A.GetComponent<Animator> ().enabled = false;
-			HUD_A.transform.position = new Vector3 (HUD_A.transform.position.x, 46, HUD_A.transform.position.z);
+			HUD_A.transform.position = new Vector3 (HUD_A.transform.position.x, 50.0f, HUD_A.transform.position.z);
 
 
         }

@@ -20,7 +20,7 @@ MonoBehaviour:
     PointSize: 98
     Scale: 1
     CharacterCount: 232
-    LineHeight: 112.6875
+    LineHeight: 135
     Baseline: 0
     Ascender: 88.6875
     CapHeight: 70.18749
@@ -2233,7 +2233,7 @@ Material:
     - _BumpOutline: 0
     - _ColorMask: 15
     - _Diffuse: 0.5
-    - _FaceDilate: 0
+    - _FaceDilate: 0.120634094
     - _FaceUVSpeedX: 0
     - _FaceUVSpeedY: 0
     - _GlowInner: 0.05
@@ -2251,8 +2251,8 @@ Material:
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 0.8333333
-    - _ScaleRatioB: 0.6770833
-    - _ScaleRatioC: 0.6770833
+    - _ScaleRatioB: 0.57655495
+    - _ScaleRatioC: 0.57655495
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
