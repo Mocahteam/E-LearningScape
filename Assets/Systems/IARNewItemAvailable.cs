@@ -110,14 +110,14 @@ public class IARNewItemAvailable : FSystem {
         else
         {
 			GameObject warn = f_inventoryWarning.First ();
-			if (!warningNewItem)
+            GameObject HUD_A = warn.transform.parent.gameObject;
+            if (!warningNewItem)
             {
 				GameObjectManager.setGameObjectState(warn, false);
                 warningNewItem = true;
+                HUD_A.transform.position = new Vector3(HUD_A.transform.position.x, 50.0f, HUD_A.transform.position.z);
             }
-			GameObject HUD_A = warn.transform.parent.gameObject;
-			HUD_A.GetComponent<Animator> ().enabled = false;
-			HUD_A.transform.position = new Vector3 (HUD_A.transform.position.x, 50.0f, HUD_A.transform.position.z);
+            HUD_A.GetComponent<Animator>().enabled = false;
 
 
         }
