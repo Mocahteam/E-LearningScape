@@ -20,7 +20,7 @@ MonoBehaviour:
     PointSize: 98
     Scale: 1
     CharacterCount: 232
-    LineHeight: 135
+    LineHeight: 145
     Baseline: 0
     Ascender: 88.6875
     CapHeight: 70.18749
@@ -28,7 +28,7 @@ MonoBehaviour:
     CenterLine: 0
     SuperscriptOffset: 88.6875
     SubscriptOffset: -13.972656
-    SubSize: 0.5
+    SubSize: 0.9
     Underline: -13.972656
     UnderlineThickness: 7.1777344
     strikethrough: 24.704546
@@ -2179,9 +2179,9 @@ MonoBehaviour:
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
   normalStyle: 0
-  normalSpacingOffset: 0
+  normalSpacingOffset: 5
   boldStyle: 0.75
-  boldSpacing: 7
+  boldSpacing: 17.67
   italicStyle: 35
   tabSize: 10
 --- !u!21 &21857587001916142
@@ -2233,7 +2233,7 @@ Material:
     - _BumpOutline: 0
     - _ColorMask: 15
     - _Diffuse: 0.5
-    - _FaceDilate: 0.120634094
+    - _FaceDilate: 0.2
     - _FaceUVSpeedX: 0
     - _FaceUVSpeedY: 0
     - _GlowInner: 0.05
@@ -2247,12 +2247,12 @@ Material:
     - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
-    - _OutlineWidth: 0
+    - _OutlineWidth: 0.2
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 0.8333333
-    - _ScaleRatioB: 0.57655495
-    - _ScaleRatioC: 0.57655495
+    - _ScaleRatioB: 0.5104167
+    - _ScaleRatioC: 0.5104167
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0

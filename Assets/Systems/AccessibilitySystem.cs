@@ -11,8 +11,8 @@ public class AccessibilitySystem : FSystem {
 
     
     private Family needUpdateFontSize_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontSize)));
-    private Family needUpdateFontOutlineWidth_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontOutline)));
-    private Family countourSlider_f = FamilyManager.getFamily(new AllOfComponents(typeof(Slider)), new AnyOfTags("TMP_Contour"));
+    //private Family needUpdateFontOutlineWidth_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontOutline)));
+    //private Family countourSlider_f = FamilyManager.getFamily(new AllOfComponents(typeof(Slider)), new AnyOfTags("TMP_Contour"));
 
     private Family UIColorAlpha_f = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(RawImage)));
     private Family needUpdateColorAlpha_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateOpacity)));
@@ -20,7 +20,7 @@ public class AccessibilitySystem : FSystem {
     //creation de famille qui recupere tous les components type Text; TextMeshPro et TextMeshProUGUI
     private Family text_f = FamilyManager.getFamily(new AnyOfComponents (typeof(TextMeshPro), typeof(TextMeshProUGUI)));
     private Family textWithMax_f = FamilyManager.getFamily(new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)), new AllOfComponents(typeof(MaxFontSize)));
-    private Family textContour_f = FamilyManager.getFamily(new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)), new NoneOfComponents(typeof(noFontWidth)), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    //private Family textContour_f = FamilyManager.getFamily(new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)), new NoneOfComponents(typeof(noFontWidth)), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private Family needUpdateAnimation_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateAnimation), typeof(Accessibility_settings)));
     private Family AnimatedObject_f = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites)), new NoneOfTags("PlankE09", "InventoryElements", "UIEffect", "LockArrow"), new NoneOfComponents(typeof(Button)));
@@ -37,8 +37,8 @@ public class AccessibilitySystem : FSystem {
         {
             needUpdateFont_f.addEntryCallback(onNeedUpdateFont); //Ecouteur qui regarde quand un nouvel element rentre dans la famille et dans ce cas appel la méthode onNeedUpdate
             needUpdateFontSize_f.addEntryCallback(onNeedUpdateFontSize); //A chaque fois qu'on touche à la sliderBar taille police, on est rentré dans la famille needUpdateFontSize_f
-            needUpdateFontOutlineWidth_f.addEntryCallback(onNeedUpdateFontOutlineWidth);
-            textContour_f.addEntryCallback(onNewTextMeshProEnabled);
+            //needUpdateFontOutlineWidth_f.addEntryCallback(onNeedUpdateFontOutlineWidth);
+            //textContour_f.addEntryCallback(onNewTextMeshProEnabled);
             needUpdateColorAlpha_f.addEntryCallback(onNeedUpdateAlpha);
             needUpdateAnimation_f.addEntryCallback(onNeedUpdateAnimation);
 
@@ -70,7 +70,7 @@ public class AccessibilitySystem : FSystem {
 
     // Script pour modifier l'épaisseur contour des text pour chaque nouveau TMP s'activant (voir commentaire fonction "onNeedUpdateFontOutlineWidth") pour gérer le cas des TMPGUI
     // non actifs au moment où le slider est déplacé
-    private void onNewTextMeshProEnabled(GameObject go)
+    /*private void onNewTextMeshProEnabled(GameObject go)
     {
         Slider slider = countourSlider_f.First().GetComponent<Slider>();
         TMP_Text thickness = go.GetComponent<TMP_Text>();
@@ -93,7 +93,7 @@ public class AccessibilitySystem : FSystem {
             thickness.fontSharedMaterial.SetFloat(ShaderUtilities.ID_FaceDilate, ufo.newWidthContour);
         }
         GameObjectManager.removeComponent<UpdateFontOutline>(go);
-    }
+    }*/
 
     //Script pour modifier la taille de la police 
     private void onNeedUpdateFontSize (GameObject go)
