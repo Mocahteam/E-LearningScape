@@ -4,13 +4,12 @@ using UnityEngine.UI;
 using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine.EventSystems;
 
 public class IARTabNavigation : FSystem {
 
     // Manage base IAR integration (Open/Close + tab switching)
 
-    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button), typeof(navigationKeybord)));
+    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
     private Family f_fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)));
     private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
@@ -82,13 +81,8 @@ public class IARTabNavigation : FSystem {
         else if (!iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape)))
         {
             if (Input.GetKeyDown(KeyCode.A))
-            {
                 openIar(0); // Open IAR on the first tab
-                //Try to find the first element in IAR tab, highlighted it and navigate with arrow keyboard
-                /*GameObjectManager.setGameObjectState(f_tabs.First().GetComponent<navigationKeybord>().panelPopup, true);
-                f_tabs.First().GetComponent<navigationKeybord>().es.SetSelectedGameObject(f_tabs.First().GetComponent<navigationKeybord>().bouton1);
-                f_tabs.First().GetComponent<navigationKeybord>().es.UpdateModules();*/
-            }
+               
             else if (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause)
                 openIar(f_tabs.Count - 2); // Open IAR on the second last tab
             else
