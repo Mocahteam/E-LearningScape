@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class IARTabNavigation : FSystem {
 
@@ -83,10 +84,10 @@ public class IARTabNavigation : FSystem {
             if (Input.GetKeyDown(KeyCode.A))
             {
                 openIar(0); // Open IAR on the first tab
-                //Try find the first element in IAR tab, highlighted it and navigate with arrow keyboard
-                GameObjectManager.setGameObjectState(f_tabs.First().GetComponent<navigationKeybord>().panelPopup, true);
+                //Try to find the first element in IAR tab, highlighted it and navigate with arrow keyboard
+                /*GameObjectManager.setGameObjectState(f_tabs.First().GetComponent<navigationKeybord>().panelPopup, true);
                 f_tabs.First().GetComponent<navigationKeybord>().es.SetSelectedGameObject(f_tabs.First().GetComponent<navigationKeybord>().bouton1);
-                f_tabs.First().GetComponent<navigationKeybord>().es.UpdateModules();
+                f_tabs.First().GetComponent<navigationKeybord>().es.UpdateModules();*/
             }
             else if (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause)
                 openIar(f_tabs.Count - 2); // Open IAR on the second last tab
