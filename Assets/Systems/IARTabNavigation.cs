@@ -9,7 +9,7 @@ public class IARTabNavigation : FSystem {
 
     // Manage base IAR integration (Open/Close + tab switching)
 
-    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
+    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button), typeof(navigationKeybord)));
     private Family f_fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)));
     private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
@@ -81,7 +81,12 @@ public class IARTabNavigation : FSystem {
         else if (!iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape)))
         {
             if (Input.GetKeyDown(KeyCode.A))
+            {
                 openIar(0); // Open IAR on the first tab
+                GameObjectManager.setGameObjectState(f_tabs.First().GetComponent<navigationKeybord>().panelPopup, true);
+                f_tabs.First().GetComponent<navigationKeybord>().es.SetSelectedGameObject(f_tabs.First().GetComponent<navigationKeybord>().bouton1);
+                f_tabs.First().GetComponent<navigationKeybord>().es.UpdateModules();
+            }
             else if (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause)
                 openIar(f_tabs.Count - 2); // Open IAR on the second last tab
             else
@@ -99,6 +104,7 @@ public class IARTabNavigation : FSystem {
         if (f_HUD_H.Count > 0)
             GameObjectManager.setGameObjectState(f_HUD_H.First(), false); // hide HUD "H"
         GameObjectManager.setGameObjectState(iar, true); // open IAR
+        
         SwitchTab(f_tabs.getAt(tabId)); // switch to the desired tab
         systemsStates.Clear();
         // save systems states
