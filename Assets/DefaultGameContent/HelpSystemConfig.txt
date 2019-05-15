@@ -2,8 +2,8 @@
   "sessionDuration": 60.0,
   "playerHintCooldownDuration": 300.0,
   "systemHintCooldownDuration": 15.0,
-  "feedbackStep1": 0.75,
-  "feedbackStep2": 2.0,
-  "labelCountStep": 20.0,
+  "feedbackStep1": -0.10,
+  "feedbackStep2": -0.25,
+  "labelCountStep": 4.0,
   "noActionFrequency": 10.0
 }

@@ -1,7 +1,13 @@
 {
-  "1.2": {
-    "Trouver clé": [
-      "hintContent"
-    ]
-  }
+	"[roomID].[hintName].[ComponentMonitoringId]": {
+		"[hintLevel]": [
+			{
+				"Key": "[myLink]",
+				"Value": [
+					"hint content 1",
+					"hint content 2"
+				]
+			}
+		]
+	}
 }
