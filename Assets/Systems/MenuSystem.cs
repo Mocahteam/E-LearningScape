@@ -3,6 +3,7 @@ using FYFY;
 using UnityEngine.UI;
 using UnityEngine.PostProcessing;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class MenuSystem : FSystem {
 
@@ -16,6 +17,7 @@ public class MenuSystem : FSystem {
     private Family f_particles = FamilyManager.getFamily(new AllOfComponents(typeof(ParticleSystem)));
     private Family f_reflectionProbe = FamilyManager.getFamily(new AllOfComponents(typeof(ReflectionProbe)));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
+    private Family f_settingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private Camera menuCamera;
     private float switchDelay = 12;
@@ -60,7 +62,7 @@ public class MenuSystem : FSystem {
             // Get singleton fading screen
             fadingBackground = GameObject.Find("MenuFadingBackground").GetComponent<Image>();
             // Get singleton MainMenu
-            mainMenu = GameObject.Find("MainMenu");
+            mainMenu = f_buttons.First().transform.parent.gameObject;
             // Get singleton ToggleButton
             //togglePuzzle = GameObject.Find("TogglePuzzle").GetComponent<Toggle>();
 
@@ -110,9 +112,21 @@ public class MenuSystem : FSystem {
             menuCamera.gameObject.GetComponent<MenuCamera>().positions[2] = new PosRot(13.85f,1.26f,6.11f,-8.774f,131.818f,-2.642f);
             // Init timer
             switchTimer = Time.time;
+
+            f_settingsMenu.addEntryCallback(onSettingMenuEnabled);
         }
 
         instance = this;
+    }
+
+    // SettingsMainMenu manages UI windows displaying but due to Fyfy delay on GameObjectManager.setGameObjectState, EventSystem doesn't display properly the current UI element. We have to select again the current UI.
+    private void onSettingMenuEnabled(GameObject go)
+    {
+        SettingsMainMenu smm = go.GetComponent<SettingsMainMenu>();
+        // force currentSelectedGameObject to be reinitialized
+        GameObject currentSelection = EventSystem.current.currentSelectedGameObject;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(currentSelection);
     }
 
     // Use this to update member variables when system resume.

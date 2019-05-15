@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityStandardAssets.Characters.FirstPerson;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class LogoDisplaying : FSystem {
 
@@ -170,9 +171,14 @@ public class LogoDisplaying : FSystem {
                         {
                             tmpGO = f_fadingMenuElems.getAt(i);
                             if (tmpGO.GetComponent<Image>())
-                                tmpGO.GetComponent<Image>().color = new Color(1, 1, 1, tmpGO.GetComponent<FadingMenu>().finalAlpha/256 * (Time.time - readingTimer) / fadeSpeed);
-                            else
-                                tmpGO.GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, tmpGO.GetComponent<FadingMenu>().finalAlpha / 256 * (Time.time - readingTimer) / fadeSpeed);
+                                tmpGO.GetComponent<Image>().color = new Color(1, 1, 1, tmpGO.GetComponent<FadingMenu>().finalAlpha / 256 * (Time.time - readingTimer) / fadeSpeed);
+                            else if (tmpGO.GetComponent<Button>())
+                            {
+                                ColorBlock cb = tmpGO.GetComponent<Button>().colors;
+                                cb.normalColor = new Color(cb.normalColor.r, cb.normalColor.g, cb.normalColor.b, tmpGO.GetComponent<FadingMenu>().finalAlpha / 256 * (Time.time - readingTimer) / fadeSpeed);
+                                cb.highlightedColor = new Color(cb.highlightedColor.r, cb.highlightedColor.g, cb.highlightedColor.b, tmpGO.GetComponent<FadingMenu>().finalAlpha / 256 * (Time.time - readingTimer) / fadeSpeed);
+                                tmpGO.GetComponent<Button>().colors = cb;
+                            }
                         }
                     }
                     else
@@ -180,9 +186,11 @@ public class LogoDisplaying : FSystem {
                 }
                 else // fade end
                 {
-                    if(menuFaded)
+                    if (menuFaded)
+                    {
                         // Pause this
                         this.Pause = true;
+                    }
                     else
                     {
                         menuFaded = true;
