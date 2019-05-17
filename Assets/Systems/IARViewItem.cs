@@ -4,6 +4,7 @@ using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
 using TMPro;
 using FYFY_plugins.Monitoring;
+using UnityEngine.EventSystems;
 
 public class IARViewItem : FSystem {
 
@@ -11,6 +12,7 @@ public class IARViewItem : FSystem {
 
     // Contains all game object inside inventory under mouse cursor (only one)
     private Family f_viewed = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver)), new AnyOfTags("InventoryElements"));
+    private Family f_triggerable = FamilyManager.getFamily(new AllOfComponents(typeof(EventTrigger), typeof(UnityEngine.UI.Selectable)), new AnyOfTags("InventoryElements"));
     // Contains all game objects selected inside inventory (SelectedInInventory is dynamically added by this system)
     private Family f_selected = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedInInventory), typeof(Collected), typeof(AnimatedSprites)), new AnyOfTags("InventoryElements"));
     private Family f_descriptionUI = FamilyManager.getFamily(new AnyOfTags("DescriptionUI"));
@@ -52,6 +54,22 @@ public class IARViewItem : FSystem {
             f_viewable.addEntryCallback(onEnable);
             f_viewable.addExitCallback(onDisable);
 
+            /*foreach (GameObject go in f_triggerable){
+                EventTrigger et = go.GetComponent<EventTrigger>();
+                EventTrigger.Entry entry = new EventTrigger.Entry();
+                entry.eventID = EventTriggerType.PointerEnter;
+                entry.callback.AddListener((eventData) => { onEnterItem(go); });
+                et.triggers.Add(entry);
+                entry = new EventTrigger.Entry();
+                entry.eventID = EventTriggerType.PointerExit;
+                entry.callback.AddListener((eventData) => { onExitItem(go.GetInstanceID()); });
+                et.triggers.Add(entry);
+                entry = new EventTrigger.Entry();
+                entry.eventID = EventTriggerType.PointerClick;
+                entry.callback.AddListener((eventData) => { onItemSelected(go); });
+                et.triggers.Add(entry);
+            }*/
+
             id2go = new Dictionary<int, GameObject>();
         }
         instance = this;
@@ -78,6 +96,7 @@ public class IARViewItem : FSystem {
     private void onEnterItem(GameObject go)
     {
         currentView = go;
+        Debug.Log("onEnterItem "+go);
         // show description of the new focused Game Object
         showDescription(go);
     }
@@ -85,6 +104,7 @@ public class IARViewItem : FSystem {
     // because f_viewed contains only one gameobject (thanks to PointerOver), if it exits family no game object are focused
     private void onExitItem(int instanceId)
     {
+        Debug.Log("onExitItem " + currentView);
         // if we exit a selected and linked game object which is not the last selected we hide its linked game object (exception for glasses)
         if (currentView && currentView != lastSelection && currentView.GetComponent<LinkedWith>() && currentView.GetComponent<SelectedInInventory>() && !currentView.name.Contains("Glasses"))
             GameObjectManager.setGameObjectState(currentView.GetComponent<LinkedWith>().link, false); // switch off the linked game object
@@ -189,38 +209,51 @@ public class IARViewItem : FSystem {
             showDescription(lastSelection);
     }
 
+    private void onItemSelected(GameObject go)
+    {
+        Debug.Log("onItemSelected " + go);
+        // we toggle animation
+        AnimatedSprites animation = go.GetComponent<AnimatedSprites>();
+        animation.animate = !animation.animate;
+        // we manage SelectedInInventory component
+        if (go.GetComponent<SelectedInInventory>())
+        {
+            GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOff", performedBy = "player" });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "deactivated", objectType = "item", objectName = go.name });
+
+            GameObjectManager.removeComponent<SelectedInInventory>(go);
+
+            // this game object is unselected and it contains a linked game object => we hide the linked game object
+            if (go.GetComponent<LinkedWith>())
+                GameObjectManager.setGameObjectState(go.GetComponent<LinkedWith>().link, false); // switch off the view of the last selection
+        }
+        else
+        {
+            GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "activated", objectType = "item", objectName = go.name });
+
+            GameObjectManager.addComponent<SelectedInInventory>(go);
+        }
+    }
+
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
         // mouse click management
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) //rajouter "ou si on clique sur bouton entrer
         {
             // We parse all viewed game object (only once)
             foreach (GameObject go in f_viewed)
             {
-                // we toggle animation
-                AnimatedSprites animation = go.GetComponent<AnimatedSprites>();
-                animation.animate = !animation.animate;
-                // we manage SelectedInInventory component
-                if (go.GetComponent<SelectedInInventory>())
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOff", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "deactivated", objectType = "item", objectName = go.name });
-
-                    GameObjectManager.removeComponent<SelectedInInventory>(go);
-
-                    // this game object is unselected and it contains a linked game object => we hide the linked game object
-                    if (go.GetComponent<LinkedWith>())
-                        GameObjectManager.setGameObjectState(go.GetComponent<LinkedWith>().link, false); // switch off the view of the last selection
-                }
-                else
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "activated", objectType = "item", objectName = go.name });
-
-                    GameObjectManager.addComponent<SelectedInInventory>(go);
-                }
+                onItemSelected(go);
             }
+        }
+        if (f_selected.Count == 0 && f_viewed.Count == 0)
+            onExitItem(-1);
+        foreach (GameObject go in f_triggerable)
+        {
+            if (go == EventSystem.current.currentSelectedGameObject && f_viewed.Count == 0)
+                onEnterItem(go);
         }
     }
 }

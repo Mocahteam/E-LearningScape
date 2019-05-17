@@ -18,7 +18,7 @@ public class MenuSystem : FSystem {
     private Family f_reflectionProbe = FamilyManager.getFamily(new AllOfComponents(typeof(ReflectionProbe)));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_settingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_inputFieldMasterMind = FamilyManager.getFamily(new AllOfComponents(typeof(InputField), typeof(Button)), new NoneOfLayers(5));
+    private Family f_inputFieldMasterMind = FamilyManager.getFamily(new AnyOfComponents(typeof(InputField), typeof(Button)), new NoneOfLayers(5));
 
     private Camera menuCamera;
     private float switchDelay = 12;
@@ -202,11 +202,17 @@ public class MenuSystem : FSystem {
         // Disable UI
         GameObjectManager.setGameObjectState(mainMenu, false);
         GameObjectManager.setGameObjectState(fadingBackground.gameObject, false);
+
+        //To allow a good automatic navigation keyboard in menu we disabled InputField and button component in mastermind
+        //When game play we have to enable these component to allow the gamer to interact with mastermind object 
         foreach (GameObject inputF in f_inputFieldMasterMind)
         {
-            inputF.GetComponent<InputField>().enabled = true;
-            inputF.GetComponent<Button>().enabled = true;
+            if(inputF.GetComponent<InputField>())
+                inputF.GetComponent<InputField>().enabled = true;
+            if(inputF.GetComponent<Button>())
+                inputF.GetComponent<Button>().enabled = true;
         }
+
         // Switch on/off puzzle or fragments
         /*foreach (GameObject go in f_puzzles)
             GameObjectManager.setGameObjectState(go, togglePuzzle.isOn);
