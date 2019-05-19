@@ -1,54 +1,54 @@
 {
-	"[roomID].[hintName[##actionNameThatKillThisHint]].[ComponentMonitoringId]": {
+	"[ComponentMonitoringId].[rdpActionName]": {
+		"Comment": ["Human text to easily identify the game object associted to these hints"],
+		"options": [
+			"?? => means force hint to display",
+			"-- => means force hint to destroy"
+		],
 		"[hintLevel]": [
 			"hint content 1",
 			"hint content 2"
 		]
 	},
-	"0.scrollOnTheFloor.0": {
-		"1": [
-			"Je dois trouver un objet supplémentaire"
-		],
-		"2": [
-			"Il me manque un parchemin"
-		],
-		"3": [
-			"J'ai l'intuition qu'un parchemin intéressant se trouve dans les escaliers"
-		]
+	
+	"Comment: Intro hints": {},
+	"108.perform": {
+		"Comment": ["The first in game Scroll"],
+		"1": ["Je dois trouver un objet supplémentaire"],
+		"2": ["Il me manque un parchemin"],
+		"3": ["J'ai l'intuition qu'un parchemin intéressant se trouve dans les escaliers"]
 	},
-	"0.scrollOnIAR##activate.1": {
-		"1": [
-			"Je devrait consulter le parchemin ramassé"
-		]
+	"1.turnOn": {
+		"Comment": ["The Scroll in IAR"],
+		"options": ["--"],
+		"1": ["Je devrait consulter le parchemin ramassé"]
 	},
-	"0.firstFragment##activate.2": {
-		"1": [
-			"Un fragment de rêve doit traîner dans les alentours"
-		],
-		"2": [
-			"Le fragment de rêve en bas des escaliers devrait m'aider à passer cette énigme"
-		]
+	"2.activate": {
+		"Comment": ["First dream fragment"],
+		"options": ["--"],
+		"1": ["Un fragment de rêve doit traîner dans les alentours"],
+		"2": ["Le fragment de rêve en bas des escaliers devrait m'aider à passer cette énigme"]
 	},
-	"0.threeWheels.3": {
-		"1": [
-			"Je dois manipuler un mécanisme pour pouvoir continuer"
-		],
-		"2": [
-			"Le mécanisme dans l'escalier doit être la clé"
-		]
+	"3.turnOn": {
+		"Comment": ["First Locker"],
+		"1": ["Je dois trouver une solution pour débloquer le passage"],
+		"2": ["Le mécanisme dans l'escalier doit déverrouiller le passage"]
 	},
-	"0.wallLocked.4": {
-		"1": [
-			"Ce mécanisme est la clé"
-		],
-		"2": [
-			"Les roues semblent tourner, mais quelle est la bonne combinaison ?"
-		],
-		"3": [
-			"Le fragment de rêve et le parchemin devraient me donner la solution"
-		]
+	"44.perform": {
+		"Comment": ["First Locker"],
+		"1": ["J'ai tout ce qu'il faut pour passer cette première énigme"],
+		"2": ["Les roues semblent tourner, mais quelle est la bonne combinaison ?"],
+		"3": ["Le fragment de rêve et le parchemin devraient me donner la solution"]
 	},
-	"1.keyE03World.5": {
+	
+	"Comment: BallBox hints": {},
+	"5.perform": {
+		"Comment": ["The in game key to open ball box"],
+		"1": ["Il me reste au moins un objet à trouver"],
+		"2": ["Je pense qu'une clé me serait utile"],
+		"3": ["Je pressent que la clé est dans la petite commode"]
+	},
+	"1.ballBox.7": {
 		"1": [
 			"Il me reste au moins un objet à trouver"
 		],
@@ -59,6 +59,7 @@
 			"Je pressent que la clé est dans la petite commode"
 		]
 	},
+	
 	"1.wireWorld.26": {
 		"1": [
 			"Il me reste au moins un objet à trouver"

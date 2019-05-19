@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-BD0C-8220D-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-4888-9E866-0" type ="http://www.laas.fr/tina/tpn">
   <name>
-   <text>Enigma7</text>
+   <text>ScrollsEnigma</text>
   </name>
- <page id="g-BD0C-8221A-1">
-  <place id="p-BD0C-82221-2">
+ <page id="g-4888-9E873-1">
+  <place id="p-4888-9E877-2">
   <name>
    <text>Q3_Answered_77</text>
     <graphics>
@@ -16,7 +16,7 @@
     <position x="660" y="280"/>
    </graphics>
   </place>
-  <place id="p-BD0C-82233-3">
+  <place id="p-4888-9E88A-3">
   <name>
    <text>Q3_Answering_77</text>
     <graphics>
@@ -30,7 +30,7 @@
     <position x="400" y="280"/>
    </graphics>
   </place>
-  <transition id="t-BD0C-8223B-4">
+  <transition id="t-4888-9E88F-4">
   <name>
    <text>Q3_Correct_77</text>
     <graphics>
@@ -41,7 +41,7 @@
     <position x="540" y="260"/>
    </graphics>
   </transition>
-  <place id="p-BD0C-82240-5">
+  <place id="p-4888-9E891-5">
   <name>
    <text>Scroll1_end_71</text>
     <graphics>
@@ -52,7 +52,7 @@
     <position x="230" y="290"/>
    </graphics>
   </place>
-  <transition id="t-BD0C-82245-6">
+  <transition id="t-4888-9E894-6">
   <name>
    <text>Scroll1_perform_71</text>
     <graphics>
@@ -63,7 +63,7 @@
     <position x="150" y="280"/>
    </graphics>
   </transition>
-  <place id="p-BD0C-8224A-7">
+  <place id="p-4888-9E898-7">
   <name>
    <text>Scroll1_start_71</text>
     <graphics>
@@ -77,7 +77,7 @@
     <position x="70" y="290"/>
    </graphics>
   </place>
-  <place id="p-BD0C-82251-8">
+  <place id="p-4888-9E89B-8">
   <name>
    <text>Scroll2_end_72</text>
     <graphics>
@@ -88,7 +88,7 @@
     <position x="220" y="360"/>
    </graphics>
   </place>
-  <transition id="t-BD0C-82254-9">
+  <transition id="t-4888-9E89E-9">
   <name>
    <text>Scroll2_perform_72</text>
     <graphics>
@@ -99,7 +99,7 @@
     <position x="150" y="350"/>
    </graphics>
   </transition>
-  <place id="p-BD0C-8225B-10">
+  <place id="p-4888-9E8A0-10">
   <name>
    <text>Scroll2_start_72</text>
     <graphics>
@@ -113,7 +113,7 @@
     <position x="70" y="360"/>
    </graphics>
   </place>
-  <place id="p-BD0C-82260-11">
+  <place id="p-4888-9E8A4-11">
   <name>
    <text>Scroll3_end_73</text>
     <graphics>
@@ -124,7 +124,7 @@
     <position x="220" y="430"/>
    </graphics>
   </place>
-  <transition id="t-BD0C-82264-12">
+  <transition id="t-4888-9E8A7-12">
   <name>
    <text>Scroll3_perform_73</text>
     <graphics>
@@ -135,7 +135,7 @@
     <position x="140" y="420"/>
    </graphics>
   </transition>
-  <place id="p-BD0C-8226A-13">
+  <place id="p-4888-9E8A9-13">
   <name>
    <text>Scroll3_start_73</text>
     <graphics>
@@ -149,7 +149,7 @@
     <position x="60" y="430"/>
    </graphics>
   </place>
-  <place id="p-BD0C-8226F-14">
+  <place id="p-4888-9E8AD-14">
   <name>
    <text>Scroll4_end_74</text>
     <graphics>
@@ -160,7 +160,7 @@
     <position x="220" y="500"/>
    </graphics>
   </place>
-  <transition id="t-BD0C-82274-15">
+  <transition id="t-4888-9E8AE-15">
   <name>
    <text>Scroll4_perform_74</text>
     <graphics>
@@ -171,7 +171,7 @@
     <position x="140" y="480"/>
    </graphics>
   </transition>
-  <place id="p-BD0C-82279-16">
+  <place id="p-4888-9E8B2-16">
   <name>
    <text>Scroll4_start_74</text>
     <graphics>
@@ -185,7 +185,7 @@
     <position x="60" y="500"/>
    </graphics>
   </place>
-  <place id="p-BD0C-8227D-17">
+  <place id="p-4888-9E8B6-17">
   <name>
    <text>Scroll5_end_75</text>
     <graphics>
@@ -196,7 +196,7 @@
     <position x="210" y="560"/>
    </graphics>
   </place>
-  <transition id="t-BD0C-82282-18">
+  <transition id="t-4888-9E8B8-18">
   <name>
    <text>Scroll5_perform_75</text>
     <graphics>
@@ -207,7 +207,7 @@
     <position x="140" y="550"/>
    </graphics>
   </transition>
-  <place id="p-BD0C-822FC-19">
+  <place id="p-4888-9E912-19">
   <name>
    <text>Scroll5_start_75</text>
     <graphics>
@@ -221,9 +221,9 @@
     <position x="60" y="560"/>
    </graphics>
   </place>
-  <place id="p-BD0C-82304-20">
+  <place id="p-4888-9E915-20">
   <name>
-   <text>Scroll_ActivationCount_70</text>
+   <text>Scrolls_ActivationCount_70</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -232,9 +232,9 @@
     <position x="250" y="170"/>
    </graphics>
   </place>
-  <place id="p-BD0C-8230C-21">
+  <place id="p-4888-9E91A-21">
   <name>
-   <text>Scroll_off_70</text>
+   <text>Scrolls_off_70</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -246,9 +246,9 @@
     <position x="70" y="50"/>
    </graphics>
   </place>
-  <place id="p-BD0C-82310-22">
+  <place id="p-4888-9E91E-22">
   <name>
-   <text>Scroll_on_70</text>
+   <text>Scrolls_on_70</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -257,9 +257,9 @@
     <position x="250" y="50"/>
    </graphics>
   </place>
-  <transition id="t-BD0C-82316-23">
+  <transition id="t-4888-9E920-23">
   <name>
-   <text>Scroll_turnOn_70</text>
+   <text>Scrolls_turnOn_70</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -268,53 +268,53 @@
     <position x="150" y="110"/>
    </graphics>
   </transition>
-  <arc id="e-BD0C-8231F-24" source="p-BD0C-8227D-17" target="t-BD0C-8223B-4">
+  <arc id="e-4888-9E928-24" source="p-4888-9E91A-21" target="t-4888-9E920-23">
+  </arc>
+  <arc id="e-4888-9E929-25" source="p-4888-9E8AD-14" target="t-4888-9E88F-4">
    <type value="test"/>
   </arc>
-  <arc id="e-BD0C-82324-25" source="t-BD0C-82316-23" target="p-BD0C-82304-20">
+  <arc id="e-4888-9E92D-26" source="t-4888-9E8B8-18" target="p-4888-9E8B6-17">
   </arc>
-  <arc id="e-BD0C-82328-26" source="p-BD0C-82233-3" target="t-BD0C-8223B-4">
+  <arc id="e-4888-9E92E-27" source="p-4888-9E898-7" target="t-4888-9E894-6">
   </arc>
-  <arc id="e-BD0C-82329-27" source="t-BD0C-8223B-4" target="p-BD0C-82221-2">
+  <arc id="e-4888-9E92F-28" source="t-4888-9E894-6" target="p-4888-9E891-5">
   </arc>
-  <arc id="e-BD0C-8232B-28" source="t-BD0C-82274-15" target="p-BD0C-8226F-14">
+  <arc id="e-4888-9E930-29" source="p-4888-9E8A9-13" target="t-4888-9E8A7-12">
   </arc>
-  <arc id="e-BD0C-8232D-29" source="p-BD0C-82279-16" target="t-BD0C-82274-15">
+  <arc id="e-4888-9E931-30" source="t-4888-9E8A7-12" target="p-4888-9E8A4-11">
   </arc>
-  <arc id="e-BD0C-82331-30" source="t-BD0C-82264-12" target="p-BD0C-82260-11">
+  <arc id="e-4888-9E934-31" source="p-4888-9E8B2-16" target="t-4888-9E8AE-15">
   </arc>
-  <arc id="e-BD0C-82333-31" source="p-BD0C-8226A-13" target="t-BD0C-82264-12">
+  <arc id="e-4888-9E935-32" source="t-4888-9E8AE-15" target="p-4888-9E8AD-14">
   </arc>
-  <arc id="e-BD0C-82335-32" source="t-BD0C-82245-6" target="p-BD0C-82240-5">
+  <arc id="e-4888-9E936-33" source="t-4888-9E88F-4" target="p-4888-9E877-2">
   </arc>
-  <arc id="e-BD0C-82337-33" source="p-BD0C-8224A-7" target="t-BD0C-82245-6">
+  <arc id="e-4888-9E938-34" source="p-4888-9E88A-3" target="t-4888-9E88F-4">
   </arc>
-  <arc id="e-BD0C-82339-34" source="t-BD0C-82282-18" target="p-BD0C-8227D-17">
+  <arc id="e-4888-9E938-35" source="t-4888-9E920-23" target="p-4888-9E91E-22">
   </arc>
-  <arc id="e-BD0C-8233E-35" source="p-BD0C-8226F-14" target="t-BD0C-8223B-4">
+  <arc id="e-4888-9E93A-36" source="t-4888-9E920-23" target="p-4888-9E915-20">
+  </arc>
+  <arc id="e-4888-9E93A-37" source="p-4888-9E8B6-17" target="t-4888-9E88F-4">
    <type value="test"/>
   </arc>
-  <arc id="e-BD0C-8233F-36" source="p-BD0C-822FC-19" target="t-BD0C-82282-18">
+  <arc id="e-4888-9E93C-38" source="p-4888-9E8A0-10" target="t-4888-9E89E-9">
   </arc>
-  <arc id="e-BD0C-82342-37" source="t-BD0C-82254-9" target="p-BD0C-82251-8">
-  </arc>
-  <arc id="e-BD0C-82343-38" source="p-BD0C-82260-11" target="t-BD0C-8223B-4">
+  <arc id="e-4888-9E93D-39" source="p-4888-9E915-20" target="t-4888-9E88F-4">
    <type value="test"/>
   </arc>
-  <arc id="e-BD0C-82345-39" source="p-BD0C-82251-8" target="t-BD0C-8223B-4">
+  <arc id="e-4888-9E93F-40" source="p-4888-9E891-5" target="t-4888-9E88F-4">
    <type value="test"/>
   </arc>
-  <arc id="e-BD0C-82347-40" source="p-BD0C-82240-5" target="t-BD0C-8223B-4">
+  <arc id="e-4888-9E940-41" source="p-4888-9E89B-8" target="t-4888-9E88F-4">
    <type value="test"/>
   </arc>
-  <arc id="e-BD0C-82349-41" source="p-BD0C-82304-20" target="t-BD0C-8223B-4">
+  <arc id="e-4888-9E941-42" source="p-4888-9E8A4-11" target="t-4888-9E88F-4">
    <type value="test"/>
   </arc>
-  <arc id="e-BD0C-8234C-42" source="p-BD0C-8225B-10" target="t-BD0C-82254-9">
+  <arc id="e-4888-9E942-43" source="t-4888-9E89E-9" target="p-4888-9E89B-8">
   </arc>
-  <arc id="e-BD0C-8234E-43" source="t-BD0C-82316-23" target="p-BD0C-82310-22">
-  </arc>
-  <arc id="e-BD0C-82352-44" source="p-BD0C-8230C-21" target="t-BD0C-82316-23">
+  <arc id="e-4888-9E944-44" source="p-4888-9E912-19" target="t-4888-9E8B8-18">
   </arc>
  </page>
  </net>

@@ -113,31 +113,15 @@ public class IARHintManager : FSystem {
         {
             foreach (GameObject hint in f_visibleHintsIAR)
             {
-                ComponentMonitoring cm = hint.GetComponent<HintContent>().monitor;
-                if (cm)
+                HintContent hc = hint.GetComponent<HintContent>();
+                if (hc.monitor)
                 {
-                    bool endActionReachable = MonitoringManager.getNextActionsToReach(cm, "##playerObjectives##", int.MaxValue).Count > 0;
+                    bool endActionReachable = MonitoringManager.getNextActionsToReachPlayerObjective(MonitoringManager.Instance.PetriNetsName[hc.monitor.fullPnSelected], int.MaxValue).Count > 0;
 
                     bool stillReachable = false;
                     if (endActionReachable)
-                    {
-                        // loop through each transition included into monitor
-                        foreach (TransitionLink tl in cm.transitionLinks)
-                        {
-                            // for each transition loop through each set of links and check if at least one of them is still reachable
-                            List<List<string>> setOfLinksConcerned = cm.getPossibleSetOfLinks(tl.transition.label);
-                            foreach (List<string> linksConcerned in setOfLinksConcerned)
-                            {
-                                if (MonitoringManager.getNextActionsToReach(cm, tl.transition.label, int.MaxValue, linksConcerned.ToArray()).Count != 0)
-                                {
-                                    stillReachable = true;
-                                    break;
-                                }
-                            }
-                            if (stillReachable)
-                                break;
-                        }
-                    }
+                        stillReachable = hc.monitor.isStillReachable(hc.actionName);
+
                     if (!endActionReachable || !stillReachable)
                     {
                         // remove the button

@@ -7,8 +7,8 @@ using FYFY_plugins.Monitoring;
 /// </summary>
 public class HintContent : MonoBehaviour {
     // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
-    public string hintName;
+    public ComponentMonitoring monitor;
+    public string actionName;
     public string text;
     public string link;
-    public ComponentMonitoring monitor;
 }

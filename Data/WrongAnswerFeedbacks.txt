@@ -1,19 +1,14 @@
 {
   "questionXRoomX.9999": {
     "givenAnswer": {
-      "Key": "myLink",
-      "Value": [
-        "feedback formulation 1",
-        "feedback formulation 2"
-      ]
+      "Key": "[myLink]",
+      "Value": "feedback formulation 1"
     }
   },
   "question1Room1.24": {
     "0": {
       "Key": "http://lmgtfy.com/?q=les+bienfaits+du+sommeil",
-      "Value": [
-        "Tôt le matin c'est trop tôt."
-      ]
+      "Value": "Tôt le matin c'est trop tôt."
     }
   }
 }

@@ -23,11 +23,6 @@ public class DreamFragmentCollecting : FSystem {
     private DreamFragment tmpDFComponent;
     private bool backupIARNavigationState;
     private GameObject tmpGo;
-
-    //key: dream fragment name, value: link
-    //this dictionary contains links to get more info about a dream fragment
-    //if a link is given, a button to open the link will appear in the dream fragment UI
-    private Dictionary<string, string> dreamFragmentsLinks;
     //button in dream fragment UI to open the link
     private GameObject onlineButton;
 
@@ -51,28 +46,6 @@ public class DreamFragmentCollecting : FSystem {
             }
             // Get child text area
             FragmentText = dfUI.GetComponentInChildren<TextMeshProUGUI>();
-
-            //Load dream fragment links (should be done in LoadGameContent)
-            if (File.Exists(LoadGameContent.gameContent.dreamFragmentLinksPath))
-                try
-                {
-                    dreamFragmentsLinks = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(LoadGameContent.gameContent.dreamFragmentLinksPath));
-                }
-                catch (Exception)
-                {
-                    File.WriteAllText("Data/DreamFragmentLinks.txt", LoadGameContent.defaultGameContent.dreamFragmentlinks.text);
-                    Debug.LogWarning("Invalid content in the file containing dream fragment links. Default used");
-                    File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - Invalid content in the file containing dream fragment links. Default used"));
-                }
-            else
-            {
-                if(!File.Exists("Data/DreamFragmentLinks.txt"))
-                    File.WriteAllText("Data/DreamFragmentLinks.txt", LoadGameContent.defaultGameContent.dreamFragmentlinks.text);
-                Debug.LogWarning("Unable to load dream fragment links because no file found.");
-                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - Unable to load dream fragment links because no file found"));
-            }
-            if (dreamFragmentsLinks == null)
-                dreamFragmentsLinks = new Dictionary<string, string>();
         }
         instance = this;
     }
@@ -99,7 +72,7 @@ public class DreamFragmentCollecting : FSystem {
                     GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
                     GameObjectManager.setGameObjectState(dfUI, true);
                     tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
-                    GameObjectManager.setGameObjectState(onlineButton, dreamFragmentsLinks.ContainsKey(selectedFragment.name) && dreamFragmentsLinks[selectedFragment.name] != "");
+                    GameObjectManager.setGameObjectState(onlineButton, tmpDFComponent.urlLink != "");
                     // Set UI text depending on type and id
                     if (tmpDFComponent.type == 0)
                         FragmentText.text = string.Concat("Ouvrez le fragment de rêve numéro ", tmpDFComponent.id);
@@ -157,22 +130,23 @@ public class DreamFragmentCollecting : FSystem {
 
     private void OpenFragmentLink()
     {
+        DreamFragment df = selectedFragment.GetComponent<DreamFragment>();
         //when onlineButton is clicked
         try
         {
-            Application.OpenURL(dreamFragmentsLinks[selectedFragment.name]);
+            Application.OpenURL(df.urlLink);
         }
         catch (Exception)
         {
-            Debug.LogError(string.Concat("Invalid dream fragment link: ", dreamFragmentsLinks[selectedFragment.name]));
-            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid dream fragment link: ", dreamFragmentsLinks[selectedFragment.name]));
+            Debug.LogError(string.Concat("Invalid dream fragment link: ", df.urlLink));
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid dream fragment link: ", df.urlLink));
         }
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new
         {
             verb = "accessed",
             objectType = "viewable",
             objectName = string.Concat(selectedFragment.name, "_Link"),
-            activityExtensions = new Dictionary<string, List<string>>() { { "link", new List<string>() { dreamFragmentsLinks[selectedFragment.name]  } } }
+            activityExtensions = new Dictionary<string, List<string>>() { { "link", new List<string>() { df.urlLink } } }
         });
     }
 }

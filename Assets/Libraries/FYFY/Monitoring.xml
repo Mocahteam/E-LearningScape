@@ -187,6 +187,11 @@
             Each list element is a set of AND links, then the main list model OR set of links.
             </summary>
         </member>
+        <member name="M:FYFY_plugins.Monitoring.ComponentMonitoring.isStillReachable(System.String)">
+            <summary>
+            Check if action named actionName is still reachable inside the Petri net associated to this monitor
+            </summary>
+        </member>
         <member name="P:FYFY_plugins.Monitoring.ComponentMonitoring.PetriNet">
             <summary> PetriNet getter and setter. Set the PetriNet implies reset transitionLinks. </summary>
         </member>

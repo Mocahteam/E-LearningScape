@@ -2,11 +2,12 @@
 	"[roomID].[hintName].[ComponentMonitoringId]": {
 		"[hintLevel]": [
 			{
-				"Key": "[myLink]",
-				"Value": [
-					"hint content 1",
-					"hint content 2"
-				]
+				"Key": "[myLink1]",
+				"Value": "hint content 1"
+			},
+			{
+				"Key": "[myLink2]",
+				"Value": "hint content 2"
 			}
 		]
 	}

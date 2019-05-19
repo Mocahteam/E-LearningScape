@@ -6,4 +6,5 @@ public class DreamFragment : MonoBehaviour {
     public int id;
     public int type; //0 - blue, 1 - green, 2 - endFragments
     public bool viewed = false;
+    public string urlLink = ""; // if not empty display a button to access this web link
 }

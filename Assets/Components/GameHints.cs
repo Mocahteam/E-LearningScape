@@ -13,7 +13,7 @@ public class GameHints : MonoBehaviour {
     /// Once a hint is identified, a pair containing a link for more information and a list of different way to formulate the hint is given
     /// If the link is filled, a button in the help tab will appear to open the link
     /// </summary>
-    public Dictionary<string, Dictionary<string, List<KeyValuePair<string, List<string>>>>> dictionary;
+    public Dictionary<string, Dictionary<string, List<KeyValuePair<string, string>>>> dictionary;
     /// <summary>
     /// Dictionary used to store feedbacks for wrong answers
     /// The first parameter asked is a string of the format "x.y" with x the question name and y the ComponentMonitoring ID of the action "Wrong" performed
@@ -21,5 +21,5 @@ public class GameHints : MonoBehaviour {
     /// Once a feedback is identified, a pair containing a link for more information and a list of different way to formulate the feedback is given
     /// If the link is filled, a button in the help tab will appear to open the link
     /// </summary>
-    public Dictionary<string, Dictionary<string, KeyValuePair<string, List<string>>>> wrongAnswerFeedbacks;
+    public Dictionary<string, Dictionary<string, KeyValuePair<string, string>>> wrongAnswerFeedbacks;
 }

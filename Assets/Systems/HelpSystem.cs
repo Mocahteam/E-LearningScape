@@ -15,14 +15,10 @@ using UnityEngine.SceneManagement;
 
 public class HelpSystem : FSystem {
 
-    private Family f_subtitlesFamily = FamilyManager.getFamily(new AnyOfTags("HelpSubtitles"), new AllOfComponents(typeof(TextMeshProUGUI)));
     private Family f_traces = FamilyManager.getFamily(new AllOfComponents(typeof(Trace)));
     private Family f_gameHints = FamilyManager.getFamily(new AllOfComponents(typeof(GameHints)));
     private Family f_internalGameHints = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameHints)));
     private Family f_timer = FamilyManager.getFamily(new AllOfComponents(typeof(Timer)));
-    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
-    private Family f_actions = FamilyManager.getFamily(new AllOfComponents(typeof(ActionPerformed)));
-    private Family f_actionsProcessed = FamilyManager.getFamily(new NoneOfComponents(typeof(ActionPerformed)));
     private Family f_componentMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
     private Family f_askHelpButton = FamilyManager.getFamily(new AnyOfTags("AskHelpButton"), new AllOfComponents(typeof(Button)));
     private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
@@ -37,37 +33,39 @@ public class HelpSystem : FSystem {
     private Family f_enabledHintsIAR = FamilyManager.getFamily(new AllOfComponents(typeof(HintContent)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
 
     /// <summary>
-    /// Contains hints about the pedagogic content of the game (hints about enigmas and feedback when the player gives a wrong answer)
+    /// Contains hints
     /// </summary>
     private GameHints gameHints;
-    /// <summary>
-    /// Contains hint about game mechanics
-    /// </summary>
-    private InternalGameHints internalGameHints;
     /// <summary>
     /// Contains weights for each Laalys labels used to increase/decrease labelCount
     /// </summary>
     private Dictionary<string, float> labelWeights;
 
     /// <summary>
-    /// Key: room id
-    /// value:  Dictionary<Key: Petri net id, Value: ComponentMonitoring corresponding to the enigma in the meta Petri net.>
-    /// This dictionary is used to get from room id the ComponentMonitorings associated to each enigma of the room
+    /// Key: ComponentMonitoring id of enigmas inside meta Petri net
+    /// Value: id of sub Petri net that details the resolution process of enigma
     /// </summary>
-    private Dictionary<int, Dictionary<int, ComponentMonitoring>> rooms2Enigmas;
+    private Dictionary<int, int> EnigmaIdToPnId;
 
     /// <summary>
     /// Associate for each Petri net name the number of remaining action to reach a player objective in this Petri net
     /// </summary>
-    private Dictionary<string, int> pnNetsCompletion;
+    private Dictionary<string, int> pnNetsRemainingSteps;
     /// <summary>
-    /// Contains the minimal number of steps (actions) to finish the game
+    /// Associate for each Petri net name the number of action to carry out at the beginning of the game to reach a player objective in this Petri net
     /// </summary>
-    private int requiredSteps;
+    private Dictionary<string, int> pnNetsRequiredStepsOnStart;
     /// <summary>
     /// A Thread to compute remaining steps for each Petri net
     /// </summary>
     private static Thread thread = null;
+    private static Mutex mut = new Mutex();
+
+
+    /// <summary>
+    /// a stack to store the name of Petri nets for which we have to clean hints
+    /// </summary>
+    private Stack<string> cleanHintsByPn;
 
     /// <summary>
     /// sum of actions/enigmas in meta Petri net multiplied by their wheight
@@ -93,36 +91,16 @@ public class HelpSystem : FSystem {
     /// </summary>
     private float labelCount = 0;
     /// <summary>
-    /// count the number of feedback given to the player with labelCount or the help button
-    /// </summary>
-    private int nbFeedBackGiven = 0;
-    /// <summary>
     /// True when the player asked help with the help button.
     /// Set to false when the information is processed and the hint is given
     /// </summary>
     private bool playerAskedHelp = false;
 
     /// <summary>
-    /// contains the id of the last room unlocked by the player to know which room the hint has to be about
-    /// </summary>
-    private UnlockedRoom room;
-
-    /// <summary>
-    /// Used to debug: used to display the hint text with subtitles and disable subtitles after 2 seconds
-    /// </summary>
-    private TextMeshProUGUI subtitles;
-    private float subtitlesTimer = float.MinValue;
-
-    /// <summary>
     /// Timer used to count the time without any action (no trace from Laalys, which means it is reseted when a Laalys action is received).
     /// Every time the timer reaches noActionFrequency, "stagntion" weight is added to labelCount and the timer is reset
     /// </summary>
     private float noActionTimer = float.MaxValue;
-
-    /// <summary>
-    /// CompoenentMonitoring of the last action in the meta Petri net
-    /// </summary>
-    private ComponentMonitoring finalComponentMonitoring;
 
     /// <summary>
     /// key: enigma name, value: enigma weight.
@@ -144,18 +122,6 @@ public class HelpSystem : FSystem {
     private List<GameObject> hintButtonsPool;
 
     private GameObject tmpGO;
-    private RectTransform tmpRT;
-    private HintContent tmpHC;
-    private KeyValuePair<string, List<string>> tmpPair;
-
-    /// <summary>
-    /// Pair key: name, Pair value: overrideName.
-    /// Stores the gameObject, the name and the overrideName of the ActionPerformed
-    /// and processes it after the system ActionManager processed all ActionPerformed of the gameobject.
-    /// This information is used only when the ActionManager processed this data because else actions are not performed in Petri nets yet.
-    /// The information has to be stored because once processed, the ActionPerformed component is removed by ActionManager
-    /// </summary>
-    private Dictionary<GameObject, Queue<KeyValuePair<string, string>>> actionPerformedHistory;
 
     public static HelpSystem instance;
     public static bool shouldPause = true;
@@ -180,35 +146,39 @@ public class HelpSystem : FSystem {
                 //get game hints filled with tips loaded from "Data/Hints_LearningScape.txt"
                 gameHints = f_gameHints.First().GetComponent<GameHints>();
                 //get internal game hints
-                internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
+                InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
 
                 //add internal game hints to the dictionary of the component GameHints
                 //if the key2 already exists in gameHints.dictionary and gameHints.dictionary[key1][key2].Value isn't empty internalGameHints.dictionary[key1][key2] isn't added
                 foreach (string key1 in internalGameHints.dictionary.Keys)
                 {
                     if (!gameHints.dictionary.ContainsKey(key1))
-                        gameHints.dictionary.Add(key1, new Dictionary<string, List<KeyValuePair<string, List<string>>>>());
+                        gameHints.dictionary.Add(key1, new Dictionary<string, List<KeyValuePair<string, string>>>());
                     // merge hints with the same level
                     foreach (string key2 in internalGameHints.dictionary[key1].Keys)
                     {
                         if (!gameHints.dictionary[key1].ContainsKey(key2))
-                            gameHints.dictionary[key1].Add(key2, new List<KeyValuePair<string, List<string>>>());
+                            gameHints.dictionary[key1].Add(key2, new List<KeyValuePair<string, string>>());
 
-                        gameHints.dictionary[key1][key2].Add(new KeyValuePair<string, List<string>>("", internalGameHints.dictionary[key1][key2]));
+                        foreach (string hintContent in internalGameHints.dictionary[key1][key2])
+                            gameHints.dictionary[key1][key2].Add(new KeyValuePair<string, string>("", hintContent));
                     }
                 }
 
                 // Get labels weight
                 labelWeights = f_labelWeights.First().GetComponent<LabelWeights>().weights;
 
-                requiredSteps = 0;
-
                 // clone Petri net names from MonitoringManager
-                pnNetsCompletion = new Dictionary<string, int>();
+                pnNetsRemainingSteps = new Dictionary<string, int>();
+                pnNetsRequiredStepsOnStart = new Dictionary<string, int>();
                 foreach (string pnName in MonitoringManager.Instance.PetriNetsName)
-                    pnNetsCompletion.Add(pnName, 0);
-                // Removes meta Petri net corresponding to the scene name
-                pnNetsCompletion.Remove(SceneManager.GetActiveScene().name);
+                {
+                    pnNetsRemainingSteps.Add(pnName, 0);
+                    pnNetsRequiredStepsOnStart.Add(pnName, 0); // will be properly initialized in OnResume function
+                }
+                // Removes meta Petri net
+                pnNetsRemainingSteps.Remove(MonitoringManager.Instance.PetriNetsName[0]);
+                pnNetsRequiredStepsOnStart.Remove(MonitoringManager.Instance.PetriNetsName[0]);
                 //Removes hints of the unused puzzle Petri net
                 int pnSelected = -1;
                 if (LoadGameContent.gameContent.virtualPuzzle)
@@ -216,7 +186,10 @@ public class HelpSystem : FSystem {
                 else
                     pnSelected = f_puzzles.First().GetComponent<ComponentMonitoring>().fullPnSelected;
                 RemoveHintsByPN(pnSelected);
-                pnNetsCompletion.Remove(MonitoringManager.Instance.PetriNetsName[pnSelected]);
+                pnNetsRemainingSteps.Remove(MonitoringManager.Instance.PetriNetsName[pnSelected]);
+                pnNetsRequiredStepsOnStart.Remove(MonitoringManager.Instance.PetriNetsName[pnSelected]);
+
+                cleanHintsByPn = new Stack<string>();
 
                 //format expected answers to be compared to formated answers from IARQueryEvaluator
                 List<string> tmpListString;
@@ -238,10 +211,6 @@ public class HelpSystem : FSystem {
                 }
 
                 config.sessionDuration *= 60; //convert to seconds
-
-                room = f_unlockedRoom.First().GetComponent<UnlockedRoom>();
-
-                subtitles = f_subtitlesFamily.First().GetComponent<TextMeshProUGUI>();
 
                 weights = LoadGameContent.enigmasWeight;
                 //count the total weighted meta actions
@@ -266,14 +235,6 @@ public class HelpSystem : FSystem {
 
                 f_traces.addEntryCallback(OnNewTraces);
 
-                // The information store in OnNewActionPerformed is used only when the ActionManager processed ActionPerformed data
-                // because else actions are not performed in Petri nets yet.
-                // The information has to be stored because once processed, the ActionPerformed component is removed by ActionManager
-                // OnActionsProcessed callback has to be set before OnNewActionPerformed callback because
-                // else OnActionsProcessed will process data stored by OnNewActionPerformed and not processed by ActionManager yet
-                f_actionsProcessed.addEntryCallback(OnActionsProcessed);
-                f_actions.addEntryCallback(OnNewActionPerformed);
-
                 f_wrongAnswerInfo.addEntryCallback(OnWrongAnswer);
                 f_askHelpButton.First().GetComponent<Button>().onClick.AddListener(OnPlayerAskHelp);
 
@@ -281,62 +242,31 @@ public class HelpSystem : FSystem {
                 cooldownRT = f_askHelpButton.First().transform.GetChild(1).GetComponent<RectTransform>();
                 cooldownText = f_askHelpButton.First().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
-                actionPerformedHistory = new Dictionary<GameObject, Queue<KeyValuePair<string, string>>>();
-
-                // WARNING: Before building the game, be sure that following ComponentMonitoring are properly set
-                //Get the last monitor in the meta Petri net
-                finalComponentMonitoring = MonitoringManager.getMonitorById(164);
-                // Init dictionary to know for each rooms [0, 3] which petrinet id is concerned (petri net id is the index of petri net in MonitoringManager). And for each of these petrinet define the ComponentMonitoring associated inside Meta petri net
-                rooms2Enigmas = new Dictionary<int, Dictionary<int, ComponentMonitoring>>()
+                // WARNING: Before building the game, be sure that following ComponentMonitorings are properly set
+                // Init dictionary to know for each enigma of the meta Petri net the associated sub Petri net id
+                EnigmaIdToPnId = new Dictionary<int, int>()
                 {
-                    {
-                        // room 0
-                        0, new Dictionary<int, ComponentMonitoring>()
-                        {
-                            // room 0 is concerned by only one petri net, the second inside MonitoringManager and the ComponentMonitoring modeling this petri net inside the Meta petri net is the one this specified id
-                            {1, MonitoringManager.getMonitorById(45)}
-                        }
-                    },
-                    {
-                        // room 1
-                        1, new Dictionary<int, ComponentMonitoring>()
-                        {
-                            // room 1 is concerned by the 5 following petri nets and the ComponentMonitoring modeling these petri nets inside Meta petri net are those specified
-                            {2, MonitoringManager.getMonitorById(144)},
-                            {3, MonitoringManager.getMonitorById(145)},
-                            {4, MonitoringManager.getMonitorById(146)},
-                            {5, MonitoringManager.getMonitorById(147)},
-                            {6, MonitoringManager.getMonitorById(149)}
-                        }
-                    },
-                    {
-                        // room 2 is concerned by blablabla (see previous comments, is the same)
-                        2, new Dictionary<int, ComponentMonitoring>()
-                        {
-                            {7, MonitoringManager.getMonitorById(152)},
-                            {8, MonitoringManager.getMonitorById(153)},
-                            {9, MonitoringManager.getMonitorById(154)},
-                            {10, MonitoringManager.getMonitorById(155)},
-                            {11, MonitoringManager.getMonitorById(156)},
-                            {12, MonitoringManager.getMonitorById(157)},
-                            {13, MonitoringManager.getMonitorById(158)}
-                        }
-                    },
-                    {
-                        // room 3 is concerned by blablabla (see previous comments, is the same)
-                        3, new Dictionary<int, ComponentMonitoring>()
-                        {
-                            {14, MonitoringManager.getMonitorById(141)}, // both 14th and 15th petri net have the same ComponentMonitoring id inside Meta Pn (the puzzle) 
-                            {15, MonitoringManager.getMonitorById(141)}, // both 14th and 15th petri net have the same ComponentMonitoring id inside Meta Pn (the puzzle)
-                            {16, MonitoringManager.getMonitorById(168)},
-                            {17, MonitoringManager.getMonitorById(169)},
-                            {18, MonitoringManager.getMonitorById(170)},
-                            {19, MonitoringManager.getMonitorById(0)},
-                            {20, MonitoringManager.getMonitorById(4)},
-                            {21, MonitoringManager.getMonitorById(21)},
-                            {22, MonitoringManager.getMonitorById(99)}
-                        }
-                    }
+                    { 45,  1},
+                    {144,  2},
+                    {145,  3},
+                    {146,  4},
+                    {147,  5},
+                    {149,  6},
+                    {152,  7},
+                    {153,  8},
+                    {154,  9},
+                    {155, 10},
+                    {156, 11},
+                    {157, 12},
+                    {158, 13},
+                    {141, LoadGameContent.gameContent.virtualPuzzle ? 14 : 15},
+                    {168, 16},
+                    {169, 17},
+                    {170, 18},
+                    {  0, 19},
+                    {  4, 20},
+                    { 21, 21},
+                    { 99, 22}
                 };
             }
             else
@@ -361,12 +291,6 @@ public class HelpSystem : FSystem {
         instance = this;
     }
 
-    // Use this to update member variables when system pause. 
-    // Advice: avoid to update your families inside this function.
-    protected override void onPause(int currentFrame)
-    {
-    }
-
     // Use this to update member variables when system resume.
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
@@ -376,40 +300,40 @@ public class HelpSystem : FSystem {
         {
             noActionTimer = Time.time;
 
-            // Compute the number of steps to finish the game
-            if (requiredSteps == 0)
+            if (thread == null)
             {
-                List<string> pnNames = new List<string>(pnNetsCompletion.Keys);
+                List<string> pnNames = new List<string>(pnNetsRemainingSteps.Keys);
                 foreach (string pnName in pnNames)
                 {
-                    pnNetsCompletion[pnName] = MonitoringManager.getNextActionsToReachPlayerObjective(pnName, int.MaxValue).Count;
-                    requiredSteps += pnNetsCompletion[pnName];
+                    pnNetsRemainingSteps[pnName] = MonitoringManager.getNextActionsToReachPlayerObjective(pnName, int.MaxValue).Count;
+                    pnNetsRequiredStepsOnStart[pnName] = pnNetsRemainingSteps[pnName];
                 }
-
-                if (thread == null)
-                {
-                    lastTimeout = -1;
-                    currentTimeout = 0;
-                    thread = new Thread(updatePnNetsCompletion);
-                    thread.Start();
-                }
+                lastTimeout = -1;
+                currentTimeout = 0;
+                thread = new Thread(updatePnCompletion);
+                thread.Start();
             }
         }
     }
 
-    private void updatePnNetsCompletion()
+    private void updatePnCompletion()
     {
         try
         {
+            int lastCount;
             while (lastTimeout < currentTimeout)
             {
                 lastTimeout = currentTimeout;
-                Thread.Sleep(4000); 
                 // Update each Petri net
-                List<string> pnNames = new List<string>(HelpSystem.instance.pnNetsCompletion.Keys);
+                List<string> pnNames = new List<string>(HelpSystem.instance.pnNetsRemainingSteps.Keys);
                 foreach (string pnName in pnNames)
                 {
-                    HelpSystem.instance.pnNetsCompletion[pnName] = MonitoringManager.getNextActionsToReachPlayerObjective(pnName, int.MaxValue).Count;
+                    lastCount = MonitoringManager.getNextActionsToReachPlayerObjective(pnName, int.MaxValue).Count;
+                    if (lastCount == 0 && lastCount < HelpSystem.instance.pnNetsRemainingSteps[pnName])
+                        cleanHintsByPn.Push(pnName);
+                    mut.WaitOne();
+                    HelpSystem.instance.pnNetsRemainingSteps[pnName] = lastCount;
+                    mut.ReleaseMutex();
                     Thread.Sleep(250);
                 }
             }
@@ -418,37 +342,41 @@ public class HelpSystem : FSystem {
         thread = null;
     }
 
+    // Evaluate if resolution process is ahead of remaining time or not.
+    // Return a value between [-1.0, 1.0] that models if player is ahead from time progression. For exemple, -1.0 means time is over and no enigma was resolved, 1.0 means game is over from its beginning, 0.0 means time and resolution process are synchrnized. 
     private float computeProgressionRatio()
     {
-        //enigma done / total enigma
-        float enigmaProgression = (totalWeightedMetaActions - GetWeightedNumberEnigmasLeft()) / totalWeightedMetaActions;
-        //time spent / session duration
+        // First compute time progression
         float timeProgression = (Time.time - f_timer.First().GetComponent<Timer>().startingTime) / config.sessionDuration;
-        //(nb enigma done / total nb enigma) / (current time / total duration)
-        // if time simulation is ahead of enigma resolution then progressionRation is < 1 and then will boost label weight
-        // if enigma resolution is ahead of time simulation then progressionRation is > 1 and then will reduce label weight
-        return enigmaProgression / timeProgression;
+
+        // Second compute resolution progression (taking into account enigma weights)
+        float resolutionDone = 0;
+
+        mut.WaitOne(); // because pnNetsRemainingSteps is also modified in thread, we have to protect it during iterations
+        foreach (KeyValuePair<string, int> entry in pnNetsRemainingSteps)
+        {
+            string pnName = entry.Key;
+            float remainingSteps = entry.Value;
+            float requiredSteps = pnNetsRequiredStepsOnStart[pnName];
+            resolutionDone += ((requiredSteps - remainingSteps) / requiredSteps)*weights[pnName];
+        }
+        mut.ReleaseMutex();
+        float enigmaProgression = resolutionDone / totalWeightedMetaActions;
+
+        return enigmaProgression - timeProgression;
     }
 
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount) {
         currentTimeout = familiesUpdateCount;
-        if (subtitles.gameObject.activeSelf && Time.time - subtitlesTimer > 2)
-        {
-            subtitles.text = string.Empty;
-            GameObjectManager.setGameObjectState(subtitles.gameObject, false);
-        }
 
         //increase labelCount if the player isn't doing anything
         if(Time.time - noActionTimer > config.noActionFrequency)
         {
             noActionTimer = Time.time;
-            //(nb enigma done / total nb enigma) / (current time / total duration)
             float progressionRatio = computeProgressionRatio();
-            if (progressionRatio == 0)
-                labelCount += labelWeights["stagnation"];
-            else
-                labelCount += labelWeights["stagnation"] / progressionRatio;
+            if (progressionRatio < 0) // means players are late
+                labelCount += labelWeights["stagnation"] / (1 - progressionRatio);
         }
 
         //check the time spent since the last time the player asked help
@@ -476,9 +404,13 @@ public class HelpSystem : FSystem {
             GameObjectManager.setGameObjectState(cooldownRT.gameObject, false);
             cooldownText.text = "";
         }
+
+        while (cleanHintsByPn.Count > 0)
+            RemoveHintsByPN(cleanHintsByPn.Pop());
     }
 
     /// <summary>
+    /// This function takes into account the label of each pending trace and display Hint if score exceeds threshold and time out is over
     /// Called when a new Trace component is created (they are created by ActionManager when an action is traced)
     /// </summary>
     /// <param name="go">The gameobject of the new Trace component</param>
@@ -497,11 +429,40 @@ public class HelpSystem : FSystem {
         int nbTraces = traces.Length;
         int nbLabels = -1;
 
-        //increase/decrease labelCount depending on the labels
-        //give feedback if necessary
+        //parse all traces
         for (int i = 0; i < nbTraces; i++)
         {
             tmpTrace = traces[i];
+
+            // Check if hints are available for this trace
+            Dictionary<string, List<KeyValuePair<string, string>>> hints;
+            if (gameHints.dictionary.TryGetValue(tmpTrace.componentMonitoring.id + "." + tmpTrace.actionName, out hints))
+            {
+                // Check if options are defined for this action
+                List < KeyValuePair<string, string>> options;
+                if (hints.TryGetValue("options", out options))
+                {
+                    // parse all options 
+                    bool askToRemove = false;
+                    foreach (KeyValuePair<string, string> option in options)
+                    {
+                        // For options, only Value is available and could be equal to ?? or --
+                        // ?? means force hint to display
+                        // -- means force hint to destroy
+                        if (option.Value == "??")
+                            DisplayHint(tmpTrace.componentMonitoring, tmpTrace.actionName);
+                        if (option.Value == "--")
+                            askToRemove = true;
+                    }
+                    if (askToRemove)
+                        gameHints.dictionary.Remove(tmpTrace.componentMonitoring.id + "." + tmpTrace.actionName);
+                }
+                // Check if this action is still alive => if not remove hints
+                if (!tmpTrace.componentMonitoring.isStillReachable(tmpTrace.actionName))
+                    gameHints.dictionary.Remove(tmpTrace.componentMonitoring.id + "." + tmpTrace.actionName);
+            }
+
+            // Take into account labels
             nbLabels = tmpTrace.labels.Length;
             //add the weight of each label to labelCount
             for (int j = 0; j < nbLabels; j++)
@@ -509,7 +470,7 @@ public class HelpSystem : FSystem {
                 if (labelWeights.ContainsKey(tmpTrace.labels[j]))
                 {
                     if (progressionRatio != 0)
-                        labelCount += labelWeights[tmpTrace.labels[j]] / progressionRatio;
+                        labelCount += labelWeights[tmpTrace.labels[j]] / (1 - progressionRatio);
                     else
                         labelCount += labelWeights[tmpTrace.labels[j]];
                     //labelCount can't be negative
@@ -517,104 +478,29 @@ public class HelpSystem : FSystem {
                         labelCount = 0;
 
                     //if labelCount reached the step calculate the feedback level and ask a hint and the time spent since the last time the system gave a feedback reached countLabel to know if it can give another one
-                    if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration)
-                        DisplayHint(room.roomNumber);
+                    if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration){
+                        DisplayHint();
+						labelCount = 0;
+					}
                 }
             }
             GameObjectManager.removeComponent(tmpTrace);
         }
     }
 
-    /// <summary>
-    /// Called when a ActionPerformed component is created and store its info in the dictionary actionPerformedHistory.
-    /// This information is used only when the ActionManager processed this data because else actions are not performed in Petri nets yet.
-    /// The information has to be stored because once processed, the ActionPerformed component is removed by ActionManager
-    /// </summary>
-    /// <param name="go">The game object of the new ActionPerformed</param>
-    private void OnNewActionPerformed(GameObject go)
-    {
-        ActionPerformed[] actions = go.GetComponents<ActionPerformed>();
-        //initialize a queue for this gameobject in actionPerformedHistory if it doesn't exist
-        if (!actionPerformedHistory.ContainsKey(go))
-            actionPerformedHistory.Add(go, new Queue<KeyValuePair<string, string>>());
-        for (int i = 0; i < actions.Length; i++)
-        {
-            //add the name and the overridename for each ActionPerformed to the dictionary
-            //they will then be used to find the corresponding ComponentMonitoring on the gameobject
-            ActionPerformed ap = actions[i];
-            actionPerformedHistory[go].Enqueue(new KeyValuePair<string, string>(ap.name, ap.overrideName));
-        }
-    }
-
-    /// <summary>
-    /// Called when all ActionPerformed components have been processed and removed by ActionManager 
-    /// and uses the stored information to remove hint about actions that can't be reached anymore in Petri nets.
-    /// This information is used only when the ActionManager processed this data because else actions are not performed in Petri nets yet.
-    /// The information has to be stored because once processed, the ActionPerformed component is removed by ActionManager
-    /// </summary>
-    /// <param name="go">The game object of the removed ActionPerformed</param>
-    private void OnActionsProcessed(GameObject go)
-    {
-        if (actionPerformedHistory.ContainsKey(go))
-        {
-            int historySize = actionPerformedHistory[go].Count;
-            //foreach information stored for this gameobject
-            for(int i = 0; i < historySize; i++)
-            {
-                //find monitors corresponding to the stored name and overrideName
-                List<KeyValuePair<ComponentMonitoring, TransitionLink>> cMonitors = FindMonitors(go, actionPerformedHistory[go].Peek().Key, actionPerformedHistory[go].Peek().Value);
-                //remove the information of the list once processed
-                actionPerformedHistory[go].Dequeue();
-                foreach (KeyValuePair < ComponentMonitoring, TransitionLink > cm in cMonitors)
-                {
-                    //delete hints linked to the ComponentMonitoring if it is not reachable anymore
-                    bool reachable = false;
-                    foreach(TransitionLink tl in cm.Key.transitionLinks)
-                    {
-                        foreach (List<string> linksConcerned in cm.Key.getPossibleSetOfLinks(tl.transition.label))
-                        {
-                            if (MonitoringManager.getNextActionsToReach(cm.Key, tl.transition.label, int.MaxValue, linksConcerned.ToArray()).Count > 0)
-                            {
-                                reachable = true;
-                                break;
-                            }
-                        }
-                        if (reachable) break;
-                    }
-                    if (!reachable)
-                        RemoveHintsByComponentID(cm.Key.id);
-                    //if action performed is a player objective/end action, remove all hints linked to monitors of the same Petri net
-                    if (cm.Value.isEndAction)
-                        RemoveHintsByPN(cm.Key.fullPnSelected);
-                    // Remove Hints conditioned by the non execution of this action
-                    RemoveHintsInhibedByAction(cm.Key, cm.Value);
-                }
-            }
-        }
-    }
-
     private int getFeedbackLevel()
     {
-        // Calculate appropriate feedback level depending on the number of feedback given, the number feedback availlable, the time spent and the time left
+        // Calculate appropriate feedback level depending on player progression
 
-        // First compute time progression
-        float timeProgression = (Time.time - f_timer.First().GetComponent<Timer>().startingTime) / config.sessionDuration;
-
-        // Second compute steps progression
-        int stepsDone = requiredSteps;
-        foreach (int remainingSteps in pnNetsCompletion.Values)
-            stepsDone -= remainingSteps;
-
-        float stepProgression = (float)stepsDone / requiredSteps;
+        float progression = computeProgressionRatio();
 
         // Then comute feedback level
         int feedbackLevel = -1; // default no feedback
-        float delta = stepProgression - timeProgression;
-        if (config.feedbackStep1 < delta && delta < 0)
+        if (config.feedbackStep1 < progression && progression < 0)
             feedbackLevel = 1;
-        else if (config.feedbackStep2 < delta && delta <= config.feedbackStep1)
+        else if (config.feedbackStep2 < progression && progression <= config.feedbackStep1)
             feedbackLevel = 2;
-        else if (delta <= config.feedbackStep2)
+        else if (progression <= config.feedbackStep2)
             feedbackLevel = 3;
 
         return feedbackLevel;
@@ -631,7 +517,7 @@ public class HelpSystem : FSystem {
         if(Time.time - playerHintTimer > config.playerHintCooldownDuration)
         {
             playerAskedHelp = true;
-            if (DisplayHint(room.roomNumber))
+            if (DisplayHint())
             {
                 //if the player received an hint, start the cooldown
                 playerHintTimer = Time.time;
@@ -666,31 +552,12 @@ public class HelpSystem : FSystem {
                             if (wai.givenAnswer.Contains(wrongAnswer))
                             {
                                 //display feedback in hint list in IAR
-                                string hintText = "";
-                                List<string> availableFeedbacks = gameHints.wrongAnswerFeedbacks[key][wrongAnswer].Value;
-                                if (availableFeedbacks.Count > 0)
-                                {
-                                    // Choose random hint
-                                    int randomPos = new System.Random().Next(availableFeedbacks.Count);
-                                    hintText = availableFeedbacks[randomPos];
-                                    // Add new hint button
-                                    Button hintButton = CreateHintButton(key, hintText, cm.id, gameHints.wrongAnswerFeedbacks[key][wrongAnswer].Key);
-                                    // Remove this hint
-                                    availableFeedbacks.RemoveAt(randomPos);
-
-                                    GameObjectManager.addComponent<ActionPerformedForLRS>(hintButton.gameObject, new
-                                    {
-                                        verb = "received",
-                                        objectType = "feedback",
-                                        objectName = string.Concat("hint_", hintButton.transform.GetChild(0).GetComponent<Text>().text),
-                                        activityExtensions = new Dictionary<string, List<string>>() {
-                                            { "type", new List<string>() { "wrongAnwserHint" } },
-                                            { "from", new List<string>() { "system" } },
-                                            { "content", new List<string>() { hintButton.GetComponent<HintContent>().text } }
-                                        }
-                                    });
-                                    break;
-                                }
+                                string hintText = gameHints.wrongAnswerFeedbacks[key][wrongAnswer].Value;
+                                // Add new hint button
+                                CreateHintButton(cm, key, hintText, gameHints.wrongAnswerFeedbacks[key][wrongAnswer].Key);
+                                // Remove this hint
+                                gameHints.wrongAnswerFeedbacks[key].Remove(wrongAnswer);
+                                break;
                             }
                         }
                     }
@@ -713,28 +580,8 @@ public class HelpSystem : FSystem {
         List<string> keys = new List<string>(gameHints.dictionary.Keys);
         foreach (string key in keys)
         {
-            if (key.EndsWith("."+id))
+            if (key.StartsWith(id+"."))
                 gameHints.dictionary.Remove(key);
-        }
-    }
-
-    /// <summary>
-    /// Look for hints for the ComponentMonitoring parameters and remove these hints if they are tagged by the name of the action
-    /// </summary>
-    /// <param name="cm"></param>
-    /// <param name="tl"></param>
-    private void RemoveHintsInhibedByAction(ComponentMonitoring cm, TransitionLink tl)
-    {
-        string cmId = "."+cm.id.ToString();
-        List<string> keys = new List<string>(gameHints.dictionary.Keys);
-        foreach (string key in keys)
-        {
-            if (key.EndsWith(cmId))
-            {
-                string[] tokens = key.Split('.');
-                if (tokens[1].EndsWith("##"+tl.transition.label) || tokens[1].EndsWith("##" + tl.transition.overridedLabel))
-                    gameHints.dictionary.Remove(key);
-            }
         }
     }
 
@@ -777,51 +624,69 @@ public class HelpSystem : FSystem {
     }
 
     /// <summary>
-    /// Returns a list of TransitionLink corresponding to the name and the overrideName given and their ComponentMonitoring on the given GameObject.
+    /// Tries to give the most appropriate hint
     /// </summary>
-    /// <param name="go"></param>
-    /// <param name="name"></param>
-    /// <param name="overrideName"></param>
-    /// <returns></returns>
-    private List<KeyValuePair<ComponentMonitoring, TransitionLink>> FindMonitors(GameObject go, string name, string overrideName)
+    /// <param name="cm"></param>
+    /// <returns>true if a hint is given to the player and false otherwise</returns>
+    private bool DisplayHint()
     {
-        List<KeyValuePair<ComponentMonitoring, TransitionLink>> cMonitors = new List<KeyValuePair<ComponentMonitoring, TransitionLink>>();
-
-        if (name != "" && overrideName != "")
+        // actions candidate to hints
+        List<KeyValuePair<ComponentMonitoring, string>> actionCandidates = new List<KeyValuePair<ComponentMonitoring, string>>();
+        // get the shortest path in meta Petri net to end the game
+        List<KeyValuePair<ComponentMonitoring, string>> usefullEnigmas = MonitoringManager.getNextActionsToReachPlayerObjective(MonitoringManager.Instance.PetriNetsName[0], int.MaxValue);
+        // get all activated actions current activated enigma in meta Petri net
+        List<KeyValuePair<ComponentMonitoring, string>> triggerableActions = MonitoringManager.getTriggerableActions();
+        // compute intersections between the two lists to identify enabled enigmas that have to be solved in order to progress inside the game
+        List<KeyValuePair<ComponentMonitoring, string>> selectedEnigmas = new List<KeyValuePair<ComponentMonitoring, string>>();
+        foreach (KeyValuePair<ComponentMonitoring, string> triggerableAction in triggerableActions)
         {
-            //look for ComponentMonitorings corresponding to name and overridename
-            foreach (ComponentMonitoring cm in go.GetComponents<ComponentMonitoring>())
-                foreach (TransitionLink tl in cm.transitionLinks)
-                    if (tl.transition.label == name && tl.transition.overridedLabel == overrideName)
-                        cMonitors.Add(new KeyValuePair<ComponentMonitoring, TransitionLink>(cm, tl));
+            // filter action of the meta Petri net (available enigmas)
+            if (triggerableAction.Key.fullPnSelected == 0)
+            {
+                // Check if this action is usefull to end the game
+                foreach (KeyValuePair<ComponentMonitoring, string> usefullEnigma in usefullEnigmas)
+                {
+                    if (usefullEnigma.Key.id == triggerableAction.Key.id && usefullEnigma.Value == triggerableAction.Value)
+                        selectedEnigmas.Add(usefullEnigma);
+                }
+            }
         }
-        else if (name != "")
+        // Parse all selected enigmas
+        foreach(KeyValuePair<ComponentMonitoring, string> selectedEnigma in selectedEnigmas)
         {
-            //look for the ComponentMonitoring corresponding to the name
-            foreach (ComponentMonitoring cm in go.GetComponents<ComponentMonitoring>())
-                foreach (TransitionLink tl in cm.transitionLinks)
-                    if (tl.transition.label == name)
-                        cMonitors.Add(new KeyValuePair<ComponentMonitoring, TransitionLink>(cm, tl));
+            int associatedPnToEnigma = EnigmaIdToPnId[selectedEnigma.Key.id];
+            // get the shortest path in sub Petri net to reach the end of the enigma
+            List<KeyValuePair<ComponentMonitoring, string>> usefullActions = MonitoringManager.getNextActionsToReachPlayerObjective(MonitoringManager.Instance.PetriNetsName[associatedPnToEnigma], int.MaxValue);
+            // compute intersections between the usefullActions and the triggerableActions in order to select action required to solve enigma
+            foreach (KeyValuePair<ComponentMonitoring, string> triggerableAction in triggerableActions)
+            {
+                // filter action of the selected sub Petri net
+                if (triggerableAction.Key.fullPnSelected == associatedPnToEnigma)
+                {
+                    // Select candidates which are triggerable, inside the sortest path and have hints available
+                    foreach (KeyValuePair<ComponentMonitoring, string> usefullAction in usefullActions)
+                    {
+                        if (usefullAction.Key.id == triggerableAction.Key.id && usefullAction.Value == triggerableAction.Value && gameHints.dictionary.ContainsKey(usefullAction.Key.id+"."+ usefullAction.Value))
+                            actionCandidates.Add(usefullAction);
+                    }
+                }
+            }
         }
-        else if (overrideName != "")
+        if (actionCandidates.Count > 0)
         {
-            //look for the ComponentMonitoring corresponding to the overridename
-            foreach (ComponentMonitoring cm in go.GetComponents<ComponentMonitoring>())
-                foreach (TransitionLink tl in cm.transitionLinks)
-                    if (tl.transition.overridedLabel == overrideName)
-                        cMonitors.Add(new KeyValuePair<ComponentMonitoring, TransitionLink>(cm, tl));
+            KeyValuePair<ComponentMonitoring, string> candidateSelection = actionCandidates[(int)UnityEngine.Random.Range(0, actionCandidates.Count - 0.01f)];
+            return DisplayHint(candidateSelection.Key, candidateSelection.Value);
         }
-        return cMonitors;
+        else
+            return false;
     }
 
     /// <summary>
-    /// Tries to give an hint with the given room and feedback level.
-    /// If no hint is found for the given feedback level it will look for hint for another feedback level,
-    /// but if no hint is found for the given room it stops looking for a hint
+    /// Find an hint for the given ComponentMonitoring action name. We assume that this action has at least one hint available.
     /// </summary>
-    /// <param name="room"></param>
-    /// <returns></returns>
-    private bool DisplayHint(int room)
+    /// <param name="cm"></param>
+    /// <returns>true if a hint is given to the player and false otherwise</returns>
+    private bool DisplayHint(ComponentMonitoring cm, string actionName)
     {
         // compute level priority. 
         int requiredLevel = getFeedbackLevel();
@@ -833,78 +698,37 @@ public class HelpSystem : FSystem {
             int i = 0;
             while (i < levelsPriority.Count)
             {
-                //get a hint corresponding to the room and the feedback level
-                hintName = GetHintName(room, levelsPriority[i]);
-                if (hintName != "")
+                //check if at least one formulation for the current level is not already displayed inside IAR
+                if (gameHints.dictionary[cm.id + "." + actionName].ContainsKey(levelsPriority[i].ToString()) && containsUniqueHint(gameHints.dictionary[cm.id + "." + actionName][levelsPriority[i].ToString()]))
+                {
+                    hintName = cm.id + "." + actionName;
                     break;
+                }
                 i++;
             }
             //if the feedback level is valid
             if (i < levelsPriority.Count)
             {
                 string levelFound = levelsPriority[i].ToString();
-                List<KeyValuePair<string, List<string>>> availableHints = gameHints.dictionary[hintName][levelFound];
-                // Get a random hint for the selected room/Monitor/level
+                List<KeyValuePair<string, string>> availableHints = gameHints.dictionary[hintName][levelFound];
+                // Get a random hint for the selected action
                 int selectedHint = (int)UnityEngine.Random.Range(0, availableHints.Count - 0.01f);
-                tmpPair = availableHints[selectedHint];
-                // Get a random formulation for this hint that is not already displayed to the player
-                string hintText = "";
-                // First extract all formulations not already displayed to the player
-                List<int> uniqueFormulationIds = new List<int>();
-                for (int j = 0 ; j < tmpPair.Value.Count ; j++)
-                {
-                    bool isUnique = true;
-                    foreach (GameObject go in f_enabledHintsIAR)
-                        if (go.GetComponent<HintContent>().text == tmpPair.Value[j])
-                        {
-                            isUnique = false;
-                            break;
-                        }
-                    if (isUnique)
-                        uniqueFormulationIds.Add(j);
-                }
-                int randomForm = uniqueFormulationIds[(int)UnityEngine.Random.Range(0, uniqueFormulationIds.Count - 0.01f)];
-                hintText = tmpPair.Value[randomForm];
+                KeyValuePair<string, string> tmpPair = availableHints[selectedHint];
+                string hintText = tmpPair.Value;
                 // remove selected formulation
-                tmpPair.Value.RemoveAt(randomForm);
-                // remove hint if no more formulation exists
-                if (tmpPair.Value.Count == 0)
+                availableHints.RemoveAt(selectedHint);
+                if (availableHints.Count == 0)
                 {
-                    //remove hint from dictionary
-                    availableHints.RemoveAt(selectedHint);
-
-                    if (availableHints.Count == 0)
-                    {
-                        gameHints.dictionary[hintName].Remove(levelFound);
-                        if (gameHints.dictionary[hintName].Keys.Count == 0)
-                            gameHints.dictionary.Remove(hintName);
-                    }
+                    gameHints.dictionary[hintName].Remove(levelFound);
+                    if (!gameHints.dictionary[hintName].ContainsKey("1") && !gameHints.dictionary[hintName].ContainsKey("2") && !gameHints.dictionary[hintName].ContainsKey("3"))
+                        gameHints.dictionary.Remove(hintName);
                 }
-                string[] tokens = hintName.Split('.');
-                int monitorId = int.Parse(tokens[tokens.Length - 1]);
-                Button hintButton = CreateHintButton(hintName, hintText, monitorId, tmpPair.Key);
-
-                GameObjectManager.addComponent<ActionPerformedForLRS>(hintButton.gameObject, new
-                {
-                    verb = "received",
-                    objectType = "feedback",
-                    objectName = string.Concat("hint_", hintButton.transform.GetChild(0).GetComponent<Text>().text),
-                    activityExtensions = new Dictionary<string, List<string>>() {
-                    { "type", new List<string>() { "hint" } },
-                    { "from", new List<string>() { playerAskedHelp ? "button" : "system" } },
-                    { "content", new List<string>() { hintButton.GetComponent<HintContent>().text } }
-                }
-                });
-
-                systemHintTimer = Time.time;
-                nbFeedBackGiven++;
-                labelCount = 0;
-                playerAskedHelp = false;
+                CreateHintButton(cm, actionName, hintText, tmpPair.Key);
                 return true;
             }
             else
             {
-                Debug.Log(string.Concat("No hint found for the room ", room));
+                Debug.Log(string.Concat("No hint found for the action \"", actionName, "\" of the ComponentMonitoring id ", cm.id, " (GameObject name: ", cm.gameObject.name, ")"));
                 playerAskedHelp = false;
                 return false;
             }
@@ -920,11 +744,11 @@ public class HelpSystem : FSystem {
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="hintName">"name.monitorID"</param>
+    /// <param name="hintMonitor"></param>
+    /// <param name="actionName"></param>
     /// <param name="hintText"></param>
-    /// <param name="hintMonitorID"></param>
     /// <param name="hintLink"></param>
-    private Button CreateHintButton(string hintName, string hintText, int hintMonitorID, string hintLink = "")
+    private Button CreateHintButton(ComponentMonitoring hintMonitor, string actionName, string hintText, string hintLink = "")
     {
         //show a button to see hint content in hint tab in IAR
         if (hintButtonsPool.Count == 0)
@@ -945,12 +769,28 @@ public class HelpSystem : FSystem {
         Button hintButton = tmpGO.GetComponent<Button>();
         GameObjectManager.setGameObjectState(tmpGO, true);
 
-        tmpHC = tmpGO.GetComponent<HintContent>();
-        tmpHC.hintName = hintName;
+        HintContent tmpHC = tmpGO.GetComponent<HintContent>();
+        tmpHC.monitor = hintMonitor;
+        tmpHC.actionName = actionName;
         tmpHC.text = hintText;
         tmpHC.link = hintLink;
-        if (hintMonitorID != -1)
-            tmpHC.monitor = MonitoringManager.getMonitorById(hintMonitorID);
+
+        GameObjectManager.addComponent<ActionPerformedForLRS>(hintButton.gameObject, new
+        {
+            verb = "received",
+            objectType = "feedback",
+            objectName = string.Concat("hint_", hintButton.transform.GetChild(0).GetComponent<Text>().text),
+            activityExtensions = new Dictionary<string, List<string>>() {
+                    { "type", new List<string>() { "hint" } },
+                    { "from", new List<string>() { playerAskedHelp ? "button" : "system" } },
+                    { "content", new List<string>() { hintButton.GetComponent<HintContent>().text } }
+                }
+        });
+
+        if (playerAskedHelp)
+            playerAskedHelp = false;
+        else
+            systemHintTimer = Time.time;
 
         //change subtitle text to display the hint
         //subtitles.text = tmpPair.Value[(int)UnityEngine.Random.Range(0, nbHintTexts - 0.01f)];
@@ -959,105 +799,14 @@ public class HelpSystem : FSystem {
         return hintButton;
     }
 
-    private float GetWeightedNumberEnigmasLeft()
-    {
-        if (finalComponentMonitoring)
-        {
-            float left = 0;
-            List<KeyValuePair<ComponentMonitoring,string>> nextActions = MonitoringManager.getNextActionsToReach(finalComponentMonitoring, "perform", int.MaxValue);
-            float weight = -1;
-
-            foreach (KeyValuePair<ComponentMonitoring, string> action in nextActions)
-            {
-                weight = GetEnigmaWeight(action.Key);
-                if (weight > 0)
-                    left += weight;
-            }
-
-            //Return the number action left multiplied by they weight to reach the last action of the meta Petri net
-            return left;
-        }
-        else
-            return -1;
-    }
-
-    private float GetEnigmaWeight(ComponentMonitoring monitor)
-    {
-        // Look for petri net id associated to this meta monitor
-        int petriNetId = -1;
-        foreach (Dictionary<int, ComponentMonitoring> pn2cm in rooms2Enigmas.Values)
-        {
-            foreach (KeyValuePair<int, ComponentMonitoring> entry in pn2cm)
-            {
-                if (entry.Value.id == monitor.id)
-                {
-                    petriNetId = entry.Key;
-                    break;
-                }
-                if (petriNetId != -1)
-                    break;
-            }
-        }
-        // if no petri nets found, return 0
-        if (petriNetId == -1)
-            return 0;
-
-        string key = MonitoringManager.Instance.PetriNetsName[petriNetId];
-
-        if (weights.ContainsKey(key))
-            return weights[key];
-        else
-            return 0;
-    } 
-
-    /// <summary>
-    /// Return the name of a randomly selected hint among hints corresponding to the room and the feedback level given. The hint selected contains at least one formulation not already included into the list of hints displayed to the player
-    /// </summary>
-    /// <param name="room"></param>
-    /// <param name="feedbackLevel"></param>
-    /// <returns></returns>
-    private string GetHintName(int room, int feedbackLevel)
-    {
-        List<int> nextMonitorIds = GetNextActions(room);
-        List<string> availableHintNames = new List<string>();
-
-        foreach (string key in gameHints.dictionary.Keys)
-        {
-            // First check all key that starts with room number
-            if (key.StartsWith(room.ToString()+"."))
-            {
-                // Then check once that finishes with one of the enabled monitor
-                foreach (int monitorId in nextMonitorIds)
-                {
-                    if (key.EndsWith("."+monitorId.ToString()))
-                    {
-                        if (gameHints.dictionary[key].ContainsKey(feedbackLevel.ToString()))
-                        {
-                            // Check if this formulation is not already available in the list of hints (even if it's not for the same ComponentMonitoring id)
-                            if (containsUniqueHint(gameHints.dictionary[key][feedbackLevel.ToString()]))
-                                availableHintNames.Add(key);
-                        }
-                    }
-                }
-            }
-        }
-
-        if (availableHintNames.Count > 0)
-            //return a name among the valid hints
-            return availableHintNames[(int)UnityEngine.Random.Range(0, availableHintNames.Count - 0.001f)];
-        else
-            return "";
-    }
-
-
     /// <summary>
     /// Check if at least one of the hints contains at least one formulation not already included into hints displayed to the player
     /// </summary>
     /// <param name="hintsCandidate"></param>
     /// <returns></returns>
-    private bool containsUniqueHint(List<KeyValuePair<string, List<string>>> hintsCandidate)
+    private bool containsUniqueHint(List<KeyValuePair<string, string>> hintsCandidate)
     {
-        foreach (KeyValuePair<string, List<string>> pair in hintsCandidate)
+        foreach (KeyValuePair<string, string> pair in hintsCandidate)
         {
             bool isUnique = true;
             foreach (GameObject go in f_enabledHintsIAR)
@@ -1070,46 +819,5 @@ public class HelpSystem : FSystem {
                 return true;
         }
         return false;
-    }
-
-    private List<int> GetNextActions(int room)
-    {
-        List<KeyValuePair<ComponentMonitoring, string>> triggerableActions = MonitoringManager.getTriggerableActions();
-        if (!rooms2Enigmas.ContainsKey(room))
-        {
-            Debug.LogWarning("Room " + room + " doesn't contain any petri net.");
-            return new List<int>();
-        }
-        // Get list of petri nets associated to this room
-        Dictionary<int, ComponentMonitoring> pn2cm = rooms2Enigmas[room];
-
-        List<int> actionsIDs = new List<int>();
-        
-        // Parse all triggerable actions
-        for (int i = 0; i < triggerableActions.Count; i++)
-        {
-            // Check if this action is part of the set of petri nets of this room, if not ignore this action because it is not linked to the room we are interested in
-            int pn = triggerableActions[i].Key.fullPnSelected;
-            if (pn2cm.ContainsKey(pn))
-            {
-                // Check if Meta ComponentMonitoring associated to the petri net of the current action is steal fireable, if not ingore this action because it is part of a solved enigma
-                // Parse all triggerable action
-                for (int iMeta = 0; iMeta < triggerableActions.Count; iMeta++)
-                {
-                    // filter only those that are part of meta petri net
-                    if (triggerableActions[iMeta].Key.fullPnSelected == 0)
-                    {
-                        // Check if ComponentMonitoring of this meta action is the one expected for the petri net of the action to filter (the one of the first loop)
-                        if (triggerableActions[iMeta].Key.id == pn2cm[pn].id)
-                        {
-                            actionsIDs.Add(triggerableActions[i].Key.id);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        return actionsIDs;
     }
 }
