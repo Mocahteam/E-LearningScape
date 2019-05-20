@@ -20,6 +20,8 @@ public class MenuSystem : FSystem {
     private Family f_enabledSettingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_settingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)));
     private Family f_inputFieldMasterMind = FamilyManager.getFamily(new AnyOfComponents(typeof(InputField), typeof(Button)), new NoneOfLayers(5), new AnyOfTags("Login"));
+    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
+    private Family f_inventoryMenuContent = FamilyManager.getFamily(new AnyOfTags("IARMenuButton"));
 
     private Camera menuCamera;
     private float switchDelay = 12;
@@ -210,8 +212,8 @@ public class MenuSystem : FSystem {
             if (go.name == "popupSettings")
             {
                 SettingsMainMenu smm = go.GetComponent<SettingsMainMenu>();
-                /*smm.parent = ; // mettre MenuContent de l'IAR 
-                smm.defaultUiInParent = ; // mettre le bouton Option*/
+                smm.parent = f_tabs.getAt(f_tabs.Count-1); // mettre MenuContent de l'IAR 
+                smm.defaultUiInParent = f_inventoryMenuContent.getAt(1); // mettre le bouton Option*/
             }
         }
 

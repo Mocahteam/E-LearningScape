@@ -265,6 +265,6 @@ public class IARViewItem : FSystem {
                 onExitItem(-1);
         }
         if (lastKeyboardViewed == null || (!lastKeyboardViewed.activeInHierarchy))
-            EventSystem.current.SetSelectedGameObject(f_tabs.First()); // le premier tab de l'IAR
+            EventSystem.current.SetSelectedGameObject(f_tabs.First()); //If there is no object selected in inventory or if no actif in hierarchie like scrollbar vertical in description, to not lose keyboard navigation we give to EventSystem the first element in IAR Tab 
     }
 }
