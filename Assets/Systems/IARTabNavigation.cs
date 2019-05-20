@@ -112,7 +112,7 @@ public class IARTabNavigation : FSystem {
                 inputF.GetComponent<Button>().enabled = false;
 
         }
-
+        
         SwitchTab(f_tabs.getAt(tabId)); // switch to the desired tab
         EventSystem.current.SetSelectedGameObject(f_tabs.getAt(tabId));
         systemsStates.Clear();

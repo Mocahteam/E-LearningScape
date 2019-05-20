@@ -17,7 +17,8 @@ public class MenuSystem : FSystem {
     private Family f_particles = FamilyManager.getFamily(new AllOfComponents(typeof(ParticleSystem)));
     private Family f_reflectionProbe = FamilyManager.getFamily(new AllOfComponents(typeof(ReflectionProbe)));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
-    private Family f_settingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_enabledSettingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_settingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)));
     private Family f_inputFieldMasterMind = FamilyManager.getFamily(new AnyOfComponents(typeof(InputField), typeof(Button)), new NoneOfLayers(5), new AnyOfTags("Login"));
 
     private Camera menuCamera;
@@ -114,7 +115,7 @@ public class MenuSystem : FSystem {
             // Init timer
             switchTimer = Time.time;
 
-            f_settingsMenu.addEntryCallback(onSettingMenuEnabled);
+            f_enabledSettingsMenu.addEntryCallback(onSettingMenuEnabled);
         }
 
         instance = this;
@@ -202,10 +203,21 @@ public class MenuSystem : FSystem {
         // Disable UI
         GameObjectManager.setGameObjectState(mainMenu, false);
         GameObjectManager.setGameObjectState(fadingBackground.gameObject, false);
+        
+        // Link settings window to IAR
+        foreach (GameObject go in f_settingsMenu)
+        {
+            if (go.name == "popupSettings")
+            {
+                SettingsMainMenu smm = go.GetComponent<SettingsMainMenu>();
+                /*smm.parent = ; // mettre MenuContent de l'IAR 
+                smm.defaultUiInParent = ; // mettre le bouton Option*/
+            }
+        }
 
         //To allow a good automatic navigation keyboard in menu we disabled InputField and button component in mastermind
         //When game play we have to enable these component to allow the gamer to interact with mastermind object 
-        foreach (GameObject inputF in f_inputFieldMasterMind)
+            foreach (GameObject inputF in f_inputFieldMasterMind)
         {
             if(inputF.GetComponent<InputField>())
                 inputF.GetComponent<InputField>().enabled = true;

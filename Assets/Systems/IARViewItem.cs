@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using FYFY_plugins.Monitoring;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class IARViewItem : FSystem {
 
@@ -12,7 +13,8 @@ public class IARViewItem : FSystem {
 
     // Contains all game object inside inventory under mouse cursor (only one)
     private Family f_viewed = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver)), new AnyOfTags("InventoryElements"));
-    private Family f_triggerable = FamilyManager.getFamily(new AllOfComponents(typeof(EventTrigger), typeof(UnityEngine.UI.Selectable)), new AnyOfTags("InventoryElements"));
+    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
+    private Family f_triggerable = FamilyManager.getFamily(new AllOfComponents(typeof(UnityEngine.UI.Selectable)), new AnyOfTags("InventoryElements"));
     // Contains all game objects selected inside inventory (SelectedInInventory is dynamically added by this system)
     private Family f_selected = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedInInventory), typeof(Collected), typeof(AnimatedSprites)), new AnyOfTags("InventoryElements"));
     private Family f_descriptionUI = FamilyManager.getFamily(new AnyOfTags("DescriptionUI"));
@@ -29,6 +31,7 @@ public class IARViewItem : FSystem {
 
     private GameObject currentView = null;
     private GameObject lastSelection = null;
+    private GameObject lastKeyboardViewed = null;
 
     //Variables used to blur the background when IAR opened
     public static float focusDistance;
@@ -53,22 +56,6 @@ public class IARViewItem : FSystem {
             f_selected.addExitCallback(onSelectionRemoved);
             f_viewable.addEntryCallback(onEnable);
             f_viewable.addExitCallback(onDisable);
-
-            /*foreach (GameObject go in f_triggerable){
-                EventTrigger et = go.GetComponent<EventTrigger>();
-                EventTrigger.Entry entry = new EventTrigger.Entry();
-                entry.eventID = EventTriggerType.PointerEnter;
-                entry.callback.AddListener((eventData) => { onEnterItem(go); });
-                et.triggers.Add(entry);
-                entry = new EventTrigger.Entry();
-                entry.eventID = EventTriggerType.PointerExit;
-                entry.callback.AddListener((eventData) => { onExitItem(go.GetInstanceID()); });
-                et.triggers.Add(entry);
-                entry = new EventTrigger.Entry();
-                entry.eventID = EventTriggerType.PointerClick;
-                entry.callback.AddListener((eventData) => { onItemSelected(go); });
-                et.triggers.Add(entry);
-            }*/
 
             id2go = new Dictionary<int, GameObject>();
         }
@@ -96,6 +83,7 @@ public class IARViewItem : FSystem {
     private void onEnterItem(GameObject go)
     {
         currentView = go;
+        EventSystem.current.SetSelectedGameObject(go); //When mouse is on inventory object the EventSystem take this same object as selectedGameObject 
         Debug.Log("onEnterItem "+go);
         // show description of the new focused Game Object
         showDescription(go);
@@ -240,7 +228,7 @@ public class IARViewItem : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         // mouse click management
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetMouseButtonDown(0))
         {
             // We parse all viewed game object (only once)
             foreach (GameObject go in f_viewed)
@@ -248,12 +236,35 @@ public class IARViewItem : FSystem {
                 onItemSelected(go);
             }
         }
-        if (f_selected.Count == 0 && f_viewed.Count == 0)
-            onExitItem(-1);
-        foreach (GameObject go in f_triggerable)
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (go == EventSystem.current.currentSelectedGameObject && f_viewed.Count == 0)
-                onEnterItem(go);
+            foreach (GameObject go in f_triggerable)
+            {
+                if (go == lastKeyboardViewed)
+                {
+                    onItemSelected(go);
+                }
+            }
         }
+
+
+        if (lastKeyboardViewed != EventSystem.current.currentSelectedGameObject)
+        {
+            lastKeyboardViewed = EventSystem.current.currentSelectedGameObject;
+            bool found = false;
+            foreach (GameObject go in f_triggerable)
+            {
+                if (go == lastKeyboardViewed)
+                {
+                    onEnterItem(go);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+                onExitItem(-1);
+        }
+        if (lastKeyboardViewed == null || (!lastKeyboardViewed.activeInHierarchy))
+            EventSystem.current.SetSelectedGameObject(f_tabs.First()); // le premier tab de l'IAR
     }
 }
