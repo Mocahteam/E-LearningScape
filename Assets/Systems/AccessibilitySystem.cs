@@ -23,7 +23,7 @@ public class AccessibilitySystem : FSystem {
     private Family AnimatedObject_f = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites)), new NoneOfTags("PlankE09", "InventoryElements", "UIEffect", "LockArrow"), new NoneOfComponents(typeof(Button)));
 
     //Ne comprend que ce qui a le tag DreamFragmentUI
-    private Family checkTags_f = FamilyManager.getFamily(new AnyOfTags("UIBackground"));
+    private Family checkTags_f = FamilyManager.getFamily(new AnyOfTags("NewItemFeedback"));
     
     public AccessibilitySystem ()
     {

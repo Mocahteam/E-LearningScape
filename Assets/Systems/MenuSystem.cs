@@ -210,10 +210,10 @@ public class MenuSystem : FSystem {
         foreach (GameObject go in f_settingsMenu)
         {
             if (go.name == "popupSettings")
-            {
+            { //When game is playing if we open IAR Menu and then we close the setting popup we want to back in window IAR Menu et on setting button and not on setting button of main menu 
                 SettingsMainMenu smm = go.GetComponent<SettingsMainMenu>();
-                smm.parent = f_tabs.getAt(f_tabs.Count-1); // mettre MenuContent de l'IAR 
-                smm.defaultUiInParent = f_inventoryMenuContent.getAt(1); // mettre le bouton Option*/
+                smm.parent = f_tabs.getAt(f_tabs.Count-1); //parent window is Menu IAR
+                smm.defaultUiInParent = f_inventoryMenuContent.getAt(1); //Default button is setting button in Menu IAR 
             }
         }
 

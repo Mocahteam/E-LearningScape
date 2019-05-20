@@ -14,6 +14,7 @@ public class IARViewItem : FSystem {
     // Contains all game object inside inventory under mouse cursor (only one)
     private Family f_viewed = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver)), new AnyOfTags("InventoryElements"));
     private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
+    //f_triggerable family allow with keyboard navigation to access at all of object in IAR 
     private Family f_triggerable = FamilyManager.getFamily(new AllOfComponents(typeof(UnityEngine.UI.Selectable)), new AnyOfTags("InventoryElements"));
     // Contains all game objects selected inside inventory (SelectedInInventory is dynamically added by this system)
     private Family f_selected = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedInInventory), typeof(Collected), typeof(AnimatedSprites)), new AnyOfTags("InventoryElements"));
@@ -83,8 +84,7 @@ public class IARViewItem : FSystem {
     private void onEnterItem(GameObject go)
     {
         currentView = go;
-        EventSystem.current.SetSelectedGameObject(go); //When mouse is on inventory object the EventSystem take this same object as selectedGameObject 
-        Debug.Log("onEnterItem "+go);
+        EventSystem.current.SetSelectedGameObject(go); //When mouse is on inventory object the EventSystem take this same object as selectedGameObject
         // show description of the new focused Game Object
         showDescription(go);
     }

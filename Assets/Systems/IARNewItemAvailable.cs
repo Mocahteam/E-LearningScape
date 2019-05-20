@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
+using UnityEngine.EventSystems;
 
 public class IARNewItemAvailable : FSystem {
 
@@ -11,6 +12,7 @@ public class IARNewItemAvailable : FSystem {
     private Family f_notificationEnabled = FamilyManager.getFamily(new AnyOfTags("NewItemFeedback"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_newItemOver = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(PointerOver)));
     private Family f_inventoryWarning = FamilyManager.getFamily(new AnyOfTags("InventoryWarning"));
+    //private Family f_triggerableWarning = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(UnityEngine.UI.Selectable)), new AnyOfTags("InventoryElements"));
 
     private bool warningNewItem = true;
     private bool HUD_neverDisplayed = true;
@@ -80,6 +82,7 @@ public class IARNewItemAvailable : FSystem {
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
+        
         // manage click when mouse is over an item
         foreach (GameObject go in f_newItemOver)
             OnMouseEnter(go); // same process as OnMouseEnter callback
