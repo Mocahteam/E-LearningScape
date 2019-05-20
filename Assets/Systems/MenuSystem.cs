@@ -18,7 +18,7 @@ public class MenuSystem : FSystem {
     private Family f_reflectionProbe = FamilyManager.getFamily(new AllOfComponents(typeof(ReflectionProbe)));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_settingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_inputFieldMasterMind = FamilyManager.getFamily(new AnyOfComponents(typeof(InputField), typeof(Button)), new NoneOfLayers(5));
+    private Family f_inputFieldMasterMind = FamilyManager.getFamily(new AnyOfComponents(typeof(InputField), typeof(Button)), new NoneOfLayers(5), new AnyOfTags("Login"));
 
     private Camera menuCamera;
     private float switchDelay = 12;

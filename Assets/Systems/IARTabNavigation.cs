@@ -17,7 +17,7 @@ public class IARTabNavigation : FSystem {
     private Family f_HUD_H = FamilyManager.getFamily(new AnyOfTags("HUD_H"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
     private Family f_settingsOpened = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_inputFieldMasterMind = FamilyManager.getFamily(new AnyOfComponents(typeof(InputField), typeof(Button)), new NoneOfLayers(5));
+    private Family f_inputFieldMasterMind = FamilyManager.getFamily(new AnyOfComponents(typeof(InputField), typeof(Button)), new NoneOfLayers(5), new AnyOfTags("Login"));
 
     private Sprite selectedTabSprite;
     private Sprite defaultTabSprite;
@@ -49,6 +49,7 @@ public class IARTabNavigation : FSystem {
             iar = iarBackground.transform.parent.gameObject;
 
             systemsStates = new Dictionary<FSystem, bool>();
+
         }
         instance = this;
     }
@@ -109,6 +110,7 @@ public class IARTabNavigation : FSystem {
                 inputF.GetComponent<InputField>().enabled = false;
             if (inputF.GetComponent<Button>())
                 inputF.GetComponent<Button>().enabled = false;
+
         }
 
         SwitchTab(f_tabs.getAt(tabId)); // switch to the desired tab
