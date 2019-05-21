@@ -173,12 +173,12 @@ public class IARTabNavigation : FSystem {
         foreach (GameObject oldTab in f_tabs)
         {
             oldTab.GetComponentInChildren<Image>().sprite = defaultTabSprite;
-            oldTab.GetComponentInChildren<TMP_Text>().fontStyle = FontStyles.Normal;
+            oldTab.GetComponent<TMP_Text>().fontStyle = FontStyles.Normal;
             GameObjectManager.setGameObjectState(oldTab.GetComponent<LinkedWith>().link, false);
         }
         // set new tab text and image
         newSelectedTab.GetComponentInChildren<Image>().sprite = selectedTabSprite;
-        newSelectedTab.GetComponentInChildren<TMP_Text>().fontStyle = FontStyles.Bold;
+        newSelectedTab.GetComponent<TMP_Text>().fontStyle = FontStyles.Bold;
         // enable new content
         GameObjectManager.setGameObjectState(newSelectedTab.GetComponent<LinkedWith>().link, true);
         GameObjectManager.addComponent<ActionPerformedForLRS>(newSelectedTab.GetComponent<LinkedWith>().link, new { verb = "accessed", objectType = "menu", objectName = newSelectedTab.GetComponent<LinkedWith>().link.name });
