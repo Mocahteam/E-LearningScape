@@ -241,9 +241,7 @@ public class IARViewItem : FSystem {
             foreach (GameObject go in f_triggerable)
             {
                 if (go == lastKeyboardViewed)
-                {
                     onItemSelected(go);
-                }
             }
         }
 

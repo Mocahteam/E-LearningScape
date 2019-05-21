@@ -99,10 +99,9 @@ public class IARNewItemAvailable : FSystem {
                     break;
                 }
             }
-
-
        }
 
+      
        foreach (GameObject go in f_newItemOver)
             OnMouseEnter(go); // same process as OnMouseEnter callback
 

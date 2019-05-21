@@ -8,8 +8,6 @@ using UnityEngine.UI;
 public class SettingsMainMenu : MonoBehaviour, IPointerClickHandler
 {
     public GameObject parent; //define popup when window popup close
-    //public GameObject parentIAR;
-    //public GameObject defaultUiInParentIAR;
     public GameObject defaultUiInParent; //define on which button cursor must be on parent window 
     public GameObject window; //define actual popup
     public GameObject defaultUiInWindow; //define on which button curso must be on window where gamer is
@@ -19,7 +17,7 @@ public class SettingsMainMenu : MonoBehaviour, IPointerClickHandler
         GameObjectManager.setGameObjectState(window, true);
         EventSystem.current.SetSelectedGameObject(defaultUiInWindow); //Always position cursor on default button define in inspector object 
         //EventSystem.current.currentSelectedGameObject;
-        if (parent/* || parentIAR*/)
+        if (parent)
             GameObjectManager.setGameObjectState(parent, false);
     }
     public void Hide ()
@@ -30,14 +28,6 @@ public class SettingsMainMenu : MonoBehaviour, IPointerClickHandler
             GameObjectManager.setGameObjectState(parent, true);
             EventSystem.current.SetSelectedGameObject(defaultUiInParent); //if we back on parent window so position cursor on default button choose in inspector object 
         }
-
-        /**else if (parentIAR)
-        {
-            GameObjectManager.setGameObjectState(window, false);
-            GameObjectManager.setGameObjectState(parentIAR, true);
-            GameObjectManager.setGameObjectState(parent, false);
-            EventSystem.current.SetSelectedGameObject(defaultUiInParentIAR); //if we back on parent window so position cursor on default button choose in inspector object 
-        }*/
 
     }
 

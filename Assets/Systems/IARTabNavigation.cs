@@ -103,6 +103,7 @@ public class IARTabNavigation : FSystem {
         if (f_HUD_H.Count > 0)
             GameObjectManager.setGameObjectState(f_HUD_H.First(), false); // hide HUD "H"
         GameObjectManager.setGameObjectState(iar, true); // open IAR
+        
         //To allow a good automatic navigation keyboard in menu we disabled InputField and button component in mastermind
         foreach (GameObject inputF in f_inputFieldMasterMind)
         {
@@ -110,11 +111,11 @@ public class IARTabNavigation : FSystem {
                 inputF.GetComponent<InputField>().enabled = false;
             if (inputF.GetComponent<Button>())
                 inputF.GetComponent<Button>().enabled = false;
-
         }
         
         SwitchTab(f_tabs.getAt(tabId)); // switch to the desired tab
         EventSystem.current.SetSelectedGameObject(f_tabs.getAt(tabId));
+       
         systemsStates.Clear();
         // save systems states
         foreach (FSystem sys in FSystemManager.fixedUpdateSystems())
@@ -173,12 +174,12 @@ public class IARTabNavigation : FSystem {
         foreach (GameObject oldTab in f_tabs)
         {
             oldTab.GetComponentInChildren<Image>().sprite = defaultTabSprite;
-            oldTab.GetComponentInChildren<TMP_Text>().fontStyle = FontStyles.Normal;
+            oldTab.GetComponent<TMP_Text>().fontStyle = FontStyles.Normal;
             GameObjectManager.setGameObjectState(oldTab.GetComponent<LinkedWith>().link, false);
         }
         // set new tab text and image
         newSelectedTab.GetComponentInChildren<Image>().sprite = selectedTabSprite;
-        newSelectedTab.GetComponentInChildren<TMP_Text>().fontStyle = FontStyles.Bold;
+        newSelectedTab.GetComponent<TMP_Text>().fontStyle = FontStyles.Bold;
         // enable new content
         GameObjectManager.setGameObjectState(newSelectedTab.GetComponent<LinkedWith>().link, true);
         GameObjectManager.addComponent<ActionPerformedForLRS>(newSelectedTab.GetComponent<LinkedWith>().link, new { verb = "accessed", objectType = "menu", objectName = newSelectedTab.GetComponent<LinkedWith>().link.name });
