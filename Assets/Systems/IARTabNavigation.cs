@@ -172,12 +172,12 @@ public class IARTabNavigation : FSystem {
         // reset all tabs (text and image) and disable all contents
         foreach (GameObject oldTab in f_tabs)
         {
-            oldTab.GetComponent<Image>().sprite = defaultTabSprite;
+            oldTab.GetComponentInChildren<Image>().sprite = defaultTabSprite;
             oldTab.GetComponentInChildren<TMP_Text>().fontStyle = FontStyles.Normal;
             GameObjectManager.setGameObjectState(oldTab.GetComponent<LinkedWith>().link, false);
         }
         // set new tab text and image
-        newSelectedTab.GetComponent<Image>().sprite = selectedTabSprite;
+        newSelectedTab.GetComponentInChildren<Image>().sprite = selectedTabSprite;
         newSelectedTab.GetComponentInChildren<TMP_Text>().fontStyle = FontStyles.Bold;
         // enable new content
         GameObjectManager.setGameObjectState(newSelectedTab.GetComponent<LinkedWith>().link, true);

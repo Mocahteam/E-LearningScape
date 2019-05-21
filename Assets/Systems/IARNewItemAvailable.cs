@@ -12,7 +12,9 @@ public class IARNewItemAvailable : FSystem {
     private Family f_notificationEnabled = FamilyManager.getFamily(new AnyOfTags("NewItemFeedback"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_newItemOver = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(PointerOver)));
     private Family f_inventoryWarning = FamilyManager.getFamily(new AnyOfTags("InventoryWarning"));
-    //private Family f_triggerableWarning = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(UnityEngine.UI.Selectable)), new AnyOfTags("InventoryElements"));
+    private Family f_triggerableWarning = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(UnityEngine.UI.Selectable)), new AnyOfTags("InventoryElements"));
+
+    private GameObject lastKeyboardViewed = null;
 
     private bool warningNewItem = true;
     private bool HUD_neverDisplayed = true;
@@ -69,8 +71,10 @@ public class IARNewItemAvailable : FSystem {
 
     private void OnMouseEnter(GameObject go)
     {
+
         // find child with tag "NewItemFeedback"
         GameObject child = getFeedbackChild(go);
+        EventSystem.current.SetSelectedGameObject(go);
         if (child && child.activeInHierarchy)
         {
             NewItemManager nim = go.GetComponent<NewItemManager>();
@@ -82,9 +86,24 @@ public class IARNewItemAvailable : FSystem {
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
-        
-        // manage click when mouse is over an item
-        foreach (GameObject go in f_newItemOver)
+       if (lastKeyboardViewed != EventSystem.current.currentSelectedGameObject)
+       {
+            lastKeyboardViewed = EventSystem.current.currentSelectedGameObject;
+            bool newItemHighlightObject = true;
+            foreach (GameObject go in f_triggerableWarning)
+            {
+                if (go == lastKeyboardViewed)
+                {
+                    OnMouseEnter(go);
+                    newItemHighlightObject = false;
+                    break;
+                }
+            }
+
+
+       }
+
+       foreach (GameObject go in f_newItemOver)
             OnMouseEnter(go); // same process as OnMouseEnter callback
 
         // blink HUD "A" if at least one new item is available
