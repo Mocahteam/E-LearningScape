@@ -79,7 +79,7 @@ public class IARHintManager : FSystem {
             f_enabledHintsIAR.addExitCallback(onButtonRemoved);
 
             hintTitle = f_description.First().transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            hintText = f_description.First().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            hintText = f_description.First().transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
             hintLinkButton = f_description.First().transform.GetChild(2).GetComponent<Button>();
             hintLinkButton.onClick.AddListener(OnClickHintLinkButton);
 

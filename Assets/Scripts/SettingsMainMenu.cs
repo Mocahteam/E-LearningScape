@@ -26,7 +26,7 @@ public class SettingsMainMenu : MonoBehaviour, IPointerClickHandler
         {
             GameObjectManager.setGameObjectState(window, false);
             GameObjectManager.setGameObjectState(parent, true);
-            EventSystem.current.SetSelectedGameObject(defaultUiInParent); //if we back on parent window so position cursor on default button choose in inspector object 
+            EventSystem.current.SetSelectedGameObject(defaultUiInParent); //if we back on parent window then position cursor on default button choose in inspector object 
         }
 
     }
