@@ -48,8 +48,12 @@ public class IARNewHintAvailable : FSystem {
                     GameObjectManager.setGameObjectState(helpWarning, false);
                 }
             }
+            
             else if (helpWarning.activeSelf)
                 GameObjectManager.setGameObjectState(helpWarning, false);
+
+
+            //f_helpWarning.First().transform.parent.gameObject.GetComponent<Animator>().enabled = true;
         }
 	}
 }
