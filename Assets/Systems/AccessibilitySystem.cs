@@ -8,9 +8,10 @@ public class AccessibilitySystem : FSystem {
 
     //creation de famille qui recupere tous les components type Accessibility_settings
     private Family needUpdateFont_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFont), typeof(Accessibility_settings)));
-
+    private Family needUpdateSliderSetting_f = FamilyManager.getFamily(new AllOfComponents(typeof(Slider), typeof(ValueSliderSetting)));
     
     private Family needUpdateFontSize_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontSize)));
+    private Family needUpdateValueSlider_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateValueSlider)));
 
     private Family UIColorAlpha_f = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(RawImage)));
     private Family needUpdateColorAlpha_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateOpacity)));
@@ -31,8 +32,14 @@ public class AccessibilitySystem : FSystem {
         {
             needUpdateFont_f.addEntryCallback(onNeedUpdateFont); //Ecouteur qui regarde quand un nouvel element rentre dans la famille et dans ce cas appel la méthode onNeedUpdate
             needUpdateFontSize_f.addEntryCallback(onNeedUpdateFontSize); //A chaque fois qu'on touche à la sliderBar taille police, on est rentré dans la famille needUpdateFontSize_f
+            needUpdateValueSlider_f.addEntryCallback(onNeedUpdateResetValueSlider);
             needUpdateColorAlpha_f.addEntryCallback(onNeedUpdateAlpha);
             needUpdateAnimation_f.addEntryCallback(onNeedUpdateAnimation);
+
+            foreach (GameObject go in needUpdateSliderSetting_f)
+            {
+                go.GetComponent<ValueSliderSetting>().defaultValueSlider = go.GetComponent<Slider>().value;
+            }
 
             foreach (GameObject go in textWithMax_f)
             {
@@ -75,6 +82,18 @@ public class AccessibilitySystem : FSystem {
         GameObjectManager.removeComponent<UpdateFontSize>(go);
     }
 
+    private void onNeedUpdateResetValueSlider(GameObject go)
+    {
+        //UpdateValueSlider uvs = go.GetComponent<UpdateValueSlider>();
+        ValueSliderSetting vsl;
+        foreach(GameObject backDefaultValue in needUpdateSliderSetting_f)
+        {
+            Slider newVal = backDefaultValue.GetComponent<Slider>();
+            vsl = backDefaultValue.GetComponent<ValueSliderSetting>();
+            newVal.value = vsl.defaultValueSlider;
+        }
+        GameObjectManager.removeComponent<UpdateValueSlider>(go);
+    }
     
     //Script pour switcher entre police par défaut et police accessible 
     private void onNeedUpdateFont(GameObject go)

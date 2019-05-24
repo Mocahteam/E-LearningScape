@@ -24,6 +24,7 @@ public class Accessibility_settings : MonoBehaviour {
     public void onSliderFontSizeUpdate(float size)
     {
         GameObjectManager.addComponent<UpdateFontSize>(this.gameObject, new { newFontSizeMax = size });
+        //System.Math.Round(size, 2);
     }
     
     public void onSliderColorA (float a)
@@ -35,6 +36,11 @@ public class Accessibility_settings : MonoBehaviour {
     {
         animate = newState;
         GameObjectManager.addComponent<UpdateAnimation>(this.gameObject);
+    }
+
+    public void onResetValueSlider(float value)
+    {
+        GameObjectManager.addComponent<ValueSliderSetting>(this.gameObject);
     }
     
 }

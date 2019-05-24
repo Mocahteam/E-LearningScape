@@ -71,14 +71,13 @@ public class IARNewItemAvailable : FSystem {
 
     private void OnMouseEnter(GameObject go)
     {
-
         // find child with tag "NewItemFeedback"
         GameObject child = getFeedbackChild(go);
         EventSystem.current.SetSelectedGameObject(go);
         if (child && child.activeInHierarchy)
         {
             NewItemManager nim = go.GetComponent<NewItemManager>();
-            if (nim.disableOnMouseOver || (nim.disableOnClick && Input.GetMouseButton(0)))
+            if (nim.disableOnMouseOver || (nim.disableOnClick && Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Return)))
                 GameObjectManager.setGameObjectState(child, false);
         }
     }

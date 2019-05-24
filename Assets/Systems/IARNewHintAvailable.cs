@@ -28,29 +28,44 @@ public class IARNewHintAvailable : FSystem {
             this.Pause = true;
         else
         {
-            if (f_newHint.Count > 0 && HUD_neverDisplayed && f_iarBackground.Count <= 0)
+            if (f_newHint.Count > 0)
             {
-                // enable parent
-                GameObjectManager.setGameObjectState(f_helpWarning.First().transform.parent.gameObject, true);
-                HUD_neverDisplayed = false;
+                if (HUD_neverDisplayed && f_iarBackground.Count <= 0)
+                {
+                    // enable parent
+                    GameObjectManager.setGameObjectState(f_helpWarning.First().transform.parent.gameObject, true);
+                    HUD_neverDisplayed = false;
+                }
+
+                if (helpWarning.transform.parent.gameObject.activeSelf)
+                {
+                    if (Time.time - (int)Time.time > 0.5f && !helpWarning.activeSelf)
+                    {
+                        // display warning
+                        GameObjectManager.setGameObjectState(helpWarning, true);
+                    }
+                    else if (Time.time - (int)Time.time < 0.5f && helpWarning.activeSelf)
+                    {
+                        // disable warning
+                        GameObjectManager.setGameObjectState(helpWarning, false);
+                    }
+                }
+                f_helpWarning.First().transform.parent.gameObject.GetComponent<Animator>().enabled = true;
             }
 
-            if (f_newHint.Count > 0 && helpWarning.transform.parent.gameObject.activeSelf)
+            else
             {
-                if (Time.time - (int)Time.time > 0.5f && !helpWarning.activeSelf)
+                GameObject warn = f_helpWarning.First();
+                GameObject HUD_H = warn.transform.parent.gameObject;
+                if (helpWarning.activeSelf)
                 {
-                    // display warning
-                    GameObjectManager.setGameObjectState(helpWarning, true);
-                }
-                else if (Time.time - (int)Time.time < 0.5f && helpWarning.activeSelf)
-                {
-                    // disable warning
                     GameObjectManager.setGameObjectState(helpWarning, false);
+                    HUD_H.transform.position = new Vector3(HUD_H.transform.position.x, 50.0f, HUD_H.transform.position.z);
                 }
+                    
+                HUD_H.GetComponent<Animator>().enabled = false;
+
             }
-            
-            else if (helpWarning.activeSelf)
-                GameObjectManager.setGameObjectState(helpWarning, false);
 
 
             //f_helpWarning.First().transform.parent.gameObject.GetComponent<Animator>().enabled = true;
