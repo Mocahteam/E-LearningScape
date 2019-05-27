@@ -92,7 +92,6 @@ public class AccessibilitySystem : FSystem {
             vsl = backDefaultValue.GetComponent<ValueSliderSetting>();
             newVal.value = vsl.defaultValueSlider;
 
-            
         }
         GameObjectManager.removeComponent<UpdateValueSlider>(go);
     }
@@ -131,6 +130,7 @@ public class AccessibilitySystem : FSystem {
         {
             objAnimated.GetComponent<AnimatedSprites>().animate = accessSettings.animate;
         }
+
 
         GameObjectManager.removeComponent<UpdateAnimation>(go); 
     }
