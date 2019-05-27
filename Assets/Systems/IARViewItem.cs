@@ -262,7 +262,16 @@ public class IARViewItem : FSystem {
             if (!found)
                 onExitItem(-1);
         }
-        if (lastKeyboardViewed == null || (!lastKeyboardViewed.activeInHierarchy))
+        if (lastKeyboardViewed == null || (!lastKeyboardViewed.activeInHierarchy && isChildOfDescription(lastKeyboardViewed)))
             EventSystem.current.SetSelectedGameObject(f_tabs.First()); //If there is no object selected in inventory or if no actif in hierarchie like scrollbar vertical in description, to not lose keyboard navigation we give to EventSystem the first element in IAR Tab 
+    }
+
+    private bool isChildOfDescription(GameObject go)
+    {
+        if (go.tag == "DescriptionUI")
+            return true;
+        else if (go.transform.parent)
+            return isChildOfDescription(go.transform.parent.gameObject);
+        else return false;
     }
 }

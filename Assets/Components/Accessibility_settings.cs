@@ -38,9 +38,9 @@ public class Accessibility_settings : MonoBehaviour {
         GameObjectManager.addComponent<UpdateAnimation>(this.gameObject);
     }
 
-    public void onResetValueSlider(float value)
+    public void onResetValueSlider(float defaultValueSetting)
     {
-        GameObjectManager.addComponent<ValueSliderSetting>(this.gameObject);
+        GameObjectManager.addComponent<UpdateValueSlider>(this.gameObject, new { valueSetting = defaultValueSetting });
     }
     
 }

@@ -82,15 +82,17 @@ public class AccessibilitySystem : FSystem {
         GameObjectManager.removeComponent<UpdateFontSize>(go);
     }
 
+    //If we click on back value button in setting menu, we come back at default value on slider  
     private void onNeedUpdateResetValueSlider(GameObject go)
     {
-        //UpdateValueSlider uvs = go.GetComponent<UpdateValueSlider>();
         ValueSliderSetting vsl;
         foreach(GameObject backDefaultValue in needUpdateSliderSetting_f)
         {
             Slider newVal = backDefaultValue.GetComponent<Slider>();
             vsl = backDefaultValue.GetComponent<ValueSliderSetting>();
             newVal.value = vsl.defaultValueSlider;
+
+            
         }
         GameObjectManager.removeComponent<UpdateValueSlider>(go);
     }

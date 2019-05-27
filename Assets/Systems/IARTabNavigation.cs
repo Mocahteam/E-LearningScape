@@ -16,7 +16,8 @@ public class IARTabNavigation : FSystem {
     private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
     private Family f_HUD_H = FamilyManager.getFamily(new AnyOfTags("HUD_H"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
-    private Family f_settingsOpened = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    //Image component is added to this family in order to exclude IAR Menu tab 
+    private Family f_settingsOpened = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu), typeof(Image)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_inputFieldMasterMind = FamilyManager.getFamily(new AnyOfComponents(typeof(InputField), typeof(Button)), new NoneOfLayers(5), new AnyOfTags("Login"));
 
     private Sprite selectedTabSprite;
@@ -112,8 +113,12 @@ public class IARTabNavigation : FSystem {
             if (inputF.GetComponent<Button>())
                 inputF.GetComponent<Button>().enabled = false;
         }
-        
+
         SwitchTab(f_tabs.getAt(tabId)); // switch to the desired tab
+        Debug.Log(tabId);
+        Debug.Log(f_tabs.getAt(tabId));
+        Debug.Log(f_tabs.getAt(tabId).activeInHierarchy);
+        Debug.Log(EventSystem.current.currentSelectedGameObject);
         EventSystem.current.SetSelectedGameObject(f_tabs.getAt(tabId));
        
         systemsStates.Clear();

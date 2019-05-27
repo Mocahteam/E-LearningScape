@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class IARNewItemAvailable : FSystem {
 
@@ -13,6 +14,7 @@ public class IARNewItemAvailable : FSystem {
     private Family f_newItemOver = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(PointerOver)));
     private Family f_inventoryWarning = FamilyManager.getFamily(new AnyOfTags("InventoryWarning"));
     private Family f_triggerableWarning = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(UnityEngine.UI.Selectable)), new AnyOfTags("InventoryElements"));
+    private Family f_tabs = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(Button)), new AnyOfTags("IARTab"));
 
     private GameObject lastKeyboardViewed = null;
 
@@ -29,7 +31,7 @@ public class IARNewItemAvailable : FSystem {
         {
             f_itemsEnabled.addEntryCallback(OnNewItemEnabled);
             f_itemsEnabled.addExitCallback(OnItemDisabled);
-            f_newItemOver.addEntryCallback(OnMouseEnter);
+            f_newItemOver.addEntryCallback(OnMouseOver);
 
             id2Go = new Dictionary<int, GameObject>();
         }
@@ -69,7 +71,7 @@ public class IARNewItemAvailable : FSystem {
         }
     }
 
-    private void OnMouseEnter(GameObject go)
+    private void OnMouseOver(GameObject go)
     {
         // find child with tag "NewItemFeedback"
         GameObject child = getFeedbackChild(go);
@@ -77,7 +79,7 @@ public class IARNewItemAvailable : FSystem {
         if (child && child.activeInHierarchy)
         {
             NewItemManager nim = go.GetComponent<NewItemManager>();
-            if (nim.disableOnMouseOver || (nim.disableOnClick && Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Return)))
+            if (nim.disableOnMouseOver || (nim.disableOnClick && (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Return))))
                 GameObjectManager.setGameObjectState(child, false);
         }
     }
@@ -88,13 +90,11 @@ public class IARNewItemAvailable : FSystem {
        if (lastKeyboardViewed != EventSystem.current.currentSelectedGameObject)
        {
             lastKeyboardViewed = EventSystem.current.currentSelectedGameObject;
-            bool newItemHighlightObject = true;
             foreach (GameObject go in f_triggerableWarning)
             {
                 if (go == lastKeyboardViewed)
                 {
-                    OnMouseEnter(go);
-                    newItemHighlightObject = false;
+                    OnMouseOver(go);
                     break;
                 }
             }
@@ -102,7 +102,13 @@ public class IARNewItemAvailable : FSystem {
 
       
        foreach (GameObject go in f_newItemOver)
-            OnMouseEnter(go); // same process as OnMouseEnter callback
+            OnMouseOver(go); // same process as OnMouseEnter callback
+
+       foreach (GameObject go in f_tabs)
+        {
+            if (go == EventSystem.current.currentSelectedGameObject)
+                OnMouseOver(go);
+        }
 
         // blink HUD "A" if at least one new item is available
         if (f_notificationEnabled.Count > 0)
