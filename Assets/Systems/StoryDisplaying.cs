@@ -160,8 +160,8 @@ public class StoryDisplaying : FSystem {
                 // fade background if required
                 if (fadingBackground)
                     background.color = new Color(background.color.r, background.color.g, background.color.b, (Time.time - readingTimer) / fadeSpeed);
-                // stop fading if mouse clicked
-                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetButton("A_Button") || Input.GetButton("B_Button"))
+                // stop fading if mouse clicked or A or B button down of xbox one controller
+                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetButtonDown("A_Button") || Input.GetButtonDown("B_Button"))
                 {
                     readingTimer = Time.time - (fadeSpeed + 1);
                     GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
@@ -226,7 +226,7 @@ public class StoryDisplaying : FSystem {
                 fadingImage.color = new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, 1 - (Time.time - readingTimer) / fadeSpeed);
                 if (fadingBackground)
                     background.color = new Color(background.color.r, background.color.g, background.color.b, 1 - (Time.time - readingTimer) / fadeSpeed);
-                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetButton("A_Button") || Input.GetButton("B_Button"))
+                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetButtonDown("A_Button") || Input.GetButtonDown("B_Button"))
                 {
                     readingTimer = Time.time - (fadeSpeed + 1);
                     GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
@@ -250,10 +250,10 @@ public class StoryDisplaying : FSystem {
         }
         else
         {
-            if (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetButton("A_Button") ||Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetButton("B_Button"))
+            if (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetButtonDown("A_Button") ||Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetButtonDown("B_Button"))
             {
                 alphaToPlain = true;
-                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetButton("B_Button"))
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetButton("B_Button")) //See back story if gamer click on letf arrow on keyboard or B button on xbox one controller 
                     way = -1;
                 else
                     way = 1;

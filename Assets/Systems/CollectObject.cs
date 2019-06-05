@@ -24,7 +24,7 @@ public class CollectObject : FSystem {
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("X_button")) //Collected object in IAR if click with mouse or input X button down of xbox controller
         {
             foreach (GameObject collect in f_collectableObjects)
             {

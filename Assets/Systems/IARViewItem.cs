@@ -236,7 +236,8 @@ public class IARViewItem : FSystem {
                 onItemSelected(go);
             }
         }
-        if (Input.GetKeyDown(KeyCode.Return))
+        //enable inventory object if you clicked on return keyboard or X button on xbox controller
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("X_button"))
         {
             foreach (GameObject go in f_triggerable)
             {

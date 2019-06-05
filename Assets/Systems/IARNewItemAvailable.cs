@@ -79,7 +79,7 @@ public class IARNewItemAvailable : FSystem {
         if (child && child.activeInHierarchy)
         {
             NewItemManager nim = go.GetComponent<NewItemManager>();
-            if (nim.disableOnMouseOver || (nim.disableOnClick && (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Return))))
+            if (nim.disableOnMouseOver || (nim.disableOnClick && (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Return))) || (nim.disableOnClick && Input.GetButtonDown("X_button")))
                 GameObjectManager.setGameObjectState(child, false);
         }
     }

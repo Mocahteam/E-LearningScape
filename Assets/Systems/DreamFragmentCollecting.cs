@@ -86,8 +86,8 @@ public class DreamFragmentCollecting : FSystem {
                 go.transform.Rotate(new Vector3(0, 20*Time.deltaTime, 0));
         }
 
-        // Compute Raycast only when mouse is clicked
-        if (Input.GetMouseButtonDown(0))
+        // Compute Raycast only when mouse is clicked or X button down on xbox one controller 
+        if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("X_button"))
         {
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
             {
