@@ -80,11 +80,11 @@ public class IARTabNavigation : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         // Open/Close IAR with Escape and A keys
-        if (iar.activeInHierarchy && f_settingsOpened.Count == 0 && (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape) || (Input.GetMouseButtonDown(0) && iarBackground.GetComponent<PointerOver>())))
+        if (iar.activeInHierarchy && f_settingsOpened.Count == 0 && ((Input.GetKeyDown(KeyCode.A) || Input.GetButton("A_Button")) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape) || (Input.GetMouseButtonDown(0) && iarBackground.GetComponent<PointerOver>())))
             closeIar();
-        else if (!iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape)))
+        else if (!iar.activeInHierarchy && ((Input.GetKeyDown(KeyCode.A) || Input.GetButton("A_Button")) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape)))
         {
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetButton("A_Button"))
                 openIar(0); // Open IAR on the first tab
                
             else if (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause)
