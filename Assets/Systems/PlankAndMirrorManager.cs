@@ -103,7 +103,7 @@ public class PlankAndMirrorManager : FSystem {
         if (selectedPlank)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and paper is out of the bag and IAR is closed (because Escape close IAR)
-            if (((f_closePlank.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && !movePlank)
+            if (((f_closePlank.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0) || (Input.GetButtonDown("B_Button") && f_iarBackground.Count == 0)) && !movePlank)
             {
                 // ask to exit plank
                 prepareClosing = true;
@@ -166,9 +166,9 @@ public class PlankAndMirrorManager : FSystem {
 
             if (!movePlank)
             {
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.Q))
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.Q) || Input.GetButton("LB_Button"))
                     rotatePlank(1);
-                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || Input.GetButton("RB_Button"))
                     rotatePlank(-1);
                 if (Input.GetMouseButton(0) && f_arrows.Count > 0)
                 {
