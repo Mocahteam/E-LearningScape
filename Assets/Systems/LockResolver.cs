@@ -148,7 +148,7 @@ public class LockResolver : FSystem {
         // Are we in front of the locker
         if (selectedLocker)
         {
-            // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed
+            // "close" ui (give back control to the player) when clicking on nothing or B button of xbox controller or Escape is pressed and IAR is closed
             if (((f_closeLock.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0) || (Input.GetButtonDown("B_Button") && f_iarBackground.Count == 0)) && (!room1Unlocked || IARScreenRoom1Unlocked) && (!room3Unlocked || IARScreenRoom3Unlocked))
             {
                 closedBy = "player";
@@ -175,13 +175,13 @@ public class LockResolver : FSystem {
                     }
 
                     // process hotkeys to move the wheels
-                    if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Z)) && !lockRotationUp && !lockRotationDown)
+                    if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Z) || Input.GetButton("Y_Button")) && !lockRotationUp && !lockRotationDown)
                         moveWheelUp(selectedWheel);
-                    else if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && !lockRotationUp && !lockRotationDown)
+                    else if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || Input.GetButton("X_button")) && !lockRotationUp && !lockRotationDown)
                         moveWheelDown(selectedWheel);
-                    else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Q))
+                    else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LB_Button"))
                         SelectLeftWheel(ref selectedWheel, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, selectedLocker.UpDownControl);
-                    else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+                    else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("RB_Button"))
                         SelectRightWheel(ref selectedWheel, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, selectedLocker.UpDownControl);
                     //Process mouse arrow
                     if (Input.GetMouseButton(0) && f_LockArrows.Count != 0 && !lockRotationUp && !lockRotationDown)
