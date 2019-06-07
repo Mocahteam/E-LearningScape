@@ -23,6 +23,7 @@ public class DreamFragmentCollecting : FSystem {
     private DreamFragment tmpDFComponent;
     private bool backupIARNavigationState;
     private GameObject tmpGo;
+    private bool justClosed;
 
     //key: dream fragment name, value: link
     //this dictionary contains links to get more info about a dream fragment
@@ -73,6 +74,8 @@ public class DreamFragmentCollecting : FSystem {
             }
             if (dreamFragmentsLinks == null)
                 dreamFragmentsLinks = new Dictionary<string, string>();
+
+            justClosed = false;
         }
         instance = this;
     }
@@ -87,8 +90,9 @@ public class DreamFragmentCollecting : FSystem {
         }
 
         // Compute Raycast only when mouse is clicked or X button down on xbox one controller 
-        if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("X_button"))
+        if ((Input.GetMouseButtonDown(0) || Input.GetButtonDown("X_button")) && !justClosed)
         {
+            Debug.Log("truc");
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
             {
                 // try to find a fragment touched by the raycast
@@ -125,6 +129,7 @@ public class DreamFragmentCollecting : FSystem {
                 }
             }
         }
+        justClosed = false;
     }
 
     private void CloseWindow()
@@ -149,6 +154,7 @@ public class DreamFragmentCollecting : FSystem {
         selectedFragment = null;
         // close UI
         GameObjectManager.setGameObjectState(dfUI,false);
+        justClosed = true;
         // Unpause this system and dependants systems
         this.Pause = false;
         MovingSystem.instance.Pause = false;

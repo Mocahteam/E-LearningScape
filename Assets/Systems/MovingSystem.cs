@@ -161,7 +161,7 @@ public class MovingSystem : FSystem
 
         crouchingSpeed = 70f * Time.deltaTime;
         // when control button or right click is pressed then the player can alternatively crouch and standing
-        if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetMouseButtonDown(1)))
+        if (Input.GetButtonDown("Crouch"))
         {
             changingPose = true; //true when the player is crouching or standing
             //change moving speed according to the stance

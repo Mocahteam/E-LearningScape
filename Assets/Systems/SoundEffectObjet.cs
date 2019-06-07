@@ -64,7 +64,7 @@ public class SoundEffectObjet : FSystem {
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
-        if (Input.GetMouseButtonDown(0)) //Si on clique sur un objet lumineux alors on joue le son 10 
+        if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("X_button")) //Si on clique sur un objet lumineux alors on joue le son 10 
         {
             foreach (GameObject selectObjHightLight in f_selectLightIndiceObjet)
             {

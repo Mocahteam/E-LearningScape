@@ -225,7 +225,7 @@ public class BallBoxManager : FSystem {
                     ballGo.transform.localPosition = Vector3.MoveTowards(ballGo.transform.localPosition, ballPos, speed / 2);
                     
                     // Check if we have to abort animation
-                    if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
+                    if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("B_Button") || Input.GetKeyDown(KeyCode.Escape))
                     {
                         // abort animation
                         for (int i = 0; i < f_balls.Count; i++)

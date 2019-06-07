@@ -8,7 +8,7 @@ public class AccessibilitySystem : FSystem {
 
     //creation de famille qui recupere tous les components type Accessibility_settings
     private Family needUpdateFont_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFont), typeof(Accessibility_settings)));
-    private Family needUpdateSliderSetting_f = FamilyManager.getFamily(new AllOfComponents(typeof(Slider), typeof(ValueSliderSetting)));
+    private Family needUpdateDefaultSetting_f = FamilyManager.getFamily(new AnyOfComponents(typeof(Slider), typeof(Toggle)), new AllOfComponents(typeof(DefaultValueSetting)));
     
     private Family needUpdateFontSize_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontSize)));
     private Family needUpdateValueSlider_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateValueSlider)));
@@ -36,9 +36,12 @@ public class AccessibilitySystem : FSystem {
             needUpdateColorAlpha_f.addEntryCallback(onNeedUpdateAlpha);
             needUpdateAnimation_f.addEntryCallback(onNeedUpdateAnimation);
 
-            foreach (GameObject go in needUpdateSliderSetting_f)
+            foreach (GameObject go in needUpdateDefaultSetting_f)
             {
-                go.GetComponent<ValueSliderSetting>().defaultValueSlider = go.GetComponent<Slider>().value;
+                if (go.GetComponent<Slider>())
+                    go.GetComponent<DefaultValueSetting>().defaultValue = go.GetComponent<Slider>().value;
+                else
+                    go.GetComponent<DefaultValueSetting>().defaultValue = go.GetComponent<Toggle>().isOn ? 1 : 0;
             }
 
             foreach (GameObject go in textWithMax_f)
@@ -85,12 +88,22 @@ public class AccessibilitySystem : FSystem {
     //If we click on back value button in setting menu, we come back at default value on slider  
     private void onNeedUpdateResetValueSlider(GameObject go)
     {
-        ValueSliderSetting vsl;
-        foreach(GameObject backDefaultValue in needUpdateSliderSetting_f)
+        DefaultValueSetting vsl;
+        foreach(GameObject backDefaultValue in needUpdateDefaultSetting_f)
         {
-            Slider newVal = backDefaultValue.GetComponent<Slider>();
-            vsl = backDefaultValue.GetComponent<ValueSliderSetting>();
-            newVal.value = vsl.defaultValueSlider;
+            if (backDefaultValue.GetComponent<Slider>())
+            {
+                Slider newVal = backDefaultValue.GetComponent<Slider>();
+                vsl = backDefaultValue.GetComponent<DefaultValueSetting>();
+                newVal.value = vsl.defaultValue;
+            }
+            else
+            {
+                Toggle newVal = backDefaultValue.GetComponent<Toggle>();
+                vsl = backDefaultValue.GetComponent<DefaultValueSetting>();
+                newVal.isOn = vsl.defaultValue != 0;
+            }
+
 
         }
         GameObjectManager.removeComponent<UpdateValueSlider>(go);

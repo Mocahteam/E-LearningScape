@@ -96,9 +96,9 @@ public class MoveInFrontOf : FSystem {
     {
         speed = 8f * Time.deltaTime;
 
-        if (!moveInFrontOf && (Input.GetMouseButtonDown(0) || emulateClickOn != null))
+        if (!moveInFrontOf && (Input.GetMouseButtonDown(0) || Input.GetButtonDown("X_button") || emulateClickOn != null))
         {
-			if (Input.GetMouseButtonDown (0)) {
+			if (Input.GetMouseButtonDown (0) || Input.GetButtonDown("X_button")) {
 				//If player is in third person view so when he click on object player will be in First person cam view
 				f_player.First ().GetComponent<SwitchPerso> ().ThirdCamera.enabled = false;
 				f_player.First ().GetComponent<SwitchPerso> ().FirstCamera.enabled = true;

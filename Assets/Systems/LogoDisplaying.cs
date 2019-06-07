@@ -98,7 +98,7 @@ public class LogoDisplaying : FSystem {
                     loadingFragment.transform.parent.GetComponent<PostProcessingBehaviour>().profile.motionBlur.enabled = true;
             }
             // switch to next logo if mouse clicked or Escape pressed
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("A_Button") || Input.GetButtonDown("B_Button"))
                 // change to next logo
                 nextLogo++;
 

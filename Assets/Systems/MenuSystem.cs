@@ -130,7 +130,10 @@ public class MenuSystem : FSystem {
         // force currentSelectedGameObject to be reinitialized
         GameObject currentSelection = EventSystem.current.currentSelectedGameObject;
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(currentSelection);
+        if (currentSelection == null || currentSelection.activeInHierarchy == false)
+            EventSystem.current.SetSelectedGameObject(smm.defaultUiInWindow);
+        else
+            EventSystem.current.SetSelectedGameObject(currentSelection);
     }
 
     // Use this to update member variables when system resume.
