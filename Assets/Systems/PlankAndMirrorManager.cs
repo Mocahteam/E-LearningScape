@@ -166,9 +166,9 @@ public class PlankAndMirrorManager : FSystem {
 
             if (!movePlank)
             {
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.Q) || Input.GetButton("LB_Button"))
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.Q) || Input.GetAxis("Horizontal") == -1)
                     rotatePlank(1);
-                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || Input.GetButton("RB_Button"))
+                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") == 1)
                     rotatePlank(-1);
                 if (Input.GetMouseButton(0) && f_arrows.Count > 0)
                 {
