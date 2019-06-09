@@ -236,7 +236,7 @@ public class SatchelManager : FSystem {
                         getOutPaper = false;
                         Canvas canvas = selectedBag.GetComponentInChildren<Canvas>();
                         canvas.renderMode = RenderMode.ScreenSpaceCamera;
-                        canvas.scaleFactor = 0.5f;
+                        canvas.scaleFactor = 0.8f;
                         paper.transform.position = selectedBag.transform.TransformPoint(bagPaperInitialPos) + Vector3.up * 0.8f;
                         
                         paperOut = true;

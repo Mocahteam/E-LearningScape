@@ -43,32 +43,82 @@
 	
 	"Comment: BallBox hints": {},
 	"5.perform": {
-		"Comment": ["The in game key to open ball box"],
+		"Comment": ["The in game ball box key"],
 		"1": ["Il me reste au moins un objet à trouver"],
 		"2": ["Je pense qu'une clé me serait utile"],
 		"3": ["Je pressent que la clé est dans la petite commode"]
 	},
-	"1.ballBox.7": {
-		"1": [
-			"Il me reste au moins un objet à trouver"
-		],
-		"2": [
-			"Je pense qu'une clé me serait utile"
-		],
-		"3": [
-			"Je pressent que la clé est dans la petite commode"
-		]
+	"6.turnOn": {
+		"Comment": ["The ball box key in IAR"],
+		"1": ["Cette clé doit bien me servir à quelque chose"],
+		"2": ["Quel cadena cette petite clé peut-elle bien ouvrir"],
+		"3": ["Peut-être que cette clé peut ouvrir le cadena de la grosse boîte"]
+	},
+	"7.turnOn": {
+		"Comment": ["The ball box"],
+		"2": ["Le contenu de la grosse boîte est certainement très intéressant"]
+	},
+	"9.activate": {
+		"Comment": ["The first ball that is part of the solution"],
+		"1": ["Ah quoi peuvent bien me servir ces boules ?"],
+		"2": ["Les chiffres au dos de chaque boule doivent bien servir à quelque chose"],
+		"3": ["Chaque chiffre doit être un élément de la solution"]
+	},
+	"10.activate": {
+		"Comment": ["The second ball that is part of the solution"],
+		"1": ["Ah quoi peuvent bien me servir ces boules ?"],
+		"2": ["Les chiffres au dos de chaque boule doivent bien servir à quelque chose"],
+		"3": ["Chaque chiffre doit être un élément de la solution"]
+	},
+	"11.activate": {
+		"Comment": ["The third ball that is part of the solution"],
+		"1": ["Ah quoi peuvent bien me servir ces boules ?"],
+		"2": ["Les chiffres au dos de chaque boule doivent bien servir à quelque chose"],
+		"3": ["Chaque chiffre doit être un élément de la solution"]
+	},
+	"24.Correct": {
+		"Comment": ["The ball box question"],
+		"1": ["J'ai tout ce qu'il me faut pour résoudre la question des boules"],
+		"2": ["Parmis les boules obervées, lesquelles me sont utiles ?"],
+		"3": ["9 boules mais seulement 3 chiffres sont utiles"]
 	},
 	
-	"1.wireWorld.26": {
-		"1": [
-			"Il me reste au moins un objet à trouver"
-		],
-		"2": [
-			"Je pense qu'une corde me serait utile"
-		],
-		"3": [
-			"Je pressent que la corde se trouve en bas de la grande commode"
-		]
-	}
+	"Comment: Plank&Wire hints": {},
+	"26.perform": {
+		"Comment": ["The in game wire"],
+		"1": ["Il me reste au moins un objet à trouver"],
+		"2": ["Je pense qu'une corde me serait utile"],
+		"3": ["Je pressent que la corde se trouve en bas de la grande bibliothèque"]
+	},
+	"27.turnOn": {
+		"Comment": ["The wire in IAR"],
+		"1": ["Cette corde doit bien me servir à quelque chose"],
+		"2": ["Je pourrais utiliser cette corde pour relier des éléments entre eux"]
+	},
+	"28.turnOn": {
+		"Comment": ["The plank"],
+		"1": ["A quoi peuvent bien servir les mots inscrits sur le tableau ?"],
+		"2": ["Peut être dois-je accrocher quelque chose aux punaises de quelques mots du tableau..."]
+	},
+	"31.turnOn": {
+		"Comment": ["The first word that is part of the solution"],
+		"1": ["Un tableau, une corde et des mots à relier..."],
+		"2": ["Quels sont les trois mots clés à relier ?"]
+	},
+	"32.turnOn": {
+		"Comment": ["The second word that is part of the solution"],
+		"1": ["Un tableau, une corde et des mots à relier..."],
+		"2": ["Quels sont les trois mots clés à relier ?"]
+	},
+	"33.turnOn": {
+		"Comment": ["The third word that is part of the solution"],
+		"1": ["Un tableau, une corde et des mots à relier..."],
+		"2": ["Quels sont les trois mots clés à relier ?"]
+	},
+	"35.Correct": {
+		"Comment": ["The Plank&Wire question"],
+		"1": ["J'ai tout ce qu'il me faut pour résoudre l'énigme du tableau et de la corde"],
+		"2": ["Est-ce les mots reliés ou les liens eux mêmes qui porte du sens ?"],
+		"3": ["La corde passe-t-elle seulement par les trois mots sélectionnés ?"]
+	},
 }
