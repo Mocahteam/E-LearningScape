@@ -33,7 +33,7 @@ public class SettingsMainMenu : MonoBehaviour, IPointerClickHandler
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Start_button")) //use keyboard with echap or start button on xbox one controller
             Hide();
     }
 

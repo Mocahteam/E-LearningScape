@@ -348,7 +348,7 @@ InputManager:
     negativeButton: 
     positiveButton: joystick button 1
     altNegativeButton: 
-    altPositiveButton: return
+    altPositiveButton: 
     gravity: 0
     dead: 0.001
     sensitivity: 0

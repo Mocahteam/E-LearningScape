@@ -80,7 +80,7 @@ public class IARTabNavigation : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         // Open/Close IAR with Escape and A keys or A and start button of xbox one controller
-        if (iar.activeInHierarchy && f_settingsOpened.Count == 0 && ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("A_Button")) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Start_button")) || (Input.GetMouseButtonDown(0) && iarBackground.GetComponent<PointerOver>())))
+        if (iar.activeInHierarchy && f_settingsOpened.Count == 0 && ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("A_Button")) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Start_button")) || Input.GetButtonDown("B_Button") || (Input.GetMouseButtonDown(0) && iarBackground.GetComponent<PointerOver>())))
             closeIar();
         else if (!iar.activeInHierarchy && ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("A_Button")) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Start_button"))))
         {
