@@ -77,6 +77,7 @@ TagManager:
   - UI_colorAlpha
   - LockArrow
   - WheelSpeedSlider
+  - CursorImage
   layers:
   - Default
   - TransparentFX
