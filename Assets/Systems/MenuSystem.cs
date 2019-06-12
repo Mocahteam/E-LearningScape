@@ -22,6 +22,7 @@ public class MenuSystem : FSystem {
     private Family f_inputFieldMasterMind = FamilyManager.getFamily(new AnyOfComponents(typeof(InputField), typeof(Button)), new NoneOfLayers(5), new AnyOfTags("Login"));
     private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
     private Family f_inventoryMenuContent = FamilyManager.getFamily(new AnyOfTags("IARMenuButton"));
+    private Family f_menuContent = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)), new NoneOfComponents(typeof(Image)));
 
     private Camera menuCamera;
     private float switchDelay = 12;
@@ -215,7 +216,7 @@ public class MenuSystem : FSystem {
             if (go.name == "popupSettings")
             { //When game is playing if we open IAR Menu and then we close the setting popup we want to back in window IAR Menu et on setting button and not on setting button of main menu 
                 SettingsMainMenu smm = go.GetComponent<SettingsMainMenu>();
-                smm.parent = f_tabs.getAt(f_tabs.Count-1); //parent window is Menu IAR
+                smm.parent = f_menuContent.First().gameObject; //parent window is MenuContent in IAR
                 smm.defaultUiInParent = f_inventoryMenuContent.getAt(1); //Default button is setting button in Menu IAR 
             }
         }

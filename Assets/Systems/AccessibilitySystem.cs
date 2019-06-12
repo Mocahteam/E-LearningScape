@@ -23,9 +23,15 @@ public class AccessibilitySystem : FSystem {
     private Family needUpdateAnimation_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateAnimation), typeof(Accessibility_settings)));
     private Family AnimatedObject_f = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites)), new NoneOfTags("PlankE09", "InventoryElements", "UIEffect", "LockArrow"), new NoneOfComponents(typeof(Button)));
 
+    private Family UICursorSize_f = FamilyManager.getFamily(new AnyOfTags("CursorImage"));
+    private Family needUpdateCursorSize_f = FamilyManager.getFamily(new AllOfComponents(typeof(CursorSize)));
+
     //Ne comprend que ce qui a le tag DreamFragmentUI
     private Family checkTags_f = FamilyManager.getFamily(new AnyOfTags("NewItemFeedback"));
-    
+
+    private GameObject CursorUI;
+    private GameObject CursorImage;
+
     public AccessibilitySystem ()
     {
         if (Application.isPlaying)
@@ -35,6 +41,7 @@ public class AccessibilitySystem : FSystem {
             needUpdateValueSlider_f.addEntryCallback(onNeedUpdateResetValueSlider);
             needUpdateColorAlpha_f.addEntryCallback(onNeedUpdateAlpha);
             needUpdateAnimation_f.addEntryCallback(onNeedUpdateAnimation);
+            needUpdateCursorSize_f.addEntryCallback(onNeedneedUpdateCursorSize_f);
 
             foreach (GameObject go in needUpdateDefaultSetting_f)
             {
@@ -56,7 +63,19 @@ public class AccessibilitySystem : FSystem {
                 Debug.Log(go.name);
             }
             Debug.Log("Tag Filter End");
+            
         }
+    }
+
+    private void onNeedneedUpdateCursorSize_f (GameObject go)
+    {
+        CursorSize cs = go.GetComponent<CursorSize>();
+        foreach (GameObject cursor in UICursorSize_f)
+        {
+            Image CursorImage = cursor.GetComponent<Image>();
+            CursorImage.rectTransform.localScale = new Vector3(cs.newCursorSize, cs.newCursorSize, 0);
+        }
+        GameObjectManager.removeComponent<CursorSize>(go);
     }
 
     private void onNeedUpdateAlpha (GameObject go)

@@ -42,5 +42,10 @@ public class Accessibility_settings : MonoBehaviour {
     {
         GameObjectManager.addComponent<UpdateValueSlider>(this.gameObject, new { valueSetting = defaultValueSetting });
     }
+
+    public void changeCursorSize (float Size)
+    {
+        GameObjectManager.addComponent<CursorSize>(this.gameObject, new { newCursorSize = Size});
+    }
     
 }
