@@ -18,7 +18,7 @@ public class SoundEffectObjet : FSystem {
     public static SoundEffectObjet instance;
     private RaycastHit hit;
     int idFragment;
-
+    private GameObject lastSelection = null;
 
     public SoundEffectObjet()
     {
@@ -57,6 +57,26 @@ public class SoundEffectObjet : FSystem {
                 Debug.Log("Clicked on hightlighted object");
                 f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[10]);
             }
+        }
+        
+        if (Input.GetMouseButtonDown(0))
+        { 
+            foreach (GameObject clickedEraser in f_eraserFocused)
+            {
+                if (lastSelection == null)
+                {
+                    f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[11]);
+                    
+                }
+                else if(f_eraserFocused.Count > 0)
+                {
+                    f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[12]);
+                    lastSelection = f_eraserFocused.getAt(f_eraserFocused.Count - 1);
+                    
+                }
+            }
+
+           
         }
 
 
