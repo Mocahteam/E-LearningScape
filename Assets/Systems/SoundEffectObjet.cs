@@ -35,7 +35,7 @@ public class SoundEffectObjet : FSystem {
     public void onNeedHighlighted(GameObject go)
     {
         int soundId = 8;
-        if (go.tag == "LockIntro")
+		if (go.tag == "LockIntro" || go.tag == "LockRoom2")
             soundId = 13;
         f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[soundId]);
     }
@@ -44,7 +44,7 @@ public class SoundEffectObjet : FSystem {
     //Pas de besoin de préciser input.getMouseButtonDown puisque le composant ne rentre dans la famille que quand la popup s'ouvre et elle s'ouvre quand on a cliqué dessus
     public void onDreamFragmentOpenned(GameObject go)
     {
-        go.GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[9]);
+		f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[9]);
     }
 
     // Use to process your families.
@@ -64,19 +64,17 @@ public class SoundEffectObjet : FSystem {
             foreach (GameObject clickedEraser in f_eraserFocused)
             {
                 if (lastSelection == null)
-                {
-                    f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[11]);
-                    
+				{
+					f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[11]);
+					lastSelection = f_eraserFocused.getAt(f_eraserFocused.Count - 1);
                 }
                 else if(f_eraserFocused.Count > 0)
                 {
                     f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[12]);
-                    lastSelection = f_eraserFocused.getAt(f_eraserFocused.Count - 1);
+					lastSelection = null;
                     
                 }
             }
-
-           
         }
 
 
