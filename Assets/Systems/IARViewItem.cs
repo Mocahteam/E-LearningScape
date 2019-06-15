@@ -203,8 +203,10 @@ public class IARViewItem : FSystem {
         // we toggle animation
         AnimatedSprites animation = go.GetComponent<AnimatedSprites>();
         animation.animate = !animation.animate;
+		if (go.transform.GetChild (1))
+			go.transform.GetChild (1).gameObject.SetActive (!go.transform.GetChild (1).gameObject.activeSelf);
         // we manage SelectedInInventory component
-        if (go.GetComponent<SelectedInInventory>())
+		if (go.GetComponent<SelectedInInventory>())
         {
             GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOff", performedBy = "player" });
             GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "deactivated", objectType = "item", objectName = go.name });

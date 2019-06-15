@@ -143,7 +143,7 @@ public class StoryDisplaying : FSystem {
             });
             fadingImage.color = Color.white;
             background.color = Color.white;
-            sdText.color = Color.cyan;
+			sdText.color = new Color (221.0f/255, 248.0f/255, 1, 1);
         }
         // Get current set of texts
         readTexts = storyTexts[st.storyProgression].ToArray();
