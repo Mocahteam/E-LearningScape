@@ -175,13 +175,13 @@ public class LockResolver : FSystem {
                     }
 
                     // process hotkeys to move the wheels
-                    if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Z) || Input.GetAxis("Vertical") == 1) && !lockRotationUp && !lockRotationDown)
+                    if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Z) || Input.GetAxis("Vertical") == 1 || Input.GetAxis("Mouse Y") == 1) && !lockRotationUp && !lockRotationDown)
                         moveWheelUp(selectedWheel);
-                    else if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || Input.GetAxis("Vertical") == -1) && !lockRotationUp && !lockRotationDown)
+                    else if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S) || Input.GetAxis("Vertical") == -1 || Input.GetAxis("Mouse Y") == -1) && !lockRotationUp && !lockRotationDown)
                         moveWheelDown(selectedWheel);
-                    else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Q) || Input.GetAxis("Horizontal") == -1)
+                    else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Q) || Input.GetAxis("Horizontal") == -1 || Input.GetAxis("Mouse X") == -1)
                         SelectLeftWheel(ref selectedWheel, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, selectedLocker.UpDownControl);
-                    else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) || Input.GetAxis("Horizontal") == 1)
+                    else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) || Input.GetAxis("Horizontal") == 1 || Input.GetAxis("Mouse X") == 1)
                         SelectRightWheel(ref selectedWheel, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, selectedLocker.UpDownControl);
                     //Process mouse arrow
                     if (Input.GetMouseButton(0) && f_LockArrows.Count != 0 && !lockRotationUp && !lockRotationDown)
