@@ -260,7 +260,7 @@ public class LoadGameContent : FSystem {
                 f_login.First().GetComponent<Image>().sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
         }
         // init question text and position
-        TextMeshProUGUI textMP = f_login.First().transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
+        Text textMP = f_login.First().transform.GetChild(0).GetComponentInChildren<Text>();
         textMP.text = gameContent.mastermindQuestion;
         textMP.transform.localPosition = new Vector3(textMP.transform.localPosition.x, gameContent.mastermindQuestionYPos, textMP.transform.localPosition.z);
         LoginManager.passwordSolution = gameContent.mastermindAnswer;
