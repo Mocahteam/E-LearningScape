@@ -73,6 +73,8 @@ TagManager:
   - AskHelpButton
   - HelpWarning
   - HelpTabContent
+  - IARItemSelected
+  - HUD_Main
   layers:
   - Default
   - TransparentFX

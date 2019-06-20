@@ -16,6 +16,7 @@ public class MenuSystem : FSystem {
     private Family f_particles = FamilyManager.getFamily(new AllOfComponents(typeof(ParticleSystem)));
     private Family f_reflectionProbe = FamilyManager.getFamily(new AllOfComponents(typeof(ReflectionProbe)));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
+    private Family f_mainHUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
 
     private Camera menuCamera;
     private float switchDelay = 12;
@@ -187,6 +188,8 @@ public class MenuSystem : FSystem {
         // Disable UI
         GameObjectManager.setGameObjectState(mainMenu, false);
         GameObjectManager.setGameObjectState(fadingBackground.gameObject, false);
+        // Enagle HUD
+        GameObjectManager.setGameObjectState(f_mainHUD.First(), true);
         // Switch on/off puzzle or fragments
         /*foreach (GameObject go in f_puzzles)
             GameObjectManager.setGameObjectState(go, togglePuzzle.isOn);

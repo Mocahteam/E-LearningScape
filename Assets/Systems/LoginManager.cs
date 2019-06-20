@@ -245,6 +245,8 @@ public class LoginManager : FSystem {
         }
         else
         {
+            //else, feedback following the rules of mastermind ('O' correct, '?' right number but wrong place, 'X' wrong number)
+
             GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "Wrong", performedBy = "player" });
             GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
             {
@@ -257,14 +259,19 @@ public class LoginManager : FSystem {
             });
 
             ifConnectionR2.ActivateInputField();
-            //else, feedback following the rules of mastermind ('O' correct, '?' right number but wrong place, 'X' wrong number)
-            f_mainWindow.First().GetComponentInChildren<InputField>().ActivateInputField();
-            if (answer >= 100 && answer / 100 == passwordSolution / 100)
+            int answerHundreds = answer / 100;
+            int answerTens = answer / 10 % 10;
+            int answerUnits = answer % 10;
+            int solutionHundreds = passwordSolution / 100;
+            int solutionTens = passwordSolution / 10 % 10;
+            int solutionUnits = passwordSolution % 10;
+
+            if (answerHundreds == solutionHundreds)
             {
                 connectionAnswerCheck1.text = "O";
                 connectionAnswerCheck1.color = cacGreen;
             }
-            else if (answer >= 100 && passwordSolution.ToString().Contains((answer / 100).ToString()))
+            else if ((answerTens != solutionTens && answerHundreds == solutionTens) || (answerUnits != solutionUnits && answerHundreds == solutionUnits))
             {
                 connectionAnswerCheck1.text = "?";
                 connectionAnswerCheck1.color = cacOrange;
@@ -275,12 +282,12 @@ public class LoginManager : FSystem {
                 connectionAnswerCheck1.color = cacRed;
             }
 
-            if (answer >= 10 && answer / 10 % 10 == passwordSolution / 10 % 10)
+            if (answerTens == solutionTens)
             {
                 connectionAnswerCheck2.text = "O";
                 connectionAnswerCheck2.color = cacGreen;
             }
-            else if (answer >= 10 && passwordSolution.ToString().Contains((answer / 10 % 10).ToString()))
+            else if ((answerHundreds != solutionHundreds && answerTens == solutionHundreds) || (answerUnits != solutionUnits && answerTens == solutionUnits))
             {
                 connectionAnswerCheck2.text = "?";
                 connectionAnswerCheck2.color = cacOrange;
@@ -291,12 +298,12 @@ public class LoginManager : FSystem {
                 connectionAnswerCheck2.color = cacRed;
             }
 
-            if (answer >= 0 && answer % 10 == passwordSolution % 10)
+            if (answerUnits == solutionUnits)
             {
                 connectionAnswerCheck3.text = "O";
                 connectionAnswerCheck3.color = cacGreen;
             }
-            else if (answer >= 10 && passwordSolution.ToString().Contains((answer % 10).ToString()))
+            else if ((answerHundreds != solutionHundreds && answerUnits == solutionHundreds) || (answerTens != solutionTens && answerUnits == solutionTens))
             {
                 connectionAnswerCheck3.text = "?";
                 connectionAnswerCheck3.color = cacOrange;

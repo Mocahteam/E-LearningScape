@@ -15,6 +15,7 @@ public class IARViewItem : FSystem {
     private Family f_selected = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedInInventory), typeof(Collected), typeof(AnimatedSprites)), new AnyOfTags("InventoryElements"));
     private Family f_descriptionUI = FamilyManager.getFamily(new AnyOfTags("DescriptionUI"));
     private Family f_viewable = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
+    private Family f_selectedItem = FamilyManager.getFamily(new AnyOfTags("IARItemSelected"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private GameObject descriptionUI;
     private GameObject descriptionTitle;
@@ -193,6 +194,10 @@ public class IARViewItem : FSystem {
                 // we toggle animation
                 AnimatedSprites animation = go.GetComponent<AnimatedSprites>();
                 animation.animate = !animation.animate;
+                // get second child
+                Transform secondChild = go.transform.GetChild(1);
+                if (secondChild && secondChild.gameObject.tag == "IARItemSelected")
+                    GameObjectManager.setGameObjectState(secondChild.gameObject, !secondChild.gameObject.activeSelf);
                 // we manage SelectedInInventory component
                 if (go.GetComponent<SelectedInInventory>())
                 {
@@ -213,6 +218,11 @@ public class IARViewItem : FSystem {
                     GameObjectManager.addComponent<SelectedInInventory>(go);
                 }
             }
+        }
+
+        foreach (GameObject go in f_selectedItem)
+        {
+            go.transform.Rotate(Vector3.back, Time.deltaTime * 10f);
         }
     }
 }
