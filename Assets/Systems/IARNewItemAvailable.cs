@@ -75,7 +75,6 @@ public class IARNewItemAvailable : FSystem {
     {
         // find child with tag "NewItemFeedback"
         GameObject child = getFeedbackChild(go);
-        EventSystem.current.SetSelectedGameObject(go);
         if (child && child.activeInHierarchy)
         {
             NewItemManager nim = go.GetComponent<NewItemManager>();

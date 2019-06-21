@@ -13,6 +13,7 @@ public class IARTabNavigation : FSystem {
     private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
     private Family f_fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)));
+    private Family f_iarDisplayed = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
     private Family f_HUD_H = FamilyManager.getFamily(new AnyOfTags("HUD_H"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
@@ -27,6 +28,8 @@ public class IARTabNavigation : FSystem {
     private GameObject iarBackground;
 
     private bool openedAtLeastOnce = false;
+
+    private int tabIdToFocusOn;
 
     private Dictionary<FSystem, bool> systemsStates;
 
@@ -45,6 +48,8 @@ public class IARTabNavigation : FSystem {
 
             selectedTabSprite = f_fgm.First().GetComponent<FocusedGOMaterial>().selectedTabSprite;
             defaultTabSprite = f_fgm.First().GetComponent<FocusedGOMaterial>().defaultTabSprite;
+
+            f_iarDisplayed.addEntryCallback(onIarDisplayed);
 
             iarBackground = f_iarBackground.First();
             iar = iarBackground.transform.parent.gameObject;
@@ -74,6 +79,13 @@ public class IARTabNavigation : FSystem {
             if (f_HUD_H.Count > 0)
                 GameObjectManager.setGameObjectState(f_HUD_H.First(), true); // display HUD "H"
         }
+    }
+
+    private void onIarDisplayed(GameObject go)
+    {
+        // force EventSystem affectation
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(f_tabs.getAt(tabIdToFocusOn));
     }
 
     // Use to process your families.
@@ -115,11 +127,7 @@ public class IARTabNavigation : FSystem {
         }
 
         SwitchTab(f_tabs.getAt(tabId)); // switch to the desired tab
-        Debug.Log(tabId);
-        Debug.Log(f_tabs.getAt(tabId));
-        Debug.Log(f_tabs.getAt(tabId).activeInHierarchy);
-        Debug.Log(EventSystem.current.currentSelectedGameObject);
-        EventSystem.current.SetSelectedGameObject(f_tabs.getAt(tabId));
+        tabIdToFocusOn = tabId;
        
         systemsStates.Clear();
         // save systems states

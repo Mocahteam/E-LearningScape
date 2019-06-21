@@ -20,7 +20,6 @@ public class MenuSystem : FSystem {
     private Family f_enabledSettingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_settingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)));
     private Family f_inputFieldMasterMind = FamilyManager.getFamily(new AnyOfComponents(typeof(InputField), typeof(Button)), new NoneOfLayers(5), new AnyOfTags("Login"));
-    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
     private Family f_inventoryMenuContent = FamilyManager.getFamily(new AnyOfTags("IARMenuButton"));
     private Family f_menuContent = FamilyManager.getFamily(new AllOfComponents(typeof(SettingsMainMenu)), new NoneOfComponents(typeof(Image)));
 
