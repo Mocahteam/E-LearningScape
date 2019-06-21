@@ -138,7 +138,7 @@ public class LoadGameContent : FSystem {
             else if (tmp.gameObject.name == "Description")
                 tmp.text = answerFeedbackDesc;
         }
-        question.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = placeHolder;
+		question.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<TMP_Text>().text = placeHolder;
         question.GetComponent<QuerySolution>().andSolutions = new List<string>();
         foreach (string s in andSolutions)
             forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
