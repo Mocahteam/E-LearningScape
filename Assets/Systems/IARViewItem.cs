@@ -98,7 +98,7 @@ public class IARViewItem : FSystem {
             {
                 // Check if at least one item is selected
                 if (f_selectedItems.Count > 0)
-                    EventSystem.current.SetSelectedGameObject(f_selectedItems.First());
+                    EventSystem.current.SetSelectedGameObject(f_selectedItems.getAt(f_selectedItems.Count-1));
                 else
                     EventSystem.current.SetSelectedGameObject(null);
 
