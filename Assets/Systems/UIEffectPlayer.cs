@@ -5,8 +5,7 @@ using FYFY;
 public class UIEffectPlayer : FSystem {
 
     // Display UI Effect based on PlayUIEffect component
-
-    private Family f_soundBank = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank), typeof(AudioSource)));
+    
     private Family f_playUiEffect = FamilyManager.getFamily(new AllOfComponents(typeof(PlayUIEffect)));
     private Family f_uiEffect = FamilyManager.getFamily(new AnyOfTags("UIEffect"));
 
@@ -49,8 +48,6 @@ public class UIEffectPlayer : FSystem {
         PlayUIEffect uiEffect = go.GetComponent<PlayUIEffect>();
         if (uiEffect.effectCode == 0 || uiEffect.effectCode == 2)
         {
-            // play right sound
-            f_soundBank.First().GetComponent<AudioSource>().PlayOneShot(f_soundBank.First().GetComponent<AudioBank>().audioBank[0]);
             if (uiEffect.effectCode == 0)
             {
                 blinkCorrect = true;
@@ -84,8 +81,6 @@ public class UIEffectPlayer : FSystem {
         }
         else if (uiEffect.effectCode == 1)
         {
-            // play wrong sound
-            f_soundBank.First().GetComponent<AudioSource>().PlayOneShot(f_soundBank.First().GetComponent<AudioBank>().audioBank[1]);
             blinkWrong = true;
             startTime = Time.time;
             GameObjectManager.addComponent<ActionPerformedForLRS>(go, new

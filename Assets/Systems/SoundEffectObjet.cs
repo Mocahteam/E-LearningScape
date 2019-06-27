@@ -1,13 +1,20 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.PointerManager;
+using UnityStandardAssets.Characters.FirstPerson;
+using FYFY_plugins.TriggerManager;
 
 public class SoundEffectObjet : FSystem {
     private Family f_soundObj = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank), typeof(AudioSource)));
+    private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController), typeof(AudioBank)));
     private Family f_lightIndiceObjet = FamilyManager.getFamily(new AllOfComponents(typeof(Highlighted)));
+    private Family f_ballbox = FamilyManager.getFamily(new AllOfComponents(typeof(BallBoxManager)));
     private Family f_eraserFocused = FamilyManager.getFamily(new AnyOfTags("Eraser"), new AllOfComponents(typeof(PointerOver)));
     private Family f_selectLightIndiceObjet = FamilyManager.getFamily(new AllOfComponents(typeof(Highlighted), typeof(LinkedWith)), new NoneOfTags("LockIntro","Box")); 
     private Family f_findDreamFragment = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
+    private Family f_box = FamilyManager.getFamily(new AnyOfTags("Box"));
+    private Family f_playUiEffect = FamilyManager.getFamily(new AllOfComponents(typeof(PlayUIEffect)));
+
 
     //To see when ballbox unlocked play sound report you in BallBoxManager system
 
@@ -19,6 +26,8 @@ public class SoundEffectObjet : FSystem {
     private RaycastHit hit;
     int idFragment;
     private GameObject lastSelection = null;
+    private GameObject box;
+    private GameObject boxPadlock;
 
     public SoundEffectObjet()
     {
@@ -28,10 +37,27 @@ public class SoundEffectObjet : FSystem {
             f_eraserFocused.addEntryCallback(onNeedHighlighted);
             f_dreamFragmentOpenned.addEntryCallback(onDreamFragmentOpenned);
             idFragment = -1;
+
+            box = f_box.First();
+            boxPadlock = box.transform.GetChild(0).gameObject;
+            
+            f_playUiEffect.addEntryCallback(onNewEffect);
         }
         instance = this; 
     }
 
+    private void onNewEffect(GameObject go)
+    {
+        PlayUIEffect uiEffect = go.GetComponent<PlayUIEffect>();
+        if (uiEffect.effectCode == 0 || uiEffect.effectCode == 2)
+            // play right sound
+            f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[0]);
+        else if (uiEffect.effectCode == 1)
+            // play wrong sound
+            f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[1]);
+    }
+
+    
     public void onNeedHighlighted(GameObject go)
     {
         int soundId = 8;
@@ -77,6 +103,11 @@ public class SoundEffectObjet : FSystem {
             }
         }
 
+        if (!boxPadlock.activeSelf)
+        {
+            f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[14]);
+        }
+        
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
         {
