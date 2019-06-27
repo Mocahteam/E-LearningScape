@@ -168,7 +168,7 @@
     "gearAnswer": "Facteurs relatifs à la classe",
 	
 	"mastermindQuestion": "Vous avez oublié votre code ? Le hasard vous aidera sous doute !",
-	"mastermindQuestionYPos" : -124,
+	"mastermindQuestionYPos" : -140,
     "mastermindAnswer": 814,
 	"mastermindBackgroundPicturePath": "Data/MasterMind.png",
 	

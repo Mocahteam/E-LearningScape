@@ -24,7 +24,6 @@ public class IARViewItem : FSystem {
 
     private Family f_descriptionUI = FamilyManager.getFamily(new AnyOfTags("DescriptionUI"));
 
-    private Family f_soundObj = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank), typeof(AudioSource)));
 
     private GameObject descriptionUI;
     private GameObject descriptionTitle;
@@ -187,8 +186,6 @@ public class IARViewItem : FSystem {
                 GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "deactivated", objectType = "item", objectName = go.name });
 
                 GameObjectManager.removeComponent<SelectedInInventory>(go);
-                //Play sound effect when object is desactivate
-                f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[12]);
             }
             else
             {
@@ -196,8 +193,7 @@ public class IARViewItem : FSystem {
                 GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "activated", objectType = "item", objectName = go.name });
 
                 GameObjectManager.addComponent<SelectedInInventory>(go);
-                //Play sound effect when object is activate 
-                f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[11]);
+               
             }
         }
     }

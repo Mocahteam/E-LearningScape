@@ -14,8 +14,9 @@ public class SoundEffectObjet : FSystem {
     private Family f_findDreamFragment = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
     private Family f_box = FamilyManager.getFamily(new AnyOfTags("Box"));
     private Family f_playUiEffect = FamilyManager.getFamily(new AllOfComponents(typeof(PlayUIEffect)));
+    private Family f_IARItemToggled = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedInInventory)));
 
-
+    
     //To see when ballbox unlocked play sound report you in BallBoxManager system
 
     //Il faut une famille qui comprend tout ce qui est taggé DreamFragmentUI et ceux-ci ne s'activent que quand la popup du fragment s'ouvre 
@@ -26,8 +27,6 @@ public class SoundEffectObjet : FSystem {
     private RaycastHit hit;
     int idFragment;
     private GameObject lastSelection = null;
-    private GameObject box;
-    private GameObject boxPadlock;
 
     public SoundEffectObjet()
     {
@@ -36,10 +35,9 @@ public class SoundEffectObjet : FSystem {
             f_lightIndiceObjet.addEntryCallback(onNeedHighlighted);
             f_eraserFocused.addEntryCallback(onNeedHighlighted);
             f_dreamFragmentOpenned.addEntryCallback(onDreamFragmentOpenned);
+            f_IARItemToggled.addEntryCallback(onNewIARItemSelected);
+            f_IARItemToggled.addExitCallback(onIARItemUnselected);
             idFragment = -1;
-
-            box = f_box.First();
-            boxPadlock = box.transform.GetChild(0).gameObject;
             
             f_playUiEffect.addEntryCallback(onNewEffect);
         }
@@ -72,7 +70,16 @@ public class SoundEffectObjet : FSystem {
     {
 		f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[9]);
     }
+    
+    public void onNewIARItemSelected (GameObject go)
+    {
+        f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[11]);
+    }
 
+    public void onIARItemUnselected(int instanceID)
+    {
+        f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[12]);
+    }
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
@@ -103,12 +110,7 @@ public class SoundEffectObjet : FSystem {
             }
         }
 
-        if (!boxPadlock.activeSelf)
-        {
-            f_soundObj.First().GetComponent<AudioSource>().PlayOneShot(f_soundObj.First().GetComponent<AudioBank>().audioBank[14]);
-        }
         
-
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
         {
 
