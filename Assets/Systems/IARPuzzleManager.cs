@@ -8,7 +8,7 @@ public class IARPuzzleManager : FSystem {
     // Enable to interact Move and Rotate puzzle pieces inside IAR
 
     private Family f_puzzle = FamilyManager.getFamily(new AnyOfTags("PuzzleCanvas"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_puzzleUI = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"), new AllOfComponents(typeof(PointerOver)), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_puzzleUI = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"), new AllOfComponents(typeof(PointerOver), typeof(LinkedWith), typeof(puzzleDeltaPositions)), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private GameObject tmpGo;
 
@@ -47,8 +47,25 @@ public class IARPuzzleManager : FSystem {
                 objectName = tmpGo.name,
                 activityExtensions = new Dictionary<string, List<string>>() { { "position", new List<string>() { tmpGo.GetComponent<RectTransform>().position.ToString("G4") } } }
             });
+            // try to magnet puzzle piece
+            int cpt = 0;
+            // parse all neighbours
+            foreach (LinkedWith neighbour in tmpGo.GetComponents<LinkedWith>())
+            {
+                // Check if neighbour exists and is active in hierarchy
+                if (neighbour.link && neighbour.link.activeInHierarchy)
+                {
+                    // Compute distance between current piece and its neighbour (taking into account x and y deltas)
+                    if (Mathf.Abs((tmpGo.transform.position.x - tmpGo.GetComponent<puzzleDeltaPositions>().xDelta[cpt]) - neighbour.link.transform.position.x) < 10 &&
+                            Mathf.Abs((tmpGo.transform.position.y - tmpGo.GetComponent<puzzleDeltaPositions>().yDelta[cpt]) - neighbour.link.transform.position.y) < 10)
+                        // magnets piece to this neighbour
+                        tmpGo.transform.position = new Vector3(neighbour.link.transform.position.x + tmpGo.GetComponent<puzzleDeltaPositions>().xDelta[cpt], neighbour.link.transform.position.y + tmpGo.GetComponent<puzzleDeltaPositions>().yDelta[cpt], neighbour.link.transform.position.z);
+                }
+                cpt++;
+            }
             tmpGo = null;
         }
+
         if (Input.GetMouseButton(0) && tmpGo)
         {
             tmpGo.transform.position = Input.mousePosition;

@@ -27,10 +27,6 @@ public class IARViewItem : FSystem {
     private GameObject currentView = null;
     private GameObject lastSelection = null;
 
-    //Variables used to blur the background when IAR opened
-    public static float focusDistance;
-    public static float initialFocusDistance = 1.5f;
-
     public static IARViewItem instance;
 
     public IARViewItem()
@@ -165,18 +161,10 @@ public class IARViewItem : FSystem {
             GameObjectManager.setGameObjectState(lastSelection.GetComponent<LinkedWith>().link, false); // switch off the linked game object
     }
 
-    // Use this to update member variables when system pause. 
-    // Advice: avoid to update your families inside this function.
-    protected override void onPause(int currentFrame)
-    {
-        focusDistance = initialFocusDistance;
-    }
-
     // Use this to update member variables when system resume.
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
     {
-        focusDistance = 0.1f;
         // display last selection if it exists
         if (lastSelection)
             showDescription(lastSelection);

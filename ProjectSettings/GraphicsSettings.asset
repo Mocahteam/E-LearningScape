@@ -54,9 +54,9 @@ GraphicsSettings:
     m_Tier: 2
     m_Settings:
       standardShaderQuality: 2
-      renderingPath: 1
-      hdrMode: 1
-      realtimeGICPUUsage: 50
+      renderingPath: 3
+      hdrMode: 2
+      realtimeGICPUUsage: 75
       useReflectionProbeBoxProjection: 1
       useReflectionProbeBlending: 1
       useHDR: 1
@@ -65,7 +65,7 @@ GraphicsSettings:
       prefer32BitShadowMaps: 0
       enableLPPV: 1
       useDitherMaskForAlphaBlendedShadows: 1
-    m_Automatic: 1
+    m_Automatic: 0
   - serializedVersion: 5
     m_BuildTarget: 1
     m_Tier: 0
@@ -76,7 +76,7 @@ GraphicsSettings:
       realtimeGICPUUsage: 25
       useReflectionProbeBoxProjection: 0
       useReflectionProbeBlending: 0
-      useHDR: 1
+      useHDR: 0
       useDetailNormalMap: 0
       useCascadedShadowMaps: 0
       prefer32BitShadowMaps: 0
@@ -90,7 +90,7 @@ GraphicsSettings:
       standardShaderQuality: 1
       renderingPath: 1
       hdrMode: 1
-      realtimeGICPUUsage: 25
+      realtimeGICPUUsage: 50
       useReflectionProbeBoxProjection: 1
       useReflectionProbeBlending: 1
       useHDR: 1

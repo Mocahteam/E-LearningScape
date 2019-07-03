@@ -106,11 +106,16 @@ public class IARQueryEvaluator : FSystem {
         QuerySolution qs = query.GetComponent<QuerySolution>();
         // Check mandatory solution
         bool error = false;
+        int andLength = 0;
         for (int i = 0 ; i < qs.andSolutions.Count && !error ; i++)
         {
+            andLength += qs.andSolutions[i].Length;
             if (!answer.Contains(qs.andSolutions[i]))
                 error = true;
         }
+        // if no error and no orSolutions available, check if answer is the same size of andSolutions
+        if (!error && qs.orSolutions.Count == 0)
+            error = answer.Length != andLength;
         // if no error and orSolutions available
         if (!error && qs.orSolutions.Count > 0)
         {
