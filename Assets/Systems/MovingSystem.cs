@@ -11,11 +11,11 @@ public class MovingSystem : FSystem
     // This system manage HUD on moving, walking speed and state of the FirstPersonController
 
     private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController), typeof(AudioBank)));
-    private Family f_linkedHud = FamilyManager.getFamily(new AnyOfTags("EnableOnFirstCrouch"), new AllOfComponents(typeof(Image)));
+    private Family f_linkedHud = FamilyManager.getFamily(new AnyOfTags("EnableOnFirstCrouch", "HUD_H", "HUD_Menu"), new AllOfComponents(typeof(Image)));
     private Family f_endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_cursor = FamilyManager.getFamily(new AnyOfTags("Cursor"));
     private Family f_waterWalking = FamilyManager.getFamily(new AnyOfLayers(12), new AllOfComponents(typeof(Triggered3D))); // Layer 12 <=> WaterCollider
-    private Family f_HUDInputs = FamilyManager.getFamily(new AnyOfTags("EnableOnFirstCrouch", "HUD_A", "HUD_H"), new AllOfComponents(typeof(Image)));
+    private Family f_HUDInputs = FamilyManager.getFamily(new AnyOfTags("EnableOnFirstCrouch", "HUD_A", "HUD_H", "HUD_Menu"), new AllOfComponents(typeof(Image)));
 
     public float traceMovementFrequency = 0;
     private bool crouching = false; // true when the player is crouching

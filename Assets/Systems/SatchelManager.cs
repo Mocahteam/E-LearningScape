@@ -236,7 +236,7 @@ public class SatchelManager : FSystem {
                         getOutPaper = false;
                         Canvas canvas = selectedBag.GetComponentInChildren<Canvas>();
                         canvas.renderMode = RenderMode.ScreenSpaceCamera;
-                        canvas.scaleFactor = 0.8f;
+                        canvas.scaleFactor = 0.85f + (Screen.height-720)/900f; // 900 is magic value to add 0.4f when passing from default resolution (1280/720) to high resolution (1980/1080)
                         paper.transform.position = selectedBag.transform.TransformPoint(bagPaperInitialPos) + Vector3.up * 0.8f;
                         
                         paperOut = true;

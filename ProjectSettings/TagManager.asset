@@ -75,6 +75,7 @@ TagManager:
   - HelpTabContent
   - IARItemSelected
   - HUD_Main
+  - HUD_Menu
   layers:
   - Default
   - TransparentFX

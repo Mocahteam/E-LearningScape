@@ -165,11 +165,6 @@ public class LoadGameContent : FSystem {
         Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace to LRS: ", gameContent.traceToLRS));
 
-        foreach (GameObject go in f_puzzles)
-            GameObjectManager.setGameObjectState(go, gameContent.virtualPuzzle);
-        foreach (GameObject go in f_puzzlesFragment)
-            GameObjectManager.setGameObjectState(go, !gameContent.virtualPuzzle);
-
         // Load additional Logos
         if (gameContent.additionalLogosPath.Length > 0)
         {
@@ -187,6 +182,7 @@ public class LoadGameContent : FSystem {
             // Update bank of logos
             f_logos.First().GetComponent<ImgBank>().bank = logos.ToArray();
         }
+        Debug.Log("Additional Logo loaded");
 
         #region Story
         StoryText st = f_storyText.First().GetComponent<StoryText>();
@@ -199,6 +195,7 @@ public class LoadGameContent : FSystem {
             newCredits.AddRange(gameContent.additionalCredit);
             st.credit = newCredits.ToArray();
         }
+        Debug.Log("Story loaded");
         #endregion
 
         #region InventoryTexts
@@ -228,6 +225,7 @@ public class LoadGameContent : FSystem {
                 Debug.LogWarning("No content found in config file for " + inventoryGo.name + " GameObject");
             }
         }
+        Debug.Log("Inventory texts loaded");
         #endregion
 
         #region Room 1
@@ -253,6 +251,7 @@ public class LoadGameContent : FSystem {
                     break;
             }
         }
+        Debug.Log("Room 1 queries loaded");
 
         if (File.Exists(gameContent.mastermindBackgroundPicturePath))
         {
@@ -266,6 +265,7 @@ public class LoadGameContent : FSystem {
         textMP.text = gameContent.mastermindQuestion;
         textMP.transform.localPosition = new Vector3(textMP.transform.localPosition.x, gameContent.mastermindQuestionYPos, textMP.transform.localPosition.z);
         LoginManager.passwordSolution = gameContent.mastermindAnswer;
+        Debug.Log("Master mind picture loaded");
 
 
         //Ball Box
@@ -360,10 +360,11 @@ public class LoadGameContent : FSystem {
             b.GetComponentInChildren<TextMeshPro>().text = b.number.ToString();
         }
 
-            foreach (TextMeshPro tmp in f_ballBoxTop.First().GetComponentsInChildren<TextMeshPro>())
+        foreach (TextMeshPro tmp in f_ballBoxTop.First().GetComponentsInChildren<TextMeshPro>())
         {
             tmp.text = gameContent.ballBoxQuestion;
         }
+        Debug.Log("Ball box loaded");
 
         //Plank and Wire
         int nbWrongWords = f_wrongWords.Count;
@@ -414,6 +415,7 @@ public class LoadGameContent : FSystem {
                 child.Rotate(0, -angle, 0);
         foreach (Transform child in forGO.transform.GetChild(0))
             child.Rotate(0, 0, -angle);
+        Debug.Log("Plank and wire loaded");
 
         //Green Dream Fragments
         int nbDreamFragments = f_dreamFragments.Count;
@@ -430,6 +432,7 @@ public class LoadGameContent : FSystem {
                     break;
             }
         }
+        Debug.Log("Green dream fragments loaded");
 
         //Gears
         int nbQuestionGears = 0;
@@ -477,6 +480,7 @@ public class LoadGameContent : FSystem {
             gear.isSolution = true;
             gear.tag = "RotateGear";
         }
+        Debug.Log("IAR Gears loaded");
         #endregion
 
         #region Room 2
@@ -514,6 +518,7 @@ public class LoadGameContent : FSystem {
                     break;
             }
         }
+        Debug.Log("Room 2 queries loaded");
 
         //Glasses
         BagImage bi = f_bagImage.First().GetComponent<BagImage>();
@@ -548,6 +553,7 @@ public class LoadGameContent : FSystem {
             }
         }
         bi.gameObject.GetComponent<Image>().sprite = bi.image0;
+        Debug.Log("Glasses loaded");
 
         //Scrolls
         int nbScroll = gameContent.scrollsWords.Length < f_scrollUI.Count ? gameContent.scrollsWords.Length : f_scrollUI.Count;
@@ -558,6 +564,7 @@ public class LoadGameContent : FSystem {
             else
                 f_scrollUI.getAt(i).GetComponentInChildren<TextMeshProUGUI>().text = gameContent.scrollsWords[i];
         }
+        Debug.Log("Scrolls loaded");
 
         //Mirror
         f_mirrorImage.First().GetComponent<Image>().sprite = defaultGameContent.noPictureFound;
@@ -568,6 +575,7 @@ public class LoadGameContent : FSystem {
             if (tmpTex.LoadImage(tmpFileData))
                 f_mirrorImage.First().GetComponent<Image>().sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
         }
+        Debug.Log("Mirror loaded");
 
         //Lock Room 2
         Locker locker = f_lockRoom2.First().GetComponent<Locker>();
@@ -575,6 +583,7 @@ public class LoadGameContent : FSystem {
         locker.wheel2Solution = (gameContent.lockRoom2Password / 10) % 10;
         locker.wheel3Solution = gameContent.lockRoom2Password % 10;
         f_passwordRoom2.First().GetComponentInChildren<TextMeshProUGUI>().text = (gameContent.lockRoom2Password % 1000).ToString();
+        Debug.Log("Locker loaded");
         #endregion
 
         #region Room 3
@@ -589,8 +598,14 @@ public class LoadGameContent : FSystem {
             qs.orSolutions.Add(StringToAnswer(gameContent.lampAnswer));
             qs.orSolutions.Add(StringToAnswer(gameContent.whiteBoardAnswer));
         }
+        Debug.Log("Room 3 queries loaded");
 
         //Puzzles
+        foreach (GameObject go in f_puzzles)
+            GameObjectManager.setGameObjectState(go, gameContent.virtualPuzzle);
+        foreach (GameObject go in f_puzzlesFragment)
+            GameObjectManager.setGameObjectState(go, !gameContent.virtualPuzzle);
+
         Sprite puzzlePicture = defaultGameContent.noPictureFound;
         if (gameContent.virtualPuzzle && File.Exists(gameContent.puzzlePicturePath))
         {
@@ -601,21 +616,13 @@ public class LoadGameContent : FSystem {
                 puzzlePicture = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
             }
         }
-        Rect rect;
-        if (puzzlePicture.texture.width > puzzlePicture.texture.height)
-            rect = new Rect(0, 0, 935, puzzlePicture.texture.height * 935 / puzzlePicture.texture.width);
-        else
-            rect = new Rect(0, 0, puzzlePicture.texture.width * 935 / puzzlePicture.texture.height, 935);
-
         int nbPuzzleUI = f_puzzleUI.Count;
-        RectTransform rt = f_puzzleUI.getAt(0).GetComponent<RectTransform>();
-        Vector3 newPuzzleScale = new Vector3(rect.width * rt.localScale.x / 935, rect.width * rt.localScale.y / 935, rt.localScale.z);
         for (int i = 0; i < nbPuzzleUI; i++)
         {
-            rt = f_puzzleUI.getAt(i).GetComponent<RectTransform>();
-            rt.localScale = newPuzzleScale;
+            RectTransform rt = f_puzzleUI.getAt(i).GetComponent<RectTransform>();
             rt.GetChild(0).gameObject.GetComponent<Image>().sprite = puzzlePicture;
         }
+        Debug.Log("Puzzle loaded");
 
         //Lamp
         int nbLampPictures = f_lampPictures.Count;
@@ -634,6 +641,7 @@ public class LoadGameContent : FSystem {
             }
             f_lampPictures.getAt(i).GetComponent<Image>().sprite = mySprite;
         }
+        Debug.Log("Lamp loaded");
 
         //White Board
         convertedBoardText = new string[2];
@@ -644,6 +652,7 @@ public class LoadGameContent : FSystem {
             f_boardUnremovable.getAt(i).GetComponent<TextMeshPro>().text = convertedBoardText[0];
             f_boardRemovable.getAt(i).GetComponent<TextMeshPro>().text = convertedBoardText[1];
         }
+        Debug.Log("White board loaded");
 
         #endregion
 
@@ -652,6 +661,7 @@ public class LoadGameContent : FSystem {
         LoadJsonFile(gameContent.lrsConfigPath, defaultGameContent.lrsConfigFile, out GBL_Interface.lrsAddresses);
         if (GBL_Interface.lrsAddresses == null)
             GBL_Interface.lrsAddresses = new List<LRSAddress>();
+        Debug.Log("LRS config file loaded");
 
         // Load Hints config files
         GameHints gameHints = f_gameHints.First().GetComponent<GameHints>();
@@ -661,28 +671,33 @@ public class LoadGameContent : FSystem {
         LoadJsonFile(gameContent.wrongAnswerFeedbacksPath, defaultGameContent.wrongAnswerFeedbacks, out gameHints.wrongAnswerFeedbacks);
         if (gameHints.wrongAnswerFeedbacks == null)
             gameHints.wrongAnswerFeedbacks = new Dictionary<string, Dictionary<string, KeyValuePair<string, string>>>();
+        Debug.Log("Hints loaded");
 
         // Load InternalHints config files
         InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
         LoadJsonFile(gameContent.internalHintsPath, defaultGameContent.hintsJsonFile, out internalGameHints.dictionary);
         if (internalGameHints.dictionary == null)
             internalGameHints.dictionary = new Dictionary<string, Dictionary<string, List<string>>>();
+        Debug.Log("Internal hints loaded");
 
         // Load EnigmasWeight config files
         LoadJsonFile(gameContent.enigmasWeightPath, defaultGameContent.enigmasWeight, out enigmasWeight);
         if (enigmasWeight == null)
             enigmasWeight = new Dictionary<string, float>();
+        Debug.Log("Enigmas weight loaded");
 
         // Load LabelWeights config files
         LabelWeights labelWeights = f_labelWeights.First().GetComponent<LabelWeights>();
         LoadJsonFile(gameContent.labelWeightsPath, defaultGameContent.labelWeights, out labelWeights.weights);
         if (labelWeights.weights == null)
             labelWeights.weights = new Dictionary<string, float>();
+        Debug.Log("Labels weight loaded");
 
         // Load HelpSystem config files
         LoadJsonFile(gameContent.helpSystemConfigPath, defaultGameContent.helpSystemConfig, out HelpSystem.config);
         if (HelpSystem.config == null)
             HelpSystem.config = new HelpSystemConfig();
+        Debug.Log("HelpSystem config file loaded");
 
         //Load dream fragment links config files
         Dictionary<string, string> dreamFragmentsLinks = null;
@@ -692,6 +707,7 @@ public class LoadGameContent : FSystem {
         // Affects urlLinks to dream fragments
         foreach (GameObject dream_go in f_dreamFragments)
             dreamFragmentsLinks.TryGetValue(dream_go.name, out dream_go.GetComponent<DreamFragment>().urlLink);
+        Debug.Log("Dream fragments links loaded");
         #endregion
 
         Debug.Log("Data loaded");

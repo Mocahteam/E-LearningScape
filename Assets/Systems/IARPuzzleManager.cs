@@ -56,10 +56,10 @@ public class IARPuzzleManager : FSystem {
                 if (neighbour.link && neighbour.link.activeInHierarchy)
                 {
                     // Compute distance between current piece and its neighbour (taking into account x and y deltas)
-                    if (Mathf.Abs((tmpGo.transform.position.x - tmpGo.GetComponent<puzzleDeltaPositions>().xDelta[cpt]) - neighbour.link.transform.position.x) < 10 &&
-                            Mathf.Abs((tmpGo.transform.position.y - tmpGo.GetComponent<puzzleDeltaPositions>().yDelta[cpt]) - neighbour.link.transform.position.y) < 10)
+                    if (Mathf.Abs((tmpGo.transform.position.x - (tmpGo.GetComponent<puzzleDeltaPositions>().xDelta[cpt] * Screen.width / 1280)) - neighbour.link.transform.position.x) < 10 &&
+                            Mathf.Abs((tmpGo.transform.position.y - (tmpGo.GetComponent<puzzleDeltaPositions>().yDelta[cpt] * Screen.width / 1280)) - neighbour.link.transform.position.y) < 10)
                         // magnets piece to this neighbour
-                        tmpGo.transform.position = new Vector3(neighbour.link.transform.position.x + tmpGo.GetComponent<puzzleDeltaPositions>().xDelta[cpt], neighbour.link.transform.position.y + tmpGo.GetComponent<puzzleDeltaPositions>().yDelta[cpt], neighbour.link.transform.position.z);
+                        tmpGo.transform.position = new Vector3(neighbour.link.transform.position.x + (tmpGo.GetComponent<puzzleDeltaPositions>().xDelta[cpt] * Screen.width / 1280), neighbour.link.transform.position.y + (tmpGo.GetComponent<puzzleDeltaPositions>().yDelta[cpt] * Screen.width / 1280), neighbour.link.transform.position.z);
                 }
                 cpt++;
             }
