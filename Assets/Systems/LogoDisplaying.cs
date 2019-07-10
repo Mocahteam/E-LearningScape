@@ -106,26 +106,26 @@ public class LogoDisplaying : FSystem {
                 // make logo transparent (usefull in case of clicking)
                 fadingImage.color = new Color(1, 1, 1, 0);
                 // check if logo remaining
-                if (nextLogo >= logo.bank.Length)
-                {
-                    if (!closeLogo)
-                    {
-                        int nbFadinElems = f_fadingMenuElems.Count;
-                        for(int i = 0; i < nbFadinElems; i++)
-                            GameObjectManager.setGameObjectState(f_fadingMenuElems.getAt(i), true);
-                        closeLogo = true;
-                        readingTimer = Time.time;
-                        // Start main menu
-                        MenuSystem.instance.Pause = false;
-                    }
-                }
-                else
+                if (nextLogo < logo.bank.Length)
                 {
                     currentLogo = nextLogo;
                     fadingImage.sprite = logo.bank[currentLogo];
                     fadingImage.preserveAspect = true;
                     showLogo = true;
                     readingTimer = Time.time;
+                }
+                else
+                {
+                    if (!closeLogo)
+                    {
+                        int nbFadinElems = f_fadingMenuElems.Count;
+                        for (int i = 0; i < nbFadinElems; i++)
+                            GameObjectManager.setGameObjectState(f_fadingMenuElems.getAt(i), true);
+                        closeLogo = true;
+                        readingTimer = Time.time;
+                        // Start main menu
+                        MenuSystem.instance.Pause = false;
+                    }
                 }
 
             }
@@ -160,26 +160,19 @@ public class LogoDisplaying : FSystem {
             }
             else
             {
+                float alpha = 0f;
                 if (Time.time - readingTimer < fadeSpeed)
                 {
-                    if (menuFaded)
+                    alpha = 1f;
+                    if (!menuFaded)
                     {
-                        int nbFadinElems = f_fadingMenuElems.Count;
-                        GameObject tmpGO = null;
-                        for (int i = 0; i < nbFadinElems; i++)
-                        {
-                            tmpGO = f_fadingMenuElems.getAt(i);
-                            if (tmpGO.GetComponent<Image>())
-                                tmpGO.GetComponent<Image>().color = new Color(1, 1, 1, tmpGO.GetComponent<FadingMenu>().finalAlpha/256 * (Time.time - readingTimer) / fadeSpeed);
-                            else
-                                tmpGO.GetComponent<Text>().color = new Color(1, 1, 1, tmpGO.GetComponent<FadingMenu>().finalAlpha / 256 * (Time.time - readingTimer) / fadeSpeed);
-                        }
+                        alpha = (Time.time - readingTimer) / fadeSpeed;
+                        background.color = new Color(0, 0, 0, 1-alpha);
                     }
-                    else
-                        background.color = new Color(0, 0, 0, 1 - (Time.time - readingTimer) / fadeSpeed);
                 }
                 else // fade end
                 {
+                    alpha = 1f;
                     if(menuFaded)
                         // Pause this
                         this.Pause = true;
@@ -190,6 +183,16 @@ public class LogoDisplaying : FSystem {
                         GameObjectManager.setGameObjectState(logoGo, false);
                         readingTimer = Time.time;
                     }
+                }
+                GameObject tmpGO = null;
+                int nbFadinElems = f_fadingMenuElems.Count;
+                for (int i = 0; i < nbFadinElems; i++)
+                {
+                    tmpGO = f_fadingMenuElems.getAt(i);
+                    if (tmpGO.GetComponent<Image>())
+                        tmpGO.GetComponent<Image>().color = new Color(1, 1, 1, alpha);
+                    else
+                        tmpGO.GetComponent<Text>().color = new Color(1, 1, 1, alpha);
                 }
             }
         }

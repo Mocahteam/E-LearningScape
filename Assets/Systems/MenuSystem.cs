@@ -62,6 +62,7 @@ public class MenuSystem : FSystem {
             fadingBackground = GameObject.Find("MenuFadingBackground").GetComponent<Image>();
             // Get singleton MainMenu
             mainMenu = GameObject.Find("MainMenu");
+            GameObjectManager.setGameObjectState(mainMenu, false);
             // Get singleton ToggleButton
             //togglePuzzle = GameObject.Find("TogglePuzzle").GetComponent<Toggle>();
 
@@ -127,8 +128,6 @@ public class MenuSystem : FSystem {
         foreach (FSystem syst in allSystems)
             if (syst != this && syst != LogoDisplaying.instance && syst != SendStatements.instance && syst != HelpSystem.instance)
                 syst.Pause = true;
-        // Set particular effects
-        RenderSettings.fogDensity = 0.005f;
         // Init timer
         switchTimer = Time.time;
         // Enable MainMenu
@@ -190,11 +189,6 @@ public class MenuSystem : FSystem {
         GameObjectManager.setGameObjectState(fadingBackground.gameObject, false);
         // Enagle HUD
         GameObjectManager.setGameObjectState(f_mainHUD.First(), true);
-        // Switch on/off puzzle or fragments
-        /*foreach (GameObject go in f_puzzles)
-            GameObjectManager.setGameObjectState(go, togglePuzzle.isOn);
-        foreach (GameObject go in f_puzzlesFragment)
-            GameObjectManager.setGameObjectState(go, !togglePuzzle.isOn);*/
         // Play story
         StoryDisplaying.instance.Pause = false;
     }

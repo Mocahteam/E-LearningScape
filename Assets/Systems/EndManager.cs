@@ -94,7 +94,6 @@ public class EndManager : FSystem {
             GameObjectManager.setGameObjectState(endRoom, true);
             if (f_player.First().GetComponentInChildren<Light>())
                 GameObjectManager.setGameObjectState(f_player.First().GetComponentInChildren<Light>().gameObject, false);
-            RenderSettings.fogDensity = 0;
             Camera.main.farClipPlane = 300;
             foreach (Transform child in endRoom.transform)
                 if (child.gameObject.GetComponent<MeshRenderer>())

@@ -173,7 +173,7 @@
 	"mastermindBackgroundPicturePath": "Data/MasterMind.png",
 	
     "glassesQuestion": "Le vase se renversant vous livrera la clé de cette enigme",
-    "glassesPlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
+    "glassesPlaceHolder": "     Tapez votre réponse ici (2 mots attendus)...",
     "glassesAnswer": [
         "Contrat Pédagogique"
     ],
@@ -195,8 +195,8 @@
     "enigma08AnswerFeedback": "9 - 14",
     "enigma08AnswerFeedbackDesc": "Feedbacks constructifs",
     
-	"scrollsQuestion": "Cet acronyme anglais décrit des objectifs clairs",
-    "scrollsPlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
+	"scrollsQuestion": "Cet acronyme décrit des objectifs clairs",
+    "scrollsPlaceHolder": "     Tapez votre réponse ici (1 mot anglais attendu)...",
     "scrollsAnswer": [
         "SMART"
     ],
@@ -230,7 +230,7 @@
 	"enigma11AnswerFeedbackDesc": "",
 	
     "enigma12Question": "Seul, vous ne sortirez pas de ce labyrinthe",
-    "enigma12PlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
+    "enigma12PlaceHolder": "     Tapez votre réponse ici (1 mot attendu)...",
     "enigma12Answer": [
         "Collaboration"
     ],
