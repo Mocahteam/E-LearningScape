@@ -26,6 +26,7 @@ public class MovingSystem : FSystem
     private Vector3 standingScale = Vector3.one;
     private bool firstCrouchOccurs = false;
     private FirstPersonController playerController;
+    private GameObject movableFragments;
     private Image tmpImage;
     private AudioBank audioBank;
     private Camera playerCamera;
@@ -50,10 +51,12 @@ public class MovingSystem : FSystem
     public MovingSystem()
     {
         //when crouching, the scale of the player is changed (rather than its position)
-        crouchingScale = Vector3.one * 0.2f;
+        crouchingScale = new Vector3(standingScale.x * 0.2f, standingScale.y * 0.2f, standingScale.z * 0.2f);
         if (Application.isPlaying)
         {
             playerController = f_player.First().GetComponent<FirstPersonController>();
+            movableFragments = playerController.transform.GetChild(3).gameObject;
+
             playerCamera = playerController.transform.GetChild(0).GetComponent<Camera>();
             audioBank = playerController.GetComponent<AudioBank>();
             f_waterWalking.addEntryCallback(onEnterWater);
@@ -97,6 +100,7 @@ public class MovingSystem : FSystem
     protected override void onPause(int currentFrame)
     {
         playerController.enabled = false;
+        f_player.First().GetComponentInChildren<ThirdPersonCameraControler>().enabled = false;
         SetHUD(false);
         // Show mouse cursor
         Cursor.lockState = CursorLockMode.None;
@@ -114,6 +118,7 @@ public class MovingSystem : FSystem
         playerController.m_MouseLook.m_CharacterTargetRot = f_player.First().transform.localRotation;
         
         playerController.enabled = true;
+        f_player.First().GetComponentInChildren<ThirdPersonCameraControler>().enabled = true;
         SetHUD(true);
         // hide mouse cursor
         Cursor.lockState = CursorLockMode.None;
@@ -279,5 +284,10 @@ public class MovingSystem : FSystem
             hideHUD = false;
         }
         playerWasWalking = playerIsWalking;
+        if (playerIsWalking)
+        {
+            if (playerController.m_Input.y != 0)
+                movableFragments.transform.Rotate(new Vector3(1, 0, 0), (playerController.m_Input.y > 0 ? 1 : -1) * 100 * Time.deltaTime);
+        }
     }
 }
