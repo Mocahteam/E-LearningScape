@@ -173,7 +173,7 @@ public class IARHintManager : FSystem {
         hintButton.onClick.AddListener(delegate { OnClickHint(hintButton); });
         hintButton.colors = colorNewHint;
         hintCounter++;
-        newHint.transform.GetChild(0).GetComponent<Text>().text += " " + hintCounter;
+        newHint.transform.GetChild(0).GetComponent<TMP_Text>().text += " " + hintCounter;
 
         RectTransform tmpRT = newHint.GetComponent<RectTransform>();
         tmpRT.localScale = Vector3.one;
@@ -205,7 +205,7 @@ public class IARHintManager : FSystem {
         selectedHint.colors = colorSelectedHint;
         HintContent tmpHC = selectedHint.GetComponent<HintContent>();
         //display hint info on the right part of the help tab in IAR
-        hintTitle.text = b.GetComponentInChildren<Text>().text;
+        hintTitle.text = b.GetComponentInChildren<TMP_Text>().text;
         hintText.text = tmpHC.text;
         if (tmpHC.link != "")
         {
@@ -223,7 +223,7 @@ public class IARHintManager : FSystem {
         {
             verb = "read",
             objectType = "feedback",
-            objectName = string.Concat("hint_", b.transform.GetChild(0).GetComponent<Text>().text),
+            objectName = string.Concat("hint_", b.transform.GetChild(0).GetComponent<TMP_Text>().text),
             activityExtensions = new Dictionary<string, List<string>>() {
                 { "type", new List<string>() { "hint" } },
                 { "content", new List<string>() { b.GetComponent<HintContent>().text } }

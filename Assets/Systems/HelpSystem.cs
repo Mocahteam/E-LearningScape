@@ -779,7 +779,7 @@ public class HelpSystem : FSystem {
         {
             verb = "received",
             objectType = "feedback",
-            objectName = string.Concat("hint_", hintButton.transform.GetChild(0).GetComponent<Text>().text),
+            objectName = string.Concat("hint_", hintButton.transform.GetChild(0).GetComponent<TMP_Text>().text),
             activityExtensions = new Dictionary<string, List<string>>() {
                     { "type", new List<string>() { "hint" } },
                     { "from", new List<string>() { playerAskedHelp ? "button" : "system" } },

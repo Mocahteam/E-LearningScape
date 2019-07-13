@@ -122,6 +122,7 @@ public class LoadGameContent : FSystem {
                 File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data created"));
 
                 Load();
+
             }
 
             this.Pause = true;
@@ -131,7 +132,7 @@ public class LoadGameContent : FSystem {
 
     private void loadIARQuestion(GameObject question, string questionTexte, string answerFeedback, string answerFeedbackDesc, string placeHolder, List<string> andSolutions)
     {
-        foreach (TextMeshProUGUI tmp in question.GetComponentsInChildren<TextMeshProUGUI>(true))
+        foreach (TextMeshProUGUI tmp in question.GetComponentsInChildren<TMP_Text>(true))
         {
             if (tmp.gameObject.name == "Question")
                 tmp.text = questionTexte;
@@ -140,7 +141,7 @@ public class LoadGameContent : FSystem {
             else if (tmp.gameObject.name == "Description")
                 tmp.text = answerFeedbackDesc;
         }
-        question.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<Text>().text = placeHolder;
+        question.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<TMP_Text>().text = placeHolder;
         question.GetComponent<QuerySolution>().andSolutions = new List<string>();
         foreach (string s in andSolutions)
             forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));

@@ -83,7 +83,7 @@
 	],
 	
     "ballBoxQuestion": "Que faire pour rendre actifs mes étudiants ?",
-    "ballBoxPlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+    "ballBoxPlaceHolder": "3 chiffres attendus...",
 	"ballBoxAnswerFeedback": "1 - 2 - 8",
 	"ballBoxAnswerFeedbackDesc": "Classe Inversée - Interactivité - Approche Projet",
     "ballBoxAnswer": [
@@ -105,7 +105,7 @@
     ],
 	
     "plankAndWireQuestionIAR": "Comment construire une séquence cohérente ?",
-    "plankAndWirePlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+    "plankAndWirePlaceHolder": "3 chiffres attendus...",
     "plankAndWireQuestion": "Relier avec la corde les 3 éléments qui assurent la cohérence d'un cours",
 	"plankAndWireAnswerFeedback": "4 - 5 - 9",
 	"plankAndWireAnswerFeedbackDesc": "Objectifs - Méthodes Pédagogiques - Evaluation",
@@ -141,7 +141,7 @@
     ],
 	
     "crouchQuestion": "Comment favoriser mon innovation pédagogique ?",
-    "crouchPlaceHolder": "     Tapez votre réponse ici (10 chiffres)...",
+    "crouchPlaceHolder": "10 chiffres attendus...",
     "crouchAnswer": [
         "1023810149"
     ],
@@ -173,7 +173,7 @@
 	"mastermindBackgroundPicturePath": "Data/MasterMind.png",
 	
     "glassesQuestion": "Le vase se renversant vous livrera la clé de cette enigme",
-    "glassesPlaceHolder": "     Tapez votre réponse ici (2 mots attendus)...",
+    "glassesPlaceHolder": "2 mots attendus...",
     "glassesAnswer": [
         "Contrat Pédagogique"
     ],
@@ -187,7 +187,7 @@
     ],
 	
     "enigma08Question": "A quoi Berthiaume nous conseille-t-il de faire attention ?",
-    "enigma08PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+    "enigma08PlaceHolder": "3 chiffres attendus...",
     "enigma08Answer": [
         "9",
         "14"
@@ -196,7 +196,7 @@
     "enigma08AnswerFeedbackDesc": "Feedbacks constructifs",
     
 	"scrollsQuestion": "Cet acronyme décrit des objectifs clairs",
-    "scrollsPlaceHolder": "     Tapez votre réponse ici (1 mot anglais attendu)...",
+    "scrollsPlaceHolder": "1 mot anglais attendu...",
     "scrollsAnswer": [
         "SMART"
     ],
@@ -211,7 +211,7 @@
     ],
 	
     "mirrorQuestion": "L'année de création de la taxonomie de Bloom est...",
-    "mirrorPlaceHolder": "     Tapez votre réponse ici (4 chiffres)...",
+    "mirrorPlaceHolder": "4 chiffres attendus...",
     "mirrorAnswer": [
         "1956"
     ],
@@ -220,7 +220,7 @@
     "mirrorPicturePath": "Data/Plank.png",
 	
     "enigma11Question": "L'utilisation d'une grille critériée est la solution",
-    "enigma11PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+    "enigma11PlaceHolder": "3 chiffres attendus...",
     "enigma11Answer": [
         "3",
         "1",
@@ -230,7 +230,7 @@
 	"enigma11AnswerFeedbackDesc": "",
 	
     "enigma12Question": "Seul, vous ne sortirez pas de ce labyrinthe",
-    "enigma12PlaceHolder": "     Tapez votre réponse ici (1 mot attendu)...",
+    "enigma12PlaceHolder": "1 mot attendu...",
     "enigma12Answer": [
         "Collaboration"
     ],

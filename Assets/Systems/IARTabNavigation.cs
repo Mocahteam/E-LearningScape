@@ -3,6 +3,8 @@ using FYFY;
 using UnityEngine.UI;
 using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine.EventSystems;
 
 public class IARTabNavigation : FSystem {
 
@@ -11,9 +13,11 @@ public class IARTabNavigation : FSystem {
     private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
     private Family f_fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)));
+    private Family f_iarDisplayed = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
     private Family f_HUD_H = FamilyManager.getFamily(new AnyOfTags("HUD_H"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
+    private Family f_inputFieldMasterMind = FamilyManager.getFamily(new AnyOfComponents(typeof(InputField), typeof(Button)), new NoneOfLayers(5), new AnyOfTags("Login"));
 
     private Family f_quitEnigma = FamilyManager.getFamily(new AnyOfTags("QuitEnigma"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
@@ -24,6 +28,8 @@ public class IARTabNavigation : FSystem {
     private GameObject iarBackground;
 
     private bool openedAtLeastOnce = false;
+
+    private int tabIdToFocusOn;
 
     private Dictionary<FSystem, bool> systemsStates;
 
@@ -42,6 +48,8 @@ public class IARTabNavigation : FSystem {
 
             selectedTabSprite = f_fgm.First().GetComponent<FocusedGOMaterial>().selectedTabSprite;
             defaultTabSprite = f_fgm.First().GetComponent<FocusedGOMaterial>().defaultTabSprite;
+
+            f_iarDisplayed.addEntryCallback(onIarDisplayed);
 
             iarBackground = f_iarBackground.First();
             iar = iarBackground.transform.parent.gameObject;
@@ -72,6 +80,13 @@ public class IARTabNavigation : FSystem {
         }
     }
 
+    private void onIarDisplayed(GameObject go)
+    {
+        // force EventSystem affectation
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(f_tabs.getAt(tabIdToFocusOn));
+    }
+
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
@@ -99,7 +114,18 @@ public class IARTabNavigation : FSystem {
         if (f_HUD_H.Count > 0)
             GameObjectManager.setGameObjectState(f_HUD_H.First(), false); // hide HUD "H"
         GameObjectManager.setGameObjectState(iar, true); // open IAR
+        
+        // To allow a good automatic navigation keyboard in menu we disabled InputField and button component in mastermind
+        foreach (GameObject inputF in f_inputFieldMasterMind)
+        {
+            if (inputF.GetComponent<InputField>())
+                inputF.GetComponent<InputField>().enabled = false;
+            if (inputF.GetComponent<Button>())
+                inputF.GetComponent<Button>().enabled = false;
+        }
+
         SwitchTab(f_tabs.getAt(tabId)); // switch to the desired tab
+        tabIdToFocusOn = tabId;
         systemsStates.Clear();
         // save systems states
         foreach (FSystem sys in FSystemManager.fixedUpdateSystems())
@@ -131,6 +157,14 @@ public class IARTabNavigation : FSystem {
     {
         GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "deactivated", objectType = "menu", objectName = iar.name });
         GameObjectManager.setGameObjectState(iar, false); // close IAR
+        // Restaure mastermid UI components
+        foreach (GameObject inputF in f_inputFieldMasterMind)
+        {
+            if (inputF.GetComponent<InputField>())
+                inputF.GetComponent<InputField>().enabled = true;
+            if (inputF.GetComponent<Button>())
+                inputF.GetComponent<Button>().enabled = true;
+        }
         // Restaure systems state (exception for LampManager)
         bool backLampManagerState = LampManager.instance.Pause;
         foreach (FSystem sys in systemsStates.Keys)
@@ -148,13 +182,13 @@ public class IARTabNavigation : FSystem {
         // reset all tabs (text and image) and disable all contents
         foreach (GameObject oldTab in f_tabs)
         {
-            oldTab.GetComponent<Image>().sprite = defaultTabSprite;
-            oldTab.GetComponentInChildren<Text>().fontStyle = FontStyle.Normal;
+            oldTab.GetComponentInChildren<Image>().sprite = defaultTabSprite;
+            oldTab.GetComponent<TMP_Text>().fontStyle = TMPro.FontStyles.Normal;
             GameObjectManager.setGameObjectState(oldTab.GetComponent<LinkedWith>().link, false);
         }
         // set new tab text and image
-        newSelectedTab.GetComponent<Image>().sprite = selectedTabSprite;
-        newSelectedTab.GetComponentInChildren<Text>().fontStyle = FontStyle.Bold;
+        newSelectedTab.GetComponentInChildren<Image>().sprite = selectedTabSprite;
+        newSelectedTab.GetComponent<TMP_Text>().fontStyle = TMPro.FontStyles.Bold;
         // enable new content
         GameObjectManager.setGameObjectState(newSelectedTab.GetComponent<LinkedWith>().link, true);
         GameObjectManager.addComponent<ActionPerformedForLRS>(newSelectedTab.GetComponent<LinkedWith>().link, new { verb = "accessed", objectType = "menu", objectName = newSelectedTab.GetComponent<LinkedWith>().link.name });

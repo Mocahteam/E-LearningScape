@@ -121,7 +121,6 @@ public class StoryDisplaying : FSystem {
             }
             fadingImage.color = Color.black;
             background.color = Color.black;
-            sdText.color = Color.white;
         }
         else
         {
@@ -142,7 +141,6 @@ public class StoryDisplaying : FSystem {
             });
             fadingImage.color = Color.white;
             background.color = Color.white;
-            sdText.color = Color.black;
         }
         // Get current set of texts
         readTexts = storyTexts[st.storyProgression].ToArray();
