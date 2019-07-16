@@ -61,13 +61,7 @@ public class LoginManager : FSystem {
     {
         if (Application.isPlaying)
         {
-            f_mainWindow.First().GetComponentInChildren<Button>().onClick.AddListener(CheckConnection);
             InputField inputField = f_mainWindow.First().GetComponentInChildren<InputField>();
-            // Add listeners
-            inputField.onEndEdit.AddListener(delegate {
-                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                    CheckConnection();
-            });
 
             ifConnectionR2 = inputField;
 
@@ -211,7 +205,7 @@ public class LoginManager : FSystem {
         instance.Pause = true;
     }
 
-    private void CheckConnection() //mastermind
+    public void CheckMastermindAnswer() //mastermind
     {
         int answer;
         int.TryParse(ifConnectionR2.text, out answer);

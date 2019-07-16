@@ -39,13 +39,6 @@ public class IARTabNavigation : FSystem {
     {
         if (Application.isPlaying)
         {
-            foreach (GameObject tab in f_tabs)
-            {
-                tab.GetComponent<Button>().onClick.AddListener(delegate {
-                    SwitchTab(tab);
-                });
-            }
-
             selectedTabSprite = f_fgm.First().GetComponent<FocusedGOMaterial>().selectedTabSprite;
             defaultTabSprite = f_fgm.First().GetComponent<FocusedGOMaterial>().defaultTabSprite;
 
@@ -177,7 +170,7 @@ public class IARTabNavigation : FSystem {
             GameObjectManager.setGameObjectState(f_HUD_H.First(), true);
     }
 
-    private void SwitchTab(GameObject newSelectedTab)
+    public void SwitchTab(GameObject newSelectedTab)
     {
         // reset all tabs (text and image) and disable all contents
         foreach (GameObject oldTab in f_tabs)

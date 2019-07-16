@@ -8,7 +8,6 @@ public class MenuSystem : FSystem {
 
     // this system manage the first main menu
 
-    private Family f_buttons = FamilyManager.getFamily(new AnyOfTags("MainMenuButton"));
     private Family f_vlr = FamilyManager.getFamily(new AllOfComponents(typeof(VolumetricLightRenderer)));
     private Family f_postProcessBehaviour = FamilyManager.getFamily(new AllOfComponents(typeof(PostProcessingBehaviour)));
     private Family f_postProcessProfiles = FamilyManager.getFamily(new AllOfComponents(typeof(PostProcessingProfiles)));
@@ -40,24 +39,6 @@ public class MenuSystem : FSystem {
     {
         if (Application.isPlaying)
         {
-            //initialise menu's buttons with listeners
-            foreach (GameObject b in f_buttons)
-            {
-                switch (b.name)
-                {
-                    case "Play":
-                        b.GetComponent<Button>().onClick.AddListener(Play);
-                        break;
-
-                    case "Quit":
-                        b.GetComponent<Button>().onClick.AddListener(QuitGame);
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-
             // Get singleton fading screen
             fadingBackground = GameObject.Find("MenuFadingBackground").GetComponent<Image>();
             // Get singleton MainMenu
@@ -177,7 +158,7 @@ public class MenuSystem : FSystem {
         currentFrame++;
     }
 
-    void Play()
+    public void StartGame()
     {
         this.Pause = true;
         // Disable second and third room
@@ -191,11 +172,6 @@ public class MenuSystem : FSystem {
         GameObjectManager.setGameObjectState(f_mainHUD.First(), true);
         // Play story
         StoryDisplaying.instance.Pause = false;
-    }
-
-    void QuitGame()
-    {
-        Application.Quit(); //quit the game
     }
 }
 

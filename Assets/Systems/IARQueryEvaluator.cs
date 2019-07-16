@@ -28,22 +28,14 @@ public class IARQueryEvaluator : FSystem {
     {
         if (Application.isPlaying)
         {
-            // Init callbacks and or solutions
+            // Init callbacks and/or solutions
             availableOrSolutions = new HashSet<string>();
             foreach (GameObject query in f_queries)
             {
-                query.GetComponentInChildren<Button>().onClick.AddListener(delegate {
-                    CheckAnswer(query);
-                });
                 query.GetComponentInChildren<InputField>().onValidateInput += delegate (string input, int charIndex, char addedChar) {
-                    IARTabNavigation.instance.Pause = true;
+                    IARTabNavigation.instance.Pause = true; // pause IARTabNavigation to enable "A" and "H" tap
                     return addedChar;
                 };
-                query.GetComponentInChildren<InputField>().onEndEdit.AddListener(delegate {
-                    if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-                        CheckAnswer(query);
-                    IARTabNavigation.instance.Pause = false;
-                });
                 foreach (string or in query.GetComponent<QuerySolution>().orSolutions)
                     availableOrSolutions.Add(or);
             }
@@ -97,7 +89,14 @@ public class IARQueryEvaluator : FSystem {
         }
     }
 
-    private void CheckAnswer(GameObject query)
+    public void IarOnEndEditAnswer(GameObject query)
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            IarCheckAnswer(query);
+        IARTabNavigation.instance.Pause = false;
+    }
+
+    public void IarCheckAnswer(GameObject query)
     {
         string answer = query.GetComponentInChildren<InputField>().text; //player's answer
         // format answer

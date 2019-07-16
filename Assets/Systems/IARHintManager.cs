@@ -65,6 +65,8 @@ public class IARHintManager : FSystem {
 
     private bool needRefresh = true;
 
+    public static IARHintManager instance;
+
     public IARHintManager()
     {
         if (Application.isPlaying)
@@ -81,7 +83,6 @@ public class IARHintManager : FSystem {
             hintTitle = f_description.First().transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             hintText = f_description.First().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             hintLinkButton = f_description.First().transform.GetChild(2).GetComponent<Button>();
-            hintLinkButton.onClick.AddListener(OnClickHintLinkButton);
 
             //set hint button colors values
             colorHint = new ColorBlock();
@@ -104,6 +105,7 @@ public class IARHintManager : FSystem {
             colorSelectedHint.disabledColor = new Color(253, 255, 137, 128) / 256;
             colorSelectedHint.colorMultiplier = 1;
         }
+        instance = this;
     }
 
     protected override void onProcess(int familiesUpdateCount)
@@ -235,7 +237,7 @@ public class IARHintManager : FSystem {
     /// Called when the link button of an hint on the right part of help tab in IAR is pressed
     /// and open the link of the hint
     /// </summary>
-    private void OnClickHintLinkButton()
+    public void OnClickHintLinkButton()
     {
         try
         {

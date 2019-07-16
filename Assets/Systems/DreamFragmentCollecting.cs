@@ -36,13 +36,8 @@ public class DreamFragmentCollecting : FSystem {
             // Add listener on child button to close UI
             foreach(Button b in dfUI.GetComponentsInChildren<Button>())
             {
-                if(b.gameObject.name == "OKButton")
-                    dfUI.GetComponentInChildren<Button>().onClick.AddListener(CloseWindow);
-                else if (b.gameObject.name == "ButtonOnline")
-                {
-                    b.onClick.AddListener(OpenFragmentLink);
+                if (b.gameObject.name == "ButtonOnline")
                     onlineButton = b.gameObject;
-                }
             }
             // Get child text area
             FragmentText = dfUI.GetComponentInChildren<TextMeshProUGUI>();
@@ -100,7 +95,7 @@ public class DreamFragmentCollecting : FSystem {
         }
     }
 
-    private void CloseWindow()
+    public void CloseFragmentUI()
     {
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "deactivated", objectType = "viewable", objectName = selectedFragment.name });
         if (selectedFragment.GetComponent<DreamFragment>().type != 2)
@@ -128,7 +123,7 @@ public class DreamFragmentCollecting : FSystem {
         IARTabNavigation.instance.Pause = backupIARNavigationState;
     }
 
-    private void OpenFragmentLink()
+    public void OpenFragmentLink()
     {
         DreamFragment df = selectedFragment.GetComponent<DreamFragment>();
         //when onlineButton is clicked

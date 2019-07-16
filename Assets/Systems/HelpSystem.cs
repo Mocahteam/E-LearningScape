@@ -236,7 +236,6 @@ public class HelpSystem : FSystem {
                 f_traces.addEntryCallback(OnNewTraces);
 
                 f_wrongAnswerInfo.addEntryCallback(OnWrongAnswer);
-                f_askHelpButton.First().GetComponent<Button>().onClick.AddListener(OnPlayerAskHelp);
 
                 //set player cooldown UI components
                 cooldownRT = f_askHelpButton.First().transform.GetChild(1).GetComponent<RectTransform>();
@@ -511,7 +510,7 @@ public class HelpSystem : FSystem {
     /// If the player can receive an hint, calculate the feedback level needed
     /// and ask to display an hint corresponding to the feedback level and the last room unlocked
     /// </summary>
-    private void OnPlayerAskHelp()
+    public void OnPlayerAskHelp()
     {
         //check cooldown before sending hint
         if(Time.time - playerHintTimer > config.playerHintCooldownDuration)

@@ -80,24 +80,6 @@ public class LockResolver : FSystem {
                             }
                         }
                     }
-                    else if (child.gameObject.name == "UpDown")
-                    {
-                        foreach (Transform c in child)
-                        {
-                            if (c.gameObject.name == "Up")
-                            {
-                                c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                                    moveWheelUp(selectedWheel);
-                                });
-                            }
-                            else if (c.gameObject.name == "Down")
-                            {
-                                c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                                    moveWheelDown(selectedWheel);
-                                });
-                            }
-                        }
-                    }
                 }
             }
             gameAudioSource = f_audioSourceFamily.First().GetComponent<AudioSource>();
@@ -171,9 +153,9 @@ public class LockResolver : FSystem {
 
                     // process hotkeys to move the wheels
                     if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z))
-                        moveWheelUp(selectedWheel);
+                        moveWheelUp();
                     else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-                        moveWheelDown(selectedWheel);
+                        moveWheelDown();
                     else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Q))
                         SelectLeftWheel(ref selectedWheel, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, selectedLocker.UpDownControl);
                     else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
@@ -359,12 +341,12 @@ public class LockResolver : FSystem {
         instance.Pause = true;
     }
 
-    private void moveWheelUp(GameObject wheel)
+    public void moveWheelUp()
     {
         if (!lockRotationUp && !lockRotationDown)
         {
             lockRotationUp = true;
-            WheelFrontFace wff = wheel.GetComponent<WheelFrontFace>();
+            WheelFrontFace wff = selectedWheel.GetComponent<WheelFrontFace>();
             if(wff.faceNumber == 9)
                 wff.faceNumber = 0;
             else
@@ -372,12 +354,12 @@ public class LockResolver : FSystem {
         }
     }
 
-    private void moveWheelDown(GameObject wheel)
+    public void moveWheelDown()
     {
         if (!lockRotationUp && !lockRotationDown)
         {
             lockRotationDown = true;
-            WheelFrontFace wff = wheel.GetComponent<WheelFrontFace>();
+            WheelFrontFace wff = selectedWheel.GetComponent<WheelFrontFace>();
             if (wff.faceNumber == 0)
                 wff.faceNumber = 9;
             else
