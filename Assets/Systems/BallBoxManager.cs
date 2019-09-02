@@ -37,7 +37,8 @@ public class BallBoxManager : FSystem {
     private bool moveBall = false;          //true during the animation of selection of a ball
     private GameObject focusedBall = null;  //store the focused ball
     private GameObject selectedBall = null;  //store the selected ball
-    private TextMeshProUGUI ballSubTitles;
+    private GameObject ballSubTitles;
+    private TextMeshProUGUI ballSubTitlesContent;
     private GameObject box;
     private GameObject boxTop;
 
@@ -57,7 +58,8 @@ public class BallBoxManager : FSystem {
             box = f_box.First();
             boxPadlock = box.transform.GetChild(0).gameObject;
             boxTop = box.transform.GetChild(3).gameObject;
-            ballSubTitles = box.transform.GetChild(4).gameObject.GetComponentInChildren<TextMeshProUGUI>();
+            ballSubTitles = box.transform.GetChild(4).gameObject;
+            ballSubTitlesContent = ballSubTitles.GetComponentInChildren<TextMeshProUGUI>();
 
             foreach (GameObject ball in f_balls)
                 ball.GetComponent<Ball>().initialPosition = ball.transform.localPosition;
@@ -94,7 +96,8 @@ public class BallBoxManager : FSystem {
         {
             Ball b = go.GetComponent<Ball>();
             go.GetComponent<Renderer>().material.color = Color.yellow + Color.white / 4;
-            ballSubTitles.text = b.text;
+            GameObjectManager.setGameObjectState(ballSubTitles, true);
+            ballSubTitlesContent.text = b.text;
 
             focusedBall = go;
             GameObjectManager.addComponent<ActionPerformedForLRS>(focusedBall, new
@@ -109,7 +112,8 @@ public class BallBoxManager : FSystem {
 
     private void onExitBall(int instanceId)
     {
-        ballSubTitles.text = "";
+        GameObjectManager.setGameObjectState(ballSubTitles, false);
+        ballSubTitlesContent.text = "";
         if (focusedBall)
         {
             GameObjectManager.addComponent<ActionPerformedForLRS>(focusedBall, new
@@ -329,7 +333,8 @@ public class BallBoxManager : FSystem {
         GameObjectManager.removeComponent<ReadyToWork>(selectedBox);
 
         ballCounter = 0;
-        ballSubTitles.text = "";
+        ballSubTitlesContent.text = "";
+        GameObjectManager.setGameObjectState(ballSubTitles, false);
         boxOpenned = false;
 
         GameObjectManager.addComponent<ActionPerformed>(selectedBox, new { name = "turnOff", performedBy = "player" });

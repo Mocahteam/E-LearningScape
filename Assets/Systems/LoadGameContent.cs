@@ -404,18 +404,6 @@ public class LoadGameContent : FSystem {
                 countWrongNb++;
             }
         }
-        forGO = f_wrongWords.First().transform.parent.parent.gameObject;
-
-        // Two valid rotations to avoid words and numbers overlaping
-        float angle = 0f;
-        if (UnityEngine.Random.value > 0.5f)
-            angle = 158f;
-        forGO.transform.Rotate(0, angle, 0);
-        foreach (Transform child in forGO.transform)
-            if (child.name != "Numbers")
-                child.Rotate(0, -angle, 0);
-        foreach (Transform child in forGO.transform.GetChild(0))
-            child.Rotate(0, 0, -angle);
         Debug.Log("Plank and wire loaded");
 
         //Green Dream Fragments
