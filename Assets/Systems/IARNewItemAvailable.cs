@@ -87,33 +87,18 @@ public class IARNewItemAvailable : FSystem {
         // blink HUD "A" if at least one new item is available
         if (f_notificationEnabled.Count > 0)
         {
-            if (Time.time - (int)Time.time > 0.5f && warningNewItem)
+            if (HUD_neverDisplayed)
             {
-                if (HUD_neverDisplayed)
-                {
-                    // enable parent
-                    GameObjectManager.setGameObjectState(f_inventoryWarning.First().transform.parent.gameObject, true);
-                    HUD_neverDisplayed = false;
-                }
-                // display warning
+                // enable parent
+                GameObjectManager.setGameObjectState(f_inventoryWarning.First().transform.parent.gameObject, true);
+                HUD_neverDisplayed = false;
+            }
+            if (!f_inventoryWarning.First().activeSelf)
                 GameObjectManager.setGameObjectState(f_inventoryWarning.First(), true);
-                warningNewItem = false;
-            }
-            else if (Time.time - (int)Time.time < 0.5f && !warningNewItem)
-            {
-                // disable warning
-                GameObjectManager.setGameObjectState(f_inventoryWarning.First(), false);
-                warningNewItem = true;
-            }
         }
         else
-        {
-            if (!warningNewItem)
-            {
+            if (f_inventoryWarning.First().activeSelf)
                 GameObjectManager.setGameObjectState(f_inventoryWarning.First(), false);
-                warningNewItem = true;
-            }
-        }
     }
 
 }
