@@ -7,8 +7,8 @@ public class Highlighter : FSystem {
     // Highlight all in game interactable GameObjects
 
     //all in game interactive objects
-    // in game element linked whith UI game object are collectable and so highlightable
-	private Family f_highlitable = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(ToggleableGO), typeof(LinkedWith)));
+    // in game element linked whith UI game object are collectable and so highlightable (except animated sprites)
+	private Family f_highlitable = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(ToggleableGO), typeof(LinkedWith)), new NoneOfComponents(typeof(AnimatedSprites)));
 
     private Renderer[] tmpRendererList;
     

@@ -16,7 +16,7 @@ public class LockResolver : FSystem {
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family f_closeLock = FamilyManager.getFamily(new AnyOfTags("LockIntro", "LockIntroWheel", "LockRoom2", "LockR2Wheel", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
 
-    private Family f_audioSourceFamily = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("GameRooms"));
+    private Family f_audioSourceFamily = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("Player"));
     private Family f_wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"));
     private Family f_fences = FamilyManager.getFamily(new AnyOfTags("Fence"));
 

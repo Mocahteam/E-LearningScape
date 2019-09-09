@@ -61,14 +61,16 @@ public class LoadGameContent : FSystem {
     private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
 
     private Family f_inventoryElements = FamilyManager.getFamily(new AllOfComponents(typeof(Collected)));
-
-
-    public FSystem instance;
-
+    
     public static GameContent gameContent;
     private DefaultGameContent defaultGameContent;
 
     public static Dictionary<string, float> enigmasWeight;
+
+    public TMP_FontAsset AccessibleFont;
+    public TMP_FontAsset DefaultFont;
+
+    public static LoadGameContent instance;
 
     private bool loadContent = true;
 
@@ -126,8 +128,9 @@ public class LoadGameContent : FSystem {
             }
 
             this.Pause = true;
+
+            instance = this;
         }
-        instance = this;
     }
 
     private void loadIARQuestion(GameObject question, string questionTexte, string answerFeedback, string answerFeedbackDesc, string placeHolder, List<string> andSolutions)
@@ -698,6 +701,11 @@ public class LoadGameContent : FSystem {
             dreamFragmentsLinks.TryGetValue(dream_go.name, out dream_go.GetComponent<DreamFragment>().urlLink);
         Debug.Log("Dream fragments links loaded");
         #endregion
+
+        // Load fonts
+        AccessibleFont = defaultGameContent.accessibleFontTMPro;
+        DefaultFont = defaultGameContent.defaultFontTMPro;
+        Debug.Log("Fonts loaded");
 
         Debug.Log("Data loaded");
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));

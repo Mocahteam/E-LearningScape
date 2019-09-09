@@ -74,6 +74,9 @@ TagManager:
   - IARItemSelected
   - HUD_Main
   - HUD_Menu
+  - WheelSpeedSlider
+  - CursorImage
+  - DisableOnViewed
   layers:
   - Default
   - TransparentFX

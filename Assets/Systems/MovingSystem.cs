@@ -4,18 +4,22 @@ using FYFY;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 using FYFY_plugins.TriggerManager;
+using FYFY_plugins.PointerManager;
 using FYFY_plugins.Monitoring;
+using TMPro;
 
 public class MovingSystem : FSystem
 {
     // This system manage HUD on moving, walking speed and state of the FirstPersonController
 
     private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController), typeof(AudioBank)));
-    private Family f_linkedHud = FamilyManager.getFamily(new AnyOfTags("EnableOnFirstCrouch", "HUD_H", "HUD_Menu"), new AllOfComponents(typeof(Image)));
+    private Family f_linkedHud = FamilyManager.getFamily(new AnyOfTags("DisableOnViewed", "EnableOnFirstCrouch", "HUD_H", "HUD_Menu"));
     private Family f_endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_cursor = FamilyManager.getFamily(new AnyOfTags("Cursor"));
     private Family f_waterWalking = FamilyManager.getFamily(new AnyOfLayers(12), new AllOfComponents(typeof(Triggered3D))); // Layer 12 <=> WaterCollider
-    private Family f_HUDInputs = FamilyManager.getFamily(new AnyOfTags("EnableOnFirstCrouch", "HUD_A", "HUD_H", "HUD_Menu"), new AllOfComponents(typeof(Image)));
+    private Family f_HUDInputs = FamilyManager.getFamily(new AnyOfTags("DisableOnViewed", "EnableOnFirstCrouch", "HUD_A", "HUD_H", "HUD_Menu"));
+    private Family f_CrouchHint = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver), typeof(LinkedWith)));
+    private Family f_OutOfFirstRoom = FamilyManager.getFamily(new AllOfComponents(typeof(Triggered3D), typeof(LinkedWith)));
 
     public float traceMovementFrequency = 0;
     private bool crouching = false; // true when the player is crouching
@@ -28,6 +32,7 @@ public class MovingSystem : FSystem
     private FirstPersonController playerController;
     private GameObject movableFragments;
     private Image tmpImage;
+    private TMP_Text tmpTextMesh;
     private AudioBank audioBank;
     private Camera playerCamera;
 
@@ -61,8 +66,16 @@ public class MovingSystem : FSystem
             audioBank = playerController.GetComponent<AudioBank>();
             f_waterWalking.addEntryCallback(onEnterWater);
             f_waterWalking.addExitCallback(onExitWater);
+
+            f_CrouchHint.addEntryCallback(disableHUDWarning);
+            f_OutOfFirstRoom.addEntryCallback(disableHUDWarning);
         }
         instance = this;
+    }
+
+    private void disableHUDWarning(GameObject go)
+    {
+        GameObjectManager.setGameObjectState(go.GetComponent<LinkedWith>().link, false);
     }
 
     private void onEnterWater(GameObject go)
@@ -239,16 +252,29 @@ public class MovingSystem : FSystem
             float aCount = 1;
             foreach (GameObject hud in f_HUDInputs)
             {
-                tmpImage = hud.GetComponent<Image>();
-                tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, tmpImage.color.a + hudHidingSpeed);
-                aCount = tmpImage.color.a;
+                tmpImage = hud.GetComponentInChildren<Image>();
+                if (tmpImage)
+                {
+                    tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, tmpImage.color.a + hudHidingSpeed);
+                    aCount = tmpImage.color.a;
+                }
+                tmpTextMesh = hud.GetComponentInChildren<TMP_Text>();
+                if (tmpTextMesh)
+                {
+                    tmpTextMesh.color = new Color(tmpTextMesh.color.r, tmpTextMesh.color.g, tmpTextMesh.color.b, tmpTextMesh.color.a + hudHidingSpeed);
+                    aCount = tmpTextMesh.color.a;
+                }
             }
             if (aCount < 0.3f)
             {
                 foreach (GameObject hud in f_HUDInputs)
                 {
-                    tmpImage = hud.GetComponent<Image>();
-                    tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, 0.3f);
+                    tmpImage = hud.GetComponentInChildren<Image>();
+                    if (tmpImage)
+                        tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, 0.3f);
+                    tmpTextMesh = hud.GetComponentInChildren<TMP_Text>();
+                    if (tmpTextMesh)
+                        tmpTextMesh.color = new Color(tmpTextMesh.color.r, tmpTextMesh.color.g, tmpTextMesh.color.b, 0.3f);
                 }
                 hideHUD = false;
             }
@@ -258,16 +284,29 @@ public class MovingSystem : FSystem
             float aCount = 0;
             foreach (GameObject hud in f_HUDInputs)
             {
-                tmpImage = hud.GetComponent<Image>();
-                tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, tmpImage.color.a + hudShowingSpeed);
-                aCount = tmpImage.color.a;
+                tmpImage = hud.GetComponentInChildren<Image>();
+                if (tmpImage)
+                {
+                    tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, tmpImage.color.a + hudShowingSpeed);
+                    aCount = tmpImage.color.a;
+                }
+                tmpTextMesh = hud.GetComponentInChildren<TMP_Text>();
+                if (tmpTextMesh)
+                {
+                    tmpTextMesh.color = new Color(tmpTextMesh.color.r, tmpTextMesh.color.g, tmpTextMesh.color.b, tmpTextMesh.color.a + hudShowingSpeed);
+                    aCount = tmpTextMesh.color.a;
+                }
             }
             if (aCount >= 1f)
             {
                 foreach (GameObject hud in f_HUDInputs)
                 {
-                    tmpImage = hud.GetComponent<Image>();
-                    tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, 1f);
+                    tmpImage = hud.GetComponentInChildren<Image>();
+                    if (tmpImage)
+                        tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, 1f);
+                    tmpTextMesh = hud.GetComponentInChildren<TMP_Text>();
+                    if (tmpTextMesh)
+                        tmpTextMesh.color = new Color(tmpTextMesh.color.r, tmpTextMesh.color.g, tmpTextMesh.color.b, 1f);
                 }
                 showHUD = false;
             }

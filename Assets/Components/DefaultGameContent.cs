@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.IO;
+using TMPro;
 
 /// <summary>
 /// Contains the default settings file of the game.
@@ -71,4 +72,13 @@ public class DefaultGameContent : MonoBehaviour {
     /// Default picture used when the picture given in the config file is invalid
     /// </summary>
     public Sprite noPictureFound;
+
+    /// <summary>
+    /// Accessible font
+    /// </summary>
+    public TMP_FontAsset accessibleFontTMPro;
+    /// <summary>
+    /// Default font
+    /// </summary>
+    public TMP_FontAsset defaultFontTMPro;
 }
