@@ -91,6 +91,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
 
 
+        //Method call by sliderMouseLookSpeed in popupSettings to allow player to change MouseLook speed 
+        public void SetMouseLookSpeed(float speedMouse)
+        {
+            m_MouseLook.XSensitivity = speedMouse;
+            m_MouseLook.YSensitivity = speedMouse;
+        }
+
+
         private void PlayLandingSound()
         {
             m_AudioSource.clip = m_LandSound;

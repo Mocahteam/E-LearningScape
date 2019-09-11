@@ -45,10 +45,6 @@ public class MovingSystem : FSystem
     private bool previousHUDState;
     private bool walkInWater = false;
 
-    private float walkInWaterSpeed = 2.5f;
-    private float crouchSpeed = 1;
-    private float standingSpeed = 5;
-
     private float walkingTraceTimer = float.MaxValue;
 
     public static MovingSystem instance;
@@ -75,7 +71,8 @@ public class MovingSystem : FSystem
 
     private void disableHUDWarning(GameObject go)
     {
-        GameObjectManager.setGameObjectState(go.GetComponent<LinkedWith>().link, false);
+        foreach (LinkedWith link in go.GetComponents<LinkedWith>())
+            GameObjectManager.setGameObjectState(link.link, false);
     }
 
     private void onEnterWater(GameObject go)
@@ -83,8 +80,11 @@ public class MovingSystem : FSystem
         walkInWater = true;
         playerController.m_FootstepSounds[0] = audioBank.audioBank[4];
         playerController.m_FootstepSounds[1] = audioBank.audioBank[5];
-        playerController.m_WalkSpeed = walkInWaterSpeed;
-        playerController.m_RunSpeed = walkInWaterSpeed;
+        if (!crouching)
+        {
+            playerController.m_WalkSpeed = playerController.m_WalkSpeed / 2;
+            playerController.m_RunSpeed = playerController.m_RunSpeed / 2;
+        }
     }
 
     private void onExitWater(int instanceId)
@@ -94,18 +94,25 @@ public class MovingSystem : FSystem
         playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
         if (crouching)
         {
-            playerController.m_WalkSpeed = crouchSpeed;
-            playerController.m_RunSpeed = crouchSpeed;
             playerController.m_FootstepSounds[0] = audioBank.audioBank[6];
             playerController.m_FootstepSounds[1] = audioBank.audioBank[7];
         }
         else
         {
-            playerController.m_WalkSpeed = standingSpeed;
-            playerController.m_RunSpeed = standingSpeed;
+            playerController.m_WalkSpeed = playerController.m_WalkSpeed * 2;
+            playerController.m_RunSpeed = playerController.m_RunSpeed * 2;
             playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
             playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
         }
+    }
+
+    public void SetWalkSpeed(float speedW)
+    {
+        if (walkInWater || crouching)
+            speedW = speedW / 2;
+        playerController.m_WalkSpeed = speedW;
+        playerController.m_RunSpeed = speedW;
+
     }
 
     // Use this to update member variables when system pause. 
@@ -177,21 +184,16 @@ public class MovingSystem : FSystem
 
         crouchingSpeed = 70f * Time.deltaTime;
         // when control button or right click is pressed then the player can alternatively crouch and standing
-        if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) || Input.GetMouseButtonDown(1)))
+        if (Input.GetButtonDown("Fire2"))
         {
             changingPose = true; //true when the player is crouching or standing
             //change moving speed according to the stance
             if (crouching)
             {
-                if (walkInWater)
+                if (!walkInWater)
                 {
-                    playerController.m_WalkSpeed = walkInWaterSpeed;
-                    playerController.m_RunSpeed = walkInWaterSpeed;
-                }
-                else
-                {
-                    playerController.m_WalkSpeed = standingSpeed;
-                    playerController.m_RunSpeed = standingSpeed;
+                    playerController.m_WalkSpeed = playerController.m_WalkSpeed * 2;
+                    playerController.m_RunSpeed = playerController.m_RunSpeed * 2;
                     playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
                     playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
                 }
@@ -200,15 +202,10 @@ public class MovingSystem : FSystem
             { // standing and want to crouch
                 if (!firstCrouchOccurs)
                     firstCrouchOccurs = true;
-                if (walkInWater)
+                if (!walkInWater)
                 {
-                    playerController.m_WalkSpeed = walkInWaterSpeed;
-                    playerController.m_RunSpeed = walkInWaterSpeed;
-                }
-                else
-                {
-                    playerController.m_WalkSpeed = crouchSpeed;
-                    playerController.m_RunSpeed = crouchSpeed;
+                    playerController.m_WalkSpeed = playerController.m_WalkSpeed / 2;
+                    playerController.m_RunSpeed = playerController.m_RunSpeed / 2;
                     playerController.m_FootstepSounds[0] = audioBank.audioBank[6];
                     playerController.m_FootstepSounds[1] = audioBank.audioBank[7];
                 }

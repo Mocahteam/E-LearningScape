@@ -114,7 +114,7 @@ public class IARGearsEnigma : FSystem
             {
                 tmpGO = f_gears.getAt(i);
                 //if a gear is dragged
-                if (tmpGO.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
+                if (tmpGO.GetComponent<PointerOver>() && Input.GetButtonDown("Fire1"))
                 {
                     gearDragged = tmpGO; //save the dragged gear
                     GameObjectManager.setGameObjectState(question, false);

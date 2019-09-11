@@ -54,7 +54,7 @@ public class ToggleObject : FSystem {
 	protected override void onProcess(int familiesUpdateCount) {
         speed = 50 * Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Fire1"))
         {
             int nbToggleable = f_toggleable.Count;
             for (int i = 0; i < nbToggleable; i++)

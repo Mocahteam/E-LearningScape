@@ -161,11 +161,11 @@ public class WhiteBoardManager : FSystem {
         if (selectedBoard)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed (because Escape close IAR)
-            if (((f_closeWhiteBoard.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)))
+            if (((f_closeWhiteBoard.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)))
                 ExitWhiteBoard();
             else
             {
-                if (eraser.GetComponent<PointerOver>() && Input.GetMouseButtonDown(0))
+                if (eraser.GetComponent<PointerOver>() && Input.GetButtonDown("Fire1"))
                 {
                     //start dragging eraser when it s clicked
                     eraserDragged = true;

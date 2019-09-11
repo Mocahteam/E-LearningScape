@@ -62,6 +62,16 @@ public class EventWrapper : MonoBehaviour {
         LockResolver.instance.moveWheelDown();
     }
 
+    public void selectLeftWheel()
+    {
+        LockResolver.instance.SelectLeftWheel();
+    }
+
+    public void selectRightWheel()
+    {
+        LockResolver.instance.SelectRightWheel();
+    }
+
     public void CheckMastermindAnswer()
     {
         LoginManager.instance.CheckMastermindAnswer();
@@ -69,7 +79,7 @@ public class EventWrapper : MonoBehaviour {
 
     public void OnEndEditMastermindAnswer()
     {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetButtonDown("Submit"))
             LoginManager.instance.CheckMastermindAnswer();
     }
 
@@ -96,5 +106,15 @@ public class EventWrapper : MonoBehaviour {
     public void UpdateAlpha(float newAlpha)
     {
         SettingsManager.instance.UpdateAlpha(newAlpha);
+    }
+
+    public void ToggleTextAnimation(bool newState)
+    {
+        SettingsManager.instance.ToggleTextAnimation(newState);
+    }
+
+    public void SetWalkSpeed (float newSpeed)
+    {
+        MovingSystem.instance.SetWalkSpeed(newSpeed);
     }
 }

@@ -24,7 +24,7 @@ public class CollectObject : FSystem {
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Fire1"))
         {
             foreach (GameObject collect in f_collectableObjects)
             {

@@ -17,8 +17,8 @@ public class LoginManager : FSystem {
     private Family f_door = FamilyManager.getFamily(new AllOfComponents(typeof(Door)));
     private Family f_forceMoveToLogin = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(ForceMove)));
 
-    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
-    private Family f_gameRooms = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("Player"));
+    private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("Player"));
+    private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
     // Selectable Component is dynamically added by IARGearsEnigma when this enigma is solved => this is a sure condition to know that login is unlocked
@@ -37,7 +37,7 @@ public class LoginManager : FSystem {
     public static int passwordSolution = 814;
     private GameObject door;
 
-    private AudioSource gameAudioSource;
+    private AudioSource audioSource;
 
     private TextMeshProUGUI connectionAnswerCheck1;
     private TextMeshProUGUI connectionAnswerCheck2;
@@ -61,7 +61,7 @@ public class LoginManager : FSystem {
     {
         if (Application.isPlaying)
         {
-            InputField inputField = f_mainWindow.First().GetComponentInChildren<InputField>();
+            InputField inputField = f_mainWindow.First().transform.GetChild(1).GetComponent<InputField>();
 
             ifConnectionR2 = inputField;
 
@@ -78,7 +78,7 @@ public class LoginManager : FSystem {
             f_focusedLogin.addEntryCallback(onReadyToWorkOnLogin);
             f_forceMoveToLogin.addEntryCallback(onForceMoveTo);
 
-            gameAudioSource = f_gameRooms.First().GetComponent<AudioSource>();
+            audioSource = f_player.First().GetComponent<AudioSource>();
         }
         instance = this;
     }
@@ -126,7 +126,7 @@ public class LoginManager : FSystem {
         if (selectedLoginPanel)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed (because Escape close IAR)
-            if (((f_closeLogin.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && !coverAnimate && !processEndAnimation)
+            if (((f_closeLogin.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && !coverAnimate && !processEndAnimation)
             {
                 exitBy = "player";
                 ExitLogin();
@@ -151,9 +151,9 @@ public class LoginManager : FSystem {
                 if (f_player.First().transform.position == playerGoBackPosition)
                 {
                     goBack = false;
-                    gameAudioSource.clip = door.GetComponent<Door>().openAudio;
-                    gameAudioSource.PlayDelayed(0);
-                    gameAudioSource.loop = true;
+                    audioSource.clip = door.GetComponent<Door>().openAudio;
+                    audioSource.PlayDelayed(0);
+                    audioSource.loop = true;
                     openDoor = true;
                     // enable rooms two and three
                     GameObjectManager.setGameObjectState(f_gameRooms.First().transform.GetChild(2).gameObject, true);
@@ -167,7 +167,7 @@ public class LoginManager : FSystem {
                 if (door.transform.position == doorOpennedPosition)
                 {
                     openDoor = false;
-                    gameAudioSource.loop = false;
+                    audioSource.loop = false;
                     processEndAnimation = false;
                     // show story
                     f_storyDisplayer.First().GetComponent<StoryText>().storyProgression++;

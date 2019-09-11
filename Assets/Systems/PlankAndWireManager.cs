@@ -115,12 +115,12 @@ public class PlankAndWireManager : FSystem {
         if (selectedPlank)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed (because Escape close IAR)
-            if (((f_closePlank.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)))
+            if (((f_closePlank.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)))
                 ExitPlank();
             else
             {
                 // Check if the current focused word is clicked
-                if (Input.GetMouseButtonDown(0) && currentFocusedWord)
+                if (Input.GetButtonDown("Fire1") && currentFocusedWord)
                 {
                     //trace action depending on selection state
                     if (currentFocusedWord.GetComponent<TextMeshPro>().color == Color.yellow)
@@ -264,7 +264,7 @@ public class PlankAndWireManager : FSystem {
                 }
 
                 //if click over nothing unselect all
-                if (Input.GetMouseButtonDown(0) && !currentFocusedWord && wireSelected())
+                if (Input.GetButtonDown("Fire1") && !currentFocusedWord && wireSelected())
                 {
                     foreach (GameObject word in f_allWords)
                     {

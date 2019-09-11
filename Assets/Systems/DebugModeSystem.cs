@@ -33,10 +33,6 @@ public class DebugModeSystem : FSystem
     private Vector3 target;
     private Vector3 velocity = Vector3.zero;
 
-    //In debug mode the player can run by pressing Shift
-    //This bool is true when the player is running
-    private bool running = false;
-
     public DebugModeSystem()
     {
         if (Application.isPlaying)
@@ -85,6 +81,8 @@ public class DebugModeSystem : FSystem
         {
             instance.Pause = true;
         }
+        player.m_WalkSpeed = player.m_WalkSpeed * 2;
+        player.m_RunSpeed = player.m_RunSpeed * 2;
     }
 
     // Use to process your families.
@@ -134,6 +132,8 @@ public class DebugModeSystem : FSystem
                     instance.Pause = true;
                     CheckDebugMode.canPause = false;
                     CheckDebugMode.instance.Pause = false;
+                    player.m_WalkSpeed = player.m_WalkSpeed / 2;
+                    player.m_RunSpeed = player.m_RunSpeed / 2;
                 }
             }
             else
@@ -161,26 +161,6 @@ public class DebugModeSystem : FSystem
                     player.gameObject.transform.position = player.gameObject.transform.position;
 
             }
-        }
-
-        if (running)
-        {
-            //if the player is running increase its standing and crouching speed
-            player.m_WalkSpeed = 10;
-            player.m_RunSpeed = 10;
-        }
-        else
-        {
-            //if the player is not running set its standing and crouching speed to normal
-            //in debug mode the player is not slowed when crouching
-            player.m_WalkSpeed = 5;
-            player.m_RunSpeed = 5;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            //check if Shift key is pressed and switch state between running and walking
-            running = !running;
         }
     }
 }

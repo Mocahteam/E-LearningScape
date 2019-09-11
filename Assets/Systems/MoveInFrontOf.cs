@@ -94,9 +94,9 @@ public class MoveInFrontOf : FSystem {
     {
         speed = 8f * Time.deltaTime;
 
-        if (!moveInFrontOf && (Input.GetMouseButtonDown(0) || emulateClickOn != null))
+        if (!moveInFrontOf && (Input.GetButtonDown("Fire1") || emulateClickOn != null))
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetButtonDown("Fire1"))
                 focusedGO = f_focused.First();
             else
             {

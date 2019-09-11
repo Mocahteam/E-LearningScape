@@ -24,6 +24,10 @@ public class LockResolver : FSystem {
 
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
+    private Family f_wheelSpeedSlider = FamilyManager.getFamily(new AllOfComponents(typeof(Slider)), new AnyOfTags("WheelSpeedSlider"));
+
+    private Family f_LockArrows = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver)), new AnyOfTags("LockArrow"));
+
     //information for animations
     private float speed;
     private float speedRotation;
@@ -39,6 +43,7 @@ public class LockResolver : FSystem {
     private Color lockWheelColor;
     private float wheelRotationCount = 0;
     private string rotationDirection = "";
+    private Slider wheelSpeedRotation;
 
     private bool room1Unlocked = false;
     private bool room3Unlocked = false;
@@ -55,36 +60,11 @@ public class LockResolver : FSystem {
     {
         if (Application.isPlaying)
         {
-            foreach (GameObject go in f_lockers)
-            {
-                Locker locker = go.GetComponent<Locker>();
-                lockWheelColor = locker.Wheel1.GetComponent<Renderer>().material.color;
-                // Add listener on UI arrows to control the lock 
-                foreach (Transform child in go.transform)
-                {
-                    if (child.gameObject.name == "LeftRight")
-                    {
-                        foreach (Transform c in child)
-                        {
-                            if (c.gameObject.name == "Left")
-                            {
-                                c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                                    SelectLeftWheel(ref selectedWheel, locker.Wheel1, locker.Wheel2, locker.Wheel3, locker.UpDownControl);
-                                });
-                            }
-                            else if (c.gameObject.name == "Right")
-                            {
-                                c.gameObject.GetComponent<Button>().onClick.AddListener(delegate {
-                                    SelectRightWheel(ref selectedWheel, locker.Wheel1, locker.Wheel2, locker.Wheel3, locker.UpDownControl);
-                                });
-                            }
-                        }
-                    }
-                }
-            }
             gameAudioSource = f_audioSourceFamily.First().GetComponent<AudioSource>();
 
             f_focusedLocker.addEntryCallback(onReadyToWorkOnLocker);
+
+            wheelSpeedRotation = f_wheelSpeedSlider.First().GetComponent<Slider>();
         }
         instance = this;
     }
@@ -97,6 +77,7 @@ public class LockResolver : FSystem {
         GameObjectManager.setGameObjectState(selectedLocker.UpDownControl, true);
         // Change selected wheel color and move Up/Down UI over the selected wheel
         selectedWheel = selectedLocker.Wheel2;
+        lockWheelColor = selectedWheel.GetComponent<Renderer>().material.color;
         selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
         selectedLocker.UpDownControl.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - selectedLocker.UpDownControl.transform.localPosition.x);
         // activate this system
@@ -126,7 +107,7 @@ public class LockResolver : FSystem {
         if (selectedLocker)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed
-            if (((f_closeLock.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && (!room1Unlocked || IARScreenRoom1Unlocked) && (!room3Unlocked || IARScreenRoom3Unlocked))
+            if (((f_closeLock.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && (!room1Unlocked || IARScreenRoom1Unlocked) && (!room3Unlocked || IARScreenRoom3Unlocked))
             {
                 closedBy = "player";
                 ExitLocker();
@@ -136,9 +117,9 @@ public class LockResolver : FSystem {
                 // avoid to rotate wheel during unlock animation
                 if ((!room1Unlocked || IARScreenRoom1Unlocked) && (!room3Unlocked || IARScreenRoom3Unlocked))
                 {
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetButtonDown("Fire1"))
                     {
-                        // Select the clicked wheel
+                        // Select the clicked wheel 
                         selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
                         if (selectedLocker.Wheel1.GetComponent<PointerOver>())
                             selectedWheel = selectedLocker.Wheel1;
@@ -152,14 +133,22 @@ public class LockResolver : FSystem {
                     }
 
                     // process hotkeys to move the wheels
-                    if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z))
+                    if (Input.GetAxis("Vertical") > 0.2 && !lockRotationUp && !lockRotationDown)
                         moveWheelUp();
-                    else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+                    else if (Input.GetAxis("Vertical") < -0.2 && !lockRotationUp && !lockRotationDown)
                         moveWheelDown();
-                    else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Q))
-                        SelectLeftWheel(ref selectedWheel, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, selectedLocker.UpDownControl);
-                    else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-                        SelectRightWheel(ref selectedWheel, selectedLocker.Wheel1, selectedLocker.Wheel2, selectedLocker.Wheel3, selectedLocker.UpDownControl);
+                    else if (Input.GetButtonDown("Horizontal") && Input.GetAxis("Horizontal") < 0)
+                        SelectLeftWheel();
+                    else if (Input.GetButtonDown("Horizontal") && Input.GetAxis("Horizontal") > 0)
+                        SelectRightWheel();
+                    //Process mouse arrow
+                    if (Input.GetButton("Fire1") && f_LockArrows.Count != 0 && !lockRotationUp && !lockRotationDown)
+                    {
+                        if (f_LockArrows.First().name == "Down")
+                            moveWheelDown();
+                        else
+                            moveWheelUp();
+                    }
                 }
             }
         }
@@ -168,10 +157,10 @@ public class LockResolver : FSystem {
         if (lockRotationUp || lockRotationDown)
         {
             if (lockRotationUp)
-                selectedWheel.transform.Rotate(Time.deltaTime * 200, 0, 0);
+                selectedWheel.transform.Rotate(Time.deltaTime * wheelSpeedRotation.value, 0, 0);
             else
-                selectedWheel.transform.Rotate(-Time.deltaTime * 200, 0, 0);
-            wheelRotationCount += Time.deltaTime * 200;
+                selectedWheel.transform.Rotate(-Time.deltaTime * wheelSpeedRotation.value, 0, 0);
+            wheelRotationCount += Time.deltaTime * wheelSpeedRotation.value;
 
             // is rotation finished ?
             if (wheelRotationCount > 36)
@@ -367,44 +356,44 @@ public class LockResolver : FSystem {
         }
     }
 
-    private void SelectLeftWheel(ref GameObject wheel, GameObject wheel1, GameObject wheel2, GameObject wheel3, GameObject lockUDUI)
+    public void SelectLeftWheel()
     {
         if (!lockRotationUp && !lockRotationDown)
         {
-            if (wheel.GetInstanceID() == wheel2.GetInstanceID())
+            if (selectedWheel.GetInstanceID() == selectedLocker.Wheel2.GetInstanceID())
             {
-                wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
-                wheel = wheel1;
-                wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
-                lockUDUI.transform.localPosition += Vector3.right * (wheel.transform.localPosition.x - lockUDUI.transform.localPosition.x);
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
+                selectedWheel = selectedLocker.Wheel1;
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
+                selectedLocker.UpDownControl.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - selectedLocker.UpDownControl.transform.localPosition.x);
             }
-            else if (wheel.GetInstanceID() == wheel3.GetInstanceID())
+            else if (selectedWheel.GetInstanceID() == selectedLocker.Wheel3.GetInstanceID())
             {
-                wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
-                wheel = wheel2;
-                wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
-                lockUDUI.transform.localPosition += Vector3.right * (wheel.transform.localPosition.x - lockUDUI.transform.localPosition.x);
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
+                selectedWheel = selectedLocker.Wheel2;
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
+                selectedLocker.UpDownControl.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - selectedLocker.UpDownControl.transform.localPosition.x);
             }
         }
     }
 
-    private void SelectRightWheel(ref GameObject wheel, GameObject wheel1, GameObject wheel2, GameObject wheel3, GameObject lockUDUI)
+    public void SelectRightWheel()
     {
         if (!lockRotationUp && !lockRotationDown)
         {
-            if (wheel.GetInstanceID() == wheel1.GetInstanceID())
+            if (selectedWheel.GetInstanceID() == selectedLocker.Wheel1.GetInstanceID())
             {
-                wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
-                wheel = wheel2;
-                wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
-                lockUDUI.transform.localPosition += Vector3.right * (wheel.transform.localPosition.x - lockUDUI.transform.localPosition.x);
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
+                selectedWheel = selectedLocker.Wheel2;
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
+                selectedLocker.UpDownControl.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - selectedLocker.UpDownControl.transform.localPosition.x);
             }
-            else if (wheel.GetInstanceID() == wheel2.GetInstanceID())
+            else if (selectedWheel.GetInstanceID() == selectedLocker.Wheel2.GetInstanceID())
             {
-                wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
-                wheel = wheel3;
-                wheel.GetComponent<Renderer>().material.color = wheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
-                lockUDUI.transform.localPosition += Vector3.right * (wheel.transform.localPosition.x - lockUDUI.transform.localPosition.x);
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color - Color.white * 0.2f;
+                selectedWheel = selectedLocker.Wheel3;
+                selectedWheel.GetComponent<Renderer>().material.color = selectedWheel.GetComponent<Renderer>().material.color + Color.white * 0.2f;
+                selectedLocker.UpDownControl.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - selectedLocker.UpDownControl.transform.localPosition.x);
             }
         }
     }

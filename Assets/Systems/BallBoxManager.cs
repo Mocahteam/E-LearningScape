@@ -159,7 +159,7 @@ public class BallBoxManager : FSystem {
         if (selectedBox)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and balls are out of the box but none are in front of camera and IAR is closed (because Escape close IAR)
-            if (((f_closeBox.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && (boxPadlock.activeSelf || (ballsout && !inFrontOfCamera && !selectedBall)))
+            if (((f_closeBox.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && (boxPadlock.activeSelf || (ballsout && !inFrontOfCamera && !selectedBall)))
             {
                 // set balls to initial position
                 foreach (GameObject ball in f_balls)
@@ -221,7 +221,7 @@ public class BallBoxManager : FSystem {
                     ballGo.transform.localPosition = Vector3.MoveTowards(ballGo.transform.localPosition, ballPos, speed / 2);
                     
                     // Check if we have to abort animation
-                    if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
+                    if (Input.GetButtonDown("Fire1") || Input.GetKeyDown("Cancel"))
                     {
                         // abort animation
                         for (int i = 0; i < f_balls.Count; i++)
@@ -255,7 +255,7 @@ public class BallBoxManager : FSystem {
                 // balls interaction to see background digit
 
                 // Ask a ball to move in front of the camera
-                if (focusedBall && !selectedBall && Input.GetMouseButtonDown(0) && !moveBall && !inFrontOfCamera)
+                if (focusedBall && !selectedBall && Input.GetButtonDown("Fire1") && !moveBall && !inFrontOfCamera)
                 {
                     //calculate position and speeds for the animation
                     targetPos = new Vector3 (0f, 0.5f, 1.37f);
@@ -278,7 +278,7 @@ public class BallBoxManager : FSystem {
                 }
 
                 // Ask ball to move back on grid with other balls
-                if (selectedBall && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape)) && inFrontOfCamera)
+                if (selectedBall && (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel")) && inFrontOfCamera)
                 {
                     //calculate position and speeds for the animation
                     targetPos = ballPosOnGrid(selectedBall.GetComponent<Ball>());

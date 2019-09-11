@@ -68,7 +68,9 @@ public class LoadGameContent : FSystem {
     public static Dictionary<string, float> enigmasWeight;
 
     public TMP_FontAsset AccessibleFont;
+    public TMP_FontAsset AccessibleFontUI;
     public TMP_FontAsset DefaultFont;
+    public TMP_FontAsset DefaultFontUI;
 
     public static LoadGameContent instance;
 
@@ -704,7 +706,9 @@ public class LoadGameContent : FSystem {
 
         // Load fonts
         AccessibleFont = defaultGameContent.accessibleFontTMPro;
+        AccessibleFontUI = defaultGameContent.accessibleFontTMProUI;
         DefaultFont = defaultGameContent.defaultFontTMPro;
+        DefaultFontUI = defaultGameContent.defaultFontTMProUI;
         Debug.Log("Fonts loaded");
 
         Debug.Log("Data loaded");

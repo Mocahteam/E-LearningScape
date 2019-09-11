@@ -13,6 +13,7 @@ public class StoryDisplaying : FSystem {
 
     private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
     private Family f_game = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
+    private Family f_mainHUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
 
     // Camera is required in this system to switch menuCamera to fpsCamera during displaying story
     private Family menuCamera = FamilyManager.getFamily(new AllOfComponents(typeof(MenuCamera), typeof(Camera)));
@@ -144,6 +145,8 @@ public class StoryDisplaying : FSystem {
         }
         // Get current set of texts
         readTexts = storyTexts[st.storyProgression].ToArray();
+        // Disable HUD
+        GameObjectManager.setGameObjectState(f_mainHUD.First(), false);
     }
 
 	// Use to process your families.
@@ -158,7 +161,7 @@ public class StoryDisplaying : FSystem {
                 if (fadingBackground)
                     background.color = new Color(background.color.r, background.color.g, background.color.b, (Time.time - readingTimer) / fadeSpeed);
                 // stop fading if mouse clicked
-                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
+                if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel"))
                 {
                     readingTimer = Time.time - (fadeSpeed + 1);
                     GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
@@ -219,7 +222,7 @@ public class StoryDisplaying : FSystem {
                 fadingImage.color = new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, 1 - (Time.time - readingTimer) / fadeSpeed);
                 if (fadingBackground)
                     background.color = new Color(background.color.r, background.color.g, background.color.b, 1 - (Time.time - readingTimer) / fadeSpeed);
-                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
+                if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel"))
                 {
                     readingTimer = Time.time - (fadeSpeed + 1);
                     GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
@@ -238,12 +241,15 @@ public class StoryDisplaying : FSystem {
                     //Enable IARSystem (done after the others to prevent a bug)
                     IARTabNavigation.instance.Pause = false;
                     this.Pause = true; // Stop this system
+
+                    // Enable HUD
+                    GameObjectManager.setGameObjectState(f_mainHUD.First(), true);
                 }
             }
         }
         else
         {
-            if (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetButtonDown ("Fire1") || Input.GetButtonDown("Cancel"))
             {
                 alphaToPlain = true;
                 readingTimer = Time.time;

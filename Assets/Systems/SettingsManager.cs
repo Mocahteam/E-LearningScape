@@ -13,7 +13,7 @@ public class SettingsManager : FSystem {
     //private Family needUpdateFontSize_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontSize)));
     //private Family needUpdateValueSlider_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateValueSlider)));
 
-    private Family UIColorAlpha_f = FamilyManager.getFamily(new AnyOfTags("UIBackground", "DreamFragmentUI"), new AllOfComponents(typeof(Image)));
+    private Family UIColorAlpha_f = FamilyManager.getFamily(new AnyOfTags("UIBackground", "DreamFragmentUI", "Q-R1", "Q-R2", "Q-R3"), new AllOfComponents(typeof(Image)));
    // private Family needUpdateColorAlpha_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateOpacity)));
 
     //creation de famille qui recupere tous les components type Text; TextMeshPro et TextMeshProUGUI
@@ -72,19 +72,28 @@ public class SettingsManager : FSystem {
 
     public void SwitchFont(bool accessibleFont)
     {
-        //Font textFont;
         TMP_FontAsset TM_Font;
+        TMP_FontAsset TM_FontUI;
         if (accessibleFont)
+        {
             // Load accessible font
             TM_Font = LoadGameContent.instance.AccessibleFont;
+            TM_FontUI = LoadGameContent.instance.AccessibleFontUI;
+        }
         else
+        {
             // Load default font
             TM_Font = LoadGameContent.instance.DefaultFont;
+            TM_FontUI = LoadGameContent.instance.DefaultFontUI;
+        }
 
         foreach (GameObject textGo in text_f) // parse all TextMeshPro
         {
             TMP_Text tm = textGo.GetComponent<TMP_Text>();
-            tm.font = TM_Font;
+            if (textGo.layer == 5) // 5 <=> UI
+                tm.font = TM_FontUI;
+            else
+                tm.font = TM_Font;
         }
     }
 
@@ -105,7 +114,13 @@ public class SettingsManager : FSystem {
             img.color = new Color(img.color.r, img.color.g, img.color.b, newAlpha);
         }
     }
-    
+
+    public void ToggleTextAnimation(bool newState)
+    {
+        foreach (GameObject objAnimated in AnimatedObject_f)
+            objAnimated.GetComponent<AnimatedSprites>().animate = newState;
+    }
+
     /*
 
     //If we click on back value button in setting menu, we come back at default value on slider  
@@ -132,18 +147,7 @@ public class SettingsManager : FSystem {
         GameObjectManager.removeComponent<UpdateValueSlider>(go);
     }
 
-    private void onNeedUpdateAnimation(GameObject go)
-    {
-        Accessibility_settings accessSettings = go.GetComponent<Accessibility_settings>();
-
-        foreach (GameObject objAnimated in AnimatedObject_f) //parcours de tous les GO de la famille text_f
-        {
-            objAnimated.GetComponent<AnimatedSprites>().animate = accessSettings.animate;
-        }
-
-
-        GameObjectManager.removeComponent<UpdateAnimation>(go); 
-    }*/
+    */
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {

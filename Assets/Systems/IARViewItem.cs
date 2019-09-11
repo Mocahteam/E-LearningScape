@@ -174,7 +174,7 @@ public class IARViewItem : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         // mouse click management
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Fire1"))
         {
             // We parse all viewed game object (only once)
             foreach (GameObject go in f_viewed)

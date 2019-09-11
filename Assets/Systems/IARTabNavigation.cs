@@ -14,10 +14,8 @@ public class IARTabNavigation : FSystem {
     private Family f_fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)));
     private Family f_iarDisplayed = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
-    private Family f_HUD_H = FamilyManager.getFamily(new AnyOfTags("HUD_H"));
+    private Family f_HUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
-    private Family f_inputFieldMasterMind = FamilyManager.getFamily(new AnyOfComponents(typeof(InputField), typeof(Button)), new NoneOfLayers(5), new AnyOfTags("Login"));
 
     private Family f_quitEnigma = FamilyManager.getFamily(new AnyOfTags("QuitEnigma"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
@@ -26,8 +24,6 @@ public class IARTabNavigation : FSystem {
 
     private GameObject iar;
     private GameObject iarBackground;
-
-    private bool openedAtLeastOnce = false;
 
     private int tabIdToFocusOn;
 
@@ -56,21 +52,14 @@ public class IARTabNavigation : FSystem {
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame)
     {
-        GameObjectManager.setGameObjectState(f_HUD_A.First(), false); // hide HUD "A"
-        if (f_HUD_H.Count > 0)
-            GameObjectManager.setGameObjectState(f_HUD_H.First(), false); // hide HUD "H"
+        GameObjectManager.setGameObjectState(f_HUD.First(), false); // hide HUD
     }
 
     // Use this to update member variables when system resume.
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
     {
-        if (openedAtLeastOnce)
-        {
-            GameObjectManager.setGameObjectState(f_HUD_A.First(), true); // display HUD "A"
-            if (f_HUD_H.Count > 0)
-                GameObjectManager.setGameObjectState(f_HUD_H.First(), true); // display HUD "H"
-        }
+        GameObjectManager.setGameObjectState(f_HUD.First(), true); // show HUD
     }
 
     private void onIarDisplayed(GameObject go)
@@ -84,13 +73,13 @@ public class IARTabNavigation : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         // Open/Close IAR with Escape and A keys
-        if (iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape) || (Input.GetMouseButtonDown(0) && iarBackground.GetComponent<PointerOver>())))
+        if (iar.activeInHierarchy && (Input.GetButtonDown("ToggleInventory") || (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause) || Input.GetButtonDown("Cancel") || (Input.GetButtonDown("Fire1") && iarBackground.GetComponent<PointerOver>())))
             closeIar();
-        else if (!iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause) || Input.GetKeyDown(KeyCode.Escape)))
+        else if (!iar.activeInHierarchy && (Input.GetButtonDown("ToggleInventory") || (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause) || Input.GetButtonDown("Cancel")))
         {
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetButtonDown("ToggleInventory"))
                 openIar(0); // Open IAR on the first tab
-            else if (Input.GetKeyDown(KeyCode.H) && !HelpSystem.shouldPause)
+            else if (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause)
                 openIar(f_tabs.Count - 2); // Open IAR on the second last tab
             else
                 // Open IAR on the last tab only if player doesn't work on selectable enigm (Escape enables to exit the enigm)
@@ -102,20 +91,8 @@ public class IARTabNavigation : FSystem {
     private void openIar(int tabId)
     {
         GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "activated", objectType = "menu", objectName = iar.name });
-        openedAtLeastOnce = true;
-        GameObjectManager.setGameObjectState(f_HUD_A.First(), false); // hide HUD "A"
-        if (f_HUD_H.Count > 0)
-            GameObjectManager.setGameObjectState(f_HUD_H.First(), false); // hide HUD "H"
+GameObjectManager.setGameObjectState(f_HUD.First(), false); // hide HUD
         GameObjectManager.setGameObjectState(iar, true); // open IAR
-        
-        // To allow a good automatic navigation keyboard in menu we disabled InputField and button component in mastermind
-        foreach (GameObject inputF in f_inputFieldMasterMind)
-        {
-            if (inputF.GetComponent<InputField>())
-                inputF.GetComponent<InputField>().enabled = false;
-            if (inputF.GetComponent<Button>())
-                inputF.GetComponent<Button>().enabled = false;
-        }
 
         SwitchTab(f_tabs.getAt(tabId)); // switch to the desired tab
         tabIdToFocusOn = tabId;
@@ -150,24 +127,13 @@ public class IARTabNavigation : FSystem {
     {
         GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "deactivated", objectType = "menu", objectName = iar.name });
         GameObjectManager.setGameObjectState(iar, false); // close IAR
-        // Restaure mastermid UI components
-        foreach (GameObject inputF in f_inputFieldMasterMind)
-        {
-            if (inputF.GetComponent<InputField>())
-                inputF.GetComponent<InputField>().enabled = true;
-            if (inputF.GetComponent<Button>())
-                inputF.GetComponent<Button>().enabled = true;
-        }
+
         // Restaure systems state (exception for LampManager)
         bool backLampManagerState = LampManager.instance.Pause;
         foreach (FSystem sys in systemsStates.Keys)
             sys.Pause = systemsStates[sys];
         LampManager.instance.Pause = backLampManagerState;
-        // display HUD "A"
-        GameObjectManager.setGameObjectState(f_HUD_A.First(), true);
-        // display HUD "H"
-        if (f_HUD_H.Count > 0)
-            GameObjectManager.setGameObjectState(f_HUD_H.First(), true);
+        GameObjectManager.setGameObjectState(f_HUD.First(), true); // show HUD
     }
 
     public void SwitchTab(GameObject newSelectedTab)

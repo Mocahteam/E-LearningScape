@@ -74,11 +74,19 @@ public class DefaultGameContent : MonoBehaviour {
     public Sprite noPictureFound;
 
     /// <summary>
-    /// Accessible font
+    /// Accessible font (World)
     /// </summary>
     public TMP_FontAsset accessibleFontTMPro;
     /// <summary>
-    /// Default font
+    /// Accessible font (UI)
+    /// </summary>
+    public TMP_FontAsset accessibleFontTMProUI;
+    /// <summary>
+    /// Default font (World)
     /// </summary>
     public TMP_FontAsset defaultFontTMPro;
+    /// <summary>
+    /// Default font (UI)
+    /// </summary>
+    public TMP_FontAsset defaultFontTMProUI;
 }

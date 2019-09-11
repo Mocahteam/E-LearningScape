@@ -91,7 +91,7 @@ public class IARQueryEvaluator : FSystem {
 
     public void IarOnEndEditAnswer(GameObject query)
     {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetButtonDown("Submit"))
             IarCheckAnswer(query);
         IARTabNavigation.instance.Pause = false;
     }

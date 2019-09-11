@@ -55,7 +55,7 @@ public class DreamFragmentCollecting : FSystem {
         }
 
         // Compute Raycast only when mouse is clicked
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Fire1"))
         {
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
             {

@@ -22,19 +22,13 @@ public class WindowNavigator : MonoBehaviour, IPointerClickHandler
     }
     public void Hide ()
     {
+        GameObjectManager.setGameObjectState(window, false);
         if (parent)
         {
-            GameObjectManager.setGameObjectState(window, false);
             GameObjectManager.setGameObjectState(parent, true);
             EventSystem.current.SetSelectedGameObject(defaultUiInParent); //if we back on parent window then position cursor on default button choose in inspector object 
         }
 
-    }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Start_button")) //use keyboard with echap or start button on xbox one controller
-            Hide();
     }
 
     public void OnPointerClick(PointerEventData pointerEventData)

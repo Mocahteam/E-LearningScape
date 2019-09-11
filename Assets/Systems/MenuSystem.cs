@@ -15,7 +15,7 @@ public class MenuSystem : FSystem {
     private Family f_particles = FamilyManager.getFamily(new AllOfComponents(typeof(ParticleSystem)));
     private Family f_reflectionProbe = FamilyManager.getFamily(new AllOfComponents(typeof(ReflectionProbe)));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
-    private Family f_mainHUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
+    private Family f_windowNavigator = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)));
 
     private Camera menuCamera;
     private float switchDelay = 12;
@@ -44,8 +44,6 @@ public class MenuSystem : FSystem {
             // Get singleton MainMenu
             mainMenu = GameObject.Find("MainMenu");
             GameObjectManager.setGameObjectState(mainMenu, false);
-            // Get singleton ToggleButton
-            //togglePuzzle = GameObject.Find("TogglePuzzle").GetComponent<Toggle>();
 
             // Set specific quality settings
             menuCamera = f_menuCameraFamily.First().GetComponent<Camera>();
@@ -91,6 +89,7 @@ public class MenuSystem : FSystem {
             menuCamera.gameObject.GetComponent<MenuCamera>().positions[0] = new PosRot(-20.21f, 1.42f, -1.95f, -1.516f, -131.238f, 0);
             menuCamera.gameObject.GetComponent<MenuCamera>().positions[1] = new PosRot(-10.24f,2.64f,-2.07f,1.662f,130.146f,-5.715f);
             menuCamera.gameObject.GetComponent<MenuCamera>().positions[2] = new PosRot(13.85f,1.26f,6.11f,-8.774f,131.818f,-2.642f);
+
             // Init timer
             switchTimer = Time.time;
         }
@@ -168,8 +167,24 @@ public class MenuSystem : FSystem {
         // Disable UI
         GameObjectManager.setGameObjectState(mainMenu, false);
         GameObjectManager.setGameObjectState(fadingBackground.gameObject, false);
-        // Enagle HUD
-        GameObjectManager.setGameObjectState(f_mainHUD.First(), true);
+
+        // Link settings window to IAR, when game is playing if we open IAR Menu and then we close the setting popup we want to back in window IAR Menu and on setting button and not on setting button of main menu
+        GameObject settingsMainMenu = null;
+        GameObject IARMenuContent = null;
+        foreach (GameObject go in f_windowNavigator)
+        {
+            if (go.name == "Settings_MainMenu")
+                settingsMainMenu = go;
+            if (go.name == "MenuContent")
+                IARMenuContent = go;
+        }
+        if (settingsMainMenu != null && IARMenuContent != null)
+        {
+            WindowNavigator wn = settingsMainMenu.GetComponent<WindowNavigator>();
+            wn.parent = IARMenuContent; //parent window is MenuContent in IAR
+            wn.defaultUiInWindow = wn.parent.transform.GetChild(2).gameObject;
+        }
+
         // Play story
         StoryDisplaying.instance.Pause = false;
     }

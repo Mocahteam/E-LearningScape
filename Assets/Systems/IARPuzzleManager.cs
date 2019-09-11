@@ -33,7 +33,7 @@ public class IARPuzzleManager : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        if (Input.GetMouseButtonDown(0) && f_puzzleUI.First())
+        if (Input.GetButtonDown("Fire1") && f_puzzleUI.First())
         {
             tmpGo = f_puzzleUI.First();
             GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new { verb = "dragged", objectType = "draggable", objectName = tmpGo.name });
@@ -66,7 +66,7 @@ public class IARPuzzleManager : FSystem {
             tmpGo = null;
         }
 
-        if (Input.GetMouseButton(0) && tmpGo)
+        if (Input.GetButton("Fire1") && tmpGo)
         {
             tmpGo.transform.position = Input.mousePosition;
             float puzzleScale = tmpGo.GetComponent<RectTransform>().localScale.x;

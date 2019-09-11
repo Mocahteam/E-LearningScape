@@ -20,7 +20,7 @@ public class SwitchPerso : MonoBehaviour {
     }
 
     void Update () {
-        if (Input.GetKeyDown(KeyCode.L) && !iarRef.activeInHierarchy)
+        if (Input.GetButtonDown("SwitchView") && !iarRef.activeInHierarchy)
         {
             fpsCam = !fpsCam;
             forceUpdate();

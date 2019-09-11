@@ -151,7 +151,7 @@ public class SatchelManager : FSystem {
         if (selectedBag)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and paper is out of the bag and IAR is closed (because Escape close IAR)
-            if (((f_closeBag.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && (paperOut || bagPadlock.activeSelf))
+            if (((f_closeBag.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && (paperOut || bagPadlock.activeSelf))
             {
                 // ask to close bag
                 prepareclosing = true;
