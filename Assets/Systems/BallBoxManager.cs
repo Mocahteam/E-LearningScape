@@ -22,7 +22,6 @@ public class BallBoxManager : FSystem {
     //information for animations
     private float speed;
     private float speedRotation = 200f;
-    private float coverSpeedRotation = 200f;
     private float dist = -1;
     private int ballCounter = -1;
 
@@ -42,7 +41,7 @@ public class BallBoxManager : FSystem {
     private GameObject box;
     private GameObject boxTop;
 
-    private float tmpRotationCount = 0;
+    private bool unlocked = false;
     private bool boxOpenned = false;
     private bool closeBox = false;
     private bool depthOfFieldsEnabled = false;
@@ -57,7 +56,7 @@ public class BallBoxManager : FSystem {
         {
             box = f_box.First();
             boxPadlock = box.transform.GetChild(0).gameObject;
-            boxTop = box.transform.GetChild(3).gameObject;
+            boxTop = box.transform.GetChild(2).gameObject;
             ballSubTitles = box.transform.GetChild(4).gameObject;
             ballSubTitlesContent = ballSubTitles.GetComponentInChildren<TextMeshProUGUI>();
 
@@ -79,7 +78,6 @@ public class BallBoxManager : FSystem {
         closeBox = false;
         ballsout = false;
         moveBall = false;
-        tmpRotationCount = 0;
         ballCounter = 0;
 
         // Launch this system
@@ -159,7 +157,7 @@ public class BallBoxManager : FSystem {
         if (selectedBox)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and balls are out of the box but none are in front of camera and IAR is closed (because Escape close IAR)
-            if (((f_closeBox.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && (boxPadlock.activeSelf || (ballsout && !inFrontOfCamera && !selectedBall)))
+            if (((f_closeBox.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && (!unlocked || (ballsout && !inFrontOfCamera && !selectedBall)))
             {
                 // set balls to initial position
                 foreach (GameObject ball in f_balls)
@@ -172,44 +170,30 @@ public class BallBoxManager : FSystem {
                 closeBox = true;
             }
 
-            if (boxPadlock.activeSelf)
+            if (!unlocked)
             {
                 if (keySelected())
                 {
-                    //move up and rotate the padlock
-                    dist = 1.5f - boxPadlock.transform.localPosition.y;
-                    boxPadlock.transform.localPosition = Vector3.MoveTowards(boxPadlock.transform.localPosition, boxPadlock.transform.localPosition + Vector3.up * dist, (dist + 1) / 2 * Time.deltaTime);
-                    boxPadlock.transform.localRotation = Quaternion.Euler(boxPadlock.transform.localRotation.eulerAngles + Vector3.up * (boxPadlock.transform.localPosition.y - 0.2f) * 350 * 5 * Time.deltaTime);
-                    if (boxPadlock.transform.localPosition.y > 1.4f)
-                    {
-                        //stop animation when the padlock reaches a certain height
-                        GameObjectManager.setGameObjectState(boxPadlock, false);
-                        //remove key from inventory
-                        GameObjectManager.setGameObjectState(keySelected(), false);
-
-                        GameObjectManager.addComponent<ActionPerformed>(boxPadlock, new { name = "perform", performedBy = "system" });
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "unlocked", objectType = "interactable", objectName = selectedBox.name });
-                    }
+                    // start animation
+                    boxPadlock.GetComponent<Animator>().enabled = true;
+                    //remove key from inventory
+                    GameObjectManager.setGameObjectState(keySelected(), false);
+                    // trace
+                    GameObjectManager.addComponent<ActionPerformed>(boxPadlock, new { name = "perform", performedBy = "system" });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "unlocked", objectType = "interactable", objectName = selectedBox.name });
+                    unlocked = true;
                 }
             }
 
-            if (!boxPadlock.activeSelf && !boxOpenned)
+            if (unlocked && !boxOpenned && boxPadlock.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 0.8)
             {
                 // open the cover of the box
-                float step = coverSpeedRotation * Time.deltaTime;
-                tmpRotationCount += step;
-                boxTop.transform.Rotate(-step, 0, 0);
-                if (tmpRotationCount > 120)
-                {
-                    // correct rotation
-                    boxTop.transform.Rotate(tmpRotationCount - 120, 0, 0);
-                    tmpRotationCount = 0;
-                    boxOpenned = true;
-                    ballCounter = 0;
-                }
+                boxTop.GetComponent<Animator>().SetTrigger("turnOn");
+                boxOpenned = true;
+                ballCounter = 0;
             }
 
-            if (boxOpenned && ballCounter < f_balls.Count)
+            if (boxOpenned && ballCounter < f_balls.Count && boxTop.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 0.8)
             {
                 //animation to take balls out of the box
                 GameObject ballGo = f_balls.getAt(ballCounter);
@@ -308,21 +292,10 @@ public class BallBoxManager : FSystem {
             if (closeBox)
             {
                 // Check if padlock is enabled => means the box is already closed
-                if (!boxPadlock.activeSelf)
-                {
+                if (unlocked)
                     // close the cover of the box
-                    float step = coverSpeedRotation * Time.deltaTime;
-                    boxTop.transform.Rotate(step, 0, 0);
-                    tmpRotationCount += step;
-                    if (tmpRotationCount > 120)
-                    {
-                        // correct rotation
-                        boxTop.transform.Rotate(120 - tmpRotationCount, 0, 0);
-                        ExitBox();
-                    }
-                }
-                else
-                    ExitBox();
+                    boxTop.GetComponent<Animator>().SetTrigger("turnOff");
+                ExitBox();
             }
         }
 	}

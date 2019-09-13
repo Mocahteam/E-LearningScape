@@ -11,13 +11,25 @@ public class CollectObject : FSystem {
     // We process only Highlighted game objects (this component is dynamically added by Highlight system)
     private Family f_collectableObjects = FamilyManager.getFamily(new AllOfComponents(typeof(LinkedWith), typeof(Highlighted)), new NoneOfLayers(5), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_pressA = FamilyManager.getFamily(new AnyOfTags("PressA"));
+    private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
 
     public static CollectObject instance;
 
     private GameObject seenScroll;
 
+    private GameObject itemCollectedNotif;
+    private bool animateItem;
+    private float timeStart;
+    private Vector3 targetPosition;
+
     public CollectObject()
     {
+        if (Application.isPlaying)
+        {
+            itemCollectedNotif = f_HUD_A.First().transform.parent.GetChild(6).gameObject;
+            targetPosition = f_HUD_A.First().transform.position;
+            animateItem = false;
+        }
         instance = this;
     }
 
@@ -56,6 +68,11 @@ public class CollectObject : FSystem {
                 }
                 // disable in-game source
                 GameObjectManager.setGameObjectState(collect, false);
+                // Play notification
+                itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start");
+                
+                // Play sound
+                GameObjectManager.addComponent<PlaySound>(collect, new { id = 10 }); // id refer to FPSController AudioBank
                 // particular case of collecting Intro_scroll game object => show ingame "Press A" notification
                 if (collect.name == "Intro_Scroll")
                 {
