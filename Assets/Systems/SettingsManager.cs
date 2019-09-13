@@ -21,7 +21,7 @@ public class SettingsManager : FSystem {
     //private Family textWithMax_f = FamilyManager.getFamily(new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)), new AllOfComponents(typeof(MaxFontSize)));
     
     //private Family needUpdateAnimation_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateAnimation), typeof(Accessibility_settings)));
-    private Family AnimatedObject_f = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites)), new NoneOfTags("PlankE09", "InventoryElements", "UIEffect", "LockArrow"), new NoneOfComponents(typeof(Button)));
+    private Family AnimatedObject_f = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites)), new NoneOfTags("InventoryElements", "UIEffect"));
 
     private Family UICursorSize_f = FamilyManager.getFamily(new AnyOfTags("CursorImage"));
     //private Family needUpdateCursorSize_f = FamilyManager.getFamily(new AllOfComponents(typeof(CursorSize)));

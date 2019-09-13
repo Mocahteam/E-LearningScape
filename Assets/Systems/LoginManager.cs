@@ -14,10 +14,11 @@ public class LoginManager : FSystem {
     private Family f_closeLogin = FamilyManager.getFamily(new AnyOfTags("Login", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_mainWindow = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(PointerSensitive)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_door = FamilyManager.getFamily(new AllOfComponents(typeof(Door)));
     private Family f_forceMoveToLogin = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(ForceMove)));
 
-    private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("Player"));
+    private Family f_door = FamilyManager.getFamily(new AnyOfTags("Door"), new AllOfComponents(typeof(Animator)));
+
+    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
@@ -27,17 +28,11 @@ public class LoginManager : FSystem {
     private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
 
     private GameObject selectedLoginPanel;
-    private GameObject loginCover;
-    private Vector3 coverTargetPosition;
     private Vector3 playerGoBackPosition;
-    private Vector3 doorOpennedPosition;
 
     private float speed;
     private InputField ifConnectionR2;
-    public static int passwordSolution = 814;
-    private GameObject door;
-
-    private AudioSource audioSource;
+    public static int passwordSolution;
 
     private TextMeshProUGUI connectionAnswerCheck1;
     private TextMeshProUGUI connectionAnswerCheck2;
@@ -46,11 +41,9 @@ public class LoginManager : FSystem {
     private Color cacOrange;
     private Color cacRed;
 
-    private bool processEndAnimation = false;
     private bool goBack = false;
-    private bool openDoor = false;
 
-    private bool coverAnimate = false;
+    private GameObject door;
 
     private string exitBy = "";
     private string openedBy = "";
@@ -78,7 +71,7 @@ public class LoginManager : FSystem {
             f_focusedLogin.addEntryCallback(onReadyToWorkOnLogin);
             f_forceMoveToLogin.addEntryCallback(onForceMoveTo);
 
-            audioSource = f_player.First().GetComponent<AudioSource>();
+            door = f_door.First();
         }
         instance = this;
     }
@@ -86,12 +79,11 @@ public class LoginManager : FSystem {
     private void onLoginUnlocked(GameObject go)
     {
         // launch animation of login protection
-        loginCover = go.transform.GetChild(0).gameObject; // the first child is the cover
-        coverTargetPosition = loginCover.transform.position - (Vector3.up); 
+        GameObject loginCover = go.transform.GetChild(0).gameObject; // the first child is the cover
         playerGoBackPosition = go.transform.position + (Vector3.left*3f) - (Vector3.up);
-        door = f_door.First();
-        doorOpennedPosition = door.transform.position + (Vector3.up*4f);
-        coverAnimate = true;
+
+        GameObjectManager.addComponent<PlaySound>(loginCover, new { id = 9 }); // id refer to FPSController AudioBank
+        loginCover.GetComponent<Animator>().enabled = true; // enable animation
     }
 
     private void onReadyToWorkOnLogin(GameObject go)
@@ -126,7 +118,7 @@ public class LoginManager : FSystem {
         if (selectedLoginPanel)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed (because Escape close IAR)
-            if (((f_closeLogin.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && !coverAnimate && !processEndAnimation)
+            if (((f_closeLogin.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && !goBack)
             {
                 exitBy = "player";
                 ExitLogin();
@@ -135,53 +127,24 @@ public class LoginManager : FSystem {
 
         speed = Time.deltaTime;
 
-        if (coverAnimate)
+        if (goBack)
         {
-            // open the cover of the box
-            loginCover.transform.position = Vector3.MoveTowards(loginCover.transform.position, coverTargetPosition, speed);
-            if (loginCover.transform.position == coverTargetPosition)
-                coverAnimate = false;
-        }
-
-        if (processEndAnimation)
-        {
-            if (goBack)
+            f_player.First().transform.position = Vector3.MoveTowards(f_player.First().transform.position, playerGoBackPosition, speed);
+            if (f_player.First().transform.position == playerGoBackPosition)
             {
-                f_player.First().transform.position = Vector3.MoveTowards(f_player.First().transform.position, playerGoBackPosition, speed);
-                if (f_player.First().transform.position == playerGoBackPosition)
-                {
-                    goBack = false;
-                    audioSource.clip = door.GetComponent<Door>().openAudio;
-                    audioSource.PlayDelayed(0);
-                    audioSource.loop = true;
-                    openDoor = true;
-                    // enable rooms two and three
-                    GameObjectManager.setGameObjectState(f_gameRooms.First().transform.GetChild(2).gameObject, true);
-                    GameObjectManager.setGameObjectState(f_gameRooms.First().transform.GetChild(3).gameObject, true);
-                }
-            }
-
-            if (openDoor)
-            {
-                door.transform.position = Vector3.MoveTowards(door.transform.position, doorOpennedPosition, speed);
-                if (door.transform.position == doorOpennedPosition)
-                {
-                    openDoor = false;
-                    audioSource.loop = false;
-                    processEndAnimation = false;
-                    // show story
-                    f_storyDisplayer.First().GetComponent<StoryText>().storyProgression++;
-                    StoryDisplaying.instance.Pause = false;
-                    // Enable IAR second screen
-                    GameObject IARsecondScreen = f_mainWindow.First().GetComponentInChildren<LinkedWith>().link;
-                    GameObjectManager.setGameObjectState(IARsecondScreen.transform.GetChild(0).gameObject, false); // first child is locked tab
-                    GameObjectManager.setGameObjectState(IARsecondScreen.transform.GetChild(1).gameObject, true); // second child is unlocked tab
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(IARsecondScreen, new { verb = "unlocked", objectType = "menu", objectName = IARsecondScreen.name });
-                    f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 2;
-                    // exit login
-                    exitBy = "system";
-                    ExitLogin();
-                }
+                // show story
+                f_storyDisplayer.First().GetComponent<StoryText>().storyProgression++;
+                StoryDisplaying.instance.Pause = false;
+                // Enable IAR second screen
+                GameObject IARsecondScreen = f_mainWindow.First().GetComponentInChildren<LinkedWith>().link;
+                GameObjectManager.setGameObjectState(IARsecondScreen.transform.GetChild(0).gameObject, false); // first child is locked tab
+                GameObjectManager.setGameObjectState(IARsecondScreen.transform.GetChild(1).gameObject, true); // second child is unlocked tab
+                GameObjectManager.addComponent<ActionPerformedForLRS>(IARsecondScreen, new { verb = "unlocked", objectType = "menu", objectName = IARsecondScreen.name });
+                f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 2;
+                // exit login
+                exitBy = "system";
+                ExitLogin();
+                goBack = false;
             }
         }
 	}
@@ -233,9 +196,15 @@ public class LoginManager : FSystem {
             connectionAnswerCheck2.color = cacGreen;
             connectionAnswerCheck3.text = "O";
             connectionAnswerCheck3.color = cacGreen;
+            // enable rooms two and three
+            GameObjectManager.setGameObjectState(f_gameRooms.First().transform.GetChild(2).gameObject, true);
+            GameObjectManager.setGameObjectState(f_gameRooms.First().transform.GetChild(3).gameObject, true);
             // solution found play animation
-            processEndAnimation = true;
             goBack = true;
+            GameObjectManager.addComponent<PlaySound>(door, new { id = 9 }); // id refer to FPSController AudioBank
+            door.GetComponent<Animator>().enabled = true; // enable animation
+            // lock login
+            GameObjectManager.removeComponent<Selectable>(f_loginUnlocked.First());
         }
         else
         {

@@ -10,30 +10,26 @@ public class LockResolver : FSystem {
     // THis system manages lockers with three wheels
 
     // all selectable locker
-    private Family f_lockers = FamilyManager.getFamily(new AllOfComponents(typeof(Locker)));
-    private Family f_focusedLocker = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(ReadyToWork), typeof(Locker), typeof(AudioBank)));
+    private Family f_focusedLocker = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(ReadyToWork), typeof(Locker)));
 
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
-    private Family f_closeLock = FamilyManager.getFamily(new AnyOfTags("LockIntro", "LockIntroWheel", "LockRoom2", "LockR2Wheel", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_closeLock = FamilyManager.getFamily(new AnyOfTags("LockIntroWheel", "LockR2Wheel", "ArrowUI"), new AllOfComponents(typeof(PointerOver)));
 
-    private Family f_audioSourceFamily = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource)), new AnyOfTags("Player"));
-    private Family f_wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"));
-    private Family f_fences = FamilyManager.getFamily(new AnyOfTags("Fence"));
+    private Family f_fences = FamilyManager.getFamily(new AnyOfTags("Fence"), new AllOfComponents(typeof(Animator)));
+    private Family f_wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"), new AllOfComponents(typeof(Animator)));
 
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
-
+    
     private Family f_wheelSpeedSlider = FamilyManager.getFamily(new AllOfComponents(typeof(Slider)), new AnyOfTags("WheelSpeedSlider"));
 
     private Family f_LockArrows = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver)), new AnyOfTags("LockArrow"));
 
     //information for animations
-    private float speed;
     private float speedRotation;
     private float oldDT;
     private Vector3 tmpTargetPosition;
-    private float angleCount = 0;
 
     //locker
     private Locker selectedLocker = null;
@@ -49,8 +45,9 @@ public class LockResolver : FSystem {
     private bool room3Unlocked = false;
     private bool IARScreenRoom1Unlocked = false;
     private bool IARScreenRoom3Unlocked = false;
-    private bool playerLookingAtDoor = false;
-    private AudioSource gameAudioSource;
+
+    private GameObject wallIntro;
+    private GameObject fences;
 
     private string closedBy = "";
 
@@ -60,11 +57,12 @@ public class LockResolver : FSystem {
     {
         if (Application.isPlaying)
         {
-            gameAudioSource = f_audioSourceFamily.First().GetComponent<AudioSource>();
-
             f_focusedLocker.addEntryCallback(onReadyToWorkOnLocker);
 
             wheelSpeedRotation = f_wheelSpeedSlider.First().GetComponent<Slider>();
+
+            wallIntro = f_wallIntro.First();
+            fences = f_fences.First();
         }
         instance = this;
     }
@@ -99,7 +97,6 @@ public class LockResolver : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
     {
-        speed = 8f * Time.deltaTime;
         speedRotation *= Time.deltaTime / oldDT;
         oldDT = Time.deltaTime;
 
@@ -208,102 +205,69 @@ public class LockResolver : FSystem {
             }
         }
 
-        speed = 50 * Time.deltaTime;
-
         // Do we have to unlock first room and associated IAR screen
         if (room1Unlocked && !IARScreenRoom1Unlocked)
         {
-            // the player has to look at animated wall
-            if (!playerLookingAtDoor)
+            // straf right
+            f_player.First().transform.position = Vector3.MoveTowards(f_player.First().transform.position, tmpTargetPosition, 4 * Time.deltaTime);
+            // check if animation is over
+            if (f_player.First().transform.position == tmpTargetPosition)
             {
-                // straf right
-                f_player.First().transform.position = Vector3.MoveTowards(f_player.First().transform.position, tmpTargetPosition, 4 * Time.deltaTime);
-                // check if animation is over
-                if (f_player.First().transform.position == tmpTargetPosition)
+                GameObjectManager.addComponent<PlaySound>(wallIntro, new { id = 9 }); // id refer to FPSController AudioBank
+                wallIntro.GetComponent<Animator>().enabled = true; // enable animation
+                GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock", performedBy = "player" });
+                GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock_meta", performedBy = "system" });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
                 {
-                    gameAudioSource.clip = selectedLocker.GetComponent<AudioBank>().audioBank[0];
-                    gameAudioSource.PlayDelayed(0);
-                    gameAudioSource.loop = true;
-                    playerLookingAtDoor = true;
-                    tmpTargetPosition = f_wallIntro.First().transform.position + Vector3.up * (-4f - f_wallIntro.First().transform.position.y);
-                }
-            }
-            else
-            {
-                // animate the wall
-                f_wallIntro.First().transform.position = Vector3.MoveTowards(f_wallIntro.First().transform.position, tmpTargetPosition, 0.1f * speed);
-                // Check if animation is over
-                if (f_wallIntro.First().transform.position == tmpTargetPosition)
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock_meta", performedBy = "system" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
-                    {
-                        verb = "completed",
-                        objectType = "interactable",
-                        objectName = selectedLocker.gameObject.name,
-                        activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { string.Concat(selectedLocker.wheel1Solution, selectedLocker.wheel2Solution, selectedLocker.wheel3Solution) } } }
-                    });
+                    verb = "completed",
+                    objectType = "interactable",
+                    objectName = selectedLocker.gameObject.name,
+                    activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { string.Concat(selectedLocker.wheel1Solution, selectedLocker.wheel2Solution, selectedLocker.wheel3Solution) } } }
+                });
 
-                    // disable the wall
-                    GameObjectManager.setGameObjectState(f_wallIntro.First(), false);
-                    gameAudioSource.loop = false; // stop sound
-                    // update IAR
-                    GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(0).gameObject, false); // first child is locked tab
-                    GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(1).gameObject, true); // second child is unlocked tab
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new { verb = "unlocked", objectType = "menu", objectName = selectedLocker.IARScreenUnlock.name });
-                    f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 1;
-                    // update flags
-                    playerLookingAtDoor = false;
-                    IARScreenRoom1Unlocked = true;
-                    // disable UI items usable for this enigm
-                    if (selectedLocker.GetComponent<LinkedWith>())
-                        GameObjectManager.setGameObjectState(selectedLocker.GetComponent<LinkedWith>().link, false);
-                    // Exit the locker
-                    closedBy = "system";
-                    ExitLocker();
-                }
+                // update IAR
+                GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(0).gameObject, false); // first child is locked tab
+                GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(1).gameObject, true); // second child is unlocked tab
+                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new { verb = "unlocked", objectType = "menu", objectName = selectedLocker.IARScreenUnlock.name });
+                f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 1;
+                // update flags
+                IARScreenRoom1Unlocked = true;
+                // disable UI items usable for this enigm
+                if (selectedLocker.GetComponent<LinkedWith>())
+                    GameObjectManager.setGameObjectState(selectedLocker.GetComponent<LinkedWith>().link, false);
+                // Exit the locker
+                closedBy = "system";
+                ExitLocker();
             }
         }
 
         if (room3Unlocked && !IARScreenRoom3Unlocked)
         {
-            if (!playerLookingAtDoor)
+            f_player.First().transform.position = Vector3.MoveTowards(f_player.First().transform.position, tmpTargetPosition, 4 * Time.deltaTime);
+            if (f_player.First().transform.position == tmpTargetPosition)
             {
-                f_player.First().transform.position = Vector3.MoveTowards(f_player.First().transform.position, tmpTargetPosition, 4 * Time.deltaTime);
-                if (f_player.First().transform.position == tmpTargetPosition)
+                GameObjectManager.addComponent<PlaySound>(fences, new { id = 9 }); // id refer to FPSController AudioBank
+                fences.GetComponent<Animator>().enabled = true; // enable animation
+                GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(0).gameObject, false); // first child is locked tab
+                GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(1).gameObject, true); // second child is unlocked tab
+                IARScreenRoom3Unlocked = true;
+                GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock", performedBy = "player" });
+                GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock_meta", performedBy = "player" });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
                 {
-                    gameAudioSource.clip = selectedLocker.GetComponent<AudioBank>().audioBank[0];
-                    gameAudioSource.PlayDelayed(0);
-                    gameAudioSource.loop = true;
-                    playerLookingAtDoor = true;
-                }
-            }
-            else
-            {
-                f_fences.getAt(0).transform.Rotate(0, 0, -Time.deltaTime * 100);
-                f_fences.getAt(1).transform.Rotate(0, 0, Time.deltaTime * 100);
-                angleCount += Time.deltaTime * 100;
-                if (angleCount > 103)
+                    verb = "completed",
+                    objectType = "interactable",
+                    objectName = selectedLocker.gameObject.name
+                });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new
                 {
-                    f_fences.getAt(0).transform.Rotate(0, 0, -(103 - angleCount));
-                    f_fences.getAt(1).transform.Rotate(0, 0, 103 - angleCount);
-                    angleCount = 0;
-                    playerLookingAtDoor = false;
-                    gameAudioSource.loop = false;
-                    GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(0).gameObject, false); // first child is locked tab
-                    GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(1).gameObject, true); // second child is unlocked tab
-                    IARScreenRoom3Unlocked = true;
-                    GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock_meta", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new { verb = "completed",
-                        objectType = "interactable", objectName = selectedLocker.gameObject.name });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new { verb = "unlocked", objectType = "menu",
-                        objectName = selectedLocker.IARScreenUnlock.name });
-                    f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 3;
-                    closedBy = "system";
-                    ExitLocker();
-                }
+                    verb = "unlocked",
+                    objectType = "menu",
+                    objectName = selectedLocker.IARScreenUnlock.name
+                });
+                f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 3;
+                closedBy = "system";
+                ExitLocker();
             }
         }
     }

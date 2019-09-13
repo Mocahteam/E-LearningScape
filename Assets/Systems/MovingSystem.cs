@@ -78,8 +78,8 @@ public class MovingSystem : FSystem
     private void onEnterWater(GameObject go)
     {
         walkInWater = true;
-        playerController.m_FootstepSounds[0] = audioBank.audioBank[4];
-        playerController.m_FootstepSounds[1] = audioBank.audioBank[5];
+        playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
+        playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
         if (!crouching)
         {
             playerController.m_WalkSpeed = playerController.m_WalkSpeed / 2;
@@ -90,19 +90,19 @@ public class MovingSystem : FSystem
     private void onExitWater(int instanceId)
     {
         walkInWater = false;
-        playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
-        playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
+        playerController.m_FootstepSounds[0] = audioBank.audioBank[0];
+        playerController.m_FootstepSounds[1] = audioBank.audioBank[1];
         if (crouching)
         {
-            playerController.m_FootstepSounds[0] = audioBank.audioBank[6];
-            playerController.m_FootstepSounds[1] = audioBank.audioBank[7];
+            playerController.m_FootstepSounds[0] = audioBank.audioBank[4];
+            playerController.m_FootstepSounds[1] = audioBank.audioBank[5];
         }
         else
         {
             playerController.m_WalkSpeed = playerController.m_WalkSpeed * 2;
             playerController.m_RunSpeed = playerController.m_RunSpeed * 2;
-            playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
-            playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
+            playerController.m_FootstepSounds[0] = audioBank.audioBank[0];
+            playerController.m_FootstepSounds[1] = audioBank.audioBank[1];
         }
     }
 
@@ -184,7 +184,7 @@ public class MovingSystem : FSystem
 
         crouchingSpeed = 70f * Time.deltaTime;
         // when control button or right click is pressed then the player can alternatively crouch and standing
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2") && !changingPose)
         {
             changingPose = true; //true when the player is crouching or standing
             //change moving speed according to the stance
@@ -194,8 +194,8 @@ public class MovingSystem : FSystem
                 {
                     playerController.m_WalkSpeed = playerController.m_WalkSpeed * 2;
                     playerController.m_RunSpeed = playerController.m_RunSpeed * 2;
-                    playerController.m_FootstepSounds[0] = audioBank.audioBank[2];
-                    playerController.m_FootstepSounds[1] = audioBank.audioBank[3];
+                    playerController.m_FootstepSounds[0] = audioBank.audioBank[0];
+                    playerController.m_FootstepSounds[1] = audioBank.audioBank[1];
                 }
             }
             else
@@ -206,8 +206,8 @@ public class MovingSystem : FSystem
                 {
                     playerController.m_WalkSpeed = playerController.m_WalkSpeed / 2;
                     playerController.m_RunSpeed = playerController.m_RunSpeed / 2;
-                    playerController.m_FootstepSounds[0] = audioBank.audioBank[6];
-                    playerController.m_FootstepSounds[1] = audioBank.audioBank[7];
+                    playerController.m_FootstepSounds[0] = audioBank.audioBank[4];
+                    playerController.m_FootstepSounds[1] = audioBank.audioBank[5];
                 }
             }
         }

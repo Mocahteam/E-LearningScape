@@ -6,8 +6,6 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class DebugModeSystem : FSystem
 {
     private Family f_lights = FamilyManager.getFamily(new AllOfComponents(typeof(Light)));
-    private Family f_door = FamilyManager.getFamily(new AllOfComponents(typeof(Door)));
-    private Family f_wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"));
     private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
 
     public static FSystem instance;
@@ -114,14 +112,6 @@ public class DebugModeSystem : FSystem
                     sun.color = sunInitialColor;
                     sun.gameObject.transform.rotation = sunRotation;
                     Camera.main.clearFlags = CameraClearFlags.Skybox;
-
-                    //set the doors to their initial position (moving them to the right)
-                    int nb = f_door.Count;
-                    for (int i = 0; i < nb; i++)
-                        f_door.getAt(i).transform.position += Vector3.back * 4;
-                    nb = f_wallIntro.Count;
-                    for (int i = 0; i < nb; i++)
-                        f_wallIntro.getAt(i).transform.position += Vector3.back * 4;
 
                     //set player speeds to initial speeds
                     player.m_WalkSpeed = 5;

@@ -4,10 +4,7 @@ using System.Collections.Generic;
 
 public class CheckDebugMode : FSystem
 {
-
     private Family f_lights = FamilyManager.getFamily(new AllOfComponents(typeof(Light)));
-    private Family f_door = FamilyManager.getFamily(new AllOfComponents(typeof(Door)));
-    private Family f_wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"));
 
@@ -93,16 +90,8 @@ public class CheckDebugMode : FSystem
                     //Camera.main.clearFlags = CameraClearFlags.SolidColor;
                     Camera.main.backgroundColor = Color.black;
 
-                    //open all doors (moved on the left)
-                    int nb = f_door.Count;
-                    for (int i = 0; i < nb; i++)
-                        f_door.getAt(i).transform.position += Vector3.forward * 4;
-                    nb = f_wallIntro.Count;
-                    for (int i = 0; i < nb; i++)
-                        f_wallIntro.getAt(i).transform.position += Vector3.forward * 4;
-
                     //unlock all IAR tabs
-                    nb = f_tabs.Count;
+                    int nb = f_tabs.Count;
                     for (int i = 0; i < nb; i++)
                     {
                         if (f_tabs.getAt(i).name == "Unlocked")

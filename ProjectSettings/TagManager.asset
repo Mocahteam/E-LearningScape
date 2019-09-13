@@ -78,6 +78,8 @@ TagManager:
   - CursorImage
   - DisableOnViewed
   - LockArrow
+  - Door
+  - ArrowUI
   layers:
   - Default
   - TransparentFX

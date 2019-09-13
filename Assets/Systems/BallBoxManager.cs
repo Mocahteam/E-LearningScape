@@ -221,7 +221,7 @@ public class BallBoxManager : FSystem {
                     ballGo.transform.localPosition = Vector3.MoveTowards(ballGo.transform.localPosition, ballPos, speed / 2);
                     
                     // Check if we have to abort animation
-                    if (Input.GetButtonDown("Fire1") || Input.GetKeyDown("Cancel"))
+                    if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel"))
                     {
                         // abort animation
                         for (int i = 0; i < f_balls.Count; i++)
@@ -235,7 +235,7 @@ public class BallBoxManager : FSystem {
                         ballCounter = f_balls.Count;
                         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "skipped", objectType = "animation", objectName = string.Concat(selectedBox.name, "_opening") });
                     }
-                    //when the last ball arrives to its position
+                    //when the ball reaches to its position
                     if (ballGo.transform.localPosition == ballPos)
                     {
                         //stop animations

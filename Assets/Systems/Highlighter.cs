@@ -106,10 +106,8 @@ public class Highlighter : FSystem {
             // Check if object is close to the camera
             if ((hit.transform.gameObject.transform.position - Camera.main.transform.position).sqrMagnitude < 49)
             {
-                // Evaluate if we have to check family => if object (or its parent) is not the previous one
-                bool checkFamily = previousHighlight != hit.transform.gameObject;
-                if (hit.transform.parent)
-                    checkFamily = checkFamily && previousHighlight != hit.transform.parent.gameObject;
+                // Evaluate if we have to check family => if object (or its parents) is not the previous one
+                bool checkFamily = previousHighlight != hit.transform.gameObject && hit.transform.parent && previousHighlight != hit.transform.parent.gameObject && hit.transform.parent.parent && previousHighlight != hit.transform.parent.parent.gameObject;
                 if (checkFamily)
                 {
                     // Check if this game object is included into family
@@ -119,17 +117,23 @@ public class Highlighter : FSystem {
                         currentHighlight = hit.transform.gameObject;
                         highlight(currentHighlight);
                     }
-                    // Check if the parent of hited game object is an interactive game object and this game object doesn't contain a dream fragment
-                    else if (!hit.transform.gameObject.GetComponent<DreamFragment>() && hit.transform.parent && f_highlitable.contains(hit.transform.parent.gameObject.GetInstanceID()))
+                    // Check if parents of hited game object is an interactive game object and this game object doesn't contain a dream fragment
+                    else if (!hit.transform.gameObject.GetComponent<DreamFragment>() && hit.transform.parent)
                     {
-                        // save the parent of this game object as the new highlighted game object
-                        currentHighlight = hit.transform.parent.gameObject;
-                        highlight(currentHighlight);
+                        if (f_highlitable.contains(hit.transform.parent.gameObject.GetInstanceID())){
+                            // save the parent of this game object as the new highlighted game object
+                            currentHighlight = hit.transform.parent.gameObject;
+                            highlight(currentHighlight);
+                        } else if (hit.transform.parent.parent && f_highlitable.contains(hit.transform.parent.parent.gameObject.GetInstanceID())){
+                            // save the grandparent of this game object as the new highlighted game object
+                            currentHighlight = hit.transform.parent.parent.gameObject;
+                            highlight(currentHighlight);
+                        }
                     }
                 }
                 else
                 {
-                    if (!hit.transform.gameObject.GetComponent<DreamFragment>() && (previousHighlight == hit.transform.gameObject || (hit.transform.parent && previousHighlight == hit.transform.parent.gameObject)))
+                    if (!hit.transform.gameObject.GetComponent<DreamFragment>() && (previousHighlight == hit.transform.gameObject || (hit.transform.parent && previousHighlight == hit.transform.parent.gameObject) || (hit.transform.parent && hit.transform.parent.parent && previousHighlight == hit.transform.parent.parent.gameObject)))
                         currentHighlight = previousHighlight;
                 }
             }

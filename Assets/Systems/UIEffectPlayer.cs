@@ -6,7 +6,6 @@ public class UIEffectPlayer : FSystem {
 
     // Display UI Effect based on PlayUIEffect component
 
-    private Family f_soundBank = FamilyManager.getFamily(new AllOfComponents(typeof(AudioBank), typeof(AudioSource)));
     private Family f_playUiEffect = FamilyManager.getFamily(new AllOfComponents(typeof(PlayUIEffect)));
     private Family f_uiEffect = FamilyManager.getFamily(new AnyOfTags("UIEffect"));
 
@@ -50,7 +49,7 @@ public class UIEffectPlayer : FSystem {
         if (uiEffect.effectCode == 0 || uiEffect.effectCode == 2)
         {
             // play right sound
-            f_soundBank.First().GetComponent<AudioSource>().PlayOneShot(f_soundBank.First().GetComponent<AudioBank>().audioBank[0]);
+            GameObjectManager.addComponent<PlaySound>(go, new { id = 0 }); // id refer to FPSController AudioBank
             if (uiEffect.effectCode == 0)
             {
                 blinkCorrect = true;
@@ -85,7 +84,7 @@ public class UIEffectPlayer : FSystem {
         else if (uiEffect.effectCode == 1)
         {
             // play wrong sound
-            f_soundBank.First().GetComponent<AudioSource>().PlayOneShot(f_soundBank.First().GetComponent<AudioBank>().audioBank[1]);
+            GameObjectManager.addComponent<PlaySound>(go, new { id = 1 }); // id refer to FPSController AudioBank
             blinkWrong = true;
             startTime = Time.time;
             GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
