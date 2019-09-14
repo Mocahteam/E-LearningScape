@@ -79,6 +79,8 @@ public class DreamFragmentCollecting : FSystem {
                     backupIARNavigationState = IARTabNavigation.instance.Pause;
                     IARTabNavigation.instance.Pause = true;
 
+                    GameObjectManager.addComponent<PlaySound>(selectedFragment, new { id = 3 }); // id refer to FPSController AudioBank
+
                     if (selectedFragment.transform.parent.gameObject.tag == "Chair" && selectedFragment.transform.parent.gameObject.GetComponent<IsSolution>())
                     {
                         if(f_player.First().transform.localScale.x < 0.9f)

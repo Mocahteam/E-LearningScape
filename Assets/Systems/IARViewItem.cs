@@ -107,6 +107,7 @@ public class IARViewItem : FSystem {
         lastSelection = go;
         // display description of this new selection
         showDescription(go);
+        GameObjectManager.addComponent<PlaySound>(go, new { id = 13 }); // id refer to FPSController AudioBank
         GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
         {
             verb = "read",
@@ -119,6 +120,7 @@ public class IARViewItem : FSystem {
     // when a selected game object leaves f_selected family, we update the last game object selected to the last game object of the family
     private void onSelectionRemoved(int instanceId)
     {
+        GameObjectManager.addComponent<PlaySound>(lastSelection, new { id = 14 }); // id refer to FPSController AudioBank
         if (f_selected.Count > 0)
             lastSelection = f_selected.getAt(f_selected.Count - 1);
         else

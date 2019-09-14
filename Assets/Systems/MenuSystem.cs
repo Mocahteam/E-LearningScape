@@ -185,6 +185,8 @@ public class MenuSystem : FSystem {
             wn.defaultUiInWindow = wn.parent.transform.GetChild(2).gameObject;
         }
 
+        GameObjectManager.addComponent<PlaySound>(mainMenu, new { id = 4 }); // id refer to FPSController AudioBank
+
         // Play story
         StoryDisplaying.instance.Pause = false;
     }

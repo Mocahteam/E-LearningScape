@@ -298,6 +298,7 @@ public class LockResolver : FSystem {
     {
         if (!lockRotationUp && !lockRotationDown)
         {
+            GameObjectManager.addComponent<PlaySound>(selectedWheel, new { id = 7 }); // id refer to FPSController AudioBank
             lockRotationUp = true;
             WheelFrontFace wff = selectedWheel.GetComponent<WheelFrontFace>();
             if(wff.faceNumber == 9)
@@ -311,6 +312,7 @@ public class LockResolver : FSystem {
     {
         if (!lockRotationUp && !lockRotationDown)
         {
+            GameObjectManager.addComponent<PlaySound>(selectedWheel, new { id = 7 }); // id refer to FPSController AudioBank
             lockRotationDown = true;
             WheelFrontFace wff = selectedWheel.GetComponent<WheelFrontFace>();
             if (wff.faceNumber == 0)

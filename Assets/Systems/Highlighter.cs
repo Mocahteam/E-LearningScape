@@ -8,7 +8,7 @@ public class Highlighter : FSystem {
 
     //all in game interactive objects
     // in game element linked whith UI game object are collectable and so highlightable (except animated sprites)
-	private Family f_highlitable = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(ToggleableGO), typeof(LinkedWith)), new NoneOfComponents(typeof(AnimatedSprites)));
+	private Family f_highlitable = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(ToggleableGO), typeof(LinkedWith)), new NoneOfComponents(typeof(AnimatedSprites)), new NoneOfLayers(1));
 
     private Renderer[] tmpRendererList;
     
@@ -81,6 +81,8 @@ public class Highlighter : FSystem {
         }
         // Add Highlighted component to this GameObject
         GameObjectManager.addComponent<Highlighted>(currentHighlight);
+
+        GameObjectManager.addComponent<PlaySound>(currentHighlight, new { id = 2 }); // id refer to FPSController AudioBank
     }
 
     // Use this to update member variables when system pause. 

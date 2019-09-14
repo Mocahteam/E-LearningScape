@@ -80,6 +80,7 @@ TagManager:
   - LockArrow
   - Door
   - ArrowUI
+  - ValidationButton
   layers:
   - Default
   - TransparentFX

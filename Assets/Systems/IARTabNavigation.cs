@@ -91,8 +91,10 @@ public class IARTabNavigation : FSystem {
     private void openIar(int tabId)
     {
         GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "activated", objectType = "menu", objectName = iar.name });
-GameObjectManager.setGameObjectState(f_HUD.First(), false); // hide HUD
+        GameObjectManager.setGameObjectState(f_HUD.First(), false); // hide HUD
         GameObjectManager.setGameObjectState(iar, true); // open IAR
+
+        GameObjectManager.addComponent<PlaySound>(iar, new { id = 15 }); // id refer to FPSController AudioBank
 
         SwitchTab(f_tabs.getAt(tabId)); // switch to the desired tab
         tabIdToFocusOn = tabId;
@@ -127,6 +129,8 @@ GameObjectManager.setGameObjectState(f_HUD.First(), false); // hide HUD
     {
         GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "deactivated", objectType = "menu", objectName = iar.name });
         GameObjectManager.setGameObjectState(iar, false); // close IAR
+
+        GameObjectManager.addComponent<PlaySound>(iar, new { id = 16 }); // id refer to FPSController AudioBank
 
         // Restaure systems state (exception for LampManager)
         bool backLampManagerState = LampManager.instance.Pause;
