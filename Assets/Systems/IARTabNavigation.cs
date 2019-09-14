@@ -16,6 +16,8 @@ public class IARTabNavigation : FSystem {
     private Family f_iarDisplayed = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_HUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
+    private Family f_settings = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_settings2 = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AnyOfTags("UIBackground"));
 
     private Sprite selectedTabSprite;
     private Sprite defaultTabSprite;
@@ -71,7 +73,7 @@ public class IARTabNavigation : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         // Open/Close IAR with Escape and A keys
-        if (iar.activeInHierarchy && (Input.GetButtonDown("ToggleInventory") || (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause) || Input.GetButtonDown("Cancel") || (Input.GetButtonDown("Fire1") && iarBackground.GetComponent<PointerOver>())))
+        if (iar.activeInHierarchy && f_settings.Count == 0 && (Input.GetButtonDown("ToggleInventory") || (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause) || Input.GetButtonDown("Cancel") || (Input.GetButtonDown("Fire1") && iarBackground.GetComponent<PointerOver>())))
             closeIar();
         else if (!iar.activeInHierarchy && (Input.GetButtonDown("ToggleInventory") || (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause) || Input.GetButtonDown("Cancel")))
         {

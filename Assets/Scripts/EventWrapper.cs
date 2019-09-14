@@ -122,4 +122,9 @@ public class EventWrapper : MonoBehaviour {
     {
         SettingsManager.instance.ResetDefaultValues();
     }
+
+    public void ToggleItem(GameObject go)
+    {
+        IARViewItem.instance.ToggleItem(go);
+    }
 }

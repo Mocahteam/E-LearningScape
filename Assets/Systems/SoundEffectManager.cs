@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class SoundEffectManager : FSystem {
     private Family f_Sounds = FamilyManager.getFamily(new AllOfComponents(typeof(PlaySound)));
     private Family f_AudioSource = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource), typeof(AudioBank)), new NoneOfTags("Player"));
-    private Family f_buttons = FamilyManager.getFamily(new AllOfComponents(typeof(Button)));
+    private Family f_buttons = FamilyManager.getFamily(new AllOfComponents(typeof(Button)), new NoneOfTags("InventoryElements"));
 
     private AudioSource audioSource;
     private AudioBank audioBank;
@@ -37,8 +37,10 @@ public class SoundEffectManager : FSystem {
 
     private void onNewSoundToPlay(GameObject go)
     {
-        PlaySound ps = go.GetComponent<PlaySound>();
-        audioSource.PlayOneShot(audioBank.audioBank[ps.id]);
-        GameObjectManager.removeComponent<PlaySound>(go);
+        foreach (PlaySound ps in go.GetComponents<PlaySound>())
+        {
+            audioSource.PlayOneShot(audioBank.audioBank[ps.id]);
+            GameObjectManager.removeComponent(ps);
+        }
     }
 }

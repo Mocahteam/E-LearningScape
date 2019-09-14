@@ -161,7 +161,7 @@ public class StoryDisplaying : FSystem {
                 if (fadingBackground)
                     background.color = new Color(background.color.r, background.color.g, background.color.b, (Time.time - readingTimer) / fadeSpeed);
                 // stop fading if mouse clicked
-                if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel"))
+                if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel") || Input.GetButtonDown("Submit"))
                 {
                     readingTimer = Time.time - (fadeSpeed + 1);
                     GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
@@ -222,7 +222,7 @@ public class StoryDisplaying : FSystem {
                 fadingImage.color = new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, 1 - (Time.time - readingTimer) / fadeSpeed);
                 if (fadingBackground)
                     background.color = new Color(background.color.r, background.color.g, background.color.b, 1 - (Time.time - readingTimer) / fadeSpeed);
-                if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel"))
+                if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel") || Input.GetButtonDown("Submit"))
                 {
                     readingTimer = Time.time - (fadeSpeed + 1);
                     GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
@@ -249,7 +249,7 @@ public class StoryDisplaying : FSystem {
         }
         else
         {
-            if (Input.GetButtonDown ("Fire1") || Input.GetButtonDown("Cancel"))
+            if (Input.GetButtonDown ("Fire1") || Input.GetButtonDown("Cancel") || Input.GetButtonDown("Submit"))
             {
                 alphaToPlain = true;
                 readingTimer = Time.time;

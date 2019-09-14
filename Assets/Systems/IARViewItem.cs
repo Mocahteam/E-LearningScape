@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.EventSystems;
 using FYFY_plugins.Monitoring;
 
 public class IARViewItem : FSystem {
@@ -16,6 +18,8 @@ public class IARViewItem : FSystem {
     private Family f_descriptionUI = FamilyManager.getFamily(new AnyOfTags("DescriptionUI"));
     private Family f_viewable = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_selectedItem = FamilyManager.getFamily(new AnyOfTags("IARItemSelected"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    // Contains all IAR tabs
+    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
 
     private GameObject descriptionUI;
     private GameObject descriptionTitle;
@@ -26,6 +30,8 @@ public class IARViewItem : FSystem {
 
     private GameObject currentView = null;
     private GameObject lastSelection = null;
+    private GameObject lastfocusedItem = null;
+    private GameObject lastItemShown = null;
 
     public static IARViewItem instance;
 
@@ -40,25 +46,25 @@ public class IARViewItem : FSystem {
             descriptionInfo = descriptionUI.transform.GetChild(2).gameObject; // the third child is the usable info of the description
 
             // add callback on families
-            f_viewed.addEntryCallback(onEnterItem);
-            f_viewed.addExitCallback(onExitItem);
-            f_selected.addEntryCallback(onNewSelection);
-            f_selected.addExitCallback(onSelectionRemoved);
-            f_viewable.addEntryCallback(onEnable);
-            f_viewable.addExitCallback(onDisable);
+            f_viewed.addEntryCallback(onMouseEnterItem);
+            f_viewed.addExitCallback(onMouseExitItem);
+            f_selected.addEntryCallback(onNewItemSelected);
+            f_selected.addExitCallback(onItemUnselected);
+            f_viewable.addEntryCallback(onNewItemEnabled);
+            f_viewable.addExitCallback(onItemDisabled);
 
             id2go = new Dictionary<int, GameObject>();
         }
         instance = this;
     }
 
-    private void onEnable(GameObject go)
+    private void onNewItemEnabled(GameObject go)
     {
         if (!id2go.ContainsKey(go.GetInstanceID()))
             id2go.Add(go.GetInstanceID(), go);
     }
 
-    private void onDisable(int instanceId)
+    private void onItemDisabled(int instanceId)
     {
         GameObject go;
         if (id2go.TryGetValue(instanceId, out go)) {
@@ -70,44 +76,48 @@ public class IARViewItem : FSystem {
     }
 
     // if new gameobject enter inside f_viewed we store it as current game object viewed
-    private void onEnterItem(GameObject go)
+    private void onMouseEnterItem(GameObject go)
     {
-        currentView = go;
-        // show description of the new focused Game Object
-        showDescription(go);
+        // force EventSystem to follow mouse focus
+        EventSystem.current.SetSelectedGameObject(go);
+        GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
+        {
+            verb = "View",
+            objectType = "viewable",
+            objectName = string.Concat(go.name, "_Description")
+        });
     }
 
     // because f_viewed contains only one gameobject (thanks to PointerOver), if it exits family no game object are focused
-    private void onExitItem(int instanceId)
+    private void onMouseExitItem(int instanceId)
     {
-        // if we exit a selected and linked game object which is not the last selected we hide its linked game object (exception for glasses)
-        if (currentView && currentView != lastSelection && currentView.GetComponent<LinkedWith>() && currentView.GetComponent<SelectedInInventory>() && !currentView.name.Contains("Glasses"))
-            GameObjectManager.setGameObjectState(currentView.GetComponent<LinkedWith>().link, false); // switch off the linked game object
-
-        if(currentView)
-            GameObjectManager.addComponent<ActionPerformedForLRS>(currentView, new
+        GameObject go;
+        if (id2go.TryGetValue(instanceId, out go))
+        {
+            // if we exit from the current focused game object
+            if (go == EventSystem.current.currentSelectedGameObject)
             {
-                verb = "exitedView",
-                objectType = "viewable",
-                objectName = string.Concat(currentView.name, "_Description")
-            });
+                // Check if at least one item is selected
+                if (f_selected.Count > 0)
+                    EventSystem.current.SetSelectedGameObject(f_selected.getAt(f_selected.Count - 1));
+                else
+                    EventSystem.current.SetSelectedGameObject(null);
 
-        currentView = null;
-
-        // if at least one game object was selected => we display its description
-        if (lastSelection)
-            showDescription(lastSelection);
-        else
-            GameObjectManager.setGameObjectState(descriptionUI, false);
+                GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
+                {
+                    verb = "exitedView",
+                    objectType = "viewable",
+                    objectName = string.Concat(go.name, "_Description")
+                });
+            }
+        }
     }
 
     // a new game object enter f_selected family => we consider this game object as the last game object selected
-    private void onNewSelection(GameObject go)
+    private void onNewItemSelected(GameObject go)
     {
-        lastSelection = go;
         // display description of this new selection
         showDescription(go);
-        GameObjectManager.addComponent<PlaySound>(go, new { id = 13 }); // id refer to FPSController AudioBank
         GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
         {
             verb = "read",
@@ -118,49 +128,50 @@ public class IARViewItem : FSystem {
     }
 
     // when a selected game object leaves f_selected family, we update the last game object selected to the last game object of the family
-    private void onSelectionRemoved(int instanceId)
+    private void onItemUnselected(int instanceId)
     {
-        GameObjectManager.addComponent<PlaySound>(lastSelection, new { id = 14 }); // id refer to FPSController AudioBank
-        if (f_selected.Count > 0)
-            lastSelection = f_selected.getAt(f_selected.Count - 1);
-        else
-            lastSelection = null;
-
-        // Update the current view in order to take in consideration the new last selection
-        if (currentView)
-            showDescription(currentView);
-        else
-            onExitItem(-1);
+        GameObject go;
+        if (id2go.TryGetValue(instanceId, out go))
+            showDescription(go);
     }
 
     // Show title and description of a game object
     // if this gameobject is linked with another one and is selected, the description area is replaced by its linked game object (except for glasses)
     private void showDescription(GameObject item)
     {
-        // Shows title and description
-        GameObjectManager.setGameObjectState(descriptionUI, true);
-        descriptionTitle.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().itemName;
-        GameObjectManager.setGameObjectState(descriptionContent, true); // switch on the description
-        descriptionContent.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().description;
-        GameObjectManager.setGameObjectState(descriptionInfo, true); // switch on the info
-        descriptionInfo.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().info;
-
-        // Check if the item is linked and selected
-        if (item.GetComponent<LinkedWith>() && item.GetComponent<SelectedInInventory>())
+        // In case of last item shown has a linked gameobject, we hide it (except for glasses)
+        if (lastItemShown && lastItemShown.GetComponent<LinkedWith>() && !lastItemShown.name.Contains("Glasses"))
+            GameObjectManager.setGameObjectState(lastItemShown.GetComponent<LinkedWith>().link, false); // switch off the linked game object
+        lastItemShown = item;
+        if (item == null)
+            GameObjectManager.setGameObjectState(descriptionUI, false);
+        else
         {
-            // replace description UI by linked game Object (exception for glasses)
-            if (!item.name.Contains("Glasses"))
-            {
-                GameObjectManager.setGameObjectState(descriptionContent, false); // switch off the description
-                GameObjectManager.setGameObjectState(descriptionInfo, false); // switch off the info
-            }
-            GameObjectManager.setGameObjectState(item.GetComponent<LinkedWith>().link, true); // switch on the linked game object
-        }
+            // Shows title and description
+            GameObjectManager.setGameObjectState(descriptionUI, true);
+            descriptionTitle.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().itemName;
+            GameObjectManager.setGameObjectState(descriptionContent.transform.parent.gameObject, true); // switch on the description
+            descriptionContent.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().description;
+            GameObjectManager.setGameObjectState(descriptionInfo, true); // switch on the info
+            descriptionInfo.GetComponent<TextMeshProUGUI>().text = item.GetComponent<Collected>().info;
 
-        // if item to display is not the last selection but this last selection is linked with antoher game object => we hide linked game object
-        // of the last selection to avoid superpositions (except for glasses)
-        if (item != lastSelection && lastSelection && lastSelection.GetComponent<LinkedWith>() && !lastSelection.name.Contains("Glasses"))
-            GameObjectManager.setGameObjectState(lastSelection.GetComponent<LinkedWith>().link, false); // switch off the linked game object
+            // Check if the item is linked and selected
+            if (item.GetComponent<LinkedWith>())
+            {
+                if (item.GetComponent<SelectedInInventory>())
+                {
+                    // replace description UI by linked game Object (exception for glasses)
+                    if (!item.name.Contains("Glasses"))
+                    {
+                        GameObjectManager.setGameObjectState(descriptionContent.transform.parent.gameObject, false); // switch off the description
+                        GameObjectManager.setGameObjectState(descriptionInfo, false); // switch off the info
+                    }
+                    GameObjectManager.setGameObjectState(item.GetComponent<LinkedWith>().link, true); // switch on the linked game object
+                }
+                else
+                    GameObjectManager.setGameObjectState(item.GetComponent<LinkedWith>().link, false); // switch off the linked game object
+            }
+        }
     }
 
     // Use this to update member variables when system resume.
@@ -175,44 +186,74 @@ public class IARViewItem : FSystem {
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
-        // mouse click management
-        if (Input.GetButtonDown("Fire1"))
+        if (lastfocusedItem != EventSystem.current.currentSelectedGameObject)
         {
-            // We parse all viewed game object (only once)
-            foreach (GameObject go in f_viewed)
+            if (EventSystem.current.currentSelectedGameObject && EventSystem.current.currentSelectedGameObject.tag == "InventoryElements")
             {
-                // we toggle animation
-                AnimatedSprites animation = go.GetComponent<AnimatedSprites>();
-                animation.animate = !animation.animate;
-                // get second child
-                Transform secondChild = go.transform.GetChild(1);
-                if (secondChild && secondChild.gameObject.tag == "IARItemSelected")
-                    GameObjectManager.setGameObjectState(secondChild.gameObject, !secondChild.gameObject.activeSelf);
-                // we manage SelectedInInventory component
-                if (go.GetComponent<SelectedInInventory>())
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOff", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "deactivated", objectType = "item", objectName = go.name });
-
-                    GameObjectManager.removeComponent<SelectedInInventory>(go);
-
-                    // this game object is unselected and it contains a linked game object => we hide the linked game object
-                    if (go.GetComponent<LinkedWith>())
-                        GameObjectManager.setGameObjectState(go.GetComponent<LinkedWith>().link, false); // switch off the view of the last selection
-                }
-                else
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "activated", objectType = "item", objectName = go.name });
-
-                    GameObjectManager.addComponent<SelectedInInventory>(go);
-                }
+                showDescription(EventSystem.current.currentSelectedGameObject);
+                lastfocusedItem = EventSystem.current.currentSelectedGameObject;
+            }
+            else if (f_selected.Count > 0)
+            {
+                showDescription(f_selected.getAt(f_selected.Count - 1));
+                lastfocusedItem = f_selected.getAt(f_selected.Count - 1);
+            }
+            else
+            {
+                showDescription(null);
+                lastfocusedItem = EventSystem.current.currentSelectedGameObject;
             }
         }
+        if (lastfocusedItem == null || (!lastfocusedItem.activeInHierarchy && isChildOfDescription(lastfocusedItem)))
+        {
+            EventSystem.current.SetSelectedGameObject(f_tabs.First()); // If new focused item is not active in hierarchy, we give to EventSystem the first element in IAR Tab (appears on keyboard navigation when player moves from unselected item to description scroll bar, in this case description will be hidden and keyboard navigation is braken).
+        }
+
 
         foreach (GameObject go in f_selectedItem)
         {
             go.transform.Rotate(Vector3.back, Time.deltaTime * 10f);
         }
+    }
+
+    public void ToggleItem(GameObject item) // called from EventWrapper
+    {
+        // we toggle animation
+        AnimatedSprites animation = item.GetComponent<AnimatedSprites>();
+        animation.animate = !animation.animate;
+        // get second child
+        Transform secondChild = item.transform.GetChild(1);
+        if (secondChild && secondChild.gameObject.tag == "IARItemSelected")
+            GameObjectManager.setGameObjectState(secondChild.gameObject, !secondChild.gameObject.activeSelf);
+        // we manage SelectedInInventory component
+        if (item.GetComponent<SelectedInInventory>())
+        {
+            GameObjectManager.addComponent<ActionPerformed>(item, new { name = "turnOff", performedBy = "player" });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(item, new { verb = "deactivated", objectType = "item", objectName = item.name });
+
+            GameObjectManager.removeComponent<SelectedInInventory>(item);
+            GameObjectManager.addComponent<PlaySound>(item, new { id = 14 }); // id refer to FPSController AudioBank
+
+            // this game object is unselected and it contains a linked game object => we hide the linked game object
+            if (item.GetComponent<LinkedWith>())
+                GameObjectManager.setGameObjectState(item.GetComponent<LinkedWith>().link, false); // switch off the view of the last selection
+        }
+        else
+        {
+            GameObjectManager.addComponent<ActionPerformed>(item, new { name = "turnOn", performedBy = "player" });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(item, new { verb = "activated", objectType = "item", objectName = item.name });
+
+            GameObjectManager.addComponent<SelectedInInventory>(item);
+            GameObjectManager.addComponent<PlaySound>(item, new { id = 13 }); // id refer to FPSController AudioBank
+        }
+    }
+
+    private bool isChildOfDescription(GameObject go)
+    {
+        if (go.tag == "DescriptionUI")
+            return true;
+        else if (go.transform.parent)
+            return isChildOfDescription(go.transform.parent.gameObject);
+        else return false;
     }
 }

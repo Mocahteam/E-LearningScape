@@ -3,6 +3,7 @@ using FYFY;
 using UnityEngine.UI;
 using UnityEngine.PostProcessing;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class MenuSystem : FSystem {
 
@@ -16,6 +17,7 @@ public class MenuSystem : FSystem {
     private Family f_reflectionProbe = FamilyManager.getFamily(new AllOfComponents(typeof(ReflectionProbe)));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_windowNavigator = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)));
+    private Family f_enabledSettingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private Camera menuCamera;
     private float switchDelay = 12;
@@ -92,9 +94,24 @@ public class MenuSystem : FSystem {
 
             // Init timer
             switchTimer = Time.time;
+
+            f_enabledSettingsMenu.addEntryCallback(onSettingMenuEnabled);
         }
 
         instance = this;
+    }
+
+    // WindowNavigation manages UI windows displaying but due to Fyfy delay on GameObjectManager.setGameObjectState, EventSystem doesn't display properly the current UI element. We have to select again the current UI.
+    private void onSettingMenuEnabled(GameObject go)
+    {
+        WindowNavigator smm = go.GetComponent<WindowNavigator>();
+        // force currentSelectedGameObject to be reinitialized
+        GameObject currentSelection = EventSystem.current.currentSelectedGameObject;
+        EventSystem.current.SetSelectedGameObject(null);
+        if (currentSelection == null || currentSelection.activeInHierarchy == false)
+            EventSystem.current.SetSelectedGameObject(smm.defaultUiInWindow);
+        else
+            EventSystem.current.SetSelectedGameObject(currentSelection);
     }
 
     // Use this to update member variables when system resume.
@@ -182,7 +199,7 @@ public class MenuSystem : FSystem {
         {
             WindowNavigator wn = settingsMainMenu.GetComponent<WindowNavigator>();
             wn.parent = IARMenuContent; //parent window is MenuContent in IAR
-            wn.defaultUiInWindow = wn.parent.transform.GetChild(2).gameObject;
+            wn.defaultUiInParent = wn.parent.transform.GetChild(2).gameObject;
         }
 
         GameObjectManager.addComponent<PlaySound>(mainMenu, new { id = 4 }); // id refer to FPSController AudioBank
