@@ -17,8 +17,6 @@ public class IARTabNavigation : FSystem {
     private Family f_HUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
 
-    private Family f_quitEnigma = FamilyManager.getFamily(new AnyOfTags("QuitEnigma"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-
     private Sprite selectedTabSprite;
     private Sprite defaultTabSprite;
 

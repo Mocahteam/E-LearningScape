@@ -67,7 +67,7 @@ public class DreamFragmentCollecting : FSystem {
                     GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
                     GameObjectManager.setGameObjectState(dfUI, true);
                     tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
-                    GameObjectManager.setGameObjectState(onlineButton, tmpDFComponent.urlLink != "");
+                    GameObjectManager.setGameObjectState(onlineButton, tmpDFComponent.urlLink != null && tmpDFComponent.urlLink != "");
                     // Set UI text depending on type and id
                     if (tmpDFComponent.type == 0)
                         FragmentText.text = string.Concat("Ouvrez le fragment de rêve numéro ", tmpDFComponent.id);

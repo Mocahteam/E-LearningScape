@@ -6,31 +6,12 @@ using System.Collections.Generic;
 
 public class SettingsManager : FSystem {
     
-    //creation de famille qui recupere tous les components type Accessibility_settings
-    //private Family needUpdateFont_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFont), typeof(Accessibility_settings)));
-    private Family needUpdateDefaultSetting_f = FamilyManager.getFamily(new AnyOfComponents(typeof(Slider), typeof(Toggle)), new AllOfComponents(typeof(DefaultValueSetting)));
-    
-    //private Family needUpdateFontSize_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateFontSize)));
-    //private Family needUpdateValueSlider_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateValueSlider)));
-
+    private Family DefaultSetting_f = FamilyManager.getFamily(new AnyOfComponents(typeof(Slider), typeof(Toggle)), new AllOfComponents(typeof(DefaultValueSetting)));
     private Family UIColorAlpha_f = FamilyManager.getFamily(new AnyOfTags("UIBackground", "DreamFragmentUI", "Q-R1", "Q-R2", "Q-R3"), new AllOfComponents(typeof(Image)));
-   // private Family needUpdateColorAlpha_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateOpacity)));
-
-    //creation de famille qui recupere tous les components type Text; TextMeshPro et TextMeshProUGUI
     private Family text_f = FamilyManager.getFamily(new AnyOfComponents (typeof(TextMeshPro), typeof(TextMeshProUGUI)));
-    //private Family textWithMax_f = FamilyManager.getFamily(new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)), new AllOfComponents(typeof(MaxFontSize)));
-    
-    //private Family needUpdateAnimation_f = FamilyManager.getFamily(new AllOfComponents(typeof(UpdateAnimation), typeof(Accessibility_settings)));
     private Family AnimatedObject_f = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites)), new NoneOfTags("InventoryElements", "UIEffect"));
 
     private Family UICursorSize_f = FamilyManager.getFamily(new AnyOfTags("CursorImage"));
-    //private Family needUpdateCursorSize_f = FamilyManager.getFamily(new AllOfComponents(typeof(CursorSize)));
-
-    //Ne comprend que ce qui a le tag DreamFragmentUI
-    private Family checkTags_f = FamilyManager.getFamily(new AnyOfTags("NewItemFeedback"));
-
-    private GameObject CursorUI;
-    private GameObject CursorImage;
 
     public static SettingsManager instance = null;
 
@@ -38,34 +19,13 @@ public class SettingsManager : FSystem {
     {
         if (Application.isPlaying)
         {
-            /*needUpdateFont_f.addEntryCallback(onNeedUpdateFont); //Ecouteur qui regarde quand un nouvel element rentre dans la famille et dans ce cas appel la méthode onNeedUpdate
-            needUpdateFontSize_f.addEntryCallback(onNeedUpdateFontSize); //A chaque fois qu'on touche à la sliderBar taille police, on est rentré dans la famille needUpdateFontSize_f
-            needUpdateValueSlider_f.addEntryCallback(onNeedUpdateResetValueSlider);
-            needUpdateColorAlpha_f.addEntryCallback(onNeedUpdateAlpha);
-            needUpdateAnimation_f.addEntryCallback(onNeedUpdateAnimation);
-            needUpdateCursorSize_f.addEntryCallback(onNeedneedUpdateCursorSize_f);
-
-            foreach (GameObject go in needUpdateDefaultSetting_f)
+            foreach (GameObject go in DefaultSetting_f)
             {
                 if (go.GetComponent<Slider>())
                     go.GetComponent<DefaultValueSetting>().defaultValue = go.GetComponent<Slider>().value;
                 else
                     go.GetComponent<DefaultValueSetting>().defaultValue = go.GetComponent<Toggle>().isOn ? 1 : 0;
             }
-
-            foreach (GameObject go in textWithMax_f)
-            {
-				go.GetComponent<MaxFontSize> ().defaultMaxSize = go.GetComponent<TMP_Text> ().fontSizeMax; 
-            }
-            
-            
-            Debug.Log("Tag Filter Start");
-            foreach (GameObject go in UIColorAlpha_f)
-            {
-                Debug.Log(go.name);
-            }
-            Debug.Log("Tag Filter End");*/
-
             instance = this;
         }
     }
@@ -121,36 +81,14 @@ public class SettingsManager : FSystem {
             objAnimated.GetComponent<AnimatedSprites>().animate = newState;
     }
 
-    /*
-
-    //If we click on back value button in setting menu, we come back at default value on slider  
-    private void onNeedUpdateResetValueSlider(GameObject go)
+    public void ResetDefaultValues()
     {
-        DefaultValueSetting vsl;
-        foreach(GameObject backDefaultValue in needUpdateDefaultSetting_f)
+        foreach (GameObject go in DefaultSetting_f)
         {
-            if (backDefaultValue.GetComponent<Slider>())
-            {
-                Slider newVal = backDefaultValue.GetComponent<Slider>();
-                vsl = backDefaultValue.GetComponent<DefaultValueSetting>();
-                newVal.value = vsl.defaultValue;
-            }
-            else
-            {
-                Toggle newVal = backDefaultValue.GetComponent<Toggle>();
-                vsl = backDefaultValue.GetComponent<DefaultValueSetting>();
-                newVal.isOn = vsl.defaultValue != 0;
-            }
-
-
+            if (go.GetComponent<Slider>())
+                go.GetComponent<Slider>().value = go.GetComponent<DefaultValueSetting>().defaultValue;
+            else if (go.GetComponent<Toggle>())
+                go.GetComponent<Toggle>().isOn = go.GetComponent<DefaultValueSetting>().defaultValue != 0;
         }
-        GameObjectManager.removeComponent<UpdateValueSlider>(go);
-    }
-
-    */
-    // Use to process your families.
-    protected override void onProcess(int familiesUpdateCount)
-    {
-        
     }
 }

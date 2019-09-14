@@ -12,7 +12,6 @@ public class IARNewItemAvailable : FSystem {
     private Family f_newItemOver = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(PointerOver)));
     private Family f_inventoryWarning = FamilyManager.getFamily(new AnyOfTags("InventoryWarning"));
 
-    private bool warningNewItem = true;
     private bool HUD_neverDisplayed = true;
 
     private Dictionary<int, GameObject> id2Go;

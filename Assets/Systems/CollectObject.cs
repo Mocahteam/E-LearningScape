@@ -18,17 +18,13 @@ public class CollectObject : FSystem {
     private GameObject seenScroll;
 
     private GameObject itemCollectedNotif;
-    private bool animateItem;
     private float timeStart;
-    private Vector3 targetPosition;
 
     public CollectObject()
     {
         if (Application.isPlaying)
         {
             itemCollectedNotif = f_HUD_A.First().transform.parent.GetChild(6).gameObject;
-            targetPosition = f_HUD_A.First().transform.position;
-            animateItem = false;
         }
         instance = this;
     }

@@ -117,4 +117,9 @@ public class EventWrapper : MonoBehaviour {
     {
         MovingSystem.instance.SetWalkSpeed(newSpeed);
     }
+
+    public void ResetDefaultValues()
+    {
+        SettingsManager.instance.ResetDefaultValues();
+    }
 }
