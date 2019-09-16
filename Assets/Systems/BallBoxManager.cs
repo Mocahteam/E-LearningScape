@@ -179,7 +179,7 @@ public class BallBoxManager : FSystem {
                     //remove key from inventory
                     GameObjectManager.setGameObjectState(keySelected(), false);
                     // trace
-                    GameObjectManager.addComponent<ActionPerformed>(boxPadlock, new { name = "perform", performedBy = "system" });
+                    GameObjectManager.addComponent<ActionPerformed>(boxPadlock.GetComponentInChildren<ComponentMonitoring>().gameObject, new { name = "perform", performedBy = "system" });
                     GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "unlocked", objectType = "interactable", objectName = selectedBox.name });
                     unlocked = true;
                 }

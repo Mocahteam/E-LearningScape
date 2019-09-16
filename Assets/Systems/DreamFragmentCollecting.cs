@@ -81,7 +81,7 @@ public class DreamFragmentCollecting : FSystem {
 
                     GameObjectManager.addComponent<PlaySound>(selectedFragment, new { id = 3 }); // id refer to FPSController AudioBank
 
-                    if (selectedFragment.transform.parent.gameObject.tag == "Chair" && selectedFragment.transform.parent.gameObject.GetComponent<IsSolution>())
+                    if (selectedFragment.GetComponentInParent<IsSolution>())
                     {
                         if(f_player.First().transform.localScale.x < 0.9f)
                             //if the player is crouching

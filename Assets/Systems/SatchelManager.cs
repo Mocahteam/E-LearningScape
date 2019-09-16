@@ -174,7 +174,7 @@ public class SatchelManager : FSystem {
                 bagAnimator.SetTrigger("unlock"); // launch animation to unlock the padlock
                 //remove key from inventory
                 GameObjectManager.setGameObjectState(isSelected("KeySatchel"), false);
-                GameObjectManager.addComponent<ActionPerformed>(bagPadlock, new { name = "perform", performedBy = "system" });
+                GameObjectManager.addComponent<ActionPerformed>(bagPadlock.GetComponentInChildren<ComponentMonitoring>().gameObject, new { name = "perform", performedBy = "system" });
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBag, new { verb = "unlocked", objectType = "interactable", objectName = selectedBag.name });
                 unlocked = true;
                 paperOpenning = true;
