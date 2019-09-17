@@ -669,7 +669,9 @@ public class LoadGameContent : FSystem {
 
         // Load InternalHints config files
         InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
-        LoadJsonFile(gameContent.internalHintsPath, defaultGameContent.hintsJsonFile, out internalGameHints.dictionary);
+        Debug.Log("Internal hints1 loaded");
+        LoadJsonFile(gameContent.internalHintsPath, defaultGameContent.internalHintsJsonFile, out internalGameHints.dictionary);
+        Debug.Log("Internal hints2 loaded");
         if (internalGameHints.dictionary == null)
             internalGameHints.dictionary = new Dictionary<string, Dictionary<string, List<string>>>();
         Debug.Log("Internal hints loaded");

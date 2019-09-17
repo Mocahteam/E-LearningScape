@@ -31,19 +31,6 @@ public class IARHintManager : FSystem {
     private Button selectedHint = null;
 
     /// <summary>
-    /// color of a hint button
-    /// </summary>
-    private ColorBlock colorHint;
-    /// <summary>
-    /// color of a new hint button
-    /// </summary>
-    private ColorBlock colorNewHint;
-    /// <summary>
-    /// color of the selected hint button
-    /// </summary>
-    private ColorBlock colorSelectedHint;
-
-    /// <summary>
     /// Description of the selected hint in IAR (right part of help tab in IAR)
     /// </summary>
     private TextMeshProUGUI hintTitle;
@@ -83,27 +70,6 @@ public class IARHintManager : FSystem {
             hintTitle = f_description.First().transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             hintText = f_description.First().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             hintLinkButton = f_description.First().transform.GetChild(2).GetComponent<Button>();
-
-            //set hint button colors values
-            colorHint = new ColorBlock();
-            colorHint.normalColor = new Color(200, 200, 200, 255) / 256;
-            colorHint.highlightedColor = new Color(200, 200, 235, 255) / 256;
-            colorHint.pressedColor = new Color(150, 150, 150, 255) / 256;
-            colorHint.disabledColor = new Color(130, 130, 130, 130) / 256;
-            colorHint.colorMultiplier = 1;
-            colorNewHint = ColorBlock.defaultColorBlock;
-            /*colorNewHint.normalColor = new Color(254, 255, 189, 255) / 256;
-            colorNewHint.highlightedColor = new Color(248, 255, 137, 255) / 256;
-            colorNewHint.pressedColor = new Color(199, 192, 98, 255) / 256;
-            colorNewHint.disabledColor = new Color(253, 255, 137, 128) / 256;
-            colorNewHint.colorMultiplier = 1;*/
-            colorSelectedHint = ColorBlock.defaultColorBlock;
-            colorSelectedHint = new ColorBlock();
-            colorSelectedHint.normalColor = new Color(254, 255, 189, 255) / 256;
-            colorSelectedHint.highlightedColor = new Color(248, 255, 137, 255) / 256;
-            colorSelectedHint.pressedColor = new Color(199, 192, 98, 255) / 256;
-            colorSelectedHint.disabledColor = new Color(253, 255, 137, 128) / 256;
-            colorSelectedHint.colorMultiplier = 1;
         }
         instance = this;
     }
@@ -173,7 +139,6 @@ public class IARHintManager : FSystem {
     {
         Button hintButton = newHint.GetComponent<Button>();
         hintButton.onClick.AddListener(delegate { OnClickHint(hintButton); });
-        hintButton.colors = colorNewHint;
         hintCounter++;
         newHint.transform.GetChild(0).GetComponent<TMP_Text>().text += " " + hintCounter;
 
@@ -199,9 +164,18 @@ public class IARHintManager : FSystem {
     /// <param name="b">The clicked button</param>
     private void OnClickHint(Button b)
     {
+
+        ColorBlock colorSelectedHint = new ColorBlock();
+        colorSelectedHint.highlightedColor = b.colors.highlightedColor;
+        colorSelectedHint.pressedColor = b.colors.pressedColor;
+        colorSelectedHint.disabledColor = b.colors.disabledColor;
+        colorSelectedHint.colorMultiplier = b.colors.colorMultiplier;
+        colorSelectedHint.normalColor = new Color(254, 255, 189, 255) / 256;
+
         if (selectedHint)
-            //change the color of the previousliy selected button
-            selectedHint.colors = colorHint;
+            //change the color of the previously selected button
+            selectedHint.colors = colorSelectedHint;
+
 
         selectedHint = b;
         selectedHint.colors = colorSelectedHint;
