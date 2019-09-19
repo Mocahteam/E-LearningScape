@@ -20,8 +20,14 @@ public class SoundEffectManager : FSystem {
             f_Sounds.addEntryCallback(onNewSoundToPlay);
 
             foreach (GameObject go in f_buttons)
-                go.GetComponent<Button>().onClick.AddListener(delegate { onButtonClick(go); });
+                addActionListener(go);
+            f_buttons.addEntryCallback(addActionListener);
         }
+    }
+
+    private void addActionListener(GameObject go)
+    {
+        go.GetComponent<Button>().onClick.AddListener(delegate { onButtonClick(go); });
     }
 
     void onButtonClick(GameObject go)

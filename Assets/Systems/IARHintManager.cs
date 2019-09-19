@@ -86,16 +86,21 @@ public class IARHintManager : FSystem {
                 {
                     bool endActionReachable = MonitoringManager.getNextActionsToReachPlayerObjective(MonitoringManager.Instance.PetriNetsName[hc.monitor.fullPnSelected], int.MaxValue).Count > 0;
 
-                    bool stillReachable = false;
-                    if (endActionReachable)
-                        stillReachable = hc.monitor.isStillReachable(hc.actionName);
-
-                    if (!endActionReachable || !stillReachable)
+                    try
                     {
-                        // remove the button
-                        GameObjectManager.unbind(hint);
-                        GameObject.Destroy(hint);
+                        bool stillReachable = false;
+                        if (endActionReachable)
+                            stillReachable = hc.monitor.isStillReachable(hc.actionName);
+
+                        if (!endActionReachable || !stillReachable)
+                        {
+                            // remove the button
+                            GameObjectManager.unbind(hint);
+                            GameObject.Destroy(hint);
+                        }
                     }
+                    catch(TraceAborted ta)
+                    { }
                 }
             }
             needRefresh = false;
@@ -170,7 +175,7 @@ public class IARHintManager : FSystem {
         colorSelectedHint.pressedColor = b.colors.pressedColor;
         colorSelectedHint.disabledColor = b.colors.disabledColor;
         colorSelectedHint.colorMultiplier = b.colors.colorMultiplier;
-        colorSelectedHint.normalColor = new Color(254, 255, 189, 255) / 256;
+        colorSelectedHint.normalColor = new Color(175, 175, 175, 255) / 256;
 
         if (selectedHint)
             //change the color of the previously selected button

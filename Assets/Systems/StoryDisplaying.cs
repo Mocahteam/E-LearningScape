@@ -197,7 +197,6 @@ public class StoryDisplaying : FSystem {
                         SpritesAnimator.instance.Pause = false;
                         DreamFragmentCollecting.instance.Pause = false;
                         IARNewItemAvailable.instance.Pause = false;
-                        IARNewHintAvailable.instance.Pause = false;
                         Highlighter.instance.Pause = false;
                         MirrorSystem.instance.Pause = false;
                         ToggleObject.instance.Pause = false;

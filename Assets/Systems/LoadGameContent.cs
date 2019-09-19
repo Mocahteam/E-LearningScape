@@ -662,16 +662,16 @@ public class LoadGameContent : FSystem {
         LoadJsonFile(gameContent.hintsPath, defaultGameContent.hintsJsonFile, out gameHints.dictionary);
         if (gameHints.dictionary == null)
             gameHints.dictionary = new Dictionary<string, Dictionary<string, List<KeyValuePair<string, string>>>> ();
+        Debug.Log("Hints loaded");
+        // Load Wrong answer feedback
         LoadJsonFile(gameContent.wrongAnswerFeedbacksPath, defaultGameContent.wrongAnswerFeedbacks, out gameHints.wrongAnswerFeedbacks);
         if (gameHints.wrongAnswerFeedbacks == null)
             gameHints.wrongAnswerFeedbacks = new Dictionary<string, Dictionary<string, KeyValuePair<string, string>>>();
-        Debug.Log("Hints loaded");
+        Debug.Log("Wrong answer feedback loaded");
 
         // Load InternalHints config files
         InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
-        Debug.Log("Internal hints1 loaded");
         LoadJsonFile(gameContent.internalHintsPath, defaultGameContent.internalHintsJsonFile, out internalGameHints.dictionary);
-        Debug.Log("Internal hints2 loaded");
         if (internalGameHints.dictionary == null)
             internalGameHints.dictionary = new Dictionary<string, Dictionary<string, List<string>>>();
         Debug.Log("Internal hints loaded");

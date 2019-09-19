@@ -4,11 +4,9 @@ using FYFY;
 public class IARNewHintAvailable : FSystem {
 
     private Family f_newHint = FamilyManager.getFamily(new AllOfComponents(typeof(NewHint)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
-    private Family f_helpWarning = FamilyManager.getFamily(new AnyOfTags("HelpWarning"));
-    private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_tabContent = FamilyManager.getFamily(new AnyOfTags("HelpTabContent"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_helpNotif = FamilyManager.getFamily(new AllOfComponents(typeof(HelpFlag)));
 
-    private GameObject helpWarning;
-    private bool HUD_neverDisplayed = true;
 
     public static IARNewHintAvailable instance;
 
@@ -16,40 +14,21 @@ public class IARNewHintAvailable : FSystem {
     {
         if (Application.isPlaying)
         {
-            helpWarning = f_helpWarning.First();
+            f_newHint.addEntryCallback(onNewHintAvailable);
+            f_tabContent.addExitCallback(onExitHintPanel);
         }
         instance = this;
     }
 
-	// Use to process your families.
-	protected override void onProcess(int familiesUpdateCount) {
-        // f_helpWarning will be empty if monitoring module is not enabled in config file => then pause this system
-        if (f_helpWarning.Count <= 0)
-            this.Pause = true;
-        else
-        {
-            if (f_newHint.Count > 0 && HUD_neverDisplayed && f_iarBackground.Count <= 0)
-            {
-                // enable parent
-                GameObjectManager.setGameObjectState(f_helpWarning.First().transform.parent.gameObject, true);
-                HUD_neverDisplayed = false;
-            }
+    private void onNewHintAvailable(GameObject go)
+    {
+        if (f_tabContent.Count == 0)
+            GameObjectManager.setGameObjectState(f_helpNotif.First(), true);
+    }
 
-            if (f_newHint.Count > 0 && helpWarning.transform.parent.gameObject.activeSelf)
-            {
-                if (Time.time - (int)Time.time > 0.5f && !helpWarning.activeSelf)
-                {
-                    // display warning
-                    GameObjectManager.setGameObjectState(helpWarning, true);
-                }
-                else if (Time.time - (int)Time.time < 0.5f && helpWarning.activeSelf)
-                {
-                    // disable warning
-                    GameObjectManager.setGameObjectState(helpWarning, false);
-                }
-            }
-            else if (helpWarning.activeSelf)
-                GameObjectManager.setGameObjectState(helpWarning, false);
-        }
-	}
+    private void onExitHintPanel(int InstanceId)
+    {
+        if (f_newHint.Count > 0)
+            GameObjectManager.setGameObjectState(f_helpNotif.First(), true);
+    }
 }

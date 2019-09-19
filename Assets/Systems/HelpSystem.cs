@@ -24,7 +24,6 @@ public class HelpSystem : FSystem {
     private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
     private Family f_wrongAnswerInfo = FamilyManager.getFamily(new AllOfComponents(typeof(WrongAnswerInfo), typeof(ComponentMonitoring)));
     private Family f_IARTab = FamilyManager.getFamily(new AnyOfTags("IARTab"));
-    private Family f_HUD_H = FamilyManager.getFamily(new AnyOfTags("HUD_H"));
 
     private Family f_puzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)), new AllOfComponents(typeof(ComponentMonitoring)));
     private Family f_puzzlesFragment = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new AllOfComponents(typeof(DreamFragment), typeof(ComponentMonitoring)));
@@ -149,7 +148,6 @@ public class HelpSystem : FSystem {
                 InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
 
                 //add internal game hints to the dictionary of the component GameHints
-                //if the key2 already exists in gameHints.dictionary and gameHints.dictionary[key1][key2].Value isn't empty internalGameHints.dictionary[key1][key2] isn't added
                 foreach (string key1 in internalGameHints.dictionary.Keys)
                 {
                     if (!gameHints.dictionary.ContainsKey(key1))
@@ -270,9 +268,6 @@ public class HelpSystem : FSystem {
             }
             else
             {
-                // Remove HUD H
-                GameObjectManager.unbind(f_HUD_H.First());
-                GameObject.Destroy(f_HUD_H.First());
                 // Disable IAR tab
                 GameObject tmpGO = null;
                 for (int i = 0; i < f_IARTab.Count; i++)
@@ -542,7 +537,8 @@ public class HelpSystem : FSystem {
                 if (key.EndsWith("."+cm.id))
                 {
                     // We found a feedback for this ComponentMonitoring => Parse all wrong answers defined to check if it is part of player answer
-                    foreach(string wrongAnswer in gameHints.wrongAnswerFeedbacks[key].Keys)
+                    List<string> keys = new List<string>(gameHints.wrongAnswerFeedbacks[key].Keys);
+                    foreach (string wrongAnswer in keys)
                     {
                         // Parse all wrong answers given by the player
                         foreach (WrongAnswerInfo wai in go.GetComponents<WrongAnswerInfo>())
@@ -782,7 +778,7 @@ public class HelpSystem : FSystem {
             activityExtensions = new Dictionary<string, List<string>>() {
                     { "type", new List<string>() { "hint" } },
                     { "from", new List<string>() { playerAskedHelp ? "button" : "system" } },
-                    { "content", new List<string>() { hintButton.GetComponent<HintContent>().text } }
+                    { "content", new List<string>() { tmpHC.text } }
                 }
         });
 
@@ -791,10 +787,6 @@ public class HelpSystem : FSystem {
         else
             systemHintTimer = Time.time;
 
-        //change subtitle text to display the hint
-        //subtitles.text = tmpPair.Value[(int)UnityEngine.Random.Range(0, nbHintTexts - 0.01f)];
-        //GameObjectManager.setGameObjectState(subtitles.gameObject, true);
-        //subtitlesTimer = Time.time;
         return hintButton;
     }
 

@@ -3,14 +3,23 @@ using System.Collections.Generic;
 using System;
 
 [Serializable]
-public class InternalGameHints : MonoBehaviour {
+public class InternalGameHints : MonoBehaviour
+{
     // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
 
     /// <summary>
-    /// Dictionary used to store hints
-    /// The first key is a string of the format "x.y.z" with x the room number, y the name of the hint and z the ComponentMonitoring id
-    /// The second key is the feedback level
-    /// Once a hint is identified, a list of different way to formulate the hint is given
+    /// The dictionary has to follow this pattern:
+    /// "[ComponentMonitoringId].[rdpActionName]": {
+	/// 	"Comment": ["Human text to easily identify the game object associted to these hints"],
+	/// 	"options": [
+	/// 		"?? => means force hint to display",
+	/// 		"-- => means force hint to destroy"
+	/// 	],
+	/// 	"[hintLevel]": [
+	/// 		"hint content 1",
+	/// 		"hint content 2"
+	/// 	]
+    /// }
     /// </summary>
     public Dictionary<string, Dictionary<string, List<string>>> dictionary;
 }

@@ -24,7 +24,7 @@ public class CollectObject : FSystem {
     {
         if (Application.isPlaying)
         {
-            itemCollectedNotif = f_HUD_A.First().transform.parent.GetChild(6).gameObject;
+            itemCollectedNotif = f_HUD_A.First().transform.parent.GetChild(5).gameObject;
         }
         instance = this;
     }

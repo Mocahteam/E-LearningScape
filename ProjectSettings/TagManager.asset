@@ -65,7 +65,6 @@ TagManager:
   - BoardUnremovableWords
   - PlankNumbers
   - Chair
-  - HUD_H
   - HelpDescriptionUI
   - LoadingFragment
   - AskHelpButton

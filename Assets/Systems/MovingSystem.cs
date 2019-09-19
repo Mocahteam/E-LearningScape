@@ -13,11 +13,11 @@ public class MovingSystem : FSystem
     // This system manage HUD on moving, walking speed and state of the FirstPersonController
 
     private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController), typeof(AudioBank)));
-    private Family f_linkedHud = FamilyManager.getFamily(new AnyOfTags("DisableOnViewed", "EnableOnFirstCrouch", "HUD_H", "HUD_Menu"));
+    private Family f_linkedHud = FamilyManager.getFamily(new AnyOfTags("DisableOnViewed", "EnableOnFirstCrouch","HUD_Menu"));
     private Family f_endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_cursor = FamilyManager.getFamily(new AnyOfTags("Cursor"));
     private Family f_waterWalking = FamilyManager.getFamily(new AnyOfLayers(12), new AllOfComponents(typeof(Triggered3D))); // Layer 12 <=> WaterCollider
-    private Family f_HUDInputs = FamilyManager.getFamily(new AnyOfTags("DisableOnViewed", "EnableOnFirstCrouch", "HUD_A", "HUD_H", "HUD_Menu"));
+    private Family f_HUDInputs = FamilyManager.getFamily(new AnyOfTags("DisableOnViewed", "EnableOnFirstCrouch", "HUD_A", "HUD_Menu"));
     private Family f_CrouchHint = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver), typeof(LinkedWith), typeof(BoxCollider)));
     private Family f_OutOfFirstRoom = FamilyManager.getFamily(new AllOfComponents(typeof(Triggered3D), typeof(LinkedWith)));
 
@@ -180,6 +180,20 @@ public class MovingSystem : FSystem
             }
             else
                 walkingTraceTimer = Time.time;
+        }
+
+        if(Input.GetButton("ZoomIn"))
+        {
+            Camera.main.fieldOfView -= 1;
+            if (Camera.main.fieldOfView < 20)
+                Camera.main.fieldOfView = 20;
+        }
+
+        if (Input.GetButton("ZoomOut"))
+        {
+            Camera.main.fieldOfView += 1;
+            if (Camera.main.fieldOfView > 60)
+                Camera.main.fieldOfView = 60;
         }
 
         crouchingSpeed = 70f * Time.deltaTime;

@@ -73,14 +73,12 @@ public class IARTabNavigation : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         // Open/Close IAR with Escape and A keys
-        if (iar.activeInHierarchy && f_settings.Count == 0 && (Input.GetButtonDown("ToggleInventory") || (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause) || Input.GetButtonDown("Cancel") || (Input.GetButtonDown("Fire1") && iarBackground.GetComponent<PointerOver>())))
+        if (iar.activeInHierarchy && f_settings.Count == 0 && (Input.GetButtonDown("ToggleInventory") || Input.GetButtonDown("Cancel") || (Input.GetButtonDown("Fire1") && iarBackground.GetComponent<PointerOver>())))
             closeIar();
-        else if (!iar.activeInHierarchy && (Input.GetButtonDown("ToggleInventory") || (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause) || Input.GetButtonDown("Cancel")))
+        else if (!iar.activeInHierarchy && (Input.GetButtonDown("ToggleInventory") || Input.GetButtonDown("Cancel")))
         {
             if (Input.GetButtonDown("ToggleInventory"))
                 openIar(0); // Open IAR on the first tab
-            else if (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause)
-                openIar(f_tabs.Count - 2); // Open IAR on the second last tab
             else
                 // Open IAR on the last tab only if player doesn't work on selectable enigm (Escape enables to exit the enigm)
                 if (f_atWork.Count == 0)

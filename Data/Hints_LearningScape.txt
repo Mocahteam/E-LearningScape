@@ -1,13 +1,27 @@
 {
-	"[roomID].[hintName].[ComponentMonitoringId]": {
+	"[ComponentMonitoringId].[rdpActionName]": {
+		"Comment": [{"Key": "", "Value": "Human text to easily identify the game object associted to these hints"}],
+		"options": [
+			{"Key": "", "Value": "?? => means force hint to display"},
+			{"Key": "", "Value": "-- => means force hint to destroy"}
+		],
 		"[hintLevel]": [
 			{
-				"Key": "[myLink1]",
+				"Key": "[externalLink1]",
 				"Value": "hint content 1"
 			},
 			{
-				"Key": "[myLink2]",
+				"Key": "[externalLink2]",
 				"Value": "hint content 2"
+			}
+		]
+	},
+	"108.perform": {
+		"Comment": [{"Key": "", "Value": "The first in game Scroll"}],
+		"3": [
+			{
+				"Key": "http://google.fr",
+				"Value": "Je dois trouver un objet supplémentaire"
 			}
 		]
 	}
