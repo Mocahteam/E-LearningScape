@@ -1,11 +1,8 @@
 {
-  "questionXRoomX.9999": {
+  "[Human text to easily identify the game object].[ComponentMonitoringId]": {
     "givenAnswer": {
-      "Key": "myLink",
-      "Value": [
-        "feedback formulation 1",
-        "feedback formulation 2"
-      ]
+      "Key": "[external link]",
+      "Value": "feedback formulation 1"
     }
   }
 }

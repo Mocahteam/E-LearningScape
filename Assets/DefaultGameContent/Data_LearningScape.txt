@@ -43,7 +43,7 @@
 	],
 	"inventoryWire": [
 		"Corde",
-		"Cette corde n’est pas très longue mais elle semble assez solide et en bon état. Elle permet sans doute de lier des éléments ensembles.",
+		"Cette corde n’est pas très longue mais elle semble assez solide et en bon état. Elle permet sans doute de lier des éléments ensemble.",
 		"Cliquez sur la corde pour l'activer/la désactiver"
 	],
 	"inventoryKeySatchel": [
@@ -58,18 +58,18 @@
 	],
 	"inventoryGlasses1": [
 		"Lunette Filtrante",
-		"La branche droite d'une paire de lunette ? Il doit certainement manquer l’autre moitié... La lentille est tintée en rouge.",
+		"La branche droite d'une paire de lunettes ? Il doit certainement manquer l’autre moitié... La lentille est teintée en rouge.",
 		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
 	],
 	"inventoryGlasses2": [
 		"Lunette Filtrante",
-		"La branche gauche d'une paire de lunette ? Il doit certainement manquer l’autre moitié... La lentille est tintée en jaune.",
+		"La branche gauche d'une paire de lunettes ? Il doit certainement manquer l’autre moitié... La lentille est teintée en jaune.",
 		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
 	],
 	"inventoryMirror": [
-		"Mirroir",
+		"Miroir",
 		"Un miroir cylindrique constitué d'une seule pièce d'aluminium poli. Le reflet est d'une grande qualité.",
-		"Cliquez sur le mirroir pour l'activer/le désactiver"
+		"Cliquez sur le miroir pour l'activer/le désactiver"
 	],
 	"inventoryLamp": [
 		"Lumière noire",

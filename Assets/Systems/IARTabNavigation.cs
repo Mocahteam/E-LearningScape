@@ -17,7 +17,6 @@ public class IARTabNavigation : FSystem {
     private Family f_HUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
     private Family f_settings = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_settings2 = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AnyOfTags("UIBackground"));
 
     private Sprite selectedTabSprite;
     private Sprite defaultTabSprite;

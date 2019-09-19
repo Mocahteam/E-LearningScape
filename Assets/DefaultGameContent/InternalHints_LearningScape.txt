@@ -1,6 +1,6 @@
 {
 	"[ComponentMonitoringId].[rdpActionName]": {
-		"Comment": ["Human text to easily identify the game object associted to these hints"],
+		"Comment": ["Human text to easily identify the game object associated to these hints"],
 		"options": [
 			"?? => means force hint to display",
 			"-- => means force hint to destroy"

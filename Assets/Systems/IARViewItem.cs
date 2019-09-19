@@ -28,7 +28,6 @@ public class IARViewItem : FSystem {
 
     private Dictionary<int, GameObject> id2go;
 
-    private GameObject currentView = null;
     private GameObject lastSelection = null;
     private GameObject lastfocusedItem = null;
     private GameObject lastItemShown = null;

@@ -347,6 +347,7 @@ public class HelpSystem : FSystem {
         float resolutionDone = 0;
 
         mut.WaitOne(); // because pnNetsRemainingSteps is also modified in thread, we have to protect it during iterations
+
         foreach (KeyValuePair<string, int> entry in pnNetsRemainingSteps)
         {
             string pnName = entry.Key;
@@ -355,7 +356,8 @@ public class HelpSystem : FSystem {
             resolutionDone += ((requiredSteps - remainingSteps) / requiredSteps)*weights[pnName];
         }
         mut.ReleaseMutex();
-        float enigmaProgression = resolutionDone / totalWeightedMetaActions;
+
+         float enigmaProgression = resolutionDone / totalWeightedMetaActions;
 
         return enigmaProgression - timeProgression;
     }
