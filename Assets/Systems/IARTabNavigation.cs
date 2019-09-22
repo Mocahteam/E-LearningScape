@@ -28,6 +28,8 @@ public class IARTabNavigation : FSystem {
 
     private Dictionary<FSystem, bool> systemsStates;
 
+    public bool skipNextClose = false; // enbale to skip the next IAR close (see IARQueryEvaluator)
+
     public static IARTabNavigation instance;
 
     public IARTabNavigation()
@@ -47,20 +49,6 @@ public class IARTabNavigation : FSystem {
         instance = this;
     }
 
-    // Use this to update member variables when system pause. 
-    // Advice: avoid to update your families inside this function.
-    protected override void onPause(int currentFrame)
-    {
-        GameObjectManager.setGameObjectState(f_HUD.First(), false); // hide HUD
-    }
-
-    // Use this to update member variables when system resume.
-    // Advice: avoid to update your families inside this function.
-    protected override void onResume(int currentFrame)
-    {
-        GameObjectManager.setGameObjectState(f_HUD.First(), true); // show HUD
-    }
-
     private void onIarDisplayed(GameObject go)
     {
         // force EventSystem affectation
@@ -72,16 +60,20 @@ public class IARTabNavigation : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         // Open/Close IAR with Escape and A keys
-        if (iar.activeInHierarchy && f_settings.Count == 0 && (Input.GetButtonDown("ToggleInventory") || Input.GetButtonDown("Cancel") || (Input.GetButtonDown("Fire1") && iarBackground.GetComponent<PointerOver>())))
+        if (iar.activeInHierarchy && f_settings.Count == 0 && !skipNextClose && (Input.GetButtonDown("ToggleInventory") || Input.GetButtonDown("Cancel") || (Input.GetButtonDown("Fire1") && iarBackground.GetComponent<PointerOver>())))
             closeIar();
-        else if (!iar.activeInHierarchy && (Input.GetButtonDown("ToggleInventory") || Input.GetButtonDown("Cancel")))
+        else
         {
-            if (Input.GetButtonDown("ToggleInventory"))
-                openIar(0); // Open IAR on the first tab
-            else
-                // Open IAR on the last tab only if player doesn't work on selectable enigm (Escape enables to exit the enigm)
-                if (f_atWork.Count == 0)
+            skipNextClose = false;
+            if (!iar.activeInHierarchy && (Input.GetButtonDown("ToggleInventory") || Input.GetButtonDown("Cancel")))
+            {
+                if (Input.GetButtonDown("ToggleInventory"))
+                    openIar(0); // Open IAR on the first tab
+                else
+                    // Open IAR on the last tab only if player doesn't work on selectable enigm (Escape enables to exit the enigm)
+                    if (f_atWork.Count == 0)
                     openIar(f_tabs.Count - 1); // Open IAR on the last tab
+            }
         }
     }
 

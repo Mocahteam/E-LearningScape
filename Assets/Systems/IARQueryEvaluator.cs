@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using FYFY;
 using System.Collections.Generic;
 using TMPro;
@@ -18,6 +19,7 @@ public class IARQueryEvaluator : FSystem {
     private Family f_queriesRoom3 = FamilyManager.getFamily(new AnyOfTags("Q-R3"));
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
+    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
 
     public static IARQueryEvaluator instance;
 
@@ -33,7 +35,7 @@ public class IARQueryEvaluator : FSystem {
             foreach (GameObject query in f_queries)
             {
                 query.GetComponentInChildren<InputField>().onValidateInput += delegate (string input, int charIndex, char addedChar) {
-                    IARTabNavigation.instance.Pause = true; // pause IARTabNavigation to enable "A" and "H" tap
+                    IARTabNavigation.instance.Pause = true; // pause IARTabNavigation to enable "A" tap
                     return addedChar;
                 };
                 foreach (string or in query.GetComponent<QuerySolution>().orSolutions)
@@ -93,6 +95,8 @@ public class IARQueryEvaluator : FSystem {
     {
         if (Input.GetButtonDown("Submit"))
             IarCheckAnswer(query);
+        if (Input.GetButtonDown("Cancel"))
+            IARTabNavigation.instance.skipNextClose = true;
         IARTabNavigation.instance.Pause = false;
     }
 
@@ -154,6 +158,9 @@ public class IARQueryEvaluator : FSystem {
         {
             // notify player success
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 2 });
+
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(f_tabs.getAt(0));
 
             // set final answer for third room (due to OR options)
             if (query.tag == "Q-R3")
