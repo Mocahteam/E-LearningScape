@@ -208,8 +208,6 @@ public class HelpSystem : FSystem {
                     }
                 }
 
-                config.sessionDuration *= 60; //convert to seconds
-
                 weights = LoadGameContent.enigmasWeight;
                 //count the total weighted meta actions
                 foreach (string enigmaName in weights.Keys)
@@ -372,7 +370,17 @@ public class HelpSystem : FSystem {
             noActionTimer = Time.time;
             float progressionRatio = computeProgressionRatio();
             if (progressionRatio < 0) // means players are late
-                labelCount += labelWeights["stagnation"] / (1 - progressionRatio);
+            {
+                labelCount += (0.1f + labelWeights["stagnation"]) / (1 - progressionRatio);
+
+                //if labelCount reached the step calculate the feedback level and ask a hint and the time spent since the last time the system gave a feedback reached countLabel to know if it can give another one
+                if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration)
+                {
+                    DisplayHint();
+                    labelCount = 0;
+                }
+            }
+
         }
 
         //check the time spent since the last time the player asked help
@@ -425,10 +433,13 @@ public class HelpSystem : FSystem {
         int nbTraces = traces.Length;
         int nbLabels = -1;
 
-        //parse all traces
         for (int i = 0; i < nbTraces; i++)
         {
             tmpTrace = traces[i];
+
+            // get FamilyMonitoring from Family
+            if (tmpTrace.componentMonitoring == null && tmpTrace.family != null)
+                tmpTrace.componentMonitoring = MonitoringManager.Instance.getFamilyMonitoring(tmpTrace.family);
 
             // Check if hints are available for this trace
             Dictionary<string, List<KeyValuePair<string, string>>> hints;
@@ -466,9 +477,9 @@ public class HelpSystem : FSystem {
                 if (labelWeights.ContainsKey(tmpTrace.labels[j]))
                 {
                     if (progressionRatio != 0)
-                        labelCount += labelWeights[tmpTrace.labels[j]] / (1 - progressionRatio);
+                        labelCount += (0.1f+labelWeights[tmpTrace.labels[j]]) / (1 - progressionRatio);
                     else
-                        labelCount += labelWeights[tmpTrace.labels[j]];
+                        labelCount += 0.1f+labelWeights[tmpTrace.labels[j]];
                     //labelCount can't be negative
                     if (labelCount < 0)
                         labelCount = 0;
@@ -480,6 +491,7 @@ public class HelpSystem : FSystem {
 					}
                 }
             }
+
             GameObjectManager.removeComponent(tmpTrace);
         }
     }
@@ -546,7 +558,7 @@ public class HelpSystem : FSystem {
                         foreach (WrongAnswerInfo wai in go.GetComponents<WrongAnswerInfo>())
                         {
                             // Check if the current wrong answer is part of the player answer
-                            if (wai.givenAnswer.Contains(wrongAnswer))
+                            if (LoadGameContent.StringToAnswer(wai.givenAnswer).Contains(wrongAnswer))
                             {
                                 //display feedback in hint list in IAR
                                 string hintText = gameHints.wrongAnswerFeedbacks[key][wrongAnswer].Value;

@@ -8,13 +8,13 @@
   "farther": 0.4,
   "intrusion": 0.0,
   "leap-backward": 0.0,
-  "leap-forward": 0.0,
+  "leap-forward": -0.3,
   "missing": 0.6,
-  "non-optimal": 0,
+  "non-optimal": 0.0,
   "recovery": 0.0,
   "stagnation": 0.5,
-  "too-early": 1.0,
-  "too-late": 1.0,
+  "too-early": 0.0,
+  "too-late": 0.0,
   "unsynchronized": 0.0,
   "useless": 0.2
 }

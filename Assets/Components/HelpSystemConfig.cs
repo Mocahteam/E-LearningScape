@@ -4,7 +4,7 @@
 /// Class containing HelpSystem parameters
 /// </summary>
 public class HelpSystemConfig {
-    public float sessionDuration = 60; //in minutes
+    public float sessionDuration = 3600; //in seconds
 
     /// <summary>
     /// Time the player has to wait before being able to ask help again

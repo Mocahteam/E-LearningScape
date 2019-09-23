@@ -123,10 +123,11 @@ public class PlankAndWireManager : FSystem {
                 if (Input.GetButtonDown("Fire1") && currentFocusedWord)
                 {
                     //trace action depending on selection state
+                    string actionName = "turnOn";
                     if (currentFocusedWord.GetComponent<TextMeshPro>().color == Color.yellow)
-                        GameObjectManager.addComponent<ActionPerformed>(currentFocusedWord, new { name = "turnOff", performedBy = "player", family = currentFocusedWord.GetComponent<IsSolution>() ? null : f_wrongWords });
-                    else
-                        GameObjectManager.addComponent<ActionPerformed>(currentFocusedWord, new { name = "turnOn", performedBy = "player", family = currentFocusedWord.GetComponent<IsSolution>() ? null : f_wrongWords });
+                        actionName = "turnOff";
+                    GameObjectManager.addComponent<ActionPerformed>(currentFocusedWord, new { name = actionName, performedBy = "player", family = currentFocusedWord.GetComponent<IsSolution>() ? null : f_wrongWords });
+                    Debug.Log(currentFocusedWord.name + " " + currentFocusedWord.GetComponent<IsSolution>());
 
                     // if wire is selected
                     if (wireSelected())

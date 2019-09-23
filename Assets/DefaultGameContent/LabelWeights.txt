@@ -12,7 +12,7 @@
   "missing": 0.6,
   "non-optimal": 0,
   "recovery": 0.0,
-  "stagnation": 0.5,
+  "stagnation": 0.0,
   "too-early": 1.0,
   "too-late": 1.0,
   "unsynchronized": 0.0,
