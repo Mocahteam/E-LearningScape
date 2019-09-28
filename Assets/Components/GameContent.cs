@@ -36,6 +36,10 @@ public class GameContent {
     /// Else dream fragments will replace collectable puzzles
     /// </summary>
     public bool virtualPuzzle = true;
+    /// <summary>
+    /// If true, remove extra geaometries. This is an additionnal option for very poor hardware
+    /// </summary>
+    public bool removeExtraGeometries = true;
 
     //Paths for other config files
     #region Config Files Paths

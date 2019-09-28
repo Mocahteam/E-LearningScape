@@ -81,7 +81,7 @@ public class IARViewItem : FSystem {
         EventSystem.current.SetSelectedGameObject(go);
         GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
         {
-            verb = "View",
+            verb = "highlighted",
             objectType = "viewable",
             objectName = string.Concat(go.name, "_Description")
         });

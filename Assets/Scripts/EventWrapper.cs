@@ -127,4 +127,9 @@ public class EventWrapper : MonoBehaviour {
     {
         IARViewItem.instance.ToggleItem(go);
     }
+
+    public void OnDestroy()
+    {
+        HelpSystem.killThread = true;
+    }
 }

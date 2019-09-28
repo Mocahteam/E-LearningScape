@@ -128,8 +128,7 @@ public class HelpSystem : FSystem {
     /// Timeouts to inform thread this system is still processing. On the thread context we can't use this.Pause property because
     /// when the scene is reloaded the system is not paused and so the thread doesn't stop
     /// </summary>
-    private static int lastTimeout;
-    private static int currentTimeout;
+    public static bool killThread;
 
     /// <summary>
     /// contains HelpSystem parmeters
@@ -300,8 +299,7 @@ public class HelpSystem : FSystem {
                     pnNetsRemainingSteps[pnName] = MonitoringManager.getNextActionsToReachPlayerObjective(pnName, int.MaxValue).Count;
                     pnNetsRequiredStepsOnStart[pnName] = pnNetsRemainingSteps[pnName];
                 }
-                lastTimeout = -1;
-                currentTimeout = 0;
+                killThread = false;
                 thread = new Thread(updatePnCompletion);
                 thread.Start();
             }
@@ -313,9 +311,8 @@ public class HelpSystem : FSystem {
         try
         {
             int lastCount;
-            while (lastTimeout < currentTimeout)
+            while (!killThread) // see EventWrapper Monobehavior attached to MainLoop Game object
             {
-                lastTimeout = currentTimeout;
                 // Update each Petri net
                 List<string> pnNames = new List<string>(HelpSystem.instance.pnNetsRemainingSteps.Keys);
                 foreach (string pnName in pnNames)
@@ -362,8 +359,6 @@ public class HelpSystem : FSystem {
 
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount) {
-        currentTimeout = familiesUpdateCount;
-
         //increase labelCount if the player isn't doing anything
         if(Time.time - noActionTimer > config.noActionFrequency)
         {

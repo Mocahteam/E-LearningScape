@@ -2,8 +2,8 @@
     "theme": "Pédagogie",
     "trace": true,
     "helpSystem": true,
-    "traceToLRS": false,
-    "traceMovementFrequency": 0.25,
+    "traceToLRS": true,
+    "traceMovementFrequency": 0.5,
     "virtualPuzzle": true,
     "lrsConfigPath": "Data/LRSConfig.txt",
     "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
@@ -13,6 +13,7 @@
     "enigmasWeightPath": "Data/EnigmasWeight.txt",
     "labelWeightsPath": "Data/LabelWeights.txt",
     "helpSystemConfigPath": "Data/HelpSystemConfig.txt",
+	"removeExtraGeometries": false,
 	
 	"additionalLogosPath": [],
 	

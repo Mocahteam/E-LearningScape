@@ -61,7 +61,9 @@ public class LoadGameContent : FSystem {
     private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
 
     private Family f_inventoryElements = FamilyManager.getFamily(new AllOfComponents(typeof(Collected)));
-    
+
+    private Family f_extraGeometries = FamilyManager.getFamily(new AllOfComponents(typeof(RemoveIfVeryVeryLow)));
+
     public static GameContent gameContent;
     private DefaultGameContent defaultGameContent;
 
@@ -170,6 +172,10 @@ public class LoadGameContent : FSystem {
         MovingSystem.instance.traceMovementFrequency = gameContent.traceMovementFrequency;
         Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace to LRS: ", gameContent.traceToLRS));
+
+        if (gameContent.removeExtraGeometries)
+            foreach (GameObject go in f_extraGeometries)
+                GameObjectManager.setGameObjectState(go, false);
 
         // Load additional Logos
         if (gameContent.additionalLogosPath.Length > 0)

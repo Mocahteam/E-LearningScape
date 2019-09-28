@@ -183,15 +183,15 @@ public class MirrorCameraScript : MonoBehaviour
 				cameraObject.worldToCameraMatrix = worldToCameraMatrix;
 
                	// Clip out background
-               	Vector4 clipPlane = CameraSpacePlane(ref worldToCameraMatrix, ref pos, ref normal, 1.0f);
-            	cameraObject.projectionMatrix = cameraLookingAtThisMirror.CalculateObliqueMatrix(clipPlane);
+               	//Vector4 clipPlane = CameraSpacePlane(ref worldToCameraMatrix, ref pos, ref normal, 1.0f);
+            	//cameraObject.projectionMatrix = cameraLookingAtThisMirror.CalculateObliqueMatrix(clipPlane);
                	GL.invertCulling = true;
                	cameraObject.transform.position = newpos;
                	cameraObject.farClipPlane = mirrorScript.FarClipPlane;
 				cameraObject.cullingMask = ~(1 << 4) & mirrorScript.ReflectLayers.value;
                	cameraObject.Render();
                	cameraObject.transform.position = oldpos;
-               	cameraObject.farClipPlane = oldclip;
+               	//cameraObject.farClipPlane = oldclip;
                 GL.invertCulling = false;
 
 
