@@ -1,0 +1,19 @@
+{
+	"[ComponentMonitoringId].[rdpActionName]": {
+		"Comment": [{"Key": "", "Value": "Human text to easily identify the game object associated to these hints"}],
+		"options": [
+			{"Key": "", "Value": "?? => means force hint to display"},
+			{"Key": "", "Value": "-- => means force hint to destroy"}
+		],
+		"[hintLevel]": [
+			{
+				"Key": "[externalLink1]",
+				"Value": "hint content 1"
+			},
+			{
+				"Key": "[externalLink2]",
+				"Value": "hint content 2"
+			}
+		]
+	}
+}

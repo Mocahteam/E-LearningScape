@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-25C4-8A326-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-811C-B2152-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
   <name>
    <text>answerQuestion</text>
   </name>
- <page id="g-25C4-8A331-1">
-  <place id="p-25C4-8A333-2">
+ <page id="g-811C-B215D-1">
+  <place id="p-811C-B2160-2">
   <name>
    <text>Answered</text>
     <graphics>
@@ -13,10 +12,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="300" y="115"/>
+    <position x="290" y="65"/>
    </graphics>
   </place>
-  <place id="p-25C4-8A340-3">
+  <place id="p-811C-B216B-3">
   <name>
    <text>Answering</text>
     <graphics>
@@ -27,10 +26,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="50" y="115"/>
+    <position x="40" y="65"/>
    </graphics>
   </place>
-  <transition id="t-25C4-8A344-4">
+  <transition id="t-811C-B216F-4">
   <name>
    <text>Correct</text>
     <graphics>
@@ -38,10 +37,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="180" y="55"/>
+    <position x="170" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-25C4-8A346-5">
+  <transition id="t-811C-B2172-5">
   <name>
    <text>Wrong</text>
     <graphics>
@@ -49,15 +48,25 @@
     </graphics>
   </name>
    <graphics>
-    <position x="180" y="175"/>
+    <position x="170" y="140"/>
    </graphics>
   </transition>
-  <arc id="e-25C4-8A34B-6" source="p-25C4-8A340-3" target="t-25C4-8A346-5">
-   <type value="test"/>
+  <place id="p-811C-B2174-6">
+  <name>
+   <text>locker</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="40" y="155"/>
+   </graphics>
+  </place>
+  <arc id="e-811C-B217A-7" source="p-811C-B216B-3" target="t-811C-B216F-4">
   </arc>
-  <arc id="e-25C4-8A350-7" source="p-25C4-8A340-3" target="t-25C4-8A344-4">
+  <arc id="e-811C-B217C-8" source="t-811C-B216F-4" target="p-811C-B2160-2">
   </arc>
-  <arc id="e-25C4-8A350-8" source="t-25C4-8A344-4" target="p-25C4-8A333-2">
+  <arc id="e-811C-B217E-9" source="p-811C-B2174-6" target="t-811C-B2172-5">
   </arc>
  </page>
  </net>

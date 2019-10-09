@@ -197,6 +197,11 @@
             	Return a descriptor of this family
             </summary>
         </member>
+        <member name="M:FYFY.Family.getInlineDescriptor">
+            <summary>
+            	Return a descriptor of this family
+            </summary>
+        </member>
         <member name="M:FYFY.Family.First">
             <summary>
             	Get the first Game Object included into the family
@@ -474,6 +479,11 @@
             	Gets the number of <c>GameObjects</c> of the scene known by FYFY.
             </summary>
         </member>
+        <member name="T:FYFY.FyfyBridge">
+            <summary>
+            Notify Fyfy for each Unity callback usefull to update families
+            </summary>
+        </member>
         <member name="T:FYFY.SystemDescription">
             <summary></summary>
         </member>
@@ -567,7 +577,7 @@
             	It is composed of its type and the values on which it operates.
             </remarks>
         </member>
-        <member name="F:FYFY.ComponentMatcher._componentTypeIds">
+        <member name="F:FYFY.ComponentMatcher._componentTypeNames">
             <summary>
             	Targets used to match.
             </summary>

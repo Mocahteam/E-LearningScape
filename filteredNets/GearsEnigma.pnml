@@ -1,0 +1,49 @@
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-BCF0-AF747-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+  <name>
+   <text>GearsEnigma</text>
+  </name>
+ <page id="g-BCF0-AF753-1">
+  <place id="p-BCF0-AF756-2">
+  <name>
+   <text>Gears_Answered_151</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="325" y="60"/>
+   </graphics>
+  </place>
+  <place id="p-BCF0-AF764-3">
+  <name>
+   <text>Gears_Answering_151</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="75" y="60"/>
+   </graphics>
+  </place>
+  <transition id="t-BCF0-AF768-4">
+  <name>
+   <text>Gears_Correct_151</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="205" y="50"/>
+   </graphics>
+  </transition>
+  <arc id="e-BCF0-AF76F-5" source="p-BCF0-AF764-3" target="t-BCF0-AF768-4">
+  </arc>
+  <arc id="e-BCF0-AF770-6" source="t-BCF0-AF768-4" target="p-BCF0-AF756-2">
+  </arc>
+ </page>
+ </net>
+</pnml>

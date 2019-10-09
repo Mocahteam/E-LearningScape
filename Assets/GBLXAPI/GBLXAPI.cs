@@ -95,11 +95,11 @@ namespace DIG.GBLXAPI {
 
 		// ------------------------------------------------------------------------
 		// ------------------------------------------------------------------------
-		public void init(string lrsURL, string lrsUser, string lrsPassword, string standardsConfigDefault, string standardsConfigUser, int queueDepth = 1000){
+		public void init(List<LRSAddress> addresses, string standardsConfigDefault, string standardsConfigUser, int queueDepth = 1000){
 
 			// lrs init
 			this.lrsEndpoint = this.gameObject.AddComponent<RemoteLRSAsync>();
-			this.lrsEndpoint.initLRS(lrsURL, lrsUser, lrsPassword);
+			this.lrsEndpoint.initLRS(addresses);
 
 			// queue init
 			this.gblQueue = new RingBuffer<QueuedStatement>(queueDepth);
@@ -193,6 +193,7 @@ namespace DIG.GBLXAPI {
 			Statement statement = new Statement();
 			statement.actor = statementActor;
 			statement.verb = statementVerb;
+            statement.timestamp = DateTime.Now;
 			if (statementResult != null){ statement.result = statementResult; }
 			statement.target = statementObject;  // statement.target is the object (object is a reserved c# word)
 			if (statementContext != null){ statement.context = statementContext; }
@@ -509,11 +510,27 @@ namespace DIG.GBLXAPI {
 			// appended null check catches invalid extensionName
 			JToken res = null;
 			try { res = this.standardsJson[extensionType][extensionName]; }
-			catch (NullReferenceException) { this.ThrowVocabError("extension type", extensionType); }
+			catch (NullReferenceException)
+            {
+                //DARKAOUI ---
+                //Previously an error was throwed if the extension wasn't in the json file
+                //this verification was removed because we can't dynamicaly change the json with the game content modification
+                res = extensionName;
+                //this.ThrowVocabError("extension type", extensionType);
+                //---
+            }
 
-			if (res == null) { this.ThrowVocabError("extension", extensionName); }
+            if (res == null)
+            {
+                //DARKAOUI ---
+                //Previously an error was throwed if the extension wasn't in the json file
+                //this verification was removed because we can't dynamicaly change the json with the game content modification
+                res = extensionName;
+                //this.ThrowVocabError("extension", extensionName);
+                //---
+            }
 
-			return res;
+            return res;
 		}
 
 		// ------------------------------------------------------------------------
@@ -543,7 +560,16 @@ namespace DIG.GBLXAPI {
 				Uri extURI = new Uri((string)this.standardsJson["extension"][extensionType]["id"]);
 				target.Add(extURI, JToken.FromObject(trackedStandards));
 			}
-			catch (NullReferenceException) { this.ThrowVocabError("extension type", extensionType); }
+			catch (NullReferenceException)
+            {
+                //DARKAOUI ---
+                //Previously an error was throwed if the extension wasn't in the json file
+                //this verification was removed because we can't dynamicaly change the json with the game content modification
+                Uri extURI = new Uri(extensionType);
+                target.Add(extURI, JToken.FromObject(trackedStandards));
+                //this.ThrowVocabError("extension type", extensionType);
+                //---
+            }
 		}
 
 		// ------------------------------------------------------------------------

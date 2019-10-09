@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
 
@@ -7,7 +8,7 @@ public class IARPuzzleManager : FSystem {
     // Enable to interact Move and Rotate puzzle pieces inside IAR
 
     private Family f_puzzle = FamilyManager.getFamily(new AnyOfTags("PuzzleCanvas"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_puzzleUI = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"), new AllOfComponents(typeof(PointerOver)), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_puzzleUI = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"), new AllOfComponents(typeof(PointerOver), typeof(LinkedWith), typeof(puzzleDeltaPositions)), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private GameObject tmpGo;
 
@@ -32,17 +33,44 @@ public class IARPuzzleManager : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-        if (Input.GetMouseButtonDown(0) && f_puzzleUI.First())
+        if (Input.GetButtonDown("Fire1") && f_puzzleUI.First())
         {
             tmpGo = f_puzzleUI.First();
             GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new { verb = "dragged", objectType = "draggable", objectName = tmpGo.name });
         }
         if (Input.GetMouseButtonUp(0) && tmpGo)
         {
-            GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new { verb = "released", objectType = "draggable", objectName = tmpGo.name });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
+            {
+                verb = "dropped",
+                objectType = "draggable",
+                objectName = tmpGo.name,
+                activityExtensions = new Dictionary<string, List<string>>() { { "position", new List<string>() { tmpGo.GetComponent<RectTransform>().position.ToString("G4") } } }
+            });
+            // try to magnet puzzle piece
+            int cpt = 0;
+            // parse all neighbours
+            foreach (LinkedWith neighbour in tmpGo.GetComponents<LinkedWith>())
+            {
+                // Check if neighbour exists and is active in hierarchy
+                if (neighbour.link && neighbour.link.activeInHierarchy)
+                {
+                    // Compute distance between current piece and its neighbour (taking into account x and y deltas)
+                    if (Mathf.Abs((tmpGo.transform.position.x - (tmpGo.GetComponent<puzzleDeltaPositions>().xDelta[cpt] * Screen.width / 1280)) - neighbour.link.transform.position.x) < 10 &&
+                            Mathf.Abs((tmpGo.transform.position.y - (tmpGo.GetComponent<puzzleDeltaPositions>().yDelta[cpt] * Screen.width / 1280)) - neighbour.link.transform.position.y) < 10)
+                    {
+                        // magnets piece to this neighbour
+                        tmpGo.transform.position = new Vector3(neighbour.link.transform.position.x + (tmpGo.GetComponent<puzzleDeltaPositions>().xDelta[cpt] * Screen.width / 1280), neighbour.link.transform.position.y + (tmpGo.GetComponent<puzzleDeltaPositions>().yDelta[cpt] * Screen.width / 1280), neighbour.link.transform.position.z);
+                        GameObjectManager.addComponent<PlaySound>(tmpGo, new { id = 17 });
+                    }
+
+                }
+                cpt++;
+            }
             tmpGo = null;
         }
-        if (Input.GetMouseButton(0) && tmpGo)
+
+        if (Input.GetButton("Fire1") && tmpGo)
         {
             tmpGo.transform.position = Input.mousePosition;
             float puzzleScale = tmpGo.GetComponent<RectTransform>().localScale.x;

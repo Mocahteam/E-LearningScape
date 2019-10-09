@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.PointerManager;
-using FYFY_plugins.Monitoring;
 using System.Collections.Generic;
 using TMPro;
-using FYFY_plugins.Monitoring;
 
 public class PlankAndWireManager : FSystem {
     
@@ -24,10 +22,9 @@ public class PlankAndWireManager : FSystem {
     private GameObject selectedPlank = null;
     private LineRenderer lr;                //used to link words
     private List<Vector3> lrPositions;
+    private int nbWordsSelected;
 
     private GameObject currentFocusedWord;
-
-    private GameObject tmpGO;
 
     public static PlankAndWireManager instance;
 
@@ -38,6 +35,7 @@ public class PlankAndWireManager : FSystem {
             //initialise vairables
             lr = f_plank.First().GetComponent<LineRenderer>();
             lrPositions = new List<Vector3>();
+            nbWordsSelected = 0;
 
             f_focusedPlank.addEntryCallback(onReadyToWorkOnPlank);
 
@@ -60,17 +58,35 @@ public class PlankAndWireManager : FSystem {
     private void onWordMouseEnter(GameObject go)
     {
         //if mouse over a word and word doesn't already clicked
-        if (go.GetComponent<TextMeshPro>().color != Color.red && f_iarBackground.Count == 0)
-            //if the word isn't selected change its color to yellow
-            go.GetComponent<TextMeshPro>().color = Color.yellow;
+        if (go.GetComponent<TextMeshPro>().color != Color.yellow && f_iarBackground.Count == 0 && selectedPlank != null)
+        {
+            //if the word isn't selected change its color to cyan
+            go.GetComponent<TextMeshPro>().color = Color.cyan;
+            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new
+            {
+                verb = "highlighted",
+                objectType = "interactable",
+                objectName = go.name,
+                activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { go.GetComponent<TextMeshPro>().text } } }
+            });
+        }
         currentFocusedWord = go;
     }
 
     private void onWordMouseExit(int instanceId)
     {
-        if (currentFocusedWord && currentFocusedWord.GetInstanceID() == instanceId && currentFocusedWord.GetComponent<TextMeshPro>().color != Color.red)
-            //if the word isn't selected change its color to black
-            currentFocusedWord.GetComponent<TextMeshPro>().color = Color.black;
+        if (currentFocusedWord && currentFocusedWord.GetInstanceID() == instanceId && currentFocusedWord.GetComponent<TextMeshPro>().color != Color.yellow && selectedPlank != null)
+        {
+            //if the word isn't selected change its color to white
+            currentFocusedWord.GetComponent<TextMeshPro>().color = Color.white;
+            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new
+            {
+                verb = "exitedHighlight",
+                objectType = "interactable",
+                objectName = currentFocusedWord.name,
+                activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { currentFocusedWord.GetComponent<TextMeshPro>().text } } }
+            });
+        }
         currentFocusedWord = null;
     }
 
@@ -99,172 +115,190 @@ public class PlankAndWireManager : FSystem {
         if (selectedPlank)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed (because Escape close IAR)
-            if (((f_closePlank.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)))
+            if (((f_closePlank.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)))
                 ExitPlank();
             else
             {
-                // Check if a word is clicked and wire is selected
-                if (Input.GetMouseButtonDown(0) && wireSelected())
+                // Check if the current focused word is clicked
+                if (Input.GetButtonDown("Fire1") && currentFocusedWord)
                 {
-                    int nbPlankWords = f_focusedWords.Count;
-                    for (int i = 0; i < nbPlankWords; i++)
-                    {
-                        tmpGO = f_focusedWords.getAt(i);
+                    //trace action depending on selection state
+                    string actionName = "turnOn";
+                    if (currentFocusedWord.GetComponent<TextMeshPro>().color == Color.yellow)
+                        actionName = "turnOff";
+                    GameObjectManager.addComponent<ActionPerformed>(currentFocusedWord, new { name = actionName, performedBy = "player", family = currentFocusedWord.GetComponent<IsSolution>() ? null : f_wrongWords });
+                    Debug.Log(currentFocusedWord.name + " " + currentFocusedWord.GetComponent<IsSolution>());
 
-                        //if the word is selected (color red)
-                        if (tmpGO.GetComponent<TextMeshPro>().color == Color.red)
+                    // if wire is selected
+                    if (wireSelected())
+                    {
+                        //if the word was selected (color yellow)
+                        if (currentFocusedWord.GetComponent<TextMeshPro>().color == Color.yellow)
                         {
-                            //unselect it, but we are still over (yellow)
-                            tmpGO.GetComponent<TextMeshPro>().color = Color.yellow;
+                            //unselect it, but we are still over (cyan)
+                            currentFocusedWord.GetComponent<TextMeshPro>().color = Color.cyan;
                             //remove the vertex from the linerenderer
-                            lrPositions.Remove(tmpGO.transform.TransformPoint(Vector3.up * -4));
-                            lr.positionCount--;
+                            lrPositions.Remove(currentFocusedWord.transform.TransformPoint(Vector3.up * -4));
+                            nbWordsSelected--;
+                            lr.positionCount = nbWordsSelected;
                             //set the new positions
                             lr.SetPositions(lrPositions.ToArray());
-                            if (tmpGO.GetComponent<IsSolution>())
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player" });
-                            else
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player", family = f_wrongWords });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new { verb = "interacted", objectType = "interactable",
-                                result = true, objectName = tmpGO.GetComponent<TextMeshPro>().text, completed = 1, response = "turn off" });
-                        }
-                        else
-                        {    //if the word wasn't selected
-                            if (lr.positionCount > 2)
+
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(currentFocusedWord, new
                             {
-                                //if there is already 3 selected words, unselect them and select the new one
+                                verb = "deactivated",
+                                objectType = "interactable",
+                                objectName = currentFocusedWord.name,
+                                activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { currentFocusedWord.GetComponent<TextMeshPro>().text } } }
+                            });
+                        }
+                        else //if the word wasn't selected
+                        {
+                            // check if there is already 3 selected words, if so unselect all words except current focused word
+                            if (nbWordsSelected >= 3)
+                            {
                                 foreach (GameObject w in f_allWords)
                                 {
-                                    if (w.GetComponent<TextMeshPro>().color == Color.red)
+                                    if (w.GetComponent<TextMeshPro>().color == Color.yellow && w != currentFocusedWord)
                                     {
-                                        if (tmpGO.GetComponent<IsSolution>())
-                                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player" });
-                                        else
-                                            GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player", family = f_wrongWords });
-                                        GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new
+                                        GameObjectManager.addComponent<ActionPerformed>(w, new { name = "turnOff", performedBy = "system", family = w.GetComponent<IsSolution>() ? null : f_wrongWords });
+                                        GameObjectManager.addComponent<ActionPerformedForLRS>(w, new
                                         {
-                                            verb = "interacted",
+                                            verb = "deactivated",
                                             objectType = "interactable",
-                                            objectName = tmpGO.GetComponent<TextMeshPro>().text,
-                                            result = true,
-                                            completed = 1,
-                                            response = "turn off"
+                                            objectName = w.name,
+                                            activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { w.GetComponent<TextMeshPro>().text } } }
                                         });
                                     }
-                                    w.GetComponent<TextMeshPro>().color = Color.black;
+                                    w.GetComponent<TextMeshPro>().color = Color.white;
                                 }
                                 lr.positionCount = 0;
+                                nbWordsSelected = 0;
                                 lrPositions.Clear();
                             }
-                            if (tmpGO.GetComponent<IsSolution>())
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player" });
-                            else
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", family = f_wrongWords });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new
-                            {
-                                verb = "interacted",
-                                objectType = "interactable",
-                                objectName = tmpGO.GetComponent<TextMeshPro>().text,
-                                result = true,
-                                completed = 1,
-                                response = "turn on"
-                            });
-                            tmpGO.GetComponent<TextMeshPro>().color = Color.red;
+                            // Now select the new one
+                            currentFocusedWord.GetComponent<TextMeshPro>().color = Color.yellow;
                             //update the linerenderer
-                            lr.positionCount++;
-                            lrPositions.Add(tmpGO.transform.TransformPoint(Vector3.up * -4));
+                            nbWordsSelected++;
+                            lr.positionCount = nbWordsSelected;
+                            lrPositions.Add(currentFocusedWord.transform.TransformPoint(Vector3.up * -4));
                             lr.SetPositions(lrPositions.ToArray());
 
-                            bool correct = true;
-                            foreach (GameObject word in f_allWords)
-                                if (word.GetComponent<IsSolution>() && word.GetComponent<TextMeshPro>().color != Color.red)
-                                    correct = false;
-                            
-                            if (correct)
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(currentFocusedWord, new
                             {
-                                // remove the wire from inventory
-                                LinkedWith lw = selectedPlank.GetComponent<LinkedWith>();
-                                GameObjectManager.setGameObjectState(lw.link, false);
-                                // notify player success
-                                GameObjectManager.addComponent<PlayUIEffect>(selectedPlank, new { effectCode = 2});
-                                GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "perform", performedBy = "system" });
-                                GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new
+                                verb = "activated",
+                                objectType = "interactable",
+                                objectName = currentFocusedWord.name,
+                                activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { currentFocusedWord.GetComponent<TextMeshPro>().text } } },
+                                result = true,
+                                success = 1
+                            });
+
+                            string answers = "";
+                            //if 3 words selected
+                            if (nbWordsSelected >= 3)
+                            {
+                                //create a concatenation of the 3 selected answers
+                                foreach (GameObject word in f_allWords)
+                                    if (word.GetComponent<TextMeshPro>().color == Color.yellow)
+                                    {
+                                        if (answers == "")
+                                            answers = word.GetComponent<TextMeshPro>().text;
+                                        else
+                                            answers = string.Concat(answers, " - ", word.GetComponent<TextMeshPro>().text);
+                                    }
+
+                                // check if all selected words are part of the solution
+                                bool correct = true;
+                                foreach (GameObject word in f_allWords)
+                                    if (word.GetComponent<IsSolution>() && word.GetComponent<TextMeshPro>().color != Color.yellow)
+                                    {
+                                        correct = false;
+                                        break;
+                                    }
+
+                                // trace this attempt
+                                GameObjectManager.addComponent<ActionPerformedForLRS>(currentFocusedWord, new
                                 {
-                                    verb = "completed",
+                                    verb = "answered",
                                     objectType = "interactable",
-                                    objectName = selectedPlank.name
+                                    objectName = selectedPlank.name,
+                                    result = true,
+                                    success = correct ? 1 : -1,
+                                    response = answers
                                 });
+
+                                if (correct)
+                                {
+                                    // remove the wire from inventory
+                                    LinkedWith lw = selectedPlank.GetComponent<LinkedWith>();
+                                    GameObjectManager.setGameObjectState(lw.link, false);
+
+                                    // notify player success
+                                    GameObjectManager.addComponent<PlayUIEffect>(selectedPlank, new { effectCode = 2 });
+                                    GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "perform", performedBy = "system" });
+                                    GameObjectManager.addComponent<ActionPerformedForLRS>(currentFocusedWord, new
+                                    {
+                                        verb = "completed",
+                                        objectType = "interactable",
+                                        objectName = selectedPlank.name
+                                    });
+                                }
                             }
                         }
                     }
-                }
-                else if (Input.GetMouseButtonDown(0))
-                {
-                    //if a word is clicked without using wire
-                    int nbPlankWords = f_focusedWords.Count;
-                    for (int i = 0; i < nbPlankWords; i++)
+                    else
                     {
-                        tmpGO = f_focusedWords.getAt(i);
-                        if (tmpGO.GetComponent<TextMeshPro>().color == Color.red)
+                        //a word is clicked without using wire
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(currentFocusedWord, new
                         {
-                            if(tmpGO.GetComponent<IsSolution>())
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player" });
-                            else
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player", family = f_wrongWords });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new
-                            {
-                                verb = "interacted",
-                                objectType = "interactable",
-                                objectName = tmpGO.GetComponent<TextMeshPro>().text,
-                                result = true,
-                                completed = -1,
-                                response = "turn off"
-                            });
+                            verb = "attempted",
+                            objectType = "interactable",
+                            objectName = currentFocusedWord.name,
+                            activityExtensions = new Dictionary<string, List<string>>() {
+                            { "content", new List<string>() { currentFocusedWord.GetComponent<TextMeshPro>().text } },
+                            // depends if word is selected or not
+                            { "state", new List<string>() { currentFocusedWord.GetComponent<TextMeshPro>().color == Color.yellow ? "selected" : "unselected" } }
                         }
-                        else
-                        {
-                            if (tmpGO.GetComponent<IsSolution>())
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player" });
-                            else
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOn", performedBy = "player", family = f_wrongWords });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new
-                            {
-                                verb = "interacted",
-                                objectType = "interactable",
-                                objectName = tmpGO.GetComponent<TextMeshPro>().text,
-                                result = true,
-                                completed = -1,
-                                response = "turn off"
-                            });
-                        }
+                        });
                     }
                 }
 
-                if (!currentFocusedWord && Input.GetMouseButtonDown(0) && wireSelected())
+                //if click over nothing unselect all
+                if (Input.GetButtonDown("Fire1") && !currentFocusedWord && wireSelected())
                 {
-                    //if click over nothing unselect all
                     foreach (GameObject word in f_allWords)
                     {
-                        if (word.GetComponent<TextMeshPro>().color == Color.red)
+                        if (word.GetComponent<TextMeshPro>().color == Color.yellow)
                         {
-                            if (tmpGO.GetComponent<IsSolution>())
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player" });
-                            else
-                                GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player", family = f_wrongWords });
+                            GameObjectManager.addComponent<ActionPerformed>(word, new { name = "turnOff", performedBy = "player", family = word.GetComponent<IsSolution>() ? null : f_wrongWords });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(word, new
+                            {
+                                verb = "deactivated",
+                                objectType = "interactable",
+                                objectName = word.GetComponent<TextMeshPro>().text,
+                                activityExtensions = new Dictionary<string, List<string>>() {
+                                    { "content", new List<string>() { word.GetComponent<TextMeshPro>().text } }
+                                }
+                            });
                         }
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new
-                        {
-                            verb = "interacted",
-                            objectType = "interactable",
-                            objectName = tmpGO.GetComponent<TextMeshPro>().text,
-                            result = true,
-                            completed = 1,
-                            response = "turn off"
-                        });
-                        word.GetComponent<TextMeshPro>().color = Color.black;
+                        word.GetComponent<TextMeshPro>().color = Color.white;
                         lr.positionCount = 0;
+                        nbWordsSelected = 0;
                         lrPositions.Clear();
                     }
+                }
+
+                if (nbWordsSelected > 0 && nbWordsSelected < 3 && wireSelected())
+                {
+                    //update the linerenderer
+                    lr.positionCount = nbWordsSelected + 1; // one more for mouse position
+                    List<Vector3> lrPositionsWithMouse = new List<Vector3>(lrPositions);
+                    Vector3 screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+                    float dist = Vector3.Distance(Camera.main.transform.position, lr.transform.position);
+                    screenPoint.z = dist-0.2f; //distance of the plane from the camera
+                    lrPositionsWithMouse.Add(Camera.main.ScreenToWorldPoint(screenPoint));
+                    lr.SetPositions(lrPositionsWithMouse.ToArray());
                 }
             }
         }

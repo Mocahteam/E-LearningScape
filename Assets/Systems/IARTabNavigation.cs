@@ -3,6 +3,8 @@ using FYFY;
 using UnityEngine.UI;
 using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine.EventSystems;
 
 public class IARTabNavigation : FSystem {
 
@@ -11,8 +13,10 @@ public class IARTabNavigation : FSystem {
     private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
     private Family f_fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)));
-    private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
+    private Family f_iarDisplayed = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_HUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
+    private Family f_settings = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private Sprite selectedTabSprite;
     private Sprite defaultTabSprite;
@@ -20,9 +24,11 @@ public class IARTabNavigation : FSystem {
     private GameObject iar;
     private GameObject iarBackground;
 
-    private bool openedAtLeastOnce = false;
+    private int tabIdToFocusOn;
 
     private Dictionary<FSystem, bool> systemsStates;
+
+    public bool skipNextClose = false; // enbale to skip the next IAR close (see IARQueryEvaluator)
 
     public static IARTabNavigation instance;
 
@@ -30,15 +36,10 @@ public class IARTabNavigation : FSystem {
     {
         if (Application.isPlaying)
         {
-            foreach (GameObject tab in f_tabs)
-            {
-                tab.GetComponent<Button>().onClick.AddListener(delegate {
-                    SwitchTab(tab);
-                });
-            }
-
             selectedTabSprite = f_fgm.First().GetComponent<FocusedGOMaterial>().selectedTabSprite;
             defaultTabSprite = f_fgm.First().GetComponent<FocusedGOMaterial>().defaultTabSprite;
+
+            f_iarDisplayed.addEntryCallback(onIarDisplayed);
 
             iarBackground = f_iarBackground.First();
             iar = iarBackground.transform.parent.gameObject;
@@ -48,51 +49,44 @@ public class IARTabNavigation : FSystem {
         instance = this;
     }
 
-    // Use this to update member variables when system pause. 
-    // Advice: avoid to update your families inside this function.
-    protected override void onPause(int currentFrame)
+    private void onIarDisplayed(GameObject go)
     {
-        GameObjectManager.setGameObjectState(f_HUD_A.First(), false); // hide HUD "A"
-    }
-
-    // Use this to update member variables when system resume.
-    // Advice: avoid to update your families inside this function.
-    protected override void onResume(int currentFrame)
-    {
-        if (openedAtLeastOnce)
-            GameObjectManager.setGameObjectState(f_HUD_A.First(), true); // display HUD "A"
+        // force EventSystem affectation
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(f_tabs.getAt(tabIdToFocusOn));
     }
 
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
         // Open/Close IAR with Escape and A keys
-        if (iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.Escape) || (Input.GetMouseButtonDown(0) && iarBackground.GetComponent<PointerOver>())))
+        if (iar.activeInHierarchy && f_settings.Count == 0 && !skipNextClose && (Input.GetButtonDown("ToggleInventory") || Input.GetButtonDown("Cancel") || (Input.GetButtonDown("Fire1") && iarBackground.GetComponent<PointerOver>())))
             closeIar();
-        else if (!iar.activeInHierarchy && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.Escape)))
+        else
         {
-            if (Input.GetKeyDown(KeyCode.A))
-                openIar(0); // Open IAR on the first tab
-            else
-                // Open IAR on the last tab only if player doesn't work on selectable enigm (Escape enables to exit the enigm)
-                if (f_atWork.Count == 0)
+            skipNextClose = false;
+            if (!iar.activeInHierarchy && (Input.GetButtonDown("ToggleInventory") || Input.GetButtonDown("Cancel")))
+            {
+                if (Input.GetButtonDown("ToggleInventory"))
+                    openIar(0); // Open IAR on the first tab
+                else
+                    // Open IAR on the last tab only if player doesn't work on selectable enigm (Escape enables to exit the enigm)
+                    if (f_atWork.Count == 0)
                     openIar(f_tabs.Count - 1); // Open IAR on the last tab
+            }
         }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "pressed", objectType = "key", objectName = "A" });
-        }
-        else if(Input.GetKeyDown(KeyCode.Escape))
-            GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "pressed", objectType = "key", objectName = "Escape" });
     }
 
     private void openIar(int tabId)
     {
         GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "activated", objectType = "menu", objectName = iar.name });
-        openedAtLeastOnce = true;
-        GameObjectManager.setGameObjectState(f_HUD_A.First(), false); // hide HUD "A"
+        GameObjectManager.setGameObjectState(f_HUD.First(), false); // hide HUD
         GameObjectManager.setGameObjectState(iar, true); // open IAR
-        SwitchTab(f_tabs.getAt(tabId)); // switch to the first tab
+
+        GameObjectManager.addComponent<PlaySound>(iar, new { id = 15 }); // id refer to FPSController AudioBank
+
+        SwitchTab(f_tabs.getAt(tabId)); // switch to the desired tab
+        tabIdToFocusOn = tabId;
         systemsStates.Clear();
         // save systems states
         foreach (FSystem sys in FSystemManager.fixedUpdateSystems())
@@ -124,27 +118,29 @@ public class IARTabNavigation : FSystem {
     {
         GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "deactivated", objectType = "menu", objectName = iar.name });
         GameObjectManager.setGameObjectState(iar, false); // close IAR
+
+        GameObjectManager.addComponent<PlaySound>(iar, new { id = 16 }); // id refer to FPSController AudioBank
+
         // Restaure systems state (exception for LampManager)
         bool backLampManagerState = LampManager.instance.Pause;
         foreach (FSystem sys in systemsStates.Keys)
             sys.Pause = systemsStates[sys];
         LampManager.instance.Pause = backLampManagerState;
-        // display HUD "A"
-        GameObjectManager.setGameObjectState(f_HUD_A.First(), true);
+        GameObjectManager.setGameObjectState(f_HUD.First(), true); // show HUD
     }
 
-    private void SwitchTab(GameObject newSelectedTab)
+    public void SwitchTab(GameObject newSelectedTab)
     {
         // reset all tabs (text and image) and disable all contents
         foreach (GameObject oldTab in f_tabs)
         {
-            oldTab.GetComponent<Image>().sprite = defaultTabSprite;
-            oldTab.GetComponentInChildren<Text>().fontStyle = FontStyle.Normal;
+            oldTab.GetComponentInChildren<Image>().sprite = defaultTabSprite;
+            oldTab.GetComponent<TMP_Text>().fontStyle = TMPro.FontStyles.Normal;
             GameObjectManager.setGameObjectState(oldTab.GetComponent<LinkedWith>().link, false);
         }
         // set new tab text and image
-        newSelectedTab.GetComponent<Image>().sprite = selectedTabSprite;
-        newSelectedTab.GetComponentInChildren<Text>().fontStyle = FontStyle.Bold;
+        newSelectedTab.GetComponentInChildren<Image>().sprite = selectedTabSprite;
+        newSelectedTab.GetComponent<TMP_Text>().fontStyle = TMPro.FontStyles.Bold;
         // enable new content
         GameObjectManager.setGameObjectState(newSelectedTab.GetComponent<LinkedWith>().link, true);
         GameObjectManager.addComponent<ActionPerformedForLRS>(newSelectedTab.GetComponent<LinkedWith>().link, new { verb = "accessed", objectType = "menu", objectName = newSelectedTab.GetComponent<LinkedWith>().link.name });

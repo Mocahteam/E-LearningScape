@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-C480-C55D1-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>WhiteBoardEnigma</text>
+  </name>
+ <page id="g-C480-C55DF-1">
+  <place id="p-C480-C55E4-2">
+  <name>
+   <text>AnswersInput_end_142</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="820" y="85"/>
+   </graphics>
+  </place>
+  <transition id="t-C480-C55F4-3">
+  <name>
+   <text>AnswersInput_perform_142</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="750" y="85"/>
+   </graphics>
+  </transition>
+  <place id="p-C480-C5602-4">
+  <name>
+   <text>AnswersInput_start_142</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="670" y="85"/>
+   </graphics>
+  </place>
+  <place id="p-C480-C560B-5">
+  <name>
+   <text>Board_off_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="50" y="90"/>
+   </graphics>
+  </place>
+  <place id="p-C480-C560F-6">
+  <name>
+   <text>Board_on_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="90"/>
+   </graphics>
+  </place>
+  <transition id="t-C480-C5615-7">
+  <name>
+   <text>Board_turnOff_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="130" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-C480-C5619-8">
+  <name>
+   <text>Board_turnOn_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="130" y="150"/>
+   </graphics>
+  </transition>
+  <place id="p-C480-C561F-9">
+  <name>
+   <text>Eraser_ActivationCount_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="480" y="210"/>
+   </graphics>
+  </place>
+  <place id="p-C480-C5626-10">
+  <name>
+   <text>Eraser_off_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="480" y="90"/>
+   </graphics>
+  </place>
+  <place id="p-C480-C562B-11">
+  <name>
+   <text>Eraser_on_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="320" y="90"/>
+   </graphics>
+  </place>
+  <transition id="t-C480-C5631-12">
+  <name>
+   <text>Eraser_turnOff_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="400" y="70"/>
+   </graphics>
+  </transition>
+  <transition id="t-C480-C5637-13">
+  <name>
+   <text>Eraser_turnOn_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="400" y="150"/>
+   </graphics>
+  </transition>
+  <arc id="e-C480-C5641-14" source="t-C480-C5631-12" target="p-C480-C5626-10">
+  </arc>
+  <arc id="e-C480-C5643-15" source="t-C480-C5637-13" target="p-C480-C561F-9">
+  </arc>
+  <arc id="e-C480-C5645-16" source="p-C480-C562B-11" target="t-C480-C5631-12">
+  </arc>
+  <arc id="e-C480-C5647-17" source="p-C480-C5626-10" target="t-C480-C5637-13">
+  </arc>
+  <arc id="e-C480-C5649-18" source="t-C480-C5637-13" target="p-C480-C562B-11">
+  </arc>
+  <arc id="e-C480-C564B-19" source="p-C480-C560F-6" target="t-C480-C5615-7">
+  </arc>
+  <arc id="e-C480-C564E-20" source="p-C480-C560B-5" target="t-C480-C5619-8">
+  </arc>
+  <arc id="e-C480-C5650-21" source="t-C480-C5619-8" target="p-C480-C560F-6">
+  </arc>
+  <arc id="e-C480-C5652-22" source="t-C480-C5615-7" target="p-C480-C560B-5">
+  </arc>
+  <arc id="e-C480-C5654-23" source="t-C480-C55F4-3" target="p-C480-C55E4-2">
+  </arc>
+  <arc id="e-C480-C5656-24" source="p-C480-C5602-4" target="t-C480-C55F4-3">
+  </arc>
+  <arc id="e-C480-C5658-25" source="p-C480-C560F-6" target="t-C480-C5637-13">
+   <type value="test"/>
+  </arc>
+  <arc id="e-C480-C56CD-26" source="p-C480-C560F-6" target="t-C480-C5631-12">
+   <type value="test"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

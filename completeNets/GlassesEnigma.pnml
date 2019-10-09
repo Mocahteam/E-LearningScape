@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-6388-D47BB-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>GlassesEnigma</text>
+  </name>
+ <page id="g-6388-D47C5-1">
+  <place id="p-6388-D47CA-2">
+  <name>
+   <text>Glasses1_end_51</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="225" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-6388-D4973-3">
+  <name>
+   <text>Glasses1_off_52</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="345" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-6388-D497C-4">
+  <name>
+   <text>Glasses1_on_52</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="505" y="80"/>
+   </graphics>
+  </place>
+  <transition id="t-6388-D4981-5">
+  <name>
+   <text>Glasses1_perform_51</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="160" y="65"/>
+   </graphics>
+  </transition>
+  <place id="p-6388-D4987-6">
+  <name>
+   <text>Glasses1_start_51</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="85" y="80"/>
+   </graphics>
+  </place>
+  <transition id="t-6388-D498B-7">
+  <name>
+   <text>Glasses1_turnOff_52</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-6388-D4991-8">
+  <name>
+   <text>Glasses1_turnOn_52</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="140"/>
+   </graphics>
+  </transition>
+  <place id="p-6388-D4994-9">
+  <name>
+   <text>Glasses2_end_53</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="225" y="240"/>
+   </graphics>
+  </place>
+  <place id="p-6388-D4997-10">
+  <name>
+   <text>Glasses2_off_54</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="345" y="240"/>
+   </graphics>
+  </place>
+  <place id="p-6388-D499B-11">
+  <name>
+   <text>Glasses2_on_54</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="525" y="230"/>
+   </graphics>
+  </place>
+  <transition id="t-6388-D499D-12">
+  <name>
+   <text>Glasses2_perform_53</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="165" y="220"/>
+   </graphics>
+  </transition>
+  <place id="p-6388-D49A6-13">
+  <name>
+   <text>Glasses2_start_53</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="65" y="240"/>
+   </graphics>
+  </place>
+  <transition id="t-6388-D49AD-14">
+  <name>
+   <text>Glasses2_turnOff_54</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="200"/>
+   </graphics>
+  </transition>
+  <transition id="t-6388-D49B0-15">
+  <name>
+   <text>Glasses2_turnOn_54</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="290"/>
+   </graphics>
+  </transition>
+  <place id="p-6388-D49B3-16">
+  <name>
+   <text>KeySatchel_end_55</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="245" y="590"/>
+   </graphics>
+  </place>
+  <place id="p-6388-D49B7-17">
+  <name>
+   <text>KeySatchel_off_56</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="345" y="580"/>
+   </graphics>
+  </place>
+  <place id="p-6388-D49B9-18">
+  <name>
+   <text>KeySatchel_on_56</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="505" y="580"/>
+   </graphics>
+  </place>
+  <transition id="t-6388-D4A21-19">
+  <name>
+   <text>KeySatchel_perform_55</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="165" y="580"/>
+   </graphics>
+  </transition>
+  <place id="p-6388-D4A26-20">
+  <name>
+   <text>KeySatchel_start_55</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="85" y="590"/>
+   </graphics>
+  </place>
+  <transition id="t-6388-D4A32-21">
+  <name>
+   <text>KeySatchel_turnOff_56</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="540"/>
+   </graphics>
+  </transition>
+  <transition id="t-6388-D4A38-22">
+  <name>
+   <text>KeySatchel_turnOn_56</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="630"/>
+   </graphics>
+  </transition>
+  <place id="p-6388-D4A43-23">
+  <name>
+   <text>Padlock_end_58</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="725" y="500"/>
+   </graphics>
+  </place>
+  <transition id="t-6388-D4A48-24">
+  <name>
+   <text>Padlock_perform_58</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="645" y="490"/>
+   </graphics>
+  </transition>
+  <place id="p-6388-D4A53-25">
+  <name>
+   <text>Padlock_start_58</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="565" y="500"/>
+   </graphics>
+  </place>
+  <place id="p-6388-D4A56-26">
+  <name>
+   <text>Paper_ActivationCount_59</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="865" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-6388-D4A5C-27">
+  <name>
+   <text>Paper_ActivationCount_60</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="865" y="160"/>
+   </graphics>
+  </place>
+  <place id="p-6388-D4A62-28">
+  <name>
+   <text>Paper_ActivationCount_61</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="845" y="220"/>
+   </graphics>
+  </place>
+  <place id="p-6388-D4A6A-29">
+  <name>
+   <text>Paper_ActivationCount_62</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="845" y="290"/>
+   </graphics>
+  </place>
+  <transition id="t-6388-D4A6E-30">
+  <name>
+   <text>Paper_activate_59</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="745" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-6388-D4A73-31">
+  <name>
+   <text>Paper_activate_60</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="745" y="150"/>
+   </graphics>
+  </transition>
+  <transition id="t-6388-D4A76-32">
+  <name>
+   <text>Paper_activate_61</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="745" y="210"/>
+   </graphics>
+  </transition>
+  <transition id="t-6388-D4A78-33">
+  <name>
+   <text>Paper_activate_62</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="745" y="280"/>
+   </graphics>
+  </transition>
+  <place id="p-6388-D4A7B-34">
+  <name>
+   <text>Q1_Answered_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1245" y="420"/>
+   </graphics>
+  </place>
+  <place id="p-6388-D4A7F-35">
+  <name>
+   <text>Q1_Answering_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="985" y="420"/>
+   </graphics>
+  </place>
+  <transition id="t-6388-D4AC2-36">
+  <name>
+   <text>Q1_Correct_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1125" y="410"/>
+   </graphics>
+  </transition>
+  <transition id="t-6388-D4AC7-37">
+  <name>
+   <text>Q1_Wrong_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1125" y="500"/>
+   </graphics>
+  </transition>
+  <place id="p-6388-D4AC9-38">
+  <name>
+   <text>Q1_locker_64</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="985" y="520"/>
+   </graphics>
+  </place>
+  <place id="p-6388-D4ACD-39">
+  <name>
+   <text>Satchel_off_57</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="345" y="420"/>
+   </graphics>
+  </place>
+  <place id="p-6388-D4ACF-40">
+  <name>
+   <text>Satchel_on_57</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="525" y="420"/>
+   </graphics>
+  </place>
+  <transition id="t-6388-D4AD2-41">
+  <name>
+   <text>Satchel_turnOff_57</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="380"/>
+   </graphics>
+  </transition>
+  <transition id="t-6388-D4AD4-42">
+  <name>
+   <text>Satchel_turnOn_57</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="480"/>
+   </graphics>
+  </transition>
+  <arc id="e-6388-D4ADD-43" source="t-6388-D49AD-14" target="p-6388-D4997-10">
+  </arc>
+  <arc id="e-6388-D4ADE-44" source="p-6388-D47CA-2" target="t-6388-D4991-8">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4AE2-45" source="p-6388-D47CA-2" target="t-6388-D498B-7">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4AE3-46" source="p-6388-D497C-4" target="t-6388-D498B-7">
+  </arc>
+  <arc id="e-6388-D4AE4-47" source="t-6388-D4AD2-41" target="p-6388-D4ACD-39">
+  </arc>
+  <arc id="e-6388-D4AE6-48" source="p-6388-D4973-3" target="t-6388-D4991-8">
+  </arc>
+  <arc id="e-6388-D4AE8-49" source="t-6388-D4991-8" target="p-6388-D497C-4">
+  </arc>
+  <arc id="e-6388-D4AEA-50" source="t-6388-D498B-7" target="p-6388-D4973-3">
+  </arc>
+  <arc id="e-6388-D4AEA-51" source="p-6388-D49B3-16" target="t-6388-D4A32-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4AEC-52" source="p-6388-D4A26-20" target="t-6388-D4A21-19">
+  </arc>
+  <arc id="e-6388-D4AED-53" source="t-6388-D4A21-19" target="p-6388-D49B3-16">
+  </arc>
+  <arc id="e-6388-D4AEE-54" source="p-6388-D4ACF-40" target="t-6388-D4AD2-41">
+  </arc>
+  <arc id="e-6388-D4AEF-55" source="p-6388-D4ACF-40" target="t-6388-D4A76-32">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4AF1-56" source="p-6388-D4A43-23" target="t-6388-D4A76-32">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4AF2-57" source="p-6388-D499B-11" target="t-6388-D4A76-32">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4AF4-58" source="p-6388-D4973-3" target="t-6388-D4A76-32">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4AF6-59" source="t-6388-D4A32-21" target="p-6388-D49B7-17">
+  </arc>
+  <arc id="e-6388-D4AF7-60" source="t-6388-D4A76-32" target="p-6388-D4A62-28">
+  </arc>
+  <arc id="e-6388-D4AF8-61" source="p-6388-D4ACF-40" target="t-6388-D4A6E-30">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4AFA-62" source="p-6388-D4A43-23" target="t-6388-D4A6E-30">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4AFB-63" source="p-6388-D4997-10" target="t-6388-D4A6E-30">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4AFC-64" source="p-6388-D49B9-18" target="t-6388-D4A32-21">
+  </arc>
+  <arc id="e-6388-D4AFD-65" source="p-6388-D4ACD-39" target="t-6388-D4AD4-42">
+  </arc>
+  <arc id="e-6388-D4AFF-66" source="p-6388-D4973-3" target="t-6388-D4A6E-30">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B01-67" source="t-6388-D4A6E-30" target="p-6388-D4A56-26">
+  </arc>
+  <arc id="e-6388-D4B18-68" source="p-6388-D4ACF-40" target="t-6388-D4A73-31">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B19-69" source="p-6388-D4A43-23" target="t-6388-D4A73-31">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B1A-70" source="p-6388-D4997-10" target="t-6388-D4A73-31">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B1C-71" source="p-6388-D49A6-13" target="t-6388-D499D-12">
+  </arc>
+  <arc id="e-6388-D4B1D-72" source="p-6388-D497C-4" target="t-6388-D4A73-31">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B1E-73" source="t-6388-D4A73-31" target="p-6388-D4A5C-27">
+  </arc>
+  <arc id="e-6388-D4B1F-74" source="t-6388-D4A78-33" target="p-6388-D4A62-28">
+  </arc>
+  <arc id="e-6388-D4B20-75" source="t-6388-D4A78-33" target="p-6388-D4A5C-27">
+  </arc>
+  <arc id="e-6388-D4B22-76" source="t-6388-D4AD4-42" target="p-6388-D4ACF-40">
+  </arc>
+  <arc id="e-6388-D4B24-77" source="p-6388-D4ACF-40" target="t-6388-D4A78-33">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B25-78" source="p-6388-D49B7-17" target="t-6388-D4A38-22">
+  </arc>
+  <arc id="e-6388-D4B26-79" source="p-6388-D4A43-23" target="t-6388-D4A78-33">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B27-80" source="p-6388-D499B-11" target="t-6388-D4A78-33">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B28-81" source="p-6388-D497C-4" target="t-6388-D4A78-33">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B29-82" source="t-6388-D4A78-33" target="p-6388-D4A6A-29">
+  </arc>
+  <arc id="e-6388-D4B2A-83" source="t-6388-D499D-12" target="p-6388-D4994-9">
+  </arc>
+  <arc id="e-6388-D4B2B-84" source="p-6388-D49B9-18" target="t-6388-D4A48-24">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B2D-85" source="p-6388-D4ACF-40" target="t-6388-D4A48-24">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B2E-86" source="p-6388-D4A53-25" target="t-6388-D4A48-24">
+  </arc>
+  <arc id="e-6388-D4B30-87" source="p-6388-D49B3-16" target="t-6388-D4A38-22">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B31-88" source="t-6388-D4A48-24" target="p-6388-D4A43-23">
+  </arc>
+  <arc id="e-6388-D4B32-89" source="p-6388-D4994-9" target="t-6388-D49B0-15">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B33-90" source="p-6388-D4994-9" target="t-6388-D49AD-14">
+   <type value="test"/>
+  </arc>
+  <arc id="e-6388-D4B34-91" source="t-6388-D4A38-22" target="p-6388-D49B9-18">
+  </arc>
+  <arc id="e-6388-D4B35-92" source="p-6388-D499B-11" target="t-6388-D49AD-14">
+  </arc>
+  <arc id="e-6388-D4B36-93" source="p-6388-D4997-10" target="t-6388-D49B0-15">
+  </arc>
+  <arc id="e-6388-D4B39-94" source="t-6388-D49B0-15" target="p-6388-D499B-11">
+  </arc>
+  <arc id="e-6388-D4B3A-95" source="p-6388-D4987-6" target="t-6388-D4981-5">
+  </arc>
+  <arc id="e-6388-D4B3B-96" source="t-6388-D4981-5" target="p-6388-D47CA-2">
+  </arc>
+  <arc id="e-6388-D4B3C-97" source="p-6388-D4AC9-38" target="t-6388-D4AC7-37">
+  </arc>
+  <arc id="e-6388-D4B3D-98" source="t-6388-D4AC2-36" target="p-6388-D4A7B-34">
+  </arc>
+  <arc id="e-6388-D4B3E-99" source="p-6388-D4A7F-35" target="t-6388-D4AC2-36">
+  </arc>
+ </page>
+ </net>
+</pnml>

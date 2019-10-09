@@ -1,61 +1,124 @@
 {
     "theme": "Pédagogie",
     "trace": true,
-    "traceToLRS": false,
+    "helpSystem": true,
+    "traceToLRS": true,
+    "traceMovementFrequency": 0.5,
     "virtualPuzzle": true,
+    "lrsConfigPath": "Data/LRSConfig.txt",
+    "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
+    "hintsPath": "Data/Hints_LearningScape.txt",
+    "internalHintsPath": "Data/InternalHints_LearningScape.txt",
+    "wrongAnswerFeedbacksPath": "Data/WrongAnswerFeedbacks.txt",
+    "enigmasWeightPath": "Data/EnigmasWeight.txt",
+    "labelWeightsPath": "Data/LabelWeights.txt",
+    "helpSystemConfigPath": "Data/HelpSystemConfig.txt",
+	"removeExtraGeometries": false,
+	
+	"additionalLogosPath": [],
+	
     "storyTextIntro": [
-        "Game data loaded from file",
         "Il est déjà tard le soir, Camille reste inquiète pour son premier enseignement à Sorbonne Université. Ce n’est pas la première fois qu’elle enseigne, mais maintenant elle est Maître de Conférences, son premier poste permanent.",
         "En se brossant les dents, elle révise la matière qu'elle devra enseigner demain en TD. Puis elle se couche, et plein de questions tournent dans sa tête : et si j’ai un blanc ? et si les étudiants ne sont pas motivés ? et s’il n’y a pas de craie ?",
         "Camille finit par s'endormir... C'est alors que les marchands de sable entrent en action pour aider Camille à structurer sa pensée pendant son sommeil."
     ],
     "storyTextransition": [
-        "Camille est tombée en sommeil paradoxal, et elle se met à rêver. L’université se transforme en jungle pleine de dangers. Les marchands de sable restent avec elle pour la protéger."
+        "Camille est tombée en sommeil paradoxal, et elle se met à rêver. L’université se transforme en jungle. Les marchands de sable restent avec elle pour la protéger."
     ],
     "storyTextEnd": [
         "Camille se réveille. Elle est en pleine forme, et tout est clair dans sa tête pour son premier enseignement. Elle a hâte de commencer.",
-        "Les marchands de sable ont bien travaillé et se retrouvent pour un débriefing sur tout leur travail.",
-        "Ce jeu est une adaptation du LearningScape créé par Sapiens et le CRI, soutenu d'un financement du projet IDEFI IIFR",
-        "Mounswif Darkaoui (Développement)\nSimon Giraud (Graphismes et sons)\nBasile Pesin (Réalité virtuelle)\nThomas Planques (Supervision artistique et game design)\nMathieu Muratet (Supervision développement et développement)\nBerni Hasenknopf (Initiateur du projet)"
+        "Les marchands de sable ont bien travaillé et se retrouvent pour un débriefing sur tout leur travail."
     ],
+	"additionalCredit": [],
+    "scoreText": "Vous avez mis: ",
+	
+	"inventoryScrollIntro": [
+		"Parchemin",
+		"Il y a des inscriptions inscrites à l’encre sur ce parchemin. Le message semble pour autant incomplet. Ces informations pourraient être utiles pour la suite.",
+		"Cliquez sur le parchemin pour l'ouvrir/le refermer"
+	],
+	"inventoryKeyBallBox": [
+		"Clé",
+		"C’est une clé, sans aucune distinction particulière. Elle ouvre certainement une porte ou un cadenas...",
+		"Cliquez sur la clé pour l'activer/la désactiver"
+	],
+	"inventoryWire": [
+		"Corde",
+		"Cette corde n’est pas très longue mais elle semble assez solide et en bon état. Elle permet sans doute de lier des éléments ensemble.",
+		"Cliquez sur la corde pour l'activer/la désactiver"
+	],
+	"inventoryKeySatchel": [
+		"Clé",
+		"Cette clé a été trouvée dans le vase se renversant. Elle ouvre certainement une porte ou un cadenas...",
+		"Cliquez sur la clé pour l'activer/la désactiver"
+	],
+	"inventoryScrolls": [
+		"Parchemins",
+		"Il y a des inscriptions inscrites à l’encre sur ce parchemin. Ces informations pourraient être utiles pour la suite.",
+		"Cliquez sur le parchemin pour l'ouvrir/le refermer"
+	],
+	"inventoryGlasses1": [
+		"Lunette Filtrante",
+		"La branche droite d'une paire de lunettes ? Il doit certainement manquer l’autre moitié... La lentille est teintée en rouge.",
+		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
+	],
+	"inventoryGlasses2": [
+		"Lunette Filtrante",
+		"La branche gauche d'une paire de lunettes ? Il doit certainement manquer l’autre moitié... La lentille est teintée en jaune.",
+		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
+	],
+	"inventoryMirror": [
+		"Miroir",
+		"Un miroir cylindrique constitué d'une seule pièce d'aluminium poli. Le reflet est d'une grande qualité.",
+		"Cliquez sur le miroir pour l'activer/le désactiver"
+	],
+	"inventoryLamp": [
+		"Lumière noire",
+		"Cette lampe dispose d’une ampoule particulière à vapeur de mercure constituée d'un revêtement particulier: le verre de Wood. Ce verre possède la particularité d'être riche en oxydes de nickel et de fer, ne laissant passer que les rayons UltraViolet : la lumière noire.",
+		"Cliquez sur la lampe pour l'allumer/l'éteindre"
+	],
+	"inventoryPuzzle": [
+		"Pièces de puzzle",
+		"Se sont des pièces d'un puzzle, tout simplement.",
+		"Cliquez pour manipuler les pièces"
+	],
+	
     "ballBoxQuestion": "Que faire pour rendre actifs mes étudiants ?",
-    "ballBoxPlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+    "ballBoxPlaceHolder": "3 chiffres attendus...",
+	"ballBoxAnswerFeedback": "1 - 2 - 8",
+	"ballBoxAnswerFeedbackDesc": "Classe Inversée - Interactivité - Approche Projet",
     "ballBoxAnswer": [
         "1",
         "2",
         "8"
     ],
-    "ballCorrectTexts": [
+    "ballTexts": [
+        "ENSEIGNER TOT LE MATIN",
         "CLASSE INVERSEE",
         "INTERACTIVITE",
-        "APPROCHE PROJET"
-    ],
-    "ballWrongTexts": [
         "COPINAGE AVEC LES ETUDIANTS",
-        "ECRIRE AU TABLEAU",
+        "SUPPRIMER LE SUPPORT VISUEL",
         "BEAUCOUP DE DEVOIRS A LA MAISON",
         "INTERROGATIONS SURPRISES",
         "BONUS DE PARTICIPATION",
-        "INTERROGER UN ETUDIANT AU HASARD",
-        "SEVERITE AVEC LES ETUDIANTS",
-        "DEPLACEMENT DANS LA SALLE",
-        "SUPPRIMER LE SUPPORT VISUEL",
-        "SIMPLIFIER BEAUCOUP LES EXERCICES",
-        "ENSEIGNER TOT LE MATIN",
+        "APPROCHE PROJET",
         "AUGMENTER LE NIVEAU D'EXIGENCE"
     ],
-    "plankAndWireQuestion": "Relier avec la corde les 3 éléments qui assurent la cohérence d'un cours",
-    "plankAndWirePlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
+	
     "plankAndWireQuestionIAR": "Comment construire une séquence cohérente ?",
+    "plankAndWirePlaceHolder": "3 chiffres attendus...",
+    "plankAndWireQuestion": "Relier avec la corde les 3 éléments qui assurent la cohérence d'un cours",
+	"plankAndWireAnswerFeedback": "4 - 5 - 9",
+	"plankAndWireAnswerFeedbackDesc": "Objectifs - Méthodes Pédagogiques - Evaluation",
     "plankAndWireCorrectWords": [
         "Objectifs",
         "Méthodes Pédagogiques",
         "Evaluation"
     ],
     "plankAndWireCorrectNumbers": [
-        4,
-        5,
-        9
+        "4",
+        "5",
+        "9"
     ],
     "plankOtherWords": [
         "Motivation",
@@ -70,16 +133,22 @@
         "Participation"
     ],
     "plankAndWireOtherNumbers": [
-        1,
-        2,
-        3,
-        6,
-        7,
-        8
+        "1",
+        "2",
+        "3",
+        "6",
+        "7",
+        "8"
     ],
-    "greenFragmentsQuestion": "Comment favoriser mon innovation pédagogique ?",
-    "greenFragmentPlaceHolder": "     Tapez votre réponse ici (10 chiffres)...",
-    "greenFragmentsWords": [
+	
+    "crouchQuestion": "Comment favoriser mon innovation pédagogique ?",
+    "crouchPlaceHolder": "10 chiffres attendus...",
+    "crouchAnswer": [
+        "1023810149"
+    ],
+    "crouchAnswerFeedback": "Il faut savoir changer de posture",
+    "crouchAnswerFeedbackDesc": "",
+    "crouchWords": [
         "il",
         "faut",
         "savoir",
@@ -87,9 +156,7 @@
         "de",
         "posture"
     ],
-    "greenFragmentAnswer": [
-        "1023810149"
-    ],
+	
     "gearsQuestion": "Sur quels facteurs est-ce que je peux agir pour motiver mes étudiants ?",
     "gearTextUp": "Etudiants",
     "gearTextDown": "Motivation",
@@ -100,30 +167,42 @@
         "Facteurs relatifs à la société"
     ],
     "gearAnswer": "Facteurs relatifs à la classe",
-    "mdpLogin": 814,
-    "glassesPlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
-    "glassesPicturesPath": [
-        "Data/contrat01.png",
-        "Data/contrat02.png",
-        "Data/contrat03.png",
-        "Data/contrat04.png"
-    ],
+	
+	"mastermindQuestion": "Vous avez oublié votre code ? Le hasard vous aidera sous doute !",
+	"mastermindQuestionYPos" : -124,
+    "mastermindAnswer": 814,
+	"mastermindBackgroundPicturePath": "Data/MasterMind.png",
+	
     "glassesQuestion": "Le vase se renversant vous livrera la clé de cette enigme",
+    "glassesPlaceHolder": "2 mots attendus...",
     "glassesAnswer": [
         "Contrat Pédagogique"
     ],
-    "enigma6Question": "A quoi Berthiaume nous conseille-t-il de faire attention ?",
-    "enigma6PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
-    "enigma6Answer": [
+    "glassesAnswerFeedback": "Contrat Pédagogique",
+    "glassesAnswerFeedbackDesc": "",
+    "glassesPicturesPath": [
+        "Data/glasses01.png",
+        "Data/glasses02.png",
+        "Data/glasses03.png",
+        "Data/glasses04.png"
+    ],
+	
+    "enigma08Question": "A quoi Berthiaume nous conseille-t-il de faire attention ?",
+    "enigma08PlaceHolder": "3 chiffres attendus...",
+    "enigma08Answer": [
         "9",
         "14"
     ],
-    "enigma6AnswerDescription": "Feedbacks constructifs",
-    "scrollsQuestion": "Cet acronyme anglais décrit des objectifs clairs",
-    "scrollsPlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
+    "enigma08AnswerFeedback": "9 - 14",
+    "enigma08AnswerFeedbackDesc": "Feedbacks constructifs",
+    
+	"scrollsQuestion": "Cet acronyme décrit des objectifs clairs",
+    "scrollsPlaceHolder": "1 mot anglais attendu...",
     "scrollsAnswer": [
         "SMART"
     ],
+	"scrollsAnswerFeedback": "SMART",
+	"scrollsAnswerFeedbackDesc": "Sensé - Mesurable - Atteignable - Réaliste - Temporalisé",
     "scrollsWords": [
         "<color=red>S</color>ensé",
         "<color=red>M</color>esurable",
@@ -131,38 +210,52 @@
         "<color=red>R</color>éaliste",
         "<color=red>T</color>emporalisé"
     ],
+	
     "mirrorQuestion": "L'année de création de la taxonomie de Bloom est...",
-    "mirrorPlaceHolder": "     Tapez votre réponse ici (4 chiffres)...",
+    "mirrorPlaceHolder": "4 chiffres attendus...",
     "mirrorAnswer": [
         "1956"
     ],
+	"mirrorAnswerFeedback": "1956",
+	"mirrorAnswerFeedbackDesc": "",
     "mirrorPicturePath": "Data/Plank.png",
-    "enigma9Question": "L'utilisation d'une grille critériée est la solution",
-    "enigma9PlaceHolder": "     Tapez votre réponse ici (3 chiffres)...",
-    "enigma9Answer": [
+	
+    "enigma11Question": "L'utilisation d'une grille critériée est la solution",
+    "enigma11PlaceHolder": "3 chiffres attendus...",
+    "enigma11Answer": [
         "3",
         "1",
         "2"
     ],
-    "enigma10Question": "Seul, vous ne sortirez pas de ce labyrinthe",
-    "enigma10PlaceHolder": "     Tapez votre réponse ici (texte attendu)...",
-    "enigma10Answer": [
+	"enigma11AnswerFeedback": "3 - 1 - 2",
+	"enigma11AnswerFeedbackDesc": "",
+	
+    "enigma12Question": "Seul, vous ne sortirez pas de ce labyrinthe",
+    "enigma12PlaceHolder": "1 mot attendu...",
+    "enigma12Answer": [
         "Collaboration"
     ],
+	"enigma12AnswerFeedback": "Collaboration",
+	"enigma12AnswerFeedbackDesc": "",
+	
     "lockRoom2Password": 703,
-    "puzzle": true,
-    "puzzlePicturePath": "Data/Puzzle_Complet.png",
+
     "puzzleAnswer": "planification",
-    "enigma12Answer": "Contraintes",
-    "lampPicturesPath": [
-        "Data/E12_C.png",
-        "Data/E12_S.png",
-        "Data/E12_O.png",
-        "Data/E12_E.png",
-        "Data/E12_U.png",
-        "Data/E12_R.png"
-    ],
+    "puzzlePicturePath": "Data/Puzzle_Complet.png",
+	
     "lampAnswer": "Ressources",
+    "lampPicturesPath": [
+        "Data/lamp01.png",
+        "Data/lamp02.png",
+        "Data/lamp03.png",
+        "Data/lamp04.png",
+        "Data/lamp05.png",
+        "Data/lamp06.png"
+    ],
+	
+    "enigma16Answer": "Contraintes",
+	
+    "whiteBoardAnswer": "Contenu",
     "whiteBoardWords": [
         "##RIEN N'EST## IMPORTANT",
         "TOUT EST ##INDISPENSABLE##",
@@ -176,6 +269,5 @@
         "RECOMPENSE",
         "ME##T##HODE",
         "APPROCHE PROGRAMME"
-    ],
-    "whiteBoardAnswer": "Contenu"
+    ]
 }

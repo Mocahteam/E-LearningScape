@@ -16,6 +16,20 @@ using System.Text; // required for StringBuilder()
 
 using Newtonsoft.Json.Linq; // for extensions
 
+public struct LRSAddress
+{
+    public string lrsURL;       //endpoint
+    public string lrsUser;      //key
+    public string lrsPassword;  //secret
+
+    public LRSAddress(string url, string user, string password)
+    {
+        lrsURL = url;
+        lrsUser = user;
+        lrsPassword = password;
+    }
+}
+
 // --------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------
 public static class GBL_Interface {
@@ -29,9 +43,10 @@ public static class GBL_Interface {
 	};
 
     // Fill in these fields for GBLxAPI setup.
-	public static string lrsURL = "https://lrsmocah.lip6.fr/data/xAPI"; 				// endpoint
-	public static string lrsUser = "2da3ea73b1dcf6258c02649d1d3f7a9385b74d61";  		// key
-	public static string lrsPassword = "90935a12c7eeb44d1d6acefd0f413e4d4c552467";
+    //Statements will be sent to all addresses in this list
+    public static List<LRSAddress> lrsAddresses = new List<LRSAddress>() {
+        new LRSAddress("https://lrsmocah.lip6.fr/data/xAPI", "0cba1c6d1fb844993cec4ebc3ee458d271ad6d84", "6e4d81bb34ba308397943b8d1c40db389524b34a")    //default lip6 LRS
+    };
 	public static string standardsConfigDefault = "data/GBLxAPI_Vocab_Default";
 	public static string standardsConfigUser = "data/GBLxAPI_Vocab_User";
 	public static string gameURI = "https://www.lip6.fr/mocah/invalidURI/activity-types/serious-game/LearningScape";
@@ -47,28 +62,69 @@ public static class GBL_Interface {
 	Here is where you will put functions to be called whenever you want to send a GBLxAPI statement.
 	 */
 	
-	public static void SendStatement(string verb, string activityType, string activityName)
+	public static void SendStatement(string verb, string activityType, string activityName, Dictionary<string, List<string>> activityExtensions = null)
     {
 		Agent statementActor = GBLXAPI.Instance.CreateActorStatement(userUUID, "https://www.lip6.fr/mocah/", playerName);
 		Verb statementVerb = GBLXAPI.Instance.CreateVerbStatement(verb);
 		Activity statementObject = GBLXAPI.Instance.CreateObjectActivityStatement(string.Concat("https://www.lip6.fr/mocah/invalidURI/",activityType,"/",activityName), activityType, activityName);
-		Result statementResult = null;
 
+        if(activityExtensions != null)
+        {
+            //set extensions
+            foreach(string field in activityExtensions.Keys)
+            {
+                List<JToken> jtList = new List<JToken>();
+                foreach (string value in activityExtensions[field])
+                    jtList.Add(GBLXAPI.Instance.CreateContextExtensionStatement(field, value));
+                statementObject.definition.extensions = new TinCan.Extensions();
+                GBLXAPI.Instance.PackExtension(field, jtList, statementObject.definition.extensions);
+            }
+        }
+
+		Result statementResult = null;
 		Context statementContext = null;
 
 		// QueueStatement(Agent statementActor, Verb statementVerb, Activity statementObject, Result statementResult, Context statementContext, StatementCallbackHandler sendCallback = null)
 		GBLXAPI.Instance.QueueStatement(statementActor, statementVerb, statementObject, statementResult, statementContext);
 	}
 	
-	public static void SendStatementWithResult(string verb, string activityType, string activityName, bool? completed, 
-        bool? success, string response = null, int? score = null, float duration = 0)
+	public static void SendStatementWithResult(string verb, string activityType, string activityName, Dictionary<string, List<string>> activityExtensions = null,
+        Dictionary<string, List<string>> resultExtensions = null, bool ? completed = null, bool? success = null, string response = null, int? score = null,
+        float duration = 0)
     {
 		Agent statementActor = GBLXAPI.Instance.CreateActorStatement(userUUID, "https://www.lip6.fr/mocah/", playerName);
 		Verb statementVerb = GBLXAPI.Instance.CreateVerbStatement(verb);
 		Activity statementObject = GBLXAPI.Instance.CreateObjectActivityStatement(string.Concat("https://www.lip6.fr/mocah/invalidURI/",activityType,"/",activityName), activityType, activityName);
+
+        if (activityExtensions != null)
+        {
+            //set extensions
+            foreach (string field in activityExtensions.Keys)
+            {
+                List<JToken> jtList = new List<JToken>();
+                foreach (string value in activityExtensions[field])
+                    jtList.Add(GBLXAPI.Instance.CreateContextExtensionStatement(field, value));
+                statementObject.definition.extensions = new TinCan.Extensions();
+                GBLXAPI.Instance.PackExtension(field, jtList, statementObject.definition.extensions);
+            }
+        }
+
         Result statementResult = GBLXAPI.Instance.CreateResultStatement(completed, success, duration, response, score);
 
-		Context statementContext = null;
+        if (resultExtensions != null)
+        {
+            //set extensions
+            foreach (string field in resultExtensions.Keys)
+            {
+                List<JToken> jtList = new List<JToken>();
+                foreach (string value in resultExtensions[field])
+                    jtList.Add(GBLXAPI.Instance.CreateContextExtensionStatement(field, value));
+                statementResult.extensions = new TinCan.Extensions();
+                GBLXAPI.Instance.PackExtension(field, jtList, statementResult.extensions);
+            }
+        }
+
+        Context statementContext = null;
 
 		// QueueStatement(Agent statementActor, Verb statementVerb, Activity statementObject, Result statementResult, Context statementContext, StatementCallbackHandler sendCallback = null)
 		GBLXAPI.Instance.QueueStatement(statementActor, statementVerb, statementObject, statementResult, statementContext);

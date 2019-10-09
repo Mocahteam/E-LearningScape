@@ -1,0 +1,145 @@
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-4AE4-9BD93-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+  <name>
+   <text>Enigma6</text>
+  </name>
+ <page id="g-4AE4-9BD9D-1">
+  <place id="p-4AE4-9BDA0-2">
+  <name>
+   <text>Fragment_souvenir_1_ActivationCount_65</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="225" y="60"/>
+   </graphics>
+  </place>
+  <transition id="t-4AE4-9BDAD-3">
+  <name>
+   <text>Fragment_souvenir_1_activate_65</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-4AE4-9BDB2-4">
+  <name>
+   <text>Fragment_souvenir_5_ActivationCount_66</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="150"/>
+   </graphics>
+  </place>
+  <transition id="t-4AE4-9BDB6-5">
+  <name>
+   <text>Fragment_souvenir_5_activate_66</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="140"/>
+   </graphics>
+  </transition>
+  <place id="p-4AE4-9BDBA-6">
+  <name>
+   <text>Fragment_souvenir_8_ActivationCount_67</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="245"/>
+   </graphics>
+  </place>
+  <transition id="t-4AE4-9BDBE-7">
+  <name>
+   <text>Fragment_souvenir_8_activate_67</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="235"/>
+   </graphics>
+  </transition>
+  <place id="p-4AE4-9BDC2-8">
+  <name>
+   <text>Q2_Answered_69</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="725" y="95"/>
+   </graphics>
+  </place>
+  <place id="p-4AE4-9BDC5-9">
+  <name>
+   <text>Q2_Answering_69</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="475" y="95"/>
+   </graphics>
+  </place>
+  <transition id="t-4AE4-9BDC8-10">
+  <name>
+   <text>Q2_Correct_69</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="605" y="85"/>
+   </graphics>
+  </transition>
+  <transition id="t-4AE4-9BDCB-11">
+  <name>
+   <text>Q2_Wrong_69</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="605" y="175"/>
+   </graphics>
+  </transition>
+  <place id="p-4AE4-9BDCD-12">
+  <name>
+   <text>Q2_locker_69</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="475" y="195"/>
+   </graphics>
+  </place>
+  <arc id="e-4AE4-9BDD3-13" source="t-4AE4-9BDAD-3" target="p-4AE4-9BDA0-2">
+  </arc>
+  <arc id="e-4AE4-9BDD4-14" source="t-4AE4-9BDB6-5" target="p-4AE4-9BDB2-4">
+  </arc>
+  <arc id="e-4AE4-9BDD6-15" source="t-4AE4-9BDBE-7" target="p-4AE4-9BDBA-6">
+  </arc>
+  <arc id="e-4AE4-9BDD7-16" source="p-4AE4-9BDCD-12" target="t-4AE4-9BDCB-11">
+  </arc>
+  <arc id="e-4AE4-9BDD8-17" source="t-4AE4-9BDC8-10" target="p-4AE4-9BDC2-8">
+  </arc>
+  <arc id="e-4AE4-9BDD9-18" source="p-4AE4-9BDC5-9" target="t-4AE4-9BDC8-10">
+  </arc>
+ </page>
+ </net>
+</pnml>

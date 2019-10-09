@@ -3,6 +3,7 @@ using FYFY;
 using TMPro;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
@@ -14,21 +15,15 @@ public class DreamFragmentCollecting : FSystem {
     private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
     private Family f_dreamFragmentUI = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AnyOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD));
     private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
-    private Family f_inventoryElements = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
-    private Family f_collectedPuzzleFragments = FamilyManager.getFamily(new AllOfComponents(typeof(PuzzleFragmentSeen)));
 
     private GameObject dfUI;
     private TextMeshProUGUI FragmentText;
     private RaycastHit hit;
     private GameObject selectedFragment;
     private DreamFragment tmpDFComponent;
-    private bool[] fragmentsSeen;
     private bool backupIARNavigationState;
-    private GameObject puzzleLeftUI;
-    private bool allPuzzleFragmentsCollected = false;
     private GameObject tmpGo;
-
-    private Dictionary<string, string> dreamFragmentsLinks;
+    //button in dream fragment UI to open the link
     private GameObject onlineButton;
 
     public static DreamFragmentCollecting instance;
@@ -41,44 +36,26 @@ public class DreamFragmentCollecting : FSystem {
             // Add listener on child button to close UI
             foreach(Button b in dfUI.GetComponentsInChildren<Button>())
             {
-                if(b.gameObject.name == "OKButton")
-                    dfUI.GetComponentInChildren<Button>().onClick.AddListener(CloseWindow);
-                else if (b.gameObject.name == "ButtonOnline")
-                {
-                    b.onClick.AddListener(OpenFragmentLink);
+                if (b.gameObject.name == "ButtonOnline")
                     onlineButton = b.gameObject;
-                }
             }
             // Get child text area
             FragmentText = dfUI.GetComponentInChildren<TextMeshProUGUI>();
-
-            fragmentsSeen = new bool[6];
-            for(int i = 0; i < fragmentsSeen.Length; i++)
-                fragmentsSeen[i] = false;
-            int nbInvetoryElems = f_inventoryElements.Count;
-            for(int i = 0; i < nbInvetoryElems; i++)
-            {
-                if(f_inventoryElements.getAt(i).name == "Puzzle")
-                {
-                    puzzleLeftUI = f_inventoryElements.getAt(i);
-                    break;
-                }
-            }
-
-            if (File.Exists(LoadGameContent.gameContent.dreamFragmentLinksPath))
-                dreamFragmentsLinks = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(LoadGameContent.gameContent.dreamFragmentLinksPath));
-            else
-                Debug.LogWarning("Unable to load dream fragment links because no file found.");
-            if (dreamFragmentsLinks == null)
-                dreamFragmentsLinks = new Dictionary<string, string>();
         }
         instance = this;
     }
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
+        foreach(GameObject go in f_dreamFragments)
+        {
+            DreamFragment df = go.GetComponent<DreamFragment>();
+            if (!df.viewed && df.type != 1)
+                go.transform.Rotate(new Vector3(0, 20*Time.deltaTime, 0));
+        }
+
         // Compute Raycast only when mouse is clicked
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Fire1"))
         {
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
             {
@@ -87,10 +64,10 @@ public class DreamFragmentCollecting : FSystem {
                 {
                     // Show fragment UI
                     selectedFragment = hit.transform.gameObject;
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "fragment", objectName = selectedFragment.name });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
                     GameObjectManager.setGameObjectState(dfUI, true);
                     tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
-                    GameObjectManager.setGameObjectState(onlineButton, dreamFragmentsLinks.ContainsKey(selectedFragment.name) && dreamFragmentsLinks[selectedFragment.name] != "");
+                    GameObjectManager.setGameObjectState(onlineButton, tmpDFComponent.urlLink != null && tmpDFComponent.urlLink != "");
                     // Set UI text depending on type and id
                     if (tmpDFComponent.type == 0)
                         FragmentText.text = string.Concat("Ouvrez le fragment de rêve numéro ", tmpDFComponent.id);
@@ -102,74 +79,27 @@ public class DreamFragmentCollecting : FSystem {
                     backupIARNavigationState = IARTabNavigation.instance.Pause;
                     IARTabNavigation.instance.Pause = true;
 
-                    switch (selectedFragment.name)
-                    {
-                        case "Fragment_souvenir_7":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if(!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
+                    GameObjectManager.addComponent<PlaySound>(selectedFragment, new { id = 3 }); // id refer to FPSController AudioBank
 
-                        case "Fragment_souvenir_14":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        case "Fragment_souvenir_15":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        case "Fragment_souvenir_16":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        case "Fragment_souvenir_18":
-                            GameObjectManager.addComponent<PuzzleFragmentSeen>(selectedFragment);
-                            if (!allPuzzleFragmentsCollected && f_collectedPuzzleFragments.Count == 5)
-                            {
-                                allPuzzleFragmentsCollected = true;
-                                GameObjectManager.addComponent<ActionPerformed>(puzzleLeftUI, new { name = "perform", performedBy = "system" });
-                            }
-                            break;
-
-                        default:
-                            break;
-                    }
-
-                    if (selectedFragment.name == "Fragment_souvenir_de")
+                    if (selectedFragment.GetComponentInParent<IsSolution>())
                     {
                         if(f_player.First().transform.localScale.x < 0.9f)
-                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "l16"} });
+                            //if the player is crouching
+                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "crouch"} });
                         else
-                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "l17" } });
+                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "chairDown" } });
 
                     }
-                    else
+                    else if (tmpDFComponent.type != 2)
                         GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player" });
                 }
             }
         }
     }
 
-    private void CloseWindow()
+    public void CloseFragmentUI()
     {
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "deactivated", objectType = "viewable", objectName = selectedFragment.name });
         if (selectedFragment.GetComponent<DreamFragment>().type != 2)
         {
             // disable particles
@@ -184,6 +114,7 @@ public class DreamFragmentCollecting : FSystem {
                     break;
                 }
             }
+            selectedFragment.GetComponent<DreamFragment>().viewed = true;
         }
         selectedFragment = null;
         // close UI
@@ -194,8 +125,25 @@ public class DreamFragmentCollecting : FSystem {
         IARTabNavigation.instance.Pause = backupIARNavigationState;
     }
 
-    private void OpenFragmentLink()
+    public void OpenFragmentLink()
     {
-        Application.OpenURL(dreamFragmentsLinks[selectedFragment.name]);
+        DreamFragment df = selectedFragment.GetComponent<DreamFragment>();
+        //when onlineButton is clicked
+        try
+        {
+            Application.OpenURL(df.urlLink);
+        }
+        catch (Exception)
+        {
+            Debug.LogError(string.Concat("Invalid dream fragment link: ", df.urlLink));
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid dream fragment link: ", df.urlLink));
+        }
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new
+        {
+            verb = "accessed",
+            objectType = "viewable",
+            objectName = string.Concat(selectedFragment.name, "_Link"),
+            activityExtensions = new Dictionary<string, List<string>>() { { "link", new List<string>() { df.urlLink } } }
+        });
     }
 }

@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class ChangePixelColor : MonoBehaviour {
 
-    private int radius = 50;
+    private int radius = 40;
     private Color eraseColor;
 
-	// Use this for initialization
-	void Start ()
+    private int oldPointX = int.MinValue;
+    private int oldPointY = int.MinValue;
+
+    // Use this for initialization
+    void Start ()
     {
         eraseColor = this.transform.parent.gameObject.GetComponent<Renderer>().material.color;
         if (!this.GetComponent<Renderer>().material.mainTexture)
@@ -31,7 +34,7 @@ public class ChangePixelColor : MonoBehaviour {
     private void OnGUI()
     {
         Event evt = Event.current;
-        if (evt.isMouse && Input.GetMouseButton(0) && WhiteBoardManager.eraserDragged)
+        if (evt.isMouse && Input.GetButton("Fire1") && WhiteBoardManager.eraserDragged)
         {
             // Send a ray to collide with the plane
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -50,35 +53,56 @@ public class ChangePixelColor : MonoBehaviour {
                 Texture2D tex = (Texture2D)hit.transform.gameObject.GetComponent<Renderer>().material.mainTexture;
                 int pointX = (int)(uv.x * tex.width);
                 int pointY = (int)(uv.y * tex.height);
+                if (oldPointX == int.MinValue)
+                    oldPointX = pointX;
+                if (oldPointY == int.MinValue)
+                    oldPointY = pointY;
+                int stepX = 10;
+                if (pointX < oldPointX)
+                    stepX = -10;
+                int stepY = 10;
+                if (pointY < oldPointY)
+                    stepY = -10;
                 int xSym, ySym;
-                for(int x = pointX - radius; x < pointX; x++)
+                while (oldPointX != pointX || oldPointY != pointY)
                 {
-                    for (int y = pointY - radius; y < pointY; y++)
+                    if (Mathf.Abs(oldPointX - pointX) <= 10)
+                        oldPointX = pointX;
+                    if (Mathf.Abs(oldPointY - pointY) <= 10)
+                        oldPointY = pointY;
+                    if (oldPointX != pointX)
+                        oldPointX += stepX;
+                    if (oldPointY != pointY)
+                        oldPointY += stepY;
+                    for (int x = oldPointX - radius; x <= oldPointX; x++)
                     {
-                        if((x- pointX) * (x - pointX) + (y - pointY) * (y - pointY) < radius * radius)
+                        for (int y = oldPointY - radius; y <= oldPointY; y++)
                         {
-                            xSym = pointX * 2 - x;
-                            ySym = pointY * 2 - y;
-                            if(x > 0 && x < tex.width)
+                            if ((x - oldPointX) * (x - oldPointX) + (y - oldPointY) * (y - oldPointY) < radius * radius)
                             {
-                                if (y > 0 && y < tex.height)
+                                xSym = oldPointX * 2 - x;
+                                ySym = oldPointY * 2 - y;
+                                if (x > 0 && x < tex.width)
                                 {
-                                    tex.SetPixel(x, y, eraseColor);
+                                    if (y > 0 && y < tex.height)
+                                    {
+                                        tex.SetPixel(x, y, eraseColor);
+                                    }
+                                    if (ySym > 0 && ySym < tex.height)
+                                    {
+                                        tex.SetPixel(x, ySym, eraseColor);
+                                    }
                                 }
-                                if (ySym > 0 && ySym < tex.height)
+                                if (xSym > 0 && xSym < tex.width)
                                 {
-                                    tex.SetPixel(x, ySym, eraseColor);
-                                }
-                            }
-                            if (xSym > 0 && xSym < tex.width)
-                            {
-                                if (y > 0 && y < tex.height)
-                                {
-                                    tex.SetPixel(xSym, y, eraseColor);
-                                }
-                                if (ySym > 0 && ySym < tex.height)
-                                {
-                                    tex.SetPixel(xSym, ySym, eraseColor);
+                                    if (y > 0 && y < tex.height)
+                                    {
+                                        tex.SetPixel(xSym, y, eraseColor);
+                                    }
+                                    if (ySym > 0 && ySym < tex.height)
+                                    {
+                                        tex.SetPixel(xSym, ySym, eraseColor);
+                                    }
                                 }
                             }
                         }

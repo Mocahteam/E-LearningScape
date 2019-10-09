@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<transitions>
-  <transition id="Fragment_souvenir_2_activate_87" label="activate Fragment_souvenir_2" system="False" end="False" />
-  <transition id="Q5_Correct_88" label="Correct Q5" system="False" end="True" />
-  <transition id="Q5_Wrong_88" label="Wrong Q5" system="False" end="False" />
-</transitions>

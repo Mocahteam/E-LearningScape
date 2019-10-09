@@ -11,27 +11,20 @@ public class CollectObject : FSystem {
     // We process only Highlighted game objects (this component is dynamically added by Highlight system)
     private Family f_collectableObjects = FamilyManager.getFamily(new AllOfComponents(typeof(LinkedWith), typeof(Highlighted)), new NoneOfLayers(5), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_pressA = FamilyManager.getFamily(new AnyOfTags("PressA"));
-    private Family f_inventoryElements = FamilyManager.getFamily(new AnyOfTags("InventoryElements"));
+    private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
 
     public static CollectObject instance;
 
     private GameObject seenScroll;
-    private GameObject seenPuzzle;
+
+    private GameObject itemCollectedNotif;
+    private float timeStart;
 
     public CollectObject()
     {
         if (Application.isPlaying)
         {
-            int nbElem = f_inventoryElements.Count;
-            for(int i = 0; i < nbElem; i++)
-            {
-                if (f_inventoryElements.getAt(i).name == "Puzzle")
-                {
-                    seenPuzzle = f_inventoryElements.getAt(i);
-                    GameObjectManager.addComponent<LinkLabel>(f_inventoryElements.getAt(i));
-                    break;
-                }
-            }
+            itemCollectedNotif = f_HUD_A.First().transform.parent.GetChild(5).gameObject;
         }
         instance = this;
     }
@@ -39,16 +32,16 @@ public class CollectObject : FSystem {
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Fire1"))
         {
             foreach (GameObject collect in f_collectableObjects)
             {
+                GameObjectManager.addComponent<ActionPerformed>(collect, new { name = "perform", performedBy = "player" });
                 GameObjectManager.addComponent<ActionPerformedForLRS>(collect, new { verb = "collected", objectType = "item", objectName = collect.name });
                 // enable UI target
                 GameObjectManager.setGameObjectState(collect.GetComponent<LinkedWith>().link, true);
-                GameObjectManager.addComponent<ActionPerformed>(collect, new { name = "perform", performedBy = "player"});
                 // particular case of collecting room2 scrolls
-                if (collect.name.Contains("_Scroll") && collect.name.Length == 8)
+                if (collect.name.Contains("Scroll") && collect.name.Length == 7)
                 {
                     // find link into IAR left screen
                     GameObject UI_metaScroll = collect.GetComponent<LinkedWith>().link;
@@ -68,36 +61,15 @@ public class CollectObject : FSystem {
                     GameObject UIScroll = UI_metaScroll.GetComponent<LinkedWith>().link.transform.Find(collect.name).gameObject;
                     // enable it
                     GameObjectManager.setGameObjectState(UIScroll, true);
-
-                    switch (collect.name[collect.name.Length -1])
-                    {
-                        case '1':
-                            seenPuzzle.GetComponent<LinkLabel>().text = "l5";
-                            break;
-
-                        case '2':
-                            seenPuzzle.GetComponent<LinkLabel>().text = "l6";
-                            break;
-
-                        case '3':
-                            seenPuzzle.GetComponent<LinkLabel>().text = "l7";
-                            break;
-
-                        case '4':
-                            seenPuzzle.GetComponent<LinkLabel>().text = "l8";
-                            break;
-
-                        case '5':
-                            seenPuzzle.GetComponent<LinkLabel>().text = "l9";
-                            break;
-
-                        default:
-                            break;
-                    }
                 }
                 // disable in-game source
                 GameObjectManager.setGameObjectState(collect, false);
-                // particular case of collecting Intro_scroll game object => show HUD "A"
+                // Play notification
+                itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start");
+                
+                // Play sound
+                GameObjectManager.addComponent<PlaySound>(collect, new { id = 10 }); // id refer to FPSController AudioBank
+                // particular case of collecting Intro_scroll game object => show ingame "Press A" notification
                 if (collect.name == "Intro_Scroll")
                 {
                     GameObjectManager.setGameObjectState(f_pressA.First(), true);

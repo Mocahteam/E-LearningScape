@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-D050-55E49-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>WhiteBoardEnigma</text>
+  </name>
+ <page id="g-D050-55E5E-1">
+  <place id="p-D050-55E62-2">
+  <name>
+   <text>AnswersInput_end_142</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="775" y="70"/>
+   </graphics>
+  </place>
+  <transition id="t-D050-55E81-3">
+  <name>
+   <text>AnswersInput_perform_142</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="705" y="70"/>
+   </graphics>
+  </transition>
+  <place id="p-D050-55E8A-4">
+  <name>
+   <text>AnswersInput_start_142</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="625" y="70"/>
+   </graphics>
+  </place>
+  <place id="p-D050-55E8F-5">
+  <name>
+   <text>Board_off_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="50" y="90"/>
+   </graphics>
+  </place>
+  <place id="p-D050-55E95-6">
+  <name>
+   <text>Board_on_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="90"/>
+   </graphics>
+  </place>
+  <transition id="t-D050-55E98-7">
+  <name>
+   <text>Board_turnOff_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="130" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-D050-55E9E-8">
+  <name>
+   <text>Board_turnOn_127</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="130" y="150"/>
+   </graphics>
+  </transition>
+  <place id="p-D050-55EA5-9">
+  <name>
+   <text>Eraser_ActivationCount_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="480" y="210"/>
+   </graphics>
+  </place>
+  <place id="p-D050-55EAD-10">
+  <name>
+   <text>Eraser_off_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="480" y="90"/>
+   </graphics>
+  </place>
+  <place id="p-D050-55EB8-11">
+  <name>
+   <text>Eraser_on_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="320" y="90"/>
+   </graphics>
+  </place>
+  <transition id="t-D050-55EBB-12">
+  <name>
+   <text>Eraser_turnOff_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="400" y="70"/>
+   </graphics>
+  </transition>
+  <transition id="t-D050-55EC1-13">
+  <name>
+   <text>Eraser_turnOn_128</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="400" y="150"/>
+   </graphics>
+  </transition>
+  <arc id="e-D050-55ED0-14" source="p-D050-55EA5-9" target="t-D050-55E81-3">
+   <type value="test"/>
+  </arc>
+  <arc id="e-D050-55ED7-15" source="p-D050-55E95-6" target="t-D050-55EBB-12">
+   <type value="test"/>
+  </arc>
+  <arc id="e-D050-55ED9-16" source="t-D050-55EC1-13" target="p-D050-55EA5-9">
+  </arc>
+  <arc id="e-D050-55EDB-17" source="p-D050-55EB8-11" target="t-D050-55EBB-12">
+  </arc>
+  <arc id="e-D050-55EDC-18" source="p-D050-55EAD-10" target="t-D050-55EC1-13">
+  </arc>
+  <arc id="e-D050-55EDE-19" source="t-D050-55EC1-13" target="p-D050-55EB8-11">
+  </arc>
+  <arc id="e-D050-55EE0-20" source="t-D050-55EBB-12" target="p-D050-55EAD-10">
+  </arc>
+  <arc id="e-D050-55EE2-21" source="p-D050-55E95-6" target="t-D050-55E98-7">
+  </arc>
+  <arc id="e-D050-55EE6-22" source="p-D050-55E8F-5" target="t-D050-55E9E-8">
+  </arc>
+  <arc id="e-D050-55EE8-23" source="t-D050-55E9E-8" target="p-D050-55E95-6">
+  </arc>
+  <arc id="e-D050-55EEA-24" source="t-D050-55E98-7" target="p-D050-55E8F-5">
+  </arc>
+  <arc id="e-D050-55EEC-25" source="t-D050-55E81-3" target="p-D050-55E62-2">
+  </arc>
+  <arc id="e-D050-55FB4-26" source="p-D050-55E8A-4" target="t-D050-55E81-3">
+  </arc>
+  <arc id="e-D050-55FB7-27" source="p-D050-55E95-6" target="t-D050-55EC1-13">
+   <type value="test"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

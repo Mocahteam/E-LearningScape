@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<transitions>
-  <transition id="Fragment_souvenir_13_activate_119" label="activate Fragment_souvenir_13" system="False" end="False" />
-  <transition id="AnswersInput_Correct_105" label="Correct13 AnswersInput" system="False" end="True" />
-  <transition id="AnswersInput_Wrong_105" label="Wrong13 AnswersInput" system="False" end="False" />
-  <transition id="Fragment_souvenir_10_activate_120" label="activate Fragment_souvenir_10" system="False" end="False" />
-</transitions>

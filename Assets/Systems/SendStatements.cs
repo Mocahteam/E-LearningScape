@@ -2,6 +2,9 @@
 using FYFY;
 using DIG.GBLXAPI;
 using System;
+using System.IO;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 public class SendStatements : FSystem {
 
@@ -15,8 +18,8 @@ public class SendStatements : FSystem {
     {
         if (Application.isPlaying)
         {
-            if(!GBLXAPI.Instance.IsInit())
-                GBLXAPI.Instance.init(GBL_Interface.lrsURL, GBL_Interface.lrsUser, GBL_Interface.lrsPassword, GBL_Interface.standardsConfigDefault, GBL_Interface.standardsConfigUser);
+            if (!GBLXAPI.Instance.IsInit())
+                GBLXAPI.Instance.init(GBL_Interface.lrsAddresses, GBL_Interface.standardsConfigDefault, GBL_Interface.standardsConfigUser);
 
             GBLXAPI.Instance.debugStatement = false;
 
@@ -57,7 +60,9 @@ public class SendStatements : FSystem {
                 ap = listAP[i];
                 //If no result info filled
                 if (!ap.result)
-                    GBL_Interface.SendStatement(ap.verb, ap.objectType, ap.objectName);
+                {
+                    GBL_Interface.SendStatement(ap.verb, ap.objectType, ap.objectName, ap.activityExtensions);
+                }
                 else
                 {
                     bool? completed = null, success = null;
@@ -72,9 +77,9 @@ public class SendStatements : FSystem {
                     else if (ap.success < 0)
                         success = false;
 
-                    GBL_Interface.SendStatementWithResult(ap.verb, ap.objectType, ap.objectName, completed, success, ap.response, ap.score, ap.duration);
+                    GBL_Interface.SendStatementWithResult(ap.verb, ap.objectType, ap.objectName, ap.activityExtensions, ap.resultExtensions,
+                        completed, success, ap.response, ap.score, ap.duration);
                 }
-                GameObjectManager.removeComponent(ap);
             }
         }
         for (int i = nb - 1; i > -1; i--)

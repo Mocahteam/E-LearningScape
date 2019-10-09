@@ -1,0 +1,31 @@
+Passer les TextMeshPro des boutons
+Passer tous les TextMeshPro pour vérifier qu'ils sont bien tous en autosize
+Vérifier si c'est vraiement utile de cocher la case "Enable Kerning?" dans le TextMeshPro du bouton Commencer. Si oui, l'activer. (idem pour le 703)
+Mettre une jolie flêche jaune pour indiquer les nouveaux éléments de l'IAR et les notifs du A et du H => visiblement paramètre par défaut => Activer partout ?
+Vérifier navigation dans les boutons
+Vérifier tous les targetGraphic de tous les boutons
+Attention => Différentes polices utilisées (Word vs UI vs PlaceHolder / Flabby vs Arial) vérifier que sur le changement de police le texte du mastermind est bien bloqué par la géométrie (idem pour tout les texte en jeu).
+Attention lors de l'intégration du sound manager vérifier quand son Instance est utilisée pour l'activer ou pas.
+Vérifier toute la mécanique du EventSystem pour forcer le focus sur les objets du jeu.
+Vérifier bug nouvel onglet disponible et sélection au clavier => la notification ne disparaît pas.
+
+
+Panneau de login quand on valide avec Entrée la méthode CheckConnection du LoginManager.cs est appelée deux fois !!!
+Implémenter le mécanisme du ##HL## pour faire briller un objet dans la scène sur le déclenchement d'un indice (voir InternalHints_LearningScape.txt et HelpSystem.cs)
+vérifier que l'eraser passe sur les mots
+	en fonction du nombre de caractère et de la taille de la police (au lieu de la taille du champ) WhiteBoardManager.cs (changer les attributs de l'appel de PointsFromCenter dans le constructeur)
+vérifier dans le code et dans les PNML l'association entre "enigma12"/ "enigma13" et lamp/braille
+xml pour changer le contenu du jeu
+	Faire un document pour expliquer chaque champ
+	déplacer la désérialisation des liens de dreamfragment (constructeur de DreamFragmentCollecting.cs) dans LoadGameContent.cs (voir région "File Loading")
+HelpSystem
+	pour l'ajout des composant WrongAnswerInfo mettre l'id du ComponentMonitoring dynamiquement plutot que direcement dans le code? (HelpSystem.cs Constructeur)
+	ne pas redonner un feedback pour une mauvaise réponse s'il a déjà été donné? (pour le moment oui => remis dans la liste dans l'IAR)
+Envoyer les traces sur un LRS
+	Documentation sur le format des statements de LearningScape
+	sortir le systeme "SendStatements.cs", le composant "ActionPerformedForLRS.cs" et les dépendences (Dossier "GBLXAPI") du projet pour en faire une lib FYFY
+Package FYFY Unity sur l'asset store
+	créer un package avec toutes les dll et toute la doc
+	traduire tuto 2, 3 et "Trucs et astuces" en anglais
+	ajouter dans "trucs et astuces" l'explication de ActionManager
+Quand on est dans l'IAR pour répondre à une question et qu'on répond faux et qu'il y a une WrongAnswerFeedback associée (voir fichier WrongAnswerFeedback.txt) ajouter la pastille rouge sur l'onglet Aide

@@ -7,11 +7,11 @@ public class Highlighter : FSystem {
     // Highlight all in game interactable GameObjects
 
     //all in game interactive objects
-    // in game element linked whith UI game object are collectable and so highlightable
-	private Family f_highlitable = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(ToggleableGO), typeof(LinkedWith)));
+    // in game element linked whith UI game object are collectable and so highlightable (except animated sprites)
+	private Family f_highlitable = FamilyManager.getFamily(new AnyOfComponents(typeof(Selectable), typeof(ToggleableGO), typeof(LinkedWith)), new NoneOfComponents(typeof(AnimatedSprites)), new NoneOfLayers(1));
 
     private Renderer[] tmpRendererList;
-
+    
     private GameObject previousHighlight = null;
     private Queue<Color> previousColor;
 
@@ -28,6 +28,12 @@ public class Highlighter : FSystem {
     {
         if (previousHighlight != null)
         {
+            if (previousHighlight.GetComponent<Selectable>())
+                GameObjectManager.addComponent<ActionPerformedForLRS>(previousHighlight, new { verb = "exitedHighlight", objectType = "interactable", objectName = previousHighlight.name });
+            else if (previousHighlight.GetComponent<ToggleableGO>())
+                GameObjectManager.addComponent<ActionPerformedForLRS>(previousHighlight, new { verb = "exitedHighlight", objectType = "toggable", objectName = previousHighlight.name });
+            else
+                GameObjectManager.addComponent<ActionPerformedForLRS>(previousHighlight, new { verb = "exitedHighlight", objectType = "item", objectName = previousHighlight.name });
             tmpRendererList = previousHighlight.GetComponentsInChildren<Renderer>();
             int nb = tmpRendererList.Length;
             for (int i = 0; i < nb; i++)
@@ -75,6 +81,8 @@ public class Highlighter : FSystem {
         }
         // Add Highlighted component to this GameObject
         GameObjectManager.addComponent<Highlighted>(currentHighlight);
+
+        GameObjectManager.addComponent<PlaySound>(currentHighlight, new { id = 2 }); // id refer to FPSController AudioBank
     }
 
     // Use this to update member variables when system pause. 
@@ -100,10 +108,8 @@ public class Highlighter : FSystem {
             // Check if object is close to the camera
             if ((hit.transform.gameObject.transform.position - Camera.main.transform.position).sqrMagnitude < 49)
             {
-                // Evaluate if we have to check family => if object (or its parent) is not the previous one
-                bool checkFamily = previousHighlight != hit.transform.gameObject;
-                if (hit.transform.parent)
-                    checkFamily = checkFamily && previousHighlight != hit.transform.parent.gameObject;
+                // Evaluate if we have to check family => if object (or its parents) is not the previous one
+                bool checkFamily = previousHighlight != hit.transform.gameObject && hit.transform.parent && previousHighlight != hit.transform.parent.gameObject && hit.transform.parent.parent && previousHighlight != hit.transform.parent.parent.gameObject;
                 if (checkFamily)
                 {
                     // Check if this game object is included into family
@@ -113,17 +119,23 @@ public class Highlighter : FSystem {
                         currentHighlight = hit.transform.gameObject;
                         highlight(currentHighlight);
                     }
-                    // Check if the parent of hited game object is an interactive game object and this game object doesn't contain a dream fragment
-                    else if (!hit.transform.gameObject.GetComponent<DreamFragment>() && hit.transform.parent && f_highlitable.contains(hit.transform.parent.gameObject.GetInstanceID()))
+                    // Check if parents of hited game object is an interactive game object and this game object doesn't contain a dream fragment
+                    else if (!hit.transform.gameObject.GetComponent<DreamFragment>() && hit.transform.parent)
                     {
-                        // save the parent of this game object as the new highlighted game object
-                        currentHighlight = hit.transform.parent.gameObject;
-                        highlight(currentHighlight);
+                        if (f_highlitable.contains(hit.transform.parent.gameObject.GetInstanceID())){
+                            // save the parent of this game object as the new highlighted game object
+                            currentHighlight = hit.transform.parent.gameObject;
+                            highlight(currentHighlight);
+                        } else if (hit.transform.parent.parent && f_highlitable.contains(hit.transform.parent.parent.gameObject.GetInstanceID())){
+                            // save the grandparent of this game object as the new highlighted game object
+                            currentHighlight = hit.transform.parent.parent.gameObject;
+                            highlight(currentHighlight);
+                        }
                     }
                 }
                 else
                 {
-                    if (!hit.transform.gameObject.GetComponent<DreamFragment>() && (previousHighlight == hit.transform.gameObject || (hit.transform.parent && previousHighlight == hit.transform.parent.gameObject)))
+                    if (!hit.transform.gameObject.GetComponent<DreamFragment>() && (previousHighlight == hit.transform.gameObject || (hit.transform.parent && previousHighlight == hit.transform.parent.gameObject) || (hit.transform.parent && hit.transform.parent.parent && previousHighlight == hit.transform.parent.parent.gameObject)))
                         currentHighlight = previousHighlight;
                 }
             }

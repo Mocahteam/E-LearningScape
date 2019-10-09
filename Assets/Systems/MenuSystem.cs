@@ -2,12 +2,13 @@
 using FYFY;
 using UnityEngine.UI;
 using UnityEngine.PostProcessing;
+using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class MenuSystem : FSystem {
 
     // this system manage the first main menu
 
-    private Family f_buttons = FamilyManager.getFamily(new AnyOfTags("MainMenuButton"));
     private Family f_vlr = FamilyManager.getFamily(new AllOfComponents(typeof(VolumetricLightRenderer)));
     private Family f_postProcessBehaviour = FamilyManager.getFamily(new AllOfComponents(typeof(PostProcessingBehaviour)));
     private Family f_postProcessProfiles = FamilyManager.getFamily(new AllOfComponents(typeof(PostProcessingProfiles)));
@@ -15,6 +16,8 @@ public class MenuSystem : FSystem {
     private Family f_particles = FamilyManager.getFamily(new AllOfComponents(typeof(ParticleSystem)));
     private Family f_reflectionProbe = FamilyManager.getFamily(new AllOfComponents(typeof(ReflectionProbe)));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
+    private Family f_windowNavigator = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)));
+    private Family f_enabledSettingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private Camera menuCamera;
     private float switchDelay = 12;
@@ -38,30 +41,11 @@ public class MenuSystem : FSystem {
     {
         if (Application.isPlaying)
         {
-            //initialise menu's buttons with listeners
-            foreach (GameObject b in f_buttons)
-            {
-                switch (b.name)
-                {
-                    case "Play":
-                        b.GetComponent<Button>().onClick.AddListener(Play);
-                        break;
-
-                    case "Quit":
-                        b.GetComponent<Button>().onClick.AddListener(QuitGame);
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-
             // Get singleton fading screen
             fadingBackground = GameObject.Find("MenuFadingBackground").GetComponent<Image>();
             // Get singleton MainMenu
             mainMenu = GameObject.Find("MainMenu");
-            // Get singleton ToggleButton
-            //togglePuzzle = GameObject.Find("TogglePuzzle").GetComponent<Toggle>();
+            GameObjectManager.setGameObjectState(mainMenu, false);
 
             // Set specific quality settings
             menuCamera = f_menuCameraFamily.First().GetComponent<Camera>();
@@ -107,23 +91,40 @@ public class MenuSystem : FSystem {
             menuCamera.gameObject.GetComponent<MenuCamera>().positions[0] = new PosRot(-20.21f, 1.42f, -1.95f, -1.516f, -131.238f, 0);
             menuCamera.gameObject.GetComponent<MenuCamera>().positions[1] = new PosRot(-10.24f,2.64f,-2.07f,1.662f,130.146f,-5.715f);
             menuCamera.gameObject.GetComponent<MenuCamera>().positions[2] = new PosRot(13.85f,1.26f,6.11f,-8.774f,131.818f,-2.642f);
+
             // Init timer
             switchTimer = Time.time;
+
+            f_enabledSettingsMenu.addEntryCallback(onSettingMenuEnabled);
         }
 
         instance = this;
+    }
+
+    // WindowNavigation manages UI windows displaying but due to Fyfy delay on GameObjectManager.setGameObjectState, EventSystem doesn't display properly the current UI element. We have to select again the current UI.
+    private void onSettingMenuEnabled(GameObject go)
+    {
+        WindowNavigator smm = go.GetComponent<WindowNavigator>();
+        // force currentSelectedGameObject to be reinitialized
+        GameObject currentSelection = EventSystem.current.currentSelectedGameObject;
+        EventSystem.current.SetSelectedGameObject(null);
+        if (currentSelection == null || currentSelection.activeInHierarchy == false)
+            EventSystem.current.SetSelectedGameObject(smm.defaultUiInWindow);
+        else
+            EventSystem.current.SetSelectedGameObject(currentSelection);
     }
 
     // Use this to update member variables when system resume.
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
     {
-        // Pause all systems except this
-        foreach (FSystem syst in FSystemManager.updateSystems())
-            if (syst != this && syst != LogoDisplaying.instance)
+        // Pause all systems except this, LogoDisplaying, SendStatements and HelpSystem
+        List<FSystem> allSystems = new List<FSystem>(FSystemManager.fixedUpdateSystems());
+        allSystems.AddRange(FSystemManager.updateSystems());
+        allSystems.AddRange(FSystemManager.lateUpdateSystems());
+        foreach (FSystem syst in allSystems)
+            if (syst != this && syst != LogoDisplaying.instance && syst != SendStatements.instance && syst != HelpSystem.instance)
                 syst.Pause = true;
-        // Set particular effects
-        RenderSettings.fogDensity = 0.005f;
         // Init timer
         switchTimer = Time.time;
         // Enable MainMenu
@@ -173,7 +174,7 @@ public class MenuSystem : FSystem {
         currentFrame++;
     }
 
-    void Play()
+    public void StartGame()
     {
         this.Pause = true;
         // Disable second and third room
@@ -183,18 +184,28 @@ public class MenuSystem : FSystem {
         // Disable UI
         GameObjectManager.setGameObjectState(mainMenu, false);
         GameObjectManager.setGameObjectState(fadingBackground.gameObject, false);
-        // Switch on/off puzzle or fragments
-        /*foreach (GameObject go in f_puzzles)
-            GameObjectManager.setGameObjectState(go, togglePuzzle.isOn);
-        foreach (GameObject go in f_puzzlesFragment)
-            GameObjectManager.setGameObjectState(go, !togglePuzzle.isOn);*/
+
+        // Link settings window to IAR, when game is playing if we open IAR Menu and then we close the setting popup we want to back in window IAR Menu and on setting button and not on setting button of main menu
+        GameObject settingsMainMenu = null;
+        GameObject IARMenuContent = null;
+        foreach (GameObject go in f_windowNavigator)
+        {
+            if (go.name == "Settings_MainMenu")
+                settingsMainMenu = go;
+            if (go.name == "MenuContent")
+                IARMenuContent = go;
+        }
+        if (settingsMainMenu != null && IARMenuContent != null)
+        {
+            WindowNavigator wn = settingsMainMenu.GetComponent<WindowNavigator>();
+            wn.parent = IARMenuContent; //parent window is MenuContent in IAR
+            wn.defaultUiInParent = wn.parent.transform.GetChild(2).gameObject;
+        }
+
+        GameObjectManager.addComponent<PlaySound>(mainMenu, new { id = 4 }); // id refer to FPSController AudioBank
+
         // Play story
         StoryDisplaying.instance.Pause = false;
-    }
-
-    void QuitGame()
-    {
-        Application.Quit(); //quit the game
     }
 }
 

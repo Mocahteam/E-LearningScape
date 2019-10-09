@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using FYFY;
 
 public class EndDoor : MonoBehaviour {
 
@@ -14,6 +14,7 @@ public class EndDoor : MonoBehaviour {
             // show story
             storyDisplayer.GetComponent<StoryText>().storyProgression++;
             StoryDisplaying.instance.Pause = false;
+            GameObjectManager.addComponent<PlaySound>(storyDisplayer, new { id = 8 }); // id refer to FPSController AudioBank
         }
     }
 }

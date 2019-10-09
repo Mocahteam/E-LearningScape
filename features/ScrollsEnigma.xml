@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Scroll4_perform_74" label="perform Scroll4" system="False" end="False" />
+  <transition id="Scroll3_perform_73" label="perform Scroll3" system="False" end="False" />
+  <transition id="Scroll1_perform_71" label="perform Scroll1" system="False" end="False" />
+  <transition id="Scroll5_perform_75" label="perform Scroll5" system="False" end="False" />
+  <transition id="Scroll2_perform_72" label="perform Scroll2" system="False" end="False" />
+  <transition id="Scrolls_turnOff_70" label="turnOff Scrolls" system="False" end="False" />
+  <transition id="Scrolls_turnOn_70" label="turnOn Scrolls" system="False" end="False" />
+  <transition id="Q3_Correct_77" label="Correct Q3" system="False" end="True" />
+  <transition id="Q3_Wrong_77" label="Wrong Q3" system="False" end="False" />
+</transitions>

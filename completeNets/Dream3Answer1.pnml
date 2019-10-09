@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-AB48-B32E0-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Dream3Answer1</text>
+  </name>
+ <page id="g-AB48-B32EB-1">
+  <place id="p-AB48-B32ED-2">
+  <name>
+   <text>Q1_Answered_12</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="550" y="300"/>
+   </graphics>
+  </place>
+  <place id="p-AB48-B32FC-3">
+  <name>
+   <text>Q1_Answering_12</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="300" y="300"/>
+   </graphics>
+  </place>
+  <transition id="t-AB48-B3300-4">
+  <name>
+   <text>Q1_Correct_12</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="430" y="290"/>
+   </graphics>
+  </transition>
+  <transition id="t-AB48-B3307-5">
+  <name>
+   <text>Q1_Wrong_12</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="430" y="380"/>
+   </graphics>
+  </transition>
+  <transition id="t-AB48-B330C-6">
+  <name>
+   <text>Q1_choice1_18</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="120" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-AB48-B3313-7">
+  <name>
+   <text>Q1_choice1_19</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="125" y="195"/>
+   </graphics>
+  </transition>
+  <transition id="t-AB48-B3316-8">
+  <name>
+   <text>Q1_choice1_25</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="125" y="340"/>
+   </graphics>
+  </transition>
+  <transition id="t-AB48-B3319-9">
+  <name>
+   <text>Q1_choice1_36</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="485"/>
+   </graphics>
+  </transition>
+  <transition id="t-AB48-B331B-10">
+  <name>
+   <text>Q1_choice2_18</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="120" y="130"/>
+   </graphics>
+  </transition>
+  <transition id="t-AB48-B331E-11">
+  <name>
+   <text>Q1_choice2_19</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="125" y="275"/>
+   </graphics>
+  </transition>
+  <transition id="t-AB48-B3321-12">
+  <name>
+   <text>Q1_choice2_25</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="125" y="420"/>
+   </graphics>
+  </transition>
+  <transition id="t-AB48-B3324-13">
+  <name>
+   <text>Q1_choice2_36</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="565"/>
+   </graphics>
+  </transition>
+  <place id="p-AB48-B3326-14">
+  <name>
+   <text>Q1_locker_12</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="300" y="400"/>
+   </graphics>
+  </place>
+  <place id="p-AB48-B332A-15">
+  <name>
+   <text>Q1_start_18</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="50" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-AB48-B332E-16">
+  <name>
+   <text>Q1_start_19</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="45" y="225"/>
+   </graphics>
+  </place>
+  <place id="p-AB48-B3332-17">
+  <name>
+   <text>Q1_start_25</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="45" y="370"/>
+   </graphics>
+  </place>
+  <place id="p-AB48-B3333-18">
+  <name>
+   <text>Q1_start_36</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="45" y="515"/>
+   </graphics>
+  </place>
+  <arc id="e-AB48-B33BE-19" source="p-AB48-B3326-14" target="t-AB48-B3307-5">
+  </arc>
+  <arc id="e-AB48-B33C2-20" source="p-AB48-B332E-16" target="t-AB48-B3313-7">
+  </arc>
+  <arc id="e-AB48-B33C3-21" source="p-AB48-B332E-16" target="t-AB48-B331E-11">
+  </arc>
+  <arc id="e-AB48-B33C7-22" source="p-AB48-B32FC-3" target="t-AB48-B3316-8">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-AB48-B33CD-23" source="t-AB48-B3316-8" target="p-AB48-B32FC-3">
+  </arc>
+  <arc id="e-AB48-B33CF-24" source="p-AB48-B3332-17" target="t-AB48-B3316-8">
+  </arc>
+  <arc id="e-AB48-B33D3-25" source="p-AB48-B3332-17" target="t-AB48-B3321-12">
+  </arc>
+  <arc id="e-AB48-B33D7-26" source="p-AB48-B32FC-3" target="t-AB48-B3319-9">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-AB48-B33D9-27" source="t-AB48-B3319-9" target="p-AB48-B32FC-3">
+  </arc>
+  <arc id="e-AB48-B33DB-28" source="p-AB48-B3333-18" target="t-AB48-B3319-9">
+  </arc>
+  <arc id="e-AB48-B33DE-29" source="p-AB48-B3333-18" target="t-AB48-B3324-13">
+  </arc>
+  <arc id="e-AB48-B33E0-30" source="t-AB48-B3300-4" target="p-AB48-B32ED-2">
+  </arc>
+  <arc id="e-AB48-B33E2-31" source="p-AB48-B32FC-3" target="t-AB48-B3300-4">
+  </arc>
+  <arc id="e-AB48-B33E4-32" source="p-AB48-B32FC-3" target="t-AB48-B330C-6">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-AB48-B33E8-33" source="t-AB48-B330C-6" target="p-AB48-B32FC-3">
+  </arc>
+  <arc id="e-AB48-B33E9-34" source="p-AB48-B332A-15" target="t-AB48-B330C-6">
+  </arc>
+  <arc id="e-AB48-B33EC-35" source="p-AB48-B332A-15" target="t-AB48-B331B-10">
+  </arc>
+  <arc id="e-AB48-B33ED-36" source="p-AB48-B32FC-3" target="t-AB48-B3313-7">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-AB48-B33EF-37" source="t-AB48-B3313-7" target="p-AB48-B32FC-3">
+  </arc>
+ </page>
+ </net>
+</pnml>

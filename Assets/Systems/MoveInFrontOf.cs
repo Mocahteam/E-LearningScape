@@ -13,7 +13,7 @@ public class MoveInFrontOf : FSystem {
 
     private Family f_quitEnigma = FamilyManager.getFamily(new AnyOfTags("QuitEnigma"));
 
-    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
+    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"), new AllOfComponents(typeof(SwitchPerso)));
 
     //information for animations
     private float speed;
@@ -57,6 +57,8 @@ public class MoveInFrontOf : FSystem {
         {
             // reset intial player scale
             f_player.First().transform.localScale = playerLocalScale;
+            // reset player camera
+            f_player.First().GetComponent<SwitchPerso>().forceUpdate();
             // enable systems
             MovingSystem.instance.Pause = false;
             Highlighter.instance.Pause = false;
@@ -92,9 +94,9 @@ public class MoveInFrontOf : FSystem {
     {
         speed = 8f * Time.deltaTime;
 
-        if (!moveInFrontOf && (Input.GetMouseButtonDown(0) || emulateClickOn != null))
+        if (!moveInFrontOf && (Input.GetButtonDown("Fire1") || emulateClickOn != null))
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetButtonDown("Fire1"))
                 focusedGO = f_focused.First();
             else
             {
@@ -112,6 +114,10 @@ public class MoveInFrontOf : FSystem {
                 DreamFragmentCollecting.instance.Pause = true;
                 ToggleObject.instance.Pause = true;
                 CollectObject.instance.Pause = true;
+
+                // In case player is in third person view, we switvh in First person cam view
+                f_player.First().GetComponent<SwitchPerso>().ThirdCamera.enabled = false;
+                f_player.First().GetComponent<SwitchPerso>().FirstCamera.enabled = true;
 
                 // save player scale (crouch or not) in order to reset it when player exit the focused GameObject
                 playerLocalScale = f_player.First().transform.localScale;

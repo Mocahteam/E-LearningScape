@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-A8A8-461BE-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Enigma11_1</text>
+  </name>
+ <page id="g-A8A8-461CE-1">
+  <place id="p-A8A8-461D4-2">
+  <name>
+   <text>AnswersInput_end_101</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="825" y="360"/>
+   </graphics>
+  </place>
+  <transition id="t-A8A8-461E6-3">
+  <name>
+   <text>AnswersInput_perform_101</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="755" y="340"/>
+   </graphics>
+  </transition>
+  <place id="p-A8A8-461EF-4">
+  <name>
+   <text>AnswersInput_start_101</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="675" y="360"/>
+   </graphics>
+  </place>
+  <place id="p-A8A8-461F5-5">
+  <name>
+   <text>PuzzleSet_01_end_93</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="465" y="160"/>
+   </graphics>
+  </place>
+  <transition id="t-A8A8-461F9-6">
+  <name>
+   <text>PuzzleSet_01_perform_93</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="385" y="160"/>
+   </graphics>
+  </transition>
+  <place id="p-A8A8-461FF-7">
+  <name>
+   <text>PuzzleSet_01_start_93</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="305" y="160"/>
+   </graphics>
+  </place>
+  <place id="p-A8A8-46207-8">
+  <name>
+   <text>PuzzleSet_02_end_94</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="455" y="240"/>
+   </graphics>
+  </place>
+  <transition id="t-A8A8-4620C-9">
+  <name>
+   <text>PuzzleSet_02_perform_94</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="385" y="220"/>
+   </graphics>
+  </transition>
+  <place id="p-A8A8-46216-10">
+  <name>
+   <text>PuzzleSet_02_start_94</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="305" y="240"/>
+   </graphics>
+  </place>
+  <place id="p-A8A8-4621D-11">
+  <name>
+   <text>PuzzleSet_03_end_95</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="455" y="300"/>
+   </graphics>
+  </place>
+  <transition id="t-A8A8-46223-12">
+  <name>
+   <text>PuzzleSet_03_perform_95</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="385" y="300"/>
+   </graphics>
+  </transition>
+  <place id="p-A8A8-46227-13">
+  <name>
+   <text>PuzzleSet_03_start_95</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="305" y="300"/>
+   </graphics>
+  </place>
+  <place id="p-A8A8-4622E-14">
+  <name>
+   <text>PuzzleSet_04_end_96</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="465" y="380"/>
+   </graphics>
+  </place>
+  <transition id="t-A8A8-46233-15">
+  <name>
+   <text>PuzzleSet_04_perform_96</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="385" y="360"/>
+   </graphics>
+  </transition>
+  <place id="p-A8A8-46238-16">
+  <name>
+   <text>PuzzleSet_04_start_96</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="305" y="380"/>
+   </graphics>
+  </place>
+  <place id="p-A8A8-4623E-17">
+  <name>
+   <text>PuzzleSet_05_end_97</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="445" y="440"/>
+   </graphics>
+  </place>
+  <transition id="t-A8A8-462BF-18">
+  <name>
+   <text>PuzzleSet_05_perform_97</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="375" y="440"/>
+   </graphics>
+  </transition>
+  <place id="p-A8A8-462C7-19">
+  <name>
+   <text>PuzzleSet_05_start_97</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="295" y="440"/>
+   </graphics>
+  </place>
+  <place id="p-A8A8-462CC-20">
+  <name>
+   <text>Puzzle_ActivationCount_98</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="785" y="190"/>
+   </graphics>
+  </place>
+  <place id="p-A8A8-462D2-21">
+  <name>
+   <text>Puzzle_off_98</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="625" y="70"/>
+   </graphics>
+  </place>
+  <place id="p-A8A8-462D8-22">
+  <name>
+   <text>Puzzle_on_98</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="785" y="70"/>
+   </graphics>
+  </place>
+  <place id="p-A8A8-462DC-23">
+  <name>
+   <text>Puzzle_place_17</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="525" y="70"/>
+   </graphics>
+  </place>
+  <transition id="t-A8A8-462E1-24">
+  <name>
+   <text>Puzzle_turnOff_98</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="705" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-A8A8-462E5-25">
+  <name>
+   <text>Puzzle_turnOn_98</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="705" y="130"/>
+   </graphics>
+  </transition>
+  <place id="p-A8A8-462EA-26">
+  <name>
+   <text>boite_off_92</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="45" y="350"/>
+   </graphics>
+  </place>
+  <place id="p-A8A8-462ED-27">
+  <name>
+   <text>boite_on_92</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="205" y="350"/>
+   </graphics>
+  </place>
+  <transition id="t-A8A8-462F2-28">
+  <name>
+   <text>boite_turnOn_92</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="125" y="410"/>
+   </graphics>
+  </transition>
+  <arc id="e-A8A8-462FB-29" source="p-A8A8-462CC-20" target="t-A8A8-461E6-3">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A8A8-46302-30" source="t-A8A8-462E5-25" target="p-A8A8-462CC-20">
+  </arc>
+  <arc id="e-A8A8-46304-31" source="p-A8A8-462DC-23" target="t-A8A8-462E1-24">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A8A8-46306-32" source="p-A8A8-462DC-23" target="t-A8A8-462E5-25">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A8A8-46308-33" source="t-A8A8-461F9-6" target="p-A8A8-461F5-5">
+  </arc>
+  <arc id="e-A8A8-4630A-34" source="t-A8A8-46223-12" target="p-A8A8-4621D-11">
+  </arc>
+  <arc id="e-A8A8-4630C-35" source="p-A8A8-46227-13" target="t-A8A8-46223-12">
+  </arc>
+  <arc id="e-A8A8-4630E-36" source="t-A8A8-46223-12" target="p-A8A8-462DC-23">
+  </arc>
+  <arc id="e-A8A8-46310-37" source="t-A8A8-46233-15" target="p-A8A8-4622E-14">
+  </arc>
+  <arc id="e-A8A8-46312-38" source="p-A8A8-46238-16" target="t-A8A8-46233-15">
+  </arc>
+  <arc id="e-A8A8-46316-39" source="t-A8A8-46233-15" target="p-A8A8-462DC-23">
+  </arc>
+  <arc id="e-A8A8-46318-40" source="p-A8A8-461F5-5" target="t-A8A8-461E6-3">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A8A8-4631A-41" source="p-A8A8-461EF-4" target="t-A8A8-461E6-3">
+  </arc>
+  <arc id="e-A8A8-4631B-42" source="t-A8A8-461E6-3" target="p-A8A8-461D4-2">
+  </arc>
+  <arc id="e-A8A8-4631D-43" source="t-A8A8-4620C-9" target="p-A8A8-46207-8">
+  </arc>
+  <arc id="e-A8A8-4631F-44" source="p-A8A8-46216-10" target="t-A8A8-4620C-9">
+  </arc>
+  <arc id="e-A8A8-46365-45" source="p-A8A8-461FF-7" target="t-A8A8-461F9-6">
+  </arc>
+  <arc id="e-A8A8-46368-46" source="p-A8A8-462ED-27" target="t-A8A8-4620C-9">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A8A8-4636B-47" source="t-A8A8-4620C-9" target="p-A8A8-462DC-23">
+  </arc>
+  <arc id="e-A8A8-4636D-48" source="t-A8A8-462F2-28" target="p-A8A8-462ED-27">
+  </arc>
+  <arc id="e-A8A8-46371-49" source="p-A8A8-462EA-26" target="t-A8A8-462F2-28">
+  </arc>
+  <arc id="e-A8A8-46373-50" source="t-A8A8-462BF-18" target="p-A8A8-4623E-17">
+  </arc>
+  <arc id="e-A8A8-46374-51" source="p-A8A8-46207-8" target="t-A8A8-461E6-3">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A8A8-46377-52" source="p-A8A8-462C7-19" target="t-A8A8-462BF-18">
+  </arc>
+  <arc id="e-A8A8-46378-53" source="t-A8A8-462BF-18" target="p-A8A8-462DC-23">
+  </arc>
+  <arc id="e-A8A8-4637A-54" source="t-A8A8-462E1-24" target="p-A8A8-462D2-21">
+  </arc>
+  <arc id="e-A8A8-4637C-55" source="t-A8A8-461F9-6" target="p-A8A8-462DC-23">
+  </arc>
+  <arc id="e-A8A8-4637E-56" source="p-A8A8-4621D-11" target="t-A8A8-461E6-3">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A8A8-46380-57" source="p-A8A8-4622E-14" target="t-A8A8-461E6-3">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A8A8-46384-58" source="p-A8A8-4623E-17" target="t-A8A8-461E6-3">
+   <type value="test"/>
+  </arc>
+  <arc id="e-A8A8-46385-59" source="t-A8A8-462E5-25" target="p-A8A8-462D8-22">
+  </arc>
+  <arc id="e-A8A8-46387-60" source="p-A8A8-462D2-21" target="t-A8A8-462E5-25">
+  </arc>
+  <arc id="e-A8A8-46388-61" source="p-A8A8-462D8-22" target="t-A8A8-462E1-24">
+  </arc>
+ </page>
+ </net>
+</pnml>

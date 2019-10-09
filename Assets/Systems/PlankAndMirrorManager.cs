@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using FYFY_plugins.Monitoring;
@@ -28,6 +29,8 @@ public class PlankAndMirrorManager : FSystem {
     private bool discovered = false; // true if the plank on the floor was discovered (selected at least once)
     private bool prepareClosing = false;
 
+    private int rotationCount = 0;
+
     public static PlankAndMirrorManager instance;
 
     public PlankAndMirrorManager()
@@ -43,6 +46,18 @@ public class PlankAndMirrorManager : FSystem {
     private void rotatePlank(int way)
     {
         plankRotation.transform.Rotate(Vector3.up, way * 50 * Time.deltaTime);
+        rotationCount += way;
+        // trace only each 10°
+        if (rotationCount % 10 == 0)
+        {
+            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new
+            {
+                verb = "moved",
+                objectType = "interactable",
+                objectName = selectedPlank.name,
+                activityExtensions = new Dictionary<string, List<string>>() { { "direction", new List<string>() { way < 0 ? "right" : "left" } } }
+            });
+        }
     }
 
     private void onReadyToWorkOnPlank(GameObject go)
@@ -88,7 +103,7 @@ public class PlankAndMirrorManager : FSystem {
         if (selectedPlank)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and paper is out of the bag and IAR is closed (because Escape close IAR)
-            if (((f_closePlank.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && !movePlank)
+            if (((f_closePlank.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && !movePlank)
             {
                 // ask to exit plank
                 prepareClosing = true;
@@ -151,11 +166,11 @@ public class PlankAndMirrorManager : FSystem {
 
             if (!movePlank)
             {
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.Q))
+                if (Input.GetAxis("Horizontal") < -0.2)
                     rotatePlank(1);
-                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+                if (Input.GetAxis("Horizontal") > 0.2)
                     rotatePlank(-1);
-                if (Input.GetMouseButton(0) && f_arrows.Count > 0)
+                if (Input.GetButton("Fire1") && f_arrows.Count > 0)
                 {
                     if (f_arrows.First().name == "Left")
                         rotatePlank(1);

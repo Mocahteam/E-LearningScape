@@ -57,7 +57,7 @@ public class SpritesAnimator : FSystem {
                 }
 
                 // in case of animation is stoppable
-                if (tmpAS.stopable && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return)))
+                if (tmpAS.stopable && (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Submit")))
                 {
                     tmpAS.animate = false;
                     tmpAS.usedSpriteID = 0;

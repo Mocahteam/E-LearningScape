@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-14F0-6DFE-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>BallboxEnigma</text>
+  </name>
+ <page id="g-14F0-6E13-1">
+  <place id="p-14F0-6E1B-2">
+  <name>
+   <text>BallBox_off_7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="310" y="150"/>
+   </graphics>
+  </place>
+  <place id="p-14F0-6E3A-3">
+  <name>
+   <text>BallBox_on_7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="470" y="150"/>
+   </graphics>
+  </place>
+  <transition id="t-14F0-6E40-4">
+  <name>
+   <text>BallBox_turnOff_7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="390" y="110"/>
+   </graphics>
+  </transition>
+  <transition id="t-14F0-6E4A-5">
+  <name>
+   <text>BallBox_turnOn_7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="390" y="200"/>
+   </graphics>
+  </transition>
+  <place id="p-14F0-6E52-6">
+  <name>
+   <text>KeyBallBox_end_5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="360"/>
+   </graphics>
+  </place>
+  <place id="p-14F0-6E57-7">
+  <name>
+   <text>KeyBallBox_off_6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="310" y="350"/>
+   </graphics>
+  </place>
+  <place id="p-14F0-6E5F-8">
+  <name>
+   <text>KeyBallBox_on_6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="490" y="340"/>
+   </graphics>
+  </place>
+  <transition id="t-14F0-6E65-9">
+  <name>
+   <text>KeyBallBox_perform_5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="150" y="350"/>
+   </graphics>
+  </transition>
+  <place id="p-14F0-6E6E-10">
+  <name>
+   <text>KeyBallBox_start_5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="70" y="360"/>
+   </graphics>
+  </place>
+  <transition id="t-14F0-6E77-11">
+  <name>
+   <text>KeyBallBox_turnOn_6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="410" y="390"/>
+   </graphics>
+  </transition>
+  <place id="p-14F0-6E7D-12">
+  <name>
+   <text>Padlock_end_8</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="670" y="250"/>
+   </graphics>
+  </place>
+  <transition id="t-14F0-6E8C-13">
+  <name>
+   <text>Padlock_perform_8</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="610" y="230"/>
+   </graphics>
+  </transition>
+  <place id="p-14F0-6E93-14">
+  <name>
+   <text>Padlock_start_8</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="530" y="250"/>
+   </graphics>
+  </place>
+  <place id="p-14F0-6E9D-15">
+  <name>
+   <text>Q1_Answered_24</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1310" y="270"/>
+   </graphics>
+  </place>
+  <place id="p-14F0-6EA3-16">
+  <name>
+   <text>Q1_Answering_24</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1070" y="270"/>
+   </graphics>
+  </place>
+  <transition id="t-14F0-6EAA-17">
+  <name>
+   <text>Q1_Correct_24</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1190" y="270"/>
+   </graphics>
+  </transition>
+  <place id="p-14F0-6EB2-18">
+  <name>
+   <text>SphereSolution01_ActivationCount_9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="890" y="70"/>
+   </graphics>
+  </place>
+  <transition id="t-14F0-6F5F-19">
+  <name>
+   <text>SphereSolution01_activate_9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="790" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-14F0-6F67-20">
+  <name>
+   <text>SphereSolution02_ActivationCount_10</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="910" y="130"/>
+   </graphics>
+  </place>
+  <transition id="t-14F0-6F72-21">
+  <name>
+   <text>SphereSolution02_activate_10</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="790" y="130"/>
+   </graphics>
+  </transition>
+  <place id="p-14F0-6F7B-22">
+  <name>
+   <text>SphereSolution03_ActivationCount_11</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="910" y="200"/>
+   </graphics>
+  </place>
+  <transition id="t-14F0-6F84-23">
+  <name>
+   <text>SphereSolution03_activate_11</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="790" y="190"/>
+   </graphics>
+  </transition>
+  <arc id="e-14F0-6F95-24" source="t-14F0-6F5F-19" target="p-14F0-6EB2-18">
+  </arc>
+  <arc id="e-14F0-6F99-25" source="p-14F0-6E3A-3" target="t-14F0-6E40-4">
+  </arc>
+  <arc id="e-14F0-6F9C-26" source="p-14F0-6E1B-2" target="t-14F0-6E4A-5">
+  </arc>
+  <arc id="e-14F0-6F9F-27" source="t-14F0-6E4A-5" target="p-14F0-6E3A-3">
+  </arc>
+  <arc id="e-14F0-6FA4-28" source="t-14F0-6E40-4" target="p-14F0-6E1B-2">
+  </arc>
+  <arc id="e-14F0-6FA7-29" source="p-14F0-6E52-6" target="t-14F0-6E77-11">
+   <type value="test"/>
+  </arc>
+  <arc id="e-14F0-6FAD-30" source="p-14F0-6E57-7" target="t-14F0-6E77-11">
+  </arc>
+  <arc id="e-14F0-6FB0-31" source="p-14F0-6F67-20" target="t-14F0-6EAA-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-14F0-6FB4-32" source="t-14F0-6E77-11" target="p-14F0-6E5F-8">
+  </arc>
+  <arc id="e-14F0-6FB6-33" source="p-14F0-6E7D-12" target="t-14F0-6F84-23">
+   <type value="test"/>
+  </arc>
+  <arc id="e-14F0-6FB9-34" source="p-14F0-6E3A-3" target="t-14F0-6F84-23">
+   <type value="test"/>
+  </arc>
+  <arc id="e-14F0-6FBC-35" source="p-14F0-6E3A-3" target="t-14F0-6E8C-13">
+   <type value="test"/>
+  </arc>
+  <arc id="e-14F0-6FBE-36" source="t-14F0-6F84-23" target="p-14F0-6F7B-22">
+  </arc>
+  <arc id="e-14F0-6FC3-37" source="p-14F0-6E7D-12" target="t-14F0-6F72-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-14F0-6FC5-38" source="p-14F0-6E3A-3" target="t-14F0-6F72-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-14F0-6FC8-39" source="t-14F0-6F72-21" target="p-14F0-6F67-20">
+  </arc>
+  <arc id="e-14F0-6FCA-40" source="p-14F0-6E7D-12" target="t-14F0-6F5F-19">
+   <type value="test"/>
+  </arc>
+  <arc id="e-14F0-6FCD-41" source="p-14F0-6E3A-3" target="t-14F0-6F5F-19">
+   <type value="test"/>
+  </arc>
+  <arc id="e-14F0-6FCF-42" source="p-14F0-6E5F-8" target="t-14F0-6E8C-13">
+   <type value="test"/>
+  </arc>
+  <arc id="e-14F0-6FD2-43" source="p-14F0-6F7B-22" target="t-14F0-6EAA-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-14F0-6FD3-44" source="p-14F0-6E93-14" target="t-14F0-6E8C-13">
+  </arc>
+  <arc id="e-14F0-6FD6-45" source="t-14F0-6E8C-13" target="p-14F0-6E7D-12">
+  </arc>
+  <arc id="e-14F0-6FDA-46" source="p-14F0-6E6E-10" target="t-14F0-6E65-9">
+  </arc>
+  <arc id="e-14F0-6FDD-47" source="t-14F0-6E65-9" target="p-14F0-6E52-6">
+  </arc>
+  <arc id="e-14F0-6FDF-48" source="p-14F0-6EB2-18" target="t-14F0-6EAA-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-14F0-6FE2-49" source="t-14F0-6EAA-17" target="p-14F0-6E9D-15">
+  </arc>
+  <arc id="e-14F0-6FE5-50" source="p-14F0-6EA3-16" target="t-14F0-6EAA-17">
+  </arc>
+ </page>
+ </net>
+</pnml>

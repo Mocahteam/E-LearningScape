@@ -74,7 +74,7 @@ public class LampManager : FSystem {
             for (int i = 0; i < nbSymbols; i++)
             {
                 tmpGo = f_symbols.getAt(i);
-                Vector3 position = tmpGo.GetComponentInChildren<E12_Symbol>().position;
+                Vector3 position = tmpGo.GetComponentInChildren<Lamp_Symbol>().position;
                 //if the symbol is illuminated by the lamp
                 if (Vector3.Angle(position - Camera.main.transform.position, Camera.main.transform.forward) < 22 && Vector3.Angle(Camera.main.transform.forward, tmpGo.transform.forward) < 87)
                 {
@@ -87,27 +87,27 @@ public class LampManager : FSystem {
                             objectName = tmpGo.name
                         });
                         GameObjectManager.addComponent<ActionPerformed>(tmpGo, new { name = "activate", performedBy = "player" });
+                        GameObjectManager.setGameObjectState(tmpGo, true);
                     }
-                    GameObjectManager.setGameObjectState(tmpGo, true);
                     //calculate the intersection between player direction and the wall
                     float d = Vector3.Dot((position - Camera.main.transform.position), tmpGo.transform.forward) / Vector3.Dot(Camera.main.transform.forward, tmpGo.transform.forward);
                     //move the mask to the calculated position
                     tmpGo.transform.position = Camera.main.transform.position + Camera.main.transform.forward * d;
                     //set the symbol position to its initial position (it shouldn't move but it is moved because of it being the mask's child)
-                    tmpGo.GetComponentInChildren<E12_Symbol>().gameObject.transform.position = position;
+                    tmpGo.GetComponentInChildren<Lamp_Symbol>().gameObject.transform.position = position;
                     //calculate the new scale of the mask (depending on the distance with the player)
                     float a = (0.026f - 0.015f) / (5.49f - 3.29f);
                     float b = 0.026f - a * 5.49f;
                     float scale = a * (tmpGo.transform.position - Camera.main.transform.position).magnitude + b;
                     //change the scale of the mask and set the symbol scale to its initial scale
-                    tmpGo.GetComponentInChildren<E12_Symbol>().gameObject.transform.localScale *= tmpGo.transform.localScale.x / scale * tmpGo.transform.parent.localScale.x * 100;
+                    tmpGo.GetComponentInChildren<Lamp_Symbol>().gameObject.transform.localScale *= tmpGo.transform.localScale.x / scale * tmpGo.transform.parent.localScale.x * 100;
                     tmpGo.transform.localScale = new Vector3(scale, scale, scale) / tmpGo.transform.parent.localScale.x / 100;
                 }
                 else if (tmpGo.activeSelf)
                 {
                     //disable the mask and the symbol
                     tmpGo.transform.position = position;
-                    tmpGo.GetComponentInChildren<E12_Symbol>().gameObject.transform.position = position; 
+                    tmpGo.GetComponentInChildren<Lamp_Symbol>().gameObject.transform.position = position; 
                     GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
                     {
                         verb = "exited",

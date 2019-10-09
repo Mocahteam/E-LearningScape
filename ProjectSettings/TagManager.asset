@@ -38,11 +38,9 @@ TagManager:
   - UIBackground
   - NewItemFeedback
   - HelpSubtitles
-  - MainMenuButton
   - EnableOnFirstCrouch
   - InventoryWarning
   - Cursor
-  - IARMenuButton
   - HUD_A
   - DescriptionUI
   - PressA
@@ -67,6 +65,21 @@ TagManager:
   - BoardUnremovableWords
   - PlankNumbers
   - Chair
+  - HelpDescriptionUI
+  - LoadingFragment
+  - AskHelpButton
+  - HelpWarning
+  - HelpTabContent
+  - IARItemSelected
+  - HUD_Main
+  - HUD_Menu
+  - WheelSpeedSlider
+  - CursorImage
+  - DisableOnViewed
+  - LockArrow
+  - Door
+  - ArrowUI
+  - ValidationButton
   layers:
   - Default
   - TransparentFX

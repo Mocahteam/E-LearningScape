@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.PostProcessing;
+using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using FYFY_plugins.Monitoring;
@@ -21,7 +22,6 @@ public class BallBoxManager : FSystem {
     //information for animations
     private float speed;
     private float speedRotation = 200f;
-    private float coverSpeedRotation = 200f;
     private float dist = -1;
     private int ballCounter = -1;
 
@@ -36,11 +36,12 @@ public class BallBoxManager : FSystem {
     private bool moveBall = false;          //true during the animation of selection of a ball
     private GameObject focusedBall = null;  //store the focused ball
     private GameObject selectedBall = null;  //store the selected ball
-    private TextMeshProUGUI ballSubTitles;
+    private GameObject ballSubTitles;
+    private TextMeshProUGUI ballSubTitlesContent;
     private GameObject box;
     private GameObject boxTop;
 
-    private float tmpRotationCount = 0;
+    private bool unlocked = false;
     private bool boxOpenned = false;
     private bool closeBox = false;
     private bool depthOfFieldsEnabled = false;
@@ -55,8 +56,9 @@ public class BallBoxManager : FSystem {
         {
             box = f_box.First();
             boxPadlock = box.transform.GetChild(0).gameObject;
-            boxTop = box.transform.GetChild(3).gameObject;
-            ballSubTitles = box.transform.GetChild(4).gameObject.GetComponentInChildren<TextMeshProUGUI>();
+            boxTop = box.transform.GetChild(2).gameObject;
+            ballSubTitles = box.transform.GetChild(4).gameObject;
+            ballSubTitlesContent = ballSubTitles.GetComponentInChildren<TextMeshProUGUI>();
 
             foreach (GameObject ball in f_balls)
                 ball.GetComponent<Ball>().initialPosition = ball.transform.localPosition;
@@ -76,7 +78,6 @@ public class BallBoxManager : FSystem {
         closeBox = false;
         ballsout = false;
         moveBall = false;
-        tmpRotationCount = 0;
         ballCounter = 0;
 
         // Launch this system
@@ -93,18 +94,32 @@ public class BallBoxManager : FSystem {
         {
             Ball b = go.GetComponent<Ball>();
             go.GetComponent<Renderer>().material.color = Color.yellow + Color.white / 4;
-            ballSubTitles.text = b.text;
+            GameObjectManager.setGameObjectState(ballSubTitles, true);
+            ballSubTitlesContent.text = b.text;
 
             focusedBall = go;
-            GameObjectManager.addComponent<ActionPerformedForLRS>(focusedBall, new { verb = "highlighted", objectType = "interactable", objectName = focusedBall.name });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(focusedBall, new
+            {
+                verb = "read",
+                objectType = "interactable",
+                objectName = focusedBall.name,
+                activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { b.text } } }
+            });
         }
     }
 
     private void onExitBall(int instanceId)
     {
-        ballSubTitles.text = "";
+        GameObjectManager.setGameObjectState(ballSubTitles, false);
+        ballSubTitlesContent.text = "";
         if (focusedBall)
         {
+            GameObjectManager.addComponent<ActionPerformedForLRS>(focusedBall, new
+            {
+                verb = "exitedView",
+                objectType = "interactable",
+                objectName = focusedBall.name
+            });
             focusedBall.GetComponent<Renderer>().material.color = focusedBall.GetComponent<Ball>().color;
             focusedBall = null;
         }
@@ -114,14 +129,14 @@ public class BallBoxManager : FSystem {
     private GameObject keySelected()
     {
         foreach (GameObject go in f_itemSelected)
-            if (go.name == "KeyE03")
+            if (go.name == "KeyBallBox")
                 return go;
         return null;
     }
 
     private Vector3 ballPosOnGrid (Ball ball)
     {
-        return Vector3.up * ((float)f_balls.Count / 16 - (float)(ball.id / 5) / 3) + Vector3.right * ((float)(ball.id % 5) * -2f / 4 + 1f) * 2 / 3 + Vector3.forward * 0.6f;
+        return Vector3.up * ((float)f_balls.Count / 11 - (float)(ball.id / 5) / 2) + Vector3.right * ((float)(ball.id % 5) * -2f / 4 + 1f) * 2 / 3 + Vector3.forward * 0.6f;
     }
 
     // Use this to update member variables when system pause. 
@@ -142,7 +157,7 @@ public class BallBoxManager : FSystem {
         if (selectedBox)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and balls are out of the box but none are in front of camera and IAR is closed (because Escape close IAR)
-            if (((f_closeBox.Count == 0 && Input.GetMouseButtonDown(0)) || (Input.GetKeyDown(KeyCode.Escape) && f_iarBackground.Count == 0)) && (boxPadlock.activeSelf || (ballsout && !inFrontOfCamera && !selectedBall)))
+            if (((f_closeBox.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && (!unlocked || (ballsout && !inFrontOfCamera && !selectedBall)))
             {
                 // set balls to initial position
                 foreach (GameObject ball in f_balls)
@@ -155,44 +170,30 @@ public class BallBoxManager : FSystem {
                 closeBox = true;
             }
 
-            if (boxPadlock.activeSelf)
+            if (!unlocked)
             {
                 if (keySelected())
                 {
-                    //move up and rotate the padlock
-                    dist = 1.5f - boxPadlock.transform.localPosition.y;
-                    boxPadlock.transform.localPosition = Vector3.MoveTowards(boxPadlock.transform.localPosition, boxPadlock.transform.localPosition + Vector3.up * dist, (dist + 1) / 2 * Time.deltaTime);
-                    boxPadlock.transform.localRotation = Quaternion.Euler(boxPadlock.transform.localRotation.eulerAngles + Vector3.up * (boxPadlock.transform.localPosition.y - 0.2f) * 350 * 5 * Time.deltaTime);
-                    if (boxPadlock.transform.localPosition.y > 1.4f)
-                    {
-                        //stop animation when the padlock reaches a certain height
-                        GameObjectManager.setGameObjectState(boxPadlock, false);
-                        //remove key from inventory
-                        GameObjectManager.setGameObjectState(keySelected(), false);
-
-                        GameObjectManager.addComponent<ActionPerformed>(boxPadlock, new { name = "perform", performedBy = "system" });
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "unlocked", objectType = "interactable", objectName = selectedBox.name });
-                    }
+                    // start animation
+                    boxPadlock.GetComponent<Animator>().enabled = true;
+                    //remove key from inventory
+                    GameObjectManager.setGameObjectState(keySelected(), false);
+                    // trace
+                    GameObjectManager.addComponent<ActionPerformed>(boxPadlock.GetComponentInChildren<ComponentMonitoring>().gameObject, new { name = "perform", performedBy = "system" });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "unlocked", objectType = "interactable", objectName = selectedBox.name });
+                    unlocked = true;
                 }
             }
 
-            if (!boxPadlock.activeSelf && !boxOpenned)
+            if (unlocked && !boxOpenned && boxPadlock.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 0.8)
             {
                 // open the cover of the box
-                float step = coverSpeedRotation * Time.deltaTime;
-                tmpRotationCount += step;
-                boxTop.transform.Rotate(-step, 0, 0);
-                if (tmpRotationCount > 120)
-                {
-                    // correct rotation
-                    boxTop.transform.Rotate(tmpRotationCount - 120, 0, 0);
-                    tmpRotationCount = 0;
-                    boxOpenned = true;
-                    ballCounter = 0;
-                }
+                boxTop.GetComponent<Animator>().SetTrigger("turnOn");
+                boxOpenned = true;
+                ballCounter = 0;
             }
 
-            if (boxOpenned && ballCounter < f_balls.Count)
+            if (boxOpenned && ballCounter < f_balls.Count && boxTop.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 0.8)
             {
                 //animation to take balls out of the box
                 GameObject ballGo = f_balls.getAt(ballCounter);
@@ -204,7 +205,7 @@ public class BallBoxManager : FSystem {
                     ballGo.transform.localPosition = Vector3.MoveTowards(ballGo.transform.localPosition, ballPos, speed / 2);
                     
                     // Check if we have to abort animation
-                    if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
+                    if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel"))
                     {
                         // abort animation
                         for (int i = 0; i < f_balls.Count; i++)
@@ -216,8 +217,9 @@ public class BallBoxManager : FSystem {
                             ballGo.transform.localPosition = ballPos;
                         }
                         ballCounter = f_balls.Count;
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "skipped", objectType = "animation", objectName = string.Concat(selectedBox.name, "_opening") });
                     }
-                    //when the last ball arrives to its position
+                    //when the ball reaches to its position
                     if (ballGo.transform.localPosition == ballPos)
                     {
                         //stop animations
@@ -237,21 +239,30 @@ public class BallBoxManager : FSystem {
                 // balls interaction to see background digit
 
                 // Ask a ball to move in front of the camera
-                if (focusedBall && !selectedBall && Input.GetMouseButtonDown(0) && !moveBall && !inFrontOfCamera)
+                if (focusedBall && !selectedBall && Input.GetButtonDown("Fire1") && !moveBall && !inFrontOfCamera)
                 {
                     //calculate position and speeds for the animation
                     targetPos = new Vector3 (0f, 0.5f, 1.37f);
                     targetRotation = Quaternion.Euler(90, 0, 270);
                     moveBall = true;
                     selectedBall = focusedBall;
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBall, new { verb = "interacted", objectType = "interactable", objectName = selectedBall.name });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBall, new
+                    {
+                        verb = "interacted",
+                        objectType = "interactable",
+                        objectName = selectedBall.name,
+                        activityExtensions = new Dictionary<string, List<string>>() {
+                            { "content", new List<string>() { focusedBall.GetComponent<Ball>().text } },
+                            { "value", new List<string>() { focusedBall.GetComponent<Ball>().number.ToString() } }
+                        }
+                    });
                     Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = false;
 
                     GameObjectManager.addComponent<ActionPerformed>(selectedBall, new { name = "activate", performedBy = "player" });
                 }
 
                 // Ask ball to move back on grid with other balls
-                if (selectedBall && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape)) && inFrontOfCamera)
+                if (selectedBall && (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel")) && inFrontOfCamera)
                 {
                     //calculate position and speeds for the animation
                     targetPos = ballPosOnGrid(selectedBall.GetComponent<Ball>());
@@ -281,21 +292,10 @@ public class BallBoxManager : FSystem {
             if (closeBox)
             {
                 // Check if padlock is enabled => means the box is already closed
-                if (!boxPadlock.activeSelf)
-                {
+                if (unlocked)
                     // close the cover of the box
-                    float step = coverSpeedRotation * Time.deltaTime;
-                    boxTop.transform.Rotate(step, 0, 0);
-                    tmpRotationCount += step;
-                    if (tmpRotationCount > 120)
-                    {
-                        // correct rotation
-                        boxTop.transform.Rotate(120 - tmpRotationCount, 0, 0);
-                        ExitBox();
-                    }
-                }
-                else
-                    ExitBox();
+                    boxTop.GetComponent<Animator>().SetTrigger("turnOff");
+                ExitBox();
             }
         }
 	}
@@ -306,7 +306,8 @@ public class BallBoxManager : FSystem {
         GameObjectManager.removeComponent<ReadyToWork>(selectedBox);
 
         ballCounter = 0;
-        ballSubTitles.text = "";
+        ballSubTitlesContent.text = "";
+        GameObjectManager.setGameObjectState(ballSubTitles, false);
         boxOpenned = false;
 
         GameObjectManager.addComponent<ActionPerformed>(selectedBox, new { name = "turnOff", performedBy = "player" });

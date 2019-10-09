@@ -2,43 +2,105 @@
 using System.Collections.Generic;
 using System;
 
+/// <summary>
+/// Content of the game loaded from the file "Data/Data_LearningScape.txt" by the system "LaodGameContent".
+/// If the file is not found the default one set in "DefaultGameContent" is used
+/// </summary>
 [Serializable]
 public class GameContent {
     // Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
-
+    
+    /// <summary>
+    /// The pedagogic theme of the game content
+    /// </summary>
     public string theme;
+    /// <summary>
+    /// If true, traces with MonitoringManager and Laalys will be enabled
+    /// </summary>
     public bool trace = true;
+    /// <summary>
+    /// If true, HelpSystem will be enabled
+    /// </summary>
+    public bool helpSystem = true;
+    /// <summary>
+    /// If true, traces will be sent to LRS
+    /// </summary>
     public bool traceToLRS = false;
+    /// <summary>
+    /// Frequency to which movement statements will be sent to LRS.
+    /// If 0 or negative, no statment about movement sent
+    /// </summary>
+    public float traceMovementFrequency = 0;
+    /// <summary>
+    /// If true, puzzles will be included in the game.
+    /// Else dream fragments will replace collectable puzzles
+    /// </summary>
     public bool virtualPuzzle = true;
+    /// <summary>
+    /// If true, remove extra geaometries. This is an additionnal option for very poor hardware
+    /// </summary>
+    public bool removeExtraGeometries = true;
+
+    //Paths for other config files
+    #region Config Files Paths
+    public string lrsConfigPath;
     public string dreamFragmentLinksPath;
-    public string tipsPath;
-    public string internalTipsPath;
+    public string hintsPath;
+    public string internalHintsPath;
+    public string wrongAnswerFeedbacksPath;
+    public string enigmasWeightPath;
+    public string labelWeightsPath;
+    public string helpSystemConfigPath;
+    #endregion
+
+    //Additional logos
+    public string[] additionalLogosPath;
 
     //Texte intro, transition, fin
     public string[] storyTextIntro;
     public string[] storyTextransition;
     public string[] storyTextEnd;
+    public string[] additionalCredit;
+    public string scoreText;
+
+    //Inventory texts 
+    public List<string> inventoryScrollIntro;
+    public List<string> inventoryKeyBallBox;
+    public List<string> inventoryWire;
+    public List<string> inventoryKeySatchel;
+    public List<string> inventoryScrolls;
+    public List<string> inventoryGlasses1;
+    public List<string> inventoryGlasses2;
+    public List<string> inventoryMirror;
+    public List<string> inventoryLamp;
+    public List<string> inventoryPuzzle;
 
     //Ball Box
     public string ballBoxQuestion;
     public string ballBoxPlaceHolder;
+    public string ballBoxAnswerFeedback;
+    public string ballBoxAnswerFeedbackDesc;
     public List<string> ballBoxAnswer;
-    public string[] ballTexts = new string[15];
+    public string[] ballTexts = new string[10];
 
     //Plank And Wire
-    public string plankAndWireQuestion;
-    public string plankAndWirePlaceHolder;
     public string plankAndWireQuestionIAR;
+    public string plankAndWirePlaceHolder;
+    public string plankAndWireAnswerFeedback;
+    public string plankAndWireAnswerFeedbackDesc;
+    public string plankAndWireQuestion;
     public string[] plankAndWireCorrectWords = new string[3];
-    public int[] plankAndWireCorrectNumbers = new int[3];
+    public List<string> plankAndWireCorrectNumbers;
     public string[] plankOtherWords = new string[10];
-    public int[] plankAndWireOtherNumbers = new int[6];
+    public List<string> plankAndWireOtherNumbers;
 
-    //Green Fragments
-    public string greenFragmentsQuestion;
-    public string greenFragmentPlaceHolder;
-    public string[] greenFragmentsWords = new string[6];
-    public List<string> greenFragmentAnswer;
+    //Crouch enigma
+    public string crouchQuestion;
+    public string crouchPlaceHolder;
+    public List<string> crouchAnswer;
+    public string crouchAnswerFeedback;
+    public string crouchAnswerFeedbackDesc;
+    public string[] crouchWords = new string[6];
 
     //Gears
     public string gearsQuestion;
@@ -47,59 +109,73 @@ public class GameContent {
     public string[] gearMovableTexts = new string[4];
     public string gearAnswer;
 
-    //mdp login room 1 -> 2
-    public int mdpLogin;
+    //mastermind room 1 -> 2
+    public string mastermindQuestion;
+    public int mastermindQuestionYPos;
+    public int mastermindAnswer;
+    public string mastermindBackgroundPicturePath;
 
     //Glasses
     public string glassesQuestion;
     public string glassesPlaceHolder;
-    public string[] glassesPicturesPath = new string[4];
     public List<string> glassesAnswer;
+    public string glassesAnswerFeedback;
+    public string glassesAnswerFeedbackDesc;
+    public string glassesAnswerDescription;
+    public string[] glassesPicturesPath = new string[4];
 
-    //Enigma 6 (3 dream fragments)
-    public string enigma6Question;
-    public string enigma6PlaceHolder;
-    public List<string> enigma6Answer;
-    public string enigma6AnswerDescription;
+    //Enigma 8 (3 dream fragments)
+    public string enigma08Question;
+    public string enigma08PlaceHolder;
+    public List<string> enigma08Answer;
+    public string enigma08AnswerFeedback;
+    public string enigma08AnswerFeedbackDesc;
 
     //Scrolls
     public string scrollsQuestion;
     public string scrollsPlaceHolder;
     public List<string> scrollsAnswer;
+    public string scrollsAnswerFeedback;
+    public string scrollsAnswerFeedbackDesc;
     public string[] scrollsWords = new string[5];
 
     //Mirror
     public string mirrorQuestion;
     public string mirrorPlaceHolder;
     public List<string> mirrorAnswer;
+    public string mirrorAnswerFeedback;
+    public string mirrorAnswerFeedbackDesc;
     public string mirrorPicturePath;
 
-    //Enigma 9 (1 dream fragment)
-    public string enigma9Question;
-    public string enigma9PlaceHolder;
-    public List<string> enigma9Answer;
+    //Enigma 11 (1 dream fragment)
+    public string enigma11Question;
+    public string enigma11PlaceHolder;
+    public List<string> enigma11Answer;
+    public string enigma11AnswerFeedback;
+    public string enigma11AnswerFeedbackDesc;
 
-    //Enigma 10 (3 dream fragments)
-    public string enigma10Question;
-    public string enigma10PlaceHolder;
-    public List<string> enigma10Answer;
+    //Enigma 12 (3 dream fragments)
+    public string enigma12Question;
+    public string enigma12PlaceHolder;
+    public List<string> enigma12Answer;
+    public string enigma12AnswerFeedback;
+    public string enigma12AnswerFeedbackDesc;
 
     //Lock Room 2
     public int lockRoom2Password;
 
     //Puzzle (or 5 dream fragments)
-    public bool puzzle;
-    public string puzzlePicturePath;
     public string puzzleAnswer;
+    public string puzzlePicturePath;
 
-    //Enigma 12 (2 dream fragments)
-    public string enigma12Answer;
+    //Enigma 13 (2 dream fragments)
+    public string enigma16Answer;
 
     //Lamp
-    public string[] lampPicturesPath = new string[6];
     public string lampAnswer;
+    public string[] lampPicturesPath = new string[6];
 
     //White Board
-    public string[] whiteBoardWords = new string [12]; //"AMENAGER L'ESPAC##E##"
     public string whiteBoardAnswer;
+    public string[] whiteBoardWords = new string [12];
 }

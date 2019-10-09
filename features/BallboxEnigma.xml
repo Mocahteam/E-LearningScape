@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="Sphere07_activate_15" label="activate Sphere07" system="False" end="False" />
+  <transition id="Sphere05_activate_13" label="activate Sphere05" system="False" end="False" />
+  <transition id="Sphere04_activate_20" label="activate Sphere04" system="False" end="False" />
+  <transition id="SphereSolution01_activate_9" label="activate SphereSolution01" system="False" end="False" />
+  <transition id="Sphere09_activate_22" label="activate Sphere09" system="False" end="False" />
+  <transition id="SphereSolution02_activate_10" label="activate SphereSolution02" system="False" end="False" />
+  <transition id="SphereSolution03_activate_11" label="activate SphereSolution03" system="False" end="False" />
+  <transition id="KeyBallBox_turnOff_6" label="turnOff KeyBallBox" system="False" end="False" />
+  <transition id="KeyBallBox_turnOn_6" label="turnOn KeyBallBox" system="False" end="False" />
+  <transition id="BallBox_turnOff_7" label="turnOff BallBox" system="False" end="False" />
+  <transition id="BallBox_turnOn_7" label="turnOn BallBox" system="False" end="False" />
+  <transition id="Q1_Correct_24" label="Correct Q1" system="False" end="True" />
+  <transition id="Q1_Wrong_24" label="Wrong Q1" system="False" end="False" />
+  <transition id="Sphere06_activate_14" label="activate Sphere06" system="False" end="False" />
+  <transition id="Sphere00_activate_23" label="activate Sphere00" system="False" end="False" />
+  <transition id="KeyBallBox_perform_5" label="perform KeyBallBox" system="False" end="False" />
+  <transition id="Padlock_perform_8" label="perform Padlock" system="True" end="False" />
+  <transition id="Sphere08_activate_16" label="activate Sphere08" system="False" end="False" />
+</transitions>

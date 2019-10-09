@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-9B34-352C3-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>Dream3Answer2</text>
+  </name>
+ <page id="g-9B34-352D5-1">
+  <place id="p-9B34-352DC-2">
+  <name>
+   <text>Q2_Answered_49</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="530" y="250"/>
+   </graphics>
+  </place>
+  <place id="p-9B34-352FF-3">
+  <name>
+   <text>Q2_Answering_49</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="280" y="250"/>
+   </graphics>
+  </place>
+  <transition id="t-9B34-35305-4">
+  <name>
+   <text>Q2_Correct_49</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="410" y="240"/>
+   </graphics>
+  </transition>
+  <transition id="t-9B34-3530C-5">
+  <name>
+   <text>Q2_Wrong_49</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="410" y="330"/>
+   </graphics>
+  </transition>
+  <transition id="t-9B34-35310-6">
+  <name>
+   <text>Q2_choice1_63</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="120" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-9B34-35318-7">
+  <name>
+   <text>Q2_choice1_68</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="125" y="195"/>
+   </graphics>
+  </transition>
+  <transition id="t-9B34-3531C-8">
+  <name>
+   <text>Q2_choice1_76</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="125" y="340"/>
+   </graphics>
+  </transition>
+  <transition id="t-9B34-35324-9">
+  <name>
+   <text>Q2_choice1_82</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="120" y="480"/>
+   </graphics>
+  </transition>
+  <transition id="t-9B34-35329-10">
+  <name>
+   <text>Q2_choice2_63</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="120" y="130"/>
+   </graphics>
+  </transition>
+  <transition id="t-9B34-35330-11">
+  <name>
+   <text>Q2_choice2_68</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="125" y="275"/>
+   </graphics>
+  </transition>
+  <transition id="t-9B34-35337-12">
+  <name>
+   <text>Q2_choice2_76</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="125" y="420"/>
+   </graphics>
+  </transition>
+  <transition id="t-9B34-35341-13">
+  <name>
+   <text>Q2_choice2_82</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="120" y="560"/>
+   </graphics>
+  </transition>
+  <place id="p-9B34-35347-14">
+  <name>
+   <text>Q2_locker_49</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="280" y="350"/>
+   </graphics>
+  </place>
+  <place id="p-9B34-3534E-15">
+  <name>
+   <text>Q2_start_63</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="50" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-9B34-35354-16">
+  <name>
+   <text>Q2_start_68</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="45" y="225"/>
+   </graphics>
+  </place>
+  <place id="p-9B34-3535C-17">
+  <name>
+   <text>Q2_start_76</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="45" y="370"/>
+   </graphics>
+  </place>
+  <place id="p-9B34-35362-18">
+  <name>
+   <text>Q2_start_82</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="50" y="510"/>
+   </graphics>
+  </place>
+  <arc id="e-9B34-353ED-19" source="p-9B34-35347-14" target="t-9B34-3530C-5">
+  </arc>
+  <arc id="e-9B34-353F2-20" source="p-9B34-35354-16" target="t-9B34-35318-7">
+  </arc>
+  <arc id="e-9B34-353F6-21" source="p-9B34-35354-16" target="t-9B34-35330-11">
+  </arc>
+  <arc id="e-9B34-353F8-22" source="p-9B34-352FF-3" target="t-9B34-3531C-8">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-9B34-353FD-23" source="t-9B34-3531C-8" target="p-9B34-352FF-3">
+  </arc>
+  <arc id="e-9B34-353FE-24" source="p-9B34-3535C-17" target="t-9B34-3531C-8">
+  </arc>
+  <arc id="e-9B34-35400-25" source="p-9B34-3535C-17" target="t-9B34-35337-12">
+  </arc>
+  <arc id="e-9B34-35401-26" source="p-9B34-352FF-3" target="t-9B34-35324-9">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-9B34-35403-27" source="t-9B34-35324-9" target="p-9B34-352FF-3">
+  </arc>
+  <arc id="e-9B34-35404-28" source="p-9B34-35362-18" target="t-9B34-35324-9">
+  </arc>
+  <arc id="e-9B34-35405-29" source="p-9B34-35362-18" target="t-9B34-35341-13">
+  </arc>
+  <arc id="e-9B34-35405-30" source="t-9B34-35305-4" target="p-9B34-352DC-2">
+  </arc>
+  <arc id="e-9B34-35407-31" source="p-9B34-352FF-3" target="t-9B34-35305-4">
+  </arc>
+  <arc id="e-9B34-35408-32" source="p-9B34-352FF-3" target="t-9B34-35310-6">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-9B34-35409-33" source="t-9B34-35310-6" target="p-9B34-352FF-3">
+  </arc>
+  <arc id="e-9B34-3540B-34" source="p-9B34-3534E-15" target="t-9B34-35310-6">
+  </arc>
+  <arc id="e-9B34-3540C-35" source="p-9B34-3534E-15" target="t-9B34-35329-10">
+  </arc>
+  <arc id="e-9B34-3540D-36" source="p-9B34-352FF-3" target="t-9B34-35318-7">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-9B34-3540E-37" source="t-9B34-35318-7" target="p-9B34-352FF-3">
+  </arc>
+ </page>
+ </net>
+</pnml>

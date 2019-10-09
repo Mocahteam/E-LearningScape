@@ -73,9 +73,6 @@ namespace UnityEngine.PostProcessing.Utilities
 
         void Start()
         {
-            initialFocusDistance = IARViewItem.initialFocusDistance;
-            depthOfField.focusDistance = initialFocusDistance;
-            IARViewItem.focusDistance = initialFocusDistance;
             // Replace the profile with its clone.
             var postfx = GetComponent<PostProcessingBehaviour>();
             _profile = Instantiate<PostProcessingProfile>(postfx.profile);
@@ -121,8 +118,6 @@ namespace UnityEngine.PostProcessing.Utilities
 
         void Update()
         {
-            depthOfField.focusDistance = IARViewItem.focusDistance;
-
             if (controlAntialiasing)
             {
                 if (enableAntialiasing != _profile.antialiasing.enabled)

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class IARNewItemAvailable : FSystem {
 
@@ -11,8 +13,10 @@ public class IARNewItemAvailable : FSystem {
     private Family f_notificationEnabled = FamilyManager.getFamily(new AnyOfTags("NewItemFeedback"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_newItemOver = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(PointerOver)));
     private Family f_inventoryWarning = FamilyManager.getFamily(new AnyOfTags("InventoryWarning"));
+    private Family f_triggerableWarning = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(Button)), new AnyOfTags("InventoryElements"));
+    private Family f_tabs = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(Button)), new AnyOfTags("IARTab"));
 
-    private bool warningNewItem = true;
+    private GameObject lastKeyboardViewed = null;
     private bool HUD_neverDisplayed = true;
 
     private Dictionary<int, GameObject> id2Go;
@@ -25,7 +29,7 @@ public class IARNewItemAvailable : FSystem {
         {
             f_itemsEnabled.addEntryCallback(OnNewItemEnabled);
             f_itemsEnabled.addExitCallback(OnItemDisabled);
-            f_newItemOver.addEntryCallback(OnMouseEnter);
+            f_newItemOver.addEntryCallback(OnMouseOver);
 
             id2Go = new Dictionary<int, GameObject>();
         }
@@ -65,14 +69,14 @@ public class IARNewItemAvailable : FSystem {
         }
     }
 
-    private void OnMouseEnter(GameObject go)
+    private void OnMouseOver(GameObject go)
     {
         // find child with tag "NewItemFeedback"
         GameObject child = getFeedbackChild(go);
         if (child && child.activeInHierarchy)
         {
             NewItemManager nim = go.GetComponent<NewItemManager>();
-            if (nim.disableOnMouseOver || (nim.disableOnClick && Input.GetMouseButton(0)))
+            if (nim.disableOnMouseOver || (nim.disableOnClick && (Input.GetButton("Fire1") || Input.GetButton("Submit"))))
                 GameObjectManager.setGameObjectState(child, false);
         }
     }
@@ -80,40 +84,42 @@ public class IARNewItemAvailable : FSystem {
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
+        if (lastKeyboardViewed != EventSystem.current.currentSelectedGameObject)
+        {
+            lastKeyboardViewed = EventSystem.current.currentSelectedGameObject;
+            foreach (GameObject go in f_triggerableWarning)
+            {
+                if (go == lastKeyboardViewed)
+                {
+                    OnMouseOver(go);
+                    break;
+                }
+            }
+        }
+
         // manage click when mouse is over an item
         foreach (GameObject go in f_newItemOver)
-            OnMouseEnter(go); // same process as OnMouseEnter callback
+            OnMouseOver(go); // same process as OnMouseEnter callback
+
+        foreach (GameObject go in f_tabs)
+            if (go == EventSystem.current.currentSelectedGameObject)
+                OnMouseOver(go);
 
         // blink HUD "A" if at least one new item is available
         if (f_notificationEnabled.Count > 0)
         {
-            if (Time.time - (int)Time.time > 0.5f && warningNewItem)
+            if (HUD_neverDisplayed)
             {
-                if (HUD_neverDisplayed)
-                {
-                    // enable parent
-                    GameObjectManager.setGameObjectState(f_inventoryWarning.First().transform.parent.gameObject, true);
-                    HUD_neverDisplayed = false;
-                }
-                // display warning
+                // enable parent
+                GameObjectManager.setGameObjectState(f_inventoryWarning.First().transform.parent.gameObject, true);
+                HUD_neverDisplayed = false;
+            }
+            if (!f_inventoryWarning.First().activeSelf)
                 GameObjectManager.setGameObjectState(f_inventoryWarning.First(), true);
-                warningNewItem = false;
-            }
-            else if (Time.time - (int)Time.time < 0.5f && !warningNewItem)
-            {
-                // disable warning
-                GameObjectManager.setGameObjectState(f_inventoryWarning.First(), false);
-                warningNewItem = true;
-            }
         }
         else
-        {
-            if (!warningNewItem)
-            {
+            if (f_inventoryWarning.First().activeSelf)
                 GameObjectManager.setGameObjectState(f_inventoryWarning.First(), false);
-                warningNewItem = true;
-            }
-        }
     }
 
 }
