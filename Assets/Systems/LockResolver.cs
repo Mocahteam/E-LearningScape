@@ -21,14 +21,10 @@ public class LockResolver : FSystem {
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
-    
-    private Family f_wheelSpeedSlider = FamilyManager.getFamily(new AllOfComponents(typeof(Slider)), new AnyOfTags("WheelSpeedSlider"));
 
     private Family f_LockArrows = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver)), new AnyOfTags("LockArrow"));
 
     //information for animations
-    private float speedRotation;
-    private float oldDT;
     private Vector3 tmpTargetPosition;
 
     //locker
@@ -39,7 +35,7 @@ public class LockResolver : FSystem {
     private Color lockWheelColor;
     private float wheelRotationCount = 0;
     private string rotationDirection = "";
-    private Slider wheelSpeedRotation;
+    private float wheelSpeedRotation;
 
     private bool room1Unlocked = false;
     private bool room3Unlocked = false;
@@ -58,8 +54,6 @@ public class LockResolver : FSystem {
         if (Application.isPlaying)
         {
             f_focusedLocker.addEntryCallback(onReadyToWorkOnLocker);
-
-            wheelSpeedRotation = f_wheelSpeedSlider.First().GetComponent<Slider>();
 
             wallIntro = f_wallIntro.First();
             fences = f_fences.First();
@@ -97,9 +91,6 @@ public class LockResolver : FSystem {
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
     {
-        speedRotation *= Time.deltaTime / oldDT;
-        oldDT = Time.deltaTime;
-
         // Are we in front of the locker
         if (selectedLocker)
         {
@@ -154,10 +145,10 @@ public class LockResolver : FSystem {
         if (lockRotationUp || lockRotationDown)
         {
             if (lockRotationUp)
-                selectedWheel.transform.Rotate(Time.deltaTime * wheelSpeedRotation.value, 0, 0);
+                selectedWheel.transform.Rotate(Time.deltaTime * wheelSpeedRotation, 0, 0);
             else
-                selectedWheel.transform.Rotate(-Time.deltaTime * wheelSpeedRotation.value, 0, 0);
-            wheelRotationCount += Time.deltaTime * wheelSpeedRotation.value;
+                selectedWheel.transform.Rotate(-Time.deltaTime * wheelSpeedRotation, 0, 0);
+            wheelRotationCount += Time.deltaTime * wheelSpeedRotation;
 
             // is rotation finished ?
             if (wheelRotationCount > 36)
@@ -362,5 +353,10 @@ public class LockResolver : FSystem {
                 selectedLocker.UpDownControl.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - selectedLocker.UpDownControl.transform.localPosition.x);
             }
         }
+    }
+
+    public void SetWheelSpeed(float newValue)
+    {
+        wheelSpeedRotation = newValue;
     }
 }

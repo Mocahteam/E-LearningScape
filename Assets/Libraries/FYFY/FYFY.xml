@@ -504,6 +504,9 @@
              (3) to follow system load and families content during playing mode
             </summary>
         </member>
+        <member name="F:FYFY.MainLoop.instance">
+            <summary>MainLoop instance (singleton)</summary>
+        </member>
         <member name="F:FYFY.MainLoop._fixedUpdateSystemDescriptions">
             <summary>List of systems defined in fixedUpdate context through the Inspector</summary>
         </member>
@@ -549,6 +552,12 @@
         </member>
         <member name="F:FYFY.MainLoop.lateUpdateStats">
             <summary>How much time (ms) the previous late update execution lasted</summary>
+        </member>
+        <member name="M:FYFY.MainLoop.callAppropriateSystemMethod(System.String,System.String,System.Object)">
+            <summary>Call function "functionName" defined inside "systemName" system with "parameter" parameter </summary>
+        </member>
+        <member name="M:FYFY.MainLoop.synchronizeWrappers">
+            <summary>Synchronize systems' wrappers</summary>
         </member>
         <member name="T:FYFY.AllOfComponents">
             <summary>

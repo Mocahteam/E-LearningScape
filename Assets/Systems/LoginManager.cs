@@ -290,4 +290,10 @@ public class LoginManager : FSystem {
             });
         }
     }
+
+    public void OnEndEditMastermindAnswer()
+    {
+        if (Input.GetButtonDown("Submit"))
+            CheckMastermindAnswer();
+    }
 }

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.PostProcessing;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class MenuSystem : FSystem {
 
@@ -206,6 +207,16 @@ public class MenuSystem : FSystem {
 
         // Play story
         StoryDisplaying.instance.Pause = false;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void RestartGame()
+    {
+        GameObjectManager.loadScene(SceneManager.GetActiveScene().name);
     }
 }
 
