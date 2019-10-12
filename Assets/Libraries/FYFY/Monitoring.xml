@@ -346,6 +346,9 @@
             <param name="family">The Family to ask for.</param>
             <return>The FamilyMonitoring associated to the family if it exists. Null otherwise.</return>
         </member>
+        <member name="M:FYFY_plugins.Monitoring.MonitoringManager.synchronizeFamilies">
+            <summary>Parse all systems and inspect their families</summary>
+        </member>
         <member name="T:FYFY_plugins.Monitoring.MonitoringManager.Source">
             <summary>Define the different source that can trigger a game action.</summary>
         </member>

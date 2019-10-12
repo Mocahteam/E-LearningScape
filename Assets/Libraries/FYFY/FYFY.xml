@@ -507,6 +507,13 @@
         <member name="F:FYFY.MainLoop.instance">
             <summary>MainLoop instance (singleton)</summary>
         </member>
+        <member name="F:FYFY.MainLoop.mainLoopEditorScanner">
+            <summary>
+            	Reference to the mainLoopEditorScanner defined into FYFY_Inspector package. Because we have not access
+            	to this package here, we use super class type (MonoBehaviour). This reference will not be null if 
+            	MainLoopEditorScanner.OnEnable start before MainLoop.OnEnable.
+            </summary>
+        </member>
         <member name="F:FYFY.MainLoop._fixedUpdateSystemDescriptions">
             <summary>List of systems defined in fixedUpdate context through the Inspector</summary>
         </member>

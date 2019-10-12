@@ -35,7 +35,7 @@ public class LockResolver : FSystem {
     private Color lockWheelColor;
     private float wheelRotationCount = 0;
     private string rotationDirection = "";
-    private float wheelSpeedRotation;
+    private float wheelSpeedRotation = 200; // Default value
 
     private bool room1Unlocked = false;
     private bool room3Unlocked = false;
