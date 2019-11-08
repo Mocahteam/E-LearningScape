@@ -217,8 +217,7 @@ public class LockResolver : FSystem {
                 });
 
                 // update IAR
-                GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(0).gameObject, false); // first child is locked tab
-                GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(1).gameObject, true); // second child is unlocked tab
+                GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock, true);// enable questions tab
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new { verb = "unlocked", objectType = "menu", objectName = selectedLocker.IARScreenUnlock.name });
                 f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 1;
                 // update flags
@@ -239,8 +238,8 @@ public class LockResolver : FSystem {
             {
                 GameObjectManager.addComponent<PlaySound>(fences, new { id = 9 }); // id refer to FPSController AudioBank
                 fences.GetComponent<Animator>().enabled = true; // enable animation
-                GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(0).gameObject, false); // first child is locked tab
-                GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock.transform.GetChild(1).gameObject, true); // second child is unlocked tab
+                GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock, true); // enable questions tab
+                f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 3;
                 IARScreenRoom3Unlocked = true;
                 GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock", performedBy = "player" });
                 GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock_meta", performedBy = "player" });
@@ -256,7 +255,6 @@ public class LockResolver : FSystem {
                     objectType = "menu",
                     objectName = selectedLocker.IARScreenUnlock.name
                 });
-                f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 3;
                 closedBy = "system";
                 ExitLocker();
             }

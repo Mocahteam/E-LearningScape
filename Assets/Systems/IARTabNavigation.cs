@@ -17,6 +17,7 @@ public class IARTabNavigation : FSystem {
     private Family f_HUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
     private Family f_settings = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
     private Sprite selectedTabSprite;
     private Sprite defaultTabSprite;
@@ -32,6 +33,8 @@ public class IARTabNavigation : FSystem {
 
     public static IARTabNavigation instance;
 
+    private UnlockedRoom unlockedRoom;
+
     public IARTabNavigation()
     {
         if (Application.isPlaying)
@@ -45,6 +48,8 @@ public class IARTabNavigation : FSystem {
             iar = iarBackground.transform.parent.gameObject;
 
             systemsStates = new Dictionary<FSystem, bool>();
+
+            unlockedRoom = f_unlockedRoom.First().GetComponent<UnlockedRoom>();
         }
         instance = this;
     }
@@ -60,18 +65,20 @@ public class IARTabNavigation : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         // Open/Close IAR with Escape and A keys
-        if (iar.activeInHierarchy && f_settings.Count == 0 && !skipNextClose && (Input.GetButtonDown("ToggleInventory") || Input.GetButtonDown("Cancel") || (Input.GetButtonDown("Fire1") && iarBackground.GetComponent<PointerOver>())))
+        if (iar.activeInHierarchy && f_settings.Count == 0 && !skipNextClose && (Input.GetButtonDown("Cancel") || (Input.GetButtonDown("Fire1") && iarBackground.GetComponent<PointerOver>())))
             closeIar();
         else
         {
             skipNextClose = false;
-            if (!iar.activeInHierarchy && (Input.GetButtonDown("ToggleInventory") || Input.GetButtonDown("Cancel")))
+            if (!iar.activeInHierarchy)
             {
                 if (Input.GetButtonDown("ToggleInventory"))
-                    openIar(0); // Open IAR on the first tab
-                else
-                    // Open IAR on the last tab only if player doesn't work on selectable enigm (Escape enables to exit the enigm)
-                    if (f_atWork.Count == 0)
+                    openIar(0); // Open IAR on the first visible tab
+                else if (Input.GetButtonDown("ToggleQuestions") && unlockedRoom.roomNumber > 0 && unlockedRoom.roomNumber < 4)
+                    openIar(unlockedRoom.roomNumber); // Open IAR on the last query visible tab
+                else if (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause)
+                    openIar(f_tabs.Count - 2); // Open IAR on the second to last tab
+                else if (Input.GetButtonDown("Cancel"))
                     openIar(f_tabs.Count - 1); // Open IAR on the last tab
             }
         }

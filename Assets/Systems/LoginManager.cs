@@ -137,8 +137,7 @@ public class LoginManager : FSystem {
                 StoryDisplaying.instance.Pause = false;
                 // Enable IAR second screen
                 GameObject IARsecondScreen = f_mainWindow.First().GetComponentInChildren<LinkedWith>().link;
-                GameObjectManager.setGameObjectState(IARsecondScreen.transform.GetChild(0).gameObject, false); // first child is locked tab
-                GameObjectManager.setGameObjectState(IARsecondScreen.transform.GetChild(1).gameObject, true); // second child is unlocked tab
+                GameObjectManager.setGameObjectState(IARsecondScreen, true); // enable questions tab
                 GameObjectManager.addComponent<ActionPerformedForLRS>(IARsecondScreen, new { verb = "unlocked", objectType = "menu", objectName = IARsecondScreen.name });
                 f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 2;
                 // exit login

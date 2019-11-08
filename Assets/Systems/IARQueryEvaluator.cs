@@ -33,14 +33,8 @@ public class IARQueryEvaluator : FSystem {
             // Init callbacks and/or solutions
             availableOrSolutions = new HashSet<string>();
             foreach (GameObject query in f_queries)
-            {
-                query.GetComponentInChildren<InputField>().onValidateInput += delegate (string input, int charIndex, char addedChar) {
-                    IARTabNavigation.instance.Pause = true; // pause IARTabNavigation to enable "A" tap
-                    return addedChar;
-                };
                 foreach (string or in query.GetComponent<QuerySolution>().orSolutions)
                     availableOrSolutions.Add(or);
-            }
 
             f_answerRoom2.addExitCallback(onNewAnswerDisplayed);
             f_uiEffects.addEntryCallback(onUIEffectEnd);
@@ -97,7 +91,6 @@ public class IARQueryEvaluator : FSystem {
             IarCheckAnswer(query);
         if (Input.GetButtonDown("Cancel"))
             IARTabNavigation.instance.skipNextClose = true;
-        IARTabNavigation.instance.Pause = false;
     }
 
     public void IarCheckAnswer(GameObject query)

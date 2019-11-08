@@ -195,7 +195,7 @@
 	"51.perform": {
 		"Comment": ["The in game left glass"],
 		"1": ["Il me reste au moins un objet à trouver"],
-		"2": ["Je pense qu'un branche de lunette me serait utile"],
+		"2": ["Je pense qu'une branche de lunette me serait utile"],
 		"3": ["Je pressens qu'une branche de lunette se trouvait dans la grande bibliothèque de la pièce précédente"]
 	},
 	"52.turnOn": {
@@ -234,7 +234,7 @@
 	"64.Correct": {
 		"Comment": ["The satchel question"],
 		"1": ["J'ai tout ce qu'il me faut pour résoudre la question relative au contenu du cartable"],
-		"2": ["Que dois-je comprendre de la feuille observée à l'aides lunettes ?"]
+		"2": ["Que dois-je comprendre de la feuille observée à l'aides des lunettes ?"]
 	},
 	
 	"Comment: Enigma08": {},

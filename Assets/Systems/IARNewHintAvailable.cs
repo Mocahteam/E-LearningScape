@@ -7,6 +7,7 @@ public class IARNewHintAvailable : FSystem {
     private Family f_tabContent = FamilyManager.getFamily(new AnyOfTags("HelpTabContent"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_helpNotif = FamilyManager.getFamily(new AllOfComponents(typeof(HelpFlag)));
 
+    private bool firstHelpOccurs = false;
 
     public static IARNewHintAvailable instance;
 
@@ -22,13 +23,19 @@ public class IARNewHintAvailable : FSystem {
 
     private void onNewHintAvailable(GameObject go)
     {
-        if (f_tabContent.Count == 0)
-            GameObjectManager.setGameObjectState(f_helpNotif.First(), true);
+        if (!firstHelpOccurs)
+        {
+            GameObjectManager.setGameObjectState(f_helpNotif.First().transform.parent.gameObject, true);
+            firstHelpOccurs = true;
+        }
+        GameObjectManager.setGameObjectState(f_helpNotif.First(), true);
     }
 
     private void onExitHintPanel(int InstanceId)
     {
         if (f_newHint.Count > 0)
             GameObjectManager.setGameObjectState(f_helpNotif.First(), true);
+        else
+            GameObjectManager.setGameObjectState(f_helpNotif.First(), false);
     }
 }

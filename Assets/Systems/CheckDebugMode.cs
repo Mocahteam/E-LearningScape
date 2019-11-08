@@ -7,6 +7,7 @@ public class CheckDebugMode : FSystem
     private Family f_lights = FamilyManager.getFamily(new AllOfComponents(typeof(Light)));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"));
+    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
     public static FSystem instance;
     //this bool is used to switch between CheckDebugMode paused and DebugModeSystem paused
@@ -93,18 +94,14 @@ public class CheckDebugMode : FSystem
                     //unlock all IAR tabs
                     int nb = f_tabs.Count;
                     for (int i = 0; i < nb; i++)
-                    {
-                        if (f_tabs.getAt(i).name == "Unlocked")
-                        {
-                            GameObjectManager.setGameObjectState(f_tabs.getAt(i).transform.parent.GetChild(0).gameObject, false);
-                            GameObjectManager.setGameObjectState(f_tabs.getAt(i), true);
-                        }
-                    }
+                        GameObjectManager.setGameObjectState(f_tabs.getAt(i), true);
 
                     //enable room 2 and 3
                     foreach (Transform room in f_gameRooms.First().transform)
                         if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
                             GameObjectManager.setGameObjectState(room.gameObject, true);
+
+                    f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 3;
 
                     //pause this system and unable DebugModeSystem
                     canPause = true;

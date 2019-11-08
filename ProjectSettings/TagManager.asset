@@ -38,10 +38,8 @@ TagManager:
   - UIBackground
   - NewItemFeedback
   - HelpSubtitles
-  - EnableOnFirstCrouch
   - InventoryWarning
   - Cursor
-  - HUD_A
   - DescriptionUI
   - PressA
   - UIEffect
@@ -72,14 +70,15 @@ TagManager:
   - HelpTabContent
   - IARItemSelected
   - HUD_Main
-  - HUD_Menu
   - WheelSpeedSlider
   - CursorImage
-  - DisableOnViewed
   - LockArrow
   - Door
   - ArrowUI
   - ValidationButton
+  - HidableHUD
+  - HUD_TransparentOnMove
+  - QuestionTagContent
   layers:
   - Default
   - TransparentFX

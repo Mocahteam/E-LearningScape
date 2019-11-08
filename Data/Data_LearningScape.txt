@@ -79,7 +79,7 @@
 	],
 	"inventoryPuzzle": [
 		"Pièces de puzzle",
-		"Se sont des pièces d'un puzzle, tout simplement.",
+		"Ce sont des pièces d'un puzzle, tout simplement.",
 		"Cliquez pour manipuler les pièces"
 	],
 	

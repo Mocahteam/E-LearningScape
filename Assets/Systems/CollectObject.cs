@@ -11,7 +11,7 @@ public class CollectObject : FSystem {
     // We process only Highlighted game objects (this component is dynamically added by Highlight system)
     private Family f_collectableObjects = FamilyManager.getFamily(new AllOfComponents(typeof(LinkedWith), typeof(Highlighted)), new NoneOfLayers(5), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_pressA = FamilyManager.getFamily(new AnyOfTags("PressA"));
-    private Family f_HUD_A = FamilyManager.getFamily(new AnyOfTags("HUD_A"));
+    private Family f_HUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
 
     public static CollectObject instance;
 
@@ -23,9 +23,7 @@ public class CollectObject : FSystem {
     public CollectObject()
     {
         if (Application.isPlaying)
-        {
-            itemCollectedNotif = f_HUD_A.First().transform.parent.GetChild(5).gameObject;
-        }
+            itemCollectedNotif = f_HUD.First().transform.GetChild(4).gameObject;
         instance = this;
     }
 

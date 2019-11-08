@@ -272,8 +272,7 @@ public class HelpSystem : FSystem {
                     tmpGO = f_IARTab.getAt(i);
                     if (tmpGO.transform.parent.gameObject.name == "HelpTab")
                     {
-                        GameObjectManager.setGameObjectState(tmpGO.transform.parent.GetChild(0).gameObject, true);
-                        GameObjectManager.setGameObjectState(tmpGO.transform.parent.GetChild(1).gameObject, false);
+                        GameObjectManager.setGameObjectState(tmpGO.transform.parent.GetChild(0).gameObject, false);
                         break;
                     }
                 }

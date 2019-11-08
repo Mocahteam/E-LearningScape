@@ -1,0 +1,274 @@
+{
+    "theme": "EcoleInclusive",
+    "trace": true,
+    "helpSystem": true,
+    "traceToLRS": true,
+    "traceMovementFrequency": 0.5,
+    "virtualPuzzle": true,
+    "lrsConfigPath": "Data/LRSConfig.txt",
+    "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
+    "hintsPath": "Data/Hints_LearningScape.txt",
+    "internalHintsPath": "Data/InternalHints_LearningScape.txt",
+    "wrongAnswerFeedbacksPath": "Data/WrongAnswerFeedbacks.txt",
+    "enigmasWeightPath": "Data/EnigmasWeight.txt",
+    "labelWeightsPath": "Data/LabelWeights.txt",
+    "helpSystemConfigPath": "Data/HelpSystemConfig.txt",
+	"removeExtraGeometries": false,
+	
+	"additionalLogosPath": [
+		"Data/INSHEA_ORNA.png"
+	],
+	
+    "storyTextIntro": [
+        "Il est déjà tard le soir, Camille reste inquiète pour sa première journée dans son nouvel emploi. Ce n’est pas son premier poste, mais pour la première fois elle va être confrontée à un groupe de personnes dont certaines ont des besoins particuliers.",
+        "En se brossant les dents, elle se remémore ce qu’elle a appris sur la diversité, les postures à avoir, mais s’interroge sur sa capacité à mettre en oeuvre sa formation théorique. Puis elle se couche, et plein de questions tournent dans sa tête : et si j’ai un blanc ? et si je ne suis pas comprise ? et si j’étais maladroite dans mes formulations ?",
+        "Camille finit par s'endormir... C'est alors que les marchands de sable entrent en action pour l’aider à structurer sa pensée pendant son sommeil."
+    ],
+    "storyTextransition": [
+        "Camille est entrée en sommeil paradoxal, elle se met à rêver et se retrouve dans un univers étrange. Les marchands de sable restent avec elle pour l’aider à émerger de ce rêve."
+    ],
+    "storyTextEnd": [
+        "Camille se réveille. Elle est en pleine forme, et tout est clair dans sa tête pour son premier jour. Elle a hâte de commencer.",
+        "Les marchands de sable ont bien travaillé et se retrouvent pour faire le bilan de leurs activités."
+    ],
+	"additionalCredit": [
+		"Pour l'INSHEA\n\nArneton Melissa\nBroussolle Elisabeth\nFerrand Marie-Hélène\nGarbarini Délia\nGarnier Philippe\nGeffroy Véronique\nMuratet Mathieu\nVanbrugghe Anne"
+	],
+    "scoreText": "Vous avez mis: ",
+	
+	"inventoryScrollIntro": [
+		"Parchemin",
+		"Il y a des inscriptions inscrites à l’encre sur ce parchemin. Le message semble pour autant incomplet. Ces informations pourraient être utiles pour la suite.",
+		"Cliquez sur le parchemin pour l'ouvrir/le refermer"
+	],
+	"inventoryKeyBallBox": [
+		"Clé",
+		"C’est une clé, sans aucune distinction particulière. Elle ouvre certainement une porte ou un cadenas...",
+		"Cliquez sur la clé pour l'activer/la désactiver"
+	],
+	"inventoryWire": [
+		"Corde",
+		"Cette corde n’est pas très longue mais elle semble assez solide et en bon état. Elle permet sans doute de lier des éléments ensemble.",
+		"Cliquez sur la corde pour l'activer/la désactiver"
+	],
+	"inventoryKeySatchel": [
+		"Clé",
+		"Cette clé a été trouvée dans le vase se renversant. Elle ouvre certainement une porte ou un cadenas...",
+		"Cliquez sur la clé pour l'activer/la désactiver"
+	],
+	"inventoryScrolls": [
+		"Parchemins",
+		"Il y a des inscriptions inscrites à l’encre sur ce parchemin. Ces informations pourraient être utiles pour la suite.",
+		"Cliquez sur le parchemin pour l'ouvrir/le refermer"
+	],
+	"inventoryGlasses1": [
+		"Lunette Filtrante",
+		"La branche droite d'une paire de lunettes ? Il doit certainement manquer l’autre moitié... La lentille est teintée en rouge et semble mettre en lumière ce à quoi il faut être attentif dans une foule de personnes.",
+		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
+	],
+	"inventoryGlasses2": [
+		"Lunette Filtrante",
+		"La branche gauche d'une paire de lunettes ? Il doit certainement manquer l’autre moitié... La lentille est teintée en jaune et semble permettre de voir les choses invisibles dans une foule de personnes.",
+		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
+	],
+	"inventoryMirror": [
+		"Miroir",
+		"Un miroir cylindrique constitué d'une seule pièce d'aluminium poli. Le reflet est d'une grande qualité.",
+		"Cliquez sur le miroir pour l'activer/le désactiver"
+	],
+	"inventoryLamp": [
+		"Lumière noire",
+		"Cette lampe dispose d’une ampoule particulière à vapeur de mercure constituée d'un revêtement particulier: le verre de Wood. Ce verre possède la particularité d'être riche en oxydes de nickel et de fer, ne laissant passer que les rayons UltraViolet : la lumière noire.",
+		"Cliquez sur la lampe pour l'allumer/l'éteindre"
+	],
+	"inventoryPuzzle": [
+		"Pièces de puzzle",
+		"Ce sont des pièces d'un puzzle, tout simplement.",
+		"Cliquez pour manipuler les pièces"
+	],
+	
+    "ballBoxQuestion": "Comment concevoir une situation pédagogique correspondant aux besoins de tous les apprenants ?",
+    "ballBoxPlaceHolder": "3 chiffres attendus...",
+	"ballBoxAnswerFeedback": "1 - 2 - 8",
+	"ballBoxAnswerFeedbackDesc": "Proposer plusieurs modalités - Mettre l’apprenant en situation d’agir - Permettre aux apprenants de discuter",
+    "ballBoxAnswer": [
+        "1",
+        "2",
+        "8"
+    ],
+    "ballTexts": [
+        "Éviter d’être exigeant",
+        "Proposer plusieurs modalités",
+        "Mettre l’apprenant en situation d’agir",
+        "Mettre l’apprenant en écoute passive",
+        "Écrire au tableau",
+        "Donner du travail à la maison",
+        "Réexpliquer et reformuler le plus possible",
+        "Multiplier les aides techniques et humaines",
+        "Permettre aux apprenants de discuter",
+        "Interroger un apprenant au hasard"
+    ],
+	
+    "plankAndWireQuestionIAR": "Qu’apporte la Classification Internationale du Fonctionnement en 2001 ?",
+    "plankAndWirePlaceHolder": "3 chiffres attendus...",
+    "plankAndWireQuestion": "Relier avec la corde les 3 idées fortes de la CIF",
+	"plankAndWireAnswerFeedback": "4 - 2 - 1",
+	"plankAndWireAnswerFeedbackDesc": "Fonction - Capacité - Participation",
+    "plankAndWireCorrectWords": [
+        "Fonctions",
+        "Capacité",
+        "Participation"
+    ],
+    "plankAndWireCorrectNumbers": [
+        "4",
+        "2",
+        "1"
+    ],
+    "plankOtherWords": [
+        "Déficience",
+        "Handicap",
+        "Incapacité",
+        "Arriéré",
+        "Idiot",
+        "Bienfaisance",
+        "Asile",
+        "Charité",
+        "Désavantage",
+        "Limitation"
+    ],
+    "plankAndWireOtherNumbers": [
+        "3",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+    ],
+	
+    "crouchQuestion": "Comment être à l’écoute des besoins ?",
+    "crouchPlaceHolder": "10 chiffres attendus...",
+    "crouchAnswer": [
+        "1023810149"
+    ],
+    "crouchAnswerFeedback": "Il faut savoir changer de posture",
+    "crouchAnswerFeedbackDesc": "",
+    "crouchWords": [
+        "il",
+        "faut",
+        "savoir",
+        "changer",
+        "de",
+        "posture"
+    ],
+	
+    "gearsQuestion": "Sur quel facteur en premier lieu, dois-je agir pour favoriser la participation sociale de tous ?",
+    "gearTextUp": "Chacun de nous est acteur",
+    "gearTextDown": "Application des lois",
+    "gearMovableTexts": [
+        "Mes repré-sentations",
+        "Le cadre bâti",
+        "Les besoins de la personne",
+        "La com-munication"
+    ],
+    "gearAnswer": "Mes repré-sentations",
+	
+	"mastermindQuestion": "Combien (approximativement) existe-t-il de fiches ORNA ?\nLe hasard vous aidera peut-être !",
+	"mastermindQuestionYPos" : 65,
+	"mastermindAnswer": 250,
+	"mastermindBackgroundPicturePath": "Data/MasterMindINSHEA.png",
+	
+    "glassesQuestion": "Quelle caractéristique commune ressort de cette foule ?",
+    "glassesPlaceHolder": "2 mots attendus...",
+    "glassesAnswer": [
+        "Handicap invisible"
+    ],
+    "glassesAnswerFeedback": "Handicap invisible",
+    "glassesAnswerFeedbackDesc": "",
+    "glassesPicturesPath": [
+        "Data/glasses01.png",
+        "Data/glasses02.png",
+        "Data/glasses03.png",
+        "Data/glasses04.png"
+    ],
+	
+    "enigma08Question": "À quoi faut-il prêter attention lors de la conception d’un document ?",
+    "enigma08PlaceHolder": "1 mot attendu...",
+    "enigma08Answer": [
+        "Lisibilité"
+    ],
+    "enigma08AnswerFeedback": "Lisibilité",
+    "enigma08AnswerFeedbackDesc": "",
+	
+    "scrollsQuestion": "Acronyme bien utile pour construire et mettre en place un projet personnalisé",
+    "scrollsPlaceHolder": "1 mot anglais attendu...",
+    "scrollsAnswer": [
+        "SMART"
+    ],
+	"scrollsAnswerFeedback": "SMART",
+	"scrollsAnswerFeedbackDesc": "Sensé - Mesurable - Atteignable - Réaliste - Temporalisé",
+    "scrollsWords": [
+        "<color=red>S</color>ensé",
+        "<color=red>M</color>esurable",
+        "<color=red>A</color>tteignable",
+        "<color=red>R</color>éaliste",
+        "<color=red>T</color>emporalisé"
+    ],
+	
+    "mirrorQuestion": "Qu’est ce qui met en péril l’estime de soi des personnes en situation de handicap ?",
+    "mirrorPlaceHolder": "1 mot attendu...",
+    "mirrorAnswer": [
+        "Stigmatisation"
+    ],
+	"mirrorAnswerFeedback": "Stigmatisation",
+	"mirrorAnswerFeedbackDesc": "",
+    "mirrorPicturePath": "Data/Plank.png",
+	
+    "enigma11Question": "Un processus de raisonnement…",
+    "enigma11PlaceHolder": "1 mot attendu...",
+    "enigma11Answer": [
+        "Inférence"
+    ],
+	"enigma11AnswerFeedback": "Inférence",
+	"enigma11AnswerFeedbackDesc": "",
+	
+    "enigma12Question": "Elle est nécessaire pour sortir du labyrinthe de l’école inclusive",
+    "enigma12PlaceHolder": "1 mot attendu...",
+    "enigma12Answer": [
+        "Collaboration"
+    ],
+	"enigma12AnswerFeedback": "Collaboration",
+	"enigma12AnswerFeedbackDesc": "",
+	
+    "lockRoom2Password": 703,
+	
+    "puzzleAnswer": "Adapter sa pratique",
+	"puzzlePicturePath": "Data/Puzzle_Complet.png",
+	
+    "lampAnswer": "Besoins",
+    "lampPicturesPath": [
+        "Data/lamp01.png",
+        "Data/lamp02.png",
+        "Data/lamp03.png",
+        "Data/lamp04.png",
+        "Data/lamp05.png",
+        "Data/lamp06.png"
+    ],
+	
+    "enigma16Answer": "Personne ressource",
+	
+    "whiteBoardAnswer": "Accessibilité",
+    "whiteBoardWords": [
+        "Dépendances",
+        "Déni",
+        "Ob##s##tacle",
+        "Barrière",
+        "Entrave",
+        "##Accès## restreint",
+        "Mise à l’écart",
+        "Isolement",
+        "Ton sur ton",
+        "St##i##gmatisation",
+        "Stéréotypes",
+        "Immo##bilité##"
+    ]
+}
