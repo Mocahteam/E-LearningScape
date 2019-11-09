@@ -14,6 +14,7 @@ public class WhiteBoardManager : FSystem {
     private Family f_closeWhiteBoard = FamilyManager.getFamily (new AnyOfTags ("Board", "Eraser", "BoardTexture", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_eraserFocused = FamilyManager.getFamily(new AnyOfTags("Eraser"), new AllOfComponents(typeof(PointerOver)));
     private Family f_boardRemovableWords = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
+    private Family f_boardUnremovableWords = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
@@ -40,11 +41,18 @@ public class WhiteBoardManager : FSystem {
             eraser = f_whiteBoard.First().transform.GetChild(2).gameObject;
 
             // set all board's removable words to "occludable"
-            // the occlusion is then made by an invisible material that hides all objects behind it having this setting
+            // the occlusion is then made by an invisible material that hides all objects behind it having this setting (see ChangePixel.cs)
             foreach (GameObject word in f_boardRemovableWords)
             {
                 foreach (Renderer r in word.GetComponentsInChildren<Renderer>())
                     r.material.renderQueue = 2001;
+            }
+            // set all board's unremovable words to "not occludable"
+            // the occlusion is then made by an invisible material that hides all objects behind it having this setting (see ChangePixel.cs)
+            foreach (GameObject word in f_boardUnremovableWords)
+            {
+                foreach (Renderer r in word.GetComponentsInChildren<Renderer>())
+                    r.material.renderQueue = 2003;
             }
 
             f_focusedWhiteBoard.addEntryCallback(onReadyToWorkOnWhiteBoard);

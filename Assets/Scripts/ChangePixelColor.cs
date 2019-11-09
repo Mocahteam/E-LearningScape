@@ -14,10 +14,12 @@ public class ChangePixelColor : MonoBehaviour {
     void Start ()
     {
         eraseColor = this.transform.parent.gameObject.GetComponent<Renderer>().material.color;
-        if (!this.GetComponent<Renderer>().material.mainTexture)
-            this.GetComponent<Renderer>().material.mainTexture = new Texture2D(1480, 1070);
-        this.GetComponent<Renderer>().material.renderQueue = 2002;
-        Texture2D tex = (Texture2D) this.GetComponent<Renderer>().material.mainTexture;
+        Material localMaterial = this.GetComponent<Renderer>().material;
+        if (!localMaterial.mainTexture)
+            localMaterial.mainTexture = new Texture2D(1480, 1070);
+        localMaterial.renderQueue = 2002; // occludable words are set to 2001 and not occludable words are set to 2003 (see WhiteBoardManager.cs)
+
+        Texture2D tex = (Texture2D)localMaterial.mainTexture;
         Color[] colors = tex.GetPixels();
         int nb = colors.Length;
         for(int i = 0; i < nb; i++)
