@@ -78,7 +78,7 @@ public class IARTabNavigation : FSystem {
                     openIar(unlockedRoom.roomNumber); // Open IAR on the last query visible tab
                 else if (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause)
                     openIar(f_tabs.Count - 2); // Open IAR on the second to last tab
-                else if (Input.GetButtonDown("Cancel"))
+                else if (Input.GetButtonDown("Cancel") && f_atWork.Count == 0) // Check not working in enigma because else Cancel action has to leave enigma and not open IAR
                     openIar(f_tabs.Count - 1); // Open IAR on the last tab
             }
         }

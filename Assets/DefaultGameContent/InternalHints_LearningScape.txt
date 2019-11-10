@@ -21,7 +21,7 @@
 	"1.turnOn": {
 		"Comment": ["The Scroll in IAR"],
 		"options": ["--"],
-		"1": ["Je devrait consulter le parchemin ramassé"]
+		"1": ["Je devrais consulter le parchemin ramassé"]
 	},
 	"2.activate": {
 		"Comment": ["First dream fragment"],
@@ -51,8 +51,8 @@
 	"6.turnOn": {
 		"Comment": ["The ball box key in IAR"],
 		"1": ["Cette clé doit bien me servir à quelque chose"],
-		"2": ["Quel cadena cette petite clé peut-elle bien ouvrir"],
-		"3": ["Peut-être que cette clé peut ouvrir le cadena de la grosse boîte"]
+		"2": ["Quel cadenas cette petite clé peut-elle bien ouvrir"],
+		"3": ["Peut-être que cette clé peut ouvrir le cadenas de la grosse boîte"]
 	},
 	"7.turnOn": {
 		"Comment": ["The ball box"],
@@ -60,26 +60,26 @@
 	},
 	"9.activate": {
 		"Comment": ["The first ball that is part of the solution"],
-		"1": ["Ah quoi peuvent bien me servir ces boules ?"],
+		"1": ["A quoi peuvent bien me servir ces boules ?"],
 		"2": ["Les chiffres au dos de chaque boule doivent bien servir à quelque chose"],
 		"3": ["Chaque chiffre doit être un élément de la solution"]
 	},
 	"10.activate": {
 		"Comment": ["The second ball that is part of the solution"],
-		"1": ["Ah quoi peuvent bien me servir ces boules ?"],
+		"1": ["A quoi peuvent bien me servir ces boules ?"],
 		"2": ["Les chiffres au dos de chaque boule doivent bien servir à quelque chose"],
 		"3": ["Chaque chiffre doit être un élément de la solution"]
 	},
 	"11.activate": {
 		"Comment": ["The third ball that is part of the solution"],
-		"1": ["Ah quoi peuvent bien me servir ces boules ?"],
+		"1": ["A quoi peuvent bien me servir ces boules ?"],
 		"2": ["Les chiffres au dos de chaque boule doivent bien servir à quelque chose"],
 		"3": ["Chaque chiffre doit être un élément de la solution"]
 	},
 	"24.Correct": {
 		"Comment": ["The ball box question"],
 		"1": ["J'ai tout ce qu'il me faut pour résoudre la question des boules"],
-		"2": ["Parmis les boules obervées, lesquelles me sont utiles ?"],
+		"2": ["Parmi les boules observées, lesquelles me sont utiles ?"],
 		"3": ["9 boules mais seulement 3 chiffres sont utiles"]
 	},
 	
@@ -98,7 +98,7 @@
 	"28.turnOn": {
 		"Comment": ["The plank"],
 		"1": ["A quoi peuvent bien servir les mots inscrits sur le tableau ?"],
-		"2": ["Peut être dois-je accrocher quelque chose aux punaises de quelques mots du tableau..."]
+		"2": ["Peut être dois-je accrocher quelque chose aux punaises correspondantes à quelques mots du tableau..."]
 	},
 	"31.turnOn": {
 		"Comment": ["The first word that is part of the solution"],
@@ -118,7 +118,7 @@
 	"35.Correct": {
 		"Comment": ["The Plank&Wire question"],
 		"1": ["J'ai tout ce qu'il me faut pour résoudre l'énigme du tableau et de la corde"],
-		"2": ["Est-ce les mots reliés ou les liens eux mêmes qui porte du sens ?"],
+		"2": ["Sont-ce les mots reliés ou les liens eux-mêmes qui portent du sens ?"],
 		"3": ["La corde ne passerait-elle pas par certains chiffres ?"]
 	},
 	
@@ -174,7 +174,7 @@
 	"50.Correct": {
 		"Comment": ["The Crouch question"],
 		"1": ["J'ai tout ce qu'il me faut pour résoudre la dernière question de cette pièce"],
-		"2": ["Est-ce les fragments cachés ne devrait pas être mis en relation ?"],
+		"2": ["Est-ce les fragments cachés ne devraient pas être mis en relation ?"],
 	},
 	
 	"Comment: Gears enigma": {},
@@ -187,7 +187,7 @@
 	"Comment: Mastermind enigma": {},
 	"166.Correct": {
 		"Comment": ["The mastermind enigma question"],
-		"1": ["Peut être que je devrait commencer par mettre une réponse au hasard"],
+		"1": ["Peut être que je devrais commencer par mettre une réponse au hasard"],
 		"2": ["Les indices à mes tentatives devraient me permettre de trouver la bonne combinaison"],
 	},
 	
@@ -195,36 +195,36 @@
 	"51.perform": {
 		"Comment": ["The in game left glass"],
 		"1": ["Il me reste au moins un objet à trouver"],
-		"2": ["Je pense qu'un branche de lunette me serait utile"],
-		"3": ["Je pressens qu'une branche de lunette se trouvait dans la grande bibliothèque de la pièce précédente"]
+		"2": ["Je pense qu'une branche de lunette me serait utile"],
+		"3": ["Je pressens qu'une branche de lunette se trouve sur le pilier droit de piédestal au centre de la pièce"]
 	},
 	"52.turnOn": {
 		"Comment": ["The left glass in IAR"],
-		"1": ["La branche de lunette que j'ai rammassé doit bien me servir à quelque chose"],
+		"1": ["La branche de lunette que j'ai ramassée doit bien me servir à quelque chose"],
 		"3": ["Je pressens que je devrais utiliser les branches de lunette avec le contenu du cartable"]
 	},
 	"53.perform": {
 		"Comment": ["The in game right glass"],
 		"1": ["Il me reste au moins un objet à trouver"],
-		"2": ["Je pense qu'un branche de lunette me serait utile"],
-		"3": ["Je pressens qu'une branche de lunette se trouve sur le piédestal au centre de la dernière pièce"]
+		"2": ["Je pense qu'une branche de lunette me serait utile"],
+		"3": ["Je pressens qu'une branche de lunette se trouve sur le piédestal au centre de la pièce"]
 	},
 	"54.turnOn": {
 		"Comment": ["The right glass in IAR"],
-		"1": ["La branche de lunette que j'ai rammassé doit bien me servir à quelque chose"],
+		"1": ["La branche de lunette que j'ai ramassée doit bien me servir à quelque chose"],
 		"3": ["Je pressens que je devrais utiliser les branches de lunette avec le contenu du cartable"]
 	},
 	"55.perform": {
 		"Comment": ["The in game satchel's key"],
 		"1": ["Il me reste au moins un objet à trouver"],
 		"2": ["Je pense qu'une clé me serait utile"],
-		"3": ["Je pressens qu'une clé se trouve au fond à droite de la pièce branche dans une gerbe d'eau"]
+		"3": ["Je pressens qu'une clé se trouve au fond à droite de la pièce dans une gerbe d'eau"]
 	},
 	"56.turnOn": {
 		"Comment": ["The in IAR satchel's key"],
 		"1": ["Cette clé doit bien me servir à quelque chose"],
-		"2": ["Quel cadena cette petite clé peut-elle bien ouvrir"],
-		"3": ["Peut-être que cette clé peut ouvrir le cadena du cartable"]
+		"2": ["Quel cadenas cette petite clé peut-elle bien ouvrir"],
+		"3": ["Peut-être que cette clé peut ouvrir le cadenas du cartable"]
 	},
 	"57.turnOn": {
 		"Comment": ["The satchel"],
@@ -234,7 +234,7 @@
 	"64.Correct": {
 		"Comment": ["The satchel question"],
 		"1": ["J'ai tout ce qu'il me faut pour résoudre la question relative au contenu du cartable"],
-		"2": ["Que dois-je comprendre de la feuille observée à l'aides lunettes ?"]
+		"2": ["Que dois-je comprendre de la feuille observée à l'aide des lunettes ?"]
 	},
 	
 	"Comment: Enigma08": {},
@@ -296,12 +296,12 @@
 	"70.turnOn": {
 		"Comment": ["Scrolls inside IAR"],
 		"options": ["--"],
-		"1": ["Je devrait consulter les parchemins ramassés"]
+		"1": ["Je devrais consulter les parchemins ramassés"]
 	},
 	"77.Correct": {
 		"Comment": ["The scrolls question"],
 		"1": ["J'ai tout ce qu'il me faut pour résoudre la question des parchemins"],
-		"2": ["Quelle informations dois-je ressortir des parchemins ramasés ?"]
+		"2": ["Quelle informations dois-je ressortir des parchemins ramassés ?"]
 	},
 	
 	"Comment: Mirror enigma": {},
@@ -321,8 +321,8 @@
 		"Comment": ["The in game mirror's plank"],
 		"options": ["--"],
 		"1": ["Il me reste au moins un objet à trouver"],
-		"2": ["Je devrait mieux observer le sol"],
-		"3": ["J'ai le l'intuition qu'une des dalles du sol est différente"]
+		"2": ["Je devrais mieux observer le sol"],
+		"3": ["J'ai l'intuition qu'une des dalles du sol est différente"]
 	},
 	"81.perform": {
 		"Comment": ["The in game mirror's plank"],
@@ -421,7 +421,7 @@
 	"98.turnOn": {
 		"Comment": ["In IAR puzzle"],
 		"options": ["--"],
-		"2": ["Je devrait tenter de résoudre le puzzle"]
+		"2": ["Je devrais tenter de résoudre le puzzle"]
 	},
 	"101.perform": {
 		"Comment": ["Puzzle question"],
@@ -433,7 +433,7 @@
 		"Comment": ["In game puzzle set"],
 		"options": ["--"],
 		"1": ["Il me reste au moins un fragment de rêve à trouver"],
-		"3": ["Je pressens qu'un fragment de rêve est cachés dans un muret dans la salle aux deux arbres"]
+		"3": ["Je pressens qu'un fragment de rêve est caché dans un muret dans la salle aux deux arbres"]
 	},
 	"103.activate": {
 		"Comment": ["In game puzzle set"],
@@ -468,7 +468,7 @@
 	"112.perform": {
 		"Comment": ["In game lamp"],
 		"1": ["Il me reste au moins un objet à trouver"],
-		"2": ["Il pense qu'une lampe me serait utile"],
+		"2": ["Je pense qu'une lampe me serait utile"],
 		"3": ["J'ai l'intuition qu'une lampe se trouve dans le coffret au pied de l'obélisque noire"]
 	},
 	"113.turnOn": {
@@ -481,7 +481,7 @@
 		"Comment": ["One of the dream fragment inside second room"],
 		"options": ["--"],
 		"1": ["Il me reste au moins un fragment de rêve à trouver"],
-		"3": ["Je pressens qu'un fragment de rêve est situé en haut d'un bambou dans la salle aux deux arbres"]
+		"3": ["Je pressens qu'un fragment de rêve est situé sous une toiture de la salle avec l'obélisque"]
 	},
 	"114.activate": {
 		"Comment": ["One of the symbol on obelisk"],
