@@ -53,7 +53,7 @@
 		"Cliquez sur la clé pour l'activer/la désactiver"
 	],
 	"inventoryScrolls": [
-		"Parchemins",
+		"Parchemin",
 		"Il y a des inscriptions inscrites à l’encre sur ce parchemin. Ces informations pourraient être utiles pour la suite.",
 		"Cliquez sur le parchemin pour l'ouvrir/le refermer"
 	],

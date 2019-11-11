@@ -54,6 +54,20 @@ public class IARTabNavigation : FSystem {
         instance = this;
     }
 
+    // Use this to update member variables when system pause. 
+    // Advice: avoid to update your families inside this function.
+    protected override void onPause(int currentFrame)
+    {
+        GameObjectManager.setGameObjectState(f_HUD.First(), false); // hide HUD (case in the end room, see EndManager.cs)
+    }
+
+    // Use this to update member variables when system resume.
+    // Advice: avoid to update your families inside this function.
+    protected override void onResume(int currentFrame)
+    {
+        GameObjectManager.setGameObjectState(f_HUD.First(), true); // show HUD
+    }
+
     private void onIarDisplayed(GameObject go)
     {
         // force EventSystem affectation

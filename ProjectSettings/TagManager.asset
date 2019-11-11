@@ -41,7 +41,6 @@ TagManager:
   - InventoryWarning
   - Cursor
   - DescriptionUI
-  - PressA
   - UIEffect
   - Gears
   - Login
@@ -79,6 +78,7 @@ TagManager:
   - HidableHUD
   - HUD_TransparentOnMove
   - QuestionTagContent
+  - PressY
   layers:
   - Default
   - TransparentFX

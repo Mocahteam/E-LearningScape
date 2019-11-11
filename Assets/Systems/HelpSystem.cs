@@ -139,6 +139,11 @@ public class HelpSystem : FSystem {
     {
         if (Application.isPlaying)
         {
+            // Define IAR tab state
+            foreach (GameObject tmpGO in f_IARTab)
+                if (tmpGO.name == "HelpTab")
+                    GameObjectManager.setGameObjectState(tmpGO, !shouldPause);
+
             if (!shouldPause)
             {
                 //get game hints filled with tips loaded from "Data/Hints_LearningScape.txt"
@@ -262,20 +267,6 @@ public class HelpSystem : FSystem {
                     { 21, 21},
                     { 99, 22}
                 };
-            }
-            else
-            {
-                // Disable IAR tab
-                GameObject tmpGO = null;
-                for (int i = 0; i < f_IARTab.Count; i++)
-                {
-                    tmpGO = f_IARTab.getAt(i);
-                    if (tmpGO.transform.parent.gameObject.name == "HelpTab")
-                    {
-                        GameObjectManager.setGameObjectState(tmpGO.transform.parent.GetChild(0).gameObject, false);
-                        break;
-                    }
-                }
             }
         }
         instance = this;

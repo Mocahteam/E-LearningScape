@@ -2,7 +2,7 @@
     "theme": "EcoleInclusive",
     "trace": true,
     "helpSystem": true,
-    "traceToLRS": true,
+    "traceToLRS": false,
     "traceMovementFrequency": 0.5,
     "virtualPuzzle": true,
     "lrsConfigPath": "Data/LRSConfig.txt",
@@ -57,7 +57,7 @@
 		"Cliquez sur la clé pour l'activer/la désactiver"
 	],
 	"inventoryScrolls": [
-		"Parchemins",
+		"Parchemin",
 		"Il y a des inscriptions inscrites à l’encre sur ce parchemin. Ces informations pourraient être utiles pour la suite.",
 		"Cliquez sur le parchemin pour l'ouvrir/le refermer"
 	],
@@ -111,7 +111,7 @@
 	
     "plankAndWireQuestionIAR": "Qu’apporte la Classification Internationale du Fonctionnement en 2001 ?",
     "plankAndWirePlaceHolder": "3 chiffres attendus...",
-    "plankAndWireQuestion": "Relier avec la corde les 3 idées fortes de la CIF",
+    "plankAndWireQuestion": "Relier avec la corde les 3 idées fortes de la classification",
 	"plankAndWireAnswerFeedback": "4 - 2 - 1",
 	"plankAndWireAnswerFeedbackDesc": "Fonction - Capacité - Participation",
     "plankAndWireCorrectWords": [
@@ -146,31 +146,31 @@
     ],
 	
     "crouchQuestion": "Comment être à l’écoute des besoins ?",
-    "crouchPlaceHolder": "10 chiffres attendus...",
+    "crouchPlaceHolder": "6 mots attendus...",
     "crouchAnswer": [
-        "1023810149"
+        "Il faut savoir changer de posture"
     ],
     "crouchAnswerFeedback": "Il faut savoir changer de posture",
     "crouchAnswerFeedbackDesc": "",
     "crouchWords": [
-        "il",
-        "faut",
-        "savoir",
-        "changer",
-        "de",
-        "posture"
+        "Île",
+        "faux",
+        "ça voire",
+        "chant geai",
+        "deux",
+        "pause Tür"
     ],
 	
     "gearsQuestion": "Sur quel facteur en premier lieu, dois-je agir pour favoriser la participation sociale de tous ?",
     "gearTextUp": "Chacun de nous est acteur",
     "gearTextDown": "Application des lois",
     "gearMovableTexts": [
-        "Mes repré-sentations",
-        "Le cadre bâti",
+        "Ses repré-sentations",
+        "Les locaux",
         "Les besoins de la personne",
         "La com-munication"
     ],
-    "gearAnswer": "Mes repré-sentations",
+    "gearAnswer": "Ses repré-sentations",
 	
 	"mastermindQuestion": "Combien (approximativement) existe-t-il de fiches ORNA ?\nLe hasard vous aidera peut-être !",
 	"mastermindQuestionYPos" : 65,
