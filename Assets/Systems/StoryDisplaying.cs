@@ -177,6 +177,7 @@ public class StoryDisplaying : FSystem {
                     fadingBackground = false;
                     // stop systems
                     MovingSystem.instance.Pause = true;
+                    JumpingSystem.instance.Pause = true;
                 }
                 alphaToPlain = false;
                 // pass to the next text
@@ -194,6 +195,7 @@ public class StoryDisplaying : FSystem {
                         GameObjectManager.setGameObjectState(menuCamera.First(), false);
                         // Start all required systems
                         MovingSystem.instance.Pause = false;
+                        JumpingSystem.instance.Pause = false;
                         SpritesAnimator.instance.Pause = false;
                         DreamFragmentCollecting.instance.Pause = false;
                         IARNewItemAvailable.instance.Pause = false;

@@ -24,6 +24,9 @@ public class SwitchPerso : MonoBehaviour {
         {
             fpsCam = !fpsCam;
             forceUpdate();
+            JumpingSystem.instance.Pause = true;
+            JumpingSystem.instance.lockSystem = true;
+            JumpingSystem.instance.Pause = false;
         }
 	}
    

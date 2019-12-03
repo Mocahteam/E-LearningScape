@@ -76,6 +76,7 @@ public class DreamFragmentCollecting : FSystem {
                     // Pause this system and dependant systems
                     this.Pause = true;
                     MovingSystem.instance.Pause = true;
+                    JumpingSystem.instance.Pause = true;
                     backupIARNavigationState = IARTabNavigation.instance.Pause;
                     IARTabNavigation.instance.Pause = true;
 
@@ -122,6 +123,7 @@ public class DreamFragmentCollecting : FSystem {
         // Unpause this system and dependants systems
         this.Pause = false;
         MovingSystem.instance.Pause = false;
+        JumpingSystem.instance.Pause = false;
         IARTabNavigation.instance.Pause = backupIARNavigationState;
     }
 

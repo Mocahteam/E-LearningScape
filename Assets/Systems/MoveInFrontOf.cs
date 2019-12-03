@@ -61,6 +61,7 @@ public class MoveInFrontOf : FSystem {
             f_player.First().GetComponent<SwitchPerso>().forceUpdate();
             // enable systems
             MovingSystem.instance.Pause = false;
+            JumpingSystem.instance.Pause = false;
             Highlighter.instance.Pause = false;
             MirrorSystem.instance.Pause = false;
             DreamFragmentCollecting.instance.Pause = false;
@@ -110,6 +111,7 @@ public class MoveInFrontOf : FSystem {
 
                 // pause unuse systems
                 MovingSystem.instance.Pause = true;
+                JumpingSystem.instance.Pause = true;
                 Highlighter.instance.Pause = true;
                 DreamFragmentCollecting.instance.Pause = true;
                 ToggleObject.instance.Pause = true;

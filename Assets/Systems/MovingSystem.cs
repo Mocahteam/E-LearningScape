@@ -215,7 +215,12 @@ public class MovingSystem : FSystem
             else
             { // standing and want to crouch
                 if (!firstCrouchOccurs)
+                {
                     firstCrouchOccurs = true;
+                    GameObject night = GameObject.Find("Night");
+                    night.GetComponent<Animator>().enabled = true;
+                    night.GetComponent<Collider>().enabled = false;
+                }
                 if (!walkInWater)
                 {
                     playerController.m_WalkSpeed = playerController.m_WalkSpeed / 2;

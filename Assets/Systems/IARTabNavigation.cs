@@ -118,6 +118,7 @@ public class IARTabNavigation : FSystem {
             systemsStates[sys] = sys.Pause;
         // set required systems states
         MovingSystem.instance.Pause = true;
+        JumpingSystem.instance.Pause = true;
         DreamFragmentCollecting.instance.Pause = true;
         Highlighter.instance.Pause = true;
         MirrorSystem.instance.Pause = true;
