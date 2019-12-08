@@ -532,10 +532,10 @@
 		"3": ["Je pressens qu'un fragment de rêve est situé dans la dernière pièce à droite"]
 	},
 	"124.activate": {
-		"Comment": ["One of the dream fragment inside second room"],
+		"Comment": ["One of the dream fragment inside last room"],
 		"options": ["--"],
 		"1": ["Il me reste au moins un fragment de rêve à trouver"],
-		"3": ["Je pressens qu'un fragment de rêve est suspendu à l'arbre de gauche dans la salle avec les deux arbres"]
+		"3": ["Je pressens qu'un fragment de rêve est suspendu à l'entrée de la dernière salle"]
 	},
 	"126.perform": {
 		"Comment": ["The Enigma16 question"],
