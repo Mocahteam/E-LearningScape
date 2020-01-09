@@ -13,7 +13,7 @@ public class LockResolver : FSystem {
     private Family f_focusedLocker = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(ReadyToWork), typeof(Locker)));
 
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
-    private Family f_closeLock = FamilyManager.getFamily(new AnyOfTags("LockIntroWheel", "LockR2Wheel", "ArrowUI"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_closeLock = FamilyManager.getFamily(new AnyOfTags("LockIntroWheel", "LockR2Wheel", "ArrowUI", "HUD_TransparentOnMove"), new AllOfComponents(typeof(PointerOver)));
 
     private Family f_fences = FamilyManager.getFamily(new AnyOfTags("Fence"), new AllOfComponents(typeof(Animator)));
     private Family f_wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"), new AllOfComponents(typeof(Animator)));

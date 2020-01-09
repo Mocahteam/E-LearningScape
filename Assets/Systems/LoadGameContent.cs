@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Globalization;
 using FYFY_plugins.PointerManager;
+using System.Text.RegularExpressions;
 
 public class LoadGameContent : FSystem {
     
@@ -751,13 +752,21 @@ public class LoadGameContent : FSystem {
 
     public static string StringToAnswer(string answer)
     {
-        // format answer, remove accents and upper case
-        var normalizedString = answer.Normalize(NormalizationForm.FormD);
-        var stringBuilder = new StringBuilder();
+        // format answer, remove accents, upper case and multiple spaces
+        string normalizedString = answer.Normalize(NormalizationForm.FormD);
+        // remove multiple spaces
+        normalizedString = new Regex("[ ]{2,}", RegexOptions.None).Replace(normalizedString, " ");
+        // remove first space
+        if (normalizedString.StartsWith(" "))
+            normalizedString = normalizedString.Remove(0, 1);
+        // remove last space
+        if (normalizedString.EndsWith(" "))
+            normalizedString = normalizedString.Remove(normalizedString.Length-1);
+        StringBuilder stringBuilder = new StringBuilder();
 
-        foreach (var c in normalizedString)
+        foreach (char c in normalizedString)
         {
-            var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+            UnicodeCategory unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
             if (unicodeCategory != UnicodeCategory.NonSpacingMark)
             {
                 stringBuilder.Append(c);

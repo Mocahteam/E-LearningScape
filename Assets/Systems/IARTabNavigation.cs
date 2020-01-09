@@ -89,7 +89,7 @@ public class IARTabNavigation : FSystem {
                 if (Input.GetButtonDown("ToggleInventory"))
                     openIar(0); // Open IAR on the first visible tab
                 else if (Input.GetButtonDown("ToggleQuestions") && unlockedRoom.roomNumber > 0 && unlockedRoom.roomNumber < 4)
-                    openIar(unlockedRoom.roomNumber); // Open IAR on the last query visible tab
+                    openLastQuestions(); // Open IAR on the last query visible tab
                 else if (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause)
                     openIar(f_tabs.Count - 2); // Open IAR on the second to last tab
                 else if (Input.GetButtonDown("Cancel") && f_atWork.Count == 0) // Check not working in enigma because else Cancel action has to leave enigma and not open IAR
@@ -98,7 +98,12 @@ public class IARTabNavigation : FSystem {
         }
     }
 
-    private void openIar(int tabId)
+    public void openLastQuestions()
+    {
+        openIar(unlockedRoom.roomNumber); // Open IAR on the last query visible tab
+    }
+
+    public void openIar(int tabId)
     {
         GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "activated", objectType = "menu", objectName = iar.name });
         GameObjectManager.setGameObjectState(f_HUD.First(), false); // hide HUD

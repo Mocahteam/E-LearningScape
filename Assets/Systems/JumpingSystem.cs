@@ -66,14 +66,13 @@ public class JumpingSystem : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         RaycastHit hit;
-        int layerMask = (1 << 14);
-        // Launch a ray to hit clother colider
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, ~(1 << 2), QueryTriggerInteraction.Ignore))
+        // Launch a ray to hit clother colider (exclude layer with id 2)
+        if (!lockSystem && Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, ~(1 << 2), QueryTriggerInteraction.Ignore))
         {
-            //Launch another ray to hit the ground
-            higherPosition = hit.point + Vector3.up * 10;
-            if (Physics.Raycast(higherPosition, Vector3.down, out hit, Mathf.Infinity, layerMask))
+            // check if this collider is the ground or the water
+            if (hit.collider.gameObject.layer == 14 || hit.collider.gameObject.layer == 4)
             {
+                GameObjectManager.setGameObjectState(pinTarget, true); // be sure pin is displayed
                 pinTarget.transform.position = hit.point;
                 // get planar camera position
                 CameraPlanarPosition = Camera.main.transform.position;
@@ -87,12 +86,14 @@ public class JumpingSystem : FSystem {
                     GameObjectManager.addComponent<PlaySound>(fpsController, new { id = 18 }); // id refer to FPSController AudioBank
                 }
             }
+            else
+                GameObjectManager.setGameObjectState(pinTarget, false); // hide pin
         }
 
         if (Input.GetButtonDown("ToggleTarget"))
         {
-            pinTarget.SetActive(!pinTarget.activeSelf);
-            lockSystem = !pinTarget.activeSelf;
+            lockSystem = !lockSystem;
+            GameObjectManager.setGameObjectState(pinTarget, !lockSystem);
 
             SwitchPerso sp = f_player.First().GetComponent<SwitchPerso>();
             sp.fpsCam = true;

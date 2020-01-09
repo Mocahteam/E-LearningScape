@@ -34,7 +34,6 @@ public class IARNewQuestionsAvailable : FSystem {
 
     private void onQuestionsViewed(GameObject go)
     {
-        Debug.Log(go.name + " " + f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber.ToString());
         if (go.name.EndsWith(f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber.ToString()))
             GameObjectManager.setGameObjectState(f_questionNotif.First(), false);
     }

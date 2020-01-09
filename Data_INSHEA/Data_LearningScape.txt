@@ -105,7 +105,7 @@
         "Donner du travail à la maison",
         "Réexpliquer et reformuler le plus possible",
         "Multiplier les aides techniques et humaines",
-        "Permettre aux apprenants de discuter",
+        "Permettre aux apprenants de communiquer",
         "Interroger un apprenant au hasard"
     ],
 	
