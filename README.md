@@ -1,7 +1,7 @@
 # Téléchargements
 Deux versions du jeu sont disponibles :
-1. [E-LearningScape](https://github.com/Mocahteam/E-LearningScape/releases/download/v3.1/E-LearningScape.zip) est la version par défaut du jeu traitant de notions généralistes sur la pédagogie
-2. [E-LearningScape Access](https://github.com/Mocahteam/E-LearningScape/releases/download/v3.1/E-LearningScapeAccess.zip) est une version du jeu traitant de notions relatives au handicap, l'accessibilité et la société inclusive 
+1. [E-LearningScape](https://github.com/Mocahteam/E-LearningScape/releases/download/v3.2/E-LearningScape.zip) est la version par défaut du jeu traitant de notions généralistes sur la pédagogie
+2. [E-LearningScape Access](https://github.com/Mocahteam/E-LearningScape/releases/download/v3.2/E-LearningScapeAccess.zip) est une version du jeu traitant de notions relatives au handicap, l'accessibilité et la société inclusive 
 
 # E-LearningScape
 E-LearningScape est un jeu sérieux sous un format d'*escape game* mêlant contenus réels et virtuels. Les joueurs incarnent des marchands de sable naviguant dans le rêve d'une personne et devant l'aider à répondre à toutes les questions qu'elle se pose avant qu'elle ne se réveille. 
