@@ -18,6 +18,7 @@ public class IARTabNavigation : FSystem {
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
     private Family f_settings = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
+    private Family f_selectedTab = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedTab)));
 
     private Sprite selectedTabSprite;
     private Sprite defaultTabSprite;
@@ -146,6 +147,10 @@ public class IARTabNavigation : FSystem {
         GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "deactivated", objectType = "menu", objectName = iar.name });
         GameObjectManager.setGameObjectState(iar, false); // close IAR
 
+        // remove selected tabs notification
+        foreach (GameObject tab in f_selectedTab)
+            GameObjectManager.removeComponent<SelectedTab>(tab);
+
         GameObjectManager.addComponent<PlaySound>(iar, new { id = 16 }); // id refer to FPSController AudioBank
 
         // Restaure systems state (exception for LampManager)
@@ -165,11 +170,17 @@ public class IARTabNavigation : FSystem {
             oldTab.GetComponent<TMP_Text>().fontStyle = TMPro.FontStyles.Normal;
             GameObjectManager.setGameObjectState(oldTab.GetComponent<LinkedWith>().link, false);
         }
+        // clean previous selected tabs
+        foreach (GameObject tab in f_selectedTab)
+            GameObjectManager.removeComponent<SelectedTab>(tab);
         // set new tab text and image
         newSelectedTab.GetComponentInChildren<Image>().sprite = selectedTabSprite;
         newSelectedTab.GetComponent<TMP_Text>().fontStyle = TMPro.FontStyles.Bold;
         // enable new content
         GameObjectManager.setGameObjectState(newSelectedTab.GetComponent<LinkedWith>().link, true);
         GameObjectManager.addComponent<ActionPerformedForLRS>(newSelectedTab.GetComponent<LinkedWith>().link, new { verb = "accessed", objectType = "menu", objectName = newSelectedTab.GetComponent<LinkedWith>().link.name });
+        // notify this tab as selected
+        if (newSelectedTab.GetComponent<SelectedTab>() == null)
+            GameObjectManager.addComponent<SelectedTab>(newSelectedTab);
     }
 }

@@ -17,6 +17,7 @@ public class EndManager : FSystem {
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_waterFloor = FamilyManager.getFamily(new AnyOfTags("WaterFloor"));
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
+    private Family f_onEnigma = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
 
     private Image fadingBackground;
     private float fadingTimer = 2;
@@ -67,6 +68,8 @@ public class EndManager : FSystem {
             this.Pause = false;
             IARTabNavigation.instance.Pause = true;
             GameObjectManager.setGameObjectState(fadingBackground.gameObject, true);
+            foreach (GameObject go in f_onEnigma)
+                GameObjectManager.removeComponent<ReadyToWork>(go);
         }
     }
 

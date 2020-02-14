@@ -19,7 +19,7 @@ public class IARQueryEvaluator : FSystem {
     private Family f_queriesRoom3 = FamilyManager.getFamily(new AnyOfTags("Q-R3"));
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
-    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
+    private Family f_selectedTab = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedTab)));
 
     public static IARQueryEvaluator instance;
 
@@ -152,8 +152,9 @@ public class IARQueryEvaluator : FSystem {
             // notify player success
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 2 });
 
+            // set focus on selected tab
             EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(f_tabs.getAt(0));
+            EventSystem.current.SetSelectedGameObject(f_selectedTab.getAt(0));
 
             // set final answer for third room (due to OR options)
             if (query.tag == "Q-R3")
