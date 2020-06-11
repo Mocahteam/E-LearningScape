@@ -8,6 +8,8 @@ E-LearningScape est un jeu sérieux sous un format d'*escape game* mêlant conte
 
 <p align="center"><img src="docs/CaptureLearningScape.PNG" alt="Une vue du jeu" height="200"/> <img src="docs/collaboratif.jpg" alt="Travail collaboratif" height="200"/></p>
 
+Vidéo de présentation : https://www.youtube.com/watch?v=Qcy4kEYAv28
+
 # Principes de jeu
 E-LearningScape se joue entre 2 et 4 joueurs autour d'un même ordinateur. Le maître du jeu doit préparer quelques éléments avant la conduite de la session, il doit notamment imprimer un ensemble de documents et les placer dans des enveloppes (nous appelons ces éléments des fragments de rêves). Toutes les informations relatives à la constitution des enveloppes sont indiquées dans le fichier Lisez-moi.txt contenu dans l'archive relative à la version du jeu utilisée.
 
