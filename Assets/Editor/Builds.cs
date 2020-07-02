@@ -3,7 +3,6 @@ using UnityEditor;
 using System.Linq;
 using System.IO;
 using System;
-using UnityEditor.Build.Reporting;
 
 public class Builds
 {
@@ -22,7 +21,7 @@ public class Builds
 				Linux();
 				break;
 			default:
-				throw new Exception($"No build command for {buildTarget}.");
+				throw new Exception("No build command for " + buildTarget + ".");
 		}
 	}
 
@@ -56,14 +55,9 @@ public class Builds
 		buildPlayerOptions.target = buildTarget;
 		buildPlayerOptions.options = BuildOptions.None;
 
-		BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
-		BuildSummary summary = report.summary;
+		string report = BuildPipeline.BuildPlayer(buildPlayerOptions);
 
-		if (summary.result == BuildResult.Succeeded)
-			Debug.Log("Build succeeded: " + summary.totalSize + " bytes");
-
-		if (summary.result == BuildResult.Failed)
-			throw new Exception($"Build ended with {summary.result} status");
+		Debug.Log(report);
 	}
 
 	static string[] GetScenes()
