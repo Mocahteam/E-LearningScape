@@ -33,8 +33,3 @@ windows:
   <<: *build_default
   variables:
     BUILD_TARGET: "Win64"
-
-linux:
-  <<: *build_default
-  variables:
-    BUILD_TARGET: "Linux64"
