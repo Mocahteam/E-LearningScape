@@ -5,7 +5,7 @@ UNITY_VERSION=$(grep "m_EditorVersion:" ./$UNITY_PROJECT_FOLDER/ProjectSettings/
 /Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity \
 	-batchmode \
 	-silent-crashes \
-	-projectPath ./$UNITY_PROJECT_FOLDER \
+	-projectPath $(PWD)/$UNITY_PROJECT_FOLDER \
 	-logFile - \
 	-buildTarget $BUILD_TARGET \
 	-buildPath $BUILD_FOLDER/$BUILD_NAME \
