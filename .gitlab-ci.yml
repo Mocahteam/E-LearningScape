@@ -1,0 +1,35 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  UNITY_PROJECT_FOLDER: "."
+  BUILD_FOLDER: "Build"
+  BUILD_NAME: "LearningScape"
+  BUNDLE_VERSION: $CI_PIPELINE_IID
+  GIT_CLEAN_FLAGS: -ffdx -e Library/ # don't remove Library/ at checkout
+
+.build_default: &build_default
+  stage: build
+  script:
+    - chmod +x ./ci/build.sh && ./ci/build.sh
+  artifacts:
+    paths:
+    - ./$UNITY_PROJECT_FOLDER/$BUILD_FOLDER/
+    expire_in: 5 days
+  only:
+    - master
+    - Dev
+    - merge_requests
+    - web
+
+mac:
+  <<: *build_default
+  variables:
+    BUILD_TARGET: "OSXUniversal"
+
+
+windows:
+  <<: *build_default
+  variables:
+    BUILD_TARGET: "Win64"
