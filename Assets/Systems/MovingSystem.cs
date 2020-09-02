@@ -21,7 +21,6 @@ public class MovingSystem : FSystem
     private Family f_CrouchHint = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver), typeof(LinkedWith), typeof(BoxCollider)));
     private Family f_OutOfFirstRoom = FamilyManager.getFamily(new AllOfComponents(typeof(Triggered3D), typeof(LinkedWith)));
 
-    public float traceMovementFrequency = 0;
     private bool crouching = false; // true when the player is crouching
     private bool changingPose = false;
     private float crouchingSpeed;
@@ -44,8 +43,6 @@ public class MovingSystem : FSystem
     private float hudHidingSpeed;
     private bool previousHUDState;
     private bool walkInWater = false;
-
-    private float walkingTraceTimer = float.MaxValue;
 
     public static MovingSystem instance;
 
@@ -162,18 +159,6 @@ public class MovingSystem : FSystem
     protected override void onProcess(int familiesUpdateCount)
     {
         SetHUD(f_endRoom.Count == 0);
-        if (traceMovementFrequency > 0)
-        {
-            if (playerController.m_Input != Vector2.zero)
-            {
-                if (Time.time - walkingTraceTimer > traceMovementFrequency)
-                {
-                    walkingTraceTimer = Time.time;
-                }
-            }
-            else
-                walkingTraceTimer = Time.time;
-        }
 
         if(Input.GetButton("ZoomIn"))
         {
