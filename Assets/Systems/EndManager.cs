@@ -9,7 +9,6 @@ public class EndManager : FSystem {
     // this system manage the epilog
 
     private Family f_answer = FamilyManager.getFamily(new AnyOfTags("A-R3"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not already displayed of the third room
-    private Family f_questionR3 = FamilyManager.getFamily(new AnyOfTags("Q-R3"));
     // Will contain a game object when IAR is openned
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 

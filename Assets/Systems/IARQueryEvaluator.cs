@@ -16,7 +16,6 @@ public class IARQueryEvaluator : FSystem {
 
     private Family f_queriesRoom2 = FamilyManager.getFamily(new AnyOfTags("Q-R2"));
     private Family f_answerRoom2 = FamilyManager.getFamily(new AnyOfTags("A-R2"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not displayed for the second room
-    private Family f_queriesRoom3 = FamilyManager.getFamily(new AnyOfTags("Q-R3"));
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_selectedTab = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedTab)));

@@ -7,7 +7,6 @@ public class ToggleObject : FSystem {
     // This system enables to manage in game toggleable objects
 
 	private Family f_toggleable = FamilyManager.getFamily(new AllOfComponents(typeof(ToggleableGO), typeof(Highlighted), typeof(Animator))); // Highlighted is dynamically added by Highlither system
-    private Family f_wrongChair = FamilyManager.getFamily(new AnyOfTags("Chair"), new AllOfComponents(typeof(ToggleableGO)), new NoneOfComponents(typeof(IsSolution)));
 
     //temporary variables
     private GameObject tmpGO;

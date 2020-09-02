@@ -14,7 +14,6 @@ public class LoginManager : FSystem {
     private Family f_closeLogin = FamilyManager.getFamily(new AnyOfTags("Login", "InventoryElements", "HUD_TransparentOnMove"), new AllOfComponents(typeof(PointerOver)));
     private Family f_mainWindow = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(PointerSensitive)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_forceMoveToLogin = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(ForceMove)));
 
     private Family f_door = FamilyManager.getFamily(new AnyOfTags("Door"), new AllOfComponents(typeof(Animator)));
 
@@ -45,9 +44,6 @@ public class LoginManager : FSystem {
 
     private GameObject door;
 
-    private string exitBy = "";
-    private string openedBy = "";
-
     public static LoginManager instance;
 
     public LoginManager()
@@ -69,7 +65,6 @@ public class LoginManager : FSystem {
 
             f_loginUnlocked.addEntryCallback(onLoginUnlocked);
             f_focusedLogin.addEntryCallback(onReadyToWorkOnLogin);
-            f_forceMoveToLogin.addEntryCallback(onForceMoveTo);
 
             door = f_door.First();
         }
@@ -94,11 +89,6 @@ public class LoginManager : FSystem {
         instance.Pause = false;
     }
 
-    private void onForceMoveTo(GameObject go)
-    {
-        openedBy = "system";
-    }
-
     // Use this to update member variables when system pause. 
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame) {
@@ -117,7 +107,6 @@ public class LoginManager : FSystem {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed (because Escape close IAR)
             if (((f_closeLogin.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && !goBack)
             {
-                exitBy = "player";
                 ExitLogin();
             }
         }
@@ -137,7 +126,6 @@ public class LoginManager : FSystem {
                 GameObjectManager.setGameObjectState(IARsecondScreen, true); // enable questions tab
                 f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 2;
                 // exit login
-                exitBy = "system";
                 ExitLogin();
                 goBack = false;
             }

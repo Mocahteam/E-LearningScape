@@ -21,7 +21,6 @@ public class SatchelManager : FSystem {
     //bag
     private Vector3 bagPaperInitialPos;
     private GameObject selectedBag;
-    private GameObject bagPadlock;
     private Animator bagAnimator;
 
     // paper
@@ -46,7 +45,6 @@ public class SatchelManager : FSystem {
         {
             bagPaperInitialPos = f_bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition;
             paper = f_bag.First().transform.GetChild(1).gameObject;
-            bagPadlock = f_bag.First().transform.GetChild(3).gameObject;
             paperImg = f_bag.First().GetComponentInChildren<Image>();
             paperImgRef = f_bag.First().GetComponentInChildren<BagImage>(); 
 

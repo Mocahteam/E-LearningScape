@@ -14,7 +14,6 @@ public class DreamFragmentCollecting : FSystem {
 
     private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
     private Family f_dreamFragmentUI = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AnyOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD));
-    private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
 
     private GameObject dfUI;
     private TextMeshProUGUI FragmentText;
