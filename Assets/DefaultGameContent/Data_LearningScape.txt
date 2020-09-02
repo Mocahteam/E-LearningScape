@@ -1,8 +1,8 @@
 {
-    "theme": "Pédagogie",
+    "theme": "ISG",
     "virtualPuzzle": true,
-    "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
 	"removeExtraGeometries": false,
+    "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
 	
 	"additionalLogosPath": [],
 	
@@ -117,7 +117,7 @@
 	
 	"mastermindQuestion": "Combien de facettes structurent la conception d'un jeu sérieux ? Le hasard vous aidera sous doute !",
 	"mastermindQuestionYPos" : -124,
-    "mastermindAnswer": 006,
+    "mastermindAnswer": 6,
 	"mastermindBackgroundPicturePath": "Data/MasterMind.png",
 	
     "glassesQuestion": "Données et traitements",

@@ -48,9 +48,9 @@ public class GameContent {
     //Plank And Wire
     public string plankAndWireQuestionIAR;
     public string plankAndWirePlaceHolder;
+    public string plankAndWireQuestion;
     public string plankAndWireAnswerFeedback;
     public string plankAndWireAnswerFeedbackDesc;
-    public string plankAndWireQuestion;
     public string[] plankAndWireCorrectWords = new string[3];
     public List<string> plankAndWireCorrectNumbers;
     public string[] plankOtherWords = new string[10];
@@ -83,7 +83,6 @@ public class GameContent {
     public List<string> glassesAnswer;
     public string glassesAnswerFeedback;
     public string glassesAnswerFeedbackDesc;
-    public string glassesAnswerDescription;
     public string[] glassesPicturesPath = new string[4];
 
     //Scrolls
