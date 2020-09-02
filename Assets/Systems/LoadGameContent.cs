@@ -98,8 +98,6 @@ public class LoadGameContent : FSystem {
                 //create default data files
                 Directory.CreateDirectory("Data");
                 File.WriteAllText("Data/Data_LearningScape.txt", defaultGameContent.jsonFile.text);
-                File.WriteAllText("Data/Hints_LearningScape.txt", defaultGameContent.hintsJsonFile.text);
-                File.WriteAllText("Data/InternalHints_LearningScape.txt", defaultGameContent.internalHintsJsonFile.text);
                 File.WriteAllText("Data/WrongAnswerFeedbacks.txt", defaultGameContent.wrongAnswerFeedbacks.text);
                 File.WriteAllText("Data/EnigmasWeight.txt", defaultGameContent.enigmasWeight.text);
                 File.WriteAllText("Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
@@ -645,24 +643,11 @@ public class LoadGameContent : FSystem {
 
         #region File Loading
 
-        // Load Hints config files
-        GameHints gameHints = f_gameHints.First().GetComponent<GameHints>();
-        LoadJsonFile(gameContent.hintsPath, defaultGameContent.hintsJsonFile, out gameHints.dictionary);
-        if (gameHints.dictionary == null)
-            gameHints.dictionary = new Dictionary<string, Dictionary<string, List<KeyValuePair<string, string>>>> ();
-        Debug.Log("Hints loaded");
         // Load Wrong answer feedback
         LoadJsonFile(gameContent.wrongAnswerFeedbacksPath, defaultGameContent.wrongAnswerFeedbacks, out gameHints.wrongAnswerFeedbacks);
         if (gameHints.wrongAnswerFeedbacks == null)
             gameHints.wrongAnswerFeedbacks = new Dictionary<string, Dictionary<string, KeyValuePair<string, string>>>();
         Debug.Log("Wrong answer feedback loaded");
-
-        // Load InternalHints config files
-        InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
-        LoadJsonFile(gameContent.internalHintsPath, defaultGameContent.internalHintsJsonFile, out internalGameHints.dictionary);
-        if (internalGameHints.dictionary == null)
-            internalGameHints.dictionary = new Dictionary<string, Dictionary<string, List<string>>>();
-        Debug.Log("Internal hints loaded");
 
         // Load EnigmasWeight config files
         LoadJsonFile(gameContent.enigmasWeightPath, defaultGameContent.enigmasWeight, out enigmasWeight);
