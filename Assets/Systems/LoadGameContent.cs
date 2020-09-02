@@ -98,7 +98,6 @@ public class LoadGameContent : FSystem {
                 //create default data files
                 Directory.CreateDirectory("Data");
                 File.WriteAllText("Data/Data_LearningScape.txt", defaultGameContent.jsonFile.text);
-                File.WriteAllText("Data/LRSConfig.txt", defaultGameContent.lrsConfigFile.text);
                 File.WriteAllText("Data/Hints_LearningScape.txt", defaultGameContent.hintsJsonFile.text);
                 File.WriteAllText("Data/InternalHints_LearningScape.txt", defaultGameContent.internalHintsJsonFile.text);
                 File.WriteAllText("Data/WrongAnswerFeedbacks.txt", defaultGameContent.wrongAnswerFeedbacks.text);
@@ -645,11 +644,6 @@ public class LoadGameContent : FSystem {
         #endregion
 
         #region File Loading
-        // Load LRS config file
-        LoadJsonFile(gameContent.lrsConfigPath, defaultGameContent.lrsConfigFile, out GBL_Interface.lrsAddresses);
-        if (GBL_Interface.lrsAddresses == null)
-            GBL_Interface.lrsAddresses = new List<LRSAddress>();
-        Debug.Log("LRS config file loaded");
 
         // Load Hints config files
         GameHints gameHints = f_gameHints.First().GetComponent<GameHints>();
