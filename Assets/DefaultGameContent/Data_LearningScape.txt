@@ -159,5 +159,5 @@
 	"mirrorAnswerFeedbackDesc": "",
     "mirrorPicturePath": "Data/Plank.png",
 	
-    "lockRoom2Password": 703,
+    "lockRoom2Password": 703
 }
