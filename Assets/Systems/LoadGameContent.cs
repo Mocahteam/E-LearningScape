@@ -57,9 +57,6 @@ public class LoadGameContent : FSystem {
     private Family f_boardUnremovable = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
     private Family f_boardRemovable = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
 
-    private Family f_gameHints = FamilyManager.getFamily(new AllOfComponents(typeof(GameHints)));
-    private Family f_internalGameHints = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameHints)));
-
     private Family f_inventoryElements = FamilyManager.getFamily(new AllOfComponents(typeof(Collected)));
 
     private Family f_extraGeometries = FamilyManager.getFamily(new AllOfComponents(typeof(RemoveIfVeryVeryLow)));
