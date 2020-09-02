@@ -80,13 +80,6 @@ public class LampManager : FSystem {
                 {
                     if (!tmpGo.activeSelf)
                     {
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
-                        {
-                            verb = "accessed",
-                            objectType = "interactable",
-                            objectName = tmpGo.name
-                        });
-                        GameObjectManager.addComponent<ActionPerformed>(tmpGo, new { name = "activate", performedBy = "player" });
                         GameObjectManager.setGameObjectState(tmpGo, true);
                     }
                     //calculate the intersection between player direction and the wall
@@ -107,13 +100,7 @@ public class LampManager : FSystem {
                 {
                     //disable the mask and the symbol
                     tmpGo.transform.position = position;
-                    tmpGo.GetComponentInChildren<Lamp_Symbol>().gameObject.transform.position = position; 
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
-                    {
-                        verb = "exited",
-                        objectType = "interactable",
-                        objectName = tmpGo.name
-                    });
+                    tmpGo.GetComponentInChildren<Lamp_Symbol>().gameObject.transform.position = position;
                     GameObjectManager.setGameObjectState(tmpGo, false);
                 }
             }

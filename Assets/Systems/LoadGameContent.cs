@@ -106,7 +106,6 @@ public class LoadGameContent : FSystem {
                 File.WriteAllText("Data/EnigmasWeight.txt", defaultGameContent.enigmasWeight.text);
                 File.WriteAllText("Data/LabelWeights.txt", defaultGameContent.labelWeights.text);
                 File.WriteAllText("Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
-                File.WriteAllText("Data/HelpSystemConfig.txt", defaultGameContent.helpSystemConfig.text);
 
                 gameContent = new GameContent();
                 gameContent = JsonUtility.FromJson<GameContent>(defaultGameContent.jsonFile.text);
@@ -160,16 +159,6 @@ public class LoadGameContent : FSystem {
         //Load game content from the file
         gameContent = JsonUtility.FromJson<GameContent>(File.ReadAllText("Data/Data_LearningScape.txt"));
 
-        ActionsManager.instance.Pause = !gameContent.trace;
-        Debug.Log(string.Concat("Trace: ", gameContent.trace));
-        File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace: ", gameContent.trace));
-
-        HelpSystem.shouldPause = !gameContent.helpSystem || !MonitoringManager.Instance.inGameAnalysis;
-        Debug.Log(string.Concat("Help system: ", gameContent.helpSystem, "; Laalys in game analysis: ", MonitoringManager.Instance.inGameAnalysis));
-        File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Help system: ", gameContent.helpSystem));
-
-        SendStatements.shouldPause = !gameContent.traceToLRS;
-        SendStatements.instance.Pause = !gameContent.traceToLRS;
         MovingSystem.instance.traceMovementFrequency = gameContent.traceMovementFrequency;
         Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace to LRS: ", gameContent.traceToLRS));
@@ -695,12 +684,6 @@ public class LoadGameContent : FSystem {
         if (labelWeights.weights == null)
             labelWeights.weights = new Dictionary<string, float>();
         Debug.Log("Labels weight loaded");
-
-        // Load HelpSystem config files
-        LoadJsonFile(gameContent.helpSystemConfigPath, defaultGameContent.helpSystemConfig, out HelpSystem.config);
-        if (HelpSystem.config == null)
-            HelpSystem.config = new HelpSystemConfig();
-        Debug.Log("HelpSystem config file loaded");
 
         //Load dream fragment links config files
         Dictionary<string, string> dreamFragmentsLinks = null;

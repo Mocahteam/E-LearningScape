@@ -86,12 +86,12 @@ public class StoryDisplaying : FSystem {
 	// Advice: avoid to update your families inside this function.
 	protected override void onResume(int currentFrame)
     {
-        // Stop all systems except this, ActionManager, SendStatements and HelpSystem
+        // Stop all systems except this, ActionManager
         List<FSystem> allSystems = new List<FSystem>(FSystemManager.fixedUpdateSystems());
         allSystems.AddRange(FSystemManager.updateSystems());
         allSystems.AddRange(FSystemManager.lateUpdateSystems());
         foreach (FSystem syst in allSystems)
-            if (syst != this && syst != ActionsManager.instance && syst != SendStatements.instance && syst != HelpSystem.instance)
+            if (syst != this && syst != ActionsManager.instance)
                 syst.Pause = true;
         // Enable UI Story
         GameObjectManager.setGameObjectState(f_storyDisplayer.First(), true);
@@ -109,16 +109,6 @@ public class StoryDisplaying : FSystem {
             {
                 timer = f_game.First().GetComponent<Timer>();
                 timer.startingTime = Time.time;
-
-                GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
-                {
-                    verb = "started",
-                    objectType = "serious-game",
-                    objectName = "E-LearningScape",
-                    activityExtensions = new Dictionary<string, List<string>>() {
-                    { "content", new List<string>() { LoadGameContent.gameContent.theme } }
-                }
-                });
             }
             fadingImage.color = Color.black;
             background.color = Color.black;
@@ -130,16 +120,6 @@ public class StoryDisplaying : FSystem {
             int minutes = (int)(duration % 3600) / 60;
             int seconds = (int)(duration % 3600) % 60;
             storyTexts[st.storyProgression].Add(string.Concat("<align=\"center\">", LoadGameContent.gameContent.scoreText, Environment.NewLine, hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")));
-            GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
-            {
-                verb = "completed",
-                objectType = "serious-game",
-                objectName = "E-LearningScape",
-                activityExtensions = new Dictionary<string, List<string>>() {
-                    { "content", new List<string>() { LoadGameContent.gameContent.theme } },
-                    { "time", new List<string>() { string.Concat(hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")) } }
-                }
-            });
             fadingImage.color = Color.white;
             background.color = Color.white;
         }
@@ -164,7 +144,6 @@ public class StoryDisplaying : FSystem {
                 if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel") || Input.GetButtonDown("Submit"))
                 {
                     readingTimer = Time.time - (fadeSpeed + 1);
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
                 }
             }
             else
@@ -206,8 +185,6 @@ public class StoryDisplaying : FSystem {
                         MoveInFrontOf.instance.Pause = false;
                         UIEffectPlayer.instance.Pause = false;
                         ActionsManager.instance.Pause = !LoadGameContent.gameContent.trace;
-                        HelpSystem.instance.Pause = !LoadGameContent.gameContent.helpSystem;
-                        SendStatements.instance.Pause = !LoadGameContent.gameContent.traceToLRS;
                     }
                     else
                         GameObjectManager.loadScene(SceneManager.GetActiveScene().name); // reset game
@@ -226,7 +203,6 @@ public class StoryDisplaying : FSystem {
                 if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel") || Input.GetButtonDown("Submit"))
                 {
                     readingTimer = Time.time - (fadeSpeed + 1);
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
                 }
             }
             else
@@ -254,13 +230,6 @@ public class StoryDisplaying : FSystem {
             {
                 alphaToPlain = true;
                 readingTimer = Time.time;
-                GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
-                {
-                    verb = "read",
-                    objectType = "text",
-                    objectName = sdGo.name,
-                    activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { sdText.text } } }
-                });
             }
         }
     }

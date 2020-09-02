@@ -199,17 +199,6 @@ public class IARHintManager : FSystem {
 
         if (selectedHint.GetComponent<NewHint>())
             GameObjectManager.removeComponent<NewHint>(selectedHint.gameObject);
-
-        GameObjectManager.addComponent<ActionPerformedForLRS>(b.gameObject, new
-        {
-            verb = "read",
-            objectType = "feedback",
-            objectName = string.Concat("hint_", b.transform.GetChild(0).GetComponent<TMP_Text>().text),
-            activityExtensions = new Dictionary<string, List<string>>() {
-                { "type", new List<string>() { "hint" } },
-                { "content", new List<string>() { b.GetComponent<HintContent>().text } }
-            }
-        });
     }
 
     /// <summary>
@@ -221,16 +210,6 @@ public class IARHintManager : FSystem {
         try
         {
             Application.OpenURL(hintLink);
-
-            GameObjectManager.addComponent<ActionPerformedForLRS>(hintLinkButton.gameObject, new
-            {
-                verb = "read",
-                objectType = "viewable",
-                objectName = "hintLink",
-                activityExtensions = new Dictionary<string, List<string>>() {
-                    { "link", new List<string>() { hintLink } }
-                }
-            });
         }
         catch (Exception)
         {

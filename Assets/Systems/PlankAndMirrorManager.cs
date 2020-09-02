@@ -47,17 +47,6 @@ public class PlankAndMirrorManager : FSystem {
     {
         plankRotation.transform.Rotate(Vector3.up, way * 50 * Time.deltaTime);
         rotationCount += way;
-        // trace only each 10°
-        if (rotationCount % 10 == 0)
-        {
-            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new
-            {
-                verb = "moved",
-                objectType = "interactable",
-                objectName = selectedPlank.name,
-                activityExtensions = new Dictionary<string, List<string>>() { { "direction", new List<string>() { way < 0 ? "right" : "left" } } }
-            });
-        }
     }
 
     private void onReadyToWorkOnPlank(GameObject go)
@@ -72,8 +61,6 @@ public class PlankAndMirrorManager : FSystem {
 
         // Launch this system
         instance.Pause = false;
-
-        GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "turnOn", performedBy = "player" });
     }
 
     // return true if UI with name "name" is selected into inventory
@@ -159,9 +146,6 @@ public class PlankAndMirrorManager : FSystem {
                 GameObjectManager.setGameObjectState(isSelected("Mirror"), false);
                 // show ingame mirror on plank
                 GameObjectManager.setGameObjectState(mirror, true);
-
-                GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "perform", performedBy = "system" });
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new { verb = "completed", objectType = "interactable", objectName = selectedPlank.name });
             }
 
             if (!movePlank)
@@ -185,9 +169,6 @@ public class PlankAndMirrorManager : FSystem {
     {
         // remove ReadyToWork component to release selected GameObject
         GameObjectManager.removeComponent<ReadyToWork>(selectedPlank);
-
-        GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "turnOff", performedBy = "player" });
-        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new { verb = "exited", objectType = "interactable", objectName = selectedPlank.name });
 
         selectedPlank = null;
 

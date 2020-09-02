@@ -71,8 +71,6 @@ public class SatchelManager : FSystem {
 
         // Launch this system
         instance.Pause = false;
-
-        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
     }
 
     private void updatePictures()
@@ -93,8 +91,6 @@ public class SatchelManager : FSystem {
                 paperImg.sprite = paperImgRef.image3;
                 break;
         }
-        GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = ("activatePaper"+currentPaperViews), performedBy = "system" });
-        GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new { verb = "accessed", objectType = "interactable", objectName = ("paper"+ currentPaperViews) });
     }
 
     private void onItemSelectedInInventory(GameObject go)
@@ -174,8 +170,6 @@ public class SatchelManager : FSystem {
                 bagAnimator.SetTrigger("unlock"); // launch animation to unlock the padlock
                 //remove key from inventory
                 GameObjectManager.setGameObjectState(isSelected("KeySatchel"), false);
-                GameObjectManager.addComponent<ActionPerformed>(bagPadlock.GetComponentInChildren<ComponentMonitoring>().gameObject, new { name = "perform", performedBy = "system" });
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBag, new { verb = "unlocked", objectType = "interactable", objectName = selectedBag.name });
                 unlocked = true;
                 paperOpenning = true;
                 updatePictures();
@@ -194,9 +188,6 @@ public class SatchelManager : FSystem {
             {
                 // remove ReadyToWork component to release selected GameObject
                 GameObjectManager.removeComponent<ReadyToWork>(selectedBag);
-
-                GameObjectManager.addComponent<ActionPerformed>(selectedBag, new { name = "turnOff", performedBy = "player" });
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBag, new { verb = "exited", objectType = "interactable", objectName = selectedBag.name });
 
                 selectedBag = null;
                 bagAnimator = null;

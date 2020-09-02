@@ -68,20 +68,6 @@ public class IARQueryEvaluator : FSystem {
             GameObjectManager.setGameObjectState(queries, false);
             // enable final code
             GameObjectManager.setGameObjectState(queries.transform.parent.GetChild(1).gameObject, true);
-
-            GameObjectManager.addComponent<ActionPerformedForLRS>(queries.transform.parent.gameObject, new
-            {
-                verb = "completed",
-                objectType = "menu",
-                objectName = queries.transform.parent.gameObject.name
-            });
-            GameObjectManager.addComponent<ActionPerformedForLRS>(queries.transform.parent.GetChild(1).gameObject, new
-            {
-                verb = "accessed",
-                objectType = "viewable",
-                objectName = "Password_Room2",
-                activityExtensions = new Dictionary<string, List<string>>() { { "value", new List<string>() { queries.transform.parent.GetChild(1).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text } } }
-            });
         }
     }
 
@@ -129,22 +115,10 @@ public class IARQueryEvaluator : FSystem {
             }
         }
 
-        GameObjectManager.addComponent<ActionPerformedForLRS>(query, new
-        {
-            verb = "answered",
-            objectType = "question",
-            objectName = string.Concat(query.name, "-", query.tag),
-            result = true,
-            success = error ? -1 : 1,
-            response = answer
-        });
-
         if (error)
         {
             // notify player error
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 1 });
-            GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Wrong", performedBy = "player" });
-
             GameObjectManager.addComponent<WrongAnswerInfo>(query, new { givenAnswer = answer });
         }
         else
@@ -156,65 +130,11 @@ public class IARQueryEvaluator : FSystem {
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(f_selectedTab.getAt(0));
 
-            // set final answer for third room (due to OR options)
-            if (query.tag == "Q-R3")
-            {
-                query.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = answer;
-
-                // Prepare correct trace
-                string context = "";
-                if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.puzzleAnswer))
-                    context = LoadGameContent.gameContent.virtualPuzzle ? "VirtualPuzzle" : "PhysicalPuzzle";
-                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer))
-                    context = "Lamp";
-                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma16Answer))
-                    context = "Enigma16";
-                else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer))
-                    context = "WhiteBoard";
-                // mark associated enigma ready to solve
-                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "ReadyToSolve_"+context, performedBy = "player" });
-                // propagate information inside Meta (special case for Puzzle, we have to remove Virtual/Physical to avoid to manage or links)
-                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "ReadyToSolve_" + (context.Contains("Puzzle") ? "Puzzle" : context) + "_Meta", performedBy = "system" });
-                // validate associated enigma to this query and disable associated enigma to other queries
-                foreach (GameObject go in f_queriesRoom3)
-                    if (go == query)
-                        GameObjectManager.addComponent<ActionPerformed>(go, new { overrideName = (context.Contains("Puzzle") ? "Puzzle" : context) + "_Solved", performedBy = "player" });
-                    else
-                        GameObjectManager.addComponent<ActionPerformed>(go, new { overrideName = (context.Contains("Puzzle") ? "Puzzle" : context) + "_Locked", performedBy = "player" });
-            }
-
-            GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });
-            GameObjectManager.addComponent<ActionPerformed>(query, new { name = "perform", performedBy = "system" }); // meta
-
             // Toggle UI element (hide input text and button and show answer)
             for (int i = 1; i < query.transform.childCount; i++)
             {
                 GameObject child = query.transform.GetChild(i).gameObject;
                 GameObjectManager.setGameObjectState(child, !child.activeSelf);
-                // Trace to LRS displayed immediate feedback
-                if (i == 3)
-                {
-                    List<string> feedbackTexts = new List<string>();
-                    foreach (Transform grandSon in child.transform)
-                    {
-                        TextMeshProUGUI tmp = grandSon.gameObject.GetComponent<TextMeshProUGUI>();
-                        if (tmp && tmp.text != "")
-                            feedbackTexts.Add(grandSon.gameObject.GetComponent<TextMeshProUGUI>().text);
-                    }
-                    if (feedbackTexts.Count > 0)
-                    {
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(query, new
-                        {
-                            verb = "received",
-                            objectType = "feedback",
-                            objectName = string.Concat(query.name, "-", query.tag, "_feedback"),
-                            activityExtensions = new Dictionary<string, List<string>>() {
-                                { "content", feedbackTexts },
-                                { "type", new List<string>() { "answer description" } }
-                            }
-                        });
-                    }
-                }
             }
 
             // if linked hide item in inventory

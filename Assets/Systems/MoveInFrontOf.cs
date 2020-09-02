@@ -70,7 +70,6 @@ public class MoveInFrontOf : FSystem {
             // pause unused system
             LockResolver.instance.Pause = true;
             PlankAndWireManager.instance.Pause = true;
-            BallBoxManager.instance.Pause = true;
             LoginManager.instance.Pause = true;
             SatchelManager.instance.Pause = true;
             PlankAndMirrorManager.instance.Pause = true;
@@ -107,8 +106,6 @@ public class MoveInFrontOf : FSystem {
 
             if (focusedGO)
             {
-                GameObjectManager.addComponent<ActionPerformedForLRS>(focusedGO, new { verb = "accessed", objectType = "interactable", objectName = focusedGO.name });
-
                 // pause unuse systems
                 MovingSystem.instance.Pause = true;
                 JumpingSystem.instance.Pause = true;

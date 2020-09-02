@@ -69,8 +69,6 @@ public class WhiteBoardManager : FSystem {
 
         // Launch this system
         instance.Pause = false;
-
-        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
     }
 
     private void onEnterEraser (GameObject go)
@@ -79,8 +77,6 @@ public class WhiteBoardManager : FSystem {
         prevColor = rend.material.GetColor("_EmissionColor");
         rend.material.EnableKeyword("_EMISSION");
         rend.material.SetColor("_EmissionColor", Color.yellow * Mathf.LinearToGammaSpace(0.8f));
-        if(!eraserDragged)
-            GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "highlighted", objectType = "draggable", objectName = go.name });
     }
 
     private void onExitEraser(int instanceId)
@@ -126,9 +122,6 @@ public class WhiteBoardManager : FSystem {
                 {
                     //start dragging eraser when it s clicked
                     eraserDragged = true;
-
-                    GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "turnOn", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "dragged", objectType = "draggable", objectName = eraser.name });
                 }
                 if (eraserDragged)
                 {
@@ -136,8 +129,6 @@ public class WhiteBoardManager : FSystem {
                     {
                         //stop dragging eraser when the click is released
                         eraserDragged = false;
-                        GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "turnOff", performedBy = "player" });
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "dropped", objectType = "draggable", objectName = eraser.name });
                     }
                     else
                     {
@@ -169,14 +160,9 @@ public class WhiteBoardManager : FSystem {
 
     private void ExitWhiteBoard()
     {
-        if(eraserDragged)
-            GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "turnOff", performedBy = "system" });
         eraserDragged = false;
         // remove ReadyToWork component to release selected GameObject
         GameObjectManager.removeComponent<ReadyToWork>(selectedBoard);
-
-        GameObjectManager.addComponent<ActionPerformed>(selectedBoard, new { name = "turnOff", performedBy = "player" });
-        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBoard, new { verb = "exited", objectType = "interactable", objectName = selectedBoard.name });
 
         selectedBoard = null;
 

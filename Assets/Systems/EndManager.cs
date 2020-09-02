@@ -46,13 +46,6 @@ public class EndManager : FSystem {
         {
             switchToEndRoom = true;
 
-            GameObjectManager.addComponent<ActionPerformed>(f_player.First(), new { overrideName = "teleportToFinalScene", performedBy = "system" });
-            GameObjectManager.addComponent<ActionPerformedForLRS>(f_questionR3.First().transform.parent.parent.gameObject, new
-            {
-                verb = "completed",
-                objectType = "menu",
-                objectName = f_questionR3.First().transform.parent.parent.gameObject.name
-            });
             f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 4;
 
         }
@@ -106,12 +99,12 @@ public class EndManager : FSystem {
                 if (child.gameObject.GetComponent<MeshRenderer>())
                     child.gameObject.GetComponent<MeshRenderer>().allowOcclusionWhenDynamic = false;
 
-            // disable all systems except this, DreamFragmentCollect, MovingSystem, SendStatements and ActionsManager
+            // disable all systems except this, DreamFragmentCollect, MovingSystem, and ActionsManager
             List<FSystem> allSystems = new List<FSystem>(FSystemManager.fixedUpdateSystems());
             allSystems.AddRange(FSystemManager.updateSystems());
             allSystems.AddRange(FSystemManager.lateUpdateSystems());
             foreach (FSystem syst in allSystems)
-                if (syst != this && syst != DreamFragmentCollecting.instance && syst != MovingSystem.instance && syst != JumpingSystem.instance && syst != SendStatements.instance && syst != ActionsManager.instance)
+                if (syst != this && syst != DreamFragmentCollecting.instance && syst != MovingSystem.instance && syst != JumpingSystem.instance && syst != ActionsManager.instance)
                     syst.Pause = true;
         }
 

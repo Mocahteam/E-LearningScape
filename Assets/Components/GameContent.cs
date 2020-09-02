@@ -15,23 +15,6 @@ public class GameContent {
     /// </summary>
     public string theme;
     /// <summary>
-    /// If true, traces with MonitoringManager and Laalys will be enabled
-    /// </summary>
-    public bool trace = true;
-    /// <summary>
-    /// If true, HelpSystem will be enabled
-    /// </summary>
-    public bool helpSystem = true;
-    /// <summary>
-    /// If true, traces will be sent to LRS
-    /// </summary>
-    public bool traceToLRS = false;
-    /// <summary>
-    /// Frequency to which movement statements will be sent to LRS.
-    /// If 0 or negative, no statment about movement sent
-    /// </summary>
-    public float traceMovementFrequency = 0;
-    /// <summary>
     /// If true, puzzles will be included in the game.
     /// Else dream fragments will replace collectable puzzles
     /// </summary>
@@ -42,16 +25,7 @@ public class GameContent {
     public bool removeExtraGeometries = true;
 
     //Paths for other config files
-    #region Config Files Paths
-    public string lrsConfigPath;
     public string dreamFragmentLinksPath;
-    public string hintsPath;
-    public string internalHintsPath;
-    public string wrongAnswerFeedbacksPath;
-    public string enigmasWeightPath;
-    public string labelWeightsPath;
-    public string helpSystemConfigPath;
-    #endregion
 
     //Additional logos
     public string[] additionalLogosPath;
@@ -65,23 +39,11 @@ public class GameContent {
 
     //Inventory texts 
     public List<string> inventoryScrollIntro;
-    public List<string> inventoryKeyBallBox;
     public List<string> inventoryWire;
-    public List<string> inventoryKeySatchel;
     public List<string> inventoryScrolls;
     public List<string> inventoryGlasses1;
     public List<string> inventoryGlasses2;
     public List<string> inventoryMirror;
-    public List<string> inventoryLamp;
-    public List<string> inventoryPuzzle;
-
-    //Ball Box
-    public string ballBoxQuestion;
-    public string ballBoxPlaceHolder;
-    public string ballBoxAnswerFeedback;
-    public string ballBoxAnswerFeedbackDesc;
-    public List<string> ballBoxAnswer;
-    public string[] ballTexts = new string[10];
 
     //Plank And Wire
     public string plankAndWireQuestionIAR;
@@ -124,13 +86,6 @@ public class GameContent {
     public string glassesAnswerDescription;
     public string[] glassesPicturesPath = new string[4];
 
-    //Enigma 8 (3 dream fragments)
-    public string enigma08Question;
-    public string enigma08PlaceHolder;
-    public List<string> enigma08Answer;
-    public string enigma08AnswerFeedback;
-    public string enigma08AnswerFeedbackDesc;
-
     //Scrolls
     public string scrollsQuestion;
     public string scrollsPlaceHolder;
@@ -147,35 +102,6 @@ public class GameContent {
     public string mirrorAnswerFeedbackDesc;
     public string mirrorPicturePath;
 
-    //Enigma 11 (1 dream fragment)
-    public string enigma11Question;
-    public string enigma11PlaceHolder;
-    public List<string> enigma11Answer;
-    public string enigma11AnswerFeedback;
-    public string enigma11AnswerFeedbackDesc;
-
-    //Enigma 12 (3 dream fragments)
-    public string enigma12Question;
-    public string enigma12PlaceHolder;
-    public List<string> enigma12Answer;
-    public string enigma12AnswerFeedback;
-    public string enigma12AnswerFeedbackDesc;
-
     //Lock Room 2
     public int lockRoom2Password;
-
-    //Puzzle (or 5 dream fragments)
-    public string puzzleAnswer;
-    public string puzzlePicturePath;
-
-    //Enigma 13 (2 dream fragments)
-    public string enigma16Answer;
-
-    //Lamp
-    public string lampAnswer;
-    public string[] lampPicturesPath = new string[6];
-
-    //White Board
-    public string whiteBoardAnswer;
-    public string[] whiteBoardWords = new string [12];
 }

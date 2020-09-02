@@ -36,17 +36,9 @@ public class IARPuzzleManager : FSystem {
         if (Input.GetButtonDown("Fire1") && f_puzzleUI.First())
         {
             tmpGo = f_puzzleUI.First();
-            GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new { verb = "dragged", objectType = "draggable", objectName = tmpGo.name });
         }
         if (Input.GetMouseButtonUp(0) && tmpGo)
         {
-            GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
-            {
-                verb = "dropped",
-                objectType = "draggable",
-                objectName = tmpGo.name,
-                activityExtensions = new Dictionary<string, List<string>>() { { "position", new List<string>() { tmpGo.GetComponent<RectTransform>().position.ToString("G4") } } }
-            });
             // try to magnet puzzle piece
             int cpt = 0;
             // parse all neighbours

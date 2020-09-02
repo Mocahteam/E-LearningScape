@@ -168,13 +168,6 @@ public class MovingSystem : FSystem
             {
                 if (Time.time - walkingTraceTimer > traceMovementFrequency)
                 {
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new
-                    {
-                        verb = "moved",
-                        objectType = "avatar",
-                        objectName = "player",
-                        activityExtensions = new Dictionary<string, List<string>>() { { "position", new List<string>() { f_player.First().transform.position.ToString("G4") } } }
-                    });
                     walkingTraceTimer = Time.time;
                 }
             }
@@ -245,17 +238,6 @@ public class MovingSystem : FSystem
             {
                 changingPose = false;
                 crouching = !crouching; //true when the player is crouching
-
-                if (crouching)
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(playerController.gameObject, new { name = "turnOn", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "crouched", objectType = "avatar", objectName = "player" });
-                }
-                else
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(playerController.gameObject, new { name = "turnOff", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "stood", objectType = "avatar", objectName = "player" });
-                }
             }
 
         }

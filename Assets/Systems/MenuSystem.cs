@@ -113,12 +113,12 @@ public class MenuSystem : FSystem {
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
     {
-        // Pause all systems except this, LogoDisplaying, SendStatements and HelpSystem
+        // Pause all systems except this, LogoDisplaying
         List<FSystem> allSystems = new List<FSystem>(FSystemManager.fixedUpdateSystems());
         allSystems.AddRange(FSystemManager.updateSystems());
         allSystems.AddRange(FSystemManager.lateUpdateSystems());
         foreach (FSystem syst in allSystems)
-            if (syst != this && syst != LogoDisplaying.instance && syst != SendStatements.instance && syst != HelpSystem.instance)
+            if (syst != this && syst != LogoDisplaying.instance)
                 syst.Pause = true;
         // Init timer
         switchTimer = Time.time;

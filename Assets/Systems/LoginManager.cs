@@ -92,9 +92,6 @@ public class LoginManager : FSystem {
 
         // Launch this system
         instance.Pause = false;
-
-        GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "turnOn", performedBy = openedBy });
-        openedBy = "player";
     }
 
     private void onForceMoveTo(GameObject go)
@@ -138,7 +135,6 @@ public class LoginManager : FSystem {
                 // Enable IAR second screen
                 GameObject IARsecondScreen = f_mainWindow.First().GetComponentInChildren<LinkedWith>().link;
                 GameObjectManager.setGameObjectState(IARsecondScreen, true); // enable questions tab
-                GameObjectManager.addComponent<ActionPerformedForLRS>(IARsecondScreen, new { verb = "unlocked", objectType = "menu", objectName = IARsecondScreen.name });
                 f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 2;
                 // exit login
                 exitBy = "system";
@@ -152,14 +148,6 @@ public class LoginManager : FSystem {
     {
         // remove ReadyToWork component to release selected GameObject
         GameObjectManager.removeComponent<ReadyToWork>(selectedLoginPanel);
-
-        GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "turnOff", performedBy = exitBy });
-        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
-        {
-            verb = "exited",
-            objectType = "interactable",
-            objectName = selectedLoginPanel.name
-        });
 
         selectedLoginPanel = null;
 
@@ -176,18 +164,6 @@ public class LoginManager : FSystem {
 
         if (answer == passwordSolution) //if the answer is correct
         {
-            GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "Correct", performedBy = "player" });
-            GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "perform", performedBy = "system" });
-            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
-            {
-                verb = "answered",
-                objectType = "question",
-                objectName = selectedLoginPanel.name,
-                result = true,
-                success = 1,
-                response = answer.ToString()
-            });
-
             //show correct answer feedback for the 3 numbers
             connectionAnswerCheck1.text = "O";
             connectionAnswerCheck1.color = cacGreen;
@@ -208,17 +184,6 @@ public class LoginManager : FSystem {
         else
         {
             //else, feedback following the rules of mastermind ('O' correct, '?' right number but wrong place, 'X' wrong number)
-
-            GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "Wrong", performedBy = "player" });
-            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
-            {
-                verb = "answered",
-                objectType = "question",
-                objectName = selectedLoginPanel.name,
-                result = true,
-                success = -1,
-                response = answer.ToString()
-            });
 
             ifConnectionR2.ActivateInputField();
             int answerHundreds = answer / 100;
@@ -275,18 +240,6 @@ public class LoginManager : FSystem {
                 connectionAnswerCheck3.text = "X";
                 connectionAnswerCheck3.color = cacRed;
             }
-
-            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
-            {
-                verb = "received",
-                objectType = "feedback",
-                objectName = string.Concat(selectedLoginPanel.name, "_feedback"),
-                activityExtensions = new Dictionary<string, List<string>>() {
-                    { "content", new List<string>() {
-                        string.Concat(connectionAnswerCheck1, connectionAnswerCheck2, connectionAnswerCheck3), answer.ToString() } },
-                    { "type", new List<string>() { "answer validation" } }
-                }
-            });
         }
     }
 

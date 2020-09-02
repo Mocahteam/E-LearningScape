@@ -74,8 +74,6 @@ public class LockResolver : FSystem {
         selectedLocker.UpDownControl.transform.localPosition += Vector3.right * (selectedWheel.transform.localPosition.x - selectedLocker.UpDownControl.transform.localPosition.x);
         // activate this system
         instance.Pause = false;
-
-        GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
     }
 
     // Use this to update member variables when system pause. 
@@ -180,19 +178,6 @@ public class LockResolver : FSystem {
                     else
                         room3Unlocked = true;
                 }
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedWheel, new
-                {
-                    verb = "moved",
-                    objectType = "interactable",
-                    objectName = selectedWheel.name,
-                    activityExtensions = new Dictionary<string, List<string>>() {
-                        { "direction", new List<string>() { rotationDirection } },
-                        { "content", new List<string>() { selectedWheel.GetComponent<WheelFrontFace>().faceNumber.ToString() } }
-                    },
-                    result = true,
-                    success = solved,
-                    response = string.Concat(selectedLocker.Wheel1.GetComponent<WheelFrontFace>().faceNumber, selectedLocker.Wheel2.GetComponent<WheelFrontFace>().faceNumber, selectedLocker.Wheel3.GetComponent<WheelFrontFace>().faceNumber)
-                });
             }
         }
 
@@ -206,19 +191,9 @@ public class LockResolver : FSystem {
             {
                 GameObjectManager.addComponent<PlaySound>(wallIntro, new { id = 9 }); // id refer to FPSController AudioBank
                 wallIntro.GetComponent<Animator>().enabled = true; // enable animation
-                GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock", performedBy = "player" });
-                GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock_meta", performedBy = "system" });
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
-                {
-                    verb = "completed",
-                    objectType = "interactable",
-                    objectName = selectedLocker.gameObject.name,
-                    activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { string.Concat(selectedLocker.wheel1Solution, selectedLocker.wheel2Solution, selectedLocker.wheel3Solution) } } }
-                });
 
                 // update IAR
                 GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock, true);// enable questions tab
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new { verb = "unlocked", objectType = "menu", objectName = selectedLocker.IARScreenUnlock.name });
                 f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 1;
                 // update flags
                 IARScreenRoom1Unlocked = true;
@@ -241,20 +216,6 @@ public class LockResolver : FSystem {
                 GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock, true); // enable questions tab
                 f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 3;
                 IARScreenRoom3Unlocked = true;
-                GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock", performedBy = "player" });
-                GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock_meta", performedBy = "player" });
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
-                {
-                    verb = "completed",
-                    objectType = "interactable",
-                    objectName = selectedLocker.gameObject.name
-                });
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new
-                {
-                    verb = "unlocked",
-                    objectType = "menu",
-                    objectName = selectedLocker.IARScreenUnlock.name
-                });
                 closedBy = "system";
                 ExitLocker();
             }
@@ -273,9 +234,6 @@ public class LockResolver : FSystem {
 
         // remove ReadyToWork component to release selected GameObject
         GameObjectManager.removeComponent<ReadyToWork>(selectedLocker.gameObject);
-
-        GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { name = "turnOff", performedBy = closedBy });
-        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new { verb = "exited", objectType = "interactable", objectName = selectedLocker.gameObject.name });
 
         selectedLocker = null;
 

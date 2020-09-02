@@ -54,31 +54,11 @@ public class UIEffectPlayer : FSystem {
             {
                 blinkCorrect = true;
                 startTime = Time.time;
-                GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
-                {
-                    verb = "received",
-                    objectType = "feedback",
-                    objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback"),
-                    activityExtensions = new Dictionary<string, List<string>>() {
-                        { "content", new List<string>() { "blink correct" } },
-                        { "type", new List<string>() { "answer validation" } }
-                    }
-                });
             }
             if (uiEffect.effectCode == 2)
             {
                 solvedAnimation.animate = true;
                 GameObjectManager.setGameObjectState(solvedAnimation.gameObject, true);
-                GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
-                {
-                    verb = "received",
-                    objectType = "feedback",
-                    objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback"),
-                    activityExtensions = new Dictionary<string, List<string>>() {
-                        { "content", new List<string>() { "correct animation" } },
-                        { "type", new List<string>() { "answer validation" } }
-                    }
-                });
             }
         }
         else if (uiEffect.effectCode == 1)
@@ -87,16 +67,6 @@ public class UIEffectPlayer : FSystem {
             GameObjectManager.addComponent<PlaySound>(go, new { id = 1 }); // id refer to FPSController AudioBank
             blinkWrong = true;
             startTime = Time.time;
-            GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
-            {
-                verb = "received",
-                objectType = "feedback",
-                objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback"),
-                activityExtensions = new Dictionary<string, List<string>>() {
-                    { "content", new List<string>() { "blink wrong" } },
-                    { "type", new List<string>() { "answer validation" } }
-                }
-            });
         }
 
         // Remove UI Effect

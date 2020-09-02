@@ -64,7 +64,6 @@ public class DreamFragmentCollecting : FSystem {
                 {
                     // Show fragment UI
                     selectedFragment = hit.transform.gameObject;
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
                     GameObjectManager.setGameObjectState(dfUI, true);
                     tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
                     GameObjectManager.setGameObjectState(onlineButton, tmpDFComponent.urlLink != null && tmpDFComponent.urlLink != "");
@@ -81,18 +80,6 @@ public class DreamFragmentCollecting : FSystem {
                     IARTabNavigation.instance.Pause = true;
 
                     GameObjectManager.addComponent<PlaySound>(selectedFragment, new { id = 3 }); // id refer to FPSController AudioBank
-
-                    if (selectedFragment.GetComponentInParent<IsSolution>())
-                    {
-                        if(f_player.First().transform.localScale.x < 0.9f)
-                            //if the player is crouching
-                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "crouch"} });
-                        else
-                            GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "chairDown" } });
-
-                    }
-                    else if (tmpDFComponent.type != 2)
-                        GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player" });
                 }
             }
         }
@@ -100,7 +87,6 @@ public class DreamFragmentCollecting : FSystem {
 
     public void CloseFragmentUI()
     {
-        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "deactivated", objectType = "viewable", objectName = selectedFragment.name });
         if (selectedFragment.GetComponent<DreamFragment>().type != 2)
         {
             // disable particles
@@ -140,12 +126,5 @@ public class DreamFragmentCollecting : FSystem {
             Debug.LogError(string.Concat("Invalid dream fragment link: ", df.urlLink));
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid dream fragment link: ", df.urlLink));
         }
-        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new
-        {
-            verb = "accessed",
-            objectType = "viewable",
-            objectName = string.Concat(selectedFragment.name, "_Link"),
-            activityExtensions = new Dictionary<string, List<string>>() { { "link", new List<string>() { df.urlLink } } }
-        });
     }
 }

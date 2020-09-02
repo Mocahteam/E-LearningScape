@@ -1,18 +1,7 @@
 {
     "theme": "Pédagogie",
-    "trace": true,
-    "helpSystem": true,
-    "traceToLRS": false,
-    "traceMovementFrequency": 0.5,
     "virtualPuzzle": true,
-    "lrsConfigPath": "Data/LRSConfig.txt",
     "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
-    "hintsPath": "Data/Hints_LearningScape.txt",
-    "internalHintsPath": "Data/InternalHints_LearningScape.txt",
-    "wrongAnswerFeedbacksPath": "Data/WrongAnswerFeedbacks.txt",
-    "enigmasWeightPath": "Data/EnigmasWeight.txt",
-    "labelWeightsPath": "Data/LabelWeights.txt",
-    "helpSystemConfigPath": "Data/HelpSystemConfig.txt",
 	"removeExtraGeometries": false,
 	
 	"additionalLogosPath": [],
