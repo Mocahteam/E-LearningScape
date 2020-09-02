@@ -180,15 +180,11 @@ public class LoadGameContent : FSystem {
         Dictionary<string, List<string>> inventoryTexts = new Dictionary<string, List<string>>()
         {
             {"ScrollIntro", gameContent.inventoryScrollIntro},
-            {"KeyBallBox", gameContent.inventoryKeyBallBox },
             {"Wire", gameContent.inventoryWire },
-            {"KeySatchel", gameContent.inventoryKeySatchel },
             {"Scrolls", gameContent.inventoryScrolls },
             {"Glasses1", gameContent.inventoryGlasses1 },
             {"Glasses2", gameContent.inventoryGlasses2 },
-            {"Mirror", gameContent.inventoryMirror },
-            {"Lamp", gameContent.inventoryLamp },
-            {"Puzzle", gameContent.inventoryPuzzle }
+            {"Mirror", gameContent.inventoryMirror }
         };
         foreach (GameObject inventoryGo in f_inventoryElements)
         {
