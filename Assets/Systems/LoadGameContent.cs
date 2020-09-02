@@ -103,7 +103,6 @@ public class LoadGameContent : FSystem {
                     File.WriteAllBytes(string.Concat("Data/", defaultGameContent.glassesPictures[i].name, ".png"), defaultGameContent.glassesPictures[i].EncodeToPNG());
                 }
                 File.WriteAllBytes(string.Concat("Data/", defaultGameContent.plankPicture.name, ".png"), defaultGameContent.plankPicture.EncodeToPNG());
-                File.WriteAllBytes(string.Concat("Data/", defaultGameContent.puzzlePicture.name, ".png"), defaultGameContent.puzzlePicture.EncodeToPNG());
 
                 Debug.Log("Data created");
                 File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data created"));
@@ -570,30 +569,6 @@ public class LoadGameContent : FSystem {
             qs.orSolutions.Add(StringToAnswer(gameContent.whiteBoardAnswer));
         }
         Debug.Log("Room 3 queries loaded");
-
-        //Puzzles
-        foreach (GameObject go in f_puzzles)
-            GameObjectManager.setGameObjectState(go, gameContent.virtualPuzzle);
-        foreach (GameObject go in f_puzzlesFragment)
-            GameObjectManager.setGameObjectState(go, !gameContent.virtualPuzzle);
-
-        Sprite puzzlePicture = defaultGameContent.noPictureFound;
-        if (gameContent.virtualPuzzle && File.Exists(gameContent.puzzlePicturePath))
-        {
-            tmpTex = new Texture2D(1, 1);
-            tmpFileData = File.ReadAllBytes(gameContent.puzzlePicturePath);
-            if (tmpTex.LoadImage(tmpFileData))
-            {
-                puzzlePicture = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
-            }
-        }
-        int nbPuzzleUI = f_puzzleUI.Count;
-        for (int i = 0; i < nbPuzzleUI; i++)
-        {
-            RectTransform rt = f_puzzleUI.getAt(i).GetComponent<RectTransform>();
-            rt.GetChild(0).gameObject.GetComponent<Image>().sprite = puzzlePicture;
-        }
-        Debug.Log("Puzzle loaded");
 
         //White Board
         convertedBoardText = new string[2];
