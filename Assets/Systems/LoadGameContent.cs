@@ -59,7 +59,6 @@ public class LoadGameContent : FSystem {
 
     private Family f_gameHints = FamilyManager.getFamily(new AllOfComponents(typeof(GameHints)));
     private Family f_internalGameHints = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameHints)));
-    private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
 
     private Family f_inventoryElements = FamilyManager.getFamily(new AllOfComponents(typeof(Collected)));
 
@@ -104,7 +103,6 @@ public class LoadGameContent : FSystem {
                 File.WriteAllText("Data/InternalHints_LearningScape.txt", defaultGameContent.internalHintsJsonFile.text);
                 File.WriteAllText("Data/WrongAnswerFeedbacks.txt", defaultGameContent.wrongAnswerFeedbacks.text);
                 File.WriteAllText("Data/EnigmasWeight.txt", defaultGameContent.enigmasWeight.text);
-                File.WriteAllText("Data/LabelWeights.txt", defaultGameContent.labelWeights.text);
                 File.WriteAllText("Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
 
                 gameContent = new GameContent();
@@ -677,13 +675,6 @@ public class LoadGameContent : FSystem {
         if (enigmasWeight == null)
             enigmasWeight = new Dictionary<string, float>();
         Debug.Log("Enigmas weight loaded");
-
-        // Load LabelWeights config files
-        LabelWeights labelWeights = f_labelWeights.First().GetComponent<LabelWeights>();
-        LoadJsonFile(gameContent.labelWeightsPath, defaultGameContent.labelWeights, out labelWeights.weights);
-        if (labelWeights.weights == null)
-            labelWeights.weights = new Dictionary<string, float>();
-        Debug.Log("Labels weight loaded");
 
         //Load dream fragment links config files
         Dictionary<string, string> dreamFragmentsLinks = null;
