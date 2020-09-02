@@ -184,7 +184,6 @@ public class StoryDisplaying : FSystem {
                         CollectObject.instance.Pause = false;
                         MoveInFrontOf.instance.Pause = false;
                         UIEffectPlayer.instance.Pause = false;
-                        ActionsManager.instance.Pause = !LoadGameContent.gameContent.trace;
                     }
                     else
                         GameObjectManager.loadScene(SceneManager.GetActiveScene().name); // reset game
