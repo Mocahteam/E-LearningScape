@@ -73,7 +73,6 @@ public class MoveInFrontOf : FSystem {
             LoginManager.instance.Pause = true;
             SatchelManager.instance.Pause = true;
             PlankAndMirrorManager.instance.Pause = true;
-            WhiteBoardManager.instance.Pause = true;
             // hide help overlay
             GameObjectManager.setGameObjectState(f_quitEnigma.First(), false);
         }
