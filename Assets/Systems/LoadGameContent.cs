@@ -24,9 +24,6 @@ public class LoadGameContent : FSystem {
     private Family f_queriesR2 = FamilyManager.getFamily(new AnyOfTags("Q-R2"), new AllOfComponents(typeof(QuerySolution)));
     private Family f_queriesR3 = FamilyManager.getFamily(new AnyOfTags("Q-R3"), new AllOfComponents(typeof(QuerySolution)));
 
-    private Family f_balls = FamilyManager.getFamily(new AnyOfTags("Ball"));
-    private Family f_ballBoxTop = FamilyManager.getFamily(new AnyOfTags("BallBoxTop"));
-
     private Family f_plankAndWireRule = FamilyManager.getFamily(new AnyOfTags("PlankAndWireRule"));
     private Family f_wrongWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(TextMeshPro)), new NoneOfComponents(typeof(IsSolution)));
     private Family f_correctWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(TextMeshPro), typeof(IsSolution)));
@@ -47,13 +44,6 @@ public class LoadGameContent : FSystem {
 
     private Family f_passwordRoom2 = FamilyManager.getFamily(new AnyOfTags("PasswordRoom2"));
     private Family f_lockRoom2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"), new AllOfComponents(typeof(Locker)));
-
-    private Family f_puzzleUI = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"), new AllOfComponents(typeof(RectTransform)));
-    private Family f_puzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)));
-    private Family f_puzzlesFragment = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new AllOfComponents(typeof(DreamFragment)));
-
-    private Family f_boardUnremovable = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
-    private Family f_boardRemovable = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
 
     private Family f_inventoryElements = FamilyManager.getFamily(new AllOfComponents(typeof(Collected)));
 
@@ -209,10 +199,6 @@ public class LoadGameContent : FSystem {
             forGO = f_queriesR1.getAt(i);
             switch (forGO.name)
             {
-                case "Q1":
-                    loadIARQuestion(forGO, gameContent.ballBoxQuestion, gameContent.ballBoxAnswerFeedback, gameContent.ballBoxAnswerFeedbackDesc, gameContent.ballBoxPlaceHolder, gameContent.ballBoxAnswer);
-                    break;
-
                 case "Q2":
                     loadIARQuestion(forGO, gameContent.plankAndWireQuestionIAR, gameContent.plankAndWireAnswerFeedback, gameContent.plankAndWireAnswerFeedbackDesc, gameContent.plankAndWirePlaceHolder, gameContent.plankAndWireCorrectNumbers);
                     break;
@@ -240,105 +226,6 @@ public class LoadGameContent : FSystem {
         textMP.transform.localPosition = new Vector3(textMP.transform.localPosition.x, gameContent.mastermindQuestionYPos, textMP.transform.localPosition.z);
         LoginManager.passwordSolution = gameContent.mastermindAnswer;
         Debug.Log("Master mind picture loaded");
-
-
-        //Ball Box
-        int nbBalls = f_balls.Count;
-        Ball b = null;
-        Ball b2 = null;
-        string tmpString;
-        int nbBallSeen = 0;
-        int answer;
-        //initialise position and texts for all balls
-        List<int> idList = new List<int>();
-        for (int i = 0; i < nbBalls; i++)
-            idList.Add(i);
-        for (int i = 0; i < nbBalls; i++)
-        {
-            b = f_balls.getAt(i).GetComponent<Ball>();
-
-            //change randomly the position of the ball
-            b.id = idList[(int)UnityEngine.Random.Range(0, idList.Count - 0.001f)];
-            idList.Remove(b.id);
-
-            if(b.number < gameContent.ballTexts.Length)
-                b.text = gameContent.ballTexts[b.number];
-        }
-        //Exchange texts and numbers to set solution balls
-        for(int j = 0; j < 3; j++)
-        {
-            //If there is still unprocessed answers
-            if (gameContent.ballBoxAnswer.Count > j)
-            {
-                //If the answer given was integer
-                if (int.TryParse(gameContent.ballBoxAnswer[j], out answer))
-                {
-                    //If the answer given is different than the default answer
-                    if(answer != j + 1)
-                    {
-                        //Look for a default solution ball (j+1 can be 1, 2 or 3) and a new solution ball (number stored in "answer")
-                        for (int i = 0; i < nbBalls; i++)
-                        {
-                            b = f_balls.getAt(i).GetComponent<Ball>();
-                            if (b.number == j + 1 || b.number == answer)
-                            {
-                                if (nbBallSeen == 1)
-                                {
-                                    nbBallSeen++;
-                                    break;
-                                }
-                                else
-                                {
-                                    b2 = b;
-                                    nbBallSeen++;
-                                }
-                            }
-                        }
-                        //If the two balls were found
-                        if (nbBallSeen == 2)
-                        {
-                            //exchange numbers and texts
-                            if (b.number == j + 1)
-                            {
-                                b.number = answer;
-                                b2.number = j + 1;
-                            }
-                            else
-                            {
-                                b.number = j + 1;
-                                b2.number = answer;
-                            }
-                            tmpString = b.text;
-                            b.text = b2.text;
-                            b2.text = tmpString;
-                        }
-                        else
-                        {
-                            Debug.LogWarning(string.Concat("The answer ", j + 1, " of BallBox enigma should be between 1 and 15 included."));
-                            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - The answer ", j + 1, " of BallBox enigma should be between 1 and 15 included"));
-                        }
-
-                        nbBallSeen = 0;
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning(string.Concat("The answer ", j + 1, " of BallBox enigma should be an integer."));
-                    File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - The answer ", j + 1, " of BallBox enigma should be an integer"));
-                }
-            }
-        }
-        for (int i = 0; i < nbBalls; i++)
-        {
-            b = f_balls.getAt(i).GetComponent<Ball>();
-            b.GetComponentInChildren<TextMeshPro>().text = b.number.ToString();
-        }
-
-        foreach (TextMeshPro tmp in f_ballBoxTop.First().GetComponentsInChildren<TextMeshPro>())
-        {
-            tmp.text = gameContent.ballBoxQuestion;
-        }
-        Debug.Log("Ball box loaded");
 
         //Plank and Wire
         int nbWrongWords = f_wrongWords.Count;
@@ -456,24 +343,12 @@ public class LoadGameContent : FSystem {
                     loadIARQuestion(forGO, gameContent.glassesQuestion, gameContent.glassesAnswerFeedback, gameContent.glassesAnswerFeedbackDesc, gameContent.glassesPlaceHolder, gameContent.glassesAnswer);
                     break;
 
-                case "Q2":
-                    loadIARQuestion(forGO, gameContent.enigma08Question, gameContent.enigma08AnswerFeedback, gameContent.enigma08AnswerFeedbackDesc, gameContent.enigma08PlaceHolder, gameContent.enigma08Answer);
-                    break;
-
                 case "Q3":
                     loadIARQuestion(forGO, gameContent.scrollsQuestion, gameContent.scrollsAnswerFeedback, gameContent.scrollsAnswerFeedbackDesc, gameContent.scrollsPlaceHolder, gameContent.scrollsAnswer);
                     break;
 
                 case "Q4":
                     loadIARQuestion(forGO, gameContent.mirrorQuestion, gameContent.mirrorAnswerFeedback, gameContent.mirrorAnswerFeedbackDesc, gameContent.mirrorPlaceHolder, gameContent.mirrorAnswer);
-                    break;
-
-                case "Q5":
-                    loadIARQuestion(forGO, gameContent.enigma11Question, gameContent.enigma11AnswerFeedback, gameContent.enigma11AnswerFeedbackDesc, gameContent.enigma11PlaceHolder, gameContent.enigma11Answer);
-                    break;
-
-                case "Q6":
-                    loadIARQuestion(forGO, gameContent.enigma12Question, gameContent.enigma12AnswerFeedback, gameContent.enigma12AnswerFeedbackDesc, gameContent.enigma12PlaceHolder, gameContent.enigma12Answer);
                     break;
 
                 default:
@@ -546,33 +421,6 @@ public class LoadGameContent : FSystem {
         locker.wheel3Solution = gameContent.lockRoom2Password % 10;
         f_passwordRoom2.First().GetComponentInChildren<TextMeshProUGUI>().text = (gameContent.lockRoom2Password % 1000).ToString();
         Debug.Log("Locker loaded");
-        #endregion
-
-        #region Room 3
-        int nbQuestionRoom3 = f_queriesR3.Count;
-        QuerySolution qs;
-        for (int i = 0; i < nbQuestionRoom3; i++)
-        {
-            qs = f_queriesR3.getAt(i).GetComponent<QuerySolution>();
-            qs.orSolutions = new List<string>();
-            qs.orSolutions.Add(StringToAnswer(gameContent.puzzleAnswer));
-            qs.orSolutions.Add(StringToAnswer(gameContent.enigma16Answer));
-            qs.orSolutions.Add(StringToAnswer(gameContent.lampAnswer));
-            qs.orSolutions.Add(StringToAnswer(gameContent.whiteBoardAnswer));
-        }
-        Debug.Log("Room 3 queries loaded");
-
-        //White Board
-        convertedBoardText = new string[2];
-        int nbBoardTexts = Mathf.Min(gameContent.whiteBoardWords.Length, f_boardUnremovable.Count, f_boardRemovable.Count);
-        for (int i = 0; i < nbBoardTexts; i++)
-        {
-            ConvertBoardText(gameContent.whiteBoardWords[i]);
-            f_boardUnremovable.getAt(i).GetComponent<TextMeshPro>().text = convertedBoardText[0];
-            f_boardRemovable.getAt(i).GetComponent<TextMeshPro>().text = convertedBoardText[1];
-        }
-        Debug.Log("White board loaded");
-
         #endregion
 
         #region File Loading
