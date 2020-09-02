@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using FYFY;
-using FYFY_plugins.Monitoring;
 using System.Collections.Generic;
 
 public class EndManager : FSystem {
@@ -103,7 +102,7 @@ public class EndManager : FSystem {
             allSystems.AddRange(FSystemManager.updateSystems());
             allSystems.AddRange(FSystemManager.lateUpdateSystems());
             foreach (FSystem syst in allSystems)
-                if (syst != this && syst != DreamFragmentCollecting.instance && syst != MovingSystem.instance && syst != JumpingSystem.instance && syst != ActionsManager.instance)
+                if (syst != this && syst != DreamFragmentCollecting.instance && syst != MovingSystem.instance && syst != JumpingSystem.instance)
                     syst.Pause = true;
         }
 

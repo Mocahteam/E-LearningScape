@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using FYFY;
-using FYFY_plugins.Monitoring;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
@@ -91,7 +90,7 @@ public class StoryDisplaying : FSystem {
         allSystems.AddRange(FSystemManager.updateSystems());
         allSystems.AddRange(FSystemManager.lateUpdateSystems());
         foreach (FSystem syst in allSystems)
-            if (syst != this && syst != ActionsManager.instance)
+            if (syst != this)
                 syst.Pause = true;
         // Enable UI Story
         GameObjectManager.setGameObjectState(f_storyDisplayer.First(), true);

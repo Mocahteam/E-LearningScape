@@ -2,11 +2,8 @@
 using FYFY;
 using TMPro;
 using UnityEngine.UI;
-using UnityStandardAssets.Characters.FirstPerson;
 using System;
 using System.IO;
-using System.Collections.Generic;
-using Newtonsoft.Json;
 
 public class DreamFragmentCollecting : FSystem {
 

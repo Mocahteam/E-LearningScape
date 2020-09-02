@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 using FYFY;
 using System.Collections.Generic;
 using TMPro;
-using FYFY_plugins.Monitoring;
 
 public class IARQueryEvaluator : FSystem {
 
@@ -19,8 +18,6 @@ public class IARQueryEvaluator : FSystem {
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_selectedTab = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedTab)));
-
-    private Family f_inputFields = FamilyManager.getFamily(new AllOfComponents(typeof(TMP_InputField)), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     public static IARQueryEvaluator instance;
 

@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.PostProcessing;
 using FYFY;
-using FYFY_plugins.Monitoring;
 using UnityEngine.UI;
-using TMPro;
-using UnityStandardAssets.Characters.FirstPerson;
 using System.Collections.Generic;
 
 public class LogoDisplaying : FSystem {
@@ -35,11 +32,7 @@ public class LogoDisplaying : FSystem {
     private bool closeLogo = false;
 
     private GameObject loadingFragment;
-    private Material lfMat;
-    private Vector3 targetEmissionColor;
-    private Vector3 currentColor;
     private bool menuFaded = false;
-    private bool motionBlurWasOn;
 
     public static LogoDisplaying instance;
 
@@ -59,9 +52,6 @@ public class LogoDisplaying : FSystem {
             logo = logoGo.GetComponent<ImgBank>();
 
             loadingFragment = f_loadingFragment.First();
-            lfMat = loadingFragment.transform.GetChild(0).GetComponent<Renderer>().material;
-            targetEmissionColor = Random.insideUnitSphere * 155 + Vector3.one * 100;
-            currentColor = new Vector3(0, 86, 255);
         }
         instance = this;
     }
@@ -78,8 +68,6 @@ public class LogoDisplaying : FSystem {
         {
             GameObjectManager.setGameObjectState(loadingFragment, false);
             GameObjectManager.setGameObjectState(logoGo.transform.GetChild(2).gameObject, false);
-            if(motionBlurWasOn)
-                loadingFragment.transform.parent.GetComponent<PostProcessingBehaviour>().profile.motionBlur.enabled = true;
         }
         // switch to next logo if mouse clicked or Escape pressed
         if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel") || Input.GetButtonDown("Submit"))

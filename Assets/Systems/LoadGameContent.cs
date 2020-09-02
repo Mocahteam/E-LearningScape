@@ -5,8 +5,6 @@ using TMPro;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using FYFY_plugins.Monitoring;
-using Newtonsoft.Json;
 using System.Text;
 using System.Globalization;
 using FYFY_plugins.PointerManager;
@@ -452,11 +450,14 @@ public class LoadGameContent : FSystem {
         {
             try
             {
-                target = JsonConvert.DeserializeObject <T>(File.ReadAllText(jsonPath));
+
+                target = JsonUtility.FromJson<T>(File.ReadAllText(jsonPath));
+                //target = JsonConvert.DeserializeObject <T>(File.ReadAllText(jsonPath));
             }
             catch (Exception)
             {
-                target = JsonConvert.DeserializeObject<T>(defaultContent.text);
+                target = JsonUtility.FromJson<T>(defaultContent.text);
+                //target = JsonConvert.DeserializeObject<T>(defaultContent.text);
                 Debug.LogError("Invalid content in file: " + jsonPath + ". Default used.");
                 File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid content in file: " + jsonPath + ". Default used"));
             }
@@ -466,7 +467,8 @@ public class LoadGameContent : FSystem {
             // write default content
             File.WriteAllText(jsonPath, defaultContent.text);
             // load default content
-            target = JsonConvert.DeserializeObject<T>(defaultContent.text);
+            target = JsonUtility.FromJson<T>(defaultContent.text);
+            //target = JsonConvert.DeserializeObject<T>(defaultContent.text);
             Debug.LogWarning(jsonPath+ " not found. Default used.");
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - "+ jsonPath + " not found. Default used"));
         }

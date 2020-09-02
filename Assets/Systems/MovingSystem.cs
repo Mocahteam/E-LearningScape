@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using FYFY;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 using FYFY_plugins.TriggerManager;
 using FYFY_plugins.PointerManager;
-using FYFY_plugins.Monitoring;
 using TMPro;
 
 public class MovingSystem : FSystem

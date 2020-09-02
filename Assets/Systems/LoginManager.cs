@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using TMPro;
-using FYFY_plugins.Monitoring;
 
 public class LoginManager : FSystem {
 

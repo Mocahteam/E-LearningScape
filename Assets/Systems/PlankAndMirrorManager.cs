@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
-using FYFY_plugins.Monitoring;
 
 public class PlankAndMirrorManager : FSystem {
 
