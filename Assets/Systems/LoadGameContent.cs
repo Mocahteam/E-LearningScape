@@ -52,8 +52,6 @@ public class LoadGameContent : FSystem {
     private Family f_puzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)));
     private Family f_puzzlesFragment = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new AllOfComponents(typeof(DreamFragment)));
 
-    private Family f_lampPictures = FamilyManager.getFamily(new AllOfComponents(typeof(Lamp_Symbol)));
-
     private Family f_boardUnremovable = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
     private Family f_boardRemovable = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
 
@@ -103,11 +101,6 @@ public class LoadGameContent : FSystem {
                 for(int i = 0; i < l; i++)
                 {
                     File.WriteAllBytes(string.Concat("Data/", defaultGameContent.glassesPictures[i].name, ".png"), defaultGameContent.glassesPictures[i].EncodeToPNG());
-                }
-                l = defaultGameContent.lampPictures.Length;
-                for (int i = 0; i < l; i++)
-                {
-                    File.WriteAllBytes(string.Concat("Data/", defaultGameContent.lampPictures[i].name, ".png"), defaultGameContent.lampPictures[i].EncodeToPNG());
                 }
                 File.WriteAllBytes(string.Concat("Data/", defaultGameContent.plankPicture.name, ".png"), defaultGameContent.plankPicture.EncodeToPNG());
                 File.WriteAllBytes(string.Concat("Data/", defaultGameContent.puzzlePicture.name, ".png"), defaultGameContent.puzzlePicture.EncodeToPNG());
@@ -601,25 +594,6 @@ public class LoadGameContent : FSystem {
             rt.GetChild(0).gameObject.GetComponent<Image>().sprite = puzzlePicture;
         }
         Debug.Log("Puzzle loaded");
-
-        //Lamp
-        int nbLampPictures = f_lampPictures.Count;
-        nbLampPictures = nbLampPictures > gameContent.lampPicturesPath.Length ? gameContent.lampPicturesPath.Length : nbLampPictures;
-        for (int i = 0; i < nbLampPictures; i++)
-        {
-            mySprite = defaultGameContent.noPictureFound;
-            if (File.Exists(gameContent.lampPicturesPath[i]))
-            {
-                tmpTex = new Texture2D(1, 1);
-                tmpFileData = File.ReadAllBytes(gameContent.lampPicturesPath[i]);
-                if (tmpTex.LoadImage(tmpFileData))
-                {
-                    mySprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
-                }
-            }
-            f_lampPictures.getAt(i).GetComponent<Image>().sprite = mySprite;
-        }
-        Debug.Log("Lamp loaded");
 
         //White Board
         convertedBoardText = new string[2];
