@@ -64,8 +64,6 @@ public class LoadGameContent : FSystem {
     public static GameContent gameContent;
     private DefaultGameContent defaultGameContent;
 
-    public static Dictionary<string, float> enigmasWeight;
-
     public TMP_FontAsset AccessibleFont;
     public TMP_FontAsset AccessibleFontUI;
     public TMP_FontAsset DefaultFont;
@@ -95,7 +93,6 @@ public class LoadGameContent : FSystem {
                 //create default data files
                 Directory.CreateDirectory("Data");
                 File.WriteAllText("Data/Data_LearningScape.txt", defaultGameContent.jsonFile.text);
-                File.WriteAllText("Data/EnigmasWeight.txt", defaultGameContent.enigmasWeight.text);
                 File.WriteAllText("Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
 
                 gameContent = new GameContent();
@@ -638,12 +635,6 @@ public class LoadGameContent : FSystem {
         #endregion
 
         #region File Loading
-
-        // Load EnigmasWeight config files
-        LoadJsonFile(gameContent.enigmasWeightPath, defaultGameContent.enigmasWeight, out enigmasWeight);
-        if (enigmasWeight == null)
-            enigmasWeight = new Dictionary<string, float>();
-        Debug.Log("Enigmas weight loaded");
 
         //Load dream fragment links config files
         Dictionary<string, string> dreamFragmentsLinks = null;
