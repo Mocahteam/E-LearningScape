@@ -98,7 +98,6 @@ public class LoadGameContent : FSystem {
                 //create default data files
                 Directory.CreateDirectory("Data");
                 File.WriteAllText("Data/Data_LearningScape.txt", defaultGameContent.jsonFile.text);
-                File.WriteAllText("Data/WrongAnswerFeedbacks.txt", defaultGameContent.wrongAnswerFeedbacks.text);
                 File.WriteAllText("Data/EnigmasWeight.txt", defaultGameContent.enigmasWeight.text);
                 File.WriteAllText("Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
 
@@ -642,12 +641,6 @@ public class LoadGameContent : FSystem {
         #endregion
 
         #region File Loading
-
-        // Load Wrong answer feedback
-        LoadJsonFile(gameContent.wrongAnswerFeedbacksPath, defaultGameContent.wrongAnswerFeedbacks, out gameHints.wrongAnswerFeedbacks);
-        if (gameHints.wrongAnswerFeedbacks == null)
-            gameHints.wrongAnswerFeedbacks = new Dictionary<string, Dictionary<string, KeyValuePair<string, string>>>();
-        Debug.Log("Wrong answer feedback loaded");
 
         // Load EnigmasWeight config files
         LoadJsonFile(gameContent.enigmasWeightPath, defaultGameContent.enigmasWeight, out enigmasWeight);
