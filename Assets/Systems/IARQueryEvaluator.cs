@@ -119,7 +119,6 @@ public class IARQueryEvaluator : FSystem {
         {
             // notify player error
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 1 });
-            GameObjectManager.addComponent<WrongAnswerInfo>(query, new { givenAnswer = answer });
         }
         else
         {
