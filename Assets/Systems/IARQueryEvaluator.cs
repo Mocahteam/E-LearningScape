@@ -20,6 +20,8 @@ public class IARQueryEvaluator : FSystem {
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_selectedTab = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedTab)));
 
+    private Family f_inputFields = FamilyManager.getFamily(new AllOfComponents(typeof(TMP_InputField)), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+
     public static IARQueryEvaluator instance;
 
     private HashSet<string> availableOrSolutions;
@@ -76,6 +78,11 @@ public class IARQueryEvaluator : FSystem {
             IarCheckAnswer(query);
         if (Input.GetButtonDown("Cancel"))
             IARTabNavigation.instance.skipNextClose = true;
+    }
+
+    public void InputFieldUpdate(string car)
+    {
+
     }
 
     public void IarCheckAnswer(GameObject query)
