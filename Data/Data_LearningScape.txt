@@ -18,16 +18,16 @@
 	"additionalLogosPath": [],
 	
     "storyTextIntro": [
-        "Il est déjà tard le soir, Camille reste inquiète pour son premier enseignement à Sorbonne Université. Ce n’est pas la première fois qu’elle enseigne, mais maintenant elle est Maître de Conférences, son premier poste permanent.",
-        "En se brossant les dents, elle révise la matière qu'elle devra enseigner demain en TD. Puis elle se couche, et plein de questions tournent dans sa tête : et si j’ai un blanc ? et si les étudiants ne sont pas motivés ? et s’il n’y a pas de craie ?",
-        "Camille finit par s'endormir... C'est alors que les marchands de sable entrent en action pour aider Camille à structurer sa pensée pendant son sommeil."
+        "Il est déjà tard le soir, Camille se demande qu'elles UE lui seraient utiles pour son projet professionnel. Il lui faut faire un choix, demain les responsables du master Androide vont lui demander d'indiquer ses préférences. Lors de ses recherches sur le site du master, l'UE ISG a attiré son attention. A la fois pour ses parties théoriques sur les modèles et méthodes pour la conception de jeux sérieux mais également pour sa partie technique et son projet de réalisation d'un jeux sérieux.",
+        "En se brossant les dents, les informations lus sur Internet lui reviennent en mémoire. Il est temps d'aller se coucher, et plein de questions tournent dans sa tête :  Comment équilibrer les dimensions ludiques et pédagogiques ? Comment modéliser les apprenants pour leur fournir des aides adaptées et dynamique ? Comment mesurer la compléxité d'un niveau de jeu ? Quelles techniques de développement appliquer ?",
+        "Camille finit par s'endormir... C'est alors qu'un marchand de sable entre en action pour aider Camille à structurer sa pensée pendant son sommeil."
     ],
     "storyTextransition": [
-        "Camille est tombée en sommeil paradoxal, et elle se met à rêver. L’université se transforme en jungle. Les marchands de sable restent avec elle pour la protéger."
+        "Camille est tombée en sommeil paradoxal, son rêve se transforme et la porte de son salon s'ouvre vers un environnement étrange. Le marchand de sable reste dans son rêve pour poursuivre les recherches dans son subconscient."
     ],
     "storyTextEnd": [
-        "Camille se réveille. Elle est en pleine forme, et tout est clair dans sa tête pour son premier enseignement. Elle a hâte de commencer.",
-        "Les marchands de sable ont bien travaillé et se retrouvent pour un débriefing sur tout leur travail."
+        "Camille se réveille. Son rêve lui revient en mémoire, et son choix est clair dans sa tête, l'UE ISG l'intéresse clairement.",
+        "Merci d'avoir joué..."
     ],
 	"additionalCredit": [],
     "scoreText": "Vous avez mis: ",
@@ -37,20 +37,10 @@
 		"Il y a des inscriptions inscrites à l’encre sur ce parchemin. Le message semble pour autant incomplet. Ces informations pourraient être utiles pour la suite.",
 		"Cliquez sur le parchemin pour l'ouvrir/le refermer"
 	],
-	"inventoryKeyBallBox": [
-		"Clé",
-		"C’est une clé, sans aucune distinction particulière. Elle ouvre certainement une porte ou un cadenas...",
-		"Cliquez sur la clé pour l'activer/la désactiver"
-	],
 	"inventoryWire": [
 		"Corde",
 		"Cette corde n’est pas très longue mais elle semble assez solide et en bon état. Elle permet sans doute de lier des éléments ensemble.",
 		"Cliquez sur la corde pour l'activer/la désactiver"
-	],
-	"inventoryKeySatchel": [
-		"Clé",
-		"Cette clé a été trouvée dans le vase se renversant. Elle ouvre certainement une porte ou un cadenas...",
-		"Cliquez sur la clé pour l'activer/la désactiver"
 	],
 	"inventoryScrolls": [
 		"Parchemin",
@@ -72,48 +62,16 @@
 		"Un miroir cylindrique constitué d'une seule pièce d'aluminium poli. Le reflet est d'une grande qualité.",
 		"Cliquez sur le miroir pour l'activer/le désactiver"
 	],
-	"inventoryLamp": [
-		"Lumière noire",
-		"Cette lampe dispose d’une ampoule particulière à vapeur de mercure constituée d'un revêtement particulier: le verre de Wood. Ce verre possède la particularité d'être riche en oxydes de nickel et de fer, ne laissant passer que les rayons UltraViolet : la lumière noire.",
-		"Cliquez sur la lampe pour l'allumer/l'éteindre"
-	],
-	"inventoryPuzzle": [
-		"Pièces de puzzle",
-		"Ce sont des pièces d'un puzzle, tout simplement.",
-		"Cliquez pour manipuler les pièces"
-	],
 	
-    "ballBoxQuestion": "Que faire pour rendre actifs mes étudiants ?",
-    "ballBoxPlaceHolder": "3 chiffres attendus...",
-	"ballBoxAnswerFeedback": "1 - 2 - 8",
-	"ballBoxAnswerFeedbackDesc": "Classe Inversée - Interactivité - Approche Projet",
-    "ballBoxAnswer": [
-        "1",
-        "2",
-        "8"
-    ],
-    "ballTexts": [
-        "ENSEIGNER TOT LE MATIN",
-        "CLASSE INVERSEE",
-        "INTERACTIVITE",
-        "COPINAGE AVEC LES ETUDIANTS",
-        "SUPPRIMER LE SUPPORT VISUEL",
-        "BEAUCOUP DE DEVOIRS A LA MAISON",
-        "INTERROGATIONS SURPRISES",
-        "BONUS DE PARTICIPATION",
-        "APPROCHE PROJET",
-        "AUGMENTER LE NIVEAU D'EXIGENCE"
-    ],
-	
-    "plankAndWireQuestionIAR": "Comment construire une séquence cohérente ?",
+    "plankAndWireQuestionIAR": "Quel est le code de l'UE sur les jeux sérieux ?",
     "plankAndWirePlaceHolder": "3 chiffres attendus...",
-    "plankAndWireQuestion": "Relier avec la corde les 3 éléments qui assurent la cohérence d'un cours",
+    "plankAndWireQuestion": "Relier avec la corde les 3 mots clé de l'UE sur les jeux sérieux",
 	"plankAndWireAnswerFeedback": "4 - 5 - 9",
-	"plankAndWireAnswerFeedbackDesc": "Objectifs - Méthodes Pédagogiques - Evaluation",
+	"plankAndWireAnswerFeedbackDesc": "Ingénierie des Serious Games",
     "plankAndWireCorrectWords": [
-        "Objectifs",
-        "Méthodes Pédagogiques",
-        "Evaluation"
+        "Ingénierie",
+        "Serious",
+        "Games"
     ],
     "plankAndWireCorrectNumbers": [
         "4",
@@ -124,13 +82,13 @@
         "Motivation",
         "Implication",
         "Création",
-        "Validité",
-        "Compréhension",
-        "Accompagnement",
-        "Attentes",
+        "Développement",
+        "Modèles",
+        "Jeux vidéo",
+        "Outils",
         "Connaissances",
         "Bibliographie",
-        "Participation"
+        "Unity"
     ],
     "plankAndWireOtherNumbers": [
         "1",
@@ -141,44 +99,45 @@
         "8"
     ],
 	
-    "crouchQuestion": "Comment favoriser mon innovation pédagogique ?",
-    "crouchPlaceHolder": "10 chiffres attendus...",
+    "crouchQuestion": "Qu'est ce qu'un jeu sérieux ?",
+    "crouchPlaceHolder": "9 mots attendus...",
     "crouchAnswer": [
-        "1023810149"
+        "Un jeu avec un objectif autre que le simple divertissement"
     ],
-    "crouchAnswerFeedback": "Il faut savoir changer de posture",
+    "crouchAnswerFeedback": "Un jeu avec un objectif autre que le simple divertissement",
     "crouchAnswerFeedbackDesc": "",
     "crouchWords": [
-        "il",
-        "faut",
-        "savoir",
-        "changer",
-        "de",
-        "posture"
+        "Un jeu",
+        "avec un",
+		"objectif",
+        "autre que",
+        "le simple",
+        "divertissement"
     ],
 	
-    "gearsQuestion": "Sur quels facteurs est-ce que je peux agir pour motiver mes étudiants ?",
-    "gearTextUp": "Etudiants",
-    "gearTextDown": "Motivation",
+    "gearsQuestion": "Quel est l'engrenage clé pour favoriser un équilibre entre ludique et pédagogique ?",
+    "gearTextUp": "Ludique",
+    "gearTextDown": "Pédagogique",
     "gearMovableTexts": [
-        "Facteurs relatifs à la classe",
-        "Facteurs relatifs à l'université",
-        "Facteurs relatifs à la vie de l'élève",
-        "Facteurs relatifs à la société"
+        "Le flow",
+        "L'analyse des besoins",
+        "Un bon moteur de jeu",
+        "Des effets visuels"
     ],
-    "gearAnswer": "Facteurs relatifs à la classe",
+    "gearAnswer": "Flow",
 	
-	"mastermindQuestion": "Vous avez oublié votre code ? Le hasard vous aidera sous doute !",
+	"mastermindQuestion": "Combien de facettes structurent la conception d'un jeu sérieux ? Le hasard vous aidera sous doute !",
 	"mastermindQuestionYPos" : -124,
-    "mastermindAnswer": 814,
+    "mastermindAnswer": 006,
 	"mastermindBackgroundPicturePath": "Data/MasterMind.png",
 	
-    "glassesQuestion": "Le vase se renversant vous livrera la clé de cette enigme",
+    "glassesQuestion": "Données et traitements",
     "glassesPlaceHolder": "2 mots attendus...",
     "glassesAnswer": [
-        "Contrat Pédagogique"
+        "Profil",
+		"Modele"
     ],
-    "glassesAnswerFeedback": "Contrat Pédagogique",
+    "glassesAnswerFeedback": "Profil et Modèle",
     "glassesAnswerFeedbackDesc": "",
     "glassesPicturesPath": [
         "Data/glasses01.png",
@@ -187,87 +146,29 @@
         "Data/glasses04.png"
     ],
 	
-    "enigma08Question": "A quoi Berthiaume nous conseille-t-il de faire attention ?",
-    "enigma08PlaceHolder": "3 chiffres attendus...",
-    "enigma08Answer": [
-        "9",
-        "14"
-    ],
-    "enigma08AnswerFeedback": "9 - 14",
-    "enigma08AnswerFeedbackDesc": "Feedbacks constructifs",
-    
-	"scrollsQuestion": "Cet acronyme décrit des objectifs clairs",
-    "scrollsPlaceHolder": "1 mot anglais attendu...",
+	"scrollsQuestion": "Cet acronyme une architecture de développement",
+    "scrollsPlaceHolder": "3 lettres attendus...",
     "scrollsAnswer": [
-        "SMART"
+        "ECS"
     ],
-	"scrollsAnswerFeedback": "SMART",
-	"scrollsAnswerFeedbackDesc": "Sensé - Mesurable - Atteignable - Réaliste - Temporalisé",
+	"scrollsAnswerFeedback": "ECS",
+	"scrollsAnswerFeedbackDesc": "Entité - Composant - Système",
     "scrollsWords": [
-        "<color=red>S</color>ensé",
-        "<color=red>M</color>esurable",
-        "<color=red>A</color>tteignable",
-        "<color=red>R</color>éaliste",
-        "<color=red>T</color>emporalisé"
+        "<color=red>E</color>ntité",
+        "<color=red>C</color>omposant",
+        "<color=red>S</color>ystème",
+        "",
+        ""
     ],
 	
-    "mirrorQuestion": "L'année de création de la taxonomie de Bloom est...",
-    "mirrorPlaceHolder": "4 chiffres attendus...",
+    "mirrorQuestion": "Reflète l'activité du joueur...",
+    "mirrorPlaceHolder": "1 mot attendu...",
     "mirrorAnswer": [
-        "1956"
+        "Traces"
     ],
-	"mirrorAnswerFeedback": "1956",
+	"mirrorAnswerFeedback": "Traces",
 	"mirrorAnswerFeedbackDesc": "",
     "mirrorPicturePath": "Data/Plank.png",
 	
-    "enigma11Question": "L'utilisation d'une grille critériée est la solution",
-    "enigma11PlaceHolder": "3 chiffres attendus...",
-    "enigma11Answer": [
-        "3",
-        "1",
-        "2"
-    ],
-	"enigma11AnswerFeedback": "3 - 1 - 2",
-	"enigma11AnswerFeedbackDesc": "",
-	
-    "enigma12Question": "Seul, vous ne sortirez pas de ce labyrinthe",
-    "enigma12PlaceHolder": "1 mot attendu...",
-    "enigma12Answer": [
-        "Collaboration"
-    ],
-	"enigma12AnswerFeedback": "Collaboration",
-	"enigma12AnswerFeedbackDesc": "",
-	
     "lockRoom2Password": 703,
-
-    "puzzleAnswer": "planification",
-    "puzzlePicturePath": "Data/Puzzle_Complet.png",
-	
-    "lampAnswer": "Ressources",
-    "lampPicturesPath": [
-        "Data/lamp01.png",
-        "Data/lamp02.png",
-        "Data/lamp03.png",
-        "Data/lamp04.png",
-        "Data/lamp05.png",
-        "Data/lamp06.png"
-    ],
-	
-    "enigma16Answer": "Contraintes",
-	
-    "whiteBoardAnswer": "Contenu",
-    "whiteBoardWords": [
-        "##RIEN N'EST## IMPORTANT",
-        "TOUT EST ##INDISPENSABLE##",
-        "AME##N##AGER L'ESPACE",
-        "S##C##ENARISATION",
-        "ENCO##U##RAGER",
-        "M##O##TIVATION",
-        "FEEDBACK CONSTRUCTIF",
-        "##N##OTER LES APPRENANTS",
-        "P##E##DAGOGIE",
-        "RECOMPENSE",
-        "ME##T##HODE",
-        "APPROCHE PROGRAMME"
-    ]
 }
