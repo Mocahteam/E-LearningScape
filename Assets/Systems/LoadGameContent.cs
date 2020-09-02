@@ -139,10 +139,6 @@ public class LoadGameContent : FSystem {
         //Load game content from the file
         gameContent = JsonUtility.FromJson<GameContent>(File.ReadAllText("Data/Data_LearningScape.txt"));
 
-        MovingSystem.instance.traceMovementFrequency = gameContent.traceMovementFrequency;
-        Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
-        File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace to LRS: ", gameContent.traceToLRS));
-
         if (gameContent.removeExtraGeometries)
             foreach (GameObject go in f_extraGeometries)
                 GameObjectManager.setGameObjectState(go, false);
