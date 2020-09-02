@@ -71,6 +71,8 @@ public class DreamFragmentCollecting : FSystem {
                         FragmentText.text = string.Concat("Ouvrez le fragment de rêve numéro ", tmpDFComponent.id);
                     else if (tmpDFComponent.type == 1 || tmpDFComponent.type == 2)
                         FragmentText.text = string.Concat("\"", tmpDFComponent.itemName, "\"");
+                    else if (tmpDFComponent.type == 3)
+                        FragmentText.text = tmpDFComponent.itemName;
                     // Pause this system and dependant systems
                     this.Pause = true;
                     MovingSystem.instance.Pause = true;

@@ -116,7 +116,7 @@
     "gearAnswer": "Flow",
 	
 	"mastermindQuestion": "Combien de facettes structurent la conception d'un jeu sérieux ? Le hasard vous aidera sous doute !",
-	"mastermindQuestionYPos" : -124,
+	"mastermindQuestionYPos" : 110,
     "mastermindAnswer": 6,
 	"mastermindBackgroundPicturePath": "Data/MasterMind.png",
 	
@@ -138,15 +138,17 @@
 	"scrollsQuestion": "Cet acronyme une architecture de développement",
     "scrollsPlaceHolder": "3 lettres attendus...",
     "scrollsAnswer": [
-        "ECS"
+        "E",
+		"C",
+		"S"
     ],
 	"scrollsAnswerFeedback": "ECS",
 	"scrollsAnswerFeedbackDesc": "Entité - Composant - Système",
     "scrollsWords": [
         "<color=red>E</color>ntité",
-        "<color=red>C</color>omposant",
-        "<color=red>S</color>ystème",
         "",
+        "<color=red>S</color>ystème",
+        "<color=red>C</color>omposant",
         ""
     ],
 	
