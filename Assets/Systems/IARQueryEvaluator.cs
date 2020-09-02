@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using FYFY;
 using System.Collections.Generic;
-using TMPro;
 
 public class IARQueryEvaluator : FSystem {
 

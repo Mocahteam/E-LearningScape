@@ -2,7 +2,6 @@
 using FYFY;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections.Generic;
 
 public class SettingsManager : FSystem {
     
