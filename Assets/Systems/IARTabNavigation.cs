@@ -148,11 +148,9 @@ public class IARTabNavigation : FSystem {
 
         GameObjectManager.addComponent<PlaySound>(iar, new { id = 16 }); // id refer to FPSController AudioBank
 
-        // Restaure systems state (exception for LampManager)
-        bool backLampManagerState = LampManager.instance.Pause;
+        // Restaure systems state
         foreach (FSystem sys in systemsStates.Keys)
             sys.Pause = systemsStates[sys];
-        LampManager.instance.Pause = backLampManagerState;
         GameObjectManager.setGameObjectState(f_HUD.First(), true); // show HUD
     }
 
