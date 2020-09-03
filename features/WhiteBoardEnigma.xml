@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<transitions>
-  <transition id="AnswersInput_perform_142" label="ReadyToSolve_WhiteBoard AnswersInput" system="False" end="True" />
-  <transition id="Board_turnOff_127" label="turnOff Board" system="False" end="False" />
-  <transition id="Board_turnOn_127" label="turnOn Board" system="False" end="False" />
-  <transition id="Eraser_turnOff_128" label="turnOff Eraser" system="False" end="False" />
-  <transition id="Eraser_turnOn_128" label="turnOn Eraser" system="False" end="False" />
-</transitions>

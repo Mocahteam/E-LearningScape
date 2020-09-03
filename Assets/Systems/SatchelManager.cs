@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using FYFY;
 using FYFY_plugins.PointerManager;
-using FYFY_plugins.Monitoring;
 
 public class SatchelManager : FSystem {
 
@@ -29,9 +28,7 @@ public class SatchelManager : FSystem {
     private BagImage paperImgRef;
 
     private bool satchelOpenning = false;
-    private bool satchelOpenned = false;
     private bool paperOpenning = false;
-    private bool unlocked = false;
     private bool paperOut = false;
     private bool closingSatchel = false;
 
@@ -62,7 +59,6 @@ public class SatchelManager : FSystem {
         bagAnimator = selectedBag.GetComponent<Animator>();
         bagAnimator.SetTrigger("openSatchel"); // start animation
         satchelOpenning = true;
-        satchelOpenned = false;
         paperOpenning = false;
         paperOut = false;
         closingSatchel = false;
@@ -142,7 +138,7 @@ public class SatchelManager : FSystem {
         if (selectedBag)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and paper is out of the bag and IAR is closed (because Escape close IAR)
-            if (((f_closeBag.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && (paperOut || !unlocked) && !closingSatchel)
+            if (((f_closeBag.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && paperOut && !closingSatchel)
             {
                 if (paperOut)
                 {
@@ -158,19 +154,9 @@ public class SatchelManager : FSystem {
             // Check if moving satchel in front of the player is over
             if (satchelOpenning && bagAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                paperOpenning = unlocked;
-                satchelOpenned = true;
-                updatePictures();
-                satchelOpenning = false;
-            }
-            else if (satchelOpenned && !unlocked && isSelected("KeySatchel"))
-            {
-                bagAnimator.SetTrigger("unlock"); // launch animation to unlock the padlock
-                //remove key from inventory
-                GameObjectManager.setGameObjectState(isSelected("KeySatchel"), false);
-                unlocked = true;
                 paperOpenning = true;
                 updatePictures();
+                satchelOpenning = false;
             }
             else if (paperOpenning && bagAnimator.GetCurrentAnimatorStateInfo(0).IsName("OpenPaper") && bagAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {

@@ -29,7 +29,7 @@ public class LoginManager : FSystem {
 
     private float speed;
     private InputField ifConnectionR2;
-    public static int passwordSolution;
+    public static int passwordSolution = 6;
 
     private TextMeshProUGUI connectionAnswerCheck1;
     private TextMeshProUGUI connectionAnswerCheck2;

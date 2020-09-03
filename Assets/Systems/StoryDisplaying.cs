@@ -118,7 +118,7 @@ public class StoryDisplaying : FSystem {
             int hours = (int)duration / 3600;
             int minutes = (int)(duration % 3600) / 60;
             int seconds = (int)(duration % 3600) % 60;
-            storyTexts[st.storyProgression].Add(string.Concat("<align=\"center\">", LoadGameContent.gameContent.scoreText, Environment.NewLine, hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")));
+            storyTexts[st.storyProgression].Add(string.Concat("<align=\"center\">Vous avez mis", Environment.NewLine, hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")));
             fadingImage.color = Color.white;
             background.color = Color.white;
         }

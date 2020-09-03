@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<transitions>
-  <transition id="Verrou Porte_perform_167" label="unlock Verrou Porte" system="False" end="True" />
-  <transition id="Verrou Porte_turnOff_159" label="turnOff Verrou Porte" system="False" end="False" />
-  <transition id="Verrou Porte_turnOn_159" label="turnOn Verrou Porte" system="False" end="False" />
-</transitions>

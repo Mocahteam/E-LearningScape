@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<transitions>
-  <transition id="MasterMindPanel_Correct_166" label="Correct MasterMindPanel" system="False" end="True" />
-  <transition id="MasterMindPanel_Wrong_166" label="Wrong MasterMindPanel" system="False" end="False" />
-  <transition id="MasterMindPanel_turnOff_165" label="turnOff MasterMindPanel" system="False" end="False" />
-  <transition id="MasterMindPanel_turnOn_165" label="turnOn MasterMindPanel" system="False" end="False" />
-</transitions>

@@ -56,7 +56,7 @@ public class LoadGameContent : FSystem {
 
     public static LoadGameContent instance;
 
-    private bool loadContent = true;
+    private bool loadContent = false;
 
     private Texture2D tmpTex;
     private byte[] tmpFileData;

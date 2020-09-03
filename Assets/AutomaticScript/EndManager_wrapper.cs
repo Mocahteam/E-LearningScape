@@ -9,4 +9,9 @@ public class EndManager_wrapper : MonoBehaviour
 		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
 	}
 
+	public void startEpilog()
+	{
+		MainLoop.callAppropriateSystemMethod ("EndManager", "startEpilog", null);
+	}
+
 }

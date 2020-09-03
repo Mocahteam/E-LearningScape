@@ -101,7 +101,7 @@ public class CheckDebugMode : FSystem
                         if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
                             GameObjectManager.setGameObjectState(room.gameObject, true);
 
-                    f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 3;
+                    f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 2;
 
                     //pause this system and unable DebugModeSystem
                     canPause = true;

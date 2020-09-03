@@ -25,43 +25,29 @@ public class EndManager : FSystem {
 
     private bool switchToEndRoom = false;
 
+    public static EndManager instance = null;
+
     public EndManager()
     {
+        instance = this;
         if (Application.isPlaying)
         {
-            f_answer.addExitCallback(onNewAnswerDisplayed);
-            f_iarBackground.addExitCallback(onIARClosed);
-
             // Get singleton fading screen
             fadingBackground = GameObject.Find("MenuFadingBackground").GetComponent<Image>();
         }
     }
 
-    private void onNewAnswerDisplayed(int instanceId)
+    public void startEpilog()
     {
-        // When all answer was displayed => ask to teleport in the end room
-        if (f_answer.Count == 0)
-        {
-            switchToEndRoom = true;
-
-            f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 4;
-
-        }
-    }
-
-    private void onIARClosed(int instanceId)
-    {
-        if (switchToEndRoom)
-        {
-            fadingStart = Time.time;
-            switchToEndRoom = false;
-            alphaToWhite = true;
-            this.Pause = false;
-            IARTabNavigation.instance.Pause = true;
-            GameObjectManager.setGameObjectState(fadingBackground.gameObject, true);
-            foreach (GameObject go in f_onEnigma)
-                GameObjectManager.removeComponent<ReadyToWork>(go);
-        }
+        f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 4;
+        fadingStart = Time.time;
+        switchToEndRoom = false;
+        alphaToWhite = true;
+        this.Pause = false;
+        IARTabNavigation.instance.Pause = true;
+        GameObjectManager.setGameObjectState(fadingBackground.gameObject, true);
+        foreach (GameObject go in f_onEnigma)
+            GameObjectManager.removeComponent<ReadyToWork>(go);
     }
 
     // Use to process your families.

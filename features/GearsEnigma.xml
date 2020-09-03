@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<transitions>
-  <transition id="Gears_Correct_151" label="Correct Gears" system="False" end="True" />
-  <transition id="Gears_Wrong_151" label="Wrong Gears" system="False" end="False" />
-</transitions>

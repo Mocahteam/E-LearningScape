@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<transitions>
-  <transition id="Fragment_souvenir_10_activate_123" label="activate Fragment_souvenir_10" system="False" end="False" />
-  <transition id="AnswersInput_perform_126" label="ReadyToSolve_Enigma16 AnswersInput" system="False" end="True" />
-  <transition id="Fragment_souvenir_13_activate_124" label="activate Fragment_souvenir_13" system="False" end="False" />
-</transitions>

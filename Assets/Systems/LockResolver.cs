@@ -12,7 +12,6 @@ public class LockResolver : FSystem {
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family f_closeLock = FamilyManager.getFamily(new AnyOfTags("LockIntroWheel", "LockR2Wheel", "ArrowUI", "HUD_TransparentOnMove"), new AllOfComponents(typeof(PointerOver)));
 
-    private Family f_fences = FamilyManager.getFamily(new AnyOfTags("Fence"), new AllOfComponents(typeof(Animator)));
     private Family f_wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"), new AllOfComponents(typeof(Animator)));
 
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
@@ -36,10 +35,9 @@ public class LockResolver : FSystem {
     private bool room1Unlocked = false;
     private bool room3Unlocked = false;
     private bool IARScreenRoom1Unlocked = false;
-    private bool IARScreenRoom3Unlocked = false;
+    private bool EpilogStarted = false;
 
     private GameObject wallIntro;
-    private GameObject fences;
 
     public static LockResolver instance;
 
@@ -50,7 +48,6 @@ public class LockResolver : FSystem {
             f_focusedLocker.addEntryCallback(onReadyToWorkOnLocker);
 
             wallIntro = f_wallIntro.First();
-            fences = f_fences.First();
         }
         instance = this;
     }
@@ -87,14 +84,14 @@ public class LockResolver : FSystem {
         if (selectedLocker)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed
-            if (((f_closeLock.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && (!room1Unlocked || IARScreenRoom1Unlocked) && (!room3Unlocked || IARScreenRoom3Unlocked))
+            if (((f_closeLock.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && (!room1Unlocked || IARScreenRoom1Unlocked) && (!room3Unlocked || EpilogStarted))
             {
                 ExitLocker();
             }
             else
             {
                 // avoid to rotate wheel during unlock animation
-                if ((!room1Unlocked || IARScreenRoom1Unlocked) && (!room3Unlocked || IARScreenRoom3Unlocked))
+                if ((!room1Unlocked || IARScreenRoom1Unlocked) && (!room3Unlocked || EpilogStarted))
                 {
                     if (Input.GetButtonDown("Fire1"))
                     {
@@ -194,17 +191,14 @@ public class LockResolver : FSystem {
             }
         }
 
-        if (room3Unlocked && !IARScreenRoom3Unlocked)
+        if (room3Unlocked && !EpilogStarted)
         {
             f_player.First().transform.position = Vector3.MoveTowards(f_player.First().transform.position, tmpTargetPosition, 4 * Time.deltaTime);
             if (f_player.First().transform.position == tmpTargetPosition)
             {
-                GameObjectManager.addComponent<PlaySound>(fences, new { id = 9 }); // id refer to FPSController AudioBank
-                fences.GetComponent<Animator>().enabled = true; // enable animation
-                GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock, true); // enable questions tab
-                f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 3;
-                IARScreenRoom3Unlocked = true;
+                EpilogStarted = true;
                 ExitLocker();
+                EndManager.instance.startEpilog();
             }
         }
     }
