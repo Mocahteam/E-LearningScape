@@ -20,7 +20,9 @@ public class Highlighter : FSystem {
     public Highlighter()
     {
         if (Application.isPlaying)
+        {
             previousColor = new Queue<Color>();
+        }
         instance = this;
     }
 
@@ -36,7 +38,7 @@ public class Highlighter : FSystem {
                 {
                     Color c = previousColor.Dequeue();
                     // avoid to change fragments color
-                    if (!tmpRendererList[i].GetComponentInParent<DreamFragment>())
+                    if (!tmpRendererList[i].GetComponentInParent<DreamFragment>() && tmpRendererList[i].gameObject.name != ("BoardTexture") && tmpRendererList[i].gameObject.name != ("RopeOnPlank"))
                         tmpRendererList[i].material.SetColor("_EmissionColor", c);
                 }
             }
@@ -60,7 +62,7 @@ public class Highlighter : FSystem {
                 // Save current emission color
                 previousColor.Enqueue(tmpRendererList[i].material.GetColor("_EmissionColor"));
                 // Enable emission and hightlight target (avoid to change fragments color)
-                if (!tmpRendererList[i].GetComponentInParent<DreamFragment>() && tmpRendererList[i].gameObject.name != ("BoardTexture"))
+                if (!tmpRendererList[i].GetComponentInParent<DreamFragment>() && tmpRendererList[i].gameObject.name != "BoardTexture" && tmpRendererList[i].gameObject.name != "RopeOnPlank")
                 {
                     tmpRendererList[i].material.EnableKeyword("_EMISSION");
                     tmpRendererList[i].material.SetColor("_EmissionColor", Color.yellow * Mathf.LinearToGammaSpace(0.8f));
@@ -110,14 +112,20 @@ public class Highlighter : FSystem {
                     // Check if parents of hited game object is an interactive game object and this game object doesn't contain a dream fragment
                     else if (!hit.transform.gameObject.GetComponent<DreamFragment>() && hit.transform.parent)
                     {
-                        if (f_highlitable.contains(hit.transform.parent.gameObject.GetInstanceID())){
+                        if (f_highlitable.contains(hit.transform.parent.gameObject.GetInstanceID()))
+                        {
                             // save the parent of this game object as the new highlighted game object
                             currentHighlight = hit.transform.parent.gameObject;
                             highlight(currentHighlight);
-                        } else if (hit.transform.parent.parent && f_highlitable.contains(hit.transform.parent.parent.gameObject.GetInstanceID())){
-                            // save the grandparent of this game object as the new highlighted game object
-                            currentHighlight = hit.transform.parent.parent.gameObject;
-                            highlight(currentHighlight);
+                        }
+                        else
+                        {
+                            if (hit.transform.parent.parent && f_highlitable.contains(hit.transform.parent.parent.gameObject.GetInstanceID()))
+                            {
+                                // save the grandparent of this game object as the new highlighted game object
+                                currentHighlight = hit.transform.parent.parent.gameObject;
+                                highlight(currentHighlight);
+                            }
                         }
                     }
                 }

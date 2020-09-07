@@ -7,23 +7,16 @@ public class EndManager : FSystem {
 
     // this system manage the epilog
 
-    private Family f_answer = FamilyManager.getFamily(new AnyOfTags("A-R3"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not already displayed of the third room
-    // Will contain a game object when IAR is openned
-    private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_waterFloor = FamilyManager.getFamily(new AnyOfTags("WaterFloor"));
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
-    private Family f_onEnigma = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
 
     private Image fadingBackground;
     private float fadingTimer = 2;
     private float fadingStart;
     private bool alphaToWhite = false;
     private bool whiteToAlpha = false;
-
-    private bool switchToEndRoom = false;
 
     public static EndManager instance = null;
 
@@ -41,13 +34,10 @@ public class EndManager : FSystem {
     {
         f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 4;
         fadingStart = Time.time;
-        switchToEndRoom = false;
         alphaToWhite = true;
         this.Pause = false;
         IARTabNavigation.instance.Pause = true;
         GameObjectManager.setGameObjectState(fadingBackground.gameObject, true);
-        foreach (GameObject go in f_onEnigma)
-            GameObjectManager.removeComponent<ReadyToWork>(go);
     }
 
     // Use to process your families.

@@ -14,14 +14,4 @@ public class MenuSystem_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("MenuSystem", "StartGame", null);
 	}
 
-	public void QuitGame()
-	{
-		MainLoop.callAppropriateSystemMethod ("MenuSystem", "QuitGame", null);
-	}
-
-	public void RestartGame()
-	{
-		MainLoop.callAppropriateSystemMethod ("MenuSystem", "RestartGame", null);
-	}
-
 }

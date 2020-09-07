@@ -20,6 +20,9 @@ public class MenuSystem : FSystem {
     private Family f_windowNavigator = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)));
     private Family f_enabledSettingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
+    private Family f_extraGeometries = FamilyManager.getFamily(new AllOfComponents(typeof(RemoveIfVeryVeryLow)));
+    private bool removeExtraGeometries = false;
+
     private Camera menuCamera;
     private float switchDelay = 12;
     private float switchTimer;
@@ -42,6 +45,11 @@ public class MenuSystem : FSystem {
     {
         if (Application.isPlaying)
         {
+
+            if (removeExtraGeometries)
+                foreach (GameObject go in f_extraGeometries)
+                    GameObject.Destroy(go);
+
             // Get singleton fading screen
             fadingBackground = GameObject.Find("MenuFadingBackground").GetComponent<Image>();
             // Get singleton MainMenu
@@ -194,23 +202,13 @@ public class MenuSystem : FSystem {
         {
             WindowNavigator wn = settingsMainMenu.GetComponent<WindowNavigator>();
             wn.parent = IARMenuContent; //parent window is MenuContent in IAR
-            wn.defaultUiInParent = wn.parent.transform.GetChild(2).gameObject;
+            wn.defaultUiInParent = wn.parent.transform.GetChild(0).gameObject;
         }
 
         GameObjectManager.addComponent<PlaySound>(mainMenu, new { id = 4 }); // id refer to FPSController AudioBank
 
         // Play story
         StoryDisplaying.instance.Pause = false;
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
-
-    public void RestartGame()
-    {
-        GameObjectManager.loadScene(SceneManager.GetActiveScene().name);
     }
 }
 

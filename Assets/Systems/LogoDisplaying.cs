@@ -9,7 +9,6 @@ public class LogoDisplaying : FSystem {
 
     private Family f_logo = FamilyManager.getFamily(new AllOfComponents(typeof(ImgBank)));
     private Family f_fadingMenuElems = FamilyManager.getFamily(new AllOfComponents(typeof(FadingMenu)));
-    private Family f_loadingFragment = FamilyManager.getFamily(new AnyOfTags("LoadingFragment"));
 
     private GameObject logoGo;
     private Image fadingImage;
@@ -30,7 +29,6 @@ public class LogoDisplaying : FSystem {
     private bool showLogo = false;
     private bool closeLogo = false;
 
-    private GameObject loadingFragment;
     private bool menuFaded = false;
 
     public static LogoDisplaying instance;
@@ -49,8 +47,6 @@ public class LogoDisplaying : FSystem {
             }
 
             logo = logoGo.GetComponent<ImgBank>();
-
-            loadingFragment = f_loadingFragment.First();
         }
         instance = this;
     }
@@ -63,11 +59,6 @@ public class LogoDisplaying : FSystem {
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
-        if (loadingFragment.activeSelf)
-        {
-            GameObjectManager.setGameObjectState(loadingFragment, false);
-            GameObjectManager.setGameObjectState(logoGo.transform.GetChild(2).gameObject, false);
-        }
         // switch to next logo if mouse clicked or Escape pressed
         if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel") || Input.GetButtonDown("Submit"))
             // change to next logo

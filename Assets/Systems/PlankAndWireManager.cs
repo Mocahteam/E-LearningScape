@@ -9,7 +9,6 @@ public class PlankAndWireManager : FSystem {
     // this system manage the plank and the wire
 
     //all selectable objects
-    private Family f_plank = FamilyManager.getFamily(new AnyOfTags("Plank"));
     private Family f_focusedPlank = FamilyManager.getFamily(new AnyOfTags("Plank"), new AllOfComponents(typeof(ReadyToWork), typeof(LinkedWith)));
     private Family f_focusedWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerOver), typeof(TextMeshPro))); // focused words on the plank
     private Family f_allWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro))); // all clickable words on the plank
@@ -32,7 +31,7 @@ public class PlankAndWireManager : FSystem {
         if (Application.isPlaying)
         {
             //initialise vairables
-            lr = f_plank.First().GetComponent<LineRenderer>();
+            lr = GameObject.Find("RopeOnPlank").GetComponent<LineRenderer>();// f_plank.First().GetComponentInChildren<LineRenderer>();
             lrPositions = new List<Vector3>();
             nbWordsSelected = 0;
 

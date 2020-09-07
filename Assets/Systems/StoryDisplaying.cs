@@ -78,7 +78,8 @@ public class StoryDisplaying : FSystem {
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame) {
         // Disable UI story
-        GameObjectManager.setGameObjectState(f_storyDisplayer.First(), false);
+        if (st.storyProgression != -1)
+            GameObjectManager.setGameObjectState(f_storyDisplayer.First(), false);
     }
 
 	// Use this to update member variables when system resume.
@@ -185,7 +186,10 @@ public class StoryDisplaying : FSystem {
                         UIEffectPlayer.instance.Pause = false;
                     }
                     else
-                        GameObjectManager.loadScene(SceneManager.GetActiveScene().name); // reset game
+                    {
+                        st.storyProgression = -1;
+                        this.Pause = true;
+                    }
                 }
                 readingTimer = Time.time;
                 plainToAlpha = true;
