@@ -25,7 +25,6 @@ public class MovingSystem : FSystem
     private Vector3 targetScale;
     private Vector3 crouchingScale;
     private Vector3 standingScale = Vector3.one;
-    private bool firstCrouchOccurs = false;
     private FirstPersonController playerController;
     private GameObject movableFragments;
     private Image tmpImage;
@@ -145,7 +144,7 @@ public class MovingSystem : FSystem
 
     private void SetHUD(bool state)
     {
-        if (firstCrouchOccurs && previousHUDState != state)
+        if (previousHUDState != state)
         {
             foreach (GameObject hud in f_hidableHUD)
                 GameObjectManager.setGameObjectState(hud, state);
@@ -190,13 +189,6 @@ public class MovingSystem : FSystem
             }
             else
             { // standing and want to crouch
-                if (!firstCrouchOccurs)
-                {
-                    firstCrouchOccurs = true;
-                    GameObject night = GameObject.Find("Night");
-                    night.GetComponent<Animator>().enabled = true;
-                    night.GetComponent<Collider>().enabled = false;
-                }
                 if (!walkInWater)
                 {
                     playerController.m_WalkSpeed = playerController.m_WalkSpeed / 2;
