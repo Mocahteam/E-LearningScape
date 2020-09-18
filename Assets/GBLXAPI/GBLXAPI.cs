@@ -558,8 +558,8 @@ namespace DIG.GBLXAPI {
 
 			try {
 				Uri extURI = new Uri((string)this.standardsJson["extension"][extensionType]["id"]);
-				target.Add(extURI, JToken.FromObject(trackedStandards));
-			}
+                target.Add(extURI, JToken.FromObject(trackedStandards));
+            }
 			catch (NullReferenceException)
             {
                 //DARKAOUI ---

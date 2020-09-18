@@ -52,8 +52,8 @@ public static class GBL_Interface {
 	public static string gameURI = "https://www.lip6.fr/mocah/invalidURI/activity-types/serious-game/LearningScape";
 	public static string gameName = "E-LearningScape";
 	public static string companyURI = "https://www.lip6.fr/mocah/";
-	public static string userUUID = "f1cd58aa-ad22-49e5-8567-d59d97d3b209";
-    public static string playerName = "player";
+	public static string userUUID = ""; // Muratet : overrided in SendStatements system
+    public static string playerName = ""; // Muratet : overrided in SendStatements system
 
     // ------------------------------------------------------------------------
 	// Sample Gameplay GBLxAPI Triggers
@@ -71,12 +71,12 @@ public static class GBL_Interface {
         if(activityExtensions != null)
         {
             //set extensions
-            foreach(string field in activityExtensions.Keys)
+            statementObject.definition.extensions = new TinCan.Extensions();
+            foreach (string field in activityExtensions.Keys)
             {
                 List<JToken> jtList = new List<JToken>();
                 foreach (string value in activityExtensions[field])
                     jtList.Add(GBLXAPI.Instance.CreateContextExtensionStatement(field, value));
-                statementObject.definition.extensions = new TinCan.Extensions();
                 GBLXAPI.Instance.PackExtension(field, jtList, statementObject.definition.extensions);
             }
         }
@@ -99,12 +99,12 @@ public static class GBL_Interface {
         if (activityExtensions != null)
         {
             //set extensions
+            statementObject.definition.extensions = new TinCan.Extensions();
             foreach (string field in activityExtensions.Keys)
             {
                 List<JToken> jtList = new List<JToken>();
                 foreach (string value in activityExtensions[field])
                     jtList.Add(GBLXAPI.Instance.CreateContextExtensionStatement(field, value));
-                statementObject.definition.extensions = new TinCan.Extensions();
                 GBLXAPI.Instance.PackExtension(field, jtList, statementObject.definition.extensions);
             }
         }
@@ -114,12 +114,12 @@ public static class GBL_Interface {
         if (resultExtensions != null)
         {
             //set extensions
+            statementResult.extensions = new TinCan.Extensions();
             foreach (string field in resultExtensions.Keys)
             {
                 List<JToken> jtList = new List<JToken>();
                 foreach (string value in resultExtensions[field])
                     jtList.Add(GBLXAPI.Instance.CreateContextExtensionStatement(field, value));
-                statementResult.extensions = new TinCan.Extensions();
                 GBLXAPI.Instance.PackExtension(field, jtList, statementResult.extensions);
             }
         }

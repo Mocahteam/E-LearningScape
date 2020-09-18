@@ -15,5 +15,9 @@
 				"Value": "hint content 2"
 			}
 		]
-	}
+	},
+	"77.Correct": {
+		"Comment": [{"Key": "", "Value": "The scrolls question"}],
+		"3": [{"Key": "", "Value": "L'acronyme à trouver est aussi le nom d'une petite voiture"}]
+	},
 }

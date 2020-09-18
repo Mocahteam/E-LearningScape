@@ -107,7 +107,7 @@ public class IARGearsEnigma : FSystem
     protected override void onProcess(int familiesUpdateCount)
     {
         //if the player is playing enigma04 and didn't answer
-        if (gears.activeSelf)
+        if (gears.activeSelf && !rotateGear)
         {
             int nbGears = f_gears.Count;
             for (int i = 0; i < nbGears; i++)

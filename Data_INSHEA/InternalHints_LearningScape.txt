@@ -196,7 +196,7 @@
 		"Comment": ["The in game left glass"],
 		"1": ["Il me reste au moins un objet à trouver"],
 		"2": ["Je pense qu'une branche de lunette me serait utile"],
-		"3": ["Je pressens qu'une branche de lunette se trouve sur le pilier droit de piédestal au centre de la pièce"]
+		"3": ["Je pressens qu'une branche de lunette se trouve au sol à droite de la grille au fond de la pièce"]
 	},
 	"52.turnOn": {
 		"Comment": ["The left glass in IAR"],

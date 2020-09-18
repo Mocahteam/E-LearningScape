@@ -209,9 +209,9 @@ public class IARQueryEvaluator : FSystem {
                             objectType = "feedback",
                             objectName = string.Concat(query.name, "-", query.tag, "_feedback"),
                             activityExtensions = new Dictionary<string, List<string>>() {
-                                { "content", feedbackTexts },
-                                { "type", new List<string>() { "answer description" } }
-                            }
+                            { "content", feedbackTexts },
+                            { "type", new List<string>() { "answer description" } }
+                        }
                         });
                     }
                 }

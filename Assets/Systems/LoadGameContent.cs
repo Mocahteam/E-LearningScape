@@ -662,7 +662,9 @@ public class LoadGameContent : FSystem {
         LoadJsonFile(gameContent.lrsConfigPath, defaultGameContent.lrsConfigFile, out GBL_Interface.lrsAddresses);
         if (GBL_Interface.lrsAddresses == null)
             GBL_Interface.lrsAddresses = new List<LRSAddress>();
-        Debug.Log("LRS config file loaded");
+        if (gameContent.traceToLRS)
+            SendStatements.instance.initGBLXAPI();
+        Debug.Log("LRS config file loaded ");
 
         // Load Hints config files
         GameHints gameHints = f_gameHints.First().GetComponent<GameHints>();
