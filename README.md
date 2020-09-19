@@ -1,7 +1,7 @@
 # Téléchargements
 Deux versions du jeu sont disponibles :
-1. [E-LearningScape](https://github.com/Mocahteam/E-LearningScape/releases/download/v3.2/E-LearningScape.zip) est la version par défaut du jeu traitant de notions généralistes sur la pédagogie
-2. [E-LearningScape Access](https://github.com/Mocahteam/E-LearningScape/releases/download/v3.2/E-LearningScapeAccess.zip) est une version du jeu traitant de notions relatives au handicap, l'accessibilité et la société inclusive 
+1. [E-LearningScape](https://github.com/Mocahteam/E-LearningScape/releases/download/v3.3/E-LearningScape.zip) est la version par défaut du jeu traitant de notions généralistes sur la pédagogie
+2. [E-LearningScape Access](https://github.com/Mocahteam/E-LearningScape/releases/download/v3.3/E-LearningScapeAccess.zip) est une version du jeu traitant de notions relatives au handicap, l'accessibilité et la société inclusive 
 
 # E-LearningScape
 E-LearningScape est un jeu sérieux sous un format d'*escape game* mêlant contenus réels et virtuels. Les joueurs incarnent des marchands de sable naviguant dans le rêve d'une personne et devant l'aider à répondre à toutes les questions qu'elle se pose avant qu'elle ne se réveille. 
@@ -30,3 +30,4 @@ Pour changer les contenus dans le jeu il vous suffit de travailler sur les fichi
 
 # Crédits
 E-LearningScape a été réalisé par [Sorbonne Université](http://www.sorbonne-universite.fr/) à travers l’équipe [MOCAH](https://www.lip6.fr/recherche/team.php?acronyme=MOCAH) du LIP6, [CAPSULE](http://capsule.sorbonne-universite.fr/) et le projet Play@SU. C'est une adaptation numérique du jeu [LearningScape](https://sapiens-uspc.com/learningscape-2/) développé par la cellule [SAPIENS](https://sapiens-uspc.com/) de l'[USPC](http://www.sorbonne-paris-cite.fr/) et le [CRI](https://cri-paris.org/).
+E-LearningScapeAccess est un mod d'E-LearningScape réalisé par l'[INSHEA](https://www.inshea.fr/)
