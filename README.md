@@ -30,4 +30,5 @@ Pour changer les contenus dans le jeu il vous suffit de travailler sur les fichi
 
 # Crédits
 E-LearningScape a été réalisé par [Sorbonne Université](http://www.sorbonne-universite.fr/) à travers l’équipe [MOCAH](https://www.lip6.fr/recherche/team.php?acronyme=MOCAH) du LIP6, [CAPSULE](http://capsule.sorbonne-universite.fr/) et le projet Play@SU. C'est une adaptation numérique du jeu [LearningScape](https://sapiens-uspc.com/learningscape-2/) développé par la cellule [SAPIENS](https://sapiens-uspc.com/) de l'[USPC](http://www.sorbonne-paris-cite.fr/) et le [CRI](https://cri-paris.org/).
+
 E-LearningScapeAccess est un mod d'E-LearningScape réalisé par l'[INSHEA](https://www.inshea.fr/)
