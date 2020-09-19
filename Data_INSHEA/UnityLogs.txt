@@ -932,3 +932,7 @@
 [2019.04.13.09.40] Log - Help system: True
 [2019.04.13.09.40] Log - Trace to LRS: False
 [2019.04.13.09.40] Log - Data loaded
+[2020.09.19.09.14] Log - Trace: True
+[2020.09.19.09.14] Log - Help system: True
+[2020.09.19.09.14] Log - Trace to LRS: False
+[2020.09.19.09.14] Log - Data loaded

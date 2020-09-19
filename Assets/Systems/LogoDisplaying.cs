@@ -191,7 +191,7 @@ public class LogoDisplaying : FSystem {
                     tmpGO = f_fadingMenuElems.getAt(i);
                     if (tmpGO.GetComponent<Image>())
                         tmpGO.GetComponent<Image>().color = new Color(1, 1, 1, alpha);
-                    else
+                    else if (tmpGO.GetComponent<Button>())
                     {
                         ColorBlock cb = tmpGO.GetComponent<Button>().colors;
                         cb.normalColor = new Color(cb.normalColor.r, cb.normalColor.g, cb.normalColor.b, alpha);
