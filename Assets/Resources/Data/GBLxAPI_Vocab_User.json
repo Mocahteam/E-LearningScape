@@ -96,6 +96,15 @@
                 "en-US": "content"
             }
         },
+        "from": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/extensions/from",
+            "name": {
+                "en-US": "from"
+            }
+        },
         "direction": {
             "description": {
                 "en-US": ""

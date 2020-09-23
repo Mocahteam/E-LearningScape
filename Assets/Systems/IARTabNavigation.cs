@@ -92,9 +92,9 @@ public class IARTabNavigation : FSystem {
                 else if (Input.GetButtonDown("ToggleQuestions") && unlockedRoom.roomNumber > 0 && unlockedRoom.roomNumber < 4)
                     openLastQuestions(); // Open IAR on the last query visible tab
                 else if (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause)
-                    openIar(f_tabs.Count - 2); // Open IAR on the second to last tab
+                    openIar(-2); // Open IAR on the second to last tab
                 else if (Input.GetButtonDown("Cancel") && f_atWork.Count == 0) // Check not working in enigma because else Cancel action has to leave enigma and not open IAR
-                    openIar(f_tabs.Count - 1); // Open IAR on the last tab
+                    openIar(-1); // Open IAR on the last tab
             }
         }
     }
@@ -111,6 +111,9 @@ public class IARTabNavigation : FSystem {
         GameObjectManager.setGameObjectState(iar, true); // open IAR
 
         GameObjectManager.addComponent<PlaySound>(iar, new { id = 15 }); // id refer to FPSController AudioBank
+
+        if (tabId < 0)
+            tabId = f_tabs.Count + tabId;
 
         SwitchTab(f_tabs.getAt(tabId)); // switch to the desired tab
         tabIdToFocusOn = tabId;

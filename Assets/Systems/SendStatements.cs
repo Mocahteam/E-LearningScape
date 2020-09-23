@@ -18,19 +18,22 @@ public class SendStatements : FSystem {
     {
         if (Application.isPlaying)
         {
-            if (!GBLXAPI.Instance.IsInit())
-                GBLXAPI.Instance.init(GBL_Interface.lrsAddresses, GBL_Interface.standardsConfigDefault, GBL_Interface.standardsConfigUser);
-
-            GBLXAPI.Instance.debugStatement = false;
-
-            //Generate player name unique to each playing session (computer name + date + hour)
-            GBL_Interface.playerName = string.Concat(Environment.MachineName, "-", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"));
-            //Generate a UUID from the player name
-            GBL_Interface.userUUID = GBLXAPI.Instance.GenerateActorUUID(string.Concat(Environment.MachineName, "-", DateTime.Now.ToString("yyyy.MM.dd.hh.mm")));
-
             f_actionForLRS.addEntryCallback(ActionProcessing);
         }
         instance = this;
+    }
+
+    public void initGBLXAPI()
+    {
+        if (!GBLXAPI.Instance.IsInit())
+            GBLXAPI.Instance.init(GBL_Interface.lrsAddresses, GBL_Interface.standardsConfigDefault, GBL_Interface.standardsConfigUser);
+
+        GBLXAPI.Instance.debugStatement = false;
+
+        //Generate player name unique to each playing session (computer name + date + hour)
+        GBL_Interface.playerName = string.Concat(Environment.MachineName, "-", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"));
+        //Generate a UUID from the player name
+        GBL_Interface.userUUID = GBLXAPI.Instance.GenerateActorUUID(string.Concat(Environment.MachineName, "-", DateTime.Now.ToString("yyyy.MM.dd.hh.mm")));
     }
 
 	// Use this to update member variables when system pause. 

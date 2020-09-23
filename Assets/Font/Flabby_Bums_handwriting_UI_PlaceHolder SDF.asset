@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: -667331979, guid: 89f0137620f6af44b9ba852b4190e64e, type: 3}
   m_Name: Flabby_Bums_handwriting_UI_PlaceHolder SDF
   m_EditorClassIdentifier: 
-  hashCode: 1020051762
+  hashCode: -257374674
   material: {fileID: 21740666910402926}
   materialHashCode: -45727302
   fontAssetType: 1

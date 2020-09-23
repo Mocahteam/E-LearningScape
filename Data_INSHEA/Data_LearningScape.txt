@@ -101,10 +101,10 @@
         "Proposer plusieurs modalités",
         "Mettre l’apprenant en situation d’agir",
         "Mettre l’apprenant en écoute passive",
-        "Écrire au tableau",
+        "Tout écrire au tableau",
         "Donner du travail à la maison",
-        "Réexpliquer et reformuler le plus possible",
-        "Multiplier les aides techniques et humaines",
+        "Expliquer longuement",
+        "Démultiplier les aides techniques et humaines",
         "Permettre aux apprenants de communiquer",
         "Interroger un apprenant au hasard"
     ],

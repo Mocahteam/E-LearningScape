@@ -62,7 +62,7 @@ public class SettingsManager : FSystem {
         foreach (GameObject cursor in UICursorSize_f)
         {
             Image CursorImage = cursor.GetComponent<Image>();
-            CursorImage.rectTransform.localScale = new Vector3(newSize*2, newSize*2, 0);
+            CursorImage.rectTransform.localScale = new Vector3(newSize*4, newSize*4, 0);
         }
     }
 
