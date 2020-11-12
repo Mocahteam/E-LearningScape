@@ -63,6 +63,8 @@ public class LoadGameContent : FSystem {
 
     private Family f_inventoryElements = FamilyManager.getFamily(new AllOfComponents(typeof(Collected)));
 
+    private Family f_uiTexts = FamilyManager.getFamily(new AllOfComponents(typeof(UIText)), new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)));
+
     private Family f_extraGeometries = FamilyManager.getFamily(new AllOfComponents(typeof(RemoveIfVeryVeryLow)));
 
     public static GameContent gameContent;
@@ -83,6 +85,7 @@ public class LoadGameContent : FSystem {
     private byte[] tmpFileData;
     private string[] convertedBoardText; //0- unremovable, 1- removable
     private GameObject forGO;
+    private UIText tmpUIText;
 
     public LoadGameContent()
     {
@@ -239,6 +242,18 @@ public class LoadGameContent : FSystem {
             }
         }
         Debug.Log("Inventory texts loaded");
+        #endregion
+
+        #region UI Texts
+        foreach(GameObject go in f_uiTexts)
+        {
+            tmpUIText = go.GetComponent<UIText>();
+            //write the content of the variable of gameContent corresponding to the uiText in its text mesh pro component
+            if (tmpUIText.tmpUI)
+                go.GetComponent<TextMeshProUGUI>().text = (string) typeof(GameContent).GetField(tmpUIText.gameContentVariable).GetValue(gameContent);
+            else
+                go.GetComponent<TextMeshPro>().text = (string)typeof(GameContent).GetField(tmpUIText.gameContentVariable).GetValue(gameContent);
+        }
         #endregion
 
         #region Room 1

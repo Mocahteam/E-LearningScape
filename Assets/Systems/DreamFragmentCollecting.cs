@@ -70,7 +70,7 @@ public class DreamFragmentCollecting : FSystem {
                     GameObjectManager.setGameObjectState(onlineButton, tmpDFComponent.urlLink != null && tmpDFComponent.urlLink != "");
                     // Set UI text depending on type and id
                     if (tmpDFComponent.type == 0)
-                        FragmentText.text = string.Concat("Ouvrez le fragment de rêve numéro ", tmpDFComponent.id);
+                        FragmentText.text = string.Concat(LoadGameContent.gameContent.dreamFragmentText, tmpDFComponent.id);
                     else if (tmpDFComponent.type == 1 || tmpDFComponent.type == 2)
                         FragmentText.text = string.Concat("\"", tmpDFComponent.itemName, "\"");
                     // Pause this system and dependant systems

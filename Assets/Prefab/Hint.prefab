@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 224841325104443316}
   - component: {fileID: 222578636501415162}
   - component: {fileID: 114403188872307508}
+  - component: {fileID: 114605796857688326}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -256,6 +257,19 @@ MonoBehaviour:
   actionName: 
   text: 
   link: 
+--- !u!114 &114605796857688326
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1808861018979664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a1c4ecb05b55654cbca0a61256f524e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameContentVariable: hintButtonText
+  tmpUI: 1
 --- !u!222 &222578132218462764
 CanvasRenderer:
   m_ObjectHideFlags: 1

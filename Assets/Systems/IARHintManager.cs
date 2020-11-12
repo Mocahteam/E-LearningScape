@@ -145,7 +145,7 @@ public class IARHintManager : FSystem {
         Button hintButton = newHint.GetComponent<Button>();
         hintButton.onClick.AddListener(delegate { OnClickHint(hintButton); });
         hintCounter++;
-        newHint.transform.GetChild(0).GetComponent<TMP_Text>().text += " " + hintCounter;
+        newHint.transform.GetChild(0).GetComponent<TMP_Text>().text = LoadGameContent.gameContent.hintButtonText + " " + hintCounter;
 
         RectTransform tmpRT = newHint.GetComponent<RectTransform>();
         tmpRT.localScale = Vector3.one;
