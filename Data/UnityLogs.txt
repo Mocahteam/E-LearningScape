@@ -1,5 +1,0 @@
-
-[2020.09.23.07.03] Log - Trace: True
-[2020.09.23.07.03] Log - Help system: True
-[2020.09.23.07.03] Log - Trace to LRS: False
-[2020.09.23.07.03] Log - Data loaded
