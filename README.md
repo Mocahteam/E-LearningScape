@@ -13,7 +13,7 @@ Vidéo de présentation : https://www.youtube.com/watch?v=K2mYKNe35Q4
 # Principes de jeu
 E-LearningScape se joue entre 2 et 4 joueurs autour d'un même ordinateur. Le maître du jeu doit préparer quelques éléments avant la conduite de la session, il doit notamment imprimer un ensemble de documents et les placer dans des enveloppes (nous appelons ces éléments des fragments de rêves). Toutes les informations relatives à la constitution des enveloppes sont indiquées dans le fichier Lisez-moi.txt contenu dans l'archive relative à la version du jeu utilisée.
 
-Une fois les fragments de rêve préparés, les joueurs peuvent commencer leur partie. Une seule règle est à respecter : ouvrir les fragments de rêve (enveloppes) uniquement si le jeu vous y invite à le faire.
+Une fois les fragments de rêve préparés, les joueurs peuvent commencer leur partie. Une seule règle est à respecter : ouvrir les fragments de rêve (enveloppes) uniquement si le jeu vous y invite à le faire. 
 
 <p align="center"><img src="docs/ouvrirFragment.png" alt="Exemple d'écran invitant les joueurs à ouvrir le fragment de rêve numéro 4" height="200"/> <img src="docs/enveloppes.jpg" alt="Enveloppes contenant les fragments de rêve" height="200"/></p>
 
