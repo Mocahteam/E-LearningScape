@@ -109,7 +109,7 @@ public class Highlighter : FSystem {
             if ((hit.transform.gameObject.transform.position - Camera.main.transform.position).sqrMagnitude < 49)
             {
                 // Evaluate if we have to check family => if object (or its parents) is not the previous one
-                bool checkFamily = previousHighlight != hit.transform.gameObject && hit.transform.parent && previousHighlight != hit.transform.parent.gameObject && hit.transform.parent.parent && previousHighlight != hit.transform.parent.parent.gameObject;
+                bool checkFamily = previousHighlight != hit.transform.gameObject && (!hit.transform.parent || (previousHighlight != hit.transform.parent.gameObject && (!hit.transform.parent.parent || previousHighlight != hit.transform.parent.parent.gameObject)));
                 if (checkFamily)
                 {
                     // Check if this game object is included into family

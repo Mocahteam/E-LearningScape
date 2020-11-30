@@ -79,6 +79,11 @@ TagManager:
   - HUD_TransparentOnMove
   - QuestionTagContent
   - PressY
+  - DreamFragmentContent
+  - DreamFragmentButtonContainer
+  - DreamFragmentContentContainer
+  - Terminal
+  - TerminalScreen
   layers:
   - Default
   - TransparentFX

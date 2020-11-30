@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using FYFY;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using FYFY_plugins.Monitoring;
@@ -20,6 +21,9 @@ public class IARQueryEvaluator : FSystem {
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_selectedTab = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedTab)));
+
+    private Family f_terminalScreens = FamilyManager.getFamily(new AnyOfTags("TerminalScreen"));
+    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
     public static IARQueryEvaluator instance;
 
@@ -217,10 +221,26 @@ public class IARQueryEvaluator : FSystem {
                 }
             }
 
+            // put a screenshot of the IAR on the terminal of the last unlocked room
+            int lastUnlockedRoom = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
+            if (f_terminalScreens.Count >= lastUnlockedRoom)
+                MainLoop.instance.StartCoroutine(SetTerminalScreen(lastUnlockedRoom - 1));
+
             // if linked hide item in inventory
             foreach (LinkedWith item in query.GetComponents<LinkedWith>())
                 GameObjectManager.setGameObjectState(item.link, false);
 
         }
+    }
+
+    public IEnumerator SetTerminalScreen(int screenID)
+    {
+        yield return new WaitForEndOfFrame();
+
+        Debug.Log(screenID);
+        Texture2D tex = new Texture2D(Camera.main.pixelWidth, Camera.main.pixelHeight, TextureFormat.RGBA32, false);
+        tex.ReadPixels(new Rect(0, 0, Camera.main.pixelWidth, Camera.main.pixelHeight), 0, 0);
+        tex.Apply(false);
+        f_terminalScreens.getAt(screenID).GetComponent<Renderer>().material.mainTexture = tex;
     }
 }

@@ -59,6 +59,9 @@ public class MoveInFrontOf : FSystem {
             f_player.First().transform.localScale = playerLocalScale;
             // reset player camera
             f_player.First().GetComponent<SwitchPerso>().forceUpdate();
+            //Fix camera angle
+            Camera.main.transform.parent.localRotation = Quaternion.Euler(0, Camera.main.transform.parent.localRotation.eulerAngles.y, 0);
+            Camera.main.transform.localRotation = Quaternion.Euler(Camera.main.transform.localRotation.eulerAngles.x, 0, 0);
             // enable systems
             MovingSystem.instance.Pause = false;
             JumpingSystem.instance.Pause = false;

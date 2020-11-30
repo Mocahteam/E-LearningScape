@@ -19,6 +19,7 @@ public class IARTabNavigation : FSystem {
     private Family f_settings = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
     private Family f_selectedTab = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedTab)));
+    private Family f_selectedTerminal = FamilyManager.getFamily(new AnyOfTags("Terminal"), new AllOfComponents(typeof(ReadyToWork)));
 
     private Sprite selectedTabSprite;
     private Sprite defaultTabSprite;
@@ -36,6 +37,8 @@ public class IARTabNavigation : FSystem {
 
     private UnlockedRoom unlockedRoom;
 
+    private GameObject selectedTerminal = null;
+
     public IARTabNavigation()
     {
         if (Application.isPlaying)
@@ -44,6 +47,7 @@ public class IARTabNavigation : FSystem {
             defaultTabSprite = f_fgm.First().GetComponent<FocusedGOMaterial>().defaultTabSprite;
 
             f_iarDisplayed.addEntryCallback(onIarDisplayed);
+            f_selectedTerminal.addEntryCallback(onClickTerminal);
 
             iarBackground = f_iarBackground.First();
             iar = iarBackground.transform.parent.gameObject;
@@ -76,6 +80,12 @@ public class IARTabNavigation : FSystem {
         EventSystem.current.SetSelectedGameObject(f_tabs.getAt(tabIdToFocusOn));
     }
 
+    private void onClickTerminal(GameObject go)
+    {
+        selectedTerminal = go;
+        openLastQuestions();
+    }
+
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
@@ -101,7 +111,7 @@ public class IARTabNavigation : FSystem {
 
     public void openLastQuestions()
     {
-        openIar(unlockedRoom.roomNumber); // Open IAR on the last query visible tab
+        openIar(unlockedRoom.roomNumber+1); // Open IAR on the last query visible tab
     }
 
     public void openIar(int tabId)
@@ -135,6 +145,7 @@ public class IARTabNavigation : FSystem {
         CollectObject.instance.Pause = true;
         IARViewItem.instance.Pause = false;
         IARGearsEnigma.instance.Pause = false;
+        IARDreamFragmentManager.instance.Pause = false;
         MoveInFrontOf.instance.Pause = true;
         LockResolver.instance.Pause = true;
         PlankAndWireManager.instance.Pause = true;
@@ -162,6 +173,13 @@ public class IARTabNavigation : FSystem {
             sys.Pause = systemsStates[sys];
         LampManager.instance.Pause = backLampManagerState;
         GameObjectManager.setGameObjectState(f_HUD.First(), true); // show HUD
+
+        //if a terminal was selected, exit it when leaving IAR
+        if (selectedTerminal)
+        {
+            GameObjectManager.removeComponent<ReadyToWork>(selectedTerminal);
+            selectedTerminal = null;
+        }
     }
 
     public void SwitchTab(GameObject newSelectedTab)

@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 4272018456924000}
   - component: {fileID: 65399201935689276}
   - component: {fileID: 114992790695588028}
+  - component: {fileID: 114688892685148350}
   m_Layer: 0
   m_Name: Fragment_souvenir
   m_TagString: Untagged
@@ -732,6 +733,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.43844223, y: 0.4651432, z: 0.47513056}
   m_Center: {x: 0.026693344, y: -0.018110037, z: 0.01987052}
+--- !u!114 &114688892685148350
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1864960718811926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 363e04bd34c6c0545b128dba4b93981f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  link: {fileID: 0}
 --- !u!114 &114992790695588028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -746,6 +759,8 @@ MonoBehaviour:
   itemName: Syllabus Partie 1
   id: 17
   type: 0
+  viewed: 0
+  urlLink: 
 --- !u!198 &198012756033570074
 ParticleSystem:
   m_ObjectHideFlags: 1

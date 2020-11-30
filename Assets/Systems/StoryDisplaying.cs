@@ -150,7 +150,8 @@ public class StoryDisplaying : FSystem {
     }
 
 	// Use to process your families.
-	protected override void onProcess(int familiesUpdateCount) {
+	protected override void onProcess(int familiesUpdateCount)
+    {
         if (alphaToPlain)
         {
             if (Time.time - readingTimer < fadeSpeed)

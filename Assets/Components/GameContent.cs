@@ -32,6 +32,10 @@ public class GameContent {
     /// </summary>
     public float traceMovementFrequency = 0;
     /// <summary>
+    /// 
+    /// </summary>
+    public bool virtualDreamFragment = true;
+    /// <summary>
     /// If true, puzzles will be included in the game.
     /// Else dream fragments will replace collectable puzzles
     /// </summary>
@@ -63,13 +67,13 @@ public class GameContent {
     public string[] additionalCredit;
     public string scoreText;
 
-    //UI texts
+    #region UI texts
     public string loadingText;
     public string mainMenuStart;
     public string mainMenuOption;
     public string mainMenuLeave;
     public string optionControlsMenu;
-    public string optionHUDHiding;
+    public string optionMovingTexts;
     public string optionMoveSpeed;
     public string optionCameraSensitivity;
     public string optionLockWheelSpeed;
@@ -97,6 +101,7 @@ public class GameContent {
     public string dreamFragmentValidation;
     public string dreamFragmentOpenURL;
     public string iarTabInventory;
+    public string iarTabDreamFragments;
     public string iarTabHelp;
     public string iarTabMenu;
     public string iarTabQuestions1;
@@ -119,6 +124,73 @@ public class GameContent {
     public string tutoText2;
     public string tutoText3;
     public string tutoText4;
+
+    #region Input settings texts
+    public string inputsSetTitle1;
+    public string inputsSetTitle2;
+    public string inputsSetTitle3;
+    public string inputObserve;
+    public string inputObserveKey1;
+    public string inputObserveKey2;
+    public string inputObserveKey3;
+    public string inputForward;
+    public string inputForwardKey1;
+    public string inputForwardKey2;
+    public string inputForwardKey3;
+    public string inputBack;
+    public string inputBackKey1;
+    public string inputBackKey2;
+    public string inputBackKey3;
+    public string inputLeft;
+    public string inputLeftKey1;
+    public string inputLeftKey2;
+    public string inputLeftKey3;
+    public string inputRight;
+    public string inputRightKey1;
+    public string inputRightKey2;
+    public string inputRightKey3;
+    public string inputCrouch;
+    public string inputCrouchKey1;
+    public string inputCrouchKey2;
+    public string inputCrouchKey3;
+    public string inputInteract;
+    public string inputInteractKey1;
+    public string inputInteractKey2;
+    public string inputInteractKey3;
+    public string inputInventory;
+    public string inputInventoryKey1;
+    public string inputInventoryKey2;
+    public string inputInventoryKey3;
+    public string inputQuestions;
+    public string inputQuestionsKey1;
+    public string inputQuestionsKey2;
+    public string inputQuestionsKey3;
+    public string inputHelp;
+    public string inputHelpKey1;
+    public string inputHelpKey2;
+    public string inputHelpKey3;
+    public string inputMenu;
+    public string inputMenuKey1;
+    public string inputMenuKey2;
+    public string inputMenuKey3;
+    public string inputView;
+    public string inputViewKey1;
+    public string inputViewKey2;
+    public string inputViewKey3;
+    public string inputTarget;
+    public string inputTargetKey1;
+    public string inputTargetKey2;
+    public string inputTargetKey3;
+    public string inputZoomIn;
+    public string inputZoomInKey1;
+    public string inputZoomInKey2;
+    public string inputZoomInKey3;
+    public string inputZoomOut;
+    public string inputZoomOutKey1;
+    public string inputZoomOutKey2;
+    public string inputZoomOutKey3;
+    #endregion
+    #endregion
 
     //Inventory texts 
     public List<string> inventoryScrollIntro;
