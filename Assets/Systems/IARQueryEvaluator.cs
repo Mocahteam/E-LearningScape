@@ -241,5 +241,6 @@ public class IARQueryEvaluator : FSystem {
         tex.ReadPixels(new Rect(0, 0, Camera.main.pixelWidth, Camera.main.pixelHeight), 0, 0);
         tex.Apply(false);
         f_terminalScreens.getAt(screenID).GetComponent<Renderer>().material.mainTexture = tex;
+        f_terminalScreens.getAt(screenID).GetComponent<Renderer>().material.color = Color.white;
     }
 }

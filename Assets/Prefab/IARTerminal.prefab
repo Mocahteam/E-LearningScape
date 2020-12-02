@@ -76,7 +76,6 @@ GameObject:
   - component: {fileID: 33126552149537154}
   - component: {fileID: 64730767604729486}
   - component: {fileID: 23926173966258300}
-  - component: {fileID: 114429337819279026}
   m_Layer: 0
   m_Name: Screen
   m_TagString: TerminalScreen
@@ -127,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092719557935694}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.876, y: 0.5, z: -4.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4909090797891808}
@@ -353,7 +352,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 678054b4c58c81849b93c2d6bf70ba67, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -485,17 +484,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114429337819279026
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1604036126411052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f3a4b3f84eeb6141ba91e07f49e7735, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114574311152865190
 MonoBehaviour:
   m_ObjectHideFlags: 1

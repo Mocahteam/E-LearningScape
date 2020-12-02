@@ -8,6 +8,8 @@ public class IARNewQuestionsAvailable : FSystem {
     private Family f_questionNotif = FamilyManager.getFamily(new AllOfComponents(typeof(QuestionFlag)));
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
+    private Family f_terminalScreens = FamilyManager.getFamily(new AnyOfTags("TerminalScreen"));
+
     private bool firstQuestionOccurs = false;
 
     public static IARNewQuestionsAvailable instance;
@@ -35,6 +37,12 @@ public class IARNewQuestionsAvailable : FSystem {
     private void onQuestionsViewed(GameObject go)
     {
         if (go.name.EndsWith(f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber.ToString()))
+        {
             GameObjectManager.setGameObjectState(f_questionNotif.First(), false);
+            // put a screenshot of the IAR on the terminal when the screen is viewed for the first time
+            int lastUnlockedRoom = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
+            if (f_terminalScreens.Count >= lastUnlockedRoom)
+                MainLoop.instance.StartCoroutine(IARQueryEvaluator.instance.SetTerminalScreen(lastUnlockedRoom - 1));
+        }
     }
 }

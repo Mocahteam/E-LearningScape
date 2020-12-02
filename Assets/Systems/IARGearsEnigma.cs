@@ -23,7 +23,12 @@ public class IARGearsEnigma : FSystem
     private Family f_login = FamilyManager.getFamily(new AnyOfTags("Login"), new NoneOfComponents(typeof(PointerSensitive))); // to unlock login
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
 
+    private Family f_terminalScreens = FamilyManager.getFamily(new AnyOfTags("TerminalScreen"));
+    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
+
     private bool switchToGears = false;
+    private bool takeGearsScreenshot = false;
+    private bool correctAnswerScreenshotTaken = false; //used to do it only once
     private bool unlockLogin = false;
     private bool rotateGear;
 
@@ -87,6 +92,12 @@ public class IARGearsEnigma : FSystem
             GameObjectManager.setGameObjectState(gears.GetComponent<LinkedWith>().link, false);
 
             switchToGears = false;
+            takeGearsScreenshot = true;
+        }
+        if(!correctAnswerScreenshotTaken && rotateGear)
+        {
+            takeGearsScreenshot = true; //take a screenshot of the correct answer for the terminal
+            correctAnswerScreenshotTaken = true;
         }
     }
 
@@ -106,6 +117,17 @@ public class IARGearsEnigma : FSystem
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
+        //take a screenshot of IAR for the terminal
+        //has to be done here rather than in onUiEffectFinished to wait one frame for GameObjectManager.setGameObjectState to display gears
+        if (takeGearsScreenshot)
+        {
+            // put a screenshot of the IAR on the terminal when gears are displayed
+            int lastUnlockedRoom = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
+            if (f_terminalScreens.Count >= lastUnlockedRoom)
+                MainLoop.instance.StartCoroutine(IARQueryEvaluator.instance.SetTerminalScreen(lastUnlockedRoom - 1));
+            takeGearsScreenshot = false;
+        }
+
         //if the player is playing enigma04 and didn't answer
         if (gears.activeSelf && !rotateGear)
         {
