@@ -4,6 +4,7 @@
     "helpSystem": true,
     "traceToLRS": true,
     "traceMovementFrequency": 0.5,
+    "virtualDreamFragment": true,
     "virtualPuzzle": true,
     "lrsConfigPath": "Data/LRSConfig.txt",
     "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",

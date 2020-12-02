@@ -20,6 +20,8 @@ public class LoadGameContent : FSystem {
 
     private Family f_storyText = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
 
+    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
+
     private Family f_queriesR1 = FamilyManager.getFamily(new AnyOfTags("Q-R1"), new AllOfComponents(typeof(QuerySolution)));
     private Family f_queriesR2 = FamilyManager.getFamily(new AnyOfTags("Q-R2"), new AllOfComponents(typeof(QuerySolution)));
     private Family f_queriesR3 = FamilyManager.getFamily(new AnyOfTags("Q-R3"), new AllOfComponents(typeof(QuerySolution)));
@@ -209,6 +211,46 @@ public class LoadGameContent : FSystem {
             f_logos.First().GetComponent<ImgBank>().bank = logos.ToArray();
         }
         Debug.Log("Additional Logo loaded");
+
+        // Set IAR tabs depending on gameContent.virtualDreamFragment value
+        Transform tabParent = f_tabs.First().transform.parent;
+        int tabCount = tabParent.childCount - 1; // -1 because of the under line among the children
+        if (gameContent.virtualDreamFragment)
+        {
+            tmpRectTransform = tabParent.GetChild(0).GetComponent<RectTransform>();
+            tmpRectTransform.anchoredPosition = new Vector2(54.66f, -20);
+            tmpRectTransform.sizeDelta = new Vector2(99, 40);
+            //enable child 1 corresponding to dream fragments tab
+            GameObjectManager.setGameObjectState(tabParent.GetChild(1).gameObject, true);
+            // if dream fragment are set to virtual, do the same for the puzzles
+            gameContent.virtualPuzzle = true;
+
+            for (int i = 1; i < tabCount; i++)
+            {
+                tmpRectTransform = tabParent.GetChild(i).GetComponent<RectTransform>();
+                tmpRectTransform.anchoredPosition = new Vector2(tabParent.GetChild(i - 1).GetComponent<RectTransform>().anchoredPosition.x + 109.32f, -20);
+                tmpRectTransform.sizeDelta = new Vector2(99, 40);
+            }
+            Debug.Log("Dream fragment IAR tab enabled");
+        }
+        else
+        {
+            tmpRectTransform = tabParent.GetChild(0).GetComponent<RectTransform>();
+            tmpRectTransform.anchoredPosition = new Vector2(63.765f, -20);
+            tmpRectTransform.sizeDelta = new Vector2(127.53f, 40);
+            //disable child 1 corresponding to dream fragments tab
+            tmpRectTransform = tabParent.GetChild(1).GetComponent<RectTransform>();
+            tmpRectTransform.anchoredPosition = new Vector2(63.765f, -20);
+            GameObjectManager.setGameObjectState(tmpRectTransform.gameObject, false);
+
+            for (int i = 2; i < tabCount; i++)
+            {
+                tmpRectTransform = tabParent.GetChild(i).GetComponent<RectTransform>();
+                tmpRectTransform.anchoredPosition = new Vector2(tabParent.GetChild(i - 1).GetComponent<RectTransform>().anchoredPosition.x + 127.53f, -20);
+                tmpRectTransform.sizeDelta = new Vector2(127.53f, 40);
+            }
+            Debug.Log("Dream fragment IAR tab disabled");
+        }
 
         #region Story
         StoryText st = f_storyText.First().GetComponent<StoryText>();
@@ -749,8 +791,9 @@ public class LoadGameContent : FSystem {
             GameObject iarDocumentPrefab = f_dreamFragmentsContentContainer.First().GetComponent<PrefabContainer>().prefab;
             string variableNameBeginning = "fragmentPath";
             string variableName = "";
-            int l;
-            Image tmpImage;
+            int l, posID;
+            float gap = 30;
+            Image[] tmpImages;
             foreach(GameObject go in f_dreamFragmentsContents)
             {
                 //get the name of the variable corresponding to the content
@@ -774,15 +817,19 @@ public class LoadGameContent : FSystem {
                                 tmpGO.transform.SetParent(go.transform);
                                 tmpRectTransform = tmpGO.GetComponent<RectTransform>();
                                 tmpRectTransform.localScale = Vector3.one;
-                                tmpRectTransform.anchoredPosition = Vector2.zero;
+                                //if there are several document for on dream fragment, give them different position to make them visible
+                                //(here we put a gap of 30 between each, alternating left and right)
+                                posID = l - i - 1;
+                                tmpRectTransform.anchoredPosition = new Vector2((l % 2 == 0 ? gap/2 : 0) + gap * (posID / 2 + posID % 2) * (posID % 2 == 0 ? 1 : -1), 0);
                                 GameObjectManager.bind(tmpGO);
-                                tmpImage = tmpGO.GetComponentInChildren<Image>();
-                                if (!tmpImage)
+                                tmpImages = tmpGO.GetComponentsInChildren<Image>();
+                                if (tmpImages.Length == 0)
                                 {
                                     GameObjectManager.addComponent<Image>(tmpGO);
-                                    tmpImage = tmpGO.GetComponentInChildren<Image>();
+                                    tmpImages = tmpGO.GetComponentsInChildren<Image>();
                                 }
-                                tmpImage.sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
+                                foreach (Image img in tmpImages)
+                                    img.sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
                             }
                         }
                     }

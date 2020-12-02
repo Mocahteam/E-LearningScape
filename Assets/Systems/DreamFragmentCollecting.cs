@@ -62,23 +62,29 @@ public class DreamFragmentCollecting : FSystem {
                 // try to find a fragment touched by the raycast
                 if (f_dreamFragments.contains(hit.transform.gameObject.GetInstanceID()))
                 {
-                    // Show fragment UI
                     selectedFragment = hit.transform.gameObject;
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
-                    GameObjectManager.setGameObjectState(dfUI, true);
                     tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
-                    GameObjectManager.setGameObjectState(onlineButton, tmpDFComponent.urlLink != null && tmpDFComponent.urlLink != "");
-                    // Set UI text depending on type and id
-                    if (tmpDFComponent.type == 0)
-                        FragmentText.text = string.Concat(LoadGameContent.gameContent.dreamFragmentText, tmpDFComponent.id);
-                    else if (tmpDFComponent.type == 1 || tmpDFComponent.type == 2)
-                        FragmentText.text = string.Concat("\"", tmpDFComponent.itemName, "\"");
-                    // Pause this system and dependant systems
-                    this.Pause = true;
-                    MovingSystem.instance.Pause = true;
-                    JumpingSystem.instance.Pause = true;
-                    backupIARNavigationState = IARTabNavigation.instance.Pause;
-                    IARTabNavigation.instance.Pause = true;
+                    if (LoadGameContent.gameContent.virtualDreamFragment && tmpDFComponent.type == 0)
+                        // if virtual fragment are activated, just turn off the fragment without opening UI
+                        TurnOffDreamFragment(selectedFragment);
+                    else
+                    {
+                        // Show fragment UI
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
+                        GameObjectManager.setGameObjectState(dfUI, true);
+                        GameObjectManager.setGameObjectState(onlineButton, tmpDFComponent.urlLink != null && tmpDFComponent.urlLink != "");
+                        // Set UI text depending on type and id
+                        if (tmpDFComponent.type == 0)
+                            FragmentText.text = string.Concat(LoadGameContent.gameContent.dreamFragmentText, tmpDFComponent.id);
+                        else if (tmpDFComponent.type == 1 || tmpDFComponent.type == 2)
+                            FragmentText.text = string.Concat("\"", tmpDFComponent.itemName, "\"");
+                        // Pause this system and dependant systems
+                        this.Pause = true;
+                        MovingSystem.instance.Pause = true;
+                        JumpingSystem.instance.Pause = true;
+                        backupIARNavigationState = IARTabNavigation.instance.Pause;
+                        IARTabNavigation.instance.Pause = true;
+                    }
 
                     GameObjectManager.addComponent<PlaySound>(selectedFragment, new { id = 3 }); // id refer to FPSController AudioBank
 
@@ -93,6 +99,9 @@ public class DreamFragmentCollecting : FSystem {
                     }
                     else if (tmpDFComponent.type != 2)
                         GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player" });
+
+                    if (LoadGameContent.gameContent.virtualDreamFragment && tmpDFComponent.type == 0)
+                        selectedFragment = null;
                 }
             }
         }
@@ -101,22 +110,7 @@ public class DreamFragmentCollecting : FSystem {
     public void CloseFragmentUI()
     {
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "deactivated", objectType = "viewable", objectName = selectedFragment.name });
-        if (selectedFragment.GetComponent<DreamFragment>().type != 2)
-        {
-            // disable particles
-            if (selectedFragment.GetComponentInChildren<ParticleSystem>())
-                GameObjectManager.setGameObjectState(selectedFragment.GetComponentInChildren<ParticleSystem>().gameObject,false);
-            // disable glowing
-            foreach (Transform child in selectedFragment.transform)
-            {
-                if (child.gameObject.tag == "DreamFragmentLight")
-                {
-                    child.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-                    break;
-                }
-            }
-            selectedFragment.GetComponent<DreamFragment>().viewed = true;
-        }
+        TurnOffDreamFragment(selectedFragment);
         selectedFragment = null;
         // close UI
         GameObjectManager.setGameObjectState(dfUI,false);
@@ -125,6 +119,26 @@ public class DreamFragmentCollecting : FSystem {
         MovingSystem.instance.Pause = false;
         JumpingSystem.instance.Pause = false;
         IARTabNavigation.instance.Pause = backupIARNavigationState;
+    }
+
+    public void TurnOffDreamFragment(GameObject fragment)
+    {
+        if (fragment && fragment.GetComponent<DreamFragment>().type != 2)
+        {
+            // disable particles
+            if (fragment.GetComponentInChildren<ParticleSystem>())
+                GameObjectManager.setGameObjectState(fragment.GetComponentInChildren<ParticleSystem>().gameObject, false);
+            // disable glowing
+            foreach (Transform child in fragment.transform)
+            {
+                if (child.gameObject.tag == "DreamFragmentLight")
+                {
+                    child.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                    break;
+                }
+            }
+            fragment.GetComponent<DreamFragment>().viewed = true;
+        }
     }
 
     public void OpenFragmentLink()

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using FYFY;
 using System.Collections.Generic;
 
@@ -8,6 +9,7 @@ public class CheckDebugMode : FSystem
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"));
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
+    private Family f_dreamFragmentsToggles = FamilyManager.getFamily(new AllOfComponents(typeof(Toggle), typeof(DreamFragmentToggle)));
 
     public static FSystem instance;
     //this bool is used to switch between CheckDebugMode paused and DebugModeSystem paused
@@ -94,7 +96,14 @@ public class CheckDebugMode : FSystem
                     //unlock all IAR tabs
                     int nb = f_tabs.Count;
                     for (int i = 0; i < nb; i++)
-                        GameObjectManager.setGameObjectState(f_tabs.getAt(i), true);
+                    {
+                        if(LoadGameContent.gameContent.virtualDreamFragment || f_tabs.getAt(i).name != "DreamFragments")
+                            GameObjectManager.setGameObjectState(f_tabs.getAt(i), true);
+                    }
+
+                    //unlock all dream fragments in IAR
+                    foreach (GameObject go in f_dreamFragmentsToggles)
+                        GameObjectManager.setGameObjectState(go, true);
 
                     //enable room 2 and 3
                     foreach (Transform room in f_gameRooms.First().transform)
