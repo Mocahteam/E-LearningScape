@@ -49,6 +49,7 @@ public class GameContent {
     #region Config Files Paths
     public string lrsConfigPath;
     public string dreamFragmentLinksPath;
+    public string dreamFragmentDocumentsPathFile;
     public string hintsPath;
     public string internalHintsPath;
     public string wrongAnswerFeedbacksPath;

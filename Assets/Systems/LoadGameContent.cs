@@ -33,6 +33,8 @@ public class LoadGameContent : FSystem {
     private Family f_plankNumbers = FamilyManager.getFamily(new AnyOfTags("PlankNumbers"));
 
     private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
+    private Family f_dreamFragmentsContentContainer = FamilyManager.getFamily(new AllOfComponents(typeof(PrefabContainer)), new AnyOfTags("DreamFragmentContentContainer"));
+    private Family f_dreamFragmentsContents = FamilyManager.getFamily(new AnyOfTags("DreamFragmentContent"));
 
     private Family f_gears = FamilyManager.getFamily(new AnyOfTags("Gears"));
     private Family f_gearComponent = FamilyManager.getFamily(new AllOfComponents(typeof(Gear)));
@@ -84,8 +86,10 @@ public class LoadGameContent : FSystem {
     private Texture2D tmpTex;
     private byte[] tmpFileData;
     private string[] convertedBoardText; //0- unremovable, 1- removable
-    private GameObject forGO;
+    private GameObject tmpGO;
     private UIText tmpUIText;
+    private List<string> tmpStringList;
+    private RectTransform tmpRectTransform;
 
     public LoadGameContent()
     {
@@ -109,13 +113,19 @@ public class LoadGameContent : FSystem {
                 File.WriteAllText("Data/EnigmasWeight.txt", defaultGameContent.enigmasWeight.text);
                 File.WriteAllText("Data/LabelWeights.txt", defaultGameContent.labelWeights.text);
                 File.WriteAllText("Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
+                File.WriteAllText("Data/FragmentsPath.txt", defaultGameContent.dreamFragmentDocuments.text);
                 File.WriteAllText("Data/HelpSystemConfig.txt", defaultGameContent.helpSystemConfig.text);
 
                 gameContent = new GameContent();
                 gameContent = JsonUtility.FromJson<GameContent>(defaultGameContent.jsonFile.text);
 
+                int l = defaultGameContent.dreamFragmentPictures.Length;
+                for (int i = 0; i < l; i++)
+                {
+                    File.WriteAllBytes(string.Concat("Data/Fragments/", defaultGameContent.dreamFragmentPictures[i].name, ".png"), defaultGameContent.dreamFragmentPictures[i].EncodeToPNG());
+                }
                 File.WriteAllBytes(string.Concat("Data/", defaultGameContent.mastermindPicture.name, ".png"), defaultGameContent.mastermindPicture.EncodeToPNG());
-                int l = defaultGameContent.glassesPictures.Length;
+                l = defaultGameContent.glassesPictures.Length;
                 for(int i = 0; i < l; i++)
                 {
                     File.WriteAllBytes(string.Concat("Data/", defaultGameContent.glassesPictures[i].name, ".png"), defaultGameContent.glassesPictures[i].EncodeToPNG());
@@ -155,7 +165,7 @@ public class LoadGameContent : FSystem {
         question.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<TMP_Text>().text = placeHolder;
         question.GetComponent<QuerySolution>().andSolutions = new List<string>();
         foreach (string s in andSolutions)
-            forGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
+            tmpGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
     }
 
     private void Load()
@@ -260,19 +270,19 @@ public class LoadGameContent : FSystem {
         int nbQueries = f_queriesR1.Count;
         for (int i = 0; i < nbQueries; i++)
         {
-            forGO = f_queriesR1.getAt(i);
-            switch (forGO.name)
+            tmpGO = f_queriesR1.getAt(i);
+            switch (tmpGO.name)
             {
                 case "Q1":
-                    loadIARQuestion(forGO, gameContent.ballBoxQuestion, gameContent.ballBoxAnswerFeedback, gameContent.ballBoxAnswerFeedbackDesc, gameContent.ballBoxPlaceHolder, gameContent.ballBoxAnswer);
+                    loadIARQuestion(tmpGO, gameContent.ballBoxQuestion, gameContent.ballBoxAnswerFeedback, gameContent.ballBoxAnswerFeedbackDesc, gameContent.ballBoxPlaceHolder, gameContent.ballBoxAnswer);
                     break;
 
                 case "Q2":
-                    loadIARQuestion(forGO, gameContent.plankAndWireQuestionIAR, gameContent.plankAndWireAnswerFeedback, gameContent.plankAndWireAnswerFeedbackDesc, gameContent.plankAndWirePlaceHolder, gameContent.plankAndWireCorrectNumbers);
+                    loadIARQuestion(tmpGO, gameContent.plankAndWireQuestionIAR, gameContent.plankAndWireAnswerFeedback, gameContent.plankAndWireAnswerFeedbackDesc, gameContent.plankAndWirePlaceHolder, gameContent.plankAndWireCorrectNumbers);
                     break;
 
                 case "Q3":
-                    loadIARQuestion(forGO, gameContent.crouchQuestion, gameContent.crouchAnswerFeedback, gameContent.crouchAnswerFeedbackDesc, gameContent.crouchPlaceHolder, gameContent.crouchAnswer);
+                    loadIARQuestion(tmpGO, gameContent.crouchQuestion, gameContent.crouchAnswerFeedback, gameContent.crouchAnswerFeedbackDesc, gameContent.crouchPlaceHolder, gameContent.crouchAnswer);
                     break;
 
                 default:
@@ -503,31 +513,31 @@ public class LoadGameContent : FSystem {
         nbQueries = f_queriesR2.Count;
         for (int i = 0; i < nbQueries; i++)
         {
-            forGO = f_queriesR2.getAt(i);
-            switch (forGO.name)
+            tmpGO = f_queriesR2.getAt(i);
+            switch (tmpGO.name)
             {
                 case "Q1":
-                    loadIARQuestion(forGO, gameContent.glassesQuestion, gameContent.glassesAnswerFeedback, gameContent.glassesAnswerFeedbackDesc, gameContent.glassesPlaceHolder, gameContent.glassesAnswer);
+                    loadIARQuestion(tmpGO, gameContent.glassesQuestion, gameContent.glassesAnswerFeedback, gameContent.glassesAnswerFeedbackDesc, gameContent.glassesPlaceHolder, gameContent.glassesAnswer);
                     break;
 
                 case "Q2":
-                    loadIARQuestion(forGO, gameContent.enigma08Question, gameContent.enigma08AnswerFeedback, gameContent.enigma08AnswerFeedbackDesc, gameContent.enigma08PlaceHolder, gameContent.enigma08Answer);
+                    loadIARQuestion(tmpGO, gameContent.enigma08Question, gameContent.enigma08AnswerFeedback, gameContent.enigma08AnswerFeedbackDesc, gameContent.enigma08PlaceHolder, gameContent.enigma08Answer);
                     break;
 
                 case "Q3":
-                    loadIARQuestion(forGO, gameContent.scrollsQuestion, gameContent.scrollsAnswerFeedback, gameContent.scrollsAnswerFeedbackDesc, gameContent.scrollsPlaceHolder, gameContent.scrollsAnswer);
+                    loadIARQuestion(tmpGO, gameContent.scrollsQuestion, gameContent.scrollsAnswerFeedback, gameContent.scrollsAnswerFeedbackDesc, gameContent.scrollsPlaceHolder, gameContent.scrollsAnswer);
                     break;
 
                 case "Q4":
-                    loadIARQuestion(forGO, gameContent.mirrorQuestion, gameContent.mirrorAnswerFeedback, gameContent.mirrorAnswerFeedbackDesc, gameContent.mirrorPlaceHolder, gameContent.mirrorAnswer);
+                    loadIARQuestion(tmpGO, gameContent.mirrorQuestion, gameContent.mirrorAnswerFeedback, gameContent.mirrorAnswerFeedbackDesc, gameContent.mirrorPlaceHolder, gameContent.mirrorAnswer);
                     break;
 
                 case "Q5":
-                    loadIARQuestion(forGO, gameContent.enigma11Question, gameContent.enigma11AnswerFeedback, gameContent.enigma11AnswerFeedbackDesc, gameContent.enigma11PlaceHolder, gameContent.enigma11Answer);
+                    loadIARQuestion(tmpGO, gameContent.enigma11Question, gameContent.enigma11AnswerFeedback, gameContent.enigma11AnswerFeedbackDesc, gameContent.enigma11PlaceHolder, gameContent.enigma11Answer);
                     break;
 
                 case "Q6":
-                    loadIARQuestion(forGO, gameContent.enigma12Question, gameContent.enigma12AnswerFeedback, gameContent.enigma12AnswerFeedbackDesc, gameContent.enigma12PlaceHolder, gameContent.enigma12Answer);
+                    loadIARQuestion(tmpGO, gameContent.enigma12Question, gameContent.enigma12AnswerFeedback, gameContent.enigma12AnswerFeedbackDesc, gameContent.enigma12PlaceHolder, gameContent.enigma12Answer);
                     break;
 
                 default:
@@ -728,6 +738,63 @@ public class LoadGameContent : FSystem {
         foreach (GameObject dream_go in f_dreamFragments)
             dreamFragmentsLinks.TryGetValue(dream_go.name, out dream_go.GetComponent<DreamFragment>().urlLink);
         Debug.Log("Dream fragments links loaded");
+
+        // Load dream fragment png config files
+        FragmentFiles fragmentFilesPaths = null;
+        LoadJsonFile(gameContent.dreamFragmentDocumentsPathFile, defaultGameContent.dreamFragmentDocuments, out fragmentFilesPaths);
+        Debug.Log(fragmentFilesPaths);
+        // Affects dream fragment pictures to documents gameobject in IAR
+        if(f_dreamFragmentsContentContainer.Count > 0 && f_dreamFragmentsContentContainer.First().GetComponent<PrefabContainer>().prefab)
+        {
+            GameObject iarDocumentPrefab = f_dreamFragmentsContentContainer.First().GetComponent<PrefabContainer>().prefab;
+            string variableNameBeginning = "fragmentPath";
+            string variableName = "";
+            int l;
+            Image tmpImage;
+            foreach(GameObject go in f_dreamFragmentsContents)
+            {
+                //get the name of the variable corresponding to the content
+                variableName = string.Concat(variableNameBeginning, go.name.Substring(go.name.Length - 2, 2));
+                //retrieve the list of paths with the variable name
+                tmpStringList = (List<string>)typeof(FragmentFiles).GetField(variableName).GetValue(fragmentFilesPaths);
+                if(tmpStringList != null)
+                {
+                    l = tmpStringList.Count;
+                    for(int i = 0; i < l; i++)
+                    {
+                        //load each pictures of the list
+                        if (File.Exists(tmpStringList[i]))
+                        {
+                            tmpTex = new Texture2D(1, 1);
+                            tmpFileData = File.ReadAllBytes(tmpStringList[i]);
+                            if (tmpTex.LoadImage(tmpFileData))
+                            {
+                                //if the picture is successfully loaded, create an instance of IARDocument and put the picture in it
+                                tmpGO = GameObject.Instantiate(iarDocumentPrefab);
+                                tmpGO.transform.SetParent(go.transform);
+                                tmpRectTransform = tmpGO.GetComponent<RectTransform>();
+                                tmpRectTransform.localScale = Vector3.one;
+                                tmpRectTransform.anchoredPosition = Vector2.zero;
+                                GameObjectManager.bind(tmpGO);
+                                tmpImage = tmpGO.GetComponentInChildren<Image>();
+                                if (!tmpImage)
+                                {
+                                    GameObjectManager.addComponent<Image>(tmpGO);
+                                    tmpImage = tmpGO.GetComponentInChildren<Image>();
+                                }
+                                tmpImage.sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
+                            }
+                        }
+                    }
+                }
+            }
+            Debug.Log("IAR dream fragments' pictures loaded");
+        }
+        else
+        {
+            Debug.LogError("Missing IARDocument prefab, pictures can't be loaded.");
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Missing IARDocument prefab, pictures can't be loaded."));
+        }
         #endregion
 
         // Load fonts

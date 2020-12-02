@@ -46,6 +46,16 @@ public class DefaultGameContent : MonoBehaviour {
     /// If a link is filled, when the player accesses to the correcponding dreamFragment he can open the link from a button
     /// </summary>
     public TextAsset dreamFragmentlinks;
+    /// <summary>
+    /// File containing paths to dream fragments' documents for the virtual version
+    /// Several paths can be given for a same dream fragment
+    /// When the player clicks on a dream fragment button in the IAR, all documents corresponding to the dream fragment will be displayed
+    /// </summary>
+    public TextAsset dreamFragmentDocuments;
+    /// <summary>
+    /// Pictures for the dream fragments in IAR
+    /// </summary>
+    public Texture2D[] dreamFragmentPictures;
 
     /// <summary>
     /// Picture for the Login panel (mastermind)

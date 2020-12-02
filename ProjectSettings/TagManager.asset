@@ -84,6 +84,8 @@ TagManager:
   - DreamFragmentContentContainer
   - Terminal
   - TerminalScreen
+  - DreamFragmentButton
+  - IARDocument
   layers:
   - Default
   - TransparentFX

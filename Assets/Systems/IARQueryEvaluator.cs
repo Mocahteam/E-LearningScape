@@ -237,7 +237,6 @@ public class IARQueryEvaluator : FSystem {
     {
         yield return new WaitForEndOfFrame();
 
-        Debug.Log(screenID);
         Texture2D tex = new Texture2D(Camera.main.pixelWidth, Camera.main.pixelHeight, TextureFormat.RGBA32, false);
         tex.ReadPixels(new Rect(0, 0, Camera.main.pixelWidth, Camera.main.pixelHeight), 0, 0);
         tex.Apply(false);

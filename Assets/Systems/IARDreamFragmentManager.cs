@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.IO;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using FYFY;
@@ -8,16 +10,18 @@ public class IARDreamFragmentManager : FSystem {
 
 	//Manage collected dream fragment in the IAR
 
-	private Family f_buttonContainer = FamilyManager.getFamily(new AllOfComponents(typeof(PrefabContainer)), new AnyOfTags("DreamFragmentButtonContainer"));
+	private Family f_buttonContainer = FamilyManager.getFamily(new AnyOfTags("DreamFragmentButtonContainer"));
 	private Family f_contentContainer = FamilyManager.getFamily(new AllOfComponents(typeof(PrefabContainer)), new AnyOfTags("DreamFragmentContentContainer"));
-	private Family f_contents = FamilyManager.getFamily(new AllOfComponents(typeof(PointerSensitive)), new AnyOfTags("DreamFragmentContent"));
+	private Family f_contents = FamilyManager.getFamily(new AnyOfTags("DreamFragmentContent"));
+	private Family f_documents = FamilyManager.getFamily(new AllOfComponents(typeof(PointerSensitive)), new AnyOfTags("IARDocument"));
 	private Family f_canvas = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
 
 	public static IARDreamFragmentManager instance;
 
 	private RectTransform iarRectTransform;
+	private RectTransform contentContainerRT;
 
-	private GameObject draggedContent = null;
+	private GameObject draggedDocument = null;
 	//the offset is used to move the document from the point clicked and not the center
 	private Vector2 offset;
 
@@ -35,6 +39,14 @@ public class IARDreamFragmentManager : FSystem {
 					iarRectTransform = go.GetComponent<RectTransform>();
 					break;
 				}
+			}
+
+			if (f_contentContainer.Count > 0)
+				contentContainerRT = f_contentContainer.First().GetComponent<RectTransform>();
+            else
+			{
+				Debug.LogError("Missing right panel for the dream fragment tab in IAR.");
+				File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Missing right panel for the dream fragment tab in IAR"));
 			}
         }
 		instance = this;
@@ -68,14 +80,16 @@ public class IARDreamFragmentManager : FSystem {
         if (Input.GetButtonDown("Fire1"))
         {
 			//check if a document is clicked and set it as dragged
-			foreach(GameObject go in f_contents)
+			foreach(GameObject go in f_documents)
             {
                 if (go.GetComponent<PointerOver>())
                 {
-					draggedContent = go;
+					draggedDocument = go;
 					tmpRT = go.GetComponent<RectTransform>();
-					offset = new Vector2(tmpRT.position.x - Input.mousePosition.x - 111.2f, tmpRT.position.y - Input.mousePosition.y + 28.8f);
-					Debug.Log(offset);
+					float screenOffsetX = (Screen.width - contentContainerRT.sizeDelta.x) / 5;
+					float screenOffsetY = (Screen.height - contentContainerRT.sizeDelta.y) / 5;
+					offset = new Vector2(tmpRT.position.x - Input.mousePosition.x - screenOffsetX, tmpRT.position.y - Input.mousePosition.y + screenOffsetY);
+					Debug.Log(screenOffsetX + " " + screenOffsetY);
 					//put the go above the others in hierarchy so that it is seen above the others
 					GameObjectManager.setGameObjectParent(go, go.transform.parent.gameObject, true);
 					break;
@@ -83,20 +97,21 @@ public class IARDreamFragmentManager : FSystem {
             }
         }
 
-        if (draggedContent)
+        if (draggedDocument)
         {
 			//check if drag button is released to stop dragging
             if (Input.GetButtonUp("Fire1"))
             {
-				draggedContent = null;
+				draggedDocument = null;
             }
             //move the dragged object
             else
 			{
 				// compute mouse position from screen center
-				Vector3 pos = new Vector3((Input.mousePosition.x + offset.x) / Screen.width - 0.5f, (Input.mousePosition.y + offset.y) / Screen.height - 0.5f, 0);
+				Vector3 pos = new Vector3((Input.mousePosition.x + offset.x) / Screen.width - 0.5f, 
+					(Input.mousePosition.y + offset.y) / Screen.height - 0.5f, 0);
 				// correct position depending on canvas scale (0.6) and screen size comparing to reference size (800:500 => 16:10 screen ratio)
-				draggedContent.transform.localPosition = Vector3.Scale(pos, iarRectTransform.sizeDelta / 1f);
+				draggedDocument.transform.localPosition = Vector3.Scale(pos, iarRectTransform.sizeDelta);
 			}
         }
 	}
