@@ -26,12 +26,15 @@ public class IARNewQuestionsAvailable : FSystem {
 
     private void onNewQuestionAvailable(GameObject go)
     {
-        if (!firstQuestionOccurs)
+        if(go.name != "DreamFragments")
         {
-            GameObjectManager.setGameObjectState(f_questionNotif.First().transform.parent.gameObject, true);
-            firstQuestionOccurs = true;
+            if (!firstQuestionOccurs)
+            {
+                GameObjectManager.setGameObjectState(f_questionNotif.First().transform.parent.gameObject, true);
+                firstQuestionOccurs = true;
+            }
+            GameObjectManager.setGameObjectState(f_questionNotif.First(), true);
         }
-        GameObjectManager.setGameObjectState(f_questionNotif.First(), true);
     }
 
     private void onQuestionsViewed(GameObject go)

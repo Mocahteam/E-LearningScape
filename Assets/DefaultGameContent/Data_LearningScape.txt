@@ -15,10 +15,10 @@
     "enigmasWeightPath": "Data/EnigmasWeight.txt",
     "labelWeightsPath": "Data/LabelWeights.txt",
     "helpSystemConfigPath": "Data/HelpSystemConfig.txt",
-	"removeExtraGeometries": false,
-	
-	"additionalLogosPath": [],
-	
+    "removeExtraGeometries": false,
+    
+    "additionalLogosPath": [],
+    
     "storyTextIntro": [
         "Il est déjà tard le soir, Camille reste inquiète pour son premier enseignement à Sorbonne Université. Ce n’est pas la première fois qu’elle enseigne, mais maintenant elle est Maître de Conférences, son premier poste permanent.",
         "En se brossant les dents, elle révise la matière qu'elle devra enseigner demain en TD. Puis elle se couche, et plein de questions tournent dans sa tête : et si j’ai un blanc ? et si les étudiants ne sont pas motivés ? et s’il n’y a pas de craie ?",
@@ -31,59 +31,59 @@
         "Camille se réveille. Elle est en pleine forme, et tout est clair dans sa tête pour son premier enseignement. Elle a hâte de commencer.",
         "Les marchands de sable ont bien travaillé et se retrouvent pour un débriefing sur tout leur travail."
     ],
-	"additionalCredit": [],
+    "additionalCredit": [],
     "scoreText": "Vous avez mis: ",
-	
-	"inventoryScrollIntro": [
-		"Parchemin",
-		"Il y a des inscriptions inscrites à l’encre sur ce parchemin. Le message semble pour autant incomplet. Ces informations pourraient être utiles pour la suite.",
-		"Cliquez sur le parchemin pour l'ouvrir/le refermer"
-	],
-	"inventoryKeyBallBox": [
-		"Clé",
-		"C’est une clé, sans aucune distinction particulière. Elle ouvre certainement une porte ou un cadenas...",
-		"Cliquez sur la clé pour l'activer/la désactiver"
-	],
-	"inventoryWire": [
-		"Corde",
-		"Cette corde n’est pas très longue mais elle semble assez solide et en bon état. Elle permet sans doute de lier des éléments ensemble.",
-		"Cliquez sur la corde pour l'activer/la désactiver"
-	],
-	"inventoryKeySatchel": [
-		"Clé",
-		"Cette clé a été trouvée dans le vase se renversant. Elle ouvre certainement une porte ou un cadenas...",
-		"Cliquez sur la clé pour l'activer/la désactiver"
-	],
-	"inventoryScrolls": [
-		"Parchemin",
-		"Il y a des inscriptions inscrites à l’encre sur ce parchemin. Ces informations pourraient être utiles pour la suite.",
-		"Cliquez sur le parchemin pour l'ouvrir/le refermer"
-	],
-	"inventoryGlasses1": [
-		"Lunette Filtrante",
-		"La branche droite d'une paire de lunettes ? Il doit certainement manquer l’autre moitié... La lentille est teintée en rouge.",
-		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
-	],
-	"inventoryGlasses2": [
-		"Lunette Filtrante",
-		"La branche gauche d'une paire de lunettes ? Il doit certainement manquer l’autre moitié... La lentille est teintée en jaune.",
-		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
-	],
-	"inventoryMirror": [
-		"Miroir",
-		"Un miroir cylindrique constitué d'une seule pièce d'aluminium poli. Le reflet est d'une grande qualité.",
-		"Cliquez sur le miroir pour l'activer/le désactiver"
-	],
-	"inventoryLamp": [
-		"Lumière noire",
-		"Cette lampe dispose d’une ampoule particulière à vapeur de mercure constituée d'un revêtement particulier: le verre de Wood. Ce verre possède la particularité d'être riche en oxydes de nickel et de fer, ne laissant passer que les rayons UltraViolet : la lumière noire.",
-		"Cliquez sur la lampe pour l'allumer/l'éteindre"
-	],
-	"inventoryPuzzle": [
-		"Pièces de puzzle",
-		"Se sont des pièces d'un puzzle, tout simplement.",
-		"Cliquez pour manipuler les pièces"
-	],
+    
+    "inventoryScrollIntro": [
+        "Parchemin",
+        "Il y a des inscriptions inscrites à l’encre sur ce parchemin. Le message semble pour autant incomplet. Ces informations pourraient être utiles pour la suite.",
+        "Cliquez sur le parchemin pour l'ouvrir/le refermer"
+    ],
+    "inventoryKeyBallBox": [
+        "Clé",
+        "C’est une clé, sans aucune distinction particulière. Elle ouvre certainement une porte ou un cadenas...",
+        "Cliquez sur la clé pour l'activer/la désactiver"
+    ],
+    "inventoryWire": [
+        "Corde",
+        "Cette corde n’est pas très longue mais elle semble assez solide et en bon état. Elle permet sans doute de lier des éléments ensemble.",
+        "Cliquez sur la corde pour l'activer/la désactiver"
+    ],
+    "inventoryKeySatchel": [
+        "Clé",
+        "Cette clé a été trouvée dans le vase se renversant. Elle ouvre certainement une porte ou un cadenas...",
+        "Cliquez sur la clé pour l'activer/la désactiver"
+    ],
+    "inventoryScrolls": [
+        "Parchemin",
+        "Il y a des inscriptions inscrites à l’encre sur ce parchemin. Ces informations pourraient être utiles pour la suite.",
+        "Cliquez sur le parchemin pour l'ouvrir/le refermer"
+    ],
+    "inventoryGlasses1": [
+        "Lunette Filtrante",
+        "La branche droite d'une paire de lunettes ? Il doit certainement manquer l’autre moitié... La lentille est teintée en rouge.",
+        "Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
+    ],
+    "inventoryGlasses2": [
+        "Lunette Filtrante",
+        "La branche gauche d'une paire de lunettes ? Il doit certainement manquer l’autre moitié... La lentille est teintée en jaune.",
+        "Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
+    ],
+    "inventoryMirror": [
+        "Miroir",
+        "Un miroir cylindrique constitué d'une seule pièce d'aluminium poli. Le reflet est d'une grande qualité.",
+        "Cliquez sur le miroir pour l'activer/le désactiver"
+    ],
+    "inventoryLamp": [
+        "Lumière noire",
+        "Cette lampe dispose d’une ampoule particulière à vapeur de mercure constituée d'un revêtement particulier: le verre de Wood. Ce verre possède la particularité d'être riche en oxydes de nickel et de fer, ne laissant passer que les rayons UltraViolet : la lumière noire.",
+        "Cliquez sur la lampe pour l'allumer/l'éteindre"
+    ],
+    "inventoryPuzzle": [
+        "Pièces de puzzle",
+        "Ce sont des pièces d'un puzzle, tout simplement.",
+        "Cliquez pour manipuler les pièces"
+    ],
 
     "loadingText": "Chargement",
     "mainMenuStart": "Commencer",
@@ -111,6 +111,7 @@
     "hudMove": "Se déplacer",
     "hudCrouch": "Se baisser /\nSe relever",
     "hudInventory": "Inventaire",
+    "hudDreamFragments": "Rêves",
     "hudQuestions": "Questions",
     "hudHelp": "Aide",
     "hudMenu": "Menu",
@@ -137,11 +138,11 @@
     "tutoText2": "OK, essayons de nous relever et de nous déplacer...",
     "tutoText3": "Bien arrivé !",
     "tutoText4": "Appuie sur\npour accéder à l'inventaire",
-	
+    
     "ballBoxQuestion": "Que faire pour rendre actifs mes étudiants ?",
     "ballBoxPlaceHolder": "3 chiffres attendus...",
-	"ballBoxAnswerFeedback": "1 - 2 - 8",
-	"ballBoxAnswerFeedbackDesc": "Classe Inversée - Interactivité - Approche Projet",
+    "ballBoxAnswerFeedback": "1 - 2 - 8",
+    "ballBoxAnswerFeedbackDesc": "Classe Inversée - Interactivité - Approche Projet",
     "ballBoxAnswer": [
         "1",
         "2",
@@ -159,12 +160,12 @@
         "APPROCHE PROJET",
         "AUGMENTER LE NIVEAU D'EXIGENCE"
     ],
-	
+    
     "plankAndWireQuestionIAR": "Comment construire une séquence cohérente ?",
     "plankAndWirePlaceHolder": "3 chiffres attendus...",
     "plankAndWireQuestion": "Relier avec la corde les 3 éléments qui assurent la cohérence d'un cours",
-	"plankAndWireAnswerFeedback": "4 - 5 - 9",
-	"plankAndWireAnswerFeedbackDesc": "Objectifs - Méthodes Pédagogiques - Evaluation",
+    "plankAndWireAnswerFeedback": "4 - 5 - 9",
+    "plankAndWireAnswerFeedbackDesc": "Objectifs - Méthodes Pédagogiques - Evaluation",
     "plankAndWireCorrectWords": [
         "Objectifs",
         "Méthodes Pédagogiques",
@@ -195,7 +196,7 @@
         "7",
         "8"
     ],
-	
+    
     "crouchQuestion": "Comment favoriser mon innovation pédagogique ?",
     "crouchPlaceHolder": "10 chiffres attendus...",
     "crouchAnswer": [
@@ -211,7 +212,7 @@
         "de",
         "posture"
     ],
-	
+    
     "gearsQuestion": "Sur quels facteurs est-ce que je peux agir pour motiver mes étudiants ?",
     "iarHelpGears": "Déplacez le bon engrenage au centre de l'écran",
     "gearTextUp": "Etudiants",
@@ -223,15 +224,15 @@
         "Facteurs relatifs à la société"
     ],
     "gearAnswer": "Facteurs relatifs à la classe",
-	
-	"mastermindQuestion": "Vous avez oublié votre code ? Le hasard vous aidera sous doute !",
+    
+    "mastermindQuestion": "Vous avez oublié votre code ? Le hasard vous aidera sous doute !",
     "masterMindPlaceholder": "3 chiffres attendus...",
     "masterMindPasswordText": "Mot de passe:",
     "masterMindValidation": "Valider",
-	"mastermindQuestionYPos" : -124,
+    "mastermindQuestionYPos" : -124,
     "mastermindAnswer": 814,
-	"mastermindBackgroundPicturePath": "Data/MasterMind.png",
-	
+    "mastermindBackgroundPicturePath": "Data/MasterMind.png",
+    
     "glassesQuestion": "Le vase se renversant vous livrera la clé de cette enigme",
     "glassesPlaceHolder": "2 mots attendus...",
     "glassesAnswer": [
@@ -245,7 +246,7 @@
         "Data/glasses03.png",
         "Data/glasses04.png"
     ],
-	
+    
     "enigma08Question": "A quoi Berthiaume nous conseille-t-il de faire attention ?",
     "enigma08PlaceHolder": "3 chiffres attendus...",
     "enigma08Answer": [
@@ -255,13 +256,13 @@
     "enigma08AnswerFeedback": "9 - 14",
     "enigma08AnswerFeedbackDesc": "Feedbacks constructifs",
     
-	"scrollsQuestion": "Cet acronyme décrit des objectifs clairs",
+    "scrollsQuestion": "Cet acronyme décrit des objectifs clairs",
     "scrollsPlaceHolder": "1 mot anglais attendu...",
     "scrollsAnswer": [
         "SMART"
     ],
-	"scrollsAnswerFeedback": "SMART",
-	"scrollsAnswerFeedbackDesc": "Sensé - Mesurable - Atteignable - Réaliste - Temporalisé",
+    "scrollsAnswerFeedback": "SMART",
+    "scrollsAnswerFeedbackDesc": "Sensé - Mesurable - Atteignable - Réaliste - Temporalisé",
     "scrollsWords": [
         "<color=red>S</color>ensé",
         "<color=red>M</color>esurable",
@@ -269,16 +270,16 @@
         "<color=red>R</color>éaliste",
         "<color=red>T</color>emporalisé"
     ],
-	
+    
     "mirrorQuestion": "L'année de création de la taxonomie de Bloom est...",
     "mirrorPlaceHolder": "4 chiffres attendus...",
     "mirrorAnswer": [
         "1956"
     ],
-	"mirrorAnswerFeedback": "1956",
-	"mirrorAnswerFeedbackDesc": "",
+    "mirrorAnswerFeedback": "1956",
+    "mirrorAnswerFeedbackDesc": "",
     "mirrorPicturePath": "Data/Plank.png",
-	
+    
     "enigma11Question": "L'utilisation d'une grille critériée est la solution",
     "enigma11PlaceHolder": "3 chiffres attendus...",
     "enigma11Answer": [
@@ -286,22 +287,22 @@
         "1",
         "2"
     ],
-	"enigma11AnswerFeedback": "3 - 1 - 2",
-	"enigma11AnswerFeedbackDesc": "",
-	
+    "enigma11AnswerFeedback": "3 - 1 - 2",
+    "enigma11AnswerFeedbackDesc": "",
+    
     "enigma12Question": "Seul, vous ne sortirez pas de ce labyrinthe",
     "enigma12PlaceHolder": "1 mot attendu...",
     "enigma12Answer": [
         "Collaboration"
     ],
-	"enigma12AnswerFeedback": "Collaboration",
-	"enigma12AnswerFeedbackDesc": "",
-	
+    "enigma12AnswerFeedback": "Collaboration",
+    "enigma12AnswerFeedbackDesc": "",
+    
     "lockRoom2Password": 703,
 
     "puzzleAnswer": "planification",
     "puzzlePicturePath": "Data/Puzzle_Complet.png",
-	
+    
     "lampAnswer": "Ressources",
     "lampPicturesPath": [
         "Data/lamp01.png",
@@ -311,9 +312,9 @@
         "Data/lamp05.png",
         "Data/lamp06.png"
     ],
-	
+    
     "enigma16Answer": "Contraintes",
-	
+    
     "whiteBoardAnswer": "Contenu",
     "whiteBoardWords": [
         "##RIEN N'EST## IMPORTANT",
@@ -365,6 +366,10 @@
     "inputInventoryKey1": "Y",
     "inputInventoryKey2": "",
     "inputInventoryKey3": "Bouton 3",
+    "inputDreamFragments": "Ouvrir rêves",
+    "inputDreamFragmentsKey1": "R",
+    "inputDreamFragmentsKey2": "",
+    "inputDreamFragmentsKey3": "",
     "inputQuestions": "Ouvrir les questions",
     "inputQuestionsKey1": "B",
     "inputQuestionsKey2": "",

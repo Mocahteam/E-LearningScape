@@ -14,4 +14,9 @@ public class IARDreamFragmentManager_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("IARDreamFragmentManager", "OnClickDreamToggle", t);
 	}
 
+	public void OpenLink()
+	{
+		MainLoop.callAppropriateSystemMethod ("IARDreamFragmentManager", "OpenLink", null);
+	}
+
 }

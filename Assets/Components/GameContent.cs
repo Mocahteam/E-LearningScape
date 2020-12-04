@@ -95,6 +95,7 @@ public class GameContent {
     public string hudMove;
     public string hudCrouch;
     public string hudInventory;
+    public string hudDreamFragments;
     public string hudQuestions;
     public string hudHelp;
     public string hudMenu;
@@ -162,6 +163,10 @@ public class GameContent {
     public string inputInventoryKey1;
     public string inputInventoryKey2;
     public string inputInventoryKey3;
+    public string inputDreamFragments;
+    public string inputDreamFragmentsKey1;
+    public string inputDreamFragmentsKey2;
+    public string inputDreamFragmentsKey3;
     public string inputQuestions;
     public string inputQuestionsKey1;
     public string inputQuestionsKey2;

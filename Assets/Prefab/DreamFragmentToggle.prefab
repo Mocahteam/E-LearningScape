@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 224572400439908844}
   - component: {fileID: 114274421849334462}
   - component: {fileID: 114175713756218950}
+  - component: {fileID: 114283956094575922}
   m_Layer: 5
   m_Name: DreamFragmentToggle
   m_TagString: Untagged
@@ -201,7 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.47586206, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -272,6 +273,17 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 0
+--- !u!114 &114283956094575922
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1385405334610362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baaaa9365bfe6de4e8dbb77b9cf517ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222452054749708674
 CanvasRenderer:
   m_ObjectHideFlags: 1

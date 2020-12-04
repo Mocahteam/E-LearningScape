@@ -98,7 +98,9 @@ public class IARTabNavigation : FSystem {
             if (!iar.activeInHierarchy)
             {
                 if (Input.GetButtonDown("ToggleInventory"))
-                    openIar(0); // Open IAR on the first visible tab
+                    openIar(0); // Open IAR on the dream fragments tab if at least one fragment has been found
+                else if (Input.GetButtonDown("ToggleFragments") && LoadGameContent.gameContent.virtualDreamFragment && IARNewDreamFragmentAvailable.instance.firstFragmentOccurs)
+                    openIar(1); // Open IAR on the last query visible tab
                 else if (Input.GetButtonDown("ToggleQuestions") && unlockedRoom.roomNumber > 0 && unlockedRoom.roomNumber < 4)
                     openLastQuestions(); // Open IAR on the last query visible tab
                 else if (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause)

@@ -63,8 +63,9 @@ public class CollectObject : FSystem {
                     // enable it
                     GameObjectManager.setGameObjectState(UIScroll, true);
                 }
-                // disable in-game source
-                GameObjectManager.setGameObjectState(collect, false);
+                // disable in-game source if it is not a dream fragment
+                if (!collect.GetComponent<DreamFragment>())
+                    GameObjectManager.setGameObjectState(collect, false);
                 // Play notification
                 itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start");
                 

@@ -212,16 +212,15 @@ public class LoadGameContent : FSystem {
         }
         Debug.Log("Additional Logo loaded");
 
-        // Set IAR tabs depending on gameContent.virtualDreamFragment value
+        // Set IAR tabs and HUD depending on gameContent.virtualDreamFragment value
         Transform tabParent = f_tabs.First().transform.parent;
         int tabCount = tabParent.childCount - 1; // -1 because of the under line among the children
         if (gameContent.virtualDreamFragment)
         {
+            // IAR tabs
             tmpRectTransform = tabParent.GetChild(0).GetComponent<RectTransform>();
             tmpRectTransform.anchoredPosition = new Vector2(54.66f, -20);
             tmpRectTransform.sizeDelta = new Vector2(99, 40);
-            //enable child 1 corresponding to dream fragments tab
-            GameObjectManager.setGameObjectState(tabParent.GetChild(1).gameObject, true);
             // if dream fragment are set to virtual, do the same for the puzzles
             gameContent.virtualPuzzle = true;
 
@@ -231,15 +230,13 @@ public class LoadGameContent : FSystem {
                 tmpRectTransform.anchoredPosition = new Vector2(tabParent.GetChild(i - 1).GetComponent<RectTransform>().anchoredPosition.x + 109.32f, -20);
                 tmpRectTransform.sizeDelta = new Vector2(99, 40);
             }
-            Debug.Log("Dream fragment IAR tab enabled");
         }
         else
         {
+            // IAR tabs
             tmpRectTransform = tabParent.GetChild(0).GetComponent<RectTransform>();
             tmpRectTransform.anchoredPosition = new Vector2(63.765f, -20);
             tmpRectTransform.sizeDelta = new Vector2(127.53f, 40);
-            //disable child 1 corresponding to dream fragments tab
-            tmpRectTransform = tabParent.GetChild(1).GetComponent<RectTransform>();
             tmpRectTransform.anchoredPosition = new Vector2(63.765f, -20);
             GameObjectManager.setGameObjectState(tmpRectTransform.gameObject, false);
 
@@ -249,8 +246,8 @@ public class LoadGameContent : FSystem {
                 tmpRectTransform.anchoredPosition = new Vector2(tabParent.GetChild(i - 1).GetComponent<RectTransform>().anchoredPosition.x + 127.53f, -20);
                 tmpRectTransform.sizeDelta = new Vector2(127.53f, 40);
             }
-            Debug.Log("Dream fragment IAR tab disabled");
         }
+        Debug.Log(string.Concat("Virtual dream fragments: ", gameContent.virtualDreamFragment));
 
         #region Story
         StoryText st = f_storyText.First().GetComponent<StoryText>();
@@ -784,7 +781,6 @@ public class LoadGameContent : FSystem {
         // Load dream fragment png config files
         FragmentFiles fragmentFilesPaths = null;
         LoadJsonFile(gameContent.dreamFragmentDocumentsPathFile, defaultGameContent.dreamFragmentDocuments, out fragmentFilesPaths);
-        Debug.Log(fragmentFilesPaths);
         // Affects dream fragment pictures to documents gameobject in IAR
         if(f_dreamFragmentsContentContainer.Count > 0 && f_dreamFragmentsContentContainer.First().GetComponent<PrefabContainer>().prefab)
         {
@@ -821,6 +817,18 @@ public class LoadGameContent : FSystem {
                                 //(here we put a gap of 30 between each, alternating left and right)
                                 posID = l - i - 1;
                                 tmpRectTransform.anchoredPosition = new Vector2((l % 2 == 0 ? gap/2 : 0) + gap * (posID / 2 + posID % 2) * (posID % 2 == 0 ? 1 : -1), 0);
+                                float width, height;
+                                if (tmpTex.width > tmpTex.height)
+                                {
+                                    width = 300;
+                                    height = width * tmpTex.height / tmpTex.width;
+                                }
+                                else
+                                {
+                                    height = 300;
+                                    width = height * tmpTex.width / tmpTex.height;
+                                }
+                                tmpRectTransform.sizeDelta = new Vector2(width, height);
                                 GameObjectManager.bind(tmpGO);
                                 tmpImages = tmpGO.GetComponentsInChildren<Image>();
                                 if (tmpImages.Length == 0)

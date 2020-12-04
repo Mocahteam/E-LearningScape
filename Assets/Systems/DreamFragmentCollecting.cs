@@ -11,10 +11,13 @@ using Newtonsoft.Json;
 public class DreamFragmentCollecting : FSystem {
 
     // Display Fragment UI when player select a fragment in game
+    // This system has to be after "CollectObject" system in main loop
 
     private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
     private Family f_dreamFragmentUI = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AnyOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD));
     private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
+
+    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
 
     private GameObject dfUI;
     private TextMeshProUGUI FragmentText;
@@ -25,6 +28,7 @@ public class DreamFragmentCollecting : FSystem {
     private GameObject tmpGo;
     //button in dream fragment UI to open the link
     private GameObject onlineButton;
+    private bool firstFragmentFound = false;
 
     public static DreamFragmentCollecting instance;
 
@@ -62,6 +66,20 @@ public class DreamFragmentCollecting : FSystem {
                 // try to find a fragment touched by the raycast
                 if (f_dreamFragments.contains(hit.transform.gameObject.GetInstanceID()))
                 {
+                    // display IAR dream fragments tab after the first one is found
+                    if (!firstFragmentFound && LoadGameContent.gameContent.virtualDreamFragment)
+                    {
+                        foreach (GameObject go in f_tabs)
+                        {
+                            if(go.name == "DreamFragments")
+                            {
+                                GameObjectManager.setGameObjectState(go, true);
+                                break;
+                            }
+                        }
+                        firstFragmentFound = true;
+                    }
+
                     selectedFragment = hit.transform.gameObject;
                     tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
                     if (LoadGameContent.gameContent.virtualDreamFragment && tmpDFComponent.type == 0)
