@@ -12,6 +12,7 @@ public class CollectObject : FSystem {
     private Family f_collectableObjects = FamilyManager.getFamily(new AllOfComponents(typeof(LinkedWith), typeof(Highlighted)), new NoneOfLayers(5), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_pressY = FamilyManager.getFamily(new AnyOfTags("PressY"));
     private Family f_HUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
+    private Family f_rightHUD = FamilyManager.getFamily(new AnyOfTags("HUD_TransparentOnMove"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
 
     public static CollectObject instance;
 
@@ -20,11 +21,24 @@ public class CollectObject : FSystem {
     private GameObject itemCollectedNotif;
     private float timeStart;
 
+    private bool inventoryHUDEnabled = false;
+
     public CollectObject()
     {
         if (Application.isPlaying)
+        {
             itemCollectedNotif = f_HUD.First().transform.GetChild(4).gameObject;
+
+            //every time a HUD is enabled, checks if it is inventory HUD
+            f_rightHUD.addEntryCallback(CheckInventoryHUD);
+        }
         instance = this;
+    }
+
+    private void CheckInventoryHUD(GameObject go)
+    {
+        if (go.name == "Inventory")
+            inventoryHUDEnabled = true;
     }
 
     // Use to process your families.
@@ -34,7 +48,8 @@ public class CollectObject : FSystem {
         {
             foreach (GameObject collect in f_collectableObjects)
             {
-                if (!collect.GetComponent<DreamFragment>())
+                bool isDreamFragment = collect.GetComponent<DreamFragment>();
+                if (!isDreamFragment)
                 {
                     GameObjectManager.addComponent<ActionPerformed>(collect, new { name = "perform", performedBy = "player" });
                     GameObjectManager.addComponent<ActionPerformedForLRS>(collect, new { verb = "collected", objectType = "item", objectName = collect.name });
@@ -64,11 +79,14 @@ public class CollectObject : FSystem {
                     GameObjectManager.setGameObjectState(UIScroll, true);
                 }
                 // disable in-game source if it is not a dream fragment
-                if (!collect.GetComponent<DreamFragment>())
+                if (!isDreamFragment)
                     GameObjectManager.setGameObjectState(collect, false);
                 // Play notification
-                itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start");
-                
+                if (isDreamFragment && inventoryHUDEnabled)
+                    itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start2");
+                else
+                    itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start");
+
                 // Play sound
                 GameObjectManager.addComponent<PlaySound>(collect, new { id = 10 }); // id refer to FPSController AudioBank
                 // particular case of collecting Intro_scroll game object => show ingame "Press A" notification

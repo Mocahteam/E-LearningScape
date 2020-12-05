@@ -54,7 +54,7 @@ public class Highlighter : FSystem {
 
     private void highlight (GameObject currentHighlight)
     {
-        if(currentHighlight.GetComponent<Selectable>())
+        if (currentHighlight.GetComponent<Selectable>())
             GameObjectManager.addComponent<ActionPerformedForLRS>(currentHighlight, new { verb = "highlighted", objectType = "interactable", objectName = currentHighlight.name });
         else if(currentHighlight.GetComponent<ToggleableGO>())
             GameObjectManager.addComponent<ActionPerformedForLRS>(currentHighlight, new { verb = "highlighted", objectType = "toggable", objectName = currentHighlight.name });
@@ -135,7 +135,7 @@ public class Highlighter : FSystem {
                 }
                 else
                 {
-                    if (!hit.transform.gameObject.GetComponent<DreamFragment>() && (previousHighlight == hit.transform.gameObject || (hit.transform.parent && previousHighlight == hit.transform.parent.gameObject) || (hit.transform.parent && hit.transform.parent.parent && previousHighlight == hit.transform.parent.parent.gameObject)))
+                    if ((!hit.transform.gameObject.GetComponent<DreamFragment>() || hit.transform.gameObject.GetComponent<DreamFragment>().type == 0) && (previousHighlight == hit.transform.gameObject || (hit.transform.parent && previousHighlight == hit.transform.parent.gameObject) || (hit.transform.parent && hit.transform.parent.parent && previousHighlight == hit.transform.parent.parent.gameObject)))
                         currentHighlight = previousHighlight;
                 }
             }
