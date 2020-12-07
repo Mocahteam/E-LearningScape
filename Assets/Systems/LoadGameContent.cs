@@ -122,6 +122,7 @@ public class LoadGameContent : FSystem {
                 gameContent = JsonUtility.FromJson<GameContent>(defaultGameContent.jsonFile.text);
 
                 int l = defaultGameContent.dreamFragmentPictures.Length;
+                Directory.CreateDirectory("Data/Fragments");
                 for (int i = 0; i < l; i++)
                 {
                     File.WriteAllBytes(string.Concat("Data/Fragments/", defaultGameContent.dreamFragmentPictures[i].name, ".png"), defaultGameContent.dreamFragmentPictures[i].EncodeToPNG());
