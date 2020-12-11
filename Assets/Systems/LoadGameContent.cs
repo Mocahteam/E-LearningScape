@@ -814,7 +814,7 @@ public class LoadGameContent : FSystem {
                                 tmpGO.transform.SetParent(go.transform);
                                 tmpRectTransform = tmpGO.GetComponent<RectTransform>();
                                 tmpRectTransform.localScale = Vector3.one;
-                                //if there are several document for on dream fragment, give them different position to make them visible
+                                //if there are several document for one dream fragment, give them different position to make them visible
                                 //(here we put a gap of 30 between each, alternating left and right)
                                 posID = l - i - 1;
                                 tmpRectTransform.anchoredPosition = new Vector2((l % 2 == 0 ? gap/2 : 0) + gap * (posID / 2 + posID % 2) * (posID % 2 == 0 ? 1 : -1), 0);

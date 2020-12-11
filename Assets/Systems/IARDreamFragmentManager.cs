@@ -29,12 +29,15 @@ public class IARDreamFragmentManager : FSystem {
 	private GameObject selectedIARFragment;
 	private DreamFragment selectedDreamFragment;
 	private GameObject draggedDocument = null;
+	private GameObject selectedDocument = null;
 	//the offset is used to move the document from the point clicked and not the center
 	private Vector2 offset;
+
 
 	private DreamFragmentToggle tmpDFToggle;
 	private RectTransform tmpRT;
 	private DreamFragment tmpDreamFragment;
+	private GameObject tmpGO;
 
 	public IARDreamFragmentManager()
     {
@@ -75,15 +78,21 @@ public class IARDreamFragmentManager : FSystem {
 			if (t.GetComponent<NewDreamFragment>())
 				GameObjectManager.removeComponent<NewDreamFragment>(t.gameObject);
 
+			//set game object as last sibling in hierarchy to see it above the others
+			//(do it even when the object is disabled to prevent a bug happening when it is activated again)
+			tmpDFToggle.dreamFragmentContent.transform.SetAsLastSibling();
+
 			//change content's state depending on the value of the toggle
 			GameObjectManager.setGameObjectState(tmpDFToggle.dreamFragmentContent, t.isOn);
 
+			selectedDocument = null;
 			if (t.isOn)
 			{
 				t.GetComponentInChildren<Image>().color = tmpDFToggle.onColor;
 				selectedIARFragment = t.gameObject;
-				//set game object as last sibling in hierarchy to see it above the others
-				tmpDFToggle.dreamFragmentContent.transform.SetAsLastSibling();
+
+				if (tmpDFToggle.dreamFragmentContent.transform.childCount > 0)
+					selectedDocument = tmpDFToggle.dreamFragmentContent.transform.GetChild(0).gameObject;
 			}
             else
 			{
@@ -91,7 +100,7 @@ public class IARDreamFragmentManager : FSystem {
 				selectedIARFragment = null;
 			}
 
-			SetOnlineButtonState();
+			SetButtonsState();
 		}
 	}
 
@@ -120,6 +129,57 @@ public class IARDreamFragmentManager : FSystem {
 			GameObjectManager.setGameObjectState(onlineButton, false);
     }
 
+	public void RotateDocument(float angle)
+    {
+        if (selectedDocument)
+			selectedDocument.GetComponent<RectTransform>().Rotate(0, 0, angle);
+	}
+
+	public void ZoomDocument(float value)
+    {
+        if (selectedDocument)
+		{
+			tmpRT = selectedDocument.GetComponent<RectTransform>();
+			tmpRT.localScale += Vector3.one * value / 100;
+			//check minimum and maximum values
+			if (tmpRT.localScale.x < 0.1f)
+				tmpRT.localScale = Vector3.one * 0.1f;
+			else if (tmpRT.localScale.x > 2f)
+				tmpRT.localScale = Vector3.one * 2f;
+		}
+	}
+
+	/// <summary>
+	/// Resets the selected dream fragment to the state it was when it was created (zoom, rotation and documents positions).
+	/// </summary>
+	public void ResetFragment()
+	{
+        if (selectedIARFragment)
+        {
+			//get the dream fragment content
+			tmpDFToggle = selectedIARFragment.GetComponent<DreamFragmentToggle>();
+			if (tmpDFToggle)
+				tmpGO = tmpDFToggle.dreamFragmentContent;
+			else
+				tmpGO = selectedIARFragment;
+
+			int posID;
+			int l = tmpGO.transform.childCount;
+			float gap = 30;
+			for (int i = 0; i < l; i++)
+			{
+				//if there are several document for one dream fragment, give them different position to make them visible
+				//(here we put a gap of 30 between each, alternating left and right)
+				tmpRT = tmpGO.transform.GetChild(i).GetComponent<RectTransform>();
+				posID = l - i - 1;
+				tmpRT.anchoredPosition = new Vector2((l % 2 == 0 ? gap / 2 : 0) + gap * (posID / 2 + posID % 2) * (posID % 2 == 0 ? 1 : -1), 0);
+				//reset rotation and scale
+				tmpRT.localRotation = Quaternion.Euler(0, 0, 0);
+				tmpRT.localScale = Vector3.one;
+			}
+		}
+	}
+
 	// Use this to update member variables when system pause. 
 	// Advice: avoid to update your families inside this function.
 	protected override void onPause(int currentFrame) {
@@ -140,6 +200,7 @@ public class IARDreamFragmentManager : FSystem {
                 if (go.GetComponent<PointerOver>())
 				{
 					draggedDocument = go;
+					selectedDocument = go;
 					selectedIARFragment = go.transform.parent.gameObject;
 					tmpRT = go.GetComponent<RectTransform>();
 					float screenOffsetX = (Screen.width - contentContainerRT.sizeDelta.x) / 11.5f;
@@ -150,7 +211,7 @@ public class IARDreamFragmentManager : FSystem {
 					//set game object as last sibling in hierarchy to see it above the others
 					go.transform.SetAsLastSibling();
 					go.transform.parent.SetAsLastSibling();
-					SetOnlineButtonState();
+					SetButtonsState();
 					break;
                 }
             }
@@ -173,6 +234,10 @@ public class IARDreamFragmentManager : FSystem {
 				draggedDocument.transform.localPosition = Vector3.Scale(pos, iarRectTransform.sizeDelta);
 			}
         }
+
+        if (selectedDocument)
+			// zoom documents with mouse wheel
+			ZoomDocument(Input.mouseScrollDelta.y * -3f);
 	}
 
 	/// <summary>
@@ -208,7 +273,7 @@ public class IARDreamFragmentManager : FSystem {
 
 	/// <summary>
 	/// Checks in the dream fragment corresponding to the selected toggle if there is a link
-	/// and set the state accordingly
+	/// and set the state accordingly.
 	/// </summary>
 	private void SetOnlineButtonState()
 	{
@@ -221,4 +286,15 @@ public class IARDreamFragmentManager : FSystem {
 		GameObjectManager.setGameObjectState(onlineButton, selectedDreamFragment && 
 			selectedDreamFragment.urlLink != null && selectedDreamFragment.urlLink != "");
 	}
+
+	/// <summary>
+	/// Enable or disable buttons used to manipulate documents depending on whether there is a document selected.
+	/// </summary>
+	private void SetButtonsState()
+    {
+		foreach (GameObject go in f_buttons)
+			GameObjectManager.setGameObjectState(go, selectedDocument && selectedDocument.activeSelf);
+
+		SetOnlineButtonState();
+    }
 }

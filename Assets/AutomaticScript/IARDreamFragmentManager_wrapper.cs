@@ -19,4 +19,19 @@ public class IARDreamFragmentManager_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("IARDreamFragmentManager", "OpenLink", null);
 	}
 
+	public void RotateDocument(System.Single angle)
+	{
+		MainLoop.callAppropriateSystemMethod ("IARDreamFragmentManager", "RotateDocument", angle);
+	}
+
+	public void ZoomDocument(System.Single value)
+	{
+		MainLoop.callAppropriateSystemMethod ("IARDreamFragmentManager", "ZoomDocument", value);
+	}
+
+	public void ResetFragment()
+	{
+		MainLoop.callAppropriateSystemMethod ("IARDreamFragmentManager", "ResetFragment", null);
+	}
+
 }
