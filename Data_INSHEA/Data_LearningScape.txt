@@ -143,6 +143,7 @@
     "tutoText3": "Bien arrivé !",
     "tutoText4": "Appuie sur\npour accéder à l'inventaire",
 	
+    "ballRandomPositioning": true,
     "ballBoxQuestion": "Comment concevoir une situation pédagogique correspondant aux besoins de tous les apprenants ?",
     "ballBoxPlaceHolder": "3 chiffres attendus...",
 	"ballBoxAnswerFeedback": "1 - 2 - 8",
@@ -302,9 +303,13 @@
     "lockRoom2Password": 703,
 	
     "puzzleAnswer": "Adapter sa pratique",
+    "puzzleAnswerFeedback": "Adapter sa pratique",
+    "puzzleAnswerFeedbackDesc": "",
 	"puzzlePicturePath": "Data/Puzzle_Complet.png",
 	
     "lampAnswer": "Besoins",
+    "lampAnswerFeedback": "Besoins",
+    "lampAnswerFeedbackDesc": "",
     "lampPicturesPath": [
         "Data/lamp01.png",
         "Data/lamp02.png",
@@ -315,8 +320,12 @@
     ],
 	
     "enigma16Answer": "Personne ressource",
+    "enigma16AnswerFeedback": "Personne ressource",
+    "enigma16AnswerFeedbackDesc": "",
 	
     "whiteBoardAnswer": "Accessibilité",
+    "whiteBoardAnswerFeedback": "Accessibilité",
+    "whiteBoardAnswerFeedbackDesc": "",
     "whiteBoardWords": [
         "Dépendances",
         "Déni",

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: -667331979, guid: 89f0137620f6af44b9ba852b4190e64e, type: 3}
   m_Name: arial_UI SDF
   m_EditorClassIdentifier: 
-  hashCode: -280284314
+  hashCode: 261301093
   material: {fileID: 21857587001916142}
   materialHashCode: -1174164947
   fontAssetType: 1

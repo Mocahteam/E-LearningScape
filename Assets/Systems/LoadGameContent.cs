@@ -355,15 +355,21 @@ public class LoadGameContent : FSystem {
         int answer;
         //initialise position and texts for all balls
         List<int> idList = new List<int>();
-        for (int i = 0; i < nbBalls; i++)
-            idList.Add(i);
+        if (gameContent.ballRandomPositioning)
+            for (int i = 0; i < nbBalls; i++)
+                idList.Add(i);
         for (int i = 0; i < nbBalls; i++)
         {
             b = f_balls.getAt(i).GetComponent<Ball>();
 
-            //change randomly the position of the ball
-            b.id = idList[(int)UnityEngine.Random.Range(0, idList.Count - 0.001f)];
-            idList.Remove(b.id);
+            if (gameContent.ballRandomPositioning)
+            {
+                //change randomly the position of the ball
+                b.id = idList[(int)UnityEngine.Random.Range(0, idList.Count - 0.001f)];
+                idList.Remove(b.id);
+            }
+            else
+                b.id = i;
 
             if(b.number < gameContent.ballTexts.Length)
                 b.text = gameContent.ballTexts[b.number];
@@ -401,7 +407,7 @@ public class LoadGameContent : FSystem {
                         //If the two balls were found
                         if (nbBallSeen == 2)
                         {
-                            //exchange numbers and texts
+                            //exchange numbers, texts and id
                             if (b.number == j + 1)
                             {
                                 b.number = answer;
@@ -413,8 +419,11 @@ public class LoadGameContent : FSystem {
                                 b2.number = answer;
                             }
                             tmpString = b.text;
+                            int tmpID = b.id;
                             b.text = b2.text;
+                            b.id = b2.id;
                             b2.text = tmpString;
+                            b2.id = tmpID;
                         }
                         else
                         {

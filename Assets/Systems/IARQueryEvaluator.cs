@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using FYFY;
+using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -28,7 +30,11 @@ public class IARQueryEvaluator : FSystem {
     public static IARQueryEvaluator instance;
 
     private HashSet<string> availableOrSolutions;
+    private Dictionary<string, List<string>> splitOrSolutions;
+    private Dictionary<string, KeyValuePair<string, string>> room3AnswerFeedbacks;
     private bool showRoom2FinalCode = false;
+
+    private string tmpStr;
 
     public IARQueryEvaluator()
     {
@@ -36,9 +42,31 @@ public class IARQueryEvaluator : FSystem {
         {
             // Init callbacks and/or solutions
             availableOrSolutions = new HashSet<string>();
+            splitOrSolutions = new Dictionary<string, List<string>>();
             foreach (GameObject query in f_queries)
                 foreach (string or in query.GetComponent<QuerySolution>().orSolutions)
+                {
                     availableOrSolutions.Add(or);
+                    if (!splitOrSolutions.ContainsKey(or))
+                    {
+                        //split each solution by "##" and use this to check if the player answer contains all parts of a solution
+                        splitOrSolutions.Add(or, new List<string>(or.Split(new string[] { "##" }, System.StringSplitOptions.None)));
+                    }
+                }
+
+            // Init feedbacks for room 3
+            room3AnswerFeedbacks = new Dictionary<string, KeyValuePair<string, string>>();
+            tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.puzzleAnswer);
+            room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.puzzleAnswerFeedback, LoadGameContent.gameContent.puzzleAnswerFeedbackDesc));
+            tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma16Answer);
+            if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
+                room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.enigma16AnswerFeedback, LoadGameContent.gameContent.enigma16AnswerFeedbackDesc));
+            tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer);
+            if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
+                room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.lampAnswerFeedback, LoadGameContent.gameContent.lampAnswerFeedbackDesc));
+            tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer);
+            if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
+                room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.whiteBoardAnswerFeedback, LoadGameContent.gameContent.whiteBoardAnswerFeedbackDesc));
 
             f_answerRoom2.addExitCallback(onNewAnswerDisplayed);
             f_uiEffects.addEntryCallback(onUIEffectEnd);
@@ -100,6 +128,7 @@ public class IARQueryEvaluator : FSystem {
     public void IarCheckAnswer(GameObject query)
     {
         string answer = query.GetComponentInChildren<InputField>().text; //player's answer
+        string solution = "";
         // format answer
         answer = LoadGameContent.StringToAnswer(answer);
         // get query
@@ -120,15 +149,27 @@ public class IARQueryEvaluator : FSystem {
         if (!error && qs.orSolutions.Count > 0)
         {
             error = true;
+            bool containsSolution;
             for (int i = 0; i < qs.orSolutions.Count && error; i++)
             {
+                //check if the given answer contains all of the solution parts
+                containsSolution = true;
+                foreach(string s in splitOrSolutions[qs.orSolutions[i]])
+                {
+                    if (!answer.Contains(s))
+                    {
+                        containsSolution = false;
+                        break;
+                    }
+                }
                 // if answer includes this solution and this solution is still available
-                if (answer.Contains(qs.orSolutions[i]) && availableOrSolutions.Contains(qs.orSolutions[i]))
+                if (containsSolution && availableOrSolutions.Contains(qs.orSolutions[i]))
                 {
                     error = false;
                     availableOrSolutions.Remove(qs.orSolutions[i]); // consume this "or" solution
                     // override answer by the solution
-                    answer = qs.orSolutions[i];
+                    //answer = qs.orSolutions[i];
+                    solution = qs.orSolutions[i];
                 }
             }
         }
@@ -142,6 +183,7 @@ public class IARQueryEvaluator : FSystem {
             success = error ? -1 : 1,
             response = answer
         });
+        answer = solution != "" ? solution : answer;
 
         if (error)
         {
@@ -163,7 +205,7 @@ public class IARQueryEvaluator : FSystem {
             // set final answer for third room (due to OR options)
             if (query.tag == "Q-R3")
             {
-                query.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = answer;
+                SetRoom3AnswerFeedback(solution, query);
 
                 // Prepare correct trace
                 string context = "";
@@ -230,6 +272,42 @@ public class IARQueryEvaluator : FSystem {
             foreach (LinkedWith item in query.GetComponents<LinkedWith>())
                 GameObjectManager.setGameObjectState(item.link, false);
 
+        }
+    }
+
+    /// <summary>
+    /// Checks depending on the given solution which feedback should be used and sets it in the given query.
+    /// </summary>
+    /// <param name="solution">The solution corresponding to the answer given by the player</param>
+    /// <param name="query">The query in which the player answered</param>
+    private void SetRoom3AnswerFeedback(string solution, GameObject query)
+    {
+        string feedback = "";
+        string description = "";
+
+        if (room3AnswerFeedbacks.ContainsKey(solution))
+        {
+            feedback = room3AnswerFeedbacks[solution].Key;
+            description = room3AnswerFeedbacks[solution].Value;
+        }
+
+        if(feedback != "" && query)
+        {
+            try
+            {
+                query.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = feedback;
+                query.transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text = description;
+            }
+            catch (System.Exception)
+            {
+                Debug.LogWarning("Couldn't set the feedback of the answer \"" + feedback + "\" because of an element missing.");
+                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - Couldn't set the feedback of the answer \"" + feedback + "\" because of an element missing."));
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Couldn't set the feedback of the answer because of invalid solution or query.");
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - Couldn't set the feedback of the answer because of invalid solution or query."));
         }
     }
 

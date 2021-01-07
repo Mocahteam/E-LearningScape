@@ -139,6 +139,7 @@
     "tutoText3": "Bien arrivé !",
     "tutoText4": "Appuie sur\npour accéder à l'inventaire",
 	
+    "ballRandomPositioning": true,
     "ballBoxQuestion": "Que faire pour rendre actifs mes étudiants ?",
     "ballBoxPlaceHolder": "3 chiffres attendus...",
 	"ballBoxAnswerFeedback": "1 - 2 - 8",
@@ -300,10 +301,14 @@
 	
     "lockRoom2Password": 703,
 
-    "puzzleAnswer": "planification",
+    "puzzleAnswer": "Planification",
+    "puzzleAnswerFeedback": "Planification",
+    "puzzleAnswerFeedbackDesc": "",
     "puzzlePicturePath": "Data/Puzzle_Complet.png",
 	
     "lampAnswer": "Ressources",
+    "lampAnswerFeedback": "Ressources",
+    "lampAnswerFeedbackDesc": "",
     "lampPicturesPath": [
         "Data/lamp01.png",
         "Data/lamp02.png",
@@ -314,8 +319,12 @@
     ],
 	
     "enigma16Answer": "Contraintes",
+    "enigma16AnswerFeedback": "Contraintes",
+    "enigma16AnswerFeedbackDesc": "",
 	
     "whiteBoardAnswer": "Contenu",
+    "whiteBoardAnswerFeedback": "Contenu",
+    "whiteBoardAnswerFeedbackDesc": "",
     "whiteBoardWords": [
         "##RIEN N'EST## IMPORTANT",
         "TOUT EST ##INDISPENSABLE##",

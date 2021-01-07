@@ -82,10 +82,13 @@ public class CollectObject : FSystem {
                 if (!isDreamFragment)
                     GameObjectManager.setGameObjectState(collect, false);
                 // Play notification
-                if (isDreamFragment && inventoryHUDEnabled)
+                if (LoadGameContent.gameContent.virtualDreamFragment && isDreamFragment && inventoryHUDEnabled)
                     itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start2");
                 else
-                    itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start");
+                {
+                    if (!isDreamFragment || LoadGameContent.gameContent.virtualDreamFragment)
+                        itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start");
+                }
 
                 // Play sound
                 GameObjectManager.addComponent<PlaySound>(collect, new { id = 10 }); // id refer to FPSController AudioBank

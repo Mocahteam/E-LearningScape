@@ -211,6 +211,7 @@ public class GameContent {
     public List<string> inventoryPuzzle;
 
     //Ball Box
+    public bool ballRandomPositioning;
     public string ballBoxQuestion;
     public string ballBoxPlaceHolder;
     public string ballBoxAnswerFeedback;
@@ -301,16 +302,24 @@ public class GameContent {
 
     //Puzzle (or 5 dream fragments)
     public string puzzleAnswer;
+    public string puzzleAnswerFeedback;
+    public string puzzleAnswerFeedbackDesc;
     public string puzzlePicturePath;
 
     //Enigma 13 (2 dream fragments)
     public string enigma16Answer;
+    public string enigma16AnswerFeedback;
+    public string enigma16AnswerFeedbackDesc;
 
     //Lamp
     public string lampAnswer;
+    public string lampAnswerFeedback;
+    public string lampAnswerFeedbackDesc;
     public string[] lampPicturesPath = new string[6];
 
     //White Board
     public string whiteBoardAnswer;
+    public string whiteBoardAnswerFeedback;
+    public string whiteBoardAnswerFeedbackDesc;
     public string[] whiteBoardWords = new string [12];
 }
