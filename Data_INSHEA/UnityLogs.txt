@@ -936,3 +936,19 @@
 [2020.09.19.09.14] Log - Help system: True
 [2020.09.19.09.14] Log - Trace to LRS: False
 [2020.09.19.09.14] Log - Data loaded
+[2021.01.08.10.05] Log - Trace: True
+[2021.01.08.10.05] Log - Help system: True
+[2021.01.08.10.05] Log - Trace to LRS: False
+[2021.01.08.10.05] Log - Data loaded
+[2021.01.08.10.07] Log - Trace: True
+[2021.01.08.10.07] Log - Help system: True
+[2021.01.08.10.07] Log - Trace to LRS: False
+[2021.01.08.10.07] Log - Data loaded
+[2021.01.08.10.11] Log - Trace: True
+[2021.01.08.10.11] Log - Help system: True
+[2021.01.08.10.11] Log - Trace to LRS: False
+[2021.01.08.10.11] Log - Data loaded
+[2021.01.08.10.15] Log - Trace: True
+[2021.01.08.10.15] Log - Help system: True
+[2021.01.08.10.15] Log - Trace to LRS: False
+[2021.01.08.10.15] Log - Data loaded

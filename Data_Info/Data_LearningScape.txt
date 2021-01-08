@@ -1,14 +1,14 @@
 {
-    "theme": "EcoleInclusive",
+    "theme": "Info",
     "trace": true,
     "helpSystem": true,
     "traceToLRS": false,
     "traceMovementFrequency": 0.5,
-    "virtualDreamFragment": true,
+	"virtualDreamFragment": true,
     "virtualPuzzle": true,
     "lrsConfigPath": "Data/LRSConfig.txt",
     "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
-    "dreamFragmentDocumentsPathFile": "Data/FragmentsPath.txt",
+	"dreamFragmentDocumentsPathFile": "Data/FragmentsPath.txt",
     "hintsPath": "Data/Hints_LearningScape.txt",
     "internalHintsPath": "Data/InternalHints_LearningScape.txt",
     "wrongAnswerFeedbacksPath": "Data/WrongAnswerFeedbacks.txt",
@@ -18,23 +18,22 @@
 	"removeExtraGeometries": false,
 	
 	"additionalLogosPath": [
-		"Data/INSHEA_ORNA.png"
 	],
 	
     "storyTextIntro": [
-        "Il est déjà tard le soir, Camille reste inquiète pour sa première journée dans son nouvel emploi. Ce n’est pas son premier poste, mais pour la première fois elle va être confrontée à un groupe de personnes dont certaines ont des besoins particuliers.",
-        "En se brossant les dents, elle se remémore ce qu’elle a appris sur la diversité, les postures à avoir, mais s’interroge sur sa capacité à mettre en oeuvre sa formation théorique. Puis elle se couche, et plein de questions tournent dans sa tête : et si j’ai un blanc ? et si je ne suis pas comprise ? et si j’étais maladroite dans mes formulations ?",
+        "Il est déjà tard le soir, Camille appréhende un peu son premier jour dans son nouvel établissement. Elle vient d’arriver dans une ville qu’elle connait peu et doit résoudre un grand nombre de problèmes : Analyser les moyens de déplacement, planifier son trajet vers son université, envisager les possibilités, ordonnancer les différentes étapes...",
+        "En se brossant les dents, elle se remémore tout le programme qu’elle vient de préparer et se demande si elle devra le reconcevoir tous les jours ou si elle pourra le réutiliser. Puis elle se couche, et plein de questions tournent dans sa tête : et si je ne me réveille pas à l’heure ? combien de temps vais-je attendre le premier bus ? et si mon ordinateur n’a plus de batterie ?",
         "Camille finit par s'endormir... C'est alors que les marchands de sable entrent en action pour l’aider à structurer sa pensée pendant son sommeil."
     ],
     "storyTextransition": [
         "Camille est entrée en sommeil paradoxal, elle se met à rêver et se retrouve dans un univers étrange. Les marchands de sable restent avec elle pour l’aider à émerger de ce rêve."
     ],
     "storyTextEnd": [
-        "Camille se réveille. Elle est en pleine forme, et tout est clair dans sa tête pour son premier jour. Elle a hâte de commencer.",
+        "Camille se réveille. Elle est en pleine forme, et son programme de la journée est clair dans sa tête pour son premier jour. Elle a hâte de commencer : un vrai programme informatique !",
         "Les marchands de sable ont bien travaillé et se retrouvent pour faire le bilan de leurs activités."
     ],
 	"additionalCredit": [
-		"Pour l'INSHEA\n\nArneton Melissa\nBroussolle Elisabeth\nFerrand Marie-Hélène\nGarbarini Délia\nGarnier Philippe\nGeffroy Véronique\nMuratet Mathieu\nVanbrugghe Anne"
+		"Adaptation pour le domaine informatique réalisée par\n\nThibault Carron\nMathieu Muratet"
 	],
     "scoreText": "Vous avez mis: ",
 	
@@ -65,12 +64,12 @@
 	],
 	"inventoryGlasses1": [
 		"Lunette Filtrante",
-		"La branche droite d'une paire de lunettes ? Il doit certainement manquer l’autre moitié... La lentille est teintée en rouge et semble mettre en lumière ce à quoi il faut être attentif dans une foule de personnes.",
+		"La branche droite d'une paire de lunettes connectées ? Il doit certainement manquer l’autre moitié... La lentille est teintée en rouge et semble révéler certaines lignes de programme.",
 		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
 	],
 	"inventoryGlasses2": [
 		"Lunette Filtrante",
-		"La branche gauche d'une paire de lunettes ? Il doit certainement manquer l’autre moitié... La lentille est teintée en jaune et semble permettre de voir les choses invisibles dans une foule de personnes.",
+		"La branche gauche d'une paire de lunettes connectées ? Il doit certainement manquer l’autre moitié... La lentille est teintée en jaune et semble révéler certaines lignes de programme.",
 		"Cliquez sur la branche de lunette pour positionner/retirer le verre devant vos yeux"
 	],
 	"inventoryMirror": [
@@ -88,8 +87,8 @@
 		"Ce sont des pièces d'un puzzle, tout simplement.",
 		"Cliquez pour manipuler les pièces"
 	],
-
-    "loadingText": "Chargement",
+	
+	"loadingText": "Chargement",
     "mainMenuStart": "Commencer",
     "mainMenuOption": "Options",
     "mainMenuLeave": "Quitter",
@@ -143,107 +142,104 @@
     "tutoText3": "Bien arrivé !",
     "tutoText4": "Appuie sur\npour accéder à l'inventaire",
 	
-    "ballRandomPositioning": true,
-    "ballBoxQuestion": "Comment concevoir une situation pédagogique correspondant aux besoins de tous les apprenants ?",
-    "ballBoxPlaceHolder": "3 chiffres attendus...",
-	"ballBoxAnswerFeedback": "1 - 2 - 8",
-	"ballBoxAnswerFeedbackDesc": "Proposer plusieurs modalités - Mettre l’apprenant en situation d’agir - Permettre aux apprenants de discuter",
+	"ballRandomPositioning": false,
+    "ballBoxQuestion": "Somme des valeurs des boules dont l’écart entre l’indice des lignes et l’indice des colonnes et supérieur à deux",
+    "ballBoxPlaceHolder": "1 nombre attendu...",
+	"ballBoxAnswerFeedback": "16",
+	"ballBoxAnswerFeedbackDesc": "0 + 3 + 4 + 9",
     "ballBoxAnswer": [
-        "1",
-        "2",
-        "8"
+        "16"
     ],
     "ballTexts": [
-        "Éviter d’être exigeant",
-        "Proposer plusieurs modalités",
-        "Mettre l’apprenant en situation d’agir",
-        "Mettre l’apprenant en écoute passive",
-        "Tout écrire au tableau",
-        "Donner du travail à la maison",
-        "Expliquer longuement",
-        "Démultiplier les aides techniques et humaines",
-        "Permettre aux apprenants de communiquer",
-        "Interroger un apprenant au hasard"
+        "[0][0]",
+        "[0][1]",
+        "[0][2]",
+        "[0][3]",
+        "[0][4]",
+        "[1][0]",
+        "[1][1]",
+        "[1][2]",
+        "[1][3]",
+        "[1][4]"
     ],
 	
-    "plankAndWireQuestionIAR": "Qu’apporte la Classification Internationale du Fonctionnement en 2001 ?",
-    "plankAndWirePlaceHolder": "3 chiffres attendus...",
-    "plankAndWireQuestion": "Relier avec la corde les 3 idées fortes de la classification",
-	"plankAndWireAnswerFeedback": "4 - 2 - 1",
-	"plankAndWireAnswerFeedbackDesc": "Fonction - Capacité - Participation",
+    "plankAndWireQuestionIAR": "Qu’est-ce que l’Informatique ?",
+    "plankAndWirePlaceHolder": "1 nombre attendu...",
+    "plankAndWireQuestion": "Relier avec la corde les 3 idées fortes de l’informatique",
+	"plankAndWireAnswerFeedback": "512",
+	"plankAndWireAnswerFeedbackDesc": "Science du traitement de l'information",
     "plankAndWireCorrectWords": [
-        "Fonctions",
-        "Capacité",
-        "Participation"
+        "Science",
+        "Traitement",
+        "Information"
     ],
     "plankAndWireCorrectNumbers": [
-        "4",
-        "2",
-        "1"
+        "5",
+        "1",
+        "2"
     ],
     "plankOtherWords": [
-        "Déficience",
-        "Handicap",
-        "Incapacité",
-        "Arriéré",
-        "Idiot",
-        "Bienfaisance",
-        "Asile",
-        "Charité",
-        "Désavantage",
-        "Limitation"
+		"Ordinateur",
+		"TICE",
+		"Bureautique",
+		"Internet",
+		"Réseaux",
+		"Mathématiques",
+		"Écrans",
+		"Périphérique",
+		"Numérique",
+		"Digital"
     ],
     "plankAndWireOtherNumbers": [
         "3",
-        "5",
+        "4",
         "6",
         "7",
         "8",
         "9"
     ],
 	
-    "crouchQuestion": "Comment être à l’écoute des besoins ?",
-    "crouchPlaceHolder": "6 mots attendus...",
+    "crouchQuestion": "L’ordinateur voit des nombres, l’humain voit des lettres, l’ASCII est la solution...",
+    "crouchPlaceHolder": "1 mot attendu...",
     "crouchAnswer": [
-        "Il faut savoir changer de posture"
+        "CODAGE"
     ],
-    "crouchAnswerFeedback": "Il faut savoir changer de posture",
+    "crouchAnswerFeedback": "CODAGE",
     "crouchAnswerFeedbackDesc": "",
     "crouchWords": [
-        "Île",
-        "faux",
-        "ça voire",
-        "chant geai",
-        "deux",
-        "pause Tür"
+        "1: 67",
+        "2: 79",
+        "3: 68",
+        "4: 65",
+        "5: 71",
+        "6: 69"
     ],
 	
-    "gearsQuestion": "Sur quel facteur en premier lieu, dois-je agir pour favoriser la participation sociale de tous ?",
-    "iarHelpGears": "Déplacez le bon engrenage au centre de l'écran",
-    "gearTextUp": "Chacun de nous est acteur",
-    "gearTextDown": "Application des lois",
+    "gearsQuestion": "Quel processus permet d’obtenir des résultats à partir de données ?",
+    "gearTextUp": "Donnée",
+    "gearTextDown": "Résultat",
     "gearMovableTexts": [
-        "Ses repré-sentations",
-        "Les locaux",
-        "Les besoins de la personne",
-        "La com-munication"
+        "Traitement",
+        "Traduction",
+        "Exécution",
+        "Affichage"
     ],
-    "gearAnswer": "Ses repré-sentations",
+    "gearAnswer": "Traitement",
 	
-	"mastermindQuestion": "Combien (approximativement) existe-t-il de fiches ORNA ?\nLe hasard vous aidera peut-être !",
-    "masterMindPlaceholder": "3 chiffres attendus...",
+	"mastermindQuestion": "Vous avez oublié votre code ? Le hasard vous aidera sous doute !",
+	"masterMindPlaceholder": "3 chiffres attendus...",
     "masterMindPasswordText": "Mot de passe:",
     "masterMindValidation": "Valider",
-	"mastermindQuestionYPos" : 65,
-	"mastermindAnswer": 250,
-	"mastermindBackgroundPicturePath": "Data/MasterMindINSHEA.png",
+	"mastermindQuestionYPos" : -124,
+	"mastermindAnswer": 256,
+	"mastermindBackgroundPicturePath": "Data/MasterMind.png",
 	
-    "glassesQuestion": "Quelle caractéristique commune ressort de cette foule ?",
-    "glassesPlaceHolder": "2 mots attendus...",
+    "glassesQuestion": "Que révèle les lunettes ?",
+    "glassesPlaceHolder": "1 mot attendus...",
     "glassesAnswer": [
-        "Handicap invisible"
+        "Alternative"
     ],
-    "glassesAnswerFeedback": "Handicap invisible",
+    "glassesAnswerFeedback": "Alternative",
     "glassesAnswerFeedbackDesc": "",
     "glassesPicturesPath": [
         "Data/glasses01.png",
@@ -252,63 +248,63 @@
         "Data/glasses04.png"
     ],
 	
-    "enigma08Question": "À quoi faut-il prêter attention lors de la conception d’un document ?",
-    "enigma08PlaceHolder": "1 mot attendu...",
+    "enigma08Question": "Combien de lignes javascript sont nécessaires pour aider l'astronaute à rejoindre son module le plus vite possible ?",
+    "enigma08PlaceHolder": "1 nombre attendu...",
     "enigma08Answer": [
-        "Lisibilité"
+        "18"
     ],
-    "enigma08AnswerFeedback": "Lisibilité",
+    "enigma08AnswerFeedback": "18",
     "enigma08AnswerFeedbackDesc": "",
 	
-    "scrollsQuestion": "Acronyme bien utile pour construire et mettre en place un projet personnalisé",
-    "scrollsPlaceHolder": "1 mot anglais attendu...",
+    "scrollsQuestion": "Agencez ces lettres entre elles pour trouver le plaisir de l’informatique",
+    "scrollsPlaceHolder": "1 mot attendu...",
     "scrollsAnswer": [
-        "SMART"
+        "PROGRAMMER"
     ],
-	"scrollsAnswerFeedback": "SMART",
-	"scrollsAnswerFeedbackDesc": "Sensé - Mesurable - Atteignable - Réaliste - Temporalisé",
+	"scrollsAnswerFeedback": "PROGRAMMER",
+	"scrollsAnswerFeedbackDesc": "",
     "scrollsWords": [
-        "<color=red>S</color>ensé",
-        "<color=red>M</color>esurable",
-        "<color=red>A</color>tteignable",
-        "<color=red>R</color>éaliste",
-        "<color=red>T</color>emporalisé"
+        "<color=red>PR</color>océdure",
+        "bl<color=red>OG</color>",
+        "<color=red>RA</color>finer",
+        "co<color=red>MM</color>ander",
+        "cod<color=red>ER</color>"
     ],
 	
-    "mirrorQuestion": "Qu’est ce qui met en péril l’estime de soi des personnes en situation de handicap ?",
-    "mirrorPlaceHolder": "1 mot attendu...",
+    "mirrorQuestion": "Quelle date reflète l’apparition du premier ordinateur personnel (PC) ?",
+    "mirrorPlaceHolder": "1 année attendue...",
     "mirrorAnswer": [
-        "Stigmatisation"
+        "1981"
     ],
-	"mirrorAnswerFeedback": "Stigmatisation",
+	"mirrorAnswerFeedback": "1981",
 	"mirrorAnswerFeedbackDesc": "",
     "mirrorPicturePath": "Data/Plank.png",
 	
-    "enigma11Question": "Un processus de raisonnement…",
-    "enigma11PlaceHolder": "1 mot attendu...",
+    "enigma11Question": "Quelle est la réponse de petit panda ?",
+    "enigma11PlaceHolder": "1 nombre attendu...",
     "enigma11Answer": [
-        "Inférence"
+        "6"
     ],
-	"enigma11AnswerFeedback": "Inférence",
+	"enigma11AnswerFeedback": "6",
 	"enigma11AnswerFeedbackDesc": "",
 	
-    "enigma12Question": "Elle est nécessaire pour sortir du labyrinthe de l’école inclusive",
-    "enigma12PlaceHolder": "1 mot attendu...",
+    "enigma12Question": "L’analyse de Compute-it vous donnera la solution...",
+    "enigma12PlaceHolder": "1 nombre attendu...",
     "enigma12Answer": [
-        "Collaboration"
+        "20"
     ],
-	"enigma12AnswerFeedback": "Collaboration",
+	"enigma12AnswerFeedback": "20",
 	"enigma12AnswerFeedbackDesc": "",
 	
-    "lockRoom2Password": 703,
+    "lockRoom2Password": "111",
 	
-    "puzzleAnswer": "Adapter sa pratique",
-    "puzzleAnswerFeedback": "Adapter sa pratique",
+    "puzzleAnswer": "Fonction",
+	"puzzleAnswerFeedback": "Fonction",
     "puzzleAnswerFeedbackDesc": "",
 	"puzzlePicturePath": "Data/Puzzle_Complet.png",
 	
-    "lampAnswer": "Besoins",
-    "lampAnswerFeedback": "Besoins",
+    "lampAnswer": "8",
+    "lampAnswerFeedback": "8 cercles",
     "lampAnswerFeedbackDesc": "",
     "lampPicturesPath": [
         "Data/lamp01.png",
@@ -319,29 +315,29 @@
         "Data/lamp06.png"
     ],
 	
-    "enigma16Answer": "Personne ressource",
-    "enigma16AnswerFeedback": "Personne ressource",
+    "enigma16Answer": "TODO",
+    "enigma16AnswerFeedback": "TODO",
     "enigma16AnswerFeedbackDesc": "",
 	
-    "whiteBoardAnswer": "Accessibilité",
-    "whiteBoardAnswerFeedback": "Accessibilité",
+    "whiteBoardAnswer": "Variable##Condition##Boucle##Fonction",
+    "whiteBoardAnswerFeedback": "Variable Condition Boucle Fonction",
     "whiteBoardAnswerFeedbackDesc": "",
     "whiteBoardWords": [
-        "Dépendances",
-        "Déni",
-        "Ob##s##tacle",
-        "Barrière",
-        "Entrave",
-        "##Accès## restreint",
-        "Mise à l’écart",
-        "Isolement",
-        "Ton sur ton",
-        "St##i##gmatisation",
-        "Stéréotypes",
-        "Immo##bilité##"
+        "##La boîte à## énigme...",
+        "...est-elle un ##outils## ?",
+        "Algorithmes",
+        "##Variable## aléatoire",
+        "Processeur",
+        "##Condition##nel",
+        "Impératif",
+        "Compilateur",
+        "Synchroniser",
+        "##Boucle##ment",
+        "Internet",
+        "##Fonction##alité"
     ],
-
-    "inputsSetTitle1": "Touche 1",
+	
+	"inputsSetTitle1": "Touche 1",
     "inputsSetTitle2": "Touche 2",
     "inputsSetTitle3": "Touche 3",
     "inputObserve": "Observer",

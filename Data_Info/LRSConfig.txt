@@ -1,0 +1,7 @@
+[
+  {
+    "lrsURL": "https://lrsmocah.lip6.fr/data/xAPI",
+    "lrsUser": "2da3ea73b1dcf6258c02649d1d3f7a9385b74d61",
+    "lrsPassword": "90935a12c7eeb44d1d6acefd0f413e4d4c552467"
+  }
+]
