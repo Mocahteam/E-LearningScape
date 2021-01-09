@@ -6,7 +6,7 @@ public class DreamFragmentToggle : MonoBehaviour {
 	//the content gameobject assiociated to this toggle, and activated/deactivated on click
 	public GameObject dreamFragmentContent;
 
-	//colors used to change toggle color when clicked
-	public Color onColor;
-	public Color offColor;
+	//sprites used to change toggle state
+	public Sprite onState;
+	public Sprite offState;
 }

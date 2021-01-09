@@ -88,7 +88,7 @@ public class IARDreamFragmentManager : FSystem {
 			selectedDocument = null;
 			if (t.isOn)
 			{
-				t.GetComponentInChildren<Image>().color = tmpDFToggle.onColor;
+				t.GetComponentInChildren<Image>().sprite = tmpDFToggle.onState;
 				selectedIARFragment = t.gameObject;
 
 				if (tmpDFToggle.dreamFragmentContent.transform.childCount > 0)
@@ -96,7 +96,7 @@ public class IARDreamFragmentManager : FSystem {
 			}
             else
 			{
-				t.GetComponentInChildren<Image>().color = tmpDFToggle.offColor;
+				t.GetComponentInChildren<Image>().sprite = tmpDFToggle.offState;
 				selectedIARFragment = null;
 			}
 
@@ -144,8 +144,8 @@ public class IARDreamFragmentManager : FSystem {
 			//check minimum and maximum values
 			if (tmpRT.localScale.x < 0.1f)
 				tmpRT.localScale = Vector3.one * 0.1f;
-			else if (tmpRT.localScale.x > 2f)
-				tmpRT.localScale = Vector3.one * 2f;
+			else if (tmpRT.localScale.x > 3f)
+				tmpRT.localScale = Vector3.one * 3f;
 		}
 	}
 
