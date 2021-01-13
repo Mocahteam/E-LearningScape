@@ -1,27 +1,102 @@
 {
-  "Fragment_souvenir_0": "",
-  "Fragment_souvenir_1": "",
-  "Fragment_souvenir_2": "http://www-ia.lip6.fr/~muratetm/elearningscape/Fragment18.png",
-  "Fragment_souvenir_3": "",
-  "Fragment_souvenir_4": "",
-  "Fragment_souvenir_5": "",
-  "Fragment_souvenir_6": "",
-  "Fragment_souvenir_7": "",
-  "Fragment_souvenir_8": "",
-  "Fragment_souvenir_9": "",
-  "Fragment_souvenir_10": "",
-  "Fragment_souvenir_11": "",
-  "Fragment_souvenir_12": "",
-  "Fragment_souvenir_13": "",
-  "Fragment_souvenir_14": "",
-  "Fragment_souvenir_15": "",
-  "Fragment_souvenir_16": "",
-  "Fragment_souvenir_17": "",
-  "Fragment_souvenir_18": "",
-  "Fragment_souvenir_chair": "",
-  "Fragment_souvenir_furnitureDown": "",
-  "Fragment_souvenir_furnitureUp": "",
-  "Fragment_souvenir_table": "",
-  "Fragment_souvenir_tirroir": "",
-  "Fragment_souvenir_wall": ""
+  "Fragment_souvenir_0": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_1": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_2": [
+      "http://www-ia.lip6.fr/~muratetm/elearningscape/Fragment18.png",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_3": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_4": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_5": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_6": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_7": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_8": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_9": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_10": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_11": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_12": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_13": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_14": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_15": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_16": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_17": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_18": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_chair": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_furnitureDown": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_furnitureUp": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_table": [
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_tirroir":[
+      "",
+      "Voir plus"
+  ],
+  "Fragment_souvenir_wall": [
+      "",
+      "Voir plus"
+  ]
 }

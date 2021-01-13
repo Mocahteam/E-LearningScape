@@ -9,4 +9,9 @@ public class LoadGameContent_wrapper : MonoBehaviour
 		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
 	}
 
+	public void CopySessionID()
+	{
+		MainLoop.callAppropriateSystemMethod ("LoadGameContent", "CopySessionID", null);
+	}
+
 }

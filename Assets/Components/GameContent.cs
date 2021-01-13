@@ -73,6 +73,7 @@ public class GameContent {
     public string mainMenuStart;
     public string mainMenuOption;
     public string mainMenuLeave;
+    public string sessionIDText;
     public string optionControlsMenu;
     public string optionMovingTexts;
     public string optionMoveSpeed;
@@ -101,7 +102,7 @@ public class GameContent {
     public string hudMenu;
     public string dreamFragmentText;
     public string dreamFragmentValidation;
-    public string dreamFragmentOpenURL;
+    public string dreamFragmentVirtualReset;
     public string iarTabInventory;
     public string iarTabDreamFragments;
     public string iarTabHelp;

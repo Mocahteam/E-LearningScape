@@ -90,7 +90,13 @@ public class DreamFragmentCollecting : FSystem {
                         // Show fragment UI
                         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
                         GameObjectManager.setGameObjectState(dfUI, true);
-                        GameObjectManager.setGameObjectState(onlineButton, tmpDFComponent.urlLink != null && tmpDFComponent.urlLink != "");
+                        if(tmpDFComponent.urlLink != null && tmpDFComponent.urlLink != "")
+                        {
+                            onlineButton.GetComponentInChildren<TextMeshProUGUI>().text = tmpDFComponent.linkButtonText;
+                            GameObjectManager.setGameObjectState(onlineButton, true);
+                        }
+                        else
+                            GameObjectManager.setGameObjectState(onlineButton, true);
                         // Set UI text depending on type and id
                         if (tmpDFComponent.type == 0)
                             FragmentText.text = string.Concat(LoadGameContent.gameContent.dreamFragmentText, tmpDFComponent.id);

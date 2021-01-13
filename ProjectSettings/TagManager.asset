@@ -88,6 +88,7 @@ TagManager:
   - IARDocument
   - DreamFragmentsTabContent
   - DreamFragmentButtons
+  - SessionIDText
   layers:
   - Default
   - TransparentFX

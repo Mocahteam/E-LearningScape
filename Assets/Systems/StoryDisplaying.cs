@@ -116,7 +116,8 @@ public class StoryDisplaying : FSystem {
                     objectType = "serious-game",
                     objectName = "E-LearningScape",
                     activityExtensions = new Dictionary<string, List<string>>() {
-                    { "content", new List<string>() { LoadGameContent.gameContent.theme } }
+                    { "content", new List<string>() { LoadGameContent.gameContent.theme } },
+                    { "help", new List<string>() { LoadGameContent.gameContent.helpSystem.ToString() } }
                 }
                 });
             }

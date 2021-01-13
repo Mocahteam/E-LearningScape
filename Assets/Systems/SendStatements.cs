@@ -31,9 +31,9 @@ public class SendStatements : FSystem {
         GBLXAPI.Instance.debugStatement = false;
 
         //Generate player name unique to each playing session (computer name + date + hour)
-        GBL_Interface.playerName = string.Concat(Environment.MachineName, "-", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"));
+        GBL_Interface.playerName = LoadGameContent.sessionID;
         //Generate a UUID from the player name
-        GBL_Interface.userUUID = GBLXAPI.Instance.GenerateActorUUID(string.Concat(Environment.MachineName, "-", DateTime.Now.ToString("yyyy.MM.dd.hh.mm")));
+        GBL_Interface.userUUID = GBLXAPI.Instance.GenerateActorUUID(LoadGameContent.sessionID);
     }
 
 	// Use this to update member variables when system pause. 

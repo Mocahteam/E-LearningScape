@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using FYFY;
 using FYFY_plugins.PointerManager;
+using TMPro;
 
 public class IARDreamFragmentManager : FSystem {
 
@@ -17,6 +18,7 @@ public class IARDreamFragmentManager : FSystem {
 	private Family f_buttons = FamilyManager.getFamily(new AnyOfTags("DreamFragmentButtons"));
 	private Family f_canvas = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
 	private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
+	private Family f_focusedToggles = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragmentToggle), typeof(Toggle), typeof(PointerSensitive), typeof(PointerOver)));
 
 	public static IARDreamFragmentManager instance;
 
@@ -30,6 +32,7 @@ public class IARDreamFragmentManager : FSystem {
 	private DreamFragment selectedDreamFragment;
 	private GameObject draggedDocument = null;
 	private GameObject selectedDocument = null;
+	private GameObject mouseOverToggle = null;
 	//the offset is used to move the document from the point clicked and not the center
 	private Vector2 offset;
 
@@ -38,6 +41,7 @@ public class IARDreamFragmentManager : FSystem {
 	private RectTransform tmpRT;
 	private DreamFragment tmpDreamFragment;
 	private GameObject tmpGO;
+	private Image tmpImage;
 
 	public IARDreamFragmentManager()
     {
@@ -65,6 +69,10 @@ public class IARDreamFragmentManager : FSystem {
 				if (go.name == "SeeMore")
 					onlineButton = go;
             }
+
+			// Add callbacks for mouse over toggle
+			f_focusedToggles.addEntryCallback(OnMouseEnterToggle);
+			f_focusedToggles.addExitCallback(OnMouseExitToggle);
         }
 		instance = this;
     }
@@ -89,6 +97,7 @@ public class IARDreamFragmentManager : FSystem {
 			if (t.isOn)
 			{
 				t.GetComponentInChildren<Image>().sprite = tmpDFToggle.onState;
+				tmpDFToggle.currentState = tmpDFToggle.onState;
 				selectedIARFragment = t.gameObject;
 
 				if (tmpDFToggle.dreamFragmentContent.transform.childCount > 0)
@@ -97,10 +106,36 @@ public class IARDreamFragmentManager : FSystem {
             else
 			{
 				t.GetComponentInChildren<Image>().sprite = tmpDFToggle.offState;
+				tmpDFToggle.currentState = tmpDFToggle.offState;
 				selectedIARFragment = null;
 			}
 
 			SetButtonsState();
+		}
+	}
+
+	// Changes toggle sprite to focused state on mouse enter
+	public void OnMouseEnterToggle(GameObject go)
+    {
+		mouseOverToggle = go;
+		tmpDFToggle = go.GetComponent<DreamFragmentToggle>();
+		tmpImage = go.GetComponentInChildren<Image>();
+
+		tmpDFToggle.currentState = tmpImage.sprite;
+		tmpImage.sprite = tmpDFToggle.foucsedState;
+    }
+
+	// Changes toggle sprite back to the state before mouse over
+	public void OnMouseExitToggle(int instanceID)
+	{
+        if (mouseOverToggle)
+		{
+			tmpDFToggle = mouseOverToggle.GetComponent<DreamFragmentToggle>();
+			tmpImage = mouseOverToggle.GetComponentInChildren<Image>();
+
+			tmpImage.sprite = tmpDFToggle.currentState;
+			tmpDFToggle.currentState = null;
+			mouseOverToggle = null;
 		}
 	}
 
@@ -283,8 +318,13 @@ public class IARDreamFragmentManager : FSystem {
 			selectedDreamFragment = GetDreamFragment(selectedIARFragment);
 
 		// activate link button if there is a link
-		GameObjectManager.setGameObjectState(onlineButton, selectedDreamFragment && 
-			selectedDreamFragment.urlLink != null && selectedDreamFragment.urlLink != "");
+		if(selectedDreamFragment && selectedDreamFragment.urlLink != null && selectedDreamFragment.urlLink != "")
+		{
+			GameObjectManager.setGameObjectState(onlineButton, true);
+			onlineButton.GetComponentInChildren<TextMeshProUGUI>().text = selectedDreamFragment.linkButtonText;
+		}
+		else
+			GameObjectManager.setGameObjectState(onlineButton, false);
 	}
 
 	/// <summary>

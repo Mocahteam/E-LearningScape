@@ -11,12 +11,15 @@ using System.Text;
 using System.Globalization;
 using FYFY_plugins.PointerManager;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 
 public class LoadGameContent : FSystem {
     
     private Family f_defaultGameContent = FamilyManager.getFamily(new AllOfComponents(typeof(DefaultGameContent)));
 
     private Family f_logos = FamilyManager.getFamily(new AllOfComponents(typeof(ImgBank)));
+
+    private Family f_idTexts = FamilyManager.getFamily(new AllOfComponents(typeof(TextMeshProUGUI)), new AnyOfTags("SessionIDText"));
 
     private Family f_storyText = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
 
@@ -73,8 +76,11 @@ public class LoadGameContent : FSystem {
 
     public static GameContent gameContent;
     private DefaultGameContent defaultGameContent;
+    public static Dictionary<string, List<string>> dreamFragmentsLinks;
 
     public static Dictionary<string, float> enigmasWeight;
+
+    public static string sessionID;
 
     public TMP_FontAsset AccessibleFont;
     public TMP_FontAsset AccessibleFontUI;
@@ -213,6 +219,29 @@ public class LoadGameContent : FSystem {
         }
         Debug.Log("Additional Logo loaded");
 
+        // Generate session ID (the id is added to ui only after ui texts are set)
+        if(sessionID == null || sessionID == "")
+        {
+            sessionID = string.Concat(Environment.MachineName, "-", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"));
+
+            // create a hash with sessionID
+            sessionID = String.Format("{0:X}", sessionID.GetHashCode());
+            //HashAlgorithm algorithm = SHA256.Create();
+            //byte[] bytes = algorithm.ComputeHash(Encoding.UTF8.GetBytes(sessionID));
+            //StringBuilder sb = new StringBuilder();
+            //foreach (byte forByte in bytes)
+            //    sb.Append(forByte.ToString("X2"));
+            //sessionID = sb.ToString();
+
+            Debug.Log(string.Concat("Session ID generated: ", sessionID));
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Session ID generated: ", sessionID));
+        }
+        else
+        {
+            Debug.Log(string.Concat("Previous session ID kept: ", sessionID));
+            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Previous session ID kept: ", sessionID));
+        }
+
         // Set IAR tabs and HUD depending on gameContent.virtualDreamFragment value
         Transform tabParent = f_tabs.First().transform.parent;
         int tabCount = tabParent.childCount - 1; // -1 because of the under line among the children
@@ -299,11 +328,14 @@ public class LoadGameContent : FSystem {
         {
             tmpUIText = go.GetComponent<UIText>();
             //write the content of the variable of gameContent corresponding to the uiText in its text mesh pro component
-            if (tmpUIText.tmpUI)
-                go.GetComponent<TextMeshProUGUI>().text = (string) typeof(GameContent).GetField(tmpUIText.gameContentVariable).GetValue(gameContent);
+            if (tmpUIText.tmpUI) { 
+                go.GetComponent<TextMeshProUGUI>().text = (string) typeof(GameContent).GetField(tmpUIText.gameContentVariable).GetValue(gameContent);}
             else
                 go.GetComponent<TextMeshPro>().text = (string)typeof(GameContent).GetField(tmpUIText.gameContentVariable).GetValue(gameContent);
         }
+        // add the generated session id after the ui text has been set
+        foreach (GameObject go in f_idTexts)
+            go.GetComponent<TextMeshProUGUI>().text += sessionID;
         #endregion
 
         #region Room 1
@@ -779,13 +811,19 @@ public class LoadGameContent : FSystem {
         Debug.Log("HelpSystem config file loaded");
 
         //Load dream fragment links config files
-        Dictionary<string, string> dreamFragmentsLinks = null;
         LoadJsonFile(gameContent.dreamFragmentLinksPath, defaultGameContent.dreamFragmentlinks, out dreamFragmentsLinks);
         if (dreamFragmentsLinks == null)
-            dreamFragmentsLinks = new Dictionary<string, string>();
+            dreamFragmentsLinks = new Dictionary<string, List<string>>();
         // Affects urlLinks to dream fragments
         foreach (GameObject dream_go in f_dreamFragments)
-            dreamFragmentsLinks.TryGetValue(dream_go.name, out dream_go.GetComponent<DreamFragment>().urlLink);
+            if (dreamFragmentsLinks.ContainsKey(dream_go.name))
+            {
+                if (dreamFragmentsLinks[dream_go.name] != null && dreamFragmentsLinks[dream_go.name].Count > 1)
+                {
+                    dream_go.GetComponent<DreamFragment>().urlLink = dreamFragmentsLinks[dream_go.name][0];
+                    dream_go.GetComponent<DreamFragment>().linkButtonText = dreamFragmentsLinks[dream_go.name][1];
+                }
+            }
         Debug.Log("Dream fragments links loaded");
 
         // Load dream fragment png config files
@@ -896,6 +934,14 @@ public class LoadGameContent : FSystem {
             target = JsonConvert.DeserializeObject<T>(defaultContent.text);
             Debug.LogWarning(jsonPath+ " not found. Default used.");
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - "+ jsonPath + " not found. Default used"));
+        }
+    }
+
+    public void CopySessionID()
+    {
+        if(sessionID != null && sessionID != "")
+        {
+            GUIUtility.systemCopyBuffer = sessionID;
         }
     }
 

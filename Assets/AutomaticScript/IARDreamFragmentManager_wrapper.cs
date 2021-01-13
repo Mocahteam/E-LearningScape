@@ -14,6 +14,16 @@ public class IARDreamFragmentManager_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("IARDreamFragmentManager", "OnClickDreamToggle", t);
 	}
 
+	public void OnMouseEnterToggle(UnityEngine.GameObject go)
+	{
+		MainLoop.callAppropriateSystemMethod ("IARDreamFragmentManager", "OnMouseEnterToggle", go);
+	}
+
+	public void OnMouseExitToggle(System.Int32 instanceID)
+	{
+		MainLoop.callAppropriateSystemMethod ("IARDreamFragmentManager", "OnMouseExitToggle", instanceID);
+	}
+
 	public void OpenLink()
 	{
 		MainLoop.callAppropriateSystemMethod ("IARDreamFragmentManager", "OpenLink", null);

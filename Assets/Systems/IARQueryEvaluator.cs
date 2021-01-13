@@ -35,6 +35,7 @@ public class IARQueryEvaluator : FSystem {
     private bool showRoom2FinalCode = false;
 
     private string tmpStr;
+    private List<string> tmpListString;
 
     public IARQueryEvaluator()
     {
@@ -50,7 +51,10 @@ public class IARQueryEvaluator : FSystem {
                     if (!splitOrSolutions.ContainsKey(or))
                     {
                         //split each solution by "##" and use this to check if the player answer contains all parts of a solution
-                        splitOrSolutions.Add(or, new List<string>(or.Split(new string[] { "##" }, System.StringSplitOptions.None)));
+                        tmpListString = new List<string>(or.Split(new string[] { "##" }, System.StringSplitOptions.None));
+                        for (int i = 0; i < tmpListString.Count; i++)
+                            tmpListString[i] = LoadGameContent.StringToAnswer(tmpListString[i]);
+                        splitOrSolutions.Add(or, tmpListString);
                     }
                 }
 
@@ -168,7 +172,6 @@ public class IARQueryEvaluator : FSystem {
                     error = false;
                     availableOrSolutions.Remove(qs.orSolutions[i]); // consume this "or" solution
                     // override answer by the solution
-                    //answer = qs.orSolutions[i];
                     solution = qs.orSolutions[i];
                 }
             }
