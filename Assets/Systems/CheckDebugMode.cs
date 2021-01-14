@@ -97,7 +97,7 @@ public class CheckDebugMode : FSystem
                     int nb = f_tabs.Count;
                     for (int i = 0; i < nb; i++)
                     {
-                        if(LoadGameContent.gameContent.virtualDreamFragment || f_tabs.getAt(i).name != "DreamFragments")
+                        if(IARDreamFragmentManager.virtualDreamFragment || f_tabs.getAt(i).name != "DreamFragments")
                             GameObjectManager.setGameObjectState(f_tabs.getAt(i), true);
                     }
 

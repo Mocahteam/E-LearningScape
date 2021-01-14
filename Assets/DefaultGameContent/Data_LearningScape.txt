@@ -91,6 +91,7 @@
     "mainMenuLeave": "Quitter",
     "sessionIDText": "ID: ",
     "optionControlsMenu": "Contrôle",
+    "optionVirtualFragments": "Fragments Virtuels",
     "optionMovingTexts": "Textes en mouvement",
     "optionMoveSpeed": "Vitesse de marche",
     "optionCameraSensitivity": "Sensibilité caméra",

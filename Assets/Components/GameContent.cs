@@ -75,6 +75,7 @@ public class GameContent {
     public string mainMenuLeave;
     public string sessionIDText;
     public string optionControlsMenu;
+    public string optionVirtualFragments;
     public string optionMovingTexts;
     public string optionMoveSpeed;
     public string optionCameraSensitivity;

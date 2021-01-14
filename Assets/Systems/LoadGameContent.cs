@@ -40,6 +40,7 @@ public class LoadGameContent : FSystem {
     private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
     private Family f_dreamFragmentsContentContainer = FamilyManager.getFamily(new AllOfComponents(typeof(PrefabContainer)), new AnyOfTags("DreamFragmentContentContainer"));
     private Family f_dreamFragmentsContents = FamilyManager.getFamily(new AnyOfTags("DreamFragmentContent"));
+    private Family f_fragmentNotif = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragmentFlag)));
 
     private Family f_gears = FamilyManager.getFamily(new AnyOfTags("Gears"));
     private Family f_gearComponent = FamilyManager.getFamily(new AllOfComponents(typeof(Gear)));
@@ -71,6 +72,7 @@ public class LoadGameContent : FSystem {
     private Family f_inventoryElements = FamilyManager.getFamily(new AllOfComponents(typeof(Collected)));
 
     private Family f_uiTexts = FamilyManager.getFamily(new AllOfComponents(typeof(UIText)), new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)));
+    private Family f_settingToggles = FamilyManager.getFamily(new AllOfComponents(typeof(DefaultValueSetting), typeof(Toggle)));
 
     private Family f_extraGeometries = FamilyManager.getFamily(new AllOfComponents(typeof(RemoveIfVeryVeryLow)));
 
@@ -241,43 +243,6 @@ public class LoadGameContent : FSystem {
             Debug.Log(string.Concat("Previous session ID kept: ", sessionID));
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Previous session ID kept: ", sessionID));
         }
-
-        // Set IAR tabs and HUD depending on gameContent.virtualDreamFragment value
-        Transform tabParent = f_tabs.First().transform.parent;
-        int tabCount = tabParent.childCount - 1; // -1 because of the under line among the children
-        if (gameContent.virtualDreamFragment)
-        {
-            // IAR tabs
-            tmpRectTransform = tabParent.GetChild(0).GetComponent<RectTransform>();
-            tmpRectTransform.anchoredPosition = new Vector2(54.66f, -20);
-            tmpRectTransform.sizeDelta = new Vector2(99, 40);
-            // if dream fragment are set to virtual, do the same for the puzzles
-            gameContent.virtualPuzzle = true;
-
-            for (int i = 1; i < tabCount; i++)
-            {
-                tmpRectTransform = tabParent.GetChild(i).GetComponent<RectTransform>();
-                tmpRectTransform.anchoredPosition = new Vector2(tabParent.GetChild(i - 1).GetComponent<RectTransform>().anchoredPosition.x + 109.32f, -20);
-                tmpRectTransform.sizeDelta = new Vector2(99, 40);
-            }
-        }
-        else
-        {
-            // IAR tabs
-            tmpRectTransform = tabParent.GetChild(0).GetComponent<RectTransform>();
-            tmpRectTransform.anchoredPosition = new Vector2(63.765f, -20);
-            tmpRectTransform.sizeDelta = new Vector2(127.53f, 40);
-            tmpRectTransform.anchoredPosition = new Vector2(63.765f, -20);
-            GameObjectManager.setGameObjectState(tmpRectTransform.gameObject, false);
-
-            for (int i = 2; i < tabCount; i++)
-            {
-                tmpRectTransform = tabParent.GetChild(i).GetComponent<RectTransform>();
-                tmpRectTransform.anchoredPosition = new Vector2(tabParent.GetChild(i - 1).GetComponent<RectTransform>().anchoredPosition.x + 127.53f, -20);
-                tmpRectTransform.sizeDelta = new Vector2(127.53f, 40);
-            }
-        }
-        Debug.Log(string.Concat("Virtual dream fragments: ", gameContent.virtualDreamFragment));
 
         #region Story
         StoryText st = f_storyText.First().GetComponent<StoryText>();
@@ -907,6 +872,29 @@ public class LoadGameContent : FSystem {
         DefaultFontUI = defaultGameContent.defaultFontTMProUI;
         Debug.Log("Fonts loaded");
 
+
+        // Set IAR tabs and HUD depending on gameContent.virtualDreamFragment value
+        foreach (GameObject go in f_settingToggles)
+            if (go.transform.parent.name == "VirtualFragments")
+            {
+                go.GetComponent<Toggle>().isOn = gameContent.virtualDreamFragment;
+                go.GetComponent<DefaultValueSetting>().defaultValue = gameContent.virtualDreamFragment ? 1 : 0;
+                break;
+            }
+        SettingsManager.instance.LoadSettings();
+        bool fragmentsSet = false;
+        foreach (GameObject go in f_settingToggles)
+            if (go.transform.parent.name == "VirtualFragments")
+            {
+                fragmentsSet = true;
+                // set virtual fragments with the final value of the toggle
+                // which means either the value from saved settings or the value in gameContent
+                SetFragments(go.GetComponent<Toggle>().isOn);
+                break;
+            }
+        if(!fragmentsSet)
+            SetFragments(gameContent.virtualDreamFragment);
+
         Debug.Log("Data loaded");
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));
     }
@@ -935,6 +923,58 @@ public class LoadGameContent : FSystem {
             Debug.LogWarning(jsonPath+ " not found. Default used.");
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - "+ jsonPath + " not found. Default used"));
         }
+    }
+
+    /// <summary>
+    /// Set dream fragments as virtual or not.
+    /// </summary>
+    /// <param name="virtualDreamFragment">If true, dream fragments will be set to virtual</param>
+    public void SetFragments(bool virtualDreamFragment)
+    {
+        // Set HUD depending on virtualDreamFragment value
+        GameObjectManager.setGameObjectState(f_fragmentNotif.First().transform.parent.gameObject, virtualDreamFragment && IARNewDreamFragmentAvailable.instance.firstFragmentOccurs);
+        // Set IAR tabs and HUD depending on virtualDreamFragment value
+        Transform tabParent = f_tabs.First().transform.parent;
+        int tabCount = tabParent.childCount - 1; // -1 because of the under line among the children
+        if (virtualDreamFragment)
+        {
+            // IAR tabs
+            tmpRectTransform = tabParent.GetChild(0).GetComponent<RectTransform>();
+            tmpRectTransform.anchoredPosition = new Vector2(54.66f, -20);
+            tmpRectTransform.sizeDelta = new Vector2(99, 40);
+            // if dream fragment are set to virtual, do the same for the puzzles
+            gameContent.virtualPuzzle = true;
+
+            GameObjectManager.setGameObjectState(tabParent.GetChild(1).gameObject, DreamFragmentCollecting.instance.firstFragmentFound || !DebugModeSystem.instance.Pause);
+            for (int i = 1; i < tabCount; i++)
+            {
+                tmpRectTransform = tabParent.GetChild(i).GetComponent<RectTransform>();
+                tmpRectTransform.anchoredPosition = new Vector2(tabParent.GetChild(i - 1).GetComponent<RectTransform>().anchoredPosition.x + 109.32f, -20);
+                tmpRectTransform.sizeDelta = new Vector2(99, 40);
+            }
+        }
+        else
+        {
+            GameObjectManager.setGameObjectState(tabParent.GetChild(1).gameObject, false);
+
+            // IAR tabs
+            tmpRectTransform = tabParent.GetChild(0).GetComponent<RectTransform>();
+            tmpRectTransform.anchoredPosition = new Vector2(63.765f, -20);
+            tmpRectTransform.sizeDelta = new Vector2(127.53f, 40);
+
+            tmpRectTransform = tabParent.GetChild(2).GetComponent<RectTransform>();
+            tmpRectTransform.anchoredPosition = new Vector2(tabParent.GetChild(0).GetComponent<RectTransform>().anchoredPosition.x + 127.53f, -20);
+            tmpRectTransform.sizeDelta = new Vector2(127.53f, 40);
+
+            for (int i = 3; i < tabCount; i++)
+            {
+                tmpRectTransform = tabParent.GetChild(i).GetComponent<RectTransform>();
+                tmpRectTransform.anchoredPosition = new Vector2(tabParent.GetChild(i - 1).GetComponent<RectTransform>().anchoredPosition.x + 127.53f, -20);
+                tmpRectTransform.sizeDelta = new Vector2(127.53f, 40);
+            }
+        }
+        IARDreamFragmentManager.virtualDreamFragment = virtualDreamFragment;
+        Debug.Log(string.Concat("Virtual dream fragments: ", virtualDreamFragment));
     }
 
     public void CopySessionID()

@@ -26,7 +26,7 @@ public class IARNewDreamFragmentAvailable : FSystem
     {
         if (!firstFragmentOccurs)
         {
-            GameObjectManager.setGameObjectState(f_fragmentNotif.First().transform.parent.gameObject, LoadGameContent.gameContent.virtualDreamFragment);
+            GameObjectManager.setGameObjectState(f_fragmentNotif.First().transform.parent.gameObject, IARDreamFragmentManager.virtualDreamFragment);
             firstFragmentOccurs = true;
         }
         GameObjectManager.setGameObjectState(f_fragmentNotif.First(), true);

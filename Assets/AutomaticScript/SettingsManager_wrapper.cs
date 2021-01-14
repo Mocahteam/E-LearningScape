@@ -34,4 +34,14 @@ public class SettingsManager_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("SettingsManager", "ResetDefaultValues", null);
 	}
 
+	public void SaveSettings()
+	{
+		MainLoop.callAppropriateSystemMethod ("SettingsManager", "SaveSettings", null);
+	}
+
+	public void LoadSettings()
+	{
+		MainLoop.callAppropriateSystemMethod ("SettingsManager", "LoadSettings", null);
+	}
+
 }

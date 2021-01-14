@@ -28,7 +28,7 @@ public class DreamFragmentCollecting : FSystem {
     private GameObject tmpGo;
     //button in dream fragment UI to open the link
     private GameObject onlineButton;
-    private bool firstFragmentFound = false;
+    public bool firstFragmentFound = false;
 
     public static DreamFragmentCollecting instance;
 
@@ -67,7 +67,7 @@ public class DreamFragmentCollecting : FSystem {
                 if (f_dreamFragments.contains(hit.transform.gameObject.GetInstanceID()))
                 {
                     // display IAR dream fragments tab after the first one is found
-                    if (!firstFragmentFound && LoadGameContent.gameContent.virtualDreamFragment)
+                    if (!firstFragmentFound && IARDreamFragmentManager.virtualDreamFragment)
                     {
                         foreach (GameObject go in f_tabs)
                         {
@@ -82,7 +82,7 @@ public class DreamFragmentCollecting : FSystem {
 
                     selectedFragment = hit.transform.gameObject;
                     tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
-                    if (LoadGameContent.gameContent.virtualDreamFragment && tmpDFComponent.type == 0)
+                    if (IARDreamFragmentManager.virtualDreamFragment && tmpDFComponent.type == 0)
                         // if virtual fragment are activated, just turn off the fragment without opening UI
                         TurnOffDreamFragment(selectedFragment);
                     else
@@ -124,7 +124,7 @@ public class DreamFragmentCollecting : FSystem {
                     else if (tmpDFComponent.type != 2)
                         GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player" });
 
-                    if (LoadGameContent.gameContent.virtualDreamFragment && tmpDFComponent.type == 0)
+                    if (IARDreamFragmentManager.virtualDreamFragment && tmpDFComponent.type == 0)
                         selectedFragment = null;
                 }
             }

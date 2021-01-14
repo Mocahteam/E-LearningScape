@@ -82,11 +82,11 @@ public class CollectObject : FSystem {
                 if (!isDreamFragment)
                     GameObjectManager.setGameObjectState(collect, false);
                 // Play notification
-                if (LoadGameContent.gameContent.virtualDreamFragment && isDreamFragment && inventoryHUDEnabled)
+                if (IARDreamFragmentManager.virtualDreamFragment && isDreamFragment && inventoryHUDEnabled)
                     itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start2");
                 else
                 {
-                    if (!isDreamFragment || LoadGameContent.gameContent.virtualDreamFragment)
+                    if (!isDreamFragment || IARDreamFragmentManager.virtualDreamFragment)
                         itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start");
                 }
 

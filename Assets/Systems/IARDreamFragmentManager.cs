@@ -21,6 +21,7 @@ public class IARDreamFragmentManager : FSystem {
 	private Family f_focusedToggles = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragmentToggle), typeof(Toggle), typeof(PointerSensitive), typeof(PointerOver)));
 
 	public static IARDreamFragmentManager instance;
+	public static bool virtualDreamFragment;
 
 	private RectTransform iarRectTransform;
 	private RectTransform contentContainerRT;

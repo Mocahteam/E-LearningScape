@@ -3,8 +3,12 @@ using FYFY;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System;
+using System.IO;
 
 public class SettingsManager : FSystem {
+
+    // System has to be before LoadGameContent system
     
     private Family DefaultSetting_f = FamilyManager.getFamily(new AnyOfComponents(typeof(Slider), typeof(Toggle)), new AllOfComponents(typeof(DefaultValueSetting)));
     private Family UIColorAlpha_f = FamilyManager.getFamily(new AnyOfTags("UIBackground", "DreamFragmentUI", "Q-R1", "Q-R2", "Q-R3"), new AllOfComponents(typeof(Image)));
@@ -14,6 +18,11 @@ public class SettingsManager : FSystem {
     private Family UICursorSize_f = FamilyManager.getFamily(new AnyOfTags("CursorImage"));
 
     public static SettingsManager instance = null;
+
+    private SettingsSave settingsSave;
+    private SettingsSave tmpSettings;
+
+    private GameObject tmpGO;
 
     public SettingsManager ()
     {
@@ -90,5 +99,102 @@ public class SettingsManager : FSystem {
             else if (go.GetComponent<Toggle>())
                 go.GetComponent<Toggle>().isOn = go.GetComponent<DefaultValueSetting>().defaultValue != 0;
         }
+    }
+
+    public void SaveSettings()
+    {
+        InitializeSettingSaveDictionary();
+
+        foreach (GameObject go in DefaultSetting_f)
+        {
+            if (go.GetComponent<Slider>())
+                settingsSave.slidersValues.Add(go.GetComponent<Slider>().value);
+            else if (go.GetComponent<Toggle>())
+                settingsSave.togglesValues.Add(go.GetComponent<Toggle>().isOn ? 1 : 0);
+        }
+
+        Directory.CreateDirectory("Data");
+        File.WriteAllText("Data/GameSettings.txt", JsonUtility.ToJson(settingsSave, true));
+    }
+
+    public void LoadSettings()
+    {
+        if (File.Exists("Data/GameSettings.txt"))
+        {
+            tmpSettings = null;
+            try
+            {
+                // load settings from file
+                tmpSettings = JsonUtility.FromJson<SettingsSave>(File.ReadAllText("Data/GameSettings.txt"));
+            }
+            catch (System.Exception) { }
+
+            if (CheckSettings(tmpSettings))
+            {
+                settingsSave = tmpSettings;
+                // set settings using loaded data
+                int sliderCounter = 0, toggleCounter = 0;
+                foreach (GameObject go in DefaultSetting_f)
+                {
+                    if (go.GetComponent<Slider>())
+                    {
+                        go.GetComponent<Slider>().value = settingsSave.slidersValues[sliderCounter];
+                        sliderCounter++;
+                    }
+                    else if (go.GetComponent<Toggle>())
+                    {
+                        go.GetComponent<Toggle>().isOn = settingsSave.togglesValues[toggleCounter] != 0;
+                        toggleCounter++;
+                    }
+                }
+
+                Debug.Log("Settings loaded");
+            }
+            else
+            {
+                Debug.LogError("Couldn't load settings from file because of invalid content.");
+                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Couldn't load settings from file because of invalid content."));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Check if the loaded dictionary is valid and has the correct number of parameters
+    /// </summary>
+    /// <param name="settings"></param>
+    /// <returns></returns>
+    private bool CheckSettings(SettingsSave settings)
+    {
+        if (settings != null && settings.slidersValues != null && settings.togglesValues != null)
+        {
+            int sliderCounter = 0, toggleCounter = 0;
+            foreach (GameObject go in DefaultSetting_f)
+            {
+                if (go.GetComponent<Slider>())
+                    sliderCounter++;
+                else if (go.GetComponent<Toggle>())
+                    toggleCounter++;
+            }
+
+            if (sliderCounter == settings.slidersValues.Count && toggleCounter == settings.togglesValues.Count)
+                return true;
+        }
+
+        return false;
+    }
+
+    private void InitializeSettingSaveDictionary()
+    {
+        // initialize dictionary
+        if (settingsSave == null)
+            settingsSave = new SettingsSave();
+        if (settingsSave.slidersValues == null)
+            settingsSave.slidersValues = new List<float>();
+        else
+            settingsSave.slidersValues.Clear();
+        if (settingsSave.togglesValues == null)
+            settingsSave.togglesValues = new List<float>();
+        else
+            settingsSave.togglesValues.Clear();
     }
 }

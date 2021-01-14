@@ -28,6 +28,8 @@ public class WindowNavigator : MonoBehaviour, IPointerClickHandler
             GameObjectManager.setGameObjectState(parent, true);
             EventSystem.current.SetSelectedGameObject(defaultUiInParent); //if we back on parent window then position cursor on default button choose in inspector object 
         }
+
+        SettingsManager.instance.SaveSettings();
     }
 
     public void OnPointerClick(PointerEventData pointerEventData)

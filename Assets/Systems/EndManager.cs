@@ -19,6 +19,8 @@ public class EndManager : FSystem {
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
     private Family f_onEnigma = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
 
+    private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
+
     private Image fadingBackground;
     private float fadingTimer = 2;
     private float fadingStart;
@@ -26,6 +28,9 @@ public class EndManager : FSystem {
     private bool whiteToAlpha = false;
 
     private bool switchToEndRoom = false;
+    private bool readEndText = false;
+
+    private bool useEndRoom = false;
 
     public EndManager()
     {
@@ -41,20 +46,26 @@ public class EndManager : FSystem {
 
     private void onNewAnswerDisplayed(int instanceId)
     {
-        // When all answer was displayed => ask to teleport in the end room
+        // When all answer was displayed => ask to teleport in the end room or display end story
         if (f_answer.Count == 0)
         {
-            switchToEndRoom = true;
-
-            GameObjectManager.addComponent<ActionPerformed>(f_player.First(), new { overrideName = "teleportToFinalScene", performedBy = "system" });
-            GameObjectManager.addComponent<ActionPerformedForLRS>(f_questionR3.First().transform.parent.parent.gameObject, new
+            if (useEndRoom)
             {
-                verb = "completed",
-                objectType = "menu",
-                objectName = f_questionR3.First().transform.parent.parent.gameObject.name
-            });
-            f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 4;
+                switchToEndRoom = true;
 
+                GameObjectManager.addComponent<ActionPerformed>(f_player.First(), new { overrideName = "teleportToFinalScene", performedBy = "system" });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(f_questionR3.First().transform.parent.parent.gameObject, new
+                {
+                    verb = "completed",
+                    objectType = "menu",
+                    objectName = f_questionR3.First().transform.parent.parent.gameObject.name
+                });
+                f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 4;
+            }
+            else
+            {
+                readEndText = true;
+            }
         }
     }
 
@@ -70,6 +81,17 @@ public class EndManager : FSystem {
             GameObjectManager.setGameObjectState(fadingBackground.gameObject, true);
             foreach (GameObject go in f_onEnigma)
                 GameObjectManager.removeComponent<ReadyToWork>(go);
+        }
+        else if (readEndText)
+        {
+            IARTabNavigation.instance.Pause = true;
+            foreach (GameObject go in f_onEnigma)
+                GameObjectManager.removeComponent<ReadyToWork>(go);
+
+            // show story
+            f_storyDisplayer.First().GetComponent<StoryText>().storyProgression++;
+            StoryDisplaying.instance.Pause = false;
+            GameObjectManager.addComponent<PlaySound>(f_storyDisplayer.First(), new { id = 8 }); // id refer to FPSController AudioBank}
         }
     }
 
