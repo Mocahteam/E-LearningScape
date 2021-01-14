@@ -322,7 +322,7 @@ public class IARDreamFragmentManager : FSystem {
 		if(selectedDreamFragment && selectedDreamFragment.urlLink != null && selectedDreamFragment.urlLink != "")
 		{
 			GameObjectManager.setGameObjectState(onlineButton, true);
-			onlineButton.GetComponentInChildren<TextMeshProUGUI>().text = selectedDreamFragment.linkButtonText;
+			onlineButton.GetComponent<TextMeshProUGUI>().text = selectedDreamFragment.linkButtonText;
 		}
 		else
 			GameObjectManager.setGameObjectState(onlineButton, false);

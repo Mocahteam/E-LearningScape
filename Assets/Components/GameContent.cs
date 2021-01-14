@@ -41,6 +41,11 @@ public class GameContent {
     /// </summary>
     public bool virtualPuzzle = true;
     /// <summary>
+    /// If false, after answering the last question and leaving IAR,
+    /// the ending text will be displayed without going to the last room
+    /// </summary>
+    public bool useEndRoom;
+    /// <summary>
     /// If true, remove extra geaometries. This is an additionnal option for very poor hardware
     /// </summary>
     public bool removeExtraGeometries = true;
@@ -74,6 +79,7 @@ public class GameContent {
     public string mainMenuOption;
     public string mainMenuLeave;
     public string sessionIDText;
+    public string sessionIDPopup;
     public string optionControlsMenu;
     public string optionVirtualFragments;
     public string optionMovingTexts;

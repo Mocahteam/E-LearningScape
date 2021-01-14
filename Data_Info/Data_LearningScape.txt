@@ -6,6 +6,7 @@
     "traceMovementFrequency": 0.5,
 	"virtualDreamFragment": true,
     "virtualPuzzle": true,
+    "useEndRoom": false,
     "lrsConfigPath": "Data/LRSConfig.txt",
     "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
 	"dreamFragmentDocumentsPathFile": "Data/FragmentsPath.txt",
@@ -17,8 +18,7 @@
     "helpSystemConfigPath": "Data/HelpSystemConfig.txt",
 	"removeExtraGeometries": false,
 	
-	"additionalLogosPath": [
-	],
+	"additionalLogosPath": [],
 	
     "storyTextIntro": [
         "Il est déjà tard le soir, Camille appréhende un peu son premier jour dans son nouvel établissement. Elle vient d’arriver dans une ville qu’elle connait peu et doit résoudre un grand nombre de problèmes : Analyser les moyens de déplacement, planifier son trajet vers son université, envisager les possibilités, ordonnancer les différentes étapes...",
@@ -92,7 +92,10 @@
     "mainMenuStart": "Commencer",
     "mainMenuOption": "Options",
     "mainMenuLeave": "Quitter",
+    "sessionIDText": "ID: ",
+    "sessionIDPopup": "Cliquer pour copier",
     "optionControlsMenu": "Contrôle",
+    "optionVirtualFragments": "Fragments Virtuels",
     "optionMovingTexts": "Textes en mouvement",
     "optionMoveSpeed": "Vitesse de marche",
     "optionCameraSensitivity": "Sensibilité caméra",
@@ -120,7 +123,7 @@
     "hudMenu": "Menu",
     "dreamFragmentText": "Ouvrez le fragment de rêve numéro ",
     "dreamFragmentValidation": "OK",
-    "dreamFragmentOpenURL": "Voir en Ligne",
+    "dreamFragmentVirtualReset": "Réinitialiser",
     "iarTabInventory": "Inventaire",
     "iarTabDreamFragments": "Rêves",
     "iarTabHelp": "Aide",

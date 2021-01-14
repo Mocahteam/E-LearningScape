@@ -228,12 +228,6 @@ public class LoadGameContent : FSystem {
 
             // create a hash with sessionID
             sessionID = String.Format("{0:X}", sessionID.GetHashCode());
-            //HashAlgorithm algorithm = SHA256.Create();
-            //byte[] bytes = algorithm.ComputeHash(Encoding.UTF8.GetBytes(sessionID));
-            //StringBuilder sb = new StringBuilder();
-            //foreach (byte forByte in bytes)
-            //    sb.Append(forByte.ToString("X2"));
-            //sessionID = sb.ToString();
 
             Debug.Log(string.Concat("Session ID generated: ", sessionID));
             File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Session ID generated: ", sessionID));
