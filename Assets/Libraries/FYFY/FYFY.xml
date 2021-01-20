@@ -353,26 +353,42 @@
             	</para>
             </remarks>
         </member>
-        <member name="M:FYFY.GameObjectManager.loadScene(System.Int32)">
+        <member name="M:FYFY.GameObjectManager.loadScene(System.Int32,UnityEngine.SceneManagement.LoadSceneMode)">
             <summary>
             	Loads the specified scene at the beginning of the next update block.
             </summary>
-            <remarks>
-            	The scene is always loaded after closing the current scene.
-            </remarks>
             <param name="sceneBuildIndex">
             	Index of the scene in the Build Settings to load.
             </param>
+            <param name="mode">
+            	Allows you to specify whether or not to load the Scene additively. See UnityEngine.SceneManagement.LoadSceneMode for more information about the options.
+            </param>
         </member>
-        <member name="M:FYFY.GameObjectManager.loadScene(System.String)">
+        <member name="M:FYFY.GameObjectManager.loadScene(System.String,UnityEngine.SceneManagement.LoadSceneMode)">
             <summary>
             	Loads the scene at the beginning of the next update block.
             </summary>
-            <remarks>
-            	The scene is always loaded after closing the current scene.
-            </remarks>
             <param name="sceneName">
             	Name of the scene to load.
+            </param>
+            <param name="mode">
+            	Allows you to specify whether or not to load the Scene additively. See UnityEngine.SceneManagement.LoadSceneMode for more information about the options.
+            </param>
+        </member>
+        <member name="M:FYFY.GameObjectManager.unloadScene(System.String)">
+            <summary>
+            	Destroys all GameObjects associated with the given Scene and removes the Scene from the SceneManager.
+            </summary>
+            <param name="sceneName">
+            	Name of the scene to load.
+            </param>
+        </member>
+        <member name="M:FYFY.GameObjectManager.unloadScene(System.Int32)">
+            <summary>
+            	Destroys all GameObjects associated with the given Scene and removes the Scene from the SceneManager.
+            </summary>
+            <param name="sceneBuildIndex">
+            	Index of the scene in the Build Settings to load.
             </param>
         </member>
         <member name="M:FYFY.GameObjectManager.dontDestroyOnLoadAndRebind(UnityEngine.GameObject)">
@@ -514,6 +530,21 @@
             	MainLoopEditorScanner.OnEnable start before MainLoop.OnEnable.
             </summary>
         </member>
+        <member name="F:FYFY.MainLoop.lastFrameSceneLoaded">
+            <summary>Defined in GameObjectManager to know the last frame number a scene is loaded</summary>
+        </member>
+        <member name="F:FYFY.MainLoop.loadedSceneById">
+            <summary>List of scene id to parse</summary>
+        </member>
+        <member name="F:FYFY.MainLoop.loadedSceneByName">
+            <summary>List of scene name to parse</summary>
+        </member>
+        <member name="F:FYFY.MainLoop.unloadedSceneById">
+            <summary>List of scene id to unload</summary>
+        </member>
+        <member name="F:FYFY.MainLoop.unloadedSceneByName">
+            <summary>List of scene name to unload</summary>
+        </member>
         <member name="F:FYFY.MainLoop._fixedUpdateSystemDescriptions">
             <summary>List of systems defined in fixedUpdate context through the Inspector</summary>
         </member>
@@ -559,6 +590,9 @@
         </member>
         <member name="F:FYFY.MainLoop.lateUpdateStats">
             <summary>How much time (ms) the previous late update execution lasted</summary>
+        </member>
+        <member name="F:FYFY.MainLoop._outputWrappers">
+            <summary>Directory to store wrapper to system's public functions</summary>
         </member>
         <member name="M:FYFY.MainLoop.callAppropriateSystemMethod(System.String,System.String,System.Object)">
             <summary>Call function "functionName" defined inside "systemName" system with "parameter" parameter </summary>

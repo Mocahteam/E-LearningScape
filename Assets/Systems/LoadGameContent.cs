@@ -11,7 +11,6 @@ using System.Text;
 using System.Globalization;
 using FYFY_plugins.PointerManager;
 using System.Text.RegularExpressions;
-using System.Security.Cryptography;
 
 public class LoadGameContent : FSystem {
     
@@ -92,6 +91,8 @@ public class LoadGameContent : FSystem {
     public static LoadGameContent instance;
 
     private bool loadContent = true;
+
+    private bool loadingContextForDreamFragment = false;
 
     private Texture2D tmpTex;
     private byte[] tmpFileData;
@@ -868,15 +869,18 @@ public class LoadGameContent : FSystem {
 
 
         // Set IAR tabs and HUD depending on gameContent.virtualDreamFragment value
+        GameObject debug = null;
         foreach (GameObject go in f_settingToggles)
             if (go.transform.parent.name == "VirtualFragments")
             {
                 go.GetComponent<Toggle>().isOn = gameContent.virtualDreamFragment;
+                debug = go;
                 go.GetComponent<DefaultValueSetting>().defaultValue = gameContent.virtualDreamFragment ? 1 : 0;
                 break;
             }
         SettingsManager.instance.LoadSettings();
         bool fragmentsSet = false;
+        loadingContextForDreamFragment = true;
         foreach (GameObject go in f_settingToggles)
             if (go.transform.parent.name == "VirtualFragments")
             {
@@ -886,8 +890,11 @@ public class LoadGameContent : FSystem {
                 SetFragments(go.GetComponent<Toggle>().isOn);
                 break;
             }
-        if(!fragmentsSet)
+        if (!fragmentsSet)
+        {
             SetFragments(gameContent.virtualDreamFragment);
+        }
+        loadingContextForDreamFragment = false;
 
         Debug.Log("Data loaded");
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));
@@ -926,7 +933,10 @@ public class LoadGameContent : FSystem {
     public void SetFragments(bool virtualDreamFragment)
     {
         // Set HUD depending on virtualDreamFragment value
-        GameObjectManager.setGameObjectState(f_fragmentNotif.First().transform.parent.gameObject, virtualDreamFragment && IARNewDreamFragmentAvailable.instance.firstFragmentOccurs);
+        bool enableHUD = false;
+        if (!loadingContextForDreamFragment && IARNewDreamFragmentAvailable.instance != null) // require this test because IARNewDreamFragmentAvailable is initialized after LoadGameContent inside MainLoop
+            enableHUD = virtualDreamFragment && IARNewDreamFragmentAvailable.instance.firstFragmentOccurs;
+        GameObjectManager.setGameObjectState(f_fragmentNotif.First().transform.parent.gameObject, enableHUD);
         // Set IAR tabs and HUD depending on virtualDreamFragment value
         Transform tabParent = f_tabs.First().transform.parent;
         int tabCount = tabParent.childCount - 1; // -1 because of the under line among the children
@@ -939,7 +949,10 @@ public class LoadGameContent : FSystem {
             // if dream fragment are set to virtual, do the same for the puzzles
             gameContent.virtualPuzzle = true;
 
-            GameObjectManager.setGameObjectState(tabParent.GetChild(1).gameObject, DreamFragmentCollecting.instance.firstFragmentFound || !DebugModeSystem.instance.Pause);
+            bool viewTab = !DebugModeSystem.instance.Pause;
+            if (DreamFragmentCollecting.instance != null) // require this test because DreamFragmentCollecting is initialized after LoadGameContent inside MainLoop
+                viewTab = viewTab || DreamFragmentCollecting.instance.firstFragmentFound;
+            GameObjectManager.setGameObjectState(tabParent.GetChild(1).gameObject, viewTab);
             for (int i = 1; i < tabCount; i++)
             {
                 tmpRectTransform = tabParent.GetChild(i).GetComponent<RectTransform>();
