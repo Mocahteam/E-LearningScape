@@ -9,7 +9,7 @@
   ],
   "Fragment_souvenir_2": [
       "http://www-ia.lip6.fr/~muratetm/elearningscape/Fragment18.png",
-      "Voir plus"
+      "Besoin de plus d'aide ?"
   ],
   "Fragment_souvenir_3": [
       "",

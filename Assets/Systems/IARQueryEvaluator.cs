@@ -7,7 +7,6 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using FYFY_plugins.Monitoring;
 
 public class IARQueryEvaluator : FSystem {
 
@@ -195,6 +194,11 @@ public class IARQueryEvaluator : FSystem {
             GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Wrong", performedBy = "player" });
 
             GameObjectManager.addComponent<WrongAnswerInfo>(query, new { givenAnswer = answer });
+
+            // set focus on selected tab
+            EventSystem.current.SetSelectedGameObject(null);
+            if (f_selectedTab.Count > 0)
+                EventSystem.current.SetSelectedGameObject(f_selectedTab.getAt(0));
         }
         else
         {
@@ -203,7 +207,8 @@ public class IARQueryEvaluator : FSystem {
 
             // set focus on selected tab
             EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(f_selectedTab.getAt(0));
+            if (f_selectedTab.Count > 0)
+                EventSystem.current.SetSelectedGameObject(f_selectedTab.getAt(0));
 
             // set final answer for third room (due to OR options)
             if (query.tag == "Q-R3")

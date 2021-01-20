@@ -5,13 +5,8 @@ using FYFY_plugins.Monitoring;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
 using TMPro;
-using Newtonsoft.Json;
-using System.Text;
-using System.Globalization;
 using System.Threading;
-using UnityEngine.SceneManagement;
 
 public class HelpSystem : FSystem {
 
@@ -317,7 +312,9 @@ public class HelpSystem : FSystem {
                 }
             }
         }
-        catch (Exception e){}
+        catch (Exception e){
+            Debug.Log(e.Message);
+        }
         thread = null;
     }
 

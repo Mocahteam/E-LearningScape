@@ -3,8 +3,6 @@ using UnityEngine.PostProcessing;
 using FYFY;
 using FYFY_plugins.Monitoring;
 using UnityEngine.UI;
-using TMPro;
-using UnityStandardAssets.Characters.FirstPerson;
 using System.Collections.Generic;
 
 public class LogoDisplaying : FSystem {

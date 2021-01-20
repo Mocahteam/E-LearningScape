@@ -11,9 +11,7 @@ public class IARDreamFragmentManager : FSystem {
 
 	//Manage collected dream fragment in the IAR
 
-	private Family f_buttonContainer = FamilyManager.getFamily(new AnyOfTags("DreamFragmentButtonContainer"));
 	private Family f_contentContainer = FamilyManager.getFamily(new AllOfComponents(typeof(PrefabContainer)), new AnyOfTags("DreamFragmentContentContainer"));
-	private Family f_contents = FamilyManager.getFamily(new AnyOfTags("DreamFragmentContent"));
 	private Family f_documents = FamilyManager.getFamily(new AllOfComponents(typeof(PointerSensitive)), new AnyOfTags("IARDocument"));
 	private Family f_buttons = FamilyManager.getFamily(new AnyOfTags("DreamFragmentButtons"));
 	private Family f_canvas = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
@@ -100,15 +98,19 @@ public class IARDreamFragmentManager : FSystem {
 				t.GetComponentInChildren<Image>().sprite = tmpDFToggle.onState;
 				tmpDFToggle.currentState = tmpDFToggle.onState;
 				selectedIARFragment = t.gameObject;
+                GameObjectManager.addComponent<PlaySound>(selectedIARFragment, new { id = 13 }); // id refer to FPSController AudioBank
+                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedIARFragment, new { verb = "deactivated", objectType = "dreamFragment", objectName = selectedIARFragment.name });
 
-				if (tmpDFToggle.dreamFragmentContent.transform.childCount > 0)
+                if (tmpDFToggle.dreamFragmentContent.transform.childCount > 0)
 					selectedDocument = tmpDFToggle.dreamFragmentContent.transform.GetChild(0).gameObject;
 			}
             else
 			{
 				t.GetComponentInChildren<Image>().sprite = tmpDFToggle.offState;
 				tmpDFToggle.currentState = tmpDFToggle.offState;
-				selectedIARFragment = null;
+                GameObjectManager.addComponent<PlaySound>(t.gameObject, new { id = 14 }); // id refer to FPSController AudioBank
+                GameObjectManager.addComponent<ActionPerformedForLRS>(t.gameObject, new { verb = "activated", objectType = "dreamFragment", objectName = t.gameObject.name });
+                selectedIARFragment = null;
 			}
 
 			SetButtonsState();

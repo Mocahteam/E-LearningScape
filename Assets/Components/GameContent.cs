@@ -32,7 +32,8 @@ public class GameContent {
     /// </summary>
     public float traceMovementFrequency = 0;
     /// <summary>
-    /// 
+    /// It true, dream fragments will be viewed in IAR. If false,
+    /// dream fragments have to be printed inside envelops
     /// </summary>
     public bool virtualDreamFragment = true;
     /// <summary>

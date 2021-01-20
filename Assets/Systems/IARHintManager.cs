@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using FYFY;
 using UnityEngine.UI;
-using UnityStandardAssets.Characters.FirstPerson;
-using UnityEngine.SceneManagement;
 using FYFY_plugins.Monitoring;
 using System.Collections.Generic;
 using TMPro;
@@ -100,7 +98,9 @@ public class IARHintManager : FSystem {
                         }
                     }
                     catch(TraceAborted ta)
-                    { }
+                    {
+                        Debug.Log(ta.Message);
+                    }
                 }
             }
             needRefresh = false;
