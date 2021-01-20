@@ -51,17 +51,17 @@ public class EndManager : FSystem {
         // When all answer was displayed => ask to teleport in the end room or display end story
         if (f_answer.Count == 0)
         {
+            GameObjectManager.addComponent<ActionPerformedForLRS>(f_questionR3.First().transform.parent.parent.gameObject, new
+            {
+                verb = "completed",
+                objectType = "menu",
+                objectName = f_questionR3.First().transform.parent.parent.gameObject.name
+            });
             if (useEndRoom)
             {
                 switchToEndRoom = true;
 
                 GameObjectManager.addComponent<ActionPerformed>(f_player.First(), new { overrideName = "teleportToFinalScene", performedBy = "system" });
-                GameObjectManager.addComponent<ActionPerformedForLRS>(f_questionR3.First().transform.parent.parent.gameObject, new
-                {
-                    verb = "completed",
-                    objectType = "menu",
-                    objectName = f_questionR3.First().transform.parent.parent.gameObject.name
-                });
                 f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 4;
             }
             else

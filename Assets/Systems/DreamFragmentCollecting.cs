@@ -88,7 +88,6 @@ public class DreamFragmentCollecting : FSystem {
                     else
                     {
                         // Show fragment UI
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
                         GameObjectManager.setGameObjectState(dfUI, true);
                         if(tmpDFComponent.urlLink != null && tmpDFComponent.urlLink != "")
                         {
@@ -109,6 +108,7 @@ public class DreamFragmentCollecting : FSystem {
                         backupIARNavigationState = IARTabNavigation.instance.Pause;
                         IARTabNavigation.instance.Pause = true;
                     }
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
 
                     GameObjectManager.addComponent<PlaySound>(selectedFragment, new { id = 3 }); // id refer to FPSController AudioBank
 

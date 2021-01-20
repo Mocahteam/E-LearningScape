@@ -112,6 +112,16 @@ public class IARDreamFragmentManager : FSystem {
 			}
 
 			SetButtonsState();
+
+			GameObjectManager.addComponent<ActionPerformedForLRS>(t.gameObject, new
+			{
+					verb = t.isOn ? "activated": "deactivated",
+					objectType = "viewable",
+					objectName = tmpDFToggle.dreamFragmentContent.name,
+					activityExtensions = new Dictionary<string, List<string>>() {
+						{ "type", new List<string>() { "dream fragment" } }
+					}
+			});
 		}
 	}
 
@@ -168,7 +178,19 @@ public class IARDreamFragmentManager : FSystem {
 	public void RotateDocument(float angle)
     {
         if (selectedDocument)
+		{
 			selectedDocument.GetComponent<RectTransform>().Rotate(0, 0, angle);
+
+			GameObjectManager.addComponent<ActionPerformedForLRS>(selectedDocument, new
+			{
+				verb = "rotated",
+				objectType = "viewable",
+				objectName = selectedDocument.transform.parent.gameObject.name,
+				activityExtensions = new Dictionary<string, List<string>>() {
+					{ "value", new List<string>() { angle.ToString() } }
+				}
+			});
+		}
 	}
 
 	public void ZoomDocument(float value)
@@ -182,6 +204,16 @@ public class IARDreamFragmentManager : FSystem {
 				tmpRT.localScale = Vector3.one * 0.1f;
 			else if (tmpRT.localScale.x > 3f)
 				tmpRT.localScale = Vector3.one * 3f;
+
+			GameObjectManager.addComponent<ActionPerformedForLRS>(selectedDocument, new
+			{
+				verb = "zoomed",
+				objectType = "viewable",
+				objectName = selectedDocument.transform.parent.gameObject.name,
+				activityExtensions = new Dictionary<string, List<string>>() {
+					{ "value", new List<string>() { value.ToString() } }
+				}
+			});
 		}
 	}
 
@@ -213,6 +245,13 @@ public class IARDreamFragmentManager : FSystem {
 				tmpRT.localRotation = Quaternion.Euler(0, 0, 0);
 				tmpRT.localScale = Vector3.one;
 			}
+
+			GameObjectManager.addComponent<ActionPerformedForLRS>(selectedIARFragment, new
+			{
+				verb = "reset",
+				objectType = "viewable",
+				objectName = selectedIARFragment.name
+			});
 		}
 	}
 
@@ -248,6 +287,13 @@ public class IARDreamFragmentManager : FSystem {
 					go.transform.SetAsLastSibling();
 					go.transform.parent.SetAsLastSibling();
 					SetButtonsState();
+
+					GameObjectManager.addComponent<ActionPerformedForLRS>(selectedDocument, new
+					{
+						verb = "dragged",
+						objectType = "viewable",
+						objectName = selectedIARFragment.name
+					});
 					break;
                 }
             }
@@ -257,7 +303,14 @@ public class IARDreamFragmentManager : FSystem {
         {
 			//check if drag button is released to stop dragging
             if (Input.GetButtonUp("Fire1"))
-            {
+			{
+				GameObjectManager.addComponent<ActionPerformedForLRS>(selectedDocument, new
+				{
+					verb = "dropped",
+					objectType = "viewable",
+					objectName = draggedDocument.transform.parent.gameObject.name
+				});
+
 				draggedDocument = null;
             }
             //move the dragged object
