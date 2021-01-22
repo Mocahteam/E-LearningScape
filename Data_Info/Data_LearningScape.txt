@@ -21,23 +21,23 @@
 	"additionalLogosPath": [],
 	
     "storyTextIntro": [
-        "Il est déjà tard le soir, Camille appréhende un peu son premier jour dans son nouvel établissement. Elle vient d’arriver dans une ville qu’elle connait peu et doit résoudre un grand nombre de problèmes : Analyser les moyens de déplacement, planifier son trajet vers son université, envisager les possibilités, ordonnancer les différentes étapes...",
-        "En se brossant les dents, elle se remémore tout le programme qu’elle vient de préparer et se demande si elle devra le reconcevoir tous les jours ou si elle pourra le réutiliser. Puis elle se couche, et plein de questions tournent dans sa tête : et si je ne me réveille pas à l’heure ? combien de temps vais-je attendre le premier bus ? et si mon ordinateur n’a plus de batterie ?",
-        "Camille finit par s'endormir... C'est alors que les marchands de sable entrent en action pour l’aider à structurer sa pensée pendant son sommeil."
+        "Il est déjà tard le soir, Camille appréhende un peu son premier examen d'informatique. Toutes les notions abordées en cours lui reviennent en tête, les structures de contrôle, la notion de variable, les fonctions... Demain il lui faudra assurer, réussir cet examen récompenserait les efforts consentis jusqu'à aujourd'hui.",
+        "En se brossant les dents, pleins de questions trottent dans sa tête: Comment coder une information ? Comment parcourir un ensemble de valeurs ? Quel langage de programmation faudra-t-il utiliser ?",
+        "Camille se couche et finit par s'endormir... C'est alors qu'un marchand de sable entre en action pour l’aider à structurer sa pensée pendant son sommeil..."
     ],
     "storyTextransition": [
-        "Camille est entrée en sommeil paradoxal, elle se met à rêver et se retrouve dans un univers étrange. Les marchands de sable restent avec elle pour l’aider à émerger de ce rêve."
+        "Camille entre en sommeil paradoxal, cette porte ouverte vers son subconscient lui donne accès à un univers étrange. Le marchand de sable poursuit son travail pour l’aider à émerger de ce rêve."
     ],
     "storyTextEnd": [
-        "Camille se réveille. Elle est en pleine forme, et son programme de la journée est clair dans sa tête pour son premier jour. Elle a hâte de commencer : un vrai programme informatique !",
-        "Les marchands de sable ont bien travaillé et se retrouvent pour faire le bilan de leurs activités."
+        "Camille se réveille...\nCette bonne nuit de sommeil lui a été utile, ses idées sont plus claires et il ne lui tarde plus qu'une chose... prendre son stylo et composer à son examen.",
+        "Le marchand de sable a bien travaillé!"
     ],
 	"additionalCredit": [
-		"Adaptation pour le domaine informatique réalisée par\n\nThibault Carron\nMathieu Muratet"
+		"Adaptation pour le domaine informatique réalisée par :\n\nThibault Carron\nMathieu Muratet"
 	],
     "scoreText": "Vous avez mis: ",
-    "endExplainationText": "",
-    "endLink": "",
+    "endExplainationText": "Que vous ayez apprécié ce jeu ou pas, votre retour nous serait très utile pour tenter de l'améliorer. Merci de répondre au questionnaire ci-dessous. Ce questionnaire est anonyme et ne vous prendra que quelques minutes.\n\nMerci de votre contribution...",
+    "endLink": "http://sondages.inshea.fr/index.php/153235/lang/en/newtest/Y?153235X167X2174=",
     "concatIdToLink": true,
 	
 	"inventoryScrollIntro": [
@@ -97,8 +97,8 @@
     "mainMenuLeave": "Quitter",
     "sessionIDText": "ID: ",
     "sessionIDPopup": "Cliquer pour copier",
-    "endLinkButtonText": "Remplir un formulaire",
-    "endLeaveButtonText": "Se réveiller",
+    "endLinkButtonText": "Remplir le formulaire",
+    "endLeaveButtonText": "Retourner au menu",
     "optionControlsMenu": "Contrôle",
     "optionVirtualFragments": "Fragments Virtuels",
     "optionMovingTexts": "Textes en mouvement",
@@ -151,7 +151,7 @@
     "tutoText4": "Appuie sur\npour accéder à l'inventaire",
 	
 	"ballRandomPositioning": false,
-    "ballBoxQuestion": "Somme des valeurs des boules dont l’écart entre l’indice des lignes et l’indice des colonnes et supérieur à deux",
+    "ballBoxQuestion": "Somme des valeurs des boules dont l’écart entre l’indice des lignes et l’indice des colonnes et supérieur à deux :",
     "ballBoxPlaceHolder": "1 nombre attendu...",
 	"ballBoxAnswerFeedback": "16",
 	"ballBoxAnswerFeedbackDesc": "0 + 3 + 4 + 9",
@@ -171,7 +171,7 @@
         "[1][4]"
     ],
 	
-    "plankAndWireQuestionIAR": "Qu’est-ce que l’Informatique ?",
+    "plankAndWireQuestionIAR": "Le code révélé par la corde est la clé de la science Informatique ?",
     "plankAndWirePlaceHolder": "1 nombre attendu...",
     "plankAndWireQuestion": "Relier avec la corde les 3 idées fortes de l’informatique",
 	"plankAndWireAnswerFeedback": "512",
@@ -262,7 +262,7 @@
         "18"
     ],
     "enigma08AnswerFeedback": "18",
-    "enigma08AnswerFeedbackDesc": "",
+    "enigma08AnswerFeedbackDesc": "Algo topo !!!",
 	
     "scrollsQuestion": "Agencez ces lettres entre elles pour trouver le plaisir de l’informatique",
     "scrollsPlaceHolder": "1 mot attendu...",
@@ -304,7 +304,7 @@
 	"enigma12AnswerFeedback": "20",
 	"enigma12AnswerFeedbackDesc": "",
 	
-    "lockRoom2Password": "111",
+    "lockRoom2Password": "777",
 	
     "puzzleAnswer": "Fonction",
 	"puzzleAnswerFeedback": "Fonction",
@@ -312,7 +312,7 @@
 	"puzzlePicturePath": "Data/Puzzle_Complet.png",
 	
     "lampAnswer": "8",
-    "lampAnswerFeedback": "8 cercles",
+    "lampAnswerFeedback": "8 boucles",
     "lampAnswerFeedbackDesc": "",
     "lampPicturesPath": [
         "Data/lamp01.png",
@@ -323,26 +323,26 @@
         "Data/lamp06.png"
     ],
 	
-    "enigma16Answer": "TODO",
-    "enigma16AnswerFeedback": "TODO",
+    "enigma16Answer": "Variable",
+    "enigma16AnswerFeedback": "Variable",
     "enigma16AnswerFeedbackDesc": "",
 	
-    "whiteBoardAnswer": "Variable##Condition##Boucle##Fonction",
-    "whiteBoardAnswerFeedback": "Variable Condition Boucle Fonction",
+    "whiteBoardAnswer": "Condition",
+    "whiteBoardAnswerFeedback": "Condition",
     "whiteBoardAnswerFeedbackDesc": "",
     "whiteBoardWords": [
-        "##La boîte à## énigme...",
-        "...est-elle un ##outils## ?",
+        "La boîte à énigme...",
+        "...est-elle un outils ?",
         "Algorithmes",
-        "##Variable## aléatoire",
-        "Processeur",
-        "##Condition##nel",
+        "Variable aléatoire",
+        "Pro##c##esseur",
+        "C##ond##itionnel",
         "Impératif",
-        "Compilateur",
+        "Comp##i##lateur",
         "Synchroniser",
-        "##Boucle##ment",
+        "Bouclement",
         "Internet",
-        "##Fonction##alité"
+        "Fonc##tion##alité"
     ],
 	
 	"inputsSetTitle1": "Touche 1",

@@ -260,7 +260,8 @@ public class HelpSystem : FSystem {
                     {  0, 19},
                     {  4, 20},
                     { 21, 21},
-                    { 99, 22}
+                    { 99, 22},
+                    {164, -1}
                 };
             }
         }
@@ -646,19 +647,22 @@ public class HelpSystem : FSystem {
         foreach(KeyValuePair<ComponentMonitoring, string> selectedEnigma in selectedEnigmas)
         {
             int associatedPnToEnigma = EnigmaIdToPnId[selectedEnigma.Key.id];
-            // get the shortest path in sub Petri net to reach the end of the enigma
-            List<KeyValuePair<ComponentMonitoring, string>> usefullActions = MonitoringManager.getNextActionsToReachPlayerObjective(MonitoringManager.Instance.PetriNetsName[associatedPnToEnigma], int.MaxValue);
-            // compute intersections between the usefullActions and the triggerableActions in order to select action required to solve enigma
-            foreach (KeyValuePair<ComponentMonitoring, string> triggerableAction in triggerableActions)
+            if (associatedPnToEnigma != -1)
             {
-                // filter action of the selected sub Petri net
-                if (triggerableAction.Key.fullPnSelected == associatedPnToEnigma)
+                // get the shortest path in sub Petri net to reach the end of the enigma
+                List<KeyValuePair<ComponentMonitoring, string>> usefullActions = MonitoringManager.getNextActionsToReachPlayerObjective(MonitoringManager.Instance.PetriNetsName[associatedPnToEnigma], int.MaxValue);
+                // compute intersections between the usefullActions and the triggerableActions in order to select action required to solve enigma
+                foreach (KeyValuePair<ComponentMonitoring, string> triggerableAction in triggerableActions)
                 {
-                    // Select candidates which are triggerable, inside the sortest path and have hints available
-                    foreach (KeyValuePair<ComponentMonitoring, string> usefullAction in usefullActions)
+                    // filter action of the selected sub Petri net
+                    if (triggerableAction.Key.fullPnSelected == associatedPnToEnigma)
                     {
-                        if (usefullAction.Key.id == triggerableAction.Key.id && usefullAction.Value == triggerableAction.Value && gameHints.dictionary.ContainsKey(usefullAction.Key.id+"."+ usefullAction.Value))
-                            actionCandidates.Add(usefullAction);
+                        // Select candidates which are triggerable, inside the sortest path and have hints available
+                        foreach (KeyValuePair<ComponentMonitoring, string> usefullAction in usefullActions)
+                        {
+                            if (usefullAction.Key.id == triggerableAction.Key.id && usefullAction.Value == triggerableAction.Value && gameHints.dictionary.ContainsKey(usefullAction.Key.id + "." + usefullAction.Value))
+                                actionCandidates.Add(usefullAction);
+                        }
                     }
                 }
             }
