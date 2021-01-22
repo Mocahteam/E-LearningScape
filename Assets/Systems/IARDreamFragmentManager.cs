@@ -99,7 +99,6 @@ public class IARDreamFragmentManager : FSystem {
 				tmpDFToggle.currentState = tmpDFToggle.onState;
 				selectedIARFragment = t.gameObject;
                 GameObjectManager.addComponent<PlaySound>(selectedIARFragment, new { id = 13 }); // id refer to FPSController AudioBank
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedIARFragment, new { verb = "deactivated", objectType = "dreamFragment", objectName = selectedIARFragment.name });
 
                 if (tmpDFToggle.dreamFragmentContent.transform.childCount > 0)
 					selectedDocument = tmpDFToggle.dreamFragmentContent.transform.GetChild(0).gameObject;
@@ -109,7 +108,6 @@ public class IARDreamFragmentManager : FSystem {
 				t.GetComponentInChildren<Image>().sprite = tmpDFToggle.offState;
 				tmpDFToggle.currentState = tmpDFToggle.offState;
                 GameObjectManager.addComponent<PlaySound>(t.gameObject, new { id = 14 }); // id refer to FPSController AudioBank
-                GameObjectManager.addComponent<ActionPerformedForLRS>(t.gameObject, new { verb = "activated", objectType = "dreamFragment", objectName = t.gameObject.name });
                 selectedIARFragment = null;
 			}
 

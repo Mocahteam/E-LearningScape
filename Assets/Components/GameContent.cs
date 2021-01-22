@@ -73,6 +73,9 @@ public class GameContent {
     public string[] storyTextEnd;
     public string[] additionalCredit;
     public string scoreText;
+    public string endExplainationText;
+    public string endLink;
+    public bool concatIdToLink;
 
     #region UI texts
     public string loadingText;
@@ -81,6 +84,8 @@ public class GameContent {
     public string mainMenuLeave;
     public string sessionIDText;
     public string sessionIDPopup;
+    public string endLinkButtonText;
+    public string endLeaveButtonText;
     public string optionControlsMenu;
     public string optionVirtualFragments;
     public string optionMovingTexts;

@@ -250,6 +250,9 @@ public class LoadGameContent : FSystem {
             newCredits.AddRange(gameContent.additionalCredit);
             st.credit = newCredits.ToArray();
         }
+        st.endLink = gameContent.endLink;
+        if (gameContent.endLink != "" && gameContent.concatIdToLink)
+            st.endLink = string.Concat(st.endLink, sessionID);
         Debug.Log("Story loaded");
         #endregion
 

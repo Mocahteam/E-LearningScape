@@ -11,4 +11,5 @@ public class StoryText : MonoBehaviour {
     public string[] end;
     [TextArea]
     public string[] credit;
+    public string endLink;
 }

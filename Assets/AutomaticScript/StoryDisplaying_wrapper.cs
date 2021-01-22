@@ -9,4 +9,14 @@ public class StoryDisplaying_wrapper : MonoBehaviour
 		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
 	}
 
+	public void OpenEndLink()
+	{
+		MainLoop.callAppropriateSystemMethod ("StoryDisplaying", "OpenEndLink", null);
+	}
+
+	public void ResetGame()
+	{
+		MainLoop.callAppropriateSystemMethod ("StoryDisplaying", "ResetGame", null);
+	}
+
 }

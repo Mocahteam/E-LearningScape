@@ -38,6 +38,9 @@
 		"Pour l'INSHEA\n\nArneton Melissa\nBroussolle Elisabeth\nFerrand Marie-Hélène\nGarbarini Délia\nGarnier Philippe\nGeffroy Véronique\nMuratet Mathieu\nVanbrugghe Anne"
 	],
     "scoreText": "Vous avez mis: ",
+    "endExplainationText": "",
+    "endLink": "",
+    "concatIdToLink": true,
 	
 	"inventoryScrollIntro": [
 		"Parchemin",
@@ -96,6 +99,8 @@
     "mainMenuLeave": "Quitter",
     "sessionIDText": "ID: ",
     "sessionIDPopup": "Cliquer pour copier",
+    "endLinkButtonText": "Remplir un formulaire",
+    "endLeaveButtonText": "Se réveiller",
     "optionControlsMenu": "Contrôle",
     "optionVirtualFragments": "Fragments Virtuels",
     "optionMovingTexts": "Textes en mouvement",

@@ -36,6 +36,9 @@
 		"Adaptation pour le domaine informatique réalisée par\n\nThibault Carron\nMathieu Muratet"
 	],
     "scoreText": "Vous avez mis: ",
+    "endExplainationText": "",
+    "endLink": "",
+    "concatIdToLink": true,
 	
 	"inventoryScrollIntro": [
 		"Parchemin",
@@ -94,6 +97,8 @@
     "mainMenuLeave": "Quitter",
     "sessionIDText": "ID: ",
     "sessionIDPopup": "Cliquer pour copier",
+    "endLinkButtonText": "Remplir un formulaire",
+    "endLeaveButtonText": "Se réveiller",
     "optionControlsMenu": "Contrôle",
     "optionVirtualFragments": "Fragments Virtuels",
     "optionMovingTexts": "Textes en mouvement",

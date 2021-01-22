@@ -6,6 +6,7 @@ using TMPro;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System;
+using System.IO;
 
 public class StoryDisplaying : FSystem {
 
@@ -23,11 +24,13 @@ public class StoryDisplaying : FSystem {
     private Image fadingImage;
     private Image background;
     private GameObject clickFeedback;
+    private GameObject endText;
 
     // Contains all texts of the story
     private List<List<string>> storyTexts;
     // Contains current texts of the story
     private string[] readTexts;
+    private string endLink;
 
     StoryText st;
 
@@ -42,6 +45,8 @@ public class StoryDisplaying : FSystem {
     private Timer timer;
 
     public static StoryDisplaying instance;
+
+    private RectTransform tmpRT;
 
     public StoryDisplaying()
     {
@@ -58,6 +63,8 @@ public class StoryDisplaying : FSystem {
                     fadingImage = child.gameObject.GetComponent<Image>();
                 else if (child.gameObject.name == "Click")
                     clickFeedback = child.gameObject;
+                else if (child.gameObject.name == "EndText")
+                    endText = child.gameObject;
             }
 
             st = sdGo.GetComponent<StoryText>();
@@ -71,8 +78,55 @@ public class StoryDisplaying : FSystem {
 
             GameObjectManager.addComponent<Timer>(f_game.First());
 
+            // if there is no link, disable link button
+            if(st.endLink == "")
+            {
+                fadingImage.transform.SetAsLastSibling();
+                foreach (Transform child in endText.transform)
+                    if (child.GetComponent<Button>())
+                        GameObjectManager.setGameObjectState(child.gameObject, false);
+            }
+
             instance = this;
         }
+    }
+
+    public void OpenEndLink()
+    {
+        if(st.endLink != "")
+        {
+            try
+            {
+                Application.OpenURL(st.endLink);
+            }
+            catch (Exception)
+            {
+                Debug.LogError(string.Concat("Invalid end link: ", st.endLink));
+                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid end link: ", st.endLink));
+            }
+            GameObjectManager.addComponent<ActionPerformedForLRS>(endText, new
+            {
+                verb = "accessed",
+                objectType = "viewable",
+                objectName = "end link",
+                activityExtensions = new Dictionary<string, List<string>>() { { "link", new List<string>() { st.endLink } } }
+            });
+        }
+    }
+
+    // If there are buttons, don't fade and reset the game unless the button to leave is cliked
+    public void ResetGame()
+    {
+        fadingImage.transform.SetAsLastSibling();
+        alphaToPlain = true;
+        readingTimer = Time.time;
+        GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
+        {
+            verb = "read",
+            objectType = "text",
+            objectName = sdGo.name,
+            activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { sdText.text } } }
+        });
     }
 
     // Use this to update member variables when system pause. 
@@ -185,7 +239,20 @@ public class StoryDisplaying : FSystem {
                 // pass to the next text
                 textCount++;
                 if (textCount < readTexts.Length)
+                {
                     sdText.text = readTexts[textCount];
+                    if(st.storyProgression == storyTexts.Count - 1 && textCount == readTexts.Length - 1)
+                    {
+                        // enable endText when last text is reached
+                        GameObjectManager.setGameObjectState(endText, true);
+                        if(LoadGameContent.gameContent.endExplainationText != "")
+                        {
+                            tmpRT = sdText.GetComponent<RectTransform>();
+                            tmpRT.offsetMin = new Vector2(tmpRT.offsetMin.x, 360);
+                            tmpRT.offsetMax = new Vector2(tmpRT.offsetMax.x, 15);
+                        }
+                    }
+                }
                 else
                 {
                     // end text reached
@@ -235,8 +302,8 @@ public class StoryDisplaying : FSystem {
             {
                 fadingImage.color = new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, 0);
                 plainToAlpha = false;
-                // Displaying text
-                GameObjectManager.setGameObjectState(clickFeedback, true);
+                // Displaying text if it is not the end text or there is no end link
+                GameObjectManager.setGameObjectState(clickFeedback, !(st.storyProgression == storyTexts.Count - 1 && textCount == readTexts.Length - 1 && st.endLink != ""));
                 if (fadingBackground)
                 {
                     background.color = new Color(background.color.r, background.color.g, background.color.b, 0);
@@ -254,15 +321,19 @@ public class StoryDisplaying : FSystem {
         {
             if (Input.GetButtonDown ("Fire1") || Input.GetButtonDown("Cancel") || Input.GetButtonDown("Submit"))
             {
-                alphaToPlain = true;
-                readingTimer = Time.time;
-                GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
+                // if it is not the end text or there is no end link
+                if (!(st.storyProgression == storyTexts.Count - 1 && textCount == readTexts.Length - 1 && st.endLink != ""))
                 {
-                    verb = "read",
-                    objectType = "text",
-                    objectName = sdGo.name,
-                    activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { sdText.text } } }
-                });
+                    alphaToPlain = true;
+                    readingTimer = Time.time;
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
+                    {
+                        verb = "read",
+                        objectType = "text",
+                        objectName = sdGo.name,
+                        activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { sdText.text } } }
+                    });
+                }
             }
         }
     }
