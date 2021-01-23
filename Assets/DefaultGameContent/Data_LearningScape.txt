@@ -2,6 +2,7 @@
     "theme": "Pédagogie",
     "trace": true,
     "helpSystem": true,
+    "randomHelpSystemActivation": false,
     "traceToLRS": true,
     "traceMovementFrequency": 0.5,
     "virtualDreamFragment": true,

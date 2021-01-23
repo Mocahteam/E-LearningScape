@@ -45,7 +45,7 @@ public class IARNewQuestionsAvailable : FSystem {
             // put a screenshot of the IAR on the terminal when the screen is viewed for the first time
             int lastUnlockedRoom = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
             if (f_terminalScreens.Count >= lastUnlockedRoom)
-                MainLoop.instance.StartCoroutine(IARQueryEvaluator.instance.SetTerminalScreen(lastUnlockedRoom - 1));
+                MainLoop.instance.StartCoroutine(IARQueryEvaluator.instance.SetTerminalScreen());
         }
     }
 }

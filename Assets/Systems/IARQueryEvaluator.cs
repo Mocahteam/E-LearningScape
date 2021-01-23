@@ -274,7 +274,7 @@ public class IARQueryEvaluator : FSystem {
             // put a screenshot of the IAR on the terminal of the last unlocked room
             int lastUnlockedRoom = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
             if (f_terminalScreens.Count >= lastUnlockedRoom)
-                MainLoop.instance.StartCoroutine(SetTerminalScreen(lastUnlockedRoom - 1));
+                MainLoop.instance.StartCoroutine(SetTerminalScreen());
 
             // if linked hide item in inventory
             foreach (LinkedWith item in query.GetComponents<LinkedWith>())
@@ -319,14 +319,17 @@ public class IARQueryEvaluator : FSystem {
         }
     }
 
-    public IEnumerator SetTerminalScreen(int screenID)
+    public IEnumerator SetTerminalScreen()
     {
         yield return new WaitForEndOfFrame();
 
         Texture2D tex = new Texture2D(Camera.main.pixelWidth, Camera.main.pixelHeight, TextureFormat.RGBA32, false);
         tex.ReadPixels(new Rect(0, 0, Camera.main.pixelWidth, Camera.main.pixelHeight), 0, 0);
         tex.Apply(false);
-        f_terminalScreens.getAt(screenID).GetComponent<Renderer>().material.mainTexture = tex;
-        f_terminalScreens.getAt(screenID).GetComponent<Renderer>().material.color = Color.white;
+        foreach(GameObject screen in f_terminalScreens)
+        {
+            screen.GetComponent<Renderer>().material.mainTexture = tex;
+            screen.GetComponent<Renderer>().material.color = Color.white;
+        }
     }
 }

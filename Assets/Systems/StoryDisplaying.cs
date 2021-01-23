@@ -248,8 +248,8 @@ public class StoryDisplaying : FSystem {
                         if(LoadGameContent.gameContent.endExplainationText != "")
                         {
                             tmpRT = sdText.GetComponent<RectTransform>();
-                            tmpRT.offsetMin = new Vector2(tmpRT.offsetMin.x, 360);
-                            tmpRT.offsetMax = new Vector2(tmpRT.offsetMax.x, 15);
+                            tmpRT.anchoredPosition = new Vector2(tmpRT.anchoredPosition.x, -55);
+                            tmpRT.sizeDelta = new Vector2(tmpRT.sizeDelta.x, 80);
                         }
                     }
                 }

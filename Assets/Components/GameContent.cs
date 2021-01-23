@@ -23,6 +23,10 @@ public class GameContent {
     /// </summary>
     public bool helpSystem = true;
     /// <summary>
+    /// If true, it will be determined randomly if help system has to be enabled
+    /// </summary>
+    public bool randomHelpSystemActivation = false;
+    /// <summary>
     /// If true, traces will be sent to LRS
     /// </summary>
     public bool traceToLRS = false;
