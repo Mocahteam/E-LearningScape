@@ -38,8 +38,8 @@
 		"Pour l'INSHEA\n\nArneton Melissa\nBroussolle Elisabeth\nFerrand Marie-Hélène\nGarbarini Délia\nGarnier Philippe\nGeffroy Véronique\nMuratet Mathieu\nVanbrugghe Anne"
 	],
     "scoreText": "Vous avez mis: ",
-    "endExplainationText": "",
-    "endLink": "",
+    "endExplainationText": "Que vous ayez apprécié ce jeu ou pas, votre retour nous serait très utile pour tenter de l'améliorer. Merci de répondre au questionnaire ci-dessous. Ce questionnaire est anonyme et ne vous prendra que quelques minutes.\n\nMerci de votre contribution...",
+    "endLink": "http://sondages.inshea.fr/index.php/153235/lang/en/newtest/Y?153235X167X2174=",
     "concatIdToLink": true,
 	
 	"inventoryScrollIntro": [
@@ -99,8 +99,8 @@
     "mainMenuLeave": "Quitter",
     "sessionIDText": "ID: ",
     "sessionIDPopup": "Cliquer pour copier",
-    "endLinkButtonText": "Remplir un formulaire",
-    "endLeaveButtonText": "Se réveiller",
+    "endLinkButtonText": "Remplir le formulaire",
+    "endLeaveButtonText": "Retourner au menu",
     "optionControlsMenu": "Contrôle",
     "optionVirtualFragments": "Fragments Virtuels",
     "optionMovingTexts": "Textes en mouvement",
@@ -153,7 +153,7 @@
     "tutoText4": "Appuie sur\npour accéder à l'inventaire",
 	
     "ballRandomPositioning": true,
-    "ballBoxQuestion": "Comment concevoir une situation pédagogique correspondant aux besoins de tous les apprenants ?",
+    "ballBoxQuestion": "Comment concevoir une situation pédagogique correspondant aux besoins de tous les apprenants?",
     "ballBoxPlaceHolder": "3 chiffres attendus...",
 	"ballBoxAnswerFeedback": "1 - 2 - 8",
 	"ballBoxAnswerFeedbackDesc": "Proposer plusieurs modalités - Mettre l’apprenant en situation d’agir - Permettre aux apprenants de discuter",
