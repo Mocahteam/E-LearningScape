@@ -154,7 +154,7 @@
     "ballBoxQuestion": "Somme des valeurs des boules dont l’écart entre l’indice des lignes et l’indice des colonnes et supérieur à deux :",
     "ballBoxPlaceHolder": "1 nombre attendu...",
 	"ballBoxAnswerFeedback": "16",
-	"ballBoxAnswerFeedbackDesc": "0 + 3 + 4 + 9",
+	"ballBoxAnswerFeedbackDesc": "3 + 4 + 9",
     "ballBoxAnswer": [
         "16"
     ],
