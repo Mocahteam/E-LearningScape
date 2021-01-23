@@ -17,8 +17,9 @@ public class IARDreamFragmentManager : FSystem {
 	private Family f_canvas = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
 	private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
 	private Family f_focusedToggles = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragmentToggle), typeof(Toggle), typeof(PointerSensitive), typeof(PointerOver)));
+    private Family f_togglableFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragmentToggle)));
 
-	public static IARDreamFragmentManager instance;
+    public static IARDreamFragmentManager instance;
 	public static bool virtualDreamFragment;
 
 	private RectTransform iarRectTransform;
@@ -99,7 +100,20 @@ public class IARDreamFragmentManager : FSystem {
 			//change content's state depending on the value of the toggle
 			GameObjectManager.setGameObjectState(tmpDFToggle.dreamFragmentContent, t.isOn);
 
-			selectedDocument = null;
+            //unhighligh in left panel previous controller
+            if (selectedDocument != null)
+            {
+                foreach (GameObject togglableFragment in f_togglableFragments)
+                {
+                    DreamFragmentToggle dft = togglableFragment.GetComponent<DreamFragmentToggle>();
+                    if (dft.dreamFragmentContent.transform == selectedDocument.transform.parent)
+                    {
+                        togglableFragment.GetComponentInChildren<Image>().sprite = tmpDFToggle.onState;
+                        tmpDFToggle.currentState = tmpDFToggle.onState;
+                    }
+                }
+            }
+            selectedDocument = null;
 			if (t.isOn)
 			{
 				t.GetComponentInChildren<Image>().sprite = tmpDFToggle.onState;
@@ -116,9 +130,22 @@ public class IARDreamFragmentManager : FSystem {
 				tmpDFToggle.currentState = tmpDFToggle.offState;
                 GameObjectManager.addComponent<PlaySound>(t.gameObject, new { id = 14 }); // id refer to FPSController AudioBank
                 selectedIARFragment = null;
-			}
+            }
+            //highligh in left panel new controller
+            if (selectedDocument != null)
+            {
+                foreach (GameObject togglableFragment in f_togglableFragments)
+                {
+                    DreamFragmentToggle dft = togglableFragment.GetComponent<DreamFragmentToggle>();
+                    if (dft.dreamFragmentContent.transform == selectedDocument.transform.parent)
+                    {
+                        togglableFragment.GetComponentInChildren<Image>().sprite = tmpDFToggle.selectedState;
+                        tmpDFToggle.currentState = tmpDFToggle.selectedState;
+                    }
+                }
+            }
 
-			SetButtonsState();
+            SetButtonsState();
 
 			GameObjectManager.addComponent<ActionPerformedForLRS>(t.gameObject, new
 			{
@@ -140,7 +167,7 @@ public class IARDreamFragmentManager : FSystem {
 		tmpImage = go.GetComponentInChildren<Image>();
 
 		tmpDFToggle.currentState = tmpImage.sprite;
-		tmpImage.sprite = tmpDFToggle.foucsedState;
+		tmpImage.sprite = tmpDFToggle.focusedState;
     }
 
 	// Changes toggle sprite back to the state before mouse over
@@ -285,7 +312,20 @@ public class IARDreamFragmentManager : FSystem {
             {
                 if (go.GetComponent<PointerOver>())
 				{
-					draggedDocument = go;
+                    //unhighligh in left panel previous controller
+                    if (selectedDocument != null)
+                    {
+                        foreach (GameObject togglableFragment in f_togglableFragments)
+                        {
+                            DreamFragmentToggle dft = togglableFragment.GetComponent<DreamFragmentToggle>();
+                            if (dft.dreamFragmentContent.transform == selectedDocument.transform.parent)
+                            {
+                                togglableFragment.GetComponentInChildren<Image>().sprite = tmpDFToggle.onState;
+                                tmpDFToggle.currentState = tmpDFToggle.onState;
+                            }
+                        }
+                    }
+                    draggedDocument = go;
 					selectedDocument = go;
 					selectedIARFragment = go.transform.parent.gameObject;
 					tmpRT = go.GetComponent<RectTransform>();
@@ -298,8 +338,18 @@ public class IARDreamFragmentManager : FSystem {
 					go.transform.SetAsLastSibling();
 					go.transform.parent.SetAsLastSibling();
 					SetButtonsState();
+                    //highligh in left panel new controller
+                    foreach (GameObject togglableFragment in f_togglableFragments)
+                    {
+                        DreamFragmentToggle dft = togglableFragment.GetComponent<DreamFragmentToggle>();
+                        if (dft.dreamFragmentContent.transform == selectedDocument.transform.parent)
+                        {
+                            togglableFragment.GetComponentInChildren<Image>().sprite = tmpDFToggle.selectedState;
+                            tmpDFToggle.currentState = tmpDFToggle.selectedState;
+                        }
+                    }
 
-					lastAction = 1;
+                    lastAction = 1;
 					if (currentTracedAction == -1)
 					{
 						currentTracedAction = lastAction;

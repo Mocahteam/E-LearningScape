@@ -9,6 +9,7 @@ public class DreamFragmentToggle : MonoBehaviour {
 	//sprites used to change toggle state
 	public Sprite onState;
 	public Sprite offState;
-	public Sprite foucsedState;
-	public Sprite currentState;
+	public Sprite focusedState;
+    public Sprite selectedState;
+    public Sprite currentState;
 }
