@@ -94,6 +94,8 @@ public class LoadGameContent : FSystem {
 
     private bool loadingContextForDreamFragment = false;
 
+    private System.Random random;
+
     private Texture2D tmpTex;
     private byte[] tmpFileData;
     private string[] convertedBoardText; //0- unremovable, 1- removable
@@ -106,6 +108,8 @@ public class LoadGameContent : FSystem {
     {
         if (Application.isPlaying && loadContent)
         {
+            random = new System.Random();
+
             defaultGameContent = f_defaultGameContent.First().GetComponent<DefaultGameContent>();
             if (File.Exists("Data/Data_LearningScape.txt"))
             {
@@ -189,9 +193,12 @@ public class LoadGameContent : FSystem {
         Debug.Log(string.Concat("Trace: ", gameContent.trace));
         File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace: ", gameContent.trace));
 
-        HelpSystem.shouldPause = !gameContent.helpSystem || !MonitoringManager.Instance.inGameAnalysis;
+        // if randomHelpSystemActivation is true, set gamecontent.helpsystem with a random value
+        if (gameContent.randomHelpSystemActivation)
+            gameContent.helpSystem = random.Next(2) == 1;
+        HelpSystem.shouldPause = !gameContent.trace || !gameContent.helpSystem || !MonitoringManager.Instance.inGameAnalysis;
         Debug.Log(string.Concat("Help system: ", gameContent.helpSystem, "; Laalys in game analysis: ", MonitoringManager.Instance.inGameAnalysis));
-        File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Help system: ", gameContent.helpSystem));
+        File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Help system: ", !HelpSystem.shouldPause));
 
         SendStatements.shouldPause = !gameContent.traceToLRS;
         SendStatements.instance.Pause = !gameContent.traceToLRS;
@@ -452,7 +459,6 @@ public class LoadGameContent : FSystem {
         int nbWrongWords = f_wrongWords.Count;
         int nbCorrectWords = f_correctWords.Count;
         // Set Wrong words in a random position
-        System.Random random = new System.Random();
         List<string> words = new List<string>(gameContent.plankOtherWords);
         for (int i = 0; i < nbWrongWords; i++)
         {
@@ -821,6 +827,7 @@ public class LoadGameContent : FSystem {
                             {
                                 //if the picture is successfully loaded, create an instance of IARDocument and put the picture in it
                                 tmpGO = GameObject.Instantiate(iarDocumentPrefab);
+                                tmpGO.name = Path.GetFileNameWithoutExtension(tmpStringList[i]);
                                 tmpGO.transform.SetParent(go.transform);
                                 tmpRectTransform = tmpGO.GetComponent<RectTransform>();
                                 tmpRectTransform.localScale = Vector3.one;
