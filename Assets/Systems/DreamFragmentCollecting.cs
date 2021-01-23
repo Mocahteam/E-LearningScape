@@ -94,7 +94,7 @@ public class DreamFragmentCollecting : FSystem {
                             GameObjectManager.setGameObjectState(onlineButton, true);
                         }
                         else
-                            GameObjectManager.setGameObjectState(onlineButton, true);
+                            GameObjectManager.setGameObjectState(onlineButton, false);
                         // Set UI text depending on type and id
                         if (tmpDFComponent.type == 0)
                             FragmentText.text = string.Concat(LoadGameContent.gameContent.dreamFragmentText, tmpDFComponent.id);

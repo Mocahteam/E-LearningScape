@@ -96,15 +96,6 @@
                 "en-US": "content"
             }
         },
-        "from": {
-            "description": {
-                "en-US": ""
-            },
-            "id": "https://www.lip6.fr/mocah/invaliduri/extensions/from",
-            "name": {
-                "en-US": "from"
-            }
-        },
         "direction": {
             "description": {
                 "en-US": ""
@@ -112,6 +103,15 @@
             "id": "https://www.lip6.fr/mocah/invaliduri/extensions/direction",
             "name": {
                 "en-US": "direction"
+            }
+        },
+        "from": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/extensions/from",
+            "name": {
+                "en-US": "from"
             }
         },
         "link": {
@@ -130,6 +130,24 @@
             "id": "https://www.lip6.fr/mocah/invaliduri/extensions/position",
             "name": {
                 "en-US": "position"
+            }
+        },
+        "rotation": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/extensions/rotation",
+            "name": {
+                "en-US": "rotation"
+            }
+        },
+        "scale": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/extensions/scale",
+            "name": {
+                "en-US": "scale"
             }
         },
         "state": {

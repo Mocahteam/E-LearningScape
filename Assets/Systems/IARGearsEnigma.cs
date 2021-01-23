@@ -123,7 +123,7 @@ public class IARGearsEnigma : FSystem
             // put a screenshot of the IAR on the terminal when gears are displayed
             int lastUnlockedRoom = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
             if (f_terminalScreens.Count >= lastUnlockedRoom)
-                MainLoop.instance.StartCoroutine(IARQueryEvaluator.instance.SetTerminalScreen(lastUnlockedRoom - 1));
+                MainLoop.instance.StartCoroutine(IARQueryEvaluator.instance.SetTerminalScreen());
             takeGearsScreenshot = false;
         }
 
