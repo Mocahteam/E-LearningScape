@@ -2,6 +2,7 @@
     "theme": "Info",
     "trace": true,
     "helpSystem": true,
+    "randomHelpSystemActivation": false,
     "traceToLRS": false,
     "traceMovementFrequency": 0.5,
 	"virtualDreamFragment": true,
