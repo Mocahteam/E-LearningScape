@@ -35,8 +35,8 @@
     ],
 	"additionalCredit": [],
     "scoreText": "Vous avez mis: ",
-    "endExplainationText": "",
-    "endLink": "",
+    "endExplainationText": "Que vous ayez apprécié ce jeu ou pas, votre retour nous serait très utile pour tenter de l'améliorer. Merci de répondre au questionnaire ci-dessous. Ce questionnaire est anonyme et ne vous prendra que quelques minutes.\n\nMerci de votre contribution...",
+    "endLink": "http://sondages.inshea.fr/index.php/153235/lang/en/newtest/Y?153235X167X2174=",
     "concatIdToLink": true,
 	
 	"inventoryScrollIntro": [
@@ -96,8 +96,8 @@
     "mainMenuLeave": "Quitter",
     "sessionIDText": "ID: ",
     "sessionIDPopup": "Cliquer pour copier",
-    "endLinkButtonText": "Remplir un formulaire",
-    "endLeaveButtonText": "Se réveiller",
+    "endLinkButtonText": "Remplir le formulaire",
+    "endLeaveButtonText": "Retourner au menu",
     "optionControlsMenu": "Contrôle",
     "optionVirtualFragments": "Fragments Virtuels",
     "optionMovingTexts": "Textes en mouvement",

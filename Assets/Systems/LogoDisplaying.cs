@@ -193,6 +193,9 @@ public class LogoDisplaying : FSystem {
                     {
                         ColorBlock cb = tmpGO.GetComponent<Button>().colors;
                         cb.normalColor = new Color(cb.normalColor.r, cb.normalColor.g, cb.normalColor.b, alpha);
+                        cb.highlightedColor = new Color(cb.highlightedColor.r, cb.highlightedColor.g, cb.highlightedColor.b, alpha);
+                        cb.pressedColor = new Color(cb.pressedColor.r, cb.pressedColor.g, cb.pressedColor.b, alpha);
+                        cb.disabledColor = new Color(cb.disabledColor.r, cb.disabledColor.g, cb.disabledColor.b, alpha/2);
                         tmpGO.GetComponent<Button>().colors = cb;
                     }
                 }
