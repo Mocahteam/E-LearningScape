@@ -25,7 +25,7 @@ public class CheckJava : FSystem {
                     checkJava.Start();
                     string output = checkJava.StandardError.ReadLine();
                     string javaVersion = output.Split(' ')[2].Replace("\"", "");
-                    javaOK = output.StartsWith("java version") && javaVersion != "";
+                    javaOK = (output.StartsWith("java version") || output.StartsWith("openjdk version")) && javaVersion != "";
                 }
                 catch (Exception e)
                 {
