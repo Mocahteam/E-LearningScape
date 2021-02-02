@@ -8,19 +8,19 @@
     "virtualDreamFragment": true,
     "virtualPuzzle": true,
     "useEndRoom": false,
-    "lrsConfigPath": "Data/LRSConfig.txt",
-    "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
-    "dreamFragmentDocumentsPathFile": "Data/FragmentsPath.txt",
-    "hintsPath": "Data/Hints_LearningScape.txt",
-    "internalHintsPath": "Data/InternalHints_LearningScape.txt",
-    "wrongAnswerFeedbacksPath": "Data/WrongAnswerFeedbacks.txt",
-    "enigmasWeightPath": "Data/EnigmasWeight.txt",
-    "labelWeightsPath": "Data/LabelWeights.txt",
-    "helpSystemConfigPath": "Data/HelpSystemConfig.txt",
+    "lrsConfigPath": "./Data/LRSConfig.txt",
+    "dreamFragmentLinksPath": "./Data/DreamFragmentLinks.txt",
+    "dreamFragmentDocumentsPathFile": "./Data/FragmentsPath.txt",
+    "hintsPath": "./Data/Hints_LearningScape.txt",
+    "internalHintsPath": "./Data/InternalHints_LearningScape.txt",
+    "wrongAnswerFeedbacksPath": "./Data/WrongAnswerFeedbacks.txt",
+    "enigmasWeightPath": "./Data/EnigmasWeight.txt",
+    "labelWeightsPath": "./Data/LabelWeights.txt",
+    "helpSystemConfigPath": "./Data/HelpSystemConfig.txt",
 	"removeExtraGeometries": false,
 	
 	"additionalLogosPath": [
-		"Data/INSHEA_ORNA.png"
+		"./Data/INSHEA_ORNA.png"
 	],
 	
     "storyTextIntro": [
@@ -246,7 +246,7 @@
     "masterMindValidation": "Valider",
 	"mastermindQuestionYPos" : 65,
 	"mastermindAnswer": 250,
-	"mastermindBackgroundPicturePath": "Data/MasterMindINSHEA.png",
+	"mastermindBackgroundPicturePath": "./Data/MasterMindINSHEA.png",
 	
     "glassesQuestion": "Quelle caractéristique commune ressort de cette foule ?",
     "glassesPlaceHolder": "2 mots attendus...",
@@ -256,10 +256,10 @@
     "glassesAnswerFeedback": "Handicap invisible",
     "glassesAnswerFeedbackDesc": "",
     "glassesPicturesPath": [
-        "Data/glasses01.png",
-        "Data/glasses02.png",
-        "Data/glasses03.png",
-        "Data/glasses04.png"
+        "./Data/glasses01.png",
+        "./Data/glasses02.png",
+        "./Data/glasses03.png",
+        "./Data/glasses04.png"
     ],
 	
     "enigma08Question": "À quoi faut-il prêter attention lors de la conception d’un document ?",
@@ -292,7 +292,7 @@
     ],
 	"mirrorAnswerFeedback": "Stigmatisation",
 	"mirrorAnswerFeedbackDesc": "",
-    "mirrorPicturePath": "Data/Plank.png",
+    "mirrorPicturePath": "./Data/Plank.png",
 	
     "enigma11Question": "Un processus de raisonnement…",
     "enigma11PlaceHolder": "1 mot attendu...",
@@ -315,18 +315,18 @@
     "puzzleAnswer": "Adapter sa pratique",
     "puzzleAnswerFeedback": "Adapter sa pratique",
     "puzzleAnswerFeedbackDesc": "",
-	"puzzlePicturePath": "Data/Puzzle_Complet.png",
+	"puzzlePicturePath": "./Data/Puzzle_Complet.png",
 	
     "lampAnswer": "Besoins",
     "lampAnswerFeedback": "Besoins",
     "lampAnswerFeedbackDesc": "",
     "lampPicturesPath": [
-        "Data/lamp01.png",
-        "Data/lamp02.png",
-        "Data/lamp03.png",
-        "Data/lamp04.png",
-        "Data/lamp05.png",
-        "Data/lamp06.png"
+        "./Data/lamp01.png",
+        "./Data/lamp02.png",
+        "./Data/lamp03.png",
+        "./Data/lamp04.png",
+        "./Data/lamp05.png",
+        "./Data/lamp06.png"
     ],
 	
     "enigma16Answer": "Personne ressource",

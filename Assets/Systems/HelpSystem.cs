@@ -756,7 +756,7 @@ public class HelpSystem : FSystem {
             hintButtonsPool.Add(tmpGO);
 
             Debug.LogWarning("You should increase hintButtonsPool initial size");
-            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - You should increase hintButtonsPool initial size."));
+            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - You should increase hintButtonsPool initial size."));
         }
 
         tmpGO = hintButtonsPool[0];

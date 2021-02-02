@@ -175,7 +175,7 @@ public class DreamFragmentCollecting : FSystem {
         catch (Exception)
         {
             Debug.LogError(string.Concat("Invalid dream fragment link: ", df.urlLink));
-            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid dream fragment link: ", df.urlLink));
+            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid dream fragment link: ", df.urlLink));
         }
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new
         {

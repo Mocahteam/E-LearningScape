@@ -68,7 +68,7 @@ public class IARDreamFragmentManager : FSystem {
             else
 			{
 				Debug.LogError("Missing right panel for the dream fragment tab in IAR.");
-				File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Missing right panel for the dream fragment tab in IAR"));
+				File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Missing right panel for the dream fragment tab in IAR"));
 			}
 
 			foreach(GameObject go in f_buttons)
@@ -195,7 +195,7 @@ public class IARDreamFragmentManager : FSystem {
 			catch (Exception)
 			{
 				Debug.LogError(string.Concat("Invalid dream fragment link: ", selectedDreamFragment.urlLink));
-				File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid dream fragment link: ", selectedDreamFragment.urlLink));
+				File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid dream fragment link: ", selectedDreamFragment.urlLink));
 			}
 			GameObjectManager.addComponent<ActionPerformedForLRS>(selectedDreamFragment.gameObject, new
 			{

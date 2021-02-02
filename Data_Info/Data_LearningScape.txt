@@ -8,15 +8,15 @@
 	"virtualDreamFragment": true,
     "virtualPuzzle": true,
     "useEndRoom": false,
-    "lrsConfigPath": "Data/LRSConfig.txt",
-    "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
-	"dreamFragmentDocumentsPathFile": "Data/FragmentsPath.txt",
-    "hintsPath": "Data/Hints_LearningScape.txt",
-    "internalHintsPath": "Data/InternalHints_LearningScape.txt",
-    "wrongAnswerFeedbacksPath": "Data/WrongAnswerFeedbacks.txt",
-    "enigmasWeightPath": "Data/EnigmasWeight.txt",
-    "labelWeightsPath": "Data/LabelWeights.txt",
-    "helpSystemConfigPath": "Data/HelpSystemConfig.txt",
+    "lrsConfigPath": "./Data/LRSConfig.txt",
+    "dreamFragmentLinksPath": "./Data/DreamFragmentLinks.txt",
+	"dreamFragmentDocumentsPathFile": "./Data/FragmentsPath.txt",
+    "hintsPath": "./Data/Hints_LearningScape.txt",
+    "internalHintsPath": "./Data/InternalHints_LearningScape.txt",
+    "wrongAnswerFeedbacksPath": "./Data/WrongAnswerFeedbacks.txt",
+    "enigmasWeightPath": "./Data/EnigmasWeight.txt",
+    "labelWeightsPath": "./Data/LabelWeights.txt",
+    "helpSystemConfigPath": "./Data/HelpSystemConfig.txt",
 	"removeExtraGeometries": false,
 	
 	"additionalLogosPath": [],
@@ -225,6 +225,7 @@
     ],
 	
     "gearsQuestion": "Quel processus permet d’obtenir des résultats à partir de données ?",
+    "iarHelpGears": "Déplacez le bon engrenage au centre de l'écran",
     "gearTextUp": "Donnée",
     "gearTextDown": "Résultat",
     "gearMovableTexts": [
@@ -241,7 +242,7 @@
     "masterMindValidation": "Valider",
 	"mastermindQuestionYPos" : -124,
 	"mastermindAnswer": 256,
-	"mastermindBackgroundPicturePath": "Data/MasterMind.png",
+	"mastermindBackgroundPicturePath": "./Data/MasterMind.png",
 	
     "glassesQuestion": "Que révèle les lunettes ?",
     "glassesPlaceHolder": "1 mot attendus...",
@@ -251,10 +252,10 @@
     "glassesAnswerFeedback": "Alternative",
     "glassesAnswerFeedbackDesc": "",
     "glassesPicturesPath": [
-        "Data/glasses01.png",
-        "Data/glasses02.png",
-        "Data/glasses03.png",
-        "Data/glasses04.png"
+        "./Data/glasses01.png",
+        "./Data/glasses02.png",
+        "./Data/glasses03.png",
+        "./Data/glasses04.png"
     ],
 	
     "enigma08Question": "Combien de lignes javascript sont nécessaires pour aider l'astronaute à rejoindre son module le plus vite possible ?",
@@ -287,7 +288,7 @@
     ],
 	"mirrorAnswerFeedback": "1981",
 	"mirrorAnswerFeedbackDesc": "",
-    "mirrorPicturePath": "Data/Plank.png",
+    "mirrorPicturePath": "./Data/Plank.png",
 	
     "enigma11Question": "Quelle est la réponse de petit panda ?",
     "enigma11PlaceHolder": "1 nombre attendu...",
@@ -310,18 +311,18 @@
     "puzzleAnswer": "Fonction",
 	"puzzleAnswerFeedback": "Fonction",
     "puzzleAnswerFeedbackDesc": "",
-	"puzzlePicturePath": "Data/Puzzle_Complet.png",
+	"puzzlePicturePath": "./Data/Puzzle_Complet.png",
 	
     "lampAnswer": "8",
     "lampAnswerFeedback": "8 boucles",
     "lampAnswerFeedbackDesc": "",
     "lampPicturesPath": [
-        "Data/lamp01.png",
-        "Data/lamp02.png",
-        "Data/lamp03.png",
-        "Data/lamp04.png",
-        "Data/lamp05.png",
-        "Data/lamp06.png"
+        "./Data/lamp01.png",
+        "./Data/lamp02.png",
+        "./Data/lamp03.png",
+        "./Data/lamp04.png",
+        "./Data/lamp05.png",
+        "./Data/lamp06.png"
     ],
 	
     "enigma16Answer": "Variable",

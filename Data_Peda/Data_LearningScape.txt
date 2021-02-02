@@ -8,15 +8,15 @@
     "virtualDreamFragment": true,
     "virtualPuzzle": true,
     "useEndRoom": false,
-    "lrsConfigPath": "Data/LRSConfig.txt",
-    "dreamFragmentLinksPath": "Data/DreamFragmentLinks.txt",
-    "dreamFragmentDocumentsPathFile": "Data/FragmentsPath.txt",
-    "hintsPath": "Data/Hints_LearningScape.txt",
-    "internalHintsPath": "Data/InternalHints_LearningScape.txt",
-    "wrongAnswerFeedbacksPath": "Data/WrongAnswerFeedbacks.txt",
-    "enigmasWeightPath": "Data/EnigmasWeight.txt",
-    "labelWeightsPath": "Data/LabelWeights.txt",
-    "helpSystemConfigPath": "Data/HelpSystemConfig.txt",
+    "lrsConfigPath": "./Data/LRSConfig.txt",
+    "dreamFragmentLinksPath": "./Data/DreamFragmentLinks.txt",
+    "dreamFragmentDocumentsPathFile": "./Data/FragmentsPath.txt",
+    "hintsPath": "./Data/Hints_LearningScape.txt",
+    "internalHintsPath": "./Data/InternalHints_LearningScape.txt",
+    "wrongAnswerFeedbacksPath": "./Data/WrongAnswerFeedbacks.txt",
+    "enigmasWeightPath": "./Data/EnigmasWeight.txt",
+    "labelWeightsPath": "./Data/LabelWeights.txt",
+    "helpSystemConfigPath": "./Data/HelpSystemConfig.txt",
 	"removeExtraGeometries": false,
 	
 	"additionalLogosPath": [],
@@ -242,7 +242,7 @@
     "masterMindValidation": "Valider",
 	"mastermindQuestionYPos" : -124,
     "mastermindAnswer": 814,
-	"mastermindBackgroundPicturePath": "Data/MasterMind.png",
+	"mastermindBackgroundPicturePath": "./Data/MasterMind.png",
 	
     "glassesQuestion": "Le vase se renversant vous livrera la clé de cette enigme",
     "glassesPlaceHolder": "2 mots attendus...",
@@ -252,10 +252,10 @@
     "glassesAnswerFeedback": "Contrat Pédagogique",
     "glassesAnswerFeedbackDesc": "",
     "glassesPicturesPath": [
-        "Data/glasses01.png",
-        "Data/glasses02.png",
-        "Data/glasses03.png",
-        "Data/glasses04.png"
+        "./Data/glasses01.png",
+        "./Data/glasses02.png",
+        "./Data/glasses03.png",
+        "./Data/glasses04.png"
     ],
 	
     "enigma08Question": "A quoi Berthiaume nous conseille-t-il de faire attention ?",
@@ -289,7 +289,7 @@
     ],
 	"mirrorAnswerFeedback": "1956",
 	"mirrorAnswerFeedbackDesc": "",
-    "mirrorPicturePath": "Data/Plank.png",
+    "mirrorPicturePath": "./Data/Plank.png",
 	
     "enigma11Question": "L'utilisation d'une grille critériée est la solution",
     "enigma11PlaceHolder": "3 chiffres attendus...",
@@ -314,18 +314,18 @@
     "puzzleAnswer": "Planification",
     "puzzleAnswerFeedback": "Planification",
     "puzzleAnswerFeedbackDesc": "",
-    "puzzlePicturePath": "Data/Puzzle_Complet.png",
+    "puzzlePicturePath": "./Data/Puzzle_Complet.png",
 	
     "lampAnswer": "Ressources",
     "lampAnswerFeedback": "Ressources",
     "lampAnswerFeedbackDesc": "",
     "lampPicturesPath": [
-        "Data/lamp01.png",
-        "Data/lamp02.png",
-        "Data/lamp03.png",
-        "Data/lamp04.png",
-        "Data/lamp05.png",
-        "Data/lamp06.png"
+        "./Data/lamp01.png",
+        "./Data/lamp02.png",
+        "./Data/lamp03.png",
+        "./Data/lamp04.png",
+        "./Data/lamp05.png",
+        "./Data/lamp06.png"
     ],
 	
     "enigma16Answer": "Contraintes",

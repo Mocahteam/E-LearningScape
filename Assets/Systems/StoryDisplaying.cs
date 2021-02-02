@@ -102,7 +102,7 @@ public class StoryDisplaying : FSystem {
             catch (Exception)
             {
                 Debug.LogError(string.Concat("Invalid end link: ", st.endLink));
-                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid end link: ", st.endLink));
+                File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid end link: ", st.endLink));
             }
             GameObjectManager.addComponent<ActionPerformedForLRS>(endText, new
             {

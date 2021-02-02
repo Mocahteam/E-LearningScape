@@ -46,13 +46,13 @@ namespace TinCan {
         {
             unsentStatements = new Queue<string>();
             //Send all unsent data stored
-            if (File.Exists("Data/UnsentData.txt"))
+            if (File.Exists("./Data/UnsentData.txt"))
             {
-                List<string> unsentStoredData = new List<string>(File.ReadAllLines("Data/UnsentData.txt"));
+                List<string> unsentStoredData = new List<string>(File.ReadAllLines("./Data/UnsentData.txt"));
                 for(int i = unsentStoredData.Count - 1; i > -1; i--)
                     if (unsentStoredData[i] == "")
                         unsentStoredData.RemoveAt(i);
-                File.WriteAllLines("Data/UnsentData.txt", unsentStoredData.ToArray());
+                File.WriteAllLines("./Data/UnsentData.txt", unsentStoredData.ToArray());
                 for (int i = 0; i < unsentStoredData.Count; i++)
                 {
                     if (unsentStoredData[i] != "")
@@ -201,9 +201,9 @@ namespace TinCan {
                 {
                     sendingFromQueue = false;
                     unsentStatements.Dequeue();
-                    List<string> unsentStoredData = new List<string>(File.ReadAllLines("Data/UnsentData.txt"));
+                    List<string> unsentStoredData = new List<string>(File.ReadAllLines("./Data/UnsentData.txt"));
                     unsentStoredData.Remove(Encoding.UTF8.GetString(tmpByteArray));
-                    File.WriteAllLines("Data/UnsentData.txt", unsentStoredData.ToArray());
+                    File.WriteAllLines("./Data/UnsentData.txt", unsentStoredData.ToArray());
                 }
 			}
 			// fail
@@ -214,10 +214,10 @@ namespace TinCan {
                 {
                     //if the sending failed and the statement wasn't in the waiting queue, add the statement to the queue and save it in the file
                     unsentStatements.Enqueue(Encoding.UTF8.GetString(formBytes));
-                    if (!File.Exists("Data/UnsentData.txt") || File.ReadAllText("Data/UnsentData.txt") == "")
-                        File.WriteAllText("Data/UnsentData.txt", Encoding.UTF8.GetString(formBytes));
+                    if (!File.Exists("./Data/UnsentData.txt") || File.ReadAllText("./Data/UnsentData.txt") == "")
+                        File.WriteAllText("./Data/UnsentData.txt", Encoding.UTF8.GetString(formBytes));
                     else
-                        File.AppendAllText("Data/UnsentData.txt", string.Concat(System.Environment.NewLine, Encoding.UTF8.GetString(formBytes)));
+                        File.AppendAllText("./Data/UnsentData.txt", string.Concat(System.Environment.NewLine, Encoding.UTF8.GetString(formBytes)));
                 }
                 else
                     sendingFromQueue = false;

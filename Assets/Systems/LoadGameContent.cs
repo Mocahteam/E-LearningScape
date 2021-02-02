@@ -111,7 +111,7 @@ public class LoadGameContent : FSystem {
             random = new System.Random();
 
             defaultGameContent = f_defaultGameContent.First().GetComponent<DefaultGameContent>();
-            if (File.Exists("Data/Data_LearningScape.txt"))
+            if (File.Exists("./Data/Data_LearningScape.txt"))
             {
                 //Load game content from the file
                 Load();
@@ -119,43 +119,43 @@ public class LoadGameContent : FSystem {
             else
             {
                 //create default data files
-                Directory.CreateDirectory("Data");
-                File.WriteAllText("Data/Data_LearningScape.txt", defaultGameContent.jsonFile.text);
-                File.WriteAllText("Data/LRSConfig.txt", defaultGameContent.lrsConfigFile.text);
-                File.WriteAllText("Data/Hints_LearningScape.txt", defaultGameContent.hintsJsonFile.text);
-                File.WriteAllText("Data/InternalHints_LearningScape.txt", defaultGameContent.internalHintsJsonFile.text);
-                File.WriteAllText("Data/WrongAnswerFeedbacks.txt", defaultGameContent.wrongAnswerFeedbacks.text);
-                File.WriteAllText("Data/EnigmasWeight.txt", defaultGameContent.enigmasWeight.text);
-                File.WriteAllText("Data/LabelWeights.txt", defaultGameContent.labelWeights.text);
-                File.WriteAllText("Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
-                File.WriteAllText("Data/FragmentsPath.txt", defaultGameContent.dreamFragmentDocuments.text);
-                File.WriteAllText("Data/HelpSystemConfig.txt", defaultGameContent.helpSystemConfig.text);
+                Directory.CreateDirectory("./Data");
+                File.WriteAllText("./Data/Data_LearningScape.txt", defaultGameContent.jsonFile.text);
+                File.WriteAllText("./Data/LRSConfig.txt", defaultGameContent.lrsConfigFile.text);
+                File.WriteAllText("./Data/Hints_LearningScape.txt", defaultGameContent.hintsJsonFile.text);
+                File.WriteAllText("./Data/InternalHints_LearningScape.txt", defaultGameContent.internalHintsJsonFile.text);
+                File.WriteAllText("./Data/WrongAnswerFeedbacks.txt", defaultGameContent.wrongAnswerFeedbacks.text);
+                File.WriteAllText("./Data/EnigmasWeight.txt", defaultGameContent.enigmasWeight.text);
+                File.WriteAllText("./Data/LabelWeights.txt", defaultGameContent.labelWeights.text);
+                File.WriteAllText("./Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
+                File.WriteAllText("./Data/FragmentsPath.txt", defaultGameContent.dreamFragmentDocuments.text);
+                File.WriteAllText("./Data/HelpSystemConfig.txt", defaultGameContent.helpSystemConfig.text);
 
                 gameContent = new GameContent();
                 gameContent = JsonUtility.FromJson<GameContent>(defaultGameContent.jsonFile.text);
 
                 int l = defaultGameContent.dreamFragmentPictures.Length;
-                Directory.CreateDirectory("Data/Fragments");
+                Directory.CreateDirectory("./Data/Fragments");
                 for (int i = 0; i < l; i++)
                 {
-                    File.WriteAllBytes(string.Concat("Data/Fragments/", defaultGameContent.dreamFragmentPictures[i].name, ".png"), defaultGameContent.dreamFragmentPictures[i].EncodeToPNG());
+                    File.WriteAllBytes(string.Concat("./Data/Fragments/", defaultGameContent.dreamFragmentPictures[i].name, ".png"), defaultGameContent.dreamFragmentPictures[i].EncodeToPNG());
                 }
-                File.WriteAllBytes(string.Concat("Data/", defaultGameContent.mastermindPicture.name, ".png"), defaultGameContent.mastermindPicture.EncodeToPNG());
+                File.WriteAllBytes(string.Concat("./Data/", defaultGameContent.mastermindPicture.name, ".png"), defaultGameContent.mastermindPicture.EncodeToPNG());
                 l = defaultGameContent.glassesPictures.Length;
                 for(int i = 0; i < l; i++)
                 {
-                    File.WriteAllBytes(string.Concat("Data/", defaultGameContent.glassesPictures[i].name, ".png"), defaultGameContent.glassesPictures[i].EncodeToPNG());
+                    File.WriteAllBytes(string.Concat("./Data/", defaultGameContent.glassesPictures[i].name, ".png"), defaultGameContent.glassesPictures[i].EncodeToPNG());
                 }
                 l = defaultGameContent.lampPictures.Length;
                 for (int i = 0; i < l; i++)
                 {
-                    File.WriteAllBytes(string.Concat("Data/", defaultGameContent.lampPictures[i].name, ".png"), defaultGameContent.lampPictures[i].EncodeToPNG());
+                    File.WriteAllBytes(string.Concat("./Data/", defaultGameContent.lampPictures[i].name, ".png"), defaultGameContent.lampPictures[i].EncodeToPNG());
                 }
-                File.WriteAllBytes(string.Concat("Data/", defaultGameContent.plankPicture.name, ".png"), defaultGameContent.plankPicture.EncodeToPNG());
-                File.WriteAllBytes(string.Concat("Data/", defaultGameContent.puzzlePicture.name, ".png"), defaultGameContent.puzzlePicture.EncodeToPNG());
+                File.WriteAllBytes(string.Concat("./Data/", defaultGameContent.plankPicture.name, ".png"), defaultGameContent.plankPicture.EncodeToPNG());
+                File.WriteAllBytes(string.Concat("./Data/", defaultGameContent.puzzlePicture.name, ".png"), defaultGameContent.puzzlePicture.EncodeToPNG());
 
                 Debug.Log("Data created");
-                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data created"));
+                File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data created"));
 
                 Load();
 
@@ -187,24 +187,24 @@ public class LoadGameContent : FSystem {
     private void Load()
     {
         //Load game content from the file
-        gameContent = JsonUtility.FromJson<GameContent>(File.ReadAllText("Data/Data_LearningScape.txt"));
+        gameContent = JsonUtility.FromJson<GameContent>(File.ReadAllText("./Data/Data_LearningScape.txt"));
 
         ActionsManager.instance.Pause = !gameContent.trace;
         Debug.Log(string.Concat("Trace: ", gameContent.trace));
-        File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace: ", gameContent.trace));
+        File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace: ", gameContent.trace));
 
         // if randomHelpSystemActivation is true, set gamecontent.helpsystem with a random value
         if (gameContent.randomHelpSystemActivation)
             gameContent.helpSystem = random.Next(2) == 1;
         HelpSystem.shouldPause = !gameContent.trace || !gameContent.helpSystem || !MonitoringManager.Instance.inGameAnalysis;
         Debug.Log(string.Concat("Help system: ", gameContent.helpSystem, "; Laalys in game analysis: ", MonitoringManager.Instance.inGameAnalysis));
-        File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Help system: ", !HelpSystem.shouldPause));
+        File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Help system: ", !HelpSystem.shouldPause));
 
         SendStatements.shouldPause = !gameContent.traceToLRS;
         SendStatements.instance.Pause = !gameContent.traceToLRS;
         MovingSystem.instance.traceMovementFrequency = gameContent.traceMovementFrequency;
         Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
-        File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace to LRS: ", gameContent.traceToLRS));
+        File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace to LRS: ", gameContent.traceToLRS));
 
         if (gameContent.removeExtraGeometries)
             foreach (GameObject go in f_extraGeometries)
@@ -238,12 +238,12 @@ public class LoadGameContent : FSystem {
             sessionID = String.Format("{0:X}", sessionID.GetHashCode());
 
             Debug.Log(string.Concat("Session ID generated: ", sessionID));
-            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Session ID generated: ", sessionID));
+            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Session ID generated: ", sessionID));
         }
         else
         {
             Debug.Log(string.Concat("Previous session ID kept: ", sessionID));
-            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Previous session ID kept: ", sessionID));
+            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Previous session ID kept: ", sessionID));
         }
 
         #region Story
@@ -430,7 +430,7 @@ public class LoadGameContent : FSystem {
                         else
                         {
                             Debug.LogWarning(string.Concat("The answer ", j + 1, " of BallBox enigma should be between 1 and 15 included."));
-                            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - The answer ", j + 1, " of BallBox enigma should be between 1 and 15 included"));
+                            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - The answer ", j + 1, " of BallBox enigma should be between 1 and 15 included"));
                         }
 
                         nbBallSeen = 0;
@@ -439,7 +439,7 @@ public class LoadGameContent : FSystem {
                 else
                 {
                     Debug.LogWarning(string.Concat("The answer ", j + 1, " of BallBox enigma should be an integer."));
-                    File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - The answer ", j + 1, " of BallBox enigma should be an integer"));
+                    File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - The answer ", j + 1, " of BallBox enigma should be an integer"));
                 }
             }
         }
@@ -866,7 +866,7 @@ public class LoadGameContent : FSystem {
         else
         {
             Debug.LogError("Missing IARDocument prefab, pictures can't be loaded.");
-            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Missing IARDocument prefab, pictures can't be loaded."));
+            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Missing IARDocument prefab, pictures can't be loaded."));
         }
         #endregion
 
@@ -907,7 +907,7 @@ public class LoadGameContent : FSystem {
         loadingContextForDreamFragment = false;
 
         Debug.Log("Data loaded");
-        File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));
+        File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));
     }
 
     private void LoadJsonFile<T>(string jsonPath, TextAsset defaultContent, out T target)
@@ -922,7 +922,7 @@ public class LoadGameContent : FSystem {
             {
                 target = JsonConvert.DeserializeObject<T>(defaultContent.text);
                 Debug.LogError("Invalid content in file: " + jsonPath + ". Default used.");
-                File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid content in file: " + jsonPath + ". Default used"));
+                File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid content in file: " + jsonPath + ". Default used"));
             }
         }
         else
@@ -932,7 +932,7 @@ public class LoadGameContent : FSystem {
             // load default content
             target = JsonConvert.DeserializeObject<T>(defaultContent.text);
             Debug.LogWarning(jsonPath+ " not found. Default used.");
-            File.AppendAllText("Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - "+ jsonPath + " not found. Default used"));
+            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - "+ jsonPath + " not found. Default used"));
         }
     }
 
