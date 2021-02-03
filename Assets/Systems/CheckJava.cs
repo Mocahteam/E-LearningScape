@@ -23,13 +23,14 @@ public class CheckJava : FSystem {
                 try
                 {
                     checkJava.Start();
+                    checkJava.WaitForExit();
                     string output = checkJava.StandardError.ReadLine();
-                    string javaVersion = output.Split(' ')[2].Replace("\"", "");
-                    javaOK = (output.StartsWith("java version") || output.StartsWith("openjdk version")) && javaVersion != "";
+                    UnityEngine.Debug.Log("Java cmd output: "+output);
+                    javaOK = output.Contains("java version") || output.Contains("openjdk version");
                 }
                 catch (Exception e)
                 {
-                    UnityEngine.Debug.Log(e.Message);
+                    UnityEngine.Debug.Log("Java cmd error: "+e.Message);
                 }
             }
         }

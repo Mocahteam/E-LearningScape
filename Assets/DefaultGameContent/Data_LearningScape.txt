@@ -159,6 +159,11 @@
         "2",
         "8"
     ],
+	"ballBoxThreeUsefulBalls": [
+		1,
+		2,
+		8
+	],
     "ballTexts": [
         "ENSEIGNER TOT LE MATIN",
         "CLASSE INVERSEE",

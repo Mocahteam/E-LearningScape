@@ -163,6 +163,11 @@
         "2",
         "8"
     ],
+	"ballBoxThreeUsefulBalls": [
+		1,
+		2,
+		8
+	],
     "ballTexts": [
         "Éviter d’être exigeant",
         "Proposer plusieurs modalités",

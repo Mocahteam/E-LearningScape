@@ -235,6 +235,7 @@ public class GameContent {
     public string ballBoxAnswerFeedback;
     public string ballBoxAnswerFeedbackDesc;
     public List<string> ballBoxAnswer;
+    public int[] ballBoxThreeUsefulBalls = new int[3];
     public string[] ballTexts = new string[10];
 
     //Plank And Wire

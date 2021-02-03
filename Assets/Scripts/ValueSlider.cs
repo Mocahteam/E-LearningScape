@@ -5,12 +5,7 @@ using TMPro;
 
 public class ValueSlider : MonoBehaviour {
 
-	TMP_Text percentageTextSlider;
-
-	// Use this for initialization
-	void Start () {
-		percentageTextSlider = GetComponent<TMP_Text> ();
-	}
+	public TMP_Text percentageTextSlider;
 
 	//if value is on 0 and 1
 	public void textUpdatePercent (float valueSlider){

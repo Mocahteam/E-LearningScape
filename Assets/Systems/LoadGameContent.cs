@@ -353,7 +353,6 @@ public class LoadGameContent : FSystem {
         Ball b = null;
         Ball b2 = null;
         string tmpString;
-        int nbBallSeen = 0;
         int answer;
         //initialise position and texts for all balls
         List<int> idList = new List<int>();
@@ -376,71 +375,59 @@ public class LoadGameContent : FSystem {
             if(b.number < gameContent.ballTexts.Length)
                 b.text = gameContent.ballTexts[b.number];
         }
-        //Exchange texts and numbers to set solution balls
-        for(int j = 0; j < 3; j++)
+        //Exchange texts and numbers to set Json solution balls (3 balls required)
+        //Default solution balls are 1, 2 and 3
+        for (int j = 1; j <= 3 && j <= gameContent.ballBoxThreeUsefulBalls.Length ; j++)
         {
-            //If there is still unprocessed answers
-            if (gameContent.ballBoxAnswer.Count > j)
+            // Look for the current ball answer
+            b = null;
+            for (int i = 0; i < nbBalls; i++)
             {
-                //If the answer given was integer
-                if (int.TryParse(gameContent.ballBoxAnswer[j], out answer))
+                Ball bTmp = f_balls.getAt(i).GetComponent<Ball>();
+                if (bTmp.number == j)
                 {
-                    //If the answer given is different than the default answer
-                    if(answer != j + 1)
-                    {
-                        //Look for a default solution ball (j+1 can be 1, 2 or 3) and a new solution ball (number stored in "answer")
-                        for (int i = 0; i < nbBalls; i++)
-                        {
-                            b = f_balls.getAt(i).GetComponent<Ball>();
-                            if (b.number == j + 1 || b.number == answer)
-                            {
-                                if (nbBallSeen == 1)
-                                {
-                                    nbBallSeen++;
-                                    break;
-                                }
-                                else
-                                {
-                                    b2 = b;
-                                    nbBallSeen++;
-                                }
-                            }
-                        }
-                        //If the two balls were found
-                        if (nbBallSeen == 2)
-                        {
-                            //exchange numbers, texts and id
-                            if (b.number == j + 1)
-                            {
-                                b.number = answer;
-                                b2.number = j + 1;
-                            }
-                            else
-                            {
-                                b.number = j + 1;
-                                b2.number = answer;
-                            }
-                            tmpString = b.text;
-                            int tmpID = b.id;
-                            b.text = b2.text;
-                            b.id = b2.id;
-                            b2.text = tmpString;
-                            b2.id = tmpID;
-                        }
-                        else
-                        {
-                            Debug.LogWarning(string.Concat("The answer ", j + 1, " of BallBox enigma should be between 1 and 15 included."));
-                            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - The answer ", j + 1, " of BallBox enigma should be between 1 and 15 included"));
-                        }
-
-                        nbBallSeen = 0;
-                    }
+                    b = bTmp;
+                    break;
+                }
+            }
+            //get current answer
+            answer = gameContent.ballBoxThreeUsefulBalls[j-1];
+            //Look for the new solution ball
+            b2 = null;
+            for (int i = 0; i < nbBalls; i++)
+            {
+                Ball bTmp = f_balls.getAt(i).GetComponent<Ball>();
+                if (bTmp.number == answer)
+                {
+                    b2 = bTmp;
+                    break;
+                }
+            }
+            //If the two balls were found
+            if (b != null && b2 != null)
+            {
+                //exchange numbers, texts and id
+                if (b.number == j)
+                {
+                    b.number = answer;
+                    b2.number = j;
                 }
                 else
                 {
-                    Debug.LogWarning(string.Concat("The answer ", j + 1, " of BallBox enigma should be an integer."));
-                    File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - The answer ", j + 1, " of BallBox enigma should be an integer"));
+                    b.number = j;
+                    b2.number = answer;
                 }
+                tmpString = b.text;
+                int tmpID = b.id;
+                b.text = b2.text;
+                b.id = b2.id;
+                b2.text = tmpString;
+                b2.id = tmpID;
+            }
+            else
+            {
+                Debug.LogWarning(string.Concat("The answer ", j, " of BallBox enigma should be between 0 and 9 included."));
+                File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - The answer ", j, " of BallBox enigma should be between 0 and 9 included"));
             }
         }
         for (int i = 0; i < nbBalls; i++)
