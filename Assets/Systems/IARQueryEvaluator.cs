@@ -130,7 +130,7 @@ public class IARQueryEvaluator : FSystem {
 
     public void IarCheckAnswer(GameObject query)
     {
-        string answer = query.GetComponentInChildren<InputField>().text; //player's answer
+        string answer = query.GetComponentInChildren<TMP_InputField>().text; //player's answer
         string solution = "";
         // format answer
         answer = LoadGameContent.StringToAnswer(answer);

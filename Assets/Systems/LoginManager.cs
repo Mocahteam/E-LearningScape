@@ -30,7 +30,7 @@ public class LoginManager : FSystem {
     private Vector3 playerGoBackPosition;
 
     private float speed;
-    private InputField ifConnectionR2;
+    private TMP_InputField ifConnectionR2;
     public static int passwordSolution;
 
     private TextMeshProUGUI connectionAnswerCheck1;
@@ -53,12 +53,12 @@ public class LoginManager : FSystem {
     {
         if (Application.isPlaying)
         {
-            InputField inputField = f_mainWindow.First().transform.GetChild(1).GetComponent<InputField>();
+            TMP_InputField inputField = f_mainWindow.First().transform.GetChild(1).GetComponent<TMP_InputField>();
 
             ifConnectionR2 = inputField;
 
             // get fourth child of the password and backup answer UI notifications
-            GameObject answerCheck = inputField.gameObject.transform.GetChild(3).gameObject;
+            GameObject answerCheck = inputField.gameObject.transform.GetChild(2).gameObject;
             connectionAnswerCheck1 = answerCheck.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             cacGreen = connectionAnswerCheck1.color;
             connectionAnswerCheck2 = answerCheck.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
