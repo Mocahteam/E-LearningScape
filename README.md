@@ -4,6 +4,14 @@ Trois versions du jeu sont disponibles :
 2. **E-LearningScape Access** ([Windows](https://github.com/Mocahteam/E-LearningScape/releases/download/v4.0/E-LearningScape_Access_Windows.zip), [MacOS](https://github.com/Mocahteam/E-LearningScape/releases/download/v4.0/E-LearningScape_Access_MacOs.zip), [Linux](https://github.com/Mocahteam/E-LearningScape/releases/download/v4.0/E-LearningScape_Access_Linux.zip)) est une version du jeu traitant de notions relatives au handicap, l'accessibilité et la société inclusive 
 3. **E-LearningScape Info** ([Windows](https://github.com/Mocahteam/E-LearningScape/releases/download/v4.0/E-LearningScape_Info_Windows.zip), [MacOS](https://github.com/Mocahteam/E-LearningScape/releases/download/v4.0/E-LearningScape_Info_MacOS.zip), [Linux](https://github.com/Mocahteam/E-LearningScape/releases/download/v4.0/E-LearningScape_Info_Linux.zip)) est une version du jeu traitant de notions relatives à la science Informatique
 
+**Aide pour lancer le jeu sur MacOS :**
+1. Déplacez le dossier contenant le jeu sur le **Bureau**.
+2. Faites un **clic-secondaire** (ou clic-droit) sur l'application et choisissez **"Ouvrir"**. Une fenêtre devrait apparaître vous indiquant que l'application provient d'un développeur non identifié. Cliquez sur le bouton **"Ouvrir"** pour autoriser le lancement du jeu.
+3. Le jeu peut maintenant s'éxécuter mais MacOS continuera à bloquer son accès aux fichiers nécessaires à son exécution. **Quittez le jeu**.
+4. Ouvrez l'application **Terminal**.
+5. Entrez dans le Terminal la commande suivante pour accéder au dossier contenant le jeu (nous supposons que le jeu se trouve dans le dossier E-LearningScape sur le Bureau) : ```cd Desktop/E-LearningScape```
+6. Lancez l'execution du jeu avec la commande :	```./E-LearningScape.app/Contents/MacOS/E-LearningScape```
+
 # E-LearningScape
 E-LearningScape est un jeu sérieux sous un format d'*escape game*. Les joueurs incarnent des marchands de sable naviguant dans le rêve d'une personne et devant l'aider à répondre à toutes les questions qu'elle se pose avant qu'elle ne se réveille. 
 
