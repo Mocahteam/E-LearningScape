@@ -5,12 +5,12 @@ Trois versions du jeu sont disponibles :
 3. **E-LearningScape Info** ([Windows](https://github.com/Mocahteam/E-LearningScape/releases/download/v4.0/E-LearningScape_Info_Windows.zip), [MacOS](https://github.com/Mocahteam/E-LearningScape/releases/download/v4.0/E-LearningScape_Info_MacOS.zip), [Linux](https://github.com/Mocahteam/E-LearningScape/releases/download/v4.0/E-LearningScape_Info_Linux.zip)) est une version du jeu traitant de notions relatives à la science Informatique
 
 **Aide pour lancer le jeu sur MacOS :**
-1. Déplacez le dossier contenant le jeu sur le **Bureau**.
-2. Faites un **clic-secondaire** (ou clic-droit) sur l'application et choisissez **"Ouvrir"**. Une fenêtre devrait apparaître vous indiquant que l'application provient d'un développeur non identifié. Cliquez sur le bouton **"Ouvrir"** pour autoriser le lancement du jeu.
-3. Le jeu peut maintenant s'éxécuter mais MacOS continuera à bloquer son accès aux fichiers nécessaires à son exécution. **Quittez le jeu**.
-4. Ouvrez l'application **Terminal**.
-5. Entrez dans le Terminal la commande suivante pour accéder au dossier contenant le jeu (nous supposons que le jeu se trouve dans le dossier E-LearningScape sur le Bureau) : ```cd Desktop/E-LearningScape```
-6. Lancez l'execution du jeu avec la commande :	```./E-LearningScape.app/Contents/MacOS/E-LearningScape```
+1. Dans le dossier **E-LearningScape** double cliquez sur le fichier **PlayGame**. Si votre système refuse de lancer le jeu parce qu'il ne le reconnait pas :
+   1. faites un **clic-secondaire** (ou clic-droit) sur le fichier **PlayGame**
+   2. choisissez **Ouvrir**
+   3. Dans la fenêtre vous devriez avoir maintenant un bouton **Ouvrir**, cliquez sur ce bouton
+2. Dans la fenêtre **Terminal** qui s'ouvre vous êtes invité à saisir votre mot de passe afin d'autoriser le lancement du jeu. (Note : dans le terminal aucun symbole n'est affiché lorsque vous saisissez votre mot de passe, c'est tout à fait normal, saisissez simplement votre mot de passe à l'aveugle et validez)
+3. Une fenêtre de configuration s'affiche, cliquez sur le bouton **Play** pour lancer le jeu.
 
 # E-LearningScape
 E-LearningScape est un jeu sérieux sous un format d'*escape game*. Les joueurs incarnent des marchands de sable naviguant dans le rêve d'une personne et devant l'aider à répondre à toutes les questions qu'elle se pose avant qu'elle ne se réveille. 
