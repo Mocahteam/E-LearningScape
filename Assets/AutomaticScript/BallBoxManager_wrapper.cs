@@ -9,4 +9,9 @@ public class BallBoxManager_wrapper : MonoBehaviour
 		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
 	}
 
+	public void UnlockBallBox()
+	{
+		MainLoop.callAppropriateSystemMethod ("BallBoxManager", "UnlockBallBox", null);
+	}
+
 }

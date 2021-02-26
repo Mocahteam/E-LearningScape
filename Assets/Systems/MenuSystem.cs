@@ -199,6 +199,9 @@ public class MenuSystem : FSystem {
 
         GameObjectManager.addComponent<PlaySound>(mainMenu, new { id = 4 }); // id refer to FPSController AudioBank
 
+        // Create a new save
+        SaveManager.instance.CreateNewSave();
+
         // Play story
         StoryDisplaying.instance.Pause = false;
     }

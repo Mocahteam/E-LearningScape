@@ -14,4 +14,9 @@ public class HelpSystem_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("HelpSystem", "OnPlayerAskHelp", null);
 	}
 
+	public void SetPlayerHintTimer(System.Single hintCooldown)
+	{
+		MainLoop.callAppropriateSystemMethod ("HelpSystem", "SetPlayerHintTimer", hintCooldown);
+	}
+
 }

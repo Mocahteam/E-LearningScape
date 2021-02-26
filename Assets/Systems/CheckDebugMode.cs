@@ -112,6 +112,10 @@ public class CheckDebugMode : FSystem
 
                     f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 3;
 
+                    //remove hint cooldown
+                    DebugModeSystem.initialHintCooldownDuration = HelpSystem.config.playerHintCooldownDuration;
+                    HelpSystem.config.playerHintCooldownDuration = 0;
+
                     //pause this system and unable DebugModeSystem
                     canPause = true;
                     instance.Pause = true;

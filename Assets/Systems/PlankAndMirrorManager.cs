@@ -156,8 +156,11 @@ public class PlankAndMirrorManager : FSystem {
             {
                 // remove mirror from inventory
                 GameObjectManager.setGameObjectState(isSelected("Mirror"), false);
-                // show ingame mirror on plank
-                GameObjectManager.setGameObjectState(mirror, true);
+                // set the mirror as disabled in inventory in save
+                SaveManager.instance.SaveContent.collectableItemsStates[4] = 2;
+                SaveManager.instance.AutoSave();
+
+                PutMirrorOnPlank();
 
                 GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "perform", performedBy = "system" });
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new { verb = "completed", objectType = "interactable", objectName = selectedPlank.name });
@@ -192,5 +195,11 @@ public class PlankAndMirrorManager : FSystem {
 
         // Pause this system
         instance.Pause = true;
+    }
+
+    public void PutMirrorOnPlank()
+    {
+        // show ingame mirror on plank
+        GameObjectManager.setGameObjectState(mirror, true);
     }
 }

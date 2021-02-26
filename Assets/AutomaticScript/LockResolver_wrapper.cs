@@ -34,4 +34,14 @@ public class LockResolver_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("LockResolver", "SetWheelSpeed", newValue);
 	}
 
+	public void UnlockIntroWall()
+	{
+		MainLoop.callAppropriateSystemMethod ("LockResolver", "UnlockIntroWall", null);
+	}
+
+	public void UnlockRoom2Fences()
+	{
+		MainLoop.callAppropriateSystemMethod ("LockResolver", "UnlockRoom2Fences", null);
+	}
+
 }

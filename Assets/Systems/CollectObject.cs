@@ -92,10 +92,18 @@ public class CollectObject : FSystem {
 
                 // Play sound
                 GameObjectManager.addComponent<PlaySound>(collect, new { id = 10 }); // id refer to FPSController AudioBank
-                // particular case of collecting Intro_scroll game object => show ingame "Press A" notification
+                // particular case of collecting Intro_scroll game object => show ingame "Press Y" notification
                 if (collect.name == "Intro_Scroll")
                 {
                     GameObjectManager.setGameObjectState(f_pressY.First(), true);
+                }
+
+                // set the object as collected in SaveContent
+                int id = SaveManager.instance.GetCollectableItemID(collect);
+                if (id > -1)
+                {
+                    SaveManager.instance.SaveContent.collectableItemsStates[id] = 1;
+                    SaveManager.instance.AutoSave();
                 }
             }
         }

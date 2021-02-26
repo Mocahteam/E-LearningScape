@@ -171,12 +171,14 @@ public class SatchelManager : FSystem {
             }
             else if (satchelOpenned && !unlocked && isSelected("KeySatchel"))
             {
-                bagAnimator.SetTrigger("unlock"); // launch animation to unlock the padlock
+                UnlockSatchel();
                 //remove key from inventory
                 GameObjectManager.setGameObjectState(isSelected("KeySatchel"), false);
+                // set the key as disabled in save
+                SaveManager.instance.SaveContent.collectableItemsStates[3] = 2;
+                SaveManager.instance.AutoSave();
                 GameObjectManager.addComponent<ActionPerformed>(bagPadlock.GetComponentInChildren<ComponentMonitoring>().gameObject, new { name = "perform", performedBy = "system" });
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBag, new { verb = "unlocked", objectType = "interactable", objectName = selectedBag.name });
-                unlocked = true;
                 paperOpenning = true;
                 updatePictures();
             }
@@ -206,4 +208,10 @@ public class SatchelManager : FSystem {
             }
         }
 	}
+
+    public void UnlockSatchel()
+    {
+        unlocked = true;
+        bagAnimator.SetTrigger("unlock"); // launch animation to unlock the padlock
+    }
 }

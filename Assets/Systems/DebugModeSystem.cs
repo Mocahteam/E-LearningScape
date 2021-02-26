@@ -31,6 +31,8 @@ public class DebugModeSystem : FSystem
     private Vector3 target;
     private Vector3 velocity = Vector3.zero;
 
+    public static float initialHintCooldownDuration;
+
     public DebugModeSystem()
     {
         if (Application.isPlaying)
@@ -117,6 +119,9 @@ public class DebugModeSystem : FSystem
                     player.m_WalkSpeed = 5;
                     player.m_RunSpeed = 5;
 
+                    //set hint cooldown to initial value
+                    HelpSystem.config.playerHintCooldownDuration = initialHintCooldownDuration;
+
                     //pause this system and enable CheckDebugMode
                     canPause = true;
                     instance.Pause = true;
@@ -133,7 +138,7 @@ public class DebugModeSystem : FSystem
             }
 
             //The player can be teleported to room X by pressing Ctrl + X with X the room number (0 for intro and 4 for end room)
-            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
             {
                 if (Input.GetKeyDown(KeyCode.Alpha0))
                     player.gameObject.transform.position = new Vector3(-41, -1, -1);

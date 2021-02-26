@@ -19,4 +19,9 @@ public class LoginManager_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("LoginManager", "OnEndEditMastermindAnswer", null);
 	}
 
+	public void UnlockLoginDoor()
+	{
+		MainLoop.callAppropriateSystemMethod ("LoginManager", "UnlockLoginDoor", null);
+	}
+
 }
