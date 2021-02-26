@@ -9,4 +9,9 @@ public class PlankAndMirrorManager_wrapper : MonoBehaviour
 		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
 	}
 
+	public void PutMirrorOnPlank()
+	{
+		MainLoop.callAppropriateSystemMethod ("PlankAndMirrorManager", "PutMirrorOnPlank", null);
+	}
+
 }

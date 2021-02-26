@@ -174,14 +174,15 @@ public class BallBoxManager : FSystem {
             {
                 if (keySelected())
                 {
-                    // start animation
-                    boxPadlock.GetComponent<Animator>().enabled = true;
+                    UnlockBallBox();
                     //remove key from inventory
                     GameObjectManager.setGameObjectState(keySelected(), false);
+                    // set the key as disabled in save
+                    SaveManager.instance.SaveContent.collectableItemsStates[1] = 2;
+                    SaveManager.instance.AutoSave();
                     // trace
                     GameObjectManager.addComponent<ActionPerformed>(boxPadlock.GetComponentInChildren<ComponentMonitoring>().gameObject, new { name = "perform", performedBy = "system" });
                     GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "unlocked", objectType = "interactable", objectName = selectedBox.name });
-                    unlocked = true;
                 }
             }
 
@@ -317,5 +318,12 @@ public class BallBoxManager : FSystem {
 
         // Pause this system
         instance.Pause = true;
+    }
+
+    public void UnlockBallBox()
+    {
+        unlocked = true;
+        // start animation
+        boxPadlock.GetComponent<Animator>().enabled = true;
     }
 }

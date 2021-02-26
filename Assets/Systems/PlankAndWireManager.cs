@@ -17,6 +17,7 @@ public class PlankAndWireManager : FSystem {
     private Family f_closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PlankText", "InventoryElements", "HUD_TransparentOnMove"), new AllOfComponents(typeof(PointerOver)));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_solutionWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro), typeof(IsSolution)));
 
     //plank
     private GameObject selectedPlank = null;
@@ -233,6 +234,9 @@ public class PlankAndWireManager : FSystem {
                                     // remove the wire from inventory
                                     LinkedWith lw = selectedPlank.GetComponent<LinkedWith>();
                                     GameObjectManager.setGameObjectState(lw.link, false);
+                                    // set the wire as disabled in save
+                                    SaveManager.instance.SaveContent.collectableItemsStates[2] = 2;
+                                    SaveManager.instance.AutoSave();
 
                                     // notify player success
                                     GameObjectManager.addComponent<PlayUIEffect>(selectedPlank, new { effectCode = 2 });
@@ -316,5 +320,14 @@ public class PlankAndWireManager : FSystem {
 
         // pause this system
         instance.Pause = true;
+    }
+
+    public void DisplayWireOnSolution()
+    {
+        lrPositions.Clear();
+        foreach (GameObject solution in f_solutionWords)
+            lrPositions.Add(solution.transform.TransformPoint(Vector3.up * -4));
+        lr.positionCount = lrPositions.Count;
+        lr.SetPositions(lrPositions.ToArray());
     }
 }

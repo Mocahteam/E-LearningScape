@@ -92,6 +92,10 @@ public class IARHintManager : FSystem {
 
                         if (!endActionReachable || !stillReachable)
                         {
+                            // remove hint from save
+                            SaveManager.instance.RemoveHintFromSave(hc);
+                            SaveManager.instance.AutoSave();
+
                             // remove the button
                             GameObjectManager.unbind(hint);
                             GameObject.Destroy(hint);
@@ -210,6 +214,15 @@ public class IARHintManager : FSystem {
                 { "content", new List<string>() { b.GetComponent<HintContent>().text } }
             }
         });
+
+        // Set hint as seen
+        if (!tmpHC.seen)
+        {
+            // Set hint as seen in save
+            SaveManager.instance.SetHintAsSeen(tmpHC);
+            SaveManager.instance.AutoSave();
+        }
+        tmpHC.seen = true;
     }
 
     /// <summary>

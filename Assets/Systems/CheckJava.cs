@@ -3,7 +3,8 @@ using FYFY;
 using System;
 using System.Diagnostics;
 
-public class CheckJava : FSystem {
+public class CheckJava : FSystem
+{
     // Check if Java is installed
 
     private bool javaOK = false;
@@ -25,14 +26,16 @@ public class CheckJava : FSystem {
                     checkJava.Start();
                     checkJava.WaitForExit();
                     string output = checkJava.StandardError.ReadLine();
-                    UnityEngine.Debug.Log("Java cmd output: "+output);
+                    UnityEngine.Debug.Log("Java cmd output: " + output);
                     javaOK = output.Contains("java version") || output.Contains("openjdk version");
                 }
                 catch (Exception e)
                 {
-                    UnityEngine.Debug.Log("Java cmd error: "+e.Message);
+                    UnityEngine.Debug.Log("Java cmd error: " + e.Message);
                 }
             }
+            else
+                javaOK = true; // java is not required
         }
     }
 

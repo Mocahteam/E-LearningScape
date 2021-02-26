@@ -664,6 +664,8 @@ public class LoadGameContent : FSystem {
         Debug.Log("Room 3 queries loaded");
 
         //Puzzles
+        // if dream fragment are set to virtual, do the same for the puzzles
+        gameContent.virtualPuzzle = gameContent.virtualPuzzle || gameContent.virtualDreamFragment;
         foreach (GameObject go in f_puzzles)
             GameObjectManager.setGameObjectState(go, gameContent.virtualPuzzle);
         foreach (GameObject go in f_puzzlesFragment)
@@ -943,8 +945,6 @@ public class LoadGameContent : FSystem {
             tmpRectTransform = tabParent.GetChild(0).GetComponent<RectTransform>();
             tmpRectTransform.anchoredPosition = new Vector2(54.66f, -20);
             tmpRectTransform.sizeDelta = new Vector2(99, 40);
-            // if dream fragment are set to virtual, do the same for the puzzles
-            gameContent.virtualPuzzle = true;
 
             bool viewTab = !DebugModeSystem.instance.Pause;
             if (DreamFragmentCollecting.instance != null) // require this test because DreamFragmentCollecting is initialized after LoadGameContent inside MainLoop
@@ -981,6 +981,10 @@ public class LoadGameContent : FSystem {
         Debug.Log(string.Concat("Virtual dream fragments: ", virtualDreamFragment));
     }
 
+    /// <summary>
+    /// Used to copy sessionID to clipboard.
+    /// Called when sessionID is clicked in main menu
+    /// </summary>
     public void CopySessionID()
     {
         if(sessionID != null && sessionID != "")

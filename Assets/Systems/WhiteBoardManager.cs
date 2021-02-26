@@ -16,6 +16,7 @@ public class WhiteBoardManager : FSystem {
     private Family f_boardRemovableWords = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
     private Family f_boardUnremovableWords = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_boardTexture = FamilyManager.getFamily(new AllOfComponents(typeof(ChangePixelColor)));
 
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
 
@@ -30,6 +31,7 @@ public class WhiteBoardManager : FSystem {
     private Dictionary<Vector3, List<GameObject>> triggeredSpheres;
 
     private List<Vector2> tmpListVector2;
+    private Texture2D tmpTex;
 
     public static WhiteBoardManager instance;
 
@@ -138,6 +140,13 @@ public class WhiteBoardManager : FSystem {
                         eraserDragged = false;
                         GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "turnOff", performedBy = "player" });
                         GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "dropped", objectType = "draggable", objectName = eraser.name });
+
+                        // Save board texture
+                        tmpTex = (Texture2D) f_boardTexture.First().GetComponent<Renderer>().material.mainTexture;
+                        SaveManager.instance.SaveContent.boardEraseTexture = tmpTex.GetRawTextureData();
+                        // Save eraser position
+                        SaveManager.instance.SaveContent.boardEraserPosition = eraser.transform.position;
+                        SaveManager.instance.AutoSave();
                     }
                     else
                     {

@@ -130,6 +130,13 @@ public class HelpSystem : FSystem {
     /// </summary>
     public static HelpSystemConfig config;
 
+    public float HintCooldown { 
+        get
+        { 
+            return config.playerHintCooldownDuration - (Time.time - playerHintTimer);
+        }
+    }
+
     public HelpSystem()
     {
         if (Application.isPlaying)
@@ -549,6 +556,10 @@ public class HelpSystem : FSystem {
                                 CreateHintButton(cm, key, hintText, gameHints.wrongAnswerFeedbacks[key][wrongAnswer].Key);
                                 // Remove this hint
                                 gameHints.wrongAnswerFeedbacks[key].Remove(wrongAnswer);
+
+                                // Add hint to save
+                                SaveManager.instance.SaveContent.receivedHints.Add(new SaveContent.HintData(cm.id, key, -1, wrongAnswer));
+                                SaveManager.instance.AutoSave();
                                 break;
                             }
                         }
@@ -681,10 +692,10 @@ public class HelpSystem : FSystem {
     /// </summary>
     /// <param name="cm"></param>
     /// <returns>true if a hint is given to the player and false otherwise</returns>
-    private bool DisplayHint(ComponentMonitoring cm, string actionName)
+    public bool DisplayHint(ComponentMonitoring cm, string actionName, int level = -1, bool hintSeen = false, bool loadingSave = false)
     {
         // compute level priority. 
-        int requiredLevel = getFeedbackLevel();
+        int requiredLevel = level < 0 || level > 3 ? getFeedbackLevel() : level;
         if (requiredLevel != -1)
         {
             // First we check asked feedback level and next from the most abstract (level 1) to the most precise (level 3)
@@ -718,7 +729,14 @@ public class HelpSystem : FSystem {
                     if (!gameHints.dictionary[hintName].ContainsKey("1") && !gameHints.dictionary[hintName].ContainsKey("2") && !gameHints.dictionary[hintName].ContainsKey("3"))
                         gameHints.dictionary.Remove(hintName);
                 }
-                CreateHintButton(cm, actionName, hintText, tmpPair.Key);
+                CreateHintButton(cm, actionName, hintText, tmpPair.Key, hintSeen, loadingSave);
+
+                if (!loadingSave)
+                { 
+                    // Add hint to save
+                    SaveManager.instance.SaveContent.receivedHints.Add(new SaveContent.HintData(cm.id, actionName, requiredLevel));
+                    SaveManager.instance.AutoSave();
+                }
                 return true;
             }
             else
@@ -743,7 +761,7 @@ public class HelpSystem : FSystem {
     /// <param name="actionName"></param>
     /// <param name="hintText"></param>
     /// <param name="hintLink"></param>
-    private Button CreateHintButton(ComponentMonitoring hintMonitor, string actionName, string hintText, string hintLink = "")
+    private Button CreateHintButton(ComponentMonitoring hintMonitor, string actionName, string hintText, string hintLink = "", bool hintSeen = false, bool loadingSave = false)
     {
         //show a button to see hint content in hint tab in IAR
         if (hintButtonsPool.Count == 0)
@@ -770,24 +788,50 @@ public class HelpSystem : FSystem {
         tmpHC.text = hintText;
         tmpHC.link = hintLink;
 
-        GameObjectManager.addComponent<ActionPerformedForLRS>(hintButton.gameObject, new
+        if (hintSeen)
         {
-            verb = "received",
-            objectType = "feedback",
-            objectName = string.Concat("hint_", hintButton.transform.GetChild(0).GetComponent<TMP_Text>().text),
-            activityExtensions = new Dictionary<string, List<string>>() {
+            ColorBlock colorsHint = new ColorBlock();
+            colorsHint.highlightedColor = hintButton.colors.highlightedColor;
+            colorsHint.pressedColor = hintButton.colors.pressedColor;
+            colorsHint.disabledColor = hintButton.colors.disabledColor;
+            colorsHint.colorMultiplier = hintButton.colors.colorMultiplier;
+            colorsHint.normalColor = new Color(175, 175, 175, 255) / 256;
+            hintButton.colors = colorsHint;
+        }
+
+        if (!loadingSave)
+        {
+            GameObjectManager.addComponent<ActionPerformedForLRS>(hintButton.gameObject, new
+            {
+                verb = "received",
+                objectType = "feedback",
+                objectName = string.Concat("hint_", hintButton.transform.GetChild(0).GetComponent<TMP_Text>().text),
+                activityExtensions = new Dictionary<string, List<string>>() {
                     { "type", new List<string>() { "hint" } },
                     { "from", new List<string>() { playerAskedHelp ? "button" : "system" } },
                     { "content", new List<string>() { tmpHC.text } }
                 }
-        });
+            });
 
-        if (playerAskedHelp)
-            playerAskedHelp = false;
-        else
-            systemHintTimer = Time.time;
+            if (playerAskedHelp)
+                playerAskedHelp = false;
+            else
+                systemHintTimer = Time.time;
+        }
 
         return hintButton;
+    }
+
+    public void CreateWrongAnswerHint(ComponentMonitoring cm, string name, string wrongAnswer, bool hintSeen = false)
+    {
+        if(gameHints.wrongAnswerFeedbacks.ContainsKey(name) && gameHints.wrongAnswerFeedbacks[name].ContainsKey(wrongAnswer))
+        {
+            // Add new hint button
+            CreateHintButton(cm, name, gameHints.wrongAnswerFeedbacks[name][wrongAnswer].Value,
+                gameHints.wrongAnswerFeedbacks[name][wrongAnswer].Key, hintSeen, true);
+            // Remove this hint
+            gameHints.wrongAnswerFeedbacks[name].Remove(wrongAnswer);
+        }
     }
 
     /// <summary>
@@ -810,5 +854,10 @@ public class HelpSystem : FSystem {
                 return true;
         }
         return false;
+    }
+
+    public void SetPlayerHintTimer(float hintCooldown)
+    {
+        playerHintTimer = Time.time + hintCooldown - config.playerHintCooldownDuration;
     }
 }
