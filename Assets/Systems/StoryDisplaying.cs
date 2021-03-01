@@ -240,7 +240,7 @@ public class StoryDisplaying : FSystem {
                 alphaToPlain = false;
                 // pass to the next text
                 textCount++;
-                SaveManager.instance.SaveContent.storyTextCount = textCount;
+                SaveManager.instance.SaveContent.storyTextCount = st.storyProgression;
                 SaveManager.instance.AutoSave();
                 if (textCount < readTexts.Length)
                 {
@@ -344,8 +344,8 @@ public class StoryDisplaying : FSystem {
 
     public void LoadStoryProgression(int storyProgressionCount)
     {
-        StoryDisplaying.instance.textCount = storyProgressionCount - 1;
+        st.storyProgression = storyProgressionCount;
         // start without reading text
-        StoryDisplaying.instance.StoryTexts[storyProgressionCount].Clear();
+        storyTexts[storyProgressionCount].Clear();
     }
 }

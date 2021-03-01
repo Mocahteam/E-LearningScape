@@ -15,6 +15,10 @@ public class SaveManager : FSystem {
 	private Family f_wrongWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro)), new NoneOfComponents(typeof(IsSolution)));
 	private Family f_wrongChair = FamilyManager.getFamily(new AnyOfTags("Chair"), new AllOfComponents(typeof(ToggleableGO)), new NoneOfComponents(typeof(IsSolution)));
 
+	private Family f_prefabs = FamilyManager.getFamily(new AllOfComponents(typeof(PrefabContainer)));
+	private Family f_menuButtons = FamilyManager.getFamily(new AllOfComponents(typeof(FadingMenu), typeof(Button)));
+	private Family f_gameMenuContent = FamilyManager.getFamily(new AllOfComponents(typeof(VerticalLayoutGroup), typeof(WindowNavigator)));
+
 	private Family f_fpsController = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
 	private Family f_timer = FamilyManager.getFamily(new AllOfComponents(typeof(Timer)));
 	private Family f_componentMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
@@ -42,6 +46,24 @@ public class SaveManager : FSystem {
 	private string autoSaveFileName = "auto_save";
 	private string saveFilesExtension = ".txt";
 
+	private GameObject loadPopup;
+	private GameObject loadButtonPrefab;
+	private GameObject loadListContainer;
+	// the load button in main menu
+	private Button menuLoadButton;
+	// the load button in the popup window
+	private Button popupLoadButton;
+	private GameObject selectedSave;
+
+	private GameObject savePopup;
+	private GameObject saveButtonPrefab;
+	private GameObject saveListContainer;
+	private TMP_InputField popupSaveInputfield;
+	// popup windows displayed when the player clicks on popupSaveButton
+	private GameObject popupSaveInvalid;
+	private GameObject popupSaveOverride;
+	private GameObject popupSaveDone;
+
 	private GameObject playerGO;
 
 	/// <summary>
@@ -51,12 +73,13 @@ public class SaveManager : FSystem {
 	/// </summary>
 	private Dictionary<string, int> collectableItemIDs;
 
-	private string tmpStr;
 	private string tmpPath;
 	private DreamFragment tmpDF;
 	private GameObject tmpGO;
 	private DreamFragmentToggle tmpDFToggle;
 	private ComponentMonitoring[] tmpMonitorsArray;
+	private SaveContent tmpSave;
+	private FileInfo[] tmpFI;
 
     public SaveContent SaveContent
 	{
@@ -103,8 +126,108 @@ public class SaveManager : FSystem {
 			collectableItemIDs.Add("PuzzleSet_03", 15);
 			collectableItemIDs.Add("PuzzleSet_04", 16);
 			collectableItemIDs.Add("PuzzleSet_05", 17);
+
+			// look for the load window
+			foreach (GameObject go in f_prefabs)
+			{
+				if (go.name == "LoadPopup")
+				{
+					loadPopup = go;
+					loadButtonPrefab = go.GetComponent<PrefabContainer>().prefab;
+					loadListContainer = go.GetComponentInChildren<GridLayoutGroup>().gameObject;
+					foreach (Button b in go.GetComponentsInChildren<Button>())
+						if (b.gameObject.name == "LoadButton")
+						{
+							popupLoadButton = b;
+							break;
+						}
+				}
+				else if (go.name == "SavePopup")
+				{
+					savePopup = go;
+					saveButtonPrefab = go.GetComponent<PrefabContainer>().prefab;
+					saveListContainer = go.GetComponentInChildren<GridLayoutGroup>().gameObject;
+					foreach(Transform child in go.transform)
+                    {
+                        switch (child.gameObject.name)
+                        {
+							case "SaveInputField":
+								popupSaveInputfield = child.GetComponent<TMP_InputField>();
+								break;
+
+							case "Invalid":
+								popupSaveInvalid = child.gameObject;
+								break;
+
+							case "Override":
+								popupSaveOverride = child.gameObject;
+								break;
+
+							case "Saved":
+								popupSaveDone = child.gameObject;
+								break;
+
+							default:
+								break;
+                        }
+                    }
+				}
+			}
+			// find main menu load button 
+			foreach (GameObject go in f_menuButtons)
+				if (go.name == "Load")
+				{
+					menuLoadButton = go.GetComponent<Button>();
+					break;
+				}
+			GenerateSaveButtons();
 		}
 		instance = this;
+	}
+
+	private void GenerateSaveButtons()
+	{
+		// Look for all valid saves in save folder and create buttons for it
+		if (loadButtonPrefab)
+		{
+			// browse save folder
+			DirectoryInfo di = new DirectoryInfo(saveFolderPath);
+			tmpFI = di.GetFiles(string.Concat("*", saveFilesExtension));
+			foreach (FileInfo file in tmpFI)
+			{
+				tmpSave = LoadFromFile(file.FullName);
+				if (tmpSave != null)
+				{
+					// create button in load UI
+					GameObject loadListElem = GameObject.Instantiate(loadButtonPrefab);
+					loadListElem.name = Path.GetFileNameWithoutExtension(file.Name);
+					loadListElem.GetComponentInChildren<TextMeshProUGUI>().text = loadListElem.name;
+					loadListElem.GetComponent<SaveComponent>().content = tmpSave;
+					loadListElem.GetComponent<Button>().onClick.AddListener(delegate { SetSelectedSaveButton(loadListElem); });
+					loadListElem.transform.SetParent(loadListContainer.transform);
+					loadListElem.transform.localScale = Vector3.one;
+					GameObjectManager.bind(loadListElem);
+					// create button in save UI
+					GameObject saveListElem = GameObject.Instantiate(saveButtonPrefab);
+					saveListElem.name = Path.GetFileNameWithoutExtension(file.Name);
+					saveListElem.GetComponentInChildren<TextMeshProUGUI>().text = saveListElem.name;
+					saveListElem.GetComponent<Button>().onClick.AddListener(delegate { SetSaveInputfieldText(saveListElem); });
+					saveListElem.transform.SetParent(saveListContainer.transform);
+					saveListElem.transform.localScale = Vector3.one;
+					GameObjectManager.bind(saveListElem);
+				}
+			}
+		}
+		// enable loading button if there are valid saves
+		if (loadListContainer && loadListContainer.transform.childCount > 0)
+		{
+			menuLoadButton.interactable = true;
+			// change content size depending on the number of buttons
+			loadListContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(loadListContainer.GetComponent<RectTransform>().sizeDelta.x,
+				25 * loadListContainer.transform.childCount + 5 * (loadListContainer.transform.childCount - 1));
+			saveListContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(saveListContainer.GetComponent<RectTransform>().sizeDelta.x,
+				25 * saveListContainer.transform.childCount + 5 * (saveListContainer.transform.childCount - 1));
+		}
 	}
 
 	/// <summary>
@@ -125,8 +248,6 @@ public class SaveManager : FSystem {
 		save.collectableItemsStates = new int[18];
 		// There are 14 dream fragments of type 0 and 6 of type 1 with id going from 0 to 19
 		save.dreamFragmentsStates = new int[20];
-		// To use dream fragment id as id in the array, we create a size 18 array and don't use values 7, 14, 15 and 16 (set to -1)
-		save.dreamFragmentsStates[7] = -1; save.dreamFragmentsStates[14] = -1; save.dreamFragmentsStates[15] = -1; save.dreamFragmentsStates[16] = -1;
 		save.lockedDoorsStates = new bool[3];
 		save.toggleablesStates = new bool[8];
 		save.boardEraseTexture = null;
@@ -138,6 +259,11 @@ public class SaveManager : FSystem {
 		save.receivedHints = new List<SaveContent.HintData>();
 
 		return save;
+    }
+
+	public void SetNewSave()
+    {
+		saveContent = CreateNewSave();
     }
 
 	/// <summary>
@@ -175,6 +301,55 @@ public class SaveManager : FSystem {
 			Debug.LogError("Tried to save with an invalid SaveContent. Nothing was done.");
 			File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Tried to save with an invalid SaveContent. Nothing was done."));
 		}
+	}
+
+	/// <summary>
+	/// Called when clicking on the save button in the popup or when answering yes to override file
+	/// </summary>
+	/// <param name="checkName">checkName is false when already checked and this function is called after answering yes to override</param>
+	public void TrySaving(bool checkName = true)
+    {
+        if (!checkName || CheckSaveNameValidity())
+        {
+            if (checkName)
+			{
+				// check if this name is already used
+				bool usedName = false;
+				foreach (Transform child in saveListContainer.transform)
+					if (popupSaveInputfield.text == child.gameObject.name)
+					{
+						usedName = true;
+						break;
+					}
+				if (usedName)
+					// display popup asking for override
+					GameObjectManager.setGameObjectState(popupSaveOverride, true);
+                else
+                {
+					SaveOnFile(popupSaveInputfield.text);
+					GameObjectManager.setGameObjectState(popupSaveDone, true);
+
+					// if the save didn't already exist, add it to the list in the popup
+					GameObject saveListElem = GameObject.Instantiate(saveButtonPrefab);
+					saveListElem.name = Path.GetFileNameWithoutExtension(popupSaveInputfield.text);
+					saveListElem.GetComponentInChildren<TextMeshProUGUI>().text = saveListElem.name;
+					saveListElem.GetComponent<Button>().onClick.AddListener(delegate { SetSaveInputfieldText(saveListElem); });
+					saveListElem.transform.SetParent(saveListContainer.transform);
+					saveListElem.transform.localScale = Vector3.one;
+					GameObjectManager.bind(saveListElem);
+					saveListContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(saveListContainer.GetComponent<RectTransform>().sizeDelta.x,
+						25 * saveListContainer.transform.childCount + 5 * (saveListContainer.transform.childCount - 1));
+				}
+			}
+            else
+			{
+				SaveOnFile(popupSaveInputfield.text);
+				GameObjectManager.setGameObjectState(popupSaveDone, true);
+			}
+        }
+		else
+			// display popup for invalid name
+			GameObjectManager.setGameObjectState(popupSaveInvalid, true);
 	}
 
 	/// <summary>
@@ -251,15 +426,18 @@ public class SaveManager : FSystem {
 			StoryDisplaying.instance.LoadStoryProgression(saveContent.storyTextCount);
 
 			// set player position
-			if (saveContent.playerPositionRoom == 0)
-				f_fpsController.First().gameObject.transform.position = new Vector3(-41, -1, -1);
-			else if (saveContent.playerPositionRoom == 1)
+			f_fpsController.First().gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
+			if (saveContent.playerPositionRoom == 1)
 				f_fpsController.First().gameObject.transform.position = new Vector3(-11, 2, -1);
 			else if (saveContent.playerPositionRoom == 2)
 				f_fpsController.First().gameObject.transform.position = new Vector3(11, 2, -2);
 			else if (saveContent.playerPositionRoom == 3)
 				f_fpsController.First().gameObject.transform.position = new Vector3(30, 2, -2);
 			f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = saveContent.playerPositionRoom;
+			// disable black wall at the beginning
+			GameObject night = GameObject.Find("Night");
+			night.GetComponent<Animator>().enabled = true;
+			night.GetComponent<Collider>().enabled = false;
 
 			// set starting time
 			f_timer.First().GetComponent<Timer>().startingTime = Time.time - saveContent.playingDuration;
@@ -479,6 +657,19 @@ public class SaveManager : FSystem {
 		}
 	}
 
+	public void LoadSelectedSave()
+    {
+        if (selectedSave)
+        {
+			saveContent = selectedSave.GetComponent<SaveComponent>().content;
+			LoadSave();
+			GameObjectManager.setGameObjectState(loadPopup, false);
+			if(selectedSave.name != autoSaveFileName)
+				popupSaveInputfield.text = selectedSave.name;
+			MenuSystem.instance.StartGame();
+        }
+    }
+
 	// Use this to update member variables when system pause. 
 	// Advice: avoid to update your families inside this function.
 	protected override void onPause(int currentFrame) {
@@ -583,4 +774,66 @@ public class SaveManager : FSystem {
 		if (index > -1)
 			saveContent.receivedHints.RemoveAt(index);
 	}
+
+	/// <summary>
+	/// Used for the loading popup
+	/// </summary>
+	/// <param name="loadButton"></param>
+	public void SetSelectedSaveButton(GameObject loadButton)
+    {
+		if (loadButton.GetComponent<SaveComponent>())
+		{
+			selectedSave = loadButton;
+			popupLoadButton.interactable = true;
+		}
+    }
+
+	/// <summary>
+	/// Used when a button of the saving popup is clicked
+	/// </summary>
+	/// <param name="saveButton"></param>
+	public void SetSaveInputfieldText(GameObject saveButton)
+    {
+		if(saveButton)
+			popupSaveInputfield.text = saveButton.name;
+	}
+
+	/// <summary>
+	/// Called when trying to save
+	/// </summary>
+	public bool CheckSaveNameValidity()
+    {
+		bool isValid = true;
+
+		// remove file extension
+		if (popupSaveInputfield.text.EndsWith(saveFilesExtension))
+			popupSaveInputfield.text = popupSaveInputfield.text.Substring(popupSaveInputfield.text.Length - saveFilesExtension.Length, saveFilesExtension.Length);
+
+		isValid = popupSaveInputfield.text != "";
+
+		char[] chars = Path.GetInvalidFileNameChars();
+
+		foreach(char c in chars)
+            if (popupSaveInputfield.text.IndexOf(c) != -1)
+            {
+				isValid = false;
+				break;
+            }
+
+		return isValid;
+    }
+
+	/// <summary>
+	/// Called when changing tab or closing IAR
+	/// </summary>
+	public void CloseSavePopup()
+    {
+        if (savePopup.activeSelf)
+		{
+			GameObjectManager.setGameObjectState(savePopup, false);
+			GameObjectManager.setGameObjectState(popupSaveInvalid, false);
+			GameObjectManager.setGameObjectState(popupSaveOverride, false);
+			GameObjectManager.setGameObjectState(popupSaveDone, false);
+		}
+}
 }

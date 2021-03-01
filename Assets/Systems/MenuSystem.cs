@@ -19,6 +19,7 @@ public class MenuSystem : FSystem {
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_windowNavigator = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)));
     private Family f_enabledSettingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
     private Camera menuCamera;
     private float switchDelay = 12;
@@ -174,7 +175,8 @@ public class MenuSystem : FSystem {
         this.Pause = true;
         // Disable second and third room
         foreach (Transform room in f_gameRooms.First().transform)
-            if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
+            if (f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber < 2 &&
+                (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString())))
                 GameObjectManager.setGameObjectState(room.gameObject, false);
         // Disable UI
         GameObjectManager.setGameObjectState(mainMenu, false);
@@ -198,9 +200,6 @@ public class MenuSystem : FSystem {
         }
 
         GameObjectManager.addComponent<PlaySound>(mainMenu, new { id = 4 }); // id refer to FPSController AudioBank
-
-        // Create a new save
-        SaveManager.instance.CreateNewSave();
 
         // Play story
         StoryDisplaying.instance.Pause = false;
