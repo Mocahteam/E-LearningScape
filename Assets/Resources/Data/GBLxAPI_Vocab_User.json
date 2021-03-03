@@ -114,6 +114,15 @@
                 "en-US": "from"
             }
         },
+        "help": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/extensions/help",
+            "name": {
+                "en-US": "help"
+            }
+        },
         "link": {
             "description": {
                 "en-US": ""
