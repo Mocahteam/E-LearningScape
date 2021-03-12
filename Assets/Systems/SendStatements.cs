@@ -18,7 +18,7 @@ public class SendStatements : FSystem {
     {
         if (Application.isPlaying)
         {
-            f_actionForLRS.addEntryCallback(ActionProcessing);
+            // Add code to constructor here
         }
         instance = this;
     }
@@ -36,11 +36,6 @@ public class SendStatements : FSystem {
         GBL_Interface.userUUID = GBLXAPI.Instance.GenerateActorUUID(LoadGameContent.sessionID);
     }
 
-	// Use this to update member variables when system pause. 
-	// Advice: avoid to update your families inside this function.
-	protected override void onPause(int currentFrame) {
-	}
-
 	// Use this to update member variables when system resume.
 	// Advice: avoid to update your families inside this function.
 	protected override void onResume(int currentFrame){
@@ -49,43 +44,45 @@ public class SendStatements : FSystem {
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount) {
-	}
-
-    private void ActionProcessing(GameObject go)
-    {
-        ActionPerformedForLRS[] listAP = go.GetComponents<ActionPerformedForLRS>();
-        int nb = listAP.Length;
-        ActionPerformedForLRS ap;
-        if (!this.Pause)
+        // Do not use callbacks because in case in the same frame actions are removed on a GO and another component is added in another system, family will not trigger again callback because component will not be processed
+        foreach (GameObject go in f_actionForLRS)
         {
-            for(int i = 0; i < nb; i++)
+            ActionPerformedForLRS[] listAP = go.GetComponents<ActionPerformedForLRS>();
+            int nb = listAP.Length;
+            ActionPerformedForLRS ap;
+            if (!this.Pause)
             {
-                ap = listAP[i];
-                //If no result info filled
-                if (!ap.result)
+                for (int i = 0; i < nb; i++)
                 {
-                    GBL_Interface.SendStatement(ap.verb, ap.objectType, ap.objectName, ap.activityExtensions);
-                }
-                else
-                {
-                    bool? completed = null, success = null;
+                    ap = listAP[i];
+                    //If no result info filled
+                    if (!ap.result)
+                    {
+                        GBL_Interface.SendStatement(ap.verb, ap.objectType, ap.objectName, ap.activityExtensions);
+                    }
+                    else
+                    {
+                        bool? completed = null, success = null;
 
-                    if (ap.completed > 0)
-                        completed = true;
-                    else if (ap.completed < 0)
-                        completed = false;
+                        if (ap.completed > 0)
+                            completed = true;
+                        else if (ap.completed < 0)
+                            completed = false;
 
-                    if (ap.success > 0)
-                        success = true;
-                    else if (ap.success < 0)
-                        success = false;
+                        if (ap.success > 0)
+                            success = true;
+                        else if (ap.success < 0)
+                            success = false;
 
-                    GBL_Interface.SendStatementWithResult(ap.verb, ap.objectType, ap.objectName, ap.activityExtensions, ap.resultExtensions,
-                        completed, success, ap.response, ap.score, ap.duration);
+                        GBL_Interface.SendStatementWithResult(ap.verb, ap.objectType, ap.objectName, ap.activityExtensions, ap.resultExtensions,
+                            completed, success, ap.response, ap.score, ap.duration);
+                    }
                 }
             }
+            for (int i = nb - 1; i > -1; i--)
+            {
+                GameObjectManager.removeComponent(listAP[i]);
+            }
         }
-        for (int i = nb - 1; i > -1; i--)
-            GameObjectManager.removeComponent(listAP[i]);
-    }
+	}
 }

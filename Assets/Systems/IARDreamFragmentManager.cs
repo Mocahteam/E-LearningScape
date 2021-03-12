@@ -479,13 +479,6 @@ public class IARDreamFragmentManager : FSystem {
 	/// <param name="dreamFragmentContent"></param>
 	private void TraceReset(GameObject dreamFragmentContent)
     {
-		GameObjectManager.addComponent<ActionPerformedForLRS>(selectedIARFragment, new
-		{
-			verb = "reset",
-			objectType = "viewable",
-			objectName = selectedIARFragment.name
-		});
-
 		// trace all documents of the dream fragment
 		foreach(Transform document in dreamFragmentContent.transform)
 		{

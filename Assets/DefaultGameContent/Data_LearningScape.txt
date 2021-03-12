@@ -4,7 +4,7 @@
     "helpSystem": true,
     "randomHelpSystemActivation": false,
     "traceToLRS": true,
-    "traceMovementFrequency": 0.5,
+    "traceMovementFrequency": 1,
     "virtualDreamFragment": true,
     "virtualPuzzle": true,
     "useEndRoom": false,
