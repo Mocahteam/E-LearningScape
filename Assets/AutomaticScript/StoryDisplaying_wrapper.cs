@@ -19,4 +19,9 @@ public class StoryDisplaying_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("StoryDisplaying", "ResetGame", null);
 	}
 
+	public void LoadStoryProgression(System.Int32 storyProgressionCount)
+	{
+		MainLoop.callAppropriateSystemMethod ("StoryDisplaying", "LoadStoryProgression", storyProgressionCount);
+	}
+
 }

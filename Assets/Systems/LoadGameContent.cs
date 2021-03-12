@@ -178,7 +178,7 @@ public class LoadGameContent : FSystem {
             else if (tmp.gameObject.name == "Description")
                 tmp.text = answerFeedbackDesc;
         }
-        question.GetComponentInChildren<InputField>().transform.GetChild(0).GetComponent<TMP_Text>().text = placeHolder;
+        question.GetComponentInChildren<TMP_InputField>().transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = placeHolder;
         question.GetComponent<QuerySolution>().andSolutions = new List<string>();
         foreach (string s in andSolutions)
             tmpGO.GetComponent<QuerySolution>().andSolutions.Add(StringToAnswer(s));
@@ -664,6 +664,8 @@ public class LoadGameContent : FSystem {
         Debug.Log("Room 3 queries loaded");
 
         //Puzzles
+        // if dream fragment are set to virtual, do the same for the puzzles
+        gameContent.virtualPuzzle = gameContent.virtualPuzzle || gameContent.virtualDreamFragment;
         foreach (GameObject go in f_puzzles)
             GameObjectManager.setGameObjectState(go, gameContent.virtualPuzzle);
         foreach (GameObject go in f_puzzlesFragment)
@@ -893,6 +895,9 @@ public class LoadGameContent : FSystem {
         }
         loadingContextForDreamFragment = false;
 
+        // disable auto save if save and load are disabled
+        gameContent.autoSaveProgression = gameContent.saveAndLoadProgression && gameContent.autoSaveProgression;
+
         Debug.Log("Data loaded");
         File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));
     }
@@ -943,8 +948,6 @@ public class LoadGameContent : FSystem {
             tmpRectTransform = tabParent.GetChild(0).GetComponent<RectTransform>();
             tmpRectTransform.anchoredPosition = new Vector2(54.66f, -20);
             tmpRectTransform.sizeDelta = new Vector2(99, 40);
-            // if dream fragment are set to virtual, do the same for the puzzles
-            gameContent.virtualPuzzle = true;
 
             bool viewTab = !DebugModeSystem.instance.Pause;
             if (DreamFragmentCollecting.instance != null) // require this test because DreamFragmentCollecting is initialized after LoadGameContent inside MainLoop
@@ -981,6 +984,10 @@ public class LoadGameContent : FSystem {
         Debug.Log(string.Concat("Virtual dream fragments: ", virtualDreamFragment));
     }
 
+    /// <summary>
+    /// Used to copy sessionID to clipboard.
+    /// Called when sessionID is clicked in main menu
+    /// </summary>
     public void CopySessionID()
     {
         if(sessionID != null && sessionID != "")

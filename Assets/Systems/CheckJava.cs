@@ -3,7 +3,8 @@ using FYFY;
 using System;
 using System.Diagnostics;
 
-public class CheckJava : FSystem {
+public class CheckJava : FSystem
+{
     // Check if Java is installed
 
     private bool javaOK = false;

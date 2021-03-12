@@ -30,14 +30,13 @@ public class StoryDisplaying : FSystem {
     private List<List<string>> storyTexts;
     // Contains current texts of the story
     private string[] readTexts;
-    private string endLink;
 
     StoryText st;
 
     private int fadeSpeed = 1;
 
     private float readingTimer = -Mathf.Infinity;
-    private int textCount = -1;
+    public int textCount = -1;
     private bool plainToAlpha = false;
     private bool alphaToPlain = false;
     private bool fadingBackground = false;
@@ -47,6 +46,9 @@ public class StoryDisplaying : FSystem {
     public static StoryDisplaying instance;
 
     private RectTransform tmpRT;
+
+    public float Duration { get => Time.time - timer.startingTime; }
+    public List<List<string>> StoryTexts { get => storyTexts; }
 
     public StoryDisplaying()
     {
@@ -180,10 +182,10 @@ public class StoryDisplaying : FSystem {
         }
         else
         {
-            float duration = Time.time - timer.startingTime;
-            int hours = (int)duration / 3600;
-            int minutes = (int)(duration % 3600) / 60;
-            int seconds = (int)(duration % 3600) % 60;
+            float d = Time.time - timer.startingTime;
+            int hours = (int)d / 3600;
+            int minutes = (int)(d % 3600) / 60;
+            int seconds = (int)(d % 3600) % 60;
             storyTexts[st.storyProgression].Add(string.Concat("<align=\"center\">", LoadGameContent.gameContent.scoreText, Environment.NewLine, hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")));
             GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
             {
@@ -238,6 +240,8 @@ public class StoryDisplaying : FSystem {
                 alphaToPlain = false;
                 // pass to the next text
                 textCount++;
+                SaveManager.instance.SaveContent.storyTextCount = st.storyProgression;
+                SaveManager.instance.AutoSave();
                 if (textCount < readTexts.Length)
                 {
                     sdText.text = readTexts[textCount];
@@ -336,5 +340,12 @@ public class StoryDisplaying : FSystem {
                 }
             }
         }
+    }
+
+    public void LoadStoryProgression(int storyProgressionCount)
+    {
+        st.storyProgression = storyProgressionCount;
+        // start without reading text
+        storyTexts[storyProgressionCount].Clear();
     }
 }

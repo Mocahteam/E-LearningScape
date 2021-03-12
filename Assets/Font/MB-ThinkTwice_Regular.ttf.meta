@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 66ffdf037b6c86140a85592dde0e233d
+guid: 25cc5d2a9e1951b43941a296fad2ed6b
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -11,11 +11,13 @@ TrueTypeFontImporter:
   fontName: MB Think Twice
   fontNames:
   - MB Think Twice
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 66ffdf037b6c86140a85592dde0e233d, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
   useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 

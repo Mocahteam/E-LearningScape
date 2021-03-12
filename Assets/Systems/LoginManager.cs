@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
+using FYFY_plugins.Monitoring;
 using TMPro;
 
 public class LoginManager : FSystem {
@@ -26,11 +27,15 @@ public class LoginManager : FSystem {
 
     private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
 
+    private Family f_iarTab = FamilyManager.getFamily(new AnyOfTags("IARTab"));
+
+    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
+
     private GameObject selectedLoginPanel;
     private Vector3 playerGoBackPosition;
 
     private float speed;
-    private InputField ifConnectionR2;
+    private TMP_InputField ifConnectionR2;
     public static int passwordSolution;
 
     private TextMeshProUGUI connectionAnswerCheck1;
@@ -53,12 +58,12 @@ public class LoginManager : FSystem {
     {
         if (Application.isPlaying)
         {
-            InputField inputField = f_mainWindow.First().transform.GetChild(1).GetComponent<InputField>();
+            TMP_InputField inputField = f_mainWindow.First().transform.GetChild(1).GetComponent<TMP_InputField>();
 
             ifConnectionR2 = inputField;
 
             // get fourth child of the password and backup answer UI notifications
-            GameObject answerCheck = inputField.gameObject.transform.GetChild(3).gameObject;
+            GameObject answerCheck = inputField.gameObject.transform.GetChild(2).gameObject;
             connectionAnswerCheck1 = answerCheck.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             cacGreen = connectionAnswerCheck1.color;
             connectionAnswerCheck2 = answerCheck.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
@@ -81,7 +86,10 @@ public class LoginManager : FSystem {
         GameObject loginCover = go.transform.GetChild(0).gameObject; // the first child is the cover
         playerGoBackPosition = go.transform.position + (Vector3.left*3f) - (Vector3.up);
 
-        GameObjectManager.addComponent<PlaySound>(loginCover, new { id = 9 }); // id refer to FPSController AudioBank
+        if (go.GetComponent<LoadingSave>())
+            GameObjectManager.removeComponent<LoadingSave>(go);
+        else
+            GameObjectManager.addComponent<PlaySound>(loginCover, new { id = 9 }); // id refer to FPSController AudioBank
         loginCover.GetComponent<Animator>().enabled = true; // enable animation
     }
 
@@ -143,6 +151,10 @@ public class LoginManager : FSystem {
                 exitBy = "system";
                 ExitLogin();
                 goBack = false;
+
+                // set the second door as opened in save
+                SaveManager.instance.SaveContent.lockedDoorsStates[1] = true;
+                SaveManager.instance.AutoSave();
             }
         }
 	}
@@ -159,6 +171,8 @@ public class LoginManager : FSystem {
             objectType = "interactable",
             objectName = selectedLoginPanel.name
         });
+        if (f_pnMarkingsToken.Count == 0)
+            GameObjectManager.addComponent<AskForPNMarkings>(selectedLoginPanel);
 
         selectedLoginPanel = null;
 
@@ -293,5 +307,25 @@ public class LoginManager : FSystem {
     {
         if (Input.GetButtonDown("Submit"))
             CheckMastermindAnswer();
+    }
+
+    public void UnlockLoginDoor()
+    {
+        ifConnectionR2.text = passwordSolution.ToString();
+        //show correct answer feedback for the 3 numbers
+        connectionAnswerCheck1.text = "O";
+        connectionAnswerCheck1.color = cacGreen;
+        connectionAnswerCheck2.text = "O";
+        connectionAnswerCheck2.color = cacGreen;
+        connectionAnswerCheck3.text = "O";
+        connectionAnswerCheck3.color = cacGreen;
+
+        door.GetComponent<Animator>().enabled = true; // enable animation
+        foreach (GameObject tab in f_iarTab)
+            if (tab.name == "ScreenR1")
+            {
+                GameObjectManager.setGameObjectState(tab, true);
+                break;
+            }
     }
 }

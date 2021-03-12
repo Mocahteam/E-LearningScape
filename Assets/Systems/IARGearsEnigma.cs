@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.PointerManager;
+using FYFY_plugins.Monitoring;
 using TMPro;
 
 public class IARGearsEnigma : FSystem
@@ -13,6 +14,7 @@ public class IARGearsEnigma : FSystem
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_answer = FamilyManager.getFamily(new AnyOfTags("A-R1"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not displayed of the first room
     private Family f_gears = FamilyManager.getFamily(new AllOfComponents(typeof(Gear)));
+    private Family f_solutionGear = FamilyManager.getFamily(new AllOfComponents(typeof(Gear), typeof(IsSolution)));
     private Family f_rotatingGears = FamilyManager.getFamily(new AnyOfTags("RotateGear")); //gears that can rotate (middle top, middle bot, and the solution gear)
     private Family f_canvas = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
 
@@ -172,6 +174,10 @@ public class IARGearsEnigma : FSystem
                             Vector3 newDir = Vector3.forward;
                             f_player.First().transform.rotation = Quaternion.LookRotation(f_login.First().transform.position - f_player.First().transform.position);
                             Camera.main.transform.rotation = Quaternion.LookRotation(f_login.First().transform.position - f_player.First().transform.position);
+
+                            // Set gears enigma as solved in save
+                            SaveManager.instance.SaveContent.gearEnigmaState = true;
+                            SaveManager.instance.AutoSave();
                         }
                         else //if answer is wrong
                         {
@@ -223,6 +229,18 @@ public class IARGearsEnigma : FSystem
                 else
                     tmpGO.transform.rotation = Quaternion.Euler(tmpGO.transform.rotation.eulerAngles.x, tmpGO.transform.rotation.eulerAngles.y, tmpGO.transform.rotation.eulerAngles.z + 1);
             }
+        }
+    }
+
+    public void SolveGearsEnigma(bool loginSelectable)
+    {
+        f_solutionGear.First().transform.localPosition = Vector3.zero; //place the gear at the center
+        rotateGear = true;  //rotate gears in the middle
+        if (loginSelectable)
+        {
+            // Make login selectable
+            GameObjectManager.addComponent<Selectable>(f_login.First(), new { standingPosDelta = new Vector3(-0.9f, -0.8f, 0f), standingOrientation = new Vector3(1f, 0f, 0f) });
+            GameObjectManager.addComponent<LoadingSave>(f_login.First());
         }
     }
 }

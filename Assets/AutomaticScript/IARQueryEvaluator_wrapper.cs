@@ -14,9 +14,4 @@ public class IARQueryEvaluator_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("IARQueryEvaluator", "IarOnEndEditAnswer", query);
 	}
 
-	public void IarCheckAnswer(UnityEngine.GameObject query)
-	{
-		MainLoop.callAppropriateSystemMethod ("IARQueryEvaluator", "IarCheckAnswer", query);
-	}
-
 }

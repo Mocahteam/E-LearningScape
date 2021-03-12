@@ -176,6 +176,9 @@ public class IARTabNavigation : FSystem {
         LampManager.instance.Pause = backLampManagerState;
         GameObjectManager.setGameObjectState(f_HUD.First(), true); // show HUD
 
+        // close save popup if it was on
+        SaveManager.instance.CloseSavePopup();
+
         //if a terminal was selected, exit it when leaving IAR
         if (selectedTerminal)
         {
@@ -205,5 +208,8 @@ public class IARTabNavigation : FSystem {
         // notify this tab as selected
         if (newSelectedTab.GetComponent<SelectedTab>() == null)
             GameObjectManager.addComponent<SelectedTab>(newSelectedTab);
+
+        // close save popup if it was on
+        SaveManager.instance.CloseSavePopup();
     }
 }

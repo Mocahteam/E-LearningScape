@@ -1,7 +1,5 @@
 fileFormatVersion: 2
-guid: 96b3b921ad691dd4cb1f23452ebe9b1c
-timeCreated: 1529509155
-licenseType: Free
+guid: 6b23aca9b4c0da94e8301824fd1af475
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -13,11 +11,13 @@ TrueTypeFontImporter:
   fontName: Flabby Bums handwriting
   fontNames:
   - Flabby Bums handwriting
-  fallbackFontReferences: []
-  customCharacters: "\xE9\xE0"
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 96b3b921ad691dd4cb1f23452ebe9b1c, type: 3}
+  customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
   useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 

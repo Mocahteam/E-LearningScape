@@ -298,6 +298,15 @@
                 "en-US": "highlighted"
             }
         },
+        "loaded": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/loaded",
+            "name": {
+                "en-US": "loaded"
+            }
+        },
         "moved": {
             "description": {
                 "en-US": ""
@@ -323,6 +332,15 @@
             "id": "https://www.lip6.fr/mocah/invaliduri/verbs/received",
             "name": {
                 "en-US": "received"
+            }
+        },
+        "saved": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/saved",
+            "name": {
+                "en-US": "saved"
             }
         },
         "skipped": {

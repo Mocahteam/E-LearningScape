@@ -9,4 +9,9 @@ public class PlankAndWireManager_wrapper : MonoBehaviour
 		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
 	}
 
+	public void DisplayWireOnSolution()
+	{
+		MainLoop.callAppropriateSystemMethod ("PlankAndWireManager", "DisplayWireOnSolution", null);
+	}
+
 }

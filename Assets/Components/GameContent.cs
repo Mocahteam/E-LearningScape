@@ -51,6 +51,15 @@ public class GameContent {
     /// </summary>
     public bool useEndRoom;
     /// <summary>
+    /// If false, save and load button will be disabled
+    /// </summary>
+    public bool saveAndLoadProgression;
+    /// <summary>
+    /// If false, no auto save will be made.
+    /// autoSaveProgression will be set to false if saveAndLoadProgression is false
+    /// </summary>
+    public bool autoSaveProgression;
+    /// <summary>
     /// If true, remove extra geaometries. This is an additionnal option for very poor hardware
     /// </summary>
     public bool removeExtraGeometries = true;
@@ -84,6 +93,7 @@ public class GameContent {
     #region UI texts
     public string loadingText;
     public string mainMenuStart;
+    public string mainMenuLoad;
     public string mainMenuOption;
     public string mainMenuLeave;
     public string sessionIDText;
@@ -107,6 +117,8 @@ public class GameContent {
     public string optionTransparency;
     public string optionValidateAndReturn;
     public string optionDefault;
+    public string loadPopupLoadButton;
+    public string loadPopupCancelButton;
     public string validateOptions;
     public string storyClickToContinue;
     public string hudObserve;
@@ -136,9 +148,21 @@ public class GameContent {
     public string getHintButton;
     public string hintOpenURL;
     public string gameMenuResumeButton;
+    public string gameMenuSaveButton;
+    public string gameMenuSaveNotice;
     public string gameMenuOptionButton;
     public string gameMenuRestartButton;
     public string gameMenuLeaveButton;
+    public string savePopupSaveButton;
+    public string savePopupCancelButton;
+    public string savePopupPlaceholder;
+    public string savePopupInvalidText;
+    public string savePopupInvalidButton;
+    public string savePopupOverrideText;
+    public string savePopupOverrideYesButton;
+    public string savePopupOverrideNoButton;
+    public string savePopupDoneText;
+    public string savePopupDoneButton;
     public string tutoText0;
     public string tutoText1;
     public string tutoText2;

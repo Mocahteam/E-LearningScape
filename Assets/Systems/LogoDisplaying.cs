@@ -118,7 +118,8 @@ public class LogoDisplaying : FSystem {
                     {
                         int nbFadinElems = f_fadingMenuElems.Count;
                         for (int i = 0; i < nbFadinElems; i++)
-                            GameObjectManager.setGameObjectState(f_fadingMenuElems.getAt(i), true);
+                            if(f_fadingMenuElems.getAt(i).name != "Load")
+                                GameObjectManager.setGameObjectState(f_fadingMenuElems.getAt(i), true);
                         closeLogo = true;
                         readingTimer = Time.time;
                         // Start main menu

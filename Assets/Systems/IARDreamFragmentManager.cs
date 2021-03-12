@@ -91,7 +91,17 @@ public class IARDreamFragmentManager : FSystem {
 		{
 			//remove "new"
 			if (t.GetComponent<NewDreamFragment>())
+			{
 				GameObjectManager.removeComponent<NewDreamFragment>(t.gameObject);
+
+				// set dream fragment as seen in iar in save
+				int id = GetDreamFragmentID(t.gameObject);
+				if (id > -1)
+				{
+					SaveManager.instance.SaveContent.dreamFragmentsStates[id] = 2;
+					SaveManager.instance.AutoSave();
+				}
+			}
 
 			//set game object as last sibling in hierarchy to see it above the others
 			//(do it even when the object is disabled to prevent a bug happening when it is activated again)
@@ -391,15 +401,7 @@ public class IARDreamFragmentManager : FSystem {
 	/// <returns></returns>
 	private DreamFragment GetDreamFragment(GameObject go)
 	{
-		int id = -1;
-        if (go)
-        {
-            try
-			{
-				id = int.Parse(go.name.Substring(go.name.Length - 2, 2));
-			}
-            catch (Exception) { }
-        }
+		int id = GetDreamFragmentID(go);
 
 		if(id > -1)
         {
@@ -412,6 +414,25 @@ public class IARDreamFragmentManager : FSystem {
         }
 
 		return null;
+	}
+
+	/// <summary>
+	/// This function takes a dream fragment toggle or a dream fragment content and
+	/// returns the dream fragment id (last 2 characters of the object's name)
+	/// </summary>
+	/// <param name="go">The gameobject of a dream fragment toggle or content</param>
+	/// <returns></returns>
+	private int GetDreamFragmentID(GameObject go)
+	{
+		if (go)
+		{
+			try
+			{
+				return int.Parse(go.name.Substring(go.name.Length - 2, 2));
+			}
+			catch (Exception) { }
+		}
+		return -1;
 	}
 
 	/// <summary>

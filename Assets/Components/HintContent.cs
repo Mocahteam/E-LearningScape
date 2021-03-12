@@ -11,4 +11,5 @@ public class HintContent : MonoBehaviour {
     public string actionName;
     public string text;
     public string link;
+    public bool seen;
 }
