@@ -19,6 +19,8 @@ public class PlankAndWireManager : FSystem {
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_solutionWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro), typeof(IsSolution)));
 
+    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
+
     //plank
     private GameObject selectedPlank = null;
     private LineRenderer lr;                //used to link words
@@ -128,7 +130,6 @@ public class PlankAndWireManager : FSystem {
                     if (currentFocusedWord.GetComponent<TextMeshPro>().color == Color.yellow)
                         actionName = "turnOff";
                     GameObjectManager.addComponent<ActionPerformed>(currentFocusedWord, new { name = actionName, performedBy = "player", family = currentFocusedWord.GetComponent<IsSolution>() ? null : f_wrongWords });
-                    Debug.Log(currentFocusedWord.name + " " + currentFocusedWord.GetComponent<IsSolution>());
 
                     // if wire is selected
                     if (wireSelected())
@@ -315,6 +316,8 @@ public class PlankAndWireManager : FSystem {
 
         GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "turnOff", performedBy = "player" });
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new { verb = "exited", objectType = "interactable", objectName = selectedPlank.name });
+        if (f_pnMarkingsToken.Count == 0)
+            GameObjectManager.addComponent<AskForPNMarkings>(selectedPlank);
 
         selectedPlank = null;
 

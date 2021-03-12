@@ -17,7 +17,7 @@ public class ChangePixelColor : MonoBehaviour {
         Material localMaterial = this.GetComponent<Renderer>().material;
         if (!localMaterial.mainTexture)
             localMaterial.mainTexture = new Texture2D(1480, 1070);
-        localMaterial.renderQueue = 2002; // occludable words are set to 2001 and not occludable words are set to 2003 (see WhiteBoardManager.cs)
+        //localMaterial.renderQueue = 3002; // occludable words are set to 2001 and not occludable words are set to 2003 (see WhiteBoardManager.cs)
 
         Texture2D tex = (Texture2D)localMaterial.mainTexture;
         Color[] colors = tex.GetPixels();

@@ -64,4 +64,14 @@ public class SaveManager_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("SaveManager", "CloseSavePopup", null);
 	}
 
+	public void EnableSaving()
+	{
+		MainLoop.callAppropriateSystemMethod ("SaveManager", "EnableSaving", null);
+	}
+
+	public void SetSaveNoticeState(System.Boolean enabled)
+	{
+		MainLoop.callAppropriateSystemMethod ("SaveManager", "SetSaveNoticeState", enabled);
+	}
+
 }

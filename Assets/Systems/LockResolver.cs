@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
+using FYFY_plugins.Monitoring;
 
 public class LockResolver : FSystem {
 
@@ -23,6 +24,8 @@ public class LockResolver : FSystem {
     private Family f_LockArrows = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver)), new AnyOfTags("LockArrow"));
 
     private Family f_iarTab = FamilyManager.getFamily(new AnyOfTags("IARTab"));
+
+    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
 
     //information for animations
     private Vector3 tmpTargetPosition;
@@ -228,7 +231,6 @@ public class LockResolver : FSystem {
                     GameObjectManager.setGameObjectState(selectedLocker.GetComponent<LinkedWith>().link, false);
                     // set intro scroll as disabled in save when the wall is opened
                     SaveManager.instance.SaveContent.collectableItemsStates[0] = 2;
-                    SaveManager.instance.AutoSave();
                 }
                 // Exit the locker
                 closedBy = "system";
@@ -237,6 +239,8 @@ public class LockResolver : FSystem {
                 // set the first door as opened in save
                 SaveManager.instance.SaveContent.lockedDoorsStates[0] = true;
                 SaveManager.instance.AutoSave();
+
+                SaveManager.instance.EnableSaving();
             }
         }
 
@@ -289,6 +293,8 @@ public class LockResolver : FSystem {
 
         GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { name = "turnOff", performedBy = closedBy });
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new { verb = "exited", objectType = "interactable", objectName = selectedLocker.gameObject.name });
+        if (f_pnMarkingsToken.Count == 0)
+            GameObjectManager.addComponent<AskForPNMarkings>(selectedLocker.gameObject);
 
         selectedLocker = null;
 

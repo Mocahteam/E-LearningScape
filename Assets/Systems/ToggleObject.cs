@@ -9,6 +9,8 @@ public class ToggleObject : FSystem {
 	private Family f_toggleable = FamilyManager.getFamily(new AllOfComponents(typeof(ToggleableGO), typeof(Highlighted), typeof(Animator))); // Highlighted is dynamically added by Highlither system
     private Family f_wrongChair = FamilyManager.getFamily(new AnyOfTags("Chair"), new AllOfComponents(typeof(ToggleableGO)), new NoneOfComponents(typeof(IsSolution)));
 
+    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
+
     //temporary variables
     private GameObject tmpGO;
     private ToggleableGO tmpToggleableGO;
@@ -110,6 +112,8 @@ public class ToggleObject : FSystem {
 
                 GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new { verb = "interacted", objectType = "toggable", objectName = tmpGO.name });
 
+                if (f_pnMarkingsToken.Count == 0)
+                    GameObjectManager.addComponent<AskForPNMarkings>(tmpGO);
             }
         }
     }

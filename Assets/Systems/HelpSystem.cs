@@ -137,6 +137,9 @@ public class HelpSystem : FSystem {
         }
     }
 
+    public float SystemHintTimer { get => systemHintTimer; }
+    public float LabelCount { get => labelCount; }
+
     public HelpSystem()
     {
         if (Application.isPlaying)
@@ -299,7 +302,7 @@ public class HelpSystem : FSystem {
         }
     }
 
-    private void updatePnCompletion()
+    public void updatePnCompletion()
     {
         try
         {
@@ -858,6 +861,16 @@ public class HelpSystem : FSystem {
 
     public void SetPlayerHintTimer(float hintCooldown)
     {
-        playerHintTimer = Time.time + hintCooldown - config.playerHintCooldownDuration;
+    }
+
+    /// <summary>
+    /// Used in SaveManager during loading
+    /// </summary>
+    public void LoadHelpSystemValues()
+    {
+        playerHintTimer = Time.time + SaveManager.instance.SaveContent.hintCooldown - config.playerHintCooldownDuration;
+        systemHintTimer = SaveManager.instance.SaveContent.systemHintTimer;
+        labelCount = SaveManager.instance.SaveContent.helpLabelCount;
+        noActionTimer = Time.time;
     }
 }

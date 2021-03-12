@@ -14,6 +14,8 @@ public class CollectObject : FSystem {
     private Family f_HUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
     private Family f_rightHUD = FamilyManager.getFamily(new AnyOfTags("HUD_TransparentOnMove"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
 
+    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
+
     public static CollectObject instance;
 
     private GameObject seenScroll;
@@ -53,6 +55,8 @@ public class CollectObject : FSystem {
                 {
                     GameObjectManager.addComponent<ActionPerformed>(collect, new { name = "perform", performedBy = "player" });
                     GameObjectManager.addComponent<ActionPerformedForLRS>(collect, new { verb = "collected", objectType = "item", objectName = collect.name });
+                    if (f_pnMarkingsToken.Count == 0)
+                        GameObjectManager.addComponent<AskForPNMarkings>(collect);
                 }
                 // enable UI target
                 GameObjectManager.setGameObjectState(collect.GetComponent<LinkedWith>().link, true);

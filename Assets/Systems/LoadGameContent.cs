@@ -895,10 +895,11 @@ public class LoadGameContent : FSystem {
         }
         loadingContextForDreamFragment = false;
 
+        // disable auto save if save and load are disabled
+        gameContent.autoSaveProgression = gameContent.saveAndLoadProgression && gameContent.autoSaveProgression;
+
         Debug.Log("Data loaded");
         File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));
-
-        SaveManager.instance.Pause = false;
     }
 
     private void LoadJsonFile<T>(string jsonPath, TextAsset defaultContent, out T target)

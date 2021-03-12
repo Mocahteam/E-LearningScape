@@ -9,4 +9,9 @@ public class WhiteBoardManager_wrapper : MonoBehaviour
 		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
 	}
 
+	public void SetRenderOrder(UnityEngine.GameObject go)
+	{
+		MainLoop.callAppropriateSystemMethod ("WhiteBoardManager", "SetRenderOrder", go);
+	}
+
 }

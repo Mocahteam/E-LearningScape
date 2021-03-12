@@ -10,50 +10,6 @@ public class SaveContent {
 	// Advice: FYFY component aims to contain only public members (according to Entity-Component-System paradigm).
 
 	/// <summary>
-	/// Struct used to store information about actions performed for Laalys
-	/// </summary>
-	[Serializable]
-	public struct LaalysAction
-    {
-		public int monitoringComponentID;
-		public string name;
-		public string overrideName;
-		public string performedBy;
-		public int family;
-		public string[] orLabels;
-
-		public LaalysAction(int id, string n, string by, string overrideN = "")
-        {
-			monitoringComponentID = id;
-			name = n;
-			overrideName = overrideN;
-			performedBy = by;
-			family = -1;
-			orLabels = null;
-        }
-
-		public LaalysAction(int id, string n, string by, string[] labels = null)
-        {
-			monitoringComponentID = id;
-			name = n;
-			overrideName = "";
-			performedBy = by;
-			family = -1;
-			orLabels = labels;
-        }
-
-		public LaalysAction(int id, string n, string by, int f = -1)
-        {
-			monitoringComponentID = id;
-			name = n;
-			overrideName = "";
-			performedBy = by;
-			family = f;
-			orLabels = null;
-        }
-    }
-
-	/// <summary>
 	/// Struct used to store information about hints
 	/// </summary>
 	[Serializable]
@@ -153,13 +109,23 @@ public class SaveContent {
 	/// </summary>
 	public float hintCooldown;
 	/// <summary>
-	/// List of actions performed for Laalys, ordered by date.
-	/// This list is used to perform actions in the same order than the player did
+	/// Contains the value of HelpSystem's systemHintTimer used to count the time spent
+	/// since the system last gave a hint to the player with labelCount
 	/// </summary>
-	public List<LaalysAction> performedActions;
+	public float systemHintTimer;
 	/// <summary>
 	/// List of the hints received by the player, ordered by date.
 	/// The bool is true if the hint was seen
 	/// </summary>
 	public List<HintData> receivedHints;
+	/// <summary>
+	/// Contains the value of HelpSystem's labelCount.
+	/// When a label is received from Laalys, its weight is added to labelCount.
+	/// </summary>
+	public float helpLabelCount;
+
+	/// <summary>
+	/// List of string containing complete and filtered petri nets markings given by Laalys
+	/// </summary>
+	public List<string> petriNetsMarkings;
 }

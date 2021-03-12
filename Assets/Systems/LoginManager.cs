@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
+using FYFY_plugins.Monitoring;
 using TMPro;
 
 public class LoginManager : FSystem {
@@ -27,6 +28,8 @@ public class LoginManager : FSystem {
     private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
 
     private Family f_iarTab = FamilyManager.getFamily(new AnyOfTags("IARTab"));
+
+    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
 
     private GameObject selectedLoginPanel;
     private Vector3 playerGoBackPosition;
@@ -168,6 +171,8 @@ public class LoginManager : FSystem {
             objectType = "interactable",
             objectName = selectedLoginPanel.name
         });
+        if (f_pnMarkingsToken.Count == 0)
+            GameObjectManager.addComponent<AskForPNMarkings>(selectedLoginPanel);
 
         selectedLoginPanel = null;
 

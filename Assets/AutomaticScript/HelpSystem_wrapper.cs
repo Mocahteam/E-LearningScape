@@ -9,6 +9,11 @@ public class HelpSystem_wrapper : MonoBehaviour
 		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
 	}
 
+	public void updatePnCompletion()
+	{
+		MainLoop.callAppropriateSystemMethod ("HelpSystem", "updatePnCompletion", null);
+	}
+
 	public void OnPlayerAskHelp()
 	{
 		MainLoop.callAppropriateSystemMethod ("HelpSystem", "OnPlayerAskHelp", null);
@@ -17,6 +22,11 @@ public class HelpSystem_wrapper : MonoBehaviour
 	public void SetPlayerHintTimer(System.Single hintCooldown)
 	{
 		MainLoop.callAppropriateSystemMethod ("HelpSystem", "SetPlayerHintTimer", hintCooldown);
+	}
+
+	public void LoadHelpSystemValues()
+	{
+		MainLoop.callAppropriateSystemMethod ("HelpSystem", "LoadHelpSystemValues", null);
 	}
 
 }

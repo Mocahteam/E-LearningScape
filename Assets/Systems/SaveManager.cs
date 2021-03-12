@@ -6,24 +6,23 @@ using System.IO;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using FYFY;
-using FYFY_plugins.PointerManager;
 using FYFY_plugins.Monitoring;
+using FYFY_plugins.PointerManager;
+using FYFY_plugins.TriggerManager;
 using TMPro;
 
 public class SaveManager : FSystem {
 
-	private Family f_wrongWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro)), new NoneOfComponents(typeof(IsSolution)));
-	private Family f_wrongChair = FamilyManager.getFamily(new AnyOfTags("Chair"), new AllOfComponents(typeof(ToggleableGO)), new NoneOfComponents(typeof(IsSolution)));
-
 	private Family f_prefabs = FamilyManager.getFamily(new AllOfComponents(typeof(PrefabContainer)));
 	private Family f_menuButtons = FamilyManager.getFamily(new AllOfComponents(typeof(FadingMenu), typeof(Button)));
-	private Family f_gameMenuContent = FamilyManager.getFamily(new AllOfComponents(typeof(VerticalLayoutGroup), typeof(WindowNavigator)));
+	private Family f_inGameMenu = FamilyManager.getFamily(new AllOfComponents(typeof(VerticalLayoutGroup), typeof(WindowNavigator)));
 
 	private Family f_fpsController = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
 	private Family f_timer = FamilyManager.getFamily(new AllOfComponents(typeof(Timer)));
 	private Family f_componentMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
 	private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
+	private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
 	private Family f_queries = FamilyManager.getFamily(new AnyOfTags("Q-R1", "Q-R2", "Q-R3"), new AllOfComponents(typeof(QuerySolution)));
 	private Family f_gearsSet = FamilyManager.getFamily(new AnyOfTags("Gears"), new AllOfComponents(typeof(LinkedWith)));
 	private Family f_queriesRoom2 = FamilyManager.getFamily(new AnyOfTags("Q-R2"));
@@ -35,12 +34,15 @@ public class SaveManager : FSystem {
 	private Family f_toggleable = FamilyManager.getFamily(new AllOfComponents(typeof(ToggleableGO), typeof(Animator)));
 	private Family f_whiteBoard = FamilyManager.getFamily(new AnyOfTags("Board"));
 	private Family f_boardTexture = FamilyManager.getFamily(new AllOfComponents(typeof(ChangePixelColor)));
+	private Family f_CrouchHint = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerSensitive), typeof(LinkedWith), typeof(BoxCollider)));
+	private Family f_OutOfFirstRoom = FamilyManager.getFamily(new AllOfComponents(typeof(TriggerSensitive3D), typeof(LinkedWith)));
+	private Family f_fragmentNotif = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragmentFlag)));
+
+	private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
 
 	public static SaveManager instance;
 
 	private SaveContent saveContent;
-
-	private List<Family> tracedFamilies;
 
 	private string saveFolderPath = "./SaveFiles";
 	private string autoSaveFileName = "auto_save";
@@ -58,11 +60,16 @@ public class SaveManager : FSystem {
 	private GameObject savePopup;
 	private GameObject saveButtonPrefab;
 	private GameObject saveListContainer;
+	// the save button in the in game menu
+	private Button menuSaveButton;
+	private GameObject menuSaveButtonNotice;
 	private TMP_InputField popupSaveInputfield;
 	// popup windows displayed when the player clicks on popupSaveButton
 	private GameObject popupSaveInvalid;
 	private GameObject popupSaveOverride;
 	private GameObject popupSaveDone;
+
+	private GameObject autosaveListElem;
 
 	private GameObject playerGO;
 
@@ -102,10 +109,6 @@ public class SaveManager : FSystem {
 	{
 		if(Application.isPlaying)
 		{
-			// add traced families to this list and use their id the store them in save content
-			//tracedFamilies.Add(f_wrongWords); // 0
-			//tracedFamilies.Add(f_wrongChair); // 1
-
 			// set collectable ids dictionary
 			collectableItemIDs = new Dictionary<string, int>();
 			collectableItemIDs.Add("Intro_Scroll", 0);
@@ -126,6 +129,8 @@ public class SaveManager : FSystem {
 			collectableItemIDs.Add("PuzzleSet_03", 15);
 			collectableItemIDs.Add("PuzzleSet_04", 16);
 			collectableItemIDs.Add("PuzzleSet_05", 17);
+
+			f_pnMarkingsToken.addEntryCallback(SavePNMarkings);
 
 			// look for the load window
 			foreach (GameObject go in f_prefabs)
@@ -180,7 +185,25 @@ public class SaveManager : FSystem {
 					menuLoadButton = go.GetComponent<Button>();
 					break;
 				}
+			// find in game menu save button
+			foreach(GameObject go in f_inGameMenu)
+				if(go.name == "MenuContent")
+                {
+					tmpGO = go;
+					break;
+                }
+			foreach(Transform child in tmpGO.transform)
+				if(child.gameObject.name == "Save")
+                {
+					menuSaveButton = child.GetComponent<Button>();
+					break;
+                }
+			menuSaveButtonNotice = menuSaveButton.transform.GetChild(1).gameObject;
+
 			GenerateSaveButtons();
+
+			GameObjectManager.setGameObjectState(menuLoadButton.gameObject, LoadGameContent.gameContent.saveAndLoadProgression);
+			GameObjectManager.setGameObjectState(menuSaveButton.gameObject, LoadGameContent.gameContent.saveAndLoadProgression);
 		}
 		instance = this;
 	}
@@ -215,6 +238,9 @@ public class SaveManager : FSystem {
 					saveListElem.transform.SetParent(saveListContainer.transform);
 					saveListElem.transform.localScale = Vector3.one;
 					GameObjectManager.bind(saveListElem);
+
+					if (saveListElem.name == autoSaveFileName)
+						autosaveListElem = saveListElem;
 				}
 			}
 		}
@@ -228,6 +254,18 @@ public class SaveManager : FSystem {
 			saveListContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(saveListContainer.GetComponent<RectTransform>().sizeDelta.x,
 				25 * saveListContainer.transform.childCount + 5 * (saveListContainer.transform.childCount - 1));
 		}
+	}
+
+	/// <summary>
+	/// AskForPNMarkings is used to save markings. If there is an object in f_pnMarkingsToken, this function is called to save markings
+	/// </summary>
+	/// <param name="go"></param>
+	private void SavePNMarkings(GameObject go)
+    {
+		saveContent.petriNetsMarkings = MonitoringManager.getPetriNetsMarkings();
+		AutoSave();
+
+		GameObjectManager.removeComponent<AskForPNMarkings>(go);
 	}
 
 	/// <summary>
@@ -255,7 +293,6 @@ public class SaveManager : FSystem {
 
 		save.iarQueriesStates = new bool[13];
 
-		save.performedActions = new List<SaveContent.LaalysAction>();
 		save.receivedHints = new List<SaveContent.HintData>();
 
 		return save;
@@ -271,8 +308,12 @@ public class SaveManager : FSystem {
 	/// </summary>
 	/// <param name="path"></param>
 	public void SaveOnFile(string fileName)
-    {
-		if(saveContent != null)
+	{
+		// don't save if introduction is not completed
+		if (f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber == 0)
+			return;
+
+		if (saveContent != null)
 		{
 			saveContent.saveDate = DateTime.Now;
 			saveContent.sessionID = LoadGameContent.sessionID;
@@ -288,6 +329,8 @@ public class SaveManager : FSystem {
 			saveContent.playingDuration = StoryDisplaying.instance.Duration;
 			saveContent.hintCooldown = HelpSystem.instance.HintCooldown;
 			saveContent.hintCooldown = saveContent.hintCooldown < 0 ? 0 : saveContent.hintCooldown;
+			saveContent.systemHintTimer = HelpSystem.instance.SystemHintTimer;
+			saveContent.helpLabelCount = HelpSystem.instance.LabelCount;
 
 			tmpPath = string.Concat(saveFolderPath, "/", fileName, saveFilesExtension);
 
@@ -308,8 +351,12 @@ public class SaveManager : FSystem {
 	/// </summary>
 	/// <param name="checkName">checkName is false when already checked and this function is called after answering yes to override</param>
 	public void TrySaving(bool checkName = true)
-    {
-        if (!checkName || CheckSaveNameValidity())
+	{
+		// don't save if introduction is not completed
+		if (f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber == 0)
+			return;
+
+		if (!checkName || CheckSaveNameValidity())
         {
             if (checkName)
 			{
@@ -339,12 +386,26 @@ public class SaveManager : FSystem {
 					GameObjectManager.bind(saveListElem);
 					saveListContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(saveListContainer.GetComponent<RectTransform>().sizeDelta.x,
 						25 * saveListContainer.transform.childCount + 5 * (saveListContainer.transform.childCount - 1));
+
+					GameObjectManager.addComponent<ActionPerformedForLRS>(savePopup, new
+					{
+						verb = "saved",
+						objectType = "serious-game",
+						objectName = "E-LearningScape progression"
+					});
 				}
 			}
             else
 			{
 				SaveOnFile(popupSaveInputfield.text);
 				GameObjectManager.setGameObjectState(popupSaveDone, true);
+
+				GameObjectManager.addComponent<ActionPerformedForLRS>(savePopup, new
+				{
+					verb = "saved",
+					objectType = "serious-game",
+					objectName = "E-LearningScape progression"
+				});
 			}
         }
 		else
@@ -357,8 +418,27 @@ public class SaveManager : FSystem {
 	/// </summary>
 	public void AutoSave()
     {
+		// don't save if auto save is disabled or if introduction is not completed
+		if (!LoadGameContent.gameContent.autoSaveProgression || f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber == 0)
+			return;
+
 		SaveOnFile(autoSaveFileName);
-    }
+		if(!autosaveListElem)
+		{
+			// if the auto save didn't already exist, add it to the list in the popup
+			GameObject saveListElem = GameObject.Instantiate(saveButtonPrefab);
+			saveListElem.name = Path.GetFileNameWithoutExtension(autoSaveFileName);
+			saveListElem.GetComponentInChildren<TextMeshProUGUI>().text = saveListElem.name;
+			saveListElem.GetComponent<Button>().onClick.AddListener(delegate { SetSaveInputfieldText(saveListElem); });
+			saveListElem.transform.SetParent(saveListContainer.transform);
+			saveListElem.transform.localScale = Vector3.one;
+			GameObjectManager.bind(saveListElem);
+			saveListContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(saveListContainer.GetComponent<RectTransform>().sizeDelta.x,
+				25 * saveListContainer.transform.childCount + 5 * (saveListContainer.transform.childCount - 1));
+
+			autosaveListElem = saveListElem;
+		}
+	}
 
 	/// <summary>
 	/// Load the content of a file into saveContent
@@ -438,6 +518,16 @@ public class SaveManager : FSystem {
 			GameObject night = GameObject.Find("Night");
 			night.GetComponent<Animator>().enabled = true;
 			night.GetComponent<Collider>().enabled = false;
+			// display movement HUD
+			MovingSystem.instance.SetHUD(true, true);
+			// disable movement HUD warnings
+			foreach (LinkedWith link in f_OutOfFirstRoom.First().GetComponents<LinkedWith>())
+				GameObjectManager.setGameObjectState(link.link, false);
+			foreach (LinkedWith link in f_CrouchHint.First().GetComponents<LinkedWith>())
+				GameObjectManager.setGameObjectState(link.link, false);
+
+			if (f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber > 0)
+				EnableSaving();
 
 			// set starting time
 			f_timer.First().GetComponent<Timer>().startingTime = Time.time - saveContent.playingDuration;
@@ -505,6 +595,8 @@ public class SaveManager : FSystem {
             }
 
 			// set dream fragments states
+			bool iarSet = false;
+			bool unseenFragment = false;
 			foreach(GameObject go in f_dreamFragments)
             {
 				tmpDF = go.GetComponent<DreamFragment>();
@@ -519,21 +611,38 @@ public class SaveManager : FSystem {
 							// enable in IAR
 							tmpGO = go.GetComponent<LinkedWith>().link;
 							GameObjectManager.setGameObjectState(tmpGO, true);
-							if(saveContent.dreamFragmentsStates[tmpDF.id] == 2)
+							if (saveContent.dreamFragmentsStates[tmpDF.id] == 2)
 							{
 								// set as seen in IAR
 								tmpDFToggle = tmpGO.GetComponent<DreamFragmentToggle>();
-								tmpGO.GetComponentInChildren<Image>().sprite = tmpDFToggle.onState;
-								tmpDFToggle.currentState = tmpDFToggle.onState;
+								tmpGO.GetComponentInChildren<Image>().sprite = tmpDFToggle.offState;
+								tmpDFToggle.currentState = tmpDFToggle.offState;
+								GameObjectManager.removeComponent<NewDreamFragment>(tmpDFToggle.gameObject);
 							}
+							else
+								unseenFragment = true;
+
+                            // enable IAR tab and HUD
+                            if (!iarSet)
+                            {
+								if (LoadGameContent.gameContent.virtualDreamFragment)
+								{
+									GameObjectManager.setGameObjectState(f_tabs.First().transform.parent.GetChild(1).gameObject, true);
+									GameObjectManager.setGameObjectState(f_fragmentNotif.First().transform.parent.gameObject, true);
+								}
+								iarSet = true;
+                            }
 						}
 					}
 
                 }
             }
+            // disable dream fragment HUD warning if there are no unseen fragment
+            if (!unseenFragment)
+                GameObjectManager.setGameObjectState(f_fragmentNotif.First(), false);
 
-			// set doors states
-			if(saveContent.lockedDoorsStates[0])
+            // set doors states
+            if (saveContent.lockedDoorsStates[0])
 				LockResolver.instance.UnlockIntroWall();
 			if (saveContent.lockedDoorsStates[1])
 				LoginManager.instance.UnlockLoginDoor();
@@ -628,8 +737,6 @@ public class SaveManager : FSystem {
             if (saveContent.gearEnigmaState)
 				IARGearsEnigma.instance.SolveGearsEnigma(!saveContent.lockedDoorsStates[1]);
 
-			// set hint cooldown
-			HelpSystem.instance.SetPlayerHintTimer(saveContent.hintCooldown);
 			// generate received hints
 			foreach(SaveContent.HintData hint in saveContent.receivedHints)
 			{
@@ -654,6 +761,22 @@ public class SaveManager : FSystem {
 						break;
 				}
             }
+
+			// load complete and filtered petri nets markings
+			if (saveContent.petriNetsMarkings != null)
+			{
+				MonitoringManager.setPetriNetsMarkings(saveContent.petriNetsMarkings);
+
+				// set HelpSystem with loaded petri nets
+				HelpSystem.instance.LoadHelpSystemValues();
+			}
+
+			GameObjectManager.addComponent<ActionPerformedForLRS>(savePopup, new
+			{
+				verb = "loaded",
+				objectType = "serious-game",
+				objectName = "E-LearningScape progression"
+			});
 		}
 	}
 
@@ -835,5 +958,24 @@ public class SaveManager : FSystem {
 			GameObjectManager.setGameObjectState(popupSaveOverride, false);
 			GameObjectManager.setGameObjectState(popupSaveDone, false);
 		}
-}
+	}
+
+	/// <summary>
+	/// Called to enable save button in menu.
+	/// Called when introduction is completed
+	/// </summary>
+	public void EnableSaving()
+    {
+		menuSaveButton.interactable = true;
+    }
+
+	/// <summary>
+	/// Called when mouse enters or exits the in game save button
+	/// </summary>
+	/// <param name="enabled"></param>
+	public void SetSaveNoticeState(bool enabled)
+    {
+		if (!menuSaveButton.interactable)
+			GameObjectManager.setGameObjectState(menuSaveButtonNotice, enabled);
+    }
 }

@@ -147,8 +147,9 @@ public class MovingSystem : FSystem
         GameObjectManager.setGameObjectState(f_cursor.First(), true);
     }
 
-    private void SetHUD(bool state)
+    public void SetHUD(bool state, bool loadingGame = false)
     {
+        firstCrouchOccurs = firstCrouchOccurs || loadingGame;
         if (firstCrouchOccurs && previousHUDState != state)
         {
             foreach (GameObject hud in f_hidableHUD)

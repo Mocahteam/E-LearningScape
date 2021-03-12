@@ -17,6 +17,9 @@ public class WhiteBoardManager : FSystem {
     private Family f_boardUnremovableWords = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_boardTexture = FamilyManager.getFamily(new AllOfComponents(typeof(ChangePixelColor)));
+    private Family f_activatedBoard = FamilyManager.getFamily(new AnyOfTags("Board"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+
+    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
 
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
 
@@ -42,20 +45,8 @@ public class WhiteBoardManager : FSystem {
             //initialise variables
             eraser = f_whiteBoard.First().transform.GetChild(2).gameObject;
 
-            // set all board's removable words to "occludable"
-            // the occlusion is then made by an invisible material that hides all objects behind it having this setting (see ChangePixel.cs)
-            foreach (GameObject word in f_boardRemovableWords)
-            {
-                foreach (Renderer r in word.GetComponentsInChildren<Renderer>())
-                    r.material.renderQueue = 2001;
-            }
-            // set all board's unremovable words to "not occludable"
-            // the occlusion is then made by an invisible material that hides all objects behind it having this setting (see ChangePixel.cs)
-            foreach (GameObject word in f_boardUnremovableWords)
-            {
-                foreach (Renderer r in word.GetComponentsInChildren<Renderer>())
-                    r.material.renderQueue = 2003;
-            }
+            // set render order only when the object is activated, else unity doesn't take it in account
+            f_activatedBoard.addEntryCallback(SetRenderOrder);
 
             f_focusedWhiteBoard.addEntryCallback(onReadyToWorkOnWhiteBoard);
             f_eraserFocused.addEntryCallback(onEnterEraser);
@@ -140,13 +131,6 @@ public class WhiteBoardManager : FSystem {
                         eraserDragged = false;
                         GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "turnOff", performedBy = "player" });
                         GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "dropped", objectType = "draggable", objectName = eraser.name });
-
-                        // Save board texture
-                        tmpTex = (Texture2D) f_boardTexture.First().GetComponent<Renderer>().material.mainTexture;
-                        SaveManager.instance.SaveContent.boardEraseTexture = tmpTex.GetRawTextureData();
-                        // Save eraser position
-                        SaveManager.instance.SaveContent.boardEraserPosition = eraser.transform.position;
-                        SaveManager.instance.AutoSave();
                     }
                     else
                     {
@@ -186,10 +170,36 @@ public class WhiteBoardManager : FSystem {
 
         GameObjectManager.addComponent<ActionPerformed>(selectedBoard, new { name = "turnOff", performedBy = "player" });
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBoard, new { verb = "exited", objectType = "interactable", objectName = selectedBoard.name });
+        if (f_pnMarkingsToken.Count == 0)
+            GameObjectManager.addComponent<AskForPNMarkings>(selectedBoard);
+
+        // Save board texture
+        tmpTex = (Texture2D)f_boardTexture.First().GetComponent<Renderer>().material.mainTexture;
+        SaveManager.instance.SaveContent.boardEraseTexture = tmpTex.GetRawTextureData();
+        // Save eraser position
+        SaveManager.instance.SaveContent.boardEraserPosition = eraser.transform.position;
+        SaveManager.instance.AutoSave();
 
         selectedBoard = null;
 
         // Pause this system
         instance.Pause = true;
+    }
+
+    public void SetRenderOrder(GameObject go)
+    {
+        // set all board's removable words to "occludable" and unremovable words to "not occludable"
+        // the occlusion is then made by an invisible material that hides all objects behind it having the "occludable" setting
+        foreach (GameObject word in f_boardRemovableWords)
+        {
+            foreach (Renderer r in word.GetComponentsInChildren<Renderer>())
+                r.material.renderQueue = 2001;
+        }
+        f_boardTexture.First().GetComponent<Renderer>().material.renderQueue = 2002;
+        foreach (GameObject word in f_boardUnremovableWords)
+        {
+            foreach (Renderer r in word.GetComponentsInChildren<Renderer>())
+                r.material.renderQueue = 2003;
+        }
     }
 }

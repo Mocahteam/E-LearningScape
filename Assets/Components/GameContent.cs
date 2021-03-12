@@ -51,6 +51,15 @@ public class GameContent {
     /// </summary>
     public bool useEndRoom;
     /// <summary>
+    /// If false, save and load button will be disabled
+    /// </summary>
+    public bool saveAndLoadProgression;
+    /// <summary>
+    /// If false, no auto save will be made.
+    /// autoSaveProgression will be set to false if saveAndLoadProgression is false
+    /// </summary>
+    public bool autoSaveProgression;
+    /// <summary>
     /// If true, remove extra geaometries. This is an additionnal option for very poor hardware
     /// </summary>
     public bool removeExtraGeometries = true;
@@ -140,6 +149,7 @@ public class GameContent {
     public string hintOpenURL;
     public string gameMenuResumeButton;
     public string gameMenuSaveButton;
+    public string gameMenuSaveNotice;
     public string gameMenuOptionButton;
     public string gameMenuRestartButton;
     public string gameMenuLeaveButton;

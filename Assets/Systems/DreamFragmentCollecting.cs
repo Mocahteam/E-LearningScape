@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using FYFY;
+using FYFY_plugins.Monitoring;
 using TMPro;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
@@ -17,6 +18,8 @@ public class DreamFragmentCollecting : FSystem {
     private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
 
     private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
+
+    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
 
     private GameObject dfUI;
     private TextMeshProUGUI FragmentText;
@@ -127,6 +130,8 @@ public class DreamFragmentCollecting : FSystem {
                     }
                     else if (tmpDFComponent.type != 2)
                         GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player" });
+                    if (f_pnMarkingsToken.Count == 0)
+                        GameObjectManager.addComponent<AskForPNMarkings>(selectedFragment);
 
                     if (IARDreamFragmentManager.virtualDreamFragment && tmpDFComponent.type == 0)
                         selectedFragment = null;
