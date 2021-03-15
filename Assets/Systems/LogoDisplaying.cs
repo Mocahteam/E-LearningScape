@@ -196,9 +196,12 @@ public class LogoDisplaying : FSystem {
                         cb.normalColor = new Color(cb.normalColor.r, cb.normalColor.g, cb.normalColor.b, alpha);
                         cb.highlightedColor = new Color(cb.highlightedColor.r, cb.highlightedColor.g, cb.highlightedColor.b, alpha);
                         cb.pressedColor = new Color(cb.pressedColor.r, cb.pressedColor.g, cb.pressedColor.b, alpha);
+                        cb.selectedColor = new Color(cb.selectedColor.r, cb.selectedColor.g, cb.selectedColor.b, alpha);
                         cb.disabledColor = new Color(cb.disabledColor.r, cb.disabledColor.g, cb.disabledColor.b, alpha/2);
                         tmpGO.GetComponent<Button>().colors = cb;
                     }
+                    else if (tmpGO.GetComponent<TMPro.TMP_Text>())
+                        tmpGO.GetComponent<TMPro.TMP_Text>().color = new Color(1, 1, 1, alpha);
                 }
             }
         }

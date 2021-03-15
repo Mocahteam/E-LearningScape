@@ -213,8 +213,12 @@ public class SaveManager : FSystem {
 		// Look for all valid saves in save folder and create buttons for it
 		if (loadButtonPrefab)
 		{
-			// browse save folder
-			DirectoryInfo di = new DirectoryInfo(saveFolderPath);
+            // browse save folder
+            DirectoryInfo di;
+            if (!Directory.Exists(saveFolderPath))
+                di = Directory.CreateDirectory(saveFolderPath);
+            else
+			    di = new DirectoryInfo(saveFolderPath);
 			tmpFI = di.GetFiles(string.Concat("*", saveFilesExtension));
 			foreach (FileInfo file in tmpFI)
 			{
