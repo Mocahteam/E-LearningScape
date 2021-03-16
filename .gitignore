@@ -30,3 +30,11 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Java
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
