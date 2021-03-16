@@ -152,24 +152,21 @@ public class SaveManager : FSystem {
 					savePopup = go;
 					saveButtonPrefab = go.GetComponent<PrefabContainer>().prefab;
 					saveListContainer = go.GetComponentInChildren<GridLayoutGroup>().gameObject;
-					foreach(Transform child in go.transform)
+                    popupSaveInputfield = go.GetComponentInChildren<TMP_InputField>();
+                    foreach (LinkedWith link in go.GetComponents<LinkedWith>())
                     {
-                        switch (child.gameObject.name)
+                        switch (link.link.name)
                         {
-							case "SaveInputField":
-								popupSaveInputfield = child.GetComponent<TMP_InputField>();
-								break;
-
 							case "Invalid":
-								popupSaveInvalid = child.gameObject;
+								popupSaveInvalid = link.link.gameObject;
 								break;
 
 							case "Override":
-								popupSaveOverride = child.gameObject;
+								popupSaveOverride = link.link.gameObject;
 								break;
 
 							case "Saved":
-								popupSaveDone = child.gameObject;
+								popupSaveDone = link.link.gameObject;
 								break;
 
 							default:
@@ -360,61 +357,61 @@ public class SaveManager : FSystem {
 		if (f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber == 0)
 			return;
 
-		if (!checkName || CheckSaveNameValidity())
+        if (!checkName || CheckSaveNameValidity())
         {
             if (checkName)
-			{
-				// check if this name is already used
-				bool usedName = false;
-				foreach (Transform child in saveListContainer.transform)
-					if (popupSaveInputfield.text == child.gameObject.name)
-					{
-						usedName = true;
-						break;
-					}
-				if (usedName)
-					// display popup asking for override
-					GameObjectManager.setGameObjectState(popupSaveOverride, true);
+            {
+                // check if this name is already used
+                bool usedName = false;
+                foreach (Transform child in saveListContainer.transform)
+                    if (popupSaveInputfield.text == child.gameObject.name)
+                    {
+                        usedName = true;
+                        break;
+                    }
+                if (usedName)
+                    // display popup asking for override
+                    GameObjectManager.setGameObjectState(popupSaveOverride, true);
                 else
                 {
-					SaveOnFile(popupSaveInputfield.text);
-					GameObjectManager.setGameObjectState(popupSaveDone, true);
+                    SaveOnFile(popupSaveInputfield.text);
+                    GameObjectManager.setGameObjectState(popupSaveDone, true);
 
-					// if the save didn't already exist, add it to the list in the popup
-					GameObject saveListElem = GameObject.Instantiate(saveButtonPrefab);
-					saveListElem.name = Path.GetFileNameWithoutExtension(popupSaveInputfield.text);
-					saveListElem.GetComponentInChildren<TextMeshProUGUI>().text = saveListElem.name;
-					saveListElem.GetComponent<Button>().onClick.AddListener(delegate { SetSaveInputfieldText(saveListElem); });
-					saveListElem.transform.SetParent(saveListContainer.transform);
-					saveListElem.transform.localScale = Vector3.one;
-					GameObjectManager.bind(saveListElem);
-					saveListContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(saveListContainer.GetComponent<RectTransform>().sizeDelta.x,
-						25 * saveListContainer.transform.childCount + 5 * (saveListContainer.transform.childCount - 1));
+                    // if the save didn't already exist, add it to the list in the popup
+                    GameObject saveListElem = GameObject.Instantiate(saveButtonPrefab);
+                    saveListElem.name = Path.GetFileNameWithoutExtension(popupSaveInputfield.text);
+                    saveListElem.GetComponentInChildren<TextMeshProUGUI>().text = saveListElem.name;
+                    saveListElem.GetComponent<Button>().onClick.AddListener(delegate { SetSaveInputfieldText(saveListElem); });
+                    saveListElem.transform.SetParent(saveListContainer.transform);
+                    saveListElem.transform.localScale = Vector3.one;
+                    GameObjectManager.bind(saveListElem);
+                    saveListContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(saveListContainer.GetComponent<RectTransform>().sizeDelta.x,
+                        25 * saveListContainer.transform.childCount + 5 * (saveListContainer.transform.childCount - 1));
 
-					GameObjectManager.addComponent<ActionPerformedForLRS>(savePopup, new
-					{
-						verb = "saved",
-						objectType = "serious-game",
-						objectName = "E-LearningScape progression"
-					});
-				}
-			}
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(savePopup, new
+                    {
+                        verb = "saved",
+                        objectType = "serious-game",
+                        objectName = "E-LearningScape progression"
+                    });
+                }
+            }
             else
-			{
-				SaveOnFile(popupSaveInputfield.text);
-				GameObjectManager.setGameObjectState(popupSaveDone, true);
+            {
+                SaveOnFile(popupSaveInputfield.text);
+                GameObjectManager.setGameObjectState(popupSaveDone, true);
 
-				GameObjectManager.addComponent<ActionPerformedForLRS>(savePopup, new
-				{
-					verb = "saved",
-					objectType = "serious-game",
-					objectName = "E-LearningScape progression"
-				});
-			}
+                GameObjectManager.addComponent<ActionPerformedForLRS>(savePopup, new
+                {
+                    verb = "saved",
+                    objectType = "serious-game",
+                    objectName = "E-LearningScape progression"
+                });
+            }
         }
-		else
-			// display popup for invalid name
-			GameObjectManager.setGameObjectState(popupSaveInvalid, true);
+        else
+            // display popup for invalid name
+            GameObjectManager.setGameObjectState(popupSaveInvalid, true);
 	}
 
 	/// <summary>
@@ -955,13 +952,10 @@ public class SaveManager : FSystem {
 	/// </summary>
 	public void CloseSavePopup()
     {
-        if (savePopup.activeSelf)
-		{
-			GameObjectManager.setGameObjectState(savePopup, false);
-			GameObjectManager.setGameObjectState(popupSaveInvalid, false);
-			GameObjectManager.setGameObjectState(popupSaveOverride, false);
-			GameObjectManager.setGameObjectState(popupSaveDone, false);
-		}
+		GameObjectManager.setGameObjectState(savePopup, false);
+		GameObjectManager.setGameObjectState(popupSaveInvalid, false);
+		GameObjectManager.setGameObjectState(popupSaveOverride, false);
+		GameObjectManager.setGameObjectState(popupSaveDone, false);
 	}
 
 	/// <summary>
