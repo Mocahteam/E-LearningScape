@@ -1,9 +1,6 @@
 ﻿using FYFY;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class WindowNavigator : MonoBehaviour, IPointerClickHandler
 {
@@ -16,7 +13,6 @@ public class WindowNavigator : MonoBehaviour, IPointerClickHandler
     {
         GameObjectManager.setGameObjectState(window, true);
         EventSystem.current.SetSelectedGameObject(defaultUiInWindow); //Always position cursor on default button define in inspector object 
-        //EventSystem.current.currentSelectedGameObject;
         if (parent)
             GameObjectManager.setGameObjectState(parent, false);
     }
