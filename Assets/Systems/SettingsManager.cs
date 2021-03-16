@@ -24,6 +24,8 @@ public class SettingsManager : FSystem {
 
     private GameObject tmpGO;
 
+    private bool isAccessibilityFontSelected = false;
+
     public SettingsManager ()
     {
         if (Application.isPlaying)
@@ -35,12 +37,27 @@ public class SettingsManager : FSystem {
                 else
                     go.GetComponent<DefaultValueSetting>().defaultValue = go.GetComponent<Toggle>().isOn ? 1 : 0;
             }
+
+            text_f.addEntryCallback(OnNewText);
             instance = this;
+        }
+    }
+
+    public void OnNewText(GameObject go)
+    {
+        if (isAccessibilityFontSelected)
+        {
+            TMP_Text tm = go.GetComponent<TMP_Text>();
+            if (go.layer == 5) // 5 <=> UI
+                tm.font = LoadGameContent.instance.AccessibleFontUI;
+            else
+                tm.font = LoadGameContent.instance.AccessibleFont;
         }
     }
 
     public void SwitchFont(bool accessibleFont)
     {
+        isAccessibilityFontSelected = accessibleFont;
         TMP_FontAsset TM_Font;
         TMP_FontAsset TM_FontUI;
         if (accessibleFont)
