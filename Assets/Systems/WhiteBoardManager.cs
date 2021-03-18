@@ -195,7 +195,8 @@ public class WhiteBoardManager : FSystem {
             foreach (Renderer r in word.GetComponentsInChildren<Renderer>())
                 r.material.renderQueue = 2001;
         }
-        f_boardTexture.First().GetComponent<Renderer>().material.renderQueue = 2002;
+        if (f_boardTexture.First() != null)
+            f_boardTexture.First().GetComponent<Renderer>().material.renderQueue = 2002;
         foreach (GameObject word in f_boardUnremovableWords)
         {
             foreach (Renderer r in word.GetComponentsInChildren<Renderer>())
