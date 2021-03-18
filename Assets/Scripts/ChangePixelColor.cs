@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class ChangePixelColor : MonoBehaviour {
 
-    private int radius = 40;
+    private int textWidth = 265; // original 1070
+    private int textHeight = 370; // original 1480
+
+    private int radius = 10; // original 40
     private Color eraseColor;
 
     private int oldPointX = int.MinValue;
@@ -16,7 +19,7 @@ public class ChangePixelColor : MonoBehaviour {
         eraseColor = this.transform.parent.gameObject.GetComponent<Renderer>().material.color;
         Material localMaterial = this.GetComponent<Renderer>().material;
         if (!localMaterial.mainTexture)
-            localMaterial.mainTexture = new Texture2D(1480, 1070);
+            localMaterial.mainTexture = new Texture2D(textWidth, textHeight);
         //localMaterial.renderQueue = 3002; // occludable words are set to 2001 and not occludable words are set to 2003 (see WhiteBoardManager.cs)
 
         Texture2D tex = (Texture2D)localMaterial.mainTexture;
@@ -50,11 +53,12 @@ public class ChangePixelColor : MonoBehaviour {
                 // Paint it red
                 if (!(Texture2D)hit.transform.gameObject.GetComponent<Renderer>().material.mainTexture)
                 {
-                    hit.transform.gameObject.GetComponent<Renderer>().material.mainTexture = new Texture2D(1480, 1070);
+                    hit.transform.gameObject.GetComponent<Renderer>().material.mainTexture = new Texture2D(textWidth, textHeight);
                 }
                 Texture2D tex = (Texture2D)hit.transform.gameObject.GetComponent<Renderer>().material.mainTexture;
                 int pointX = (int)(uv.x * tex.width);
                 int pointY = (int)(uv.y * tex.height);
+                Debug.Log(uv.x + " " + uv.y + " " + pointX + " " + pointY);
                 if (oldPointX == int.MinValue)
                     oldPointX = pointX;
                 if (oldPointY == int.MinValue)

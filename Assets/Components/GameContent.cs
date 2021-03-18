@@ -95,6 +95,7 @@ public class GameContent {
     public string mainMenuStart;
     public string mainMenuLoad;
     public string mainMenuOption;
+    public string mainMenuCredits;
     public string mainMenuLeave;
     public string sessionIDText;
     public string sessionIDPopup;
@@ -163,6 +164,7 @@ public class GameContent {
     public string savePopupOverrideNoButton;
     public string savePopupDoneText;
     public string savePopupDoneButton;
+    public string CreditCloseButton;
     public string tutoText0;
     public string tutoText1;
     public string tutoText2;

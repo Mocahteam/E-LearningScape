@@ -75,6 +75,8 @@ public class LoadGameContent : FSystem {
 
     private Family f_extraGeometries = FamilyManager.getFamily(new AllOfComponents(typeof(RemoveIfVeryVeryLow)));
 
+    private Family f_credit = FamilyManager.getFamily(new AllOfComponents(typeof(TextMeshProUGUI)), new AnyOfTags("CreditArea"));
+
     public static GameContent gameContent;
     private DefaultGameContent defaultGameContent;
     public static Dictionary<string, List<string>> dreamFragmentsLinks;
@@ -251,15 +253,16 @@ public class LoadGameContent : FSystem {
         st.intro = gameContent.storyTextIntro;
         st.transition = gameContent.storyTextransition;
         st.end = gameContent.storyTextEnd;
-        if (gameContent.additionalCredit.Length > 0)
-        {
-            List<string> newCredits = new List<string>(st.credit);
-            newCredits.AddRange(gameContent.additionalCredit);
-            st.credit = newCredits.ToArray();
-        }
         st.endLink = gameContent.endLink;
         if (gameContent.endLink != "" && gameContent.concatIdToLink)
             st.endLink = string.Concat(st.endLink, sessionID);
+        Debug.Log("Story loaded");
+        #endregion
+
+        #region Credit
+        TextMeshProUGUI creditText = f_credit.First().GetComponent<TextMeshProUGUI>();
+        foreach (string newCredit in gameContent.additionalCredit)
+            creditText.text += newCredit + "\n\n";
         Debug.Log("Story loaded");
         #endregion
 
@@ -298,10 +301,7 @@ public class LoadGameContent : FSystem {
         {
             tmpUIText = go.GetComponent<UIText>();
             //write the content of the variable of gameContent corresponding to the uiText in its text mesh pro component
-            if (tmpUIText.tmpUI) { 
-                go.GetComponent<TextMeshProUGUI>().text = (string) typeof(GameContent).GetField(tmpUIText.gameContentVariable).GetValue(gameContent);}
-            else
-                go.GetComponent<TextMeshPro>().text = (string)typeof(GameContent).GetField(tmpUIText.gameContentVariable).GetValue(gameContent);
+            go.GetComponent<TMP_Text>().text = (string) typeof(GameContent).GetField(tmpUIText.gameContentVariable).GetValue(gameContent);
         }
         // add the generated session id after the ui text has been set
         foreach (GameObject go in f_idTexts)
@@ -827,12 +827,12 @@ public class LoadGameContent : FSystem {
                                 float width, height;
                                 if (tmpTex.width > tmpTex.height)
                                 {
-                                    width = 300;
+                                    width = 400;
                                     height = width * tmpTex.height / tmpTex.width;
                                 }
                                 else
                                 {
-                                    height = 300;
+                                    height = 400;
                                     width = height * tmpTex.width / tmpTex.height;
                                 }
                                 tmpRectTransform.sizeDelta = new Vector2(width, height);
