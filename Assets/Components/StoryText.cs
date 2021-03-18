@@ -9,7 +9,5 @@ public class StoryText : MonoBehaviour {
     public string[] transition;
     [TextArea]
     public string[] end;
-    [TextArea]
-    public string[] credit;
     public string endLink;
 }

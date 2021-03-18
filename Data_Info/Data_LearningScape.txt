@@ -36,7 +36,7 @@
         "Le marchand de sable a bien travaillé!"
     ],
 	"additionalCredit": [
-		"Adaptation pour le domaine informatique réalisée par :\n\nThibault Carron\nMathieu Muratet"
+		"<b>Adaptation pour le domaine informatique réalisée par :</b>\n\nThibault Carron\nMathieu Muratet"
 	],
     "scoreText": "Vous avez mis: ",
     "endExplainationText": "Que vous ayez apprécié ce jeu ou pas, votre retour nous serait très utile pour tenter de l'améliorer. Merci de répondre au questionnaire ci-dessous. Ce questionnaire est anonyme et ne vous prendra que quelques minutes.\n\nMerci de votre contribution...",
@@ -98,6 +98,7 @@
     "mainMenuStart": "Commencer",
     "mainMenuLoad": "Charger",
     "mainMenuOption": "Options",
+    "mainMenuCredits": "Crédits",
     "mainMenuLeave": "Quitter",
     "sessionIDText": "ID: ",
     "sessionIDPopup": "Cliquer pour copier",
@@ -162,6 +163,7 @@
     "savePopupOverrideNoButton": "Non",
     "savePopupDoneText": "Sauvegarde réussie.",
     "savePopupDoneButton": "OK",
+	"CreditCloseButton": "Fermer",
     "tutoText0": "Comment sortir de cette pièce ?\n\nUn indice doit se trouver\nautour de moi...",
     "tutoText1": "Clic droit ou la touche Ctrl pour se baisser",
     "tutoText2": "OK, essayons de nous relever et de nous déplacer...",
