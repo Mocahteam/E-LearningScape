@@ -81,6 +81,9 @@ public class SettingsManager : FSystem {
             else
                 tm.font = TM_Font;
         }
+        // reset renderorder if whiteboardmanager is available
+        if (WhiteBoardManager.instance != null)
+            WhiteBoardManager.instance.SetRenderOrder(null);
     }
 
     public void UpdateCursorSize (float newSize)

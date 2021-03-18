@@ -186,7 +186,7 @@ public class WhiteBoardManager : FSystem {
         instance.Pause = true;
     }
 
-    public void SetRenderOrder(GameObject go)
+    public void SetRenderOrder(GameObject unused)
     {
         // set all board's removable words to "occludable" and unremovable words to "not occludable"
         // the occlusion is then made by an invisible material that hides all objects behind it having the "occludable" setting
