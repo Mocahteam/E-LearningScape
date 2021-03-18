@@ -86,6 +86,7 @@ public class GameContent {
     public String mainMenuStart;
     public String mainMenuLoad;
     public String mainMenuOption;
+    public String mainMenuCredits;
     public String mainMenuLeave;
     public String sessionIDText;
     public String sessionIDPopup;
@@ -154,6 +155,7 @@ public class GameContent {
     public String savePopupOverrideNoButton;
     public String savePopupDoneText;
     public String savePopupDoneButton;
+    public String CreditCloseButton;
     public String tutoText0;
     public String tutoText1;
     public String tutoText2;

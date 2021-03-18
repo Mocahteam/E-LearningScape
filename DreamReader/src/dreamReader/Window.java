@@ -861,6 +861,12 @@ public class Window extends JFrame {
 		text = (JTextField) jsonKeyToComponents.get("sessionIDPopup").get(0);
 		text.setText(gameContent.sessionIDPopup);
 		text.setColumns(1);
+		text = (JTextField) jsonKeyToComponents.get("mainMenuCredits").get(0);
+		text.setText(gameContent.mainMenuCredits);
+		text.setColumns(1);
+		text = (JTextField) jsonKeyToComponents.get("CreditCloseButton").get(0);
+		text.setText(gameContent.CreditCloseButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("endLinkButtonText").get(0);
 		text.setText(gameContent.endLinkButtonText);
 		text.setColumns(1);
@@ -1912,6 +1918,10 @@ public class Window extends JFrame {
 		gameContent.sessionIDText = text.getText();
 		text = (JTextField) jsonKeyToComponents.get("sessionIDPopup").get(0);
 		gameContent.sessionIDPopup = text.getText();
+		text = (JTextField) jsonKeyToComponents.get("mainMenuCredits").get(0);
+		gameContent.mainMenuCredits = text.getText();
+		text = (JTextField) jsonKeyToComponents.get("CreditCloseButton").get(0);
+		gameContent.CreditCloseButton = text.getText();
 		text = (JTextField) jsonKeyToComponents.get("endLinkButtonText").get(0);
 		gameContent.endLinkButtonText = text.getText();
 		text = (JTextField) jsonKeyToComponents.get("endLeaveButtonText").get(0);
@@ -3037,6 +3047,10 @@ public class Window extends JFrame {
     	content.add(CreateTextInputFieldLine("Intitulé de l'ID de session:", "sessionIDText"), gbc);
     	gbc.gridy = 6;
     	content.add(CreateTextInputFieldLine("Indication pour l'ID de session:", "sessionIDPopup"), gbc);
+		gbc.gridy = 7;
+		content.add(CreateTextInputFieldLine("Voir les crédits:", "mainMenuCredits"), gbc);
+		gbc.gridy = 8;
+		content.add(CreateTextInputFieldLine("Fermer les crédits:", "CreditCloseButton"), gbc);
     	
     	return parent;
     }
