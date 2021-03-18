@@ -13,6 +13,8 @@ import java.awt.Insets;
 import javax.swing.*;
 import javax.swing.text.PlainDocument;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileReader;
 
 import java.io.FileWriter;
@@ -112,20 +114,24 @@ public class Window extends JFrame {
 		String fileName = fd.getFile();
 		if(fileName != null) {
             // load json into gameContent
+			GameContent loadedGameContent = null;
             Gson gson = new Gson();
             try {
-				gameContent = gson.fromJson(new FileReader(fd.getDirectory()+fd.getFile()), GameContent.class);
+				loadedGameContent = gson.fromJson(new FileReader(fd.getDirectory()+fd.getFile()), GameContent.class);
 			}
             catch(Exception e){
             	e.printStackTrace();
 			}
 
-            if(gameContent != null){
+            if(loadedGameContent != null){
+            	gameContent = loadedGameContent;
             	loadedFilePath = fd.getDirectory()+fd.getFile();
+            	setTitle("DreamReader - "+ loadedFilePath);
 
 				//	load dream fragments links from json
 				if(gameContent.dreamFragmentLinksPath != null && gameContent.dreamFragmentLinksPath.length() != 0){
 					try{
+						dreamFragmentsLinks = null;
 						dreamFragmentsLinks = gson.fromJson(new FileReader(gameContent.dreamFragmentLinksPath), HashMap.class);
 					}
 					catch (Exception e){
@@ -153,52 +159,74 @@ public class Window extends JFrame {
 
 		text = (JTextField) jsonKeyToComponents.get("theme").get(0);
 		text.setText(gameContent.theme);
-		toggle = (JCheckBox) jsonKeyToComponents.get("trace").get(0);
-		toggle.setSelected(gameContent.trace);
-		toggle = (JCheckBox) jsonKeyToComponents.get("helpSystem").get(0);
-		toggle.setSelected(gameContent.helpSystem);
+		text.setColumns(1);
 		toggle = (JCheckBox) jsonKeyToComponents.get("randomHelpSystemActivation").get(0);
 		toggle.setSelected(gameContent.randomHelpSystemActivation);
+		toggle = (JCheckBox) jsonKeyToComponents.get("helpSystem").get(0);
+		toggle.setSelected(gameContent.helpSystem);
+		toggle = (JCheckBox) jsonKeyToComponents.get("trace").get(0);
+		toggle.setSelected(gameContent.trace);
 		toggle = (JCheckBox) jsonKeyToComponents.get("traceToLRS").get(0);
 		toggle.setSelected(gameContent.traceToLRS);
 		text = (JTextField) jsonKeyToComponents.get("traceMovementFrequency").get(0);
 		text.setText(Float.toString(gameContent.traceMovementFrequency));
-		toggle = (JCheckBox) jsonKeyToComponents.get("virtualDreamFragment").get(0);
-		toggle.setSelected(gameContent.virtualDreamFragment);
+		text.setColumns(1);
 		toggle = (JCheckBox) jsonKeyToComponents.get("virtualPuzzle").get(0);
 		toggle.setSelected(gameContent.virtualPuzzle);
+		toggle = (JCheckBox) jsonKeyToComponents.get("virtualDreamFragment").get(0);
+		toggle.setSelected(gameContent.virtualDreamFragment);
 		toggle = (JCheckBox) jsonKeyToComponents.get("useEndRoom").get(0);
 		toggle.setSelected(gameContent.useEndRoom);
-		toggle = (JCheckBox) jsonKeyToComponents.get("saveAndLoadProgression").get(0);
-		toggle.setSelected(gameContent.saveAndLoadProgression);
 		toggle = (JCheckBox) jsonKeyToComponents.get("autoSaveProgression").get(0);
 		toggle.setSelected(gameContent.autoSaveProgression);
+		toggle = (JCheckBox) jsonKeyToComponents.get("saveAndLoadProgression").get(0);
+		toggle.setSelected(gameContent.saveAndLoadProgression);
 		text = (JTextField) jsonKeyToComponents.get("lrsConfigPath").get(0);
 		text.setText(gameContent.lrsConfigPath);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("dreamFragmentLinksPath").get(0);
 		text.setText(gameContent.dreamFragmentLinksPath);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("dreamFragmentDocumentsPathFile").get(0);
 		text.setText(gameContent.dreamFragmentDocumentsPathFile);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("hintsPath").get(0);
 		text.setText(gameContent.hintsPath);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("internalHintsPath").get(0);
 		text.setText(gameContent.internalHintsPath);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("wrongAnswerFeedbacksPath").get(0);
 		text.setText(gameContent.wrongAnswerFeedbacksPath);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("enigmasWeightPath").get(0);
 		text.setText(gameContent.enigmasWeightPath);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("labelWeightsPath").get(0);
 		text.setText(gameContent.labelWeightsPath);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("helpSystemConfigPath").get(0);
 		text.setText(gameContent.helpSystemConfigPath);
+		text.setColumns(1);
 		toggle = (JCheckBox) jsonKeyToComponents.get("removeExtraGeometries").get(0);
 		toggle.setSelected(gameContent.removeExtraGeometries);
 		text = (JTextField) jsonKeyToComponents.get("additionalLogosPathCount").get(0);
 		length = gameContent.additionalLogosPath.length;
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("additionalLogosPath").get(i);
 			text.setText(gameContent.additionalLogosPath[i]);
+			text.setColumns(1);
+		}
+		text = (JTextField) jsonKeyToComponents.get("additionalCreditCount").get(0);
+		length = gameContent.additionalCredit.length;
+		text.setText(Integer.toString(length));
+		text.setColumns(1);
+		for(int i = 0; i < length; i++){
+			text = (JTextField) jsonKeyToComponents.get("additionalCredit").get(i);
+			text.setText(gameContent.additionalCredit[i]);
+			text.setColumns(1);
 		}
 	}
 
@@ -210,9 +238,11 @@ public class Window extends JFrame {
 		text = (JTextField) jsonKeyToComponents.get("storyTextIntroCount").get(0);
 		length = gameContent.storyTextIntro.length;
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("storyTextIntro").get(i);
 			text.setText(gameContent.storyTextIntro[i]);
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("storyTextransitionCount").get(0);
 		length = gameContent.storyTextransition.length;
@@ -220,27 +250,26 @@ public class Window extends JFrame {
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("storyTextransition").get(i);
 			text.setText(gameContent.storyTextransition[i]);
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("storyTextEndCount").get(0);
 		length = gameContent.storyTextEnd.length;
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("storyTextEnd").get(i);
 			text.setText(gameContent.storyTextEnd[i]);
-		}
-		text = (JTextField) jsonKeyToComponents.get("additionalCreditCount").get(0);
-		length = gameContent.additionalCredit.length;
-		text.setText(Integer.toString(length));
-		for(int i = 0; i < length; i++){
-			text = (JTextField) jsonKeyToComponents.get("additionalCredit").get(i);
-			text.setText(gameContent.additionalCredit[i]);
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("scoreText").get(0);
 		text.setText(gameContent.scoreText);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("endExplainationText").get(0);
 		text.setText(gameContent.endExplainationText);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("endLink").get(0);
 		text.setText(gameContent.endLink);
+		text.setColumns(1);
 		toggle = (JCheckBox) jsonKeyToComponents.get("concatIdToLink").get(0);
 		toggle.setSelected(gameContent.concatIdToLink);
 	}
@@ -257,294 +286,393 @@ public class Window extends JFrame {
 		toggle.setSelected(gameContent.ballRandomPositioning);
 		text = (JTextField) jsonKeyToComponents.get("ballBoxQuestion").get(0);
 		text.setText(gameContent.ballBoxQuestion);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("ballBoxPlaceHolder").get(0);
 		text.setText(gameContent.ballBoxPlaceHolder);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("ballBoxAnswerFeedback").get(0);
 		text.setText(gameContent.ballBoxAnswerFeedback);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("ballBoxAnswerFeedbackDesc").get(0);
 		text.setText(gameContent.ballBoxAnswerFeedbackDesc);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("ballBoxAnswerCount").get(0);
 		length = gameContent.ballBoxAnswer.size();
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("ballBoxAnswer").get(i);
 			text.setText(gameContent.ballBoxAnswer.get(i));
+			text.setColumns(1);
 		}
 		length = Integer.min(gameContent.ballBoxThreeUsefulBalls.length, jsonKeyToComponents.get("ballBoxThreeUsefulBalls").size());
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("ballBoxThreeUsefulBalls").get(i);
 			text.setText(Integer.toString(gameContent.ballBoxThreeUsefulBalls[i]));
+			text.setColumns(1);
 		}
 		length = Integer.min(gameContent.ballTexts.length, jsonKeyToComponents.get("ballTexts").size());
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("ballTexts").get(i);
 			text.setText(gameContent.ballTexts[i]);
+			text.setColumns(1);
 		}
 
 		// plank and wire content
 		text = (JTextField) jsonKeyToComponents.get("plankAndWireQuestionIAR").get(0);
 		text.setText(gameContent.plankAndWireQuestionIAR);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("plankAndWirePlaceHolder").get(0);
 		text.setText(gameContent.plankAndWirePlaceHolder);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("plankAndWireQuestion").get(0);
 		text.setText(gameContent.plankAndWireQuestion);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("plankAndWireAnswerFeedback").get(0);
 		text.setText(gameContent.plankAndWireAnswerFeedback);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("plankAndWireAnswerFeedbackDesc").get(0);
 		text.setText(gameContent.plankAndWireAnswerFeedbackDesc);
+		text.setColumns(1);
 		length = Integer.min(gameContent.plankAndWireCorrectWords.length, jsonKeyToComponents.get("plankAndWireCorrectWords").size());
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("plankAndWireCorrectWords").get(i);
 			text.setText(gameContent.plankAndWireCorrectWords[i]);
+			text.setColumns(1);
 		}
 		length = Integer.min(gameContent.plankAndWireCorrectNumbers.size(), jsonKeyToComponents.get("plankAndWireCorrectNumbers").size());
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("plankAndWireCorrectNumbers").get(i);
 			text.setText(gameContent.plankAndWireCorrectNumbers.get(i));
+			text.setColumns(1);
 		}
 		length = Integer.min(gameContent.plankOtherWords.length, jsonKeyToComponents.get("plankOtherWords").size());
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("plankOtherWords").get(i);
 			text.setText(gameContent.plankOtherWords[i]);
+			text.setColumns(1);
 		}
 		length = Integer.min(gameContent.plankAndWireOtherNumbers.size(), jsonKeyToComponents.get("plankAndWireOtherNumbers").size());
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("plankAndWireOtherNumbers").get(i);
 			text.setText(gameContent.plankAndWireOtherNumbers.get(i));
+			text.setColumns(1);
 		}
 
 		// crouch content
 		text = (JTextField) jsonKeyToComponents.get("crouchQuestion").get(0);
 		text.setText(gameContent.crouchQuestion);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("crouchPlaceHolder").get(0);
 		text.setText(gameContent.crouchPlaceHolder);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("crouchAnswerCount").get(0);
 		length = gameContent.crouchAnswer.size();
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("crouchAnswer").get(i);
 			text.setText(gameContent.crouchAnswer.get(i));
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("crouchAnswerFeedback").get(0);
 		text.setText(gameContent.crouchAnswerFeedback);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("crouchAnswerFeedbackDesc").get(0);
 		text.setText(gameContent.crouchAnswerFeedbackDesc);
+		text.setColumns(1);
 		length = Integer.min(gameContent.crouchWords.length, jsonKeyToComponents.get("crouchWords").size());
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("crouchWords").get(i);
 			text.setText(gameContent.crouchWords[i]);
+			text.setColumns(1);
 		}
 		if(dreamFragmentsLinks != null){
 			text = (JTextField) jsonKeyToComponents.get("crouchLinks").get(0);
 			text.setText(dreamFragmentsLinks.get("Fragment_souvenir_chair").get(0));
+			text.setColumns(1);
 			text = (JTextField) jsonKeyToComponents.get("crouchButtons").get(0);
 			text.setText(dreamFragmentsLinks.get("Fragment_souvenir_chair").get(1));
+			text.setColumns(1);
 			text = (JTextField) jsonKeyToComponents.get("crouchLinks").get(1);
 			text.setText(dreamFragmentsLinks.get("Fragment_souvenir_furnitureDown").get(0));
+			text.setColumns(1);
 			text = (JTextField) jsonKeyToComponents.get("crouchButtons").get(1);
 			text.setText(dreamFragmentsLinks.get("Fragment_souvenir_furnitureDown").get(1));
+			text.setColumns(1);
 			text = (JTextField) jsonKeyToComponents.get("crouchLinks").get(2);
 			text.setText(dreamFragmentsLinks.get("Fragment_souvenir_furnitureUp").get(0));
+			text.setColumns(1);
 			text = (JTextField) jsonKeyToComponents.get("crouchButtons").get(2);
 			text.setText(dreamFragmentsLinks.get("Fragment_souvenir_furnitureUp").get(1));
+			text.setColumns(1);
 			text = (JTextField) jsonKeyToComponents.get("crouchLinks").get(3);
 			text.setText(dreamFragmentsLinks.get("Fragment_souvenir_table").get(0));
+			text.setColumns(1);
 			text = (JTextField) jsonKeyToComponents.get("crouchButtons").get(3);
 			text.setText(dreamFragmentsLinks.get("Fragment_souvenir_table").get(1));
+			text.setColumns(1);
 			text = (JTextField) jsonKeyToComponents.get("crouchLinks").get(4);
 			text.setText(dreamFragmentsLinks.get("Fragment_souvenir_tirroir").get(0));
+			text.setColumns(1);
 			text = (JTextField) jsonKeyToComponents.get("crouchButtons").get(4);
 			text.setText(dreamFragmentsLinks.get("Fragment_souvenir_tirroir").get(1));
+			text.setColumns(1);
 			text = (JTextField) jsonKeyToComponents.get("crouchLinks").get(5);
 			text.setText(dreamFragmentsLinks.get("Fragment_souvenir_wall").get(0));
+			text.setColumns(1);
 			text = (JTextField) jsonKeyToComponents.get("crouchButtons").get(5);
 			text.setText(dreamFragmentsLinks.get("Fragment_souvenir_wall").get(1));
+			text.setColumns(1);
 		}
 
 		// gears content
 		text = (JTextField) jsonKeyToComponents.get("gearsQuestion").get(0);
 		text.setText(gameContent.gearsQuestion);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("iarHelpGears").get(0);
 		text.setText(gameContent.iarHelpGears);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("gearTextUp").get(0);
 		text.setText(gameContent.gearTextUp);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("gearTextDown").get(0);
 		text.setText(gameContent.gearTextDown);
+		text.setColumns(1);
 		length = Integer.min(gameContent.gearMovableTexts.length, jsonKeyToComponents.get("gearMovableTexts").size());
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("gearMovableTexts").get(i);
 			text.setText(gameContent.gearMovableTexts[i]);
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("gearAnswer").get(0);
 		text.setText(gameContent.gearAnswer);
+		text.setColumns(1);
 
 		// mastermind content
 		text = (JTextField) jsonKeyToComponents.get("mastermindQuestion").get(0);
 		text.setText(gameContent.mastermindQuestion);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("masterMindPlaceholder").get(0);
 		text.setText(gameContent.masterMindPlaceholder);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("masterMindPasswordText").get(0);
 		text.setText(gameContent.masterMindPasswordText);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("masterMindValidation").get(0);
 		text.setText(gameContent.masterMindValidation);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("mastermindQuestionYPos").get(0);
 		text.setText(Integer.toString(gameContent.mastermindQuestionYPos));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("mastermindAnswer").get(0);
 		text.setText(Integer.toString(gameContent.mastermindAnswer));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("mastermindBackgroundPicturePath").get(0);
 		text.setText(gameContent.mastermindBackgroundPicturePath);
+		text.setColumns(1);
 
 		// glasses content
 		text = (JTextField) jsonKeyToComponents.get("glassesQuestion").get(0);
 		text.setText(gameContent.glassesQuestion);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("glassesPlaceHolder").get(0);
 		text.setText(gameContent.glassesPlaceHolder);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("glassesAnswerCount").get(0);
 		length = gameContent.glassesAnswer.size();
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("glassesAnswer").get(i);
 			text.setText(gameContent.glassesAnswer.get(i));
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("glassesAnswerFeedback").get(0);
 		text.setText(gameContent.glassesAnswerFeedback);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("glassesAnswerFeedbackDesc").get(0);
 		text.setText(gameContent.glassesAnswerFeedbackDesc);
+		text.setColumns(1);
 		length = Integer.min(gameContent.glassesPicturesPath.length, jsonKeyToComponents.get("glassesPicturesPath").size());
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("glassesPicturesPath").get(i);
 			text.setText(gameContent.glassesPicturesPath[i]);
+			text.setColumns(1);
 		}
 
 		// enigma 8 content
 		text = (JTextField) jsonKeyToComponents.get("enigma08Question").get(0);
 		text.setText(gameContent.enigma08Question);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("enigma08PlaceHolder").get(0);
 		text.setText(gameContent.enigma08PlaceHolder);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("enigma08AnswerCount").get(0);
 		length = gameContent.enigma08Answer.size();
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("enigma08Answer").get(i);
 			text.setText(gameContent.enigma08Answer.get(i));
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("enigma08AnswerFeedback").get(0);
 		text.setText(gameContent.enigma08AnswerFeedback);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("enigma08AnswerFeedbackDesc").get(0);
 		text.setText(gameContent.enigma08AnswerFeedbackDesc);
+		text.setColumns(1);
 
 		// scrolls content
 		text = (JTextField) jsonKeyToComponents.get("scrollsQuestion").get(0);
 		text.setText(gameContent.scrollsQuestion);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("scrollsPlaceHolder").get(0);
 		text.setText(gameContent.scrollsPlaceHolder);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("scrollsAnswerCount").get(0);
 		length = gameContent.scrollsAnswer.size();
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("scrollsAnswer").get(i);
 			text.setText(gameContent.scrollsAnswer.get(i));
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("scrollsAnswerFeedback").get(0);
 		text.setText(gameContent.scrollsAnswerFeedback);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("scrollsAnswerFeedbackDesc").get(0);
 		text.setText(gameContent.scrollsAnswerFeedbackDesc);
+		text.setColumns(1);
 		length = Integer.min(gameContent.scrollsWords.length, jsonKeyToComponents.get("scrollsWords").size());
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("scrollsWords").get(i);
 			text.setText(gameContent.scrollsWords[i]);
+			text.setColumns(1);
 		}
 
 		// mirror content
 		text = (JTextField) jsonKeyToComponents.get("mirrorQuestion").get(0);
 		text.setText(gameContent.mirrorQuestion);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("mirrorPlaceHolder").get(0);
 		text.setText(gameContent.mirrorPlaceHolder);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("mirrorAnswerCount").get(0);
 		length = gameContent.mirrorAnswer.size();
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("mirrorAnswer").get(i);
 			text.setText(gameContent.mirrorAnswer.get(i));
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("mirrorAnswerFeedback").get(0);
 		text.setText(gameContent.mirrorAnswerFeedback);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("mirrorAnswerFeedbackDesc").get(0);
 		text.setText(gameContent.mirrorAnswerFeedbackDesc);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("mirrorPicturePath").get(0);
 		text.setText(gameContent.mirrorPicturePath);
+		text.setColumns(1);
 
 		// enigma 11 content
 		text = (JTextField) jsonKeyToComponents.get("enigma11Question").get(0);
 		text.setText(gameContent.enigma11Question);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("enigma11PlaceHolder").get(0);
 		text.setText(gameContent.enigma11PlaceHolder);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("enigma11AnswerCount").get(0);
 		length = gameContent.enigma11Answer.size();
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("enigma11Answer").get(i);
 			text.setText(gameContent.enigma11Answer.get(i));
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("enigma11AnswerFeedback").get(0);
 		text.setText(gameContent.enigma11AnswerFeedback);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("enigma11AnswerFeedbackDesc").get(0);
 		text.setText(gameContent.enigma11AnswerFeedbackDesc);
+		text.setColumns(1);
 
 		// enigma 12 content
 		text = (JTextField) jsonKeyToComponents.get("enigma12Question").get(0);
 		text.setText(gameContent.enigma12Question);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("enigma12PlaceHolder").get(0);
 		text.setText(gameContent.enigma12PlaceHolder);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("enigma12AnswerCount").get(0);
 		length = gameContent.enigma12Answer.size();
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("enigma12Answer").get(i);
 			text.setText(gameContent.enigma12Answer.get(i));
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("enigma12AnswerFeedback").get(0);
 		text.setText(gameContent.enigma12AnswerFeedback);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("enigma12AnswerFeedbackDesc").get(0);
 		text.setText(gameContent.enigma12AnswerFeedbackDesc);
+		text.setColumns(1);
 
 		// lock room 2 content
 		text = (JTextField) jsonKeyToComponents.get("lockRoom2Password").get(0);
 		text.setText(Integer.toString(gameContent.lockRoom2Password));
+		text.setColumns(1);
 
 		// puzzle content
 		stringArray = gameContent.puzzleAnswer.split("##");
 		text = (JTextField) jsonKeyToComponents.get("puzzleAnswerCount").get(0);
 		length = stringArray.length;
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("puzzleAnswer").get(i);
 			text.setText(stringArray[i]);
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("puzzleAnswerFeedback").get(0);
 		text.setText(gameContent.puzzleAnswerFeedback);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("puzzleAnswerFeedbackDesc").get(0);
 		text.setText(gameContent.puzzleAnswerFeedbackDesc);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("puzzlePicturePath").get(0);
 		text.setText(gameContent.puzzlePicturePath);
+		text.setColumns(1);
 
 		// lamp content
 		stringArray = gameContent.lampAnswer.split("##");
 		text = (JTextField) jsonKeyToComponents.get("lampAnswerCount").get(0);
 		length = stringArray.length;
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("lampAnswer").get(i);
 			text.setText(stringArray[i]);
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("lampAnswerFeedback").get(0);
 		text.setText(gameContent.lampAnswerFeedback);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("lampAnswerFeedbackDesc").get(0);
 		text.setText(gameContent.lampAnswerFeedbackDesc);
+		text.setColumns(1);
 		length = Integer.min(gameContent.lampPicturesPath.length, jsonKeyToComponents.get("lampPicturesPath").size());
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("lampPicturesPath").get(i);
 			text.setText(gameContent.lampPicturesPath[i]);
+			text.setColumns(1);
 		}
 
 		// white board content
@@ -552,18 +680,23 @@ public class Window extends JFrame {
 		text = (JTextField) jsonKeyToComponents.get("whiteBoardAnswerCount").get(0);
 		length = stringArray.length;
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("whiteBoardAnswer").get(i);
 			text.setText(stringArray[i]);
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("whiteBoardAnswerFeedback").get(0);
 		text.setText(gameContent.whiteBoardAnswerFeedback);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("whiteBoardAnswerFeedbackDesc").get(0);
 		text.setText(gameContent.whiteBoardAnswerFeedbackDesc);
+		text.setColumns(1);
 		length = Integer.min(gameContent.whiteBoardWords.length, jsonKeyToComponents.get("whiteBoardWords").size());
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("whiteBoardWords").get(i);
 			text.setText(gameContent.whiteBoardWords[i]);
+			text.setColumns(1);
 		}
 
 		// enigma 16 content
@@ -571,14 +704,18 @@ public class Window extends JFrame {
 		text = (JTextField) jsonKeyToComponents.get("enigma16AnswerCount").get(0);
 		length = stringArray.length;
 		text.setText(Integer.toString(length));
+		text.setColumns(1);
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("enigma16Answer").get(i);
 			text.setText(stringArray[i]);
+			text.setColumns(1);
 		}
 		text = (JTextField) jsonKeyToComponents.get("enigma16AnswerFeedback").get(0);
 		text.setText(gameContent.puzzleAnswerFeedback);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("enigma16AnswerFeedbackDesc").get(0);
 		text.setText(gameContent.puzzleAnswerFeedbackDesc);
+		text.setColumns(1);
 	}
 
 	private void loadInventoryContent(){
@@ -586,73 +723,103 @@ public class Window extends JFrame {
 
 		text = (JTextField) jsonKeyToComponents.get("inventoryScrollIntroTitle").get(0);
 		text.setText(gameContent.inventoryScrollIntro.get(0));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryScrollIntroDescription").get(0);
 		text.setText(gameContent.inventoryScrollIntro.get(1));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryScrollIntroNotice").get(0);
 		text.setText(gameContent.inventoryScrollIntro.get(2));
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inventoryKeyBallBoxTitle").get(0);
 		text.setText(gameContent.inventoryKeyBallBox.get(0));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryKeyBallBoxDescription").get(0);
 		text.setText(gameContent.inventoryKeyBallBox.get(1));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryKeyBallBoxNotice").get(0);
 		text.setText(gameContent.inventoryKeyBallBox.get(2));
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inventoryWireTitle").get(0);
 		text.setText(gameContent.inventoryWire.get(0));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryWireDescription").get(0);
 		text.setText(gameContent.inventoryWire.get(1));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryWireNotice").get(0);
 		text.setText(gameContent.inventoryWire.get(2));
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inventoryKeySatchelTitle").get(0);
 		text.setText(gameContent.inventoryKeySatchel.get(0));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryKeySatchelDescription").get(0);
 		text.setText(gameContent.inventoryKeySatchel.get(1));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryKeySatchelNotice").get(0);
 		text.setText(gameContent.inventoryKeySatchel.get(2));
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inventoryScrollsTitle").get(0);
 		text.setText(gameContent.inventoryScrolls.get(0));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryScrollsDescription").get(0);
 		text.setText(gameContent.inventoryScrolls.get(1));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryScrollsNotice").get(0);
 		text.setText(gameContent.inventoryScrolls.get(2));
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inventoryGlasses1Title").get(0);
 		text.setText(gameContent.inventoryGlasses1.get(0));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryGlasses1Description").get(0);
 		text.setText(gameContent.inventoryGlasses1.get(1));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryGlasses1Notice").get(0);
 		text.setText(gameContent.inventoryGlasses1.get(2));
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inventoryGlasses2Title").get(0);
 		text.setText(gameContent.inventoryGlasses2.get(0));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryGlasses2Description").get(0);
 		text.setText(gameContent.inventoryGlasses2.get(1));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryGlasses2Notice").get(0);
 		text.setText(gameContent.inventoryGlasses2.get(2));
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inventoryMirrorTitle").get(0);
 		text.setText(gameContent.inventoryMirror.get(0));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryMirrorDescription").get(0);
 		text.setText(gameContent.inventoryMirror.get(1));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryMirrorNotice").get(0);
 		text.setText(gameContent.inventoryMirror.get(2));
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inventoryLampTitle").get(0);
 		text.setText(gameContent.inventoryLamp.get(0));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryLampDescription").get(0);
 		text.setText(gameContent.inventoryLamp.get(1));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryLampNotice").get(0);
 		text.setText(gameContent.inventoryLamp.get(2));
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inventoryPuzzleTitle").get(0);
 		text.setText(gameContent.inventoryPuzzle.get(0));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryPuzzleDescription").get(0);
 		text.setText(gameContent.inventoryPuzzle.get(1));
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inventoryPuzzleNotice").get(0);
 		text.setText(gameContent.inventoryPuzzle.get(2));
+		text.setColumns(1);
 	}
 
 	private void loadDreamFragmentsContent(){
@@ -663,8 +830,10 @@ public class Window extends JFrame {
 			name = "Fragment_souvenir_" + i;
 			text = (JTextField) jsonKeyToComponents.get(name + "Link").get(0);
 			text.setText(dreamFragmentsLinks.get(name).get(0));
+			text.setColumns(1);
 			text = (JTextField) jsonKeyToComponents.get(name + "Button").get(0);
 			text.setText(dreamFragmentsLinks.get(name).get(1));
+			text.setColumns(1);
 		}
 	}
 
@@ -673,150 +842,223 @@ public class Window extends JFrame {
 
 		text = (JTextField) jsonKeyToComponents.get("loadingText").get(0);
 		text.setText(gameContent.loadingText);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("mainMenuStart").get(0);
 		text.setText(gameContent.mainMenuStart);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("mainMenuLoad").get(0);
 		text.setText(gameContent.mainMenuLoad);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("mainMenuOption").get(0);
 		text.setText(gameContent.mainMenuOption);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("mainMenuLeave").get(0);
 		text.setText(gameContent.mainMenuLeave);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("sessionIDText").get(0);
 		text.setText(gameContent.sessionIDText);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("sessionIDPopup").get(0);
 		text.setText(gameContent.sessionIDPopup);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("endLinkButtonText").get(0);
 		text.setText(gameContent.endLinkButtonText);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("endLeaveButtonText").get(0);
 		text.setText(gameContent.endLeaveButtonText);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionControlsMenu").get(0);
 		text.setText(gameContent.optionControlsMenu);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionVirtualFragments").get(0);
 		text.setText(gameContent.optionVirtualFragments);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionMovingTexts").get(0);
 		text.setText(gameContent.optionMovingTexts);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionMoveSpeed").get(0);
 		text.setText(gameContent.optionMoveSpeed);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionCameraSensitivity").get(0);
 		text.setText(gameContent.optionCameraSensitivity);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionLockWheelSpeed").get(0);
 		text.setText(gameContent.optionLockWheelSpeed);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionInputs").get(0);
 		text.setText(gameContent.optionInputs);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionSoundMenu").get(0);
 		text.setText(gameContent.optionSoundMenu);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionGameMusicVolume").get(0);
 		text.setText(gameContent.optionGameMusicVolume);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionSoundEffectsVolume").get(0);
 		text.setText(gameContent.optionSoundEffectsVolume);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionDisplayMenu").get(0);
 		text.setText(gameContent.optionDisplayMenu);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionFont").get(0);
 		text.setText(gameContent.optionFont);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionCursorSize").get(0);
 		text.setText(gameContent.optionCursorSize);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionLightIntensity").get(0);
 		text.setText(gameContent.optionLightIntensity);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionTransparency").get(0);
 		text.setText(gameContent.optionTransparency);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionValidateAndReturn").get(0);
 		text.setText(gameContent.optionValidateAndReturn);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionDefault").get(0);
 		text.setText(gameContent.optionDefault);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("loadPopupLoadButton").get(0);
 		text.setText(gameContent.loadPopupLoadButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("loadPopupCancelButton").get(0);
 		text.setText(gameContent.loadPopupCancelButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("validateOptions").get(0);
 		text.setText(gameContent.validateOptions);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("storyClickToContinue").get(0);
 		text.setText(gameContent.storyClickToContinue);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("hudObserve").get(0);
 		text.setText(gameContent.hudObserve);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("hudMove").get(0);
 		text.setText(gameContent.hudMove);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("hudCrouch").get(0);
 		text.setText(gameContent.hudCrouch);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("hudInventory").get(0);
 		text.setText(gameContent.hudInventory);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("hudDreamFragments").get(0);
 		text.setText(gameContent.hudDreamFragments);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("hudQuestions").get(0);
 		text.setText(gameContent.hudQuestions);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("hudHelp").get(0);
 		text.setText(gameContent.hudHelp);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("hudMenu").get(0);
 		text.setText(gameContent.hudMenu);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("dreamFragmentText").get(0);
 		text.setText(gameContent.dreamFragmentText);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("dreamFragmentValidation").get(0);
 		text.setText(gameContent.dreamFragmentValidation);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("dreamFragmentVirtualReset").get(0);
 		text.setText(gameContent.dreamFragmentVirtualReset);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("iarTabInventory").get(0);
 		text.setText(gameContent.iarTabInventory);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("iarTabDreamFragments").get(0);
 		text.setText(gameContent.iarTabDreamFragments);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("iarTabHelp").get(0);
 		text.setText(gameContent.iarTabHelp);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("iarTabMenu").get(0);
 		text.setText(gameContent.iarTabMenu);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("iarTabQuestions1").get(0);
 		text.setText(gameContent.iarTabQuestions1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("iarTabQuestions2").get(0);
 		text.setText(gameContent.iarTabQuestions2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("iarTabQuestions3").get(0);
 		text.setText(gameContent.iarTabQuestions3);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("questionValidationButton").get(0);
 		text.setText(gameContent.questionValidationButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("hintButtonText").get(0);
 		text.setText(gameContent.hintButtonText);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("getHintButton").get(0);
 		text.setText(gameContent.getHintButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("hintOpenURL").get(0);
 		text.setText(gameContent.hintOpenURL);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("gameMenuResumeButton").get(0);
 		text.setText(gameContent.gameMenuResumeButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("gameMenuSaveButton").get(0);
 		text.setText(gameContent.gameMenuSaveButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("gameMenuSaveNotice").get(0);
 		text.setText(gameContent.gameMenuSaveNotice);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("gameMenuOptionButton").get(0);
 		text.setText(gameContent.gameMenuOptionButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("gameMenuRestartButton").get(0);
 		text.setText(gameContent.gameMenuRestartButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("gameMenuLeaveButton").get(0);
 		text.setText(gameContent.gameMenuLeaveButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("savePopupSaveButton").get(0);
 		text.setText(gameContent.savePopupSaveButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("savePopupCancelButton").get(0);
 		text.setText(gameContent.savePopupCancelButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("savePopupPlaceholder").get(0);
 		text.setText(gameContent.savePopupPlaceholder);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("savePopupInvalidText").get(0);
 		text.setText(gameContent.savePopupInvalidText);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("savePopupInvalidButton").get(0);
 		text.setText(gameContent.savePopupInvalidButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("savePopupOverrideText").get(0);
 		text.setText(gameContent.savePopupOverrideText);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("savePopupOverrideYesButton").get(0);
 		text.setText(gameContent.savePopupOverrideYesButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("savePopupOverrideNoButton").get(0);
 		text.setText(gameContent.savePopupOverrideNoButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("savePopupDoneText").get(0);
 		text.setText(gameContent.savePopupDoneText);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("savePopupDoneButton").get(0);
 		text.setText(gameContent.savePopupDoneButton);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("tutoText0").get(0);
 		text.setText(gameContent.tutoText0);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("tutoText1").get(0);
 		text.setText(gameContent.tutoText1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("tutoText2").get(0);
 		text.setText(gameContent.tutoText2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("tutoText3").get(0);
 		text.setText(gameContent.tutoText3);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("tutoText4").get(0);
 		text.setText(gameContent.tutoText4);
+		text.setColumns(1);
 	}
 
 	private void loadCommandsContent(){
@@ -824,154 +1066,221 @@ public class Window extends JFrame {
 
 		text = (JTextField) jsonKeyToComponents.get("inputsSetTitle1").get(0);
 		text.setText(gameContent.inputsSetTitle1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputsSetTitle2").get(0);
 		text.setText(gameContent.inputsSetTitle2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputsSetTitle3").get(0);
 		text.setText(gameContent.inputsSetTitle3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputObserve").get(0);
 		text.setText(gameContent.inputObserve);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputObserveKey1").get(0);
 		text.setText(gameContent.inputObserveKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputObserveKey2").get(0);
 		text.setText(gameContent.inputObserveKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputObserveKey3").get(0);
 		text.setText(gameContent.inputObserveKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputForward").get(0);
 		text.setText(gameContent.inputForward);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputForwardKey1").get(0);
 		text.setText(gameContent.inputForwardKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputForwardKey2").get(0);
 		text.setText(gameContent.inputForwardKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputForwardKey3").get(0);
 		text.setText(gameContent.inputForwardKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputBack").get(0);
 		text.setText(gameContent.inputBack);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputBackKey1").get(0);
 		text.setText(gameContent.inputBackKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputBackKey2").get(0);
 		text.setText(gameContent.inputBackKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputBackKey3").get(0);
 		text.setText(gameContent.inputBackKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputLeft").get(0);
 		text.setText(gameContent.inputLeft);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputLeftKey1").get(0);
 		text.setText(gameContent.inputLeftKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputLeftKey2").get(0);
 		text.setText(gameContent.inputLeftKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputLeftKey3").get(0);
 		text.setText(gameContent.inputLeftKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputRight").get(0);
 		text.setText(gameContent.inputRight);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputRightKey1").get(0);
 		text.setText(gameContent.inputRightKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputRightKey2").get(0);
 		text.setText(gameContent.inputRightKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputRightKey3").get(0);
 		text.setText(gameContent.inputRightKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputCrouch").get(0);
 		text.setText(gameContent.inputCrouch);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputCrouchKey1").get(0);
 		text.setText(gameContent.inputCrouchKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputCrouchKey2").get(0);
 		text.setText(gameContent.inputCrouchKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputCrouchKey3").get(0);
 		text.setText(gameContent.inputCrouchKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputInteract").get(0);
 		text.setText(gameContent.inputInteract);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputInteractKey1").get(0);
 		text.setText(gameContent.inputInteractKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputInteractKey2").get(0);
 		text.setText(gameContent.inputInteractKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputInteractKey3").get(0);
 		text.setText(gameContent.inputInteractKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputInventory").get(0);
 		text.setText(gameContent.inputInventory);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputInventoryKey1").get(0);
 		text.setText(gameContent.inputInventoryKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputInventoryKey2").get(0);
 		text.setText(gameContent.inputInventoryKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputInventoryKey3").get(0);
 		text.setText(gameContent.inputInventoryKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputDreamFragments").get(0);
 		text.setText(gameContent.inputDreamFragments);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputDreamFragmentsKey1").get(0);
 		text.setText(gameContent.inputDreamFragmentsKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputDreamFragmentsKey2").get(0);
 		text.setText(gameContent.inputDreamFragmentsKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputDreamFragmentsKey3").get(0);
 		text.setText(gameContent.inputDreamFragmentsKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputQuestions").get(0);
 		text.setText(gameContent.inputQuestions);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputQuestionsKey1").get(0);
 		text.setText(gameContent.inputQuestionsKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputQuestionsKey2").get(0);
 		text.setText(gameContent.inputQuestionsKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputQuestionsKey3").get(0);
 		text.setText(gameContent.inputQuestionsKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputHelp").get(0);
 		text.setText(gameContent.inputHelp);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputHelpKey1").get(0);
 		text.setText(gameContent.inputHelpKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputHelpKey2").get(0);
 		text.setText(gameContent.inputHelpKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputHelpKey3").get(0);
 		text.setText(gameContent.inputHelpKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputMenu").get(0);
 		text.setText(gameContent.inputMenu);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputMenuKey1").get(0);
 		text.setText(gameContent.inputMenuKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputMenuKey2").get(0);
 		text.setText(gameContent.inputMenuKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputMenuKey3").get(0);
 		text.setText(gameContent.inputMenuKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputView").get(0);
 		text.setText(gameContent.inputView);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputViewKey1").get(0);
 		text.setText(gameContent.inputViewKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputViewKey2").get(0);
 		text.setText(gameContent.inputViewKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputViewKey3").get(0);
 		text.setText(gameContent.inputViewKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputTarget").get(0);
 		text.setText(gameContent.inputTarget);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputTargetKey1").get(0);
 		text.setText(gameContent.inputTargetKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputTargetKey2").get(0);
 		text.setText(gameContent.inputTargetKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputTargetKey3").get(0);
 		text.setText(gameContent.inputTargetKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputZoomIn").get(0);
 		text.setText(gameContent.inputZoomIn);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputZoomInKey1").get(0);
 		text.setText(gameContent.inputZoomInKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputZoomInKey2").get(0);
 		text.setText(gameContent.inputZoomInKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputZoomInKey3").get(0);
 		text.setText(gameContent.inputZoomInKey3);
+		text.setColumns(1);
 
 		text = (JTextField) jsonKeyToComponents.get("inputZoomOut").get(0);
 		text.setText(gameContent.inputZoomOut);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputZoomOutKey1").get(0);
 		text.setText(gameContent.inputZoomOutKey1);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputZoomOutKey2").get(0);
 		text.setText(gameContent.inputZoomOutKey2);
+		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("inputZoomOutKey3").get(0);
 		text.setText(gameContent.inputZoomOutKey3);
+		text.setColumns(1);
 	}
 
 	private void save(){
@@ -1004,6 +1313,8 @@ public class Window extends JFrame {
 		try{
 			fw = new FileWriter(filePath);
 			fw.write(gson.toJson(gameContent));
+			loadedFilePath = filePath;
+			setTitle("DreamReader - "+ loadedFilePath);
 			fw.close();
 		}
 		catch(Exception e){
@@ -1078,6 +1389,12 @@ public class Window extends JFrame {
 			text = (JTextField) jsonKeyToComponents.get("additionalLogosPath").get(i);
 			gameContent.additionalLogosPath[i] = text.getText();
 		}
+		length = jsonKeyToComponents.get("additionalCredit").size();
+		gameContent.additionalCredit = new String[length];
+		for(int i = 0; i < length; i++){
+			text = (JTextField) jsonKeyToComponents.get("additionalCredit").get(i);
+			gameContent.additionalCredit[i] = text.getText();
+		}
 	}
 
 	private void getHistoryContentFromWindow(){
@@ -1102,12 +1419,6 @@ public class Window extends JFrame {
 		for(int i = 0; i < length; i++){
 			text = (JTextField) jsonKeyToComponents.get("storyTextEnd").get(i);
 			gameContent.storyTextEnd[i] = text.getText();
-		}
-		length = jsonKeyToComponents.get("additionalCredit").size();
-		gameContent.additionalCredit = new String[length];
-		for(int i = 0; i < length; i++){
-			text = (JTextField) jsonKeyToComponents.get("additionalCredit").get(i);
-			gameContent.additionalCredit[i] = text.getText();
 		}
 		text = (JTextField) jsonKeyToComponents.get("scoreText").get(0);
 		gameContent.scoreText = text.getText();
@@ -1904,30 +2215,36 @@ public class Window extends JFrame {
     	gbc.insets = new Insets(5, 0, 0, 0);
     	gbc.weightx = 1;
     	content.add(CreateTextInputFieldLine("Theme du jeu:", "theme"), gbc);
-    	gbc.gridy = 1;
-    	content.add(CreateToggleLine("Traces de Laalys:", "trace"), gbc);
+		gbc.gridy = 3;
+		content.add(CreateToggleLine("Activation aléatoire du système d'aide:", "randomHelpSystemActivation"), gbc);
     	gbc.gridy = 2;
-    	content.add(CreateToggleLine("Système d'aide:", "helpSystem"), gbc);
-    	gbc.gridy = 3;
-    	content.add(CreateToggleLine("Activation aléatoire du système d'aide:", "randomHelpSystemActivation"), gbc);
+    	content.add(CreateToggleLine("Système d'aide:", "helpSystem",
+				(JCheckBox) jsonKeyToComponents.get("randomHelpSystemActivation").get(0), false, false), gbc);
+		gbc.gridy = 1;
+		content.add(CreateToggleLine("Traces de Laalys:", "trace",
+				(JCheckBox) jsonKeyToComponents.get("helpSystem").get(0), false, false), gbc);
     	gbc.gridy = 4;
     	content.add(CreateToggleLine("Traces vers le LRS:", "traceToLRS"), gbc);
     	gbc.gridy = 5;
     	content.add(CreateFloatInputFieldLine("Fréquence de trace des déplacements:", "traceMovementFrequency"), gbc);
-    	gbc.gridy = 6;
-    	content.add(CreateToggleLine("Fragments de rêves virtuels:", "virtualDreamFragment"), gbc);
     	gbc.gridy = 7;
     	content.add(CreateToggleLine("Puzzles virtuels:", "virtualPuzzle"), gbc);
+		gbc.gridy = 6;
+		content.add(CreateToggleLine("Fragments de rêves virtuels:", "virtualDreamFragment",
+				(JCheckBox) jsonKeyToComponents.get("virtualPuzzle").get(0), true, true), gbc);
     	gbc.gridy = 8;
     	content.add(CreateToggleLine("Salle de fin:", "useEndRoom"), gbc);
+		gbc.gridy = 10;
+		content.add(CreateToggleLine("Sauvegarde automatique:", "autoSaveProgression"), gbc);
     	gbc.gridy = 9;
-    	content.add(CreateToggleLine("Sauvegarde et chargement:", "saveAndLoadProgression"), gbc);
-    	gbc.gridy = 10;
-    	content.add(CreateToggleLine("Sauvegarde automatique:", "autoSaveProgression"), gbc);
+    	content.add(CreateToggleLine("Sauvegarde et chargement:", "saveAndLoadProgression",
+				(JCheckBox) jsonKeyToComponents.get("autoSaveProgression").get(0), false, false), gbc);
     	gbc.gridy = 11;
     	content.add(CreateCategory("Chemins de fichiers", GenerateFilesPathsUI()), gbc);
     	gbc.gridy = 12;
     	content.add(CreateToggleLine("RemoveExtraGeometries:", "removeExtraGeometries"), gbc);
+		gbc.gridy = 13;
+		content.add(CreateTextAreaLine("Crédits", "additionalCredit"), gbc);
     	
     	return new JScrollPane(parent, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }
@@ -1962,7 +2279,7 @@ public class Window extends JFrame {
     	gbc.gridy = 8;
     	content.add(CreateTextInputFieldLine("Chemin configuration système d'aide:", "helpSystemConfigPath"), gbc);
     	gbc.gridy = 9;
-    	content.add(CreateTextAreaLine("Chemins de logos additionnels:", "additionalLogosPath"), gbc);
+    	content.add(CreateTextAreaLine("Chemins de logos additionnels", "additionalLogosPath"), gbc);
     	
     	return parent;
     }
@@ -1979,20 +2296,18 @@ public class Window extends JFrame {
 		gbc.gridy = 0;
 		gbc.insets = new Insets(5, 0, 0, 0);
 		gbc.weightx = 1;
-    	content.add(CreateTextAreaLine("Texte d'introduction:", "storyTextIntro"), gbc);
+    	content.add(CreateTextAreaLine("Texte d'introduction", "storyTextIntro"), gbc);
     	gbc.gridy = 1;
-    	content.add(CreateTextAreaLine("Texte de transition de la salle 1 à la salle 2:", "storyTextransition"), gbc);
+    	content.add(CreateTextAreaLine("Texte de transition de la salle 1 à la salle 2", "storyTextransition"), gbc);
     	gbc.gridy = 2;
-    	content.add(CreateTextAreaLine("Texte de fin:", "storyTextEnd"), gbc);
+    	content.add(CreateTextAreaLine("Texte de fin", "storyTextEnd"), gbc);
     	gbc.gridy = 3;
-    	content.add(CreateTextAreaLine("Crédits additionnels:", "additionalCredit"), gbc);
-    	gbc.gridy = 4;
     	content.add(CreateTextInputFieldLine("Texte de score:", "scoreText"), gbc);
-    	gbc.gridy = 5;
+    	gbc.gridy = 4;
     	content.add(CreateTextInputFieldLine("Texte d'explication final:", "endExplainationText"), gbc);
-    	gbc.gridy = 6;
+    	gbc.gridy = 5;
     	content.add(CreateTextInputFieldLine("Lien final:", "endLink"), gbc);
-    	gbc.gridy = 7;
+    	gbc.gridy = 6;
     	content.add(CreateToggleLine("Concaténer l'id de session au lien:", "concatIdToLink"), gbc);
     	
     	
@@ -2091,7 +2406,7 @@ public class Window extends JFrame {
     	gbc.gridy = 4;
     	content.add(CreateTextInputFieldLine("Description de la bonne réponse:", "ballBoxAnswerFeedbackDesc"), gbc);
     	gbc.gridy = 5;
-    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR:", "ballBoxAnswer"), gbc);
+    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR", "ballBoxAnswer"), gbc);
     	gbc.gridy = 6;
     	content.add(CreateIntInputFieldLine("Numéro des balles solutions:", "ballBoxThreeUsefulBalls", 3), gbc);
     	gbc.gridy = 7;
@@ -2248,7 +2563,7 @@ public class Window extends JFrame {
     	gbc.gridy = 1;
     	content.add(CreateTextInputFieldLine("Placeholder pour le champ de réponse dans l'IAR:", "glassesPlaceHolder"), gbc);
     	gbc.gridy = 2;
-    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR:", "glassesAnswer"), gbc);
+    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR", "glassesAnswer"), gbc);
     	gbc.gridy = 3;
     	content.add(CreateTextInputFieldLine("Feedback de bonne réponse:", "glassesAnswerFeedback"), gbc);
     	gbc.gridy = 4;
@@ -2293,7 +2608,7 @@ public class Window extends JFrame {
     	gbc.gridy = 1;
     	content.add(CreateTextInputFieldLine("Placeholder pour le champ de réponse dans l'IAR:", "enigma08PlaceHolder"), gbc);
     	gbc.gridy = 2;
-    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR:", "enigma08Answer"), gbc);
+    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR", "enigma08Answer"), gbc);
     	gbc.gridy = 3;
     	content.add(CreateTextInputFieldLine("Feedback de bonne réponse:", "enigma08AnswerFeedback"), gbc);
     	gbc.gridy = 4;
@@ -2318,7 +2633,7 @@ public class Window extends JFrame {
     	gbc.gridy = 1;
     	content.add(CreateTextInputFieldLine("Placeholder pour le champ de réponse dans l'IAR:", "scrollsPlaceHolder"), gbc);
     	gbc.gridy = 2;
-    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR:", "scrollsAnswer"), gbc);
+    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR", "scrollsAnswer"), gbc);
     	gbc.gridy = 3;
     	content.add(CreateTextInputFieldLine("Feedback de bonne réponse:", "scrollsAnswerFeedback"), gbc);
     	gbc.gridy = 4;
@@ -2351,7 +2666,7 @@ public class Window extends JFrame {
     	gbc.gridy = 1;
     	content.add(CreateTextInputFieldLine("Placeholder pour le champ de réponse dans l'IAR:", "mirrorPlaceHolder"), gbc);
     	gbc.gridy = 2;
-    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR:", "mirrorAnswer"), gbc);
+    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR", "mirrorAnswer"), gbc);
     	gbc.gridy = 3;
     	content.add(CreateTextInputFieldLine("Feedback de bonne réponse:", "mirrorAnswerFeedback"), gbc);
     	gbc.gridy = 4;
@@ -2384,7 +2699,7 @@ public class Window extends JFrame {
     	gbc.gridy = 1;
     	content.add(CreateTextInputFieldLine("Placeholder pour le champ de réponse dans l'IAR:", "enigma11PlaceHolder"), gbc);
     	gbc.gridy = 2;
-    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR:", "enigma11Answer"), gbc);
+    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR", "enigma11Answer"), gbc);
     	gbc.gridy = 3;
     	content.add(CreateTextInputFieldLine("Feedback de bonne réponse:", "enigma11AnswerFeedback"), gbc);
     	gbc.gridy = 4;
@@ -2409,7 +2724,7 @@ public class Window extends JFrame {
     	gbc.gridy = 1;
     	content.add(CreateTextInputFieldLine("Placeholder pour le champ de réponse dans l'IAR:", "enigma12PlaceHolder"), gbc);
     	gbc.gridy = 2;
-    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR:", "enigma12Answer"), gbc);
+    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR", "enigma12Answer"), gbc);
     	gbc.gridy = 3;
     	content.add(CreateTextInputFieldLine("Feedback de bonne réponse:", "enigma12AnswerFeedback"), gbc);
     	gbc.gridy = 4;
@@ -2447,7 +2762,7 @@ public class Window extends JFrame {
     	gbc.gridy = 0;
     	gbc.insets = new Insets(5, 25, 0, 0);
     	gbc.weightx = 1;
-    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR:", "puzzleAnswer"), gbc);
+    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR", "puzzleAnswer"), gbc);
     	gbc.gridy = 1;
     	content.add(CreateTextInputFieldLine("Feedback de bonne réponse:", "puzzleAnswerFeedback"), gbc);
     	gbc.gridy = 2;
@@ -2476,7 +2791,7 @@ public class Window extends JFrame {
     	gbc.gridy = 0;
     	gbc.insets = new Insets(5, 25, 0, 0);
     	gbc.weightx = 1;
-    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR:", "lampAnswer"), gbc);
+    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR", "lampAnswer"), gbc);
     	gbc.gridy = 1;
     	content.add(CreateTextInputFieldLine("Feedback de bonne réponse:", "lampAnswerFeedback"), gbc);
     	gbc.gridy = 2;
@@ -2505,7 +2820,7 @@ public class Window extends JFrame {
     	gbc.gridy = 0;
     	gbc.insets = new Insets(5, 25, 0, 0);
     	gbc.weightx = 1;
-    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR:", "whiteBoardAnswer"), gbc);
+    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR", "whiteBoardAnswer"), gbc);
     	gbc.gridy = 1;
     	content.add(CreateTextInputFieldLine("Feedback de bonne réponse:", "whiteBoardAnswerFeedback"), gbc);
     	gbc.gridy = 2;
@@ -2528,7 +2843,7 @@ public class Window extends JFrame {
     	gbc.gridy = 0;
     	gbc.insets = new Insets(5, 25, 0, 0);
     	gbc.weightx = 1;
-    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR:", "enigma16Answer"), gbc);
+    	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR", "enigma16Answer"), gbc);
     	gbc.gridy = 1;
     	content.add(CreateTextInputFieldLine("Feedback de bonne réponse:", "enigma16AnswerFeedback"), gbc);
     	gbc.gridy = 2;
@@ -3426,6 +3741,41 @@ public class Window extends JFrame {
     	line.add(togglePane);
     	return line;
     }
+
+	private JPanel CreateToggleLine(String label, String dictionaryKey, JCheckBox dependentToggle, boolean disableWhenOn, boolean valueWhenDisabled) {
+
+		var layout = new GridLayout(1, 2);
+		layout.setHgap(5);
+		var line = new JPanel();
+		line.setLayout(layout);
+
+		var labelPane = new JTextPane();
+		labelPane.setText(label);
+		labelPane.setEditable(false);
+		labelPane.setBackground(new Color(153, 204, 255));
+
+		var togglePane = new JPanel();
+		var toggle = new JCheckBox();
+		if(dependentToggle != null){
+			toggle.addItemListener(e -> {
+				if((disableWhenOn && toggle.isSelected()) || (!disableWhenOn && !toggle.isSelected())){
+					dependentToggle.setSelected(valueWhenDisabled);
+					dependentToggle.setEnabled(false);
+				}
+				else
+					dependentToggle.setEnabled(true);
+			});
+			toggle.setSelected(true);
+			toggle.setSelected(false);
+		}
+		togglePane.add(toggle);
+		jsonKeyToComponents.put(dictionaryKey, new ArrayList<>());
+		jsonKeyToComponents.get(dictionaryKey).add(toggle);
+
+		line.add(labelPane);
+		line.add(togglePane);
+		return line;
+	}
 
 
     public static void main(String[] args) {

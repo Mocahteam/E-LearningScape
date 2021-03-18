@@ -11,7 +11,7 @@ public class InputFieldGenerator implements DocumentListener {
 
     private final JTextField sizeField;
     private final JPanel container;
-    private final java.util.List<JTextField> list;
+    private final List<JTextField> list;
 
     private final HashMap<String, List<JComponent>> componentsDictionary;
     private final String key;
@@ -49,7 +49,7 @@ public class InputFieldGenerator implements DocumentListener {
     private void updateNumberOfInputFields(){
 
         String sizeText = sizeField.getText();
-        int size = 0;
+        int size = -1;
         if(sizeText != null && sizeText.length() != 0) {
             try {
                 size = Integer.parseInt(sizeText);
@@ -59,11 +59,15 @@ public class InputFieldGenerator implements DocumentListener {
             }
         }
 
+        if(size < 0)
+            return;
+
         GridLayout layout = (GridLayout) container.getLayout();
         layout.setRows(size);
 
         if(size > list.size()){
-            for(int i = list.size(); i < size; i++) {
+            int l = list.size();
+            for(int i = l; i < size; i++) {
                 JTextField tf = new JTextField();
                 container.add(tf);
                 list.add(tf);
@@ -71,7 +75,8 @@ public class InputFieldGenerator implements DocumentListener {
             }
         }
         else if(size < list.size()){
-            for(int i = list.size() - 1; i > size - 1; i--){
+            int l = list.size();
+            for(int i = l - 1; i > size - 1; i--){
                 JTextField tf = list.get(i);
                 list.remove(tf);
                 container.remove(tf);
