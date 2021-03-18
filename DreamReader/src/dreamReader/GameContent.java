@@ -1,6 +1,6 @@
 package dreamReader;
 
-import java.util.*;
+import java.util.List;
 
 public class GameContent {
     /// <summary>
@@ -289,7 +289,6 @@ public class GameContent {
     public List<String> glassesAnswer;
     public String glassesAnswerFeedback;
     public String glassesAnswerFeedbackDesc;
-    public String glassesAnswerDescription;
     public String[] glassesPicturesPath = new String[4];
 
     //Enigma 8 (3 dream fragments)

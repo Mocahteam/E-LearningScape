@@ -9,25 +9,26 @@ import java.util.List;
 
 public class InputFieldGenerator implements DocumentListener {
 
-    private JTextField sizeField;
-    private JPanel container;
-    private java.util.List<JTextField> list;
+    private final JTextField sizeField;
+    private final JPanel container;
+    private final java.util.List<JTextField> list;
 
-    public InputFieldGenerator(JTextField sizeInputField, JPanel inputFieldsContainer){
-        if(inputFieldsContainer == null)
-            container = new JPanel();
-        else
-            container = inputFieldsContainer;
-        if(sizeInputField == null)
-            sizeField = new JTextField();
-        else
-            sizeField = sizeInputField;
+    private final HashMap<String, List<JComponent>> componentsDictionary;
+    private final String key;
+
+    public InputFieldGenerator(JTextField sizeInputField, JPanel inputFieldsContainer, HashMap<String, List<JComponent>> jsonKeyToComponents, String dictionaryKey){
+        container = Objects.requireNonNullElseGet(inputFieldsContainer, JPanel::new);
+        sizeField = Objects.requireNonNullElseGet(sizeInputField, JTextField::new);
 
         var inputfieldsLayout = new GridLayout(0, 1);
         inputfieldsLayout.setVgap(5);
         container.setLayout(inputfieldsLayout);
 
-        list = new ArrayList<JTextField>();
+        list = new ArrayList<>();
+
+        componentsDictionary = jsonKeyToComponents;
+        key = dictionaryKey;
+        componentsDictionary.put(key, new ArrayList<>());
     }
 
     @Override
@@ -53,7 +54,9 @@ public class InputFieldGenerator implements DocumentListener {
             try {
                 size = Integer.parseInt(sizeText);
             }
-            catch (Exception e) { }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         GridLayout layout = (GridLayout) container.getLayout();
@@ -64,6 +67,7 @@ public class InputFieldGenerator implements DocumentListener {
                 JTextField tf = new JTextField();
                 container.add(tf);
                 list.add(tf);
+                componentsDictionary.get(key).add(tf);
             }
         }
         else if(size < list.size()){
@@ -71,7 +75,7 @@ public class InputFieldGenerator implements DocumentListener {
                 JTextField tf = list.get(i);
                 list.remove(tf);
                 container.remove(tf);
-                tf = null;
+                componentsDictionary.get(key).remove(tf);
             }
         }
     }
