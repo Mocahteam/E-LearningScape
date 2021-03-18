@@ -177,9 +177,10 @@ public class IARHintManager : FSystem {
         ColorBlock colorSelectedHint = new ColorBlock();
         colorSelectedHint.highlightedColor = b.colors.highlightedColor;
         colorSelectedHint.pressedColor = b.colors.pressedColor;
+        colorSelectedHint.selectedColor = b.colors.selectedColor;
         colorSelectedHint.disabledColor = b.colors.disabledColor;
         colorSelectedHint.colorMultiplier = b.colors.colorMultiplier;
-        colorSelectedHint.normalColor = new Color(175, 175, 175, 255) / 256;
+        colorSelectedHint.normalColor = new Color(114, 114, 114, 255) / 256;
 
         if (selectedHint)
             //change the color of the previously selected button

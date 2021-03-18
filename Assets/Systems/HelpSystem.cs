@@ -229,7 +229,7 @@ public class HelpSystem : FSystem {
                 //create a pool of int button right at the beginning and activate them when necessary rather than creating them during the game
                 hintButtonsPool = new List<GameObject>();
                 GameObject tmpGo;
-                for (int i = 0; i < 300; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     tmpGo = GameObject.Instantiate(hintButtonPrefab);
                     tmpGo.transform.SetParent(scrollViewContent.transform);
@@ -796,6 +796,7 @@ public class HelpSystem : FSystem {
             ColorBlock colorsHint = new ColorBlock();
             colorsHint.highlightedColor = hintButton.colors.highlightedColor;
             colorsHint.pressedColor = hintButton.colors.pressedColor;
+            colorsHint.selectedColor = hintButton.colors.selectedColor;
             colorsHint.disabledColor = hintButton.colors.disabledColor;
             colorsHint.colorMultiplier = hintButton.colors.colorMultiplier;
             colorsHint.normalColor = new Color(175, 175, 175, 255) / 256;
