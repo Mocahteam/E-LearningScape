@@ -827,12 +827,12 @@ public class LoadGameContent : FSystem {
                                 float width, height;
                                 if (tmpTex.width > tmpTex.height)
                                 {
-                                    width = 300;
+                                    width = 400;
                                     height = width * tmpTex.height / tmpTex.width;
                                 }
                                 else
                                 {
-                                    height = 300;
+                                    height = 400;
                                     width = height * tmpTex.width / tmpTex.height;
                                 }
                                 tmpRectTransform.sizeDelta = new Vector2(width, height);
