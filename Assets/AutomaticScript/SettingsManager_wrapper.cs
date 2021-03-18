@@ -9,6 +9,11 @@ public class SettingsManager_wrapper : MonoBehaviour
 		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
 	}
 
+	public void OnNewText(UnityEngine.GameObject go)
+	{
+		MainLoop.callAppropriateSystemMethod ("SettingsManager", "OnNewText", go);
+	}
+
 	public void SwitchFont(System.Boolean accessibleFont)
 	{
 		MainLoop.callAppropriateSystemMethod ("SettingsManager", "SwitchFont", accessibleFont);

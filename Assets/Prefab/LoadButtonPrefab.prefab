@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5825096330159766180}
   - component: {fileID: 7103273182705837244}
   m_Layer: 5
-  m_Name: Save
+  m_Name: LoadButtonPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.59607846, g: 0.3647059, b: 0.16078432, a: 1}
     m_HighlightedColor: {r: 0.83137256, g: 0.43529412, b: 0.078431375, a: 1}
     m_PressedColor: {r: 0.8014706, g: 0.7871644, b: 0.28287196, a: 1}
     m_SelectedColor: {r: 0.83137256, g: 0.43529412, b: 0.078431375, a: 1}
@@ -117,8 +117,10 @@ MonoBehaviour:
     iarQueriesStates: 
     gearEnigmaState: 0
     hintCooldown: 0
-    performedActions: []
+    systemHintTimer: 0
     receivedHints: []
+    helpLabelCount: 0
+    petriNetsMarkings: []
 --- !u!1 &5856256623051496930
 GameObject:
   m_ObjectHideFlags: 0

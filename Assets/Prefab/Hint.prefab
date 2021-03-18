@@ -98,7 +98,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.12156863, g: 0.83137256, b: 0.07843136, a: 1}
     m_HighlightedColor: {r: 0.83137256, g: 0.43529412, b: 0.078431375, a: 1}
     m_PressedColor: {r: 0.8014706, g: 0.7871644, b: 0.28287196, a: 1}
     m_SelectedColor: {r: 0.83137256, g: 0.43529412, b: 0.078431375, a: 1}
@@ -137,6 +137,7 @@ MonoBehaviour:
   actionName: 
   text: 
   link: 
+  seen: 0
 --- !u!114 &114081069348082582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,8 +217,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Intuition
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 028b9f35d6ca2ad439d559cb51d29873, type: 2}
-  m_sharedMaterial: {fileID: -346142643138740456, guid: 028b9f35d6ca2ad439d559cb51d29873,
+  m_fontAsset: {fileID: 11400000, guid: 388fb88c7332f6a4086c9d1069ce3d53, type: 2}
+  m_sharedMaterial: {fileID: 3898167904873870984, guid: 388fb88c7332f6a4086c9d1069ce3d53,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -246,7 +247,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 0
+  m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2

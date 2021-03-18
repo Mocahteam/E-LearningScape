@@ -108,6 +108,8 @@ public class LoadGameContent : FSystem {
     {
         if (Application.isPlaying && loadContent)
         {
+            instance = this;
+
             random = new System.Random();
 
             defaultGameContent = f_defaultGameContent.First().GetComponent<DefaultGameContent>();
@@ -162,8 +164,6 @@ public class LoadGameContent : FSystem {
             }
 
             this.Pause = true;
-
-            instance = this;
         }
     }
 
@@ -868,12 +868,10 @@ public class LoadGameContent : FSystem {
 
 
         // Set IAR tabs and HUD depending on gameContent.virtualDreamFragment value
-        GameObject debug = null;
         foreach (GameObject go in f_settingToggles)
             if (go.transform.parent.name == "VirtualFragments")
             {
                 go.GetComponent<Toggle>().isOn = gameContent.virtualDreamFragment;
-                debug = go;
                 go.GetComponent<DefaultValueSetting>().defaultValue = gameContent.virtualDreamFragment ? 1 : 0;
                 break;
             }
