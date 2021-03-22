@@ -92,10 +92,6 @@ public class IARHintManager : FSystem {
 
                         if (!endActionReachable || !stillReachable)
                         {
-                            // remove hint from save
-                            SaveManager.instance.RemoveHintFromSave(hc);
-                            SaveManager.instance.AutoSave();
-
                             // remove the button
                             GameObjectManager.unbind(hint);
                             GameObject.Destroy(hint);
@@ -173,22 +169,9 @@ public class IARHintManager : FSystem {
     /// <param name="b">The clicked button</param>
     private void OnClickHint(Button b)
     {
-
-        ColorBlock colorSelectedHint = new ColorBlock();
-        colorSelectedHint.highlightedColor = b.colors.highlightedColor;
-        colorSelectedHint.pressedColor = b.colors.pressedColor;
-        colorSelectedHint.selectedColor = b.colors.selectedColor;
-        colorSelectedHint.disabledColor = b.colors.disabledColor;
-        colorSelectedHint.colorMultiplier = b.colors.colorMultiplier;
-        colorSelectedHint.normalColor = new Color(114, 114, 114, 255) / 256;
-
-        if (selectedHint)
-            //change the color of the previously selected button
-            selectedHint.colors = colorSelectedHint;
-
+        SetNormalColor(b);
 
         selectedHint = b;
-        selectedHint.colors = colorSelectedHint;
         HintContent tmpHC = selectedHint.GetComponent<HintContent>();
         //display hint info on the right part of the help tab in IAR
         hintTitle.text = b.GetComponentInChildren<TMP_Text>().text;
@@ -215,15 +198,18 @@ public class IARHintManager : FSystem {
                 { "content", new List<string>() { b.GetComponent<HintContent>().text } }
             }
         });
+    }
 
-        // Set hint as seen
-        if (!tmpHC.seen)
-        {
-            // Set hint as seen in save
-            SaveManager.instance.SetHintAsSeen(tmpHC);
-            SaveManager.instance.AutoSave();
-        }
-        tmpHC.seen = true;
+    public void SetNormalColor(Button b)
+    {
+        ColorBlock colorSelectedHint = new ColorBlock();
+        colorSelectedHint.highlightedColor = b.colors.highlightedColor;
+        colorSelectedHint.pressedColor = b.colors.pressedColor;
+        colorSelectedHint.selectedColor = b.colors.selectedColor;
+        colorSelectedHint.disabledColor = b.colors.disabledColor;
+        colorSelectedHint.colorMultiplier = b.colors.colorMultiplier;
+        colorSelectedHint.normalColor = new Color(114, 114, 114, 255) / 256;
+        b.colors = colorSelectedHint;
     }
 
     /// <summary>

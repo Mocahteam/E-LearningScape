@@ -21,8 +21,6 @@ public class EndManager : FSystem {
 
     private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
 
-    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
-
     private Image fadingBackground;
     private float fadingTimer = 2;
     private float fadingStart;
@@ -64,8 +62,6 @@ public class EndManager : FSystem {
                 switchToEndRoom = true;
 
                 GameObjectManager.addComponent<ActionPerformed>(f_player.First(), new { overrideName = "teleportToFinalScene", performedBy = "system" });
-                if (f_pnMarkingsToken.Count == 0)
-                    GameObjectManager.addComponent<AskForPNMarkings>(f_player.First());
                 f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 4;
             }
             else

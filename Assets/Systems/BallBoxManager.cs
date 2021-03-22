@@ -19,8 +19,6 @@ public class BallBoxManager : FSystem {
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
 
-    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
-
     //information for animations
     private float speed;
     private float speedRotation = 200f;
@@ -179,9 +177,6 @@ public class BallBoxManager : FSystem {
                     UnlockBallBox();
                     //remove key from inventory
                     GameObjectManager.setGameObjectState(keySelected(), false);
-                    // set the key as disabled in save
-                    SaveManager.instance.SaveContent.collectableItemsStates[1] = 2;
-                    SaveManager.instance.AutoSave();
                     // trace
                     GameObjectManager.addComponent<ActionPerformed>(boxPadlock.GetComponentInChildren<ComponentMonitoring>().gameObject, new { name = "perform", performedBy = "system" });
                     GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "unlocked", objectType = "interactable", objectName = selectedBox.name });
@@ -315,8 +310,6 @@ public class BallBoxManager : FSystem {
 
         GameObjectManager.addComponent<ActionPerformed>(selectedBox, new { name = "turnOff", performedBy = "player" });
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "exited", objectType = "interactable", objectName = selectedBox.name });
-        if (f_pnMarkingsToken.Count == 0)
-            GameObjectManager.addComponent<AskForPNMarkings>(selectedBox);
 
         selectedBox = null;
 
@@ -329,5 +322,10 @@ public class BallBoxManager : FSystem {
         unlocked = true;
         // start animation
         boxPadlock.GetComponent<Animator>().enabled = true;
+    }
+
+    public bool IsLocked()
+    {
+        return !unlocked;
     }
 }

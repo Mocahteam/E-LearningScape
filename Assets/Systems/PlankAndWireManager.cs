@@ -19,8 +19,6 @@ public class PlankAndWireManager : FSystem {
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_solutionWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro), typeof(IsSolution)));
 
-    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
-
     //plank
     private GameObject selectedPlank = null;
     private LineRenderer lr;                //used to link words
@@ -28,6 +26,8 @@ public class PlankAndWireManager : FSystem {
     private int nbWordsSelected;
 
     private GameObject currentFocusedWord;
+
+    private bool correct = false;
 
     public static PlankAndWireManager instance;
 
@@ -211,7 +211,7 @@ public class PlankAndWireManager : FSystem {
                                     }
 
                                 // check if all selected words are part of the solution
-                                bool correct = true;
+                                correct = true;
                                 foreach (GameObject word in f_allWords)
                                     if (word.GetComponent<IsSolution>() && word.GetComponent<TextMeshPro>().color != Color.yellow)
                                     {
@@ -235,9 +235,6 @@ public class PlankAndWireManager : FSystem {
                                     // remove the wire from inventory
                                     LinkedWith lw = selectedPlank.GetComponent<LinkedWith>();
                                     GameObjectManager.setGameObjectState(lw.link, false);
-                                    // set the wire as disabled in save
-                                    SaveManager.instance.SaveContent.collectableItemsStates[2] = 2;
-                                    SaveManager.instance.AutoSave();
 
                                     // notify player success
                                     GameObjectManager.addComponent<PlayUIEffect>(selectedPlank, new { effectCode = 2 });
@@ -316,8 +313,6 @@ public class PlankAndWireManager : FSystem {
 
         GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "turnOff", performedBy = "player" });
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new { verb = "exited", objectType = "interactable", objectName = selectedPlank.name });
-        if (f_pnMarkingsToken.Count == 0)
-            GameObjectManager.addComponent<AskForPNMarkings>(selectedPlank);
 
         selectedPlank = null;
 
@@ -332,5 +327,10 @@ public class PlankAndWireManager : FSystem {
             lrPositions.Add(solution.transform.TransformPoint(Vector3.up * -4));
         lr.positionCount = lrPositions.Count;
         lr.SetPositions(lrPositions.ToArray());
+    }
+
+    public bool IsResolved()
+    {
+        return correct;
     }
 }

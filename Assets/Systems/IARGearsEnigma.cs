@@ -174,10 +174,6 @@ public class IARGearsEnigma : FSystem
                             Vector3 newDir = Vector3.forward;
                             f_player.First().transform.rotation = Quaternion.LookRotation(f_login.First().transform.position - f_player.First().transform.position);
                             Camera.main.transform.rotation = Quaternion.LookRotation(f_login.First().transform.position - f_player.First().transform.position);
-
-                            // Set gears enigma as solved in save
-                            SaveManager.instance.SaveContent.gearEnigmaState = true;
-                            SaveManager.instance.AutoSave();
                         }
                         else //if answer is wrong
                         {
@@ -232,15 +228,14 @@ public class IARGearsEnigma : FSystem
         }
     }
 
-    public void SolveGearsEnigma(bool loginSelectable)
+    public void SolveGearsEnigma()
     {
         f_solutionGear.First().transform.localPosition = Vector3.zero; //place the gear at the center
         rotateGear = true;  //rotate gears in the middle
-        if (loginSelectable)
-        {
-            // Make login selectable
-            GameObjectManager.addComponent<Selectable>(f_login.First(), new { standingPosDelta = new Vector3(-0.9f, -0.8f, 0f), standingOrientation = new Vector3(1f, 0f, 0f) });
-            GameObjectManager.addComponent<LoadingSave>(f_login.First());
-        }
+    }
+
+    public bool IsResolved()
+    {
+        return rotateGear;
     }
 }

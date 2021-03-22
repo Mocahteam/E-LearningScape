@@ -19,8 +19,6 @@ public class WhiteBoardManager : FSystem {
     private Family f_boardTexture = FamilyManager.getFamily(new AllOfComponents(typeof(ChangePixelColor)));
     private Family f_activatedBoard = FamilyManager.getFamily(new AnyOfTags("Board"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
-    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
-
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
 
     //board
@@ -170,15 +168,6 @@ public class WhiteBoardManager : FSystem {
 
         GameObjectManager.addComponent<ActionPerformed>(selectedBoard, new { name = "turnOff", performedBy = "player" });
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBoard, new { verb = "exited", objectType = "interactable", objectName = selectedBoard.name });
-        if (f_pnMarkingsToken.Count == 0)
-            GameObjectManager.addComponent<AskForPNMarkings>(selectedBoard);
-
-        // Save board texture
-        tmpTex = (Texture2D)f_boardTexture.First().GetComponent<Renderer>().material.mainTexture;
-        SaveManager.instance.SaveContent.boardEraseTexture = tmpTex.GetRawTextureData();
-        // Save eraser position
-        SaveManager.instance.SaveContent.boardEraserPosition = eraser.transform.position;
-        SaveManager.instance.AutoSave();
 
         selectedBoard = null;
 

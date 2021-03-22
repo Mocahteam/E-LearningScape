@@ -27,7 +27,7 @@ public class MovingSystem : FSystem
     private Vector3 targetScale;
     private Vector3 crouchingScale;
     private Vector3 standingScale = Vector3.one;
-    private bool firstCrouchOccurs = false;
+    public bool firstCrouchOccurs = false;
     private FirstPersonController playerController;
     private GameObject movableFragments;
     private Image tmpImage;
@@ -147,9 +147,8 @@ public class MovingSystem : FSystem
         GameObjectManager.setGameObjectState(f_cursor.First(), true);
     }
 
-    public void SetHUD(bool state, bool loadingGame = false)
+    public void SetHUD(bool state)
     {
-        firstCrouchOccurs = firstCrouchOccurs || loadingGame;
         if (firstCrouchOccurs && previousHUDState != state)
         {
             foreach (GameObject hud in f_hidableHUD)

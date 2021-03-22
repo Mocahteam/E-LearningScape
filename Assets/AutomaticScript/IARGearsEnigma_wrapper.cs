@@ -9,9 +9,9 @@ public class IARGearsEnigma_wrapper : MonoBehaviour
 		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
 	}
 
-	public void SolveGearsEnigma(System.Boolean loginSelectable)
+	public void SolveGearsEnigma()
 	{
-		MainLoop.callAppropriateSystemMethod ("IARGearsEnigma", "SolveGearsEnigma", loginSelectable);
+		MainLoop.callAppropriateSystemMethod ("IARGearsEnigma", "SolveGearsEnigma", null);
 	}
 
 }

@@ -23,9 +23,7 @@ public class LockResolver : FSystem {
 
     private Family f_LockArrows = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver)), new AnyOfTags("LockArrow"));
 
-    private Family f_iarTab = FamilyManager.getFamily(new AnyOfTags("IARTab"));
-
-    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
+    private Family f_lockers = FamilyManager.getFamily(new AnyOfTags("IARTab"));
 
     //information for animations
     private Vector3 tmpTargetPosition;
@@ -208,7 +206,11 @@ public class LockResolver : FSystem {
             if (f_player.First().transform.position == tmpTargetPosition)
             {
                 GameObjectManager.addComponent<PlaySound>(wallIntro, new { id = 9 }); // id refer to FPSController AudioBank
-                wallIntro.GetComponent<Animator>().enabled = true; // enable animation
+
+                UnlockIntroWall();
+
+                f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 1;
+
                 GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock", performedBy = "player" });
                 GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock_meta", performedBy = "system" });
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
@@ -218,29 +220,13 @@ public class LockResolver : FSystem {
                     objectName = selectedLocker.gameObject.name,
                     activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { string.Concat(selectedLocker.wheel1Solution, selectedLocker.wheel2Solution, selectedLocker.wheel3Solution) } } }
                 });
-
-                // update IAR
-                GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock, true);// enable questions tab
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new { verb = "unlocked", objectType = "menu", objectName = selectedLocker.IARScreenUnlock.name });
-                f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 1;
-                // update flags
-                IARScreenRoom1Unlocked = true;
                 // disable UI items usable for this enigm
                 if (selectedLocker.GetComponent<LinkedWith>())
-                {
                     GameObjectManager.setGameObjectState(selectedLocker.GetComponent<LinkedWith>().link, false);
-                    // set intro scroll as disabled in save when the wall is opened
-                    SaveManager.instance.SaveContent.collectableItemsStates[0] = 2;
-                }
                 // Exit the locker
                 closedBy = "system";
                 ExitLocker();
-
-                // set the first door as opened in save
-                SaveManager.instance.SaveContent.lockedDoorsStates[0] = true;
-                SaveManager.instance.AutoSave();
-
-                SaveManager.instance.EnableSaving();
             }
         }
 
@@ -250,10 +236,11 @@ public class LockResolver : FSystem {
             if (f_player.First().transform.position == tmpTargetPosition)
             {
                 GameObjectManager.addComponent<PlaySound>(fences, new { id = 9 }); // id refer to FPSController AudioBank
-                fences.GetComponent<Animator>().enabled = true; // enable animation
-                GameObjectManager.setGameObjectState(selectedLocker.IARScreenUnlock, true); // enable questions tab
+
+                UnlockRoom2Fences();
+
                 f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 3;
-                IARScreenRoom3Unlocked = true;
+
                 GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock", performedBy = "player" });
                 GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock_meta", performedBy = "player" });
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
@@ -270,10 +257,6 @@ public class LockResolver : FSystem {
                 });
                 closedBy = "system";
                 ExitLocker();
-
-                // set the first door as opened in save
-                SaveManager.instance.SaveContent.lockedDoorsStates[2] = true;
-                SaveManager.instance.AutoSave();
             }
         }
     }
@@ -293,8 +276,6 @@ public class LockResolver : FSystem {
 
         GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { name = "turnOff", performedBy = closedBy });
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new { verb = "exited", objectType = "interactable", objectName = selectedLocker.gameObject.name });
-        if (f_pnMarkingsToken.Count == 0)
-            GameObjectManager.addComponent<AskForPNMarkings>(selectedLocker.gameObject);
 
         selectedLocker = null;
 
@@ -381,12 +362,9 @@ public class LockResolver : FSystem {
     {
         room1Unlocked = true;
         wallIntro.GetComponent<Animator>().enabled = true; // enable animation
-        foreach(GameObject tab in f_iarTab)
-            if (tab.name == "ScreenR1")
-            {
-                GameObjectManager.setGameObjectState(tab, true);
-                break;
-            }
+        foreach(GameObject locker in f_lockers)
+            if (locker.name == "Verrou Mur")
+                GameObjectManager.setGameObjectState(locker.GetComponent<Locker>().IARScreenUnlock, true); // enable questions tab
         IARScreenRoom1Unlocked = true;
     }
 
@@ -394,12 +372,9 @@ public class LockResolver : FSystem {
     {
         room3Unlocked = true;
         fences.GetComponent<Animator>().enabled = true; // enable animation
-        foreach (GameObject tab in f_iarTab)
-            if (tab.name == "ScreenR3")
-            {
-                GameObjectManager.setGameObjectState(tab, true);
-                break;
-            }
+        foreach (GameObject locker in f_lockers)
+            if (locker.name == "Verrou Porte")
+                GameObjectManager.setGameObjectState(locker.GetComponent<Locker>().IARScreenUnlock, true); // enable questions tab
         IARScreenRoom3Unlocked = true;
     }
 }

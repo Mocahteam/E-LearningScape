@@ -17,17 +17,16 @@ public class SaveContent {
     {
 		public int monitorID;
 		public string name;
-		public int level;
-		// if the hint isn't about a wrong answer feedback then wrongAnswer is empty
-		public string wrongAnswer;
-		public bool seen;
+		public string text;
+        public string link;
+        public bool seen;
 
-		public HintData(int mID, string n, int hintLevel = -1, string wrongAnswerText = "", bool hintSeen = false)
+		public HintData(int mID, string n, string hintText, string hintLink, bool hintSeen)
         {
 			monitorID = mID;
 			name = n;
-			level = hintLevel;
-			wrongAnswer = wrongAnswerText;
+            text = hintText;
+            link = hintLink;
 			seen = hintSeen;
         }
     }
@@ -35,97 +34,118 @@ public class SaveContent {
 	/// <summary>
 	/// Tha time at which the progression was saved on the file
 	/// </summary>
-	public DateTime saveDate;
-	public string sessionID;
+	public DateTime saveDate = new DateTime();
+	public string sessionID = "";
 
-	/// <summary>
-	/// True if the puzzle were virtual at least once
-	/// If true and game loaded with physical puzzles, set them to virtual
-	/// </summary>
-	public bool virtualPuzzle;
-
-	/// <summary>
-	/// Keep track of the progression in history texts
-	/// </summary>
-	public int storyTextCount;
-	/// <summary>
-	/// ID of the room in which the player was when progression was saved
-	/// </summary>
-	public int playerPositionRoom;
-	/// <summary>
-	/// The time spent playing
-	/// </summary>
-	public float playingDuration;
+    /// <summary>
+    /// Keep track of the progression in history texts
+    /// </summary>
+    public int storyTextCount = 0;
+    /// <summary>
+    /// LastRoomUnlocked
+    /// </summary>
+    public int lastRoomUnlocked = 0;
+    /// <summary>
+    /// Player position
+    /// </summary>
+    public Vector3 playerPosition = new Vector3();
+    /// <summary>
+    /// The time spent playing
+    /// </summary>
+    public float playingDuration = 0;
 
 	/// <summary>
 	/// Contains the state of each collectable items:
-	/// 0 - not collected, 1 - collected, 2 - collected and used/disabled.
+	/// 0 - not collected, 1 - collected, 2 - collected and used (removed from iar).
 	/// There are 18 collectable items (including virtual puzzles):
-	/// 0-introScroll, 1-keyBallBox, 2-wire, 3-keySatchel, 4-mirror, 5-glasses1, 6-glasses2,
-	/// 7 to 11-scroll 1 to 5, 12-lamp, 13 to 17-virtuelPuzzleSet 1 to 5
+	/// introScroll, keyBallBox, wire, keySatchel, mirror, glasses1, glasses2,
+	/// scrolls 1 to 5, lamp, virtuelPuzzleSets 1 to 5
 	/// </summary>
-	public int[] collectableItemsStates;
+	public Dictionary<string, int> collectableItemsStates = new Dictionary<string, int>();
 	/// <summary>
 	/// Contains the state of each dream fragment:
 	/// 0 - not collected, 1 - collected but not seen in IAR, 2 - collected and seen in IAR.
-	/// There are 14 dream fragments of type 0.
-	/// Values 7, 14, 15, 16, 18 and 19 are used for dream fragments of type 1
 	/// </summary>
-	public int[] dreamFragmentsStates;
-	/// <summary>
-	/// Contains the state of each locked door (true if unlocked)
-	/// There are 3 locked doors:
-	/// 0-door between tuto and room1, 1-door between room 1 and 2, 2-door between room 2 and 3
-	/// </summary>
-	public bool[] lockedDoorsStates;
-	/// <summary>
-	/// Contains the state of each toggleable objects (true if "turned on").
-	/// There are 8 toggleable objects:
-	/// 0-correctChair, 1 to 5-chairs 1 to 5, 6-table, 7-chest room 3
-	/// </summary>
-	public bool[] toggleablesStates;
-	/// <summary>
-	/// The texture the player drew to erase words
-	/// </summary>
-	public byte[] boardEraseTexture;
+	public Dictionary<string, int> dreamFragmentsStates = new Dictionary<string, int>();
+
+    /// <summary>
+    /// True if the "press Y" is enabled
+    /// </summary>
+    public bool pressY_displayed = false;
+
+    /// <summary>
+    /// True if ball box is unlocked
+    /// </summary>
+    public bool ballbox_opened = false;
+
+    /// <summary>
+    /// True if wire is on plank
+    /// </summary>
+    public bool wireOnPlank = false;
+
+    /// <summary>
+    /// True if satchel is unlocked
+    /// </summary>
+    public bool satchel_opened = false;
+
+    /// <summary>
+    /// True if mirror is on plank
+    /// </summary>
+    public bool mirrorOnPlank = false;
+
+    /// <summary>
+    /// Contains the state of each toggleable objects (true if "turned on").
+    /// There are 8 toggleable objects:
+    /// correctChair, chairs 1 to 5, table, chest
+    /// </summary>
+    public Dictionary<string, bool> toggleablesStates = new Dictionary<string, bool>();
+    /// <summary>
+    /// The texture the player drew to erase words
+    /// </summary>
+    public byte[] boardEraseTexture = null;
 	/// <summary>
 	/// The final position of the eraser on the board
 	/// </summary>
-	public Vector3 boardEraserPosition;
+	public Vector3 boardEraserPosition = new Vector3();
 
 	/// <summary>
 	/// Contains the state of the questions in IAR (true if answered).
-	/// There are 13 questions ordered by room then by question id.
-	/// For the last room, IDs are: 9-puzzles, 10-enigma16, 11-lamp, 12-white board
+	/// There are 13 questions.
 	/// </summary>
-	public bool[] iarQueriesStates;
-	/// <summary>
-	/// True if gear enigma was solved
-	/// </summary>
-	public bool gearEnigmaState;
+	public Dictionary<string, bool> iarQueriesStates = new Dictionary<string, bool>();
+    public Dictionary<string, string> iarQueriesAnswer = new Dictionary<string, string>();
+    public Dictionary<string, string> iarQueriesDesc = new Dictionary<string, string>();
+    /// <summary>
+    /// State of gear enigma
+    /// 0 - not displayed, 1 - displayed and not resolved, 2 - resolved
+    /// </summary>
+    public int gearEnigmaState = 0;
 
-	/// <summary>
-	/// Time left before being able to ask for an new hint
-	/// </summary>
-	public float hintCooldown;
+    /// <summary>
+    /// List of the hints accessible to the player (already shown inside IAR).
+    /// </summary>
+    public List<HintData> accessibleHints = new List<HintData>();
+    /// <summary>
+    /// List of string containing complete and filtered petri nets markings given by Laalys
+    /// </summary>
+    public List<string> petriNetsMarkings = new List<string>();
+    /// <summary>
+    /// Time left before being able to ask for an new hint
+    /// </summary>
+    public float hintCooldown = 0;
 	/// <summary>
 	/// Contains the value of HelpSystem's systemHintTimer used to count the time spent
 	/// since the system last gave a hint to the player with labelCount
 	/// </summary>
-	public float systemHintTimer;
-	/// <summary>
-	/// List of the hints received by the player, ordered by date.
-	/// The bool is true if the hint was seen
-	/// </summary>
-	public List<HintData> receivedHints;
-	/// <summary>
-	/// Contains the value of HelpSystem's labelCount.
-	/// When a label is received from Laalys, its weight is added to labelCount.
-	/// </summary>
-	public float helpLabelCount;
+	public float systemHintTimer = 0;
+    /// <summary>
+    /// Contains the value of HelpSystem's labelCount.
+    /// When a label is received from Laalys, its weight is added to labelCount.
+    /// </summary>
+    public float helpLabelCount = 0;
+    /// <summary>
+    /// List of the bank hints still available for the player.
+    /// </summary>
+    public GameHints bankHints = null;
 
-	/// <summary>
-	/// List of string containing complete and filtered petri nets markings given by Laalys
-	/// </summary>
-	public List<string> petriNetsMarkings;
 }

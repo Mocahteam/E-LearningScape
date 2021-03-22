@@ -137,7 +137,6 @@ MonoBehaviour:
   actionName: 
   text: 
   link: 
-  seen: 0
 --- !u!114 &114081069348082582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,4 +297,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameContentVariable: hintButtonText
-  tmpUI: 1

@@ -91,17 +91,7 @@ public class IARDreamFragmentManager : FSystem {
 		{
 			//remove "new"
 			if (t.GetComponent<NewDreamFragment>())
-			{
 				GameObjectManager.removeComponent<NewDreamFragment>(t.gameObject);
-
-				// set dream fragment as seen in iar in save
-				int id = GetDreamFragmentID(t.gameObject);
-				if (id > -1)
-				{
-					SaveManager.instance.SaveContent.dreamFragmentsStates[id] = 2;
-					SaveManager.instance.AutoSave();
-				}
-			}
 
 			//set game object as last sibling in hierarchy to see it above the others
 			//(do it even when the object is disabled to prevent a bug happening when it is activated again)

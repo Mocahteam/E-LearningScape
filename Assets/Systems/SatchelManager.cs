@@ -16,8 +16,6 @@ public class SatchelManager : FSystem {
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_itemUnselected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new NoneOfComponents(typeof(SelectedInInventory)));
 
-    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
-
     private float dist;
 
     //bag
@@ -161,9 +159,6 @@ public class SatchelManager : FSystem {
                 }
                 bagAnimator.SetTrigger("closeSatchel");
                 closingSatchel = true;
-
-                if (f_pnMarkingsToken.Count == 0)
-                    GameObjectManager.addComponent<AskForPNMarkings>(selectedBag);
             }
 
             // Check if moving satchel in front of the player is over
@@ -179,9 +174,6 @@ public class SatchelManager : FSystem {
                 UnlockSatchel();
                 //remove key from inventory
                 GameObjectManager.setGameObjectState(isSelected("KeySatchel"), false);
-                // set the key as disabled in save
-                SaveManager.instance.SaveContent.collectableItemsStates[3] = 2;
-                SaveManager.instance.AutoSave();
                 GameObjectManager.addComponent<ActionPerformed>(bagPadlock.GetComponentInChildren<ComponentMonitoring>().gameObject, new { name = "perform", performedBy = "system" });
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBag, new { verb = "unlocked", objectType = "interactable", objectName = selectedBag.name });
                 paperOpenning = true;
@@ -218,5 +210,10 @@ public class SatchelManager : FSystem {
     {
         unlocked = true;
         bagAnimator.SetTrigger("unlock"); // launch animation to unlock the padlock
+    }
+
+    public bool IsLocked()
+    {
+        return !unlocked;
     }
 }

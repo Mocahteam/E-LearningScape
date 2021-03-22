@@ -14,4 +14,9 @@ public class MovingSystem_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("MovingSystem", "SetWalkSpeed", speedW);
 	}
 
+	public void SetHUD(System.Boolean state)
+	{
+		MainLoop.callAppropriateSystemMethod ("MovingSystem", "SetHUD", state);
+	}
+
 }

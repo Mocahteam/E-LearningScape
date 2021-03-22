@@ -127,7 +127,7 @@ public class IARQueryEvaluator : FSystem {
             IARTabNavigation.instance.skipNextClose = true;
     }
 
-    public void IarCheckAnswer(GameObject query, bool loadingSave = false)
+    public void IarCheckAnswer(GameObject query)
     {
         string answer = query.GetComponentInChildren<TMP_InputField>().text; //player's answer
         string solution = "";
@@ -175,19 +175,18 @@ public class IARQueryEvaluator : FSystem {
             }
         }
 
-        if(!loadingSave)
-            GameObjectManager.addComponent<ActionPerformedForLRS>(query, new
-            {
-                verb = "answered",
-                objectType = "question",
-                objectName = string.Concat(query.name, "-", query.tag),
-                result = true,
-                success = error ? -1 : 1,
-                response = answer
-            });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(query, new
+        {
+            verb = "answered",
+            objectType = "question",
+            objectName = string.Concat(query.name, "-", query.tag),
+            result = true,
+            success = error ? -1 : 1,
+            response = answer
+        });
         answer = solution != "" ? solution : answer;
 
-        if (error && !loadingSave)
+        if (error)
         {
             // notify player error
             GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 1 });
@@ -202,45 +201,17 @@ public class IARQueryEvaluator : FSystem {
         }
         else
         {
-            if (!loadingSave)
-            {
-                // notify player success
-                GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 2 });
+            // notify player success
+            GameObjectManager.addComponent<PlayUIEffect>(query, new { effectCode = 2 });
 
-                // set focus on selected tab
-                EventSystem.current.SetSelectedGameObject(null);
-                if (f_selectedTab.Count > 0)
-                    EventSystem.current.SetSelectedGameObject(f_selectedTab.getAt(0));
-            }
+            // set focus on selected tab
+            EventSystem.current.SetSelectedGameObject(null);
+            if (f_selectedTab.Count > 0)
+                EventSystem.current.SetSelectedGameObject(f_selectedTab.getAt(0));
 
             // set final answer for third room (due to OR options)
             if (query.tag == "Q-R3")
             {
-                if (loadingSave)
-                {
-                    switch (query.name)
-                    {
-                        case "Q1":
-                            solution = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.puzzleAnswer);
-                            break;
-
-                        case "Q2":
-                            solution = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma16Answer);
-                            break;
-
-                        case "Q3":
-                            solution = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer);
-                            break;
-
-                        case "Q4":
-                            solution = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer);
-                            break;
-
-                        default:
-                            break;
-                    }
-                    answer = solution;
-                }
                 SetRoom3AnswerFeedback(solution, query);
 
                 // Prepare correct trace
@@ -254,34 +225,20 @@ public class IARQueryEvaluator : FSystem {
                 else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer))
                     context = "WhiteBoard";
 
-                if (!loadingSave)
-                {
-                    // mark associated enigma ready to solve
-                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "ReadyToSolve_" + context, performedBy = "player" });
-                    // propagate information inside Meta (special case for Puzzle, we have to remove Virtual/Physical to avoid to manage or links)
-                    GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "ReadyToSolve_" + (context.Contains("Puzzle") ? "Puzzle" : context) + "_Meta", performedBy = "system" });
-                    // validate associated enigma to this query and disable associated enigma to other queries
-                    foreach (GameObject go in f_queriesRoom3)
-                        if (go == query)
-                            GameObjectManager.addComponent<ActionPerformed>(go, new { overrideName = (context.Contains("Puzzle") ? "Puzzle" : context) + "_Solved", performedBy = "player" });
-                        else
-                            GameObjectManager.addComponent<ActionPerformed>(go, new { overrideName = (context.Contains("Puzzle") ? "Puzzle" : context) + "_Locked", performedBy = "player" });
-
-                    // Set question as answered in save
-                    SaveManager.instance.SaveContent.iarQueriesStates[SaveManager.instance.GetQueryID(query, context)] = true;
-                }
+                // mark associated enigma ready to solve
+                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "ReadyToSolve_" + context, performedBy = "player" });
+                // propagate information inside Meta (special case for Puzzle, we have to remove Virtual/Physical to avoid to manage or links)
+                GameObjectManager.addComponent<ActionPerformed>(query.transform.parent.gameObject, new { overrideName = "ReadyToSolve_" + (context.Contains("Puzzle") ? "Puzzle" : context) + "_Meta", performedBy = "system" });
+                // validate associated enigma to this query and disable associated enigma to other queries
+                foreach (GameObject go in f_queriesRoom3)
+                    if (go == query)
+                        GameObjectManager.addComponent<ActionPerformed>(go, new { overrideName = (context.Contains("Puzzle") ? "Puzzle" : context) + "_Solved", performedBy = "player" });
+                    else
+                        GameObjectManager.addComponent<ActionPerformed>(go, new { overrideName = (context.Contains("Puzzle") ? "Puzzle" : context) + "_Locked", performedBy = "player" });
             }
-            else if(!loadingSave)
-                // Set question as answered in save
-                SaveManager.instance.SaveContent.iarQueriesStates[SaveManager.instance.GetQueryID(query)] = true;
 
-            if (!loadingSave)
-            {
-                SaveManager.instance.AutoSave();
-
-                GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });
-                GameObjectManager.addComponent<ActionPerformed>(query, new { name = "perform", performedBy = "system" }); // meta
-            }
+            GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });
+            GameObjectManager.addComponent<ActionPerformed>(query, new { name = "perform", performedBy = "system" }); // meta
 
             // Toggle UI element (hide input text and button and show answer)
             for (int i = 1; i < query.transform.childCount; i++)
@@ -298,7 +255,7 @@ public class IARQueryEvaluator : FSystem {
                         if (tmp && tmp.text != "")
                             feedbackTexts.Add(grandSon.gameObject.GetComponent<TextMeshProUGUI>().text);
                     }
-                    if (feedbackTexts.Count > 0 && !loadingSave)
+                    if (feedbackTexts.Count > 0)
                     {
                         GameObjectManager.addComponent<ActionPerformedForLRS>(query, new
                         {
@@ -316,33 +273,12 @@ public class IARQueryEvaluator : FSystem {
 
             // put a screenshot of the IAR on the terminal of the last unlocked room
             int lastUnlockedRoom = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
-            if (f_terminalScreens.Count >= lastUnlockedRoom && !loadingSave)
+            if (f_terminalScreens.Count >= lastUnlockedRoom)
                 MainLoop.instance.StartCoroutine(SetTerminalScreen());
 
             // if linked hide item in inventory
             foreach (LinkedWith item in query.GetComponents<LinkedWith>())
                 GameObjectManager.setGameObjectState(item.link, false);
-
-            // check if there are items linked to this query that need to be set as disabled in save
-            if(query.tag == "Q-R2" && !loadingSave)
-            {
-                // if the solved enigma is the satchel enigma
-                if (query.name == "Q1")
-                {
-                    // set glasses as disabled in save
-                    SaveManager.instance.SaveContent.collectableItemsStates[5] = 2;
-                    SaveManager.instance.SaveContent.collectableItemsStates[6] = 2;
-                    SaveManager.instance.AutoSave();
-                }
-                // if the solved enigma is the scrolls enigma
-                else if (query.name == "Q3")
-                {
-                    // set scrolls as disabled in save
-                    for(int i = 7; i < 12; i++)
-                        SaveManager.instance.SaveContent.collectableItemsStates[i] = 2;
-                    SaveManager.instance.AutoSave();
-                }
-            }
         }
     }
 

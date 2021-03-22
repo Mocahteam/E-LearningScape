@@ -15,8 +15,6 @@ public class PlankAndMirrorManager : FSystem {
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
 
-    private Family f_pnMarkingsToken = FamilyManager.getFamily(new AllOfComponents(typeof(AskForPNMarkings)));
-
     private float speed;
     private float dist = 1.5f;
 
@@ -159,9 +157,6 @@ public class PlankAndMirrorManager : FSystem {
             {
                 // remove mirror from inventory
                 GameObjectManager.setGameObjectState(isSelected("Mirror"), false);
-                // set the mirror as disabled in inventory in save
-                SaveManager.instance.SaveContent.collectableItemsStates[4] = 2;
-                SaveManager.instance.AutoSave();
 
                 PutMirrorOnPlank();
 
@@ -193,8 +188,6 @@ public class PlankAndMirrorManager : FSystem {
 
         GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "turnOff", performedBy = "player" });
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new { verb = "exited", objectType = "interactable", objectName = selectedPlank.name });
-        if (f_pnMarkingsToken.Count == 0)
-            GameObjectManager.addComponent<AskForPNMarkings>(selectedPlank);
 
         selectedPlank = null;
 
@@ -206,5 +199,10 @@ public class PlankAndMirrorManager : FSystem {
     {
         // show ingame mirror on plank
         GameObjectManager.setGameObjectState(mirror, true);
+    }
+
+    public bool IsMirrorOnPlank()
+    {
+        return mirror.activeSelf;
     }
 }
