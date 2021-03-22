@@ -829,12 +829,11 @@ public class HelpSystem : FSystem {
     /// <summary>
     /// Used in SaveManager during loading
     /// </summary>
-    public void LoadHelpSystemValues(float hintCooldown, float systemHintTimer, float helpLabelCount, GameHints gameHints)
+    public void LoadHelpSystemValues(float hintCooldown, float systemHintTimer, float helpLabelCount)
     {
         playerHintTimer = Time.time + hintCooldown - config.playerHintCooldownDuration;
         this.systemHintTimer = systemHintTimer;
         labelCount = helpLabelCount;
         noActionTimer = Time.time;
-        this.gameHints = gameHints;
     }
 }

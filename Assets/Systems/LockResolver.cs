@@ -23,7 +23,7 @@ public class LockResolver : FSystem {
 
     private Family f_LockArrows = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver)), new AnyOfTags("LockArrow"));
 
-    private Family f_lockers = FamilyManager.getFamily(new AnyOfTags("IARTab"));
+    private Family f_lockers = FamilyManager.getFamily(new AllOfComponents(typeof(Locker)));
 
     //information for animations
     private Vector3 tmpTargetPosition;
@@ -362,7 +362,7 @@ public class LockResolver : FSystem {
     {
         room1Unlocked = true;
         wallIntro.GetComponent<Animator>().enabled = true; // enable animation
-        foreach(GameObject locker in f_lockers)
+        foreach (GameObject locker in f_lockers)
             if (locker.name == "Verrou Mur")
                 GameObjectManager.setGameObjectState(locker.GetComponent<Locker>().IARScreenUnlock, true); // enable questions tab
         IARScreenRoom1Unlocked = true;

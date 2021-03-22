@@ -315,15 +315,15 @@ public class LoadGameContent : FSystem {
             tmpGO = f_queriesR1.getAt(i);
             switch (tmpGO.name)
             {
-                case "Q1":
+                case "R1-Q1":
                     loadIARQuestion(tmpGO, gameContent.ballBoxQuestion, gameContent.ballBoxAnswerFeedback, gameContent.ballBoxAnswerFeedbackDesc, gameContent.ballBoxPlaceHolder, gameContent.ballBoxAnswer);
                     break;
 
-                case "Q2":
+                case "R1-Q2":
                     loadIARQuestion(tmpGO, gameContent.plankAndWireQuestionIAR, gameContent.plankAndWireAnswerFeedback, gameContent.plankAndWireAnswerFeedbackDesc, gameContent.plankAndWirePlaceHolder, gameContent.plankAndWireCorrectNumbers);
                     break;
 
-                case "Q3":
+                case "R1-Q3":
                     loadIARQuestion(tmpGO, gameContent.crouchQuestion, gameContent.crouchAnswerFeedback, gameContent.crouchAnswerFeedbackDesc, gameContent.crouchPlaceHolder, gameContent.crouchAnswer);
                     break;
 
@@ -553,27 +553,27 @@ public class LoadGameContent : FSystem {
             tmpGO = f_queriesR2.getAt(i);
             switch (tmpGO.name)
             {
-                case "Q1":
+                case "R2-Q1":
                     loadIARQuestion(tmpGO, gameContent.glassesQuestion, gameContent.glassesAnswerFeedback, gameContent.glassesAnswerFeedbackDesc, gameContent.glassesPlaceHolder, gameContent.glassesAnswer);
                     break;
 
-                case "Q2":
+                case "R2-Q2":
                     loadIARQuestion(tmpGO, gameContent.enigma08Question, gameContent.enigma08AnswerFeedback, gameContent.enigma08AnswerFeedbackDesc, gameContent.enigma08PlaceHolder, gameContent.enigma08Answer);
                     break;
 
-                case "Q3":
+                case "R2-Q3":
                     loadIARQuestion(tmpGO, gameContent.scrollsQuestion, gameContent.scrollsAnswerFeedback, gameContent.scrollsAnswerFeedbackDesc, gameContent.scrollsPlaceHolder, gameContent.scrollsAnswer);
                     break;
 
-                case "Q4":
+                case "R2-Q4":
                     loadIARQuestion(tmpGO, gameContent.mirrorQuestion, gameContent.mirrorAnswerFeedback, gameContent.mirrorAnswerFeedbackDesc, gameContent.mirrorPlaceHolder, gameContent.mirrorAnswer);
                     break;
 
-                case "Q5":
+                case "R2-Q5":
                     loadIARQuestion(tmpGO, gameContent.enigma11Question, gameContent.enigma11AnswerFeedback, gameContent.enigma11AnswerFeedbackDesc, gameContent.enigma11PlaceHolder, gameContent.enigma11Answer);
                     break;
 
-                case "Q6":
+                case "R2-Q6":
                     loadIARQuestion(tmpGO, gameContent.enigma12Question, gameContent.enigma12AnswerFeedback, gameContent.enigma12AnswerFeedbackDesc, gameContent.enigma12PlaceHolder, gameContent.enigma12Answer);
                     break;
 

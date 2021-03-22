@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 using System;
 using System.IO;
+using Newtonsoft.Json;
 using FYFY;
 using FYFY_plugins.Monitoring;
 using FYFY_plugins.PointerManager;
@@ -155,7 +156,7 @@ public class SaveManager : FSystem {
             tmpFI = di.GetFiles(string.Concat("*", saveFilesExtension));
             foreach (FileInfo file in tmpFI)
             {
-                if (file.Name == autoSaveFileName)
+                if (file.Name == autoSaveFileName+saveFilesExtension)
                     autosaveExists = true;
                 AddNewItemToLists(file);
             }
@@ -210,7 +211,7 @@ public class SaveManager : FSystem {
         {
             try
             {
-                saveContent = JsonUtility.FromJson<SaveContent>(File.ReadAllText(file.FullName));
+                saveContent = JsonConvert.DeserializeObject<SaveContent>(File.ReadAllText(file.FullName)); 
             }
             catch (Exception) {
                 Debug.LogError("The save couldn't be loaded because of invalid content.");
@@ -337,47 +338,48 @@ public class SaveManager : FSystem {
         saveContent.sessionID = LoadGameContent.sessionID;
         saveContent.storyTextCount = StoryDisplaying.instance.GetStoryProgression();
         saveContent.lastRoomUnlocked = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
-        saveContent.playerPosition = f_fpsController.First().gameObject.transform.position;
+        Vector3 fpsPosition = f_fpsController.First().gameObject.transform.position;
+        saveContent.playerPosition[0] = fpsPosition.x;
+        saveContent.playerPosition[1] = fpsPosition.y;
+        saveContent.playerPosition[2] = fpsPosition.z;
         saveContent.playingDuration = StoryDisplaying.instance.Duration;
 
         // set collectable objects states
         foreach (GameObject go in f_collectable)
         {
+            saveContent.collectableItemsStates.Add(go.name, 1); // default collected
             if (go.activeSelf)
-                saveContent.collectableItemsStates.Add(go.name, 0);
+                saveContent.collectableItemsStates[go.name] = 0; // set not collected
             else if (go.GetComponent<LinkedWith>().link.activeSelf)
             {
                 // some linked go in IAR is a set of GO (Scrolls and Puzzles). In these cases we have to get state of sublinked go with the same name
                 GameObject iarLink = go.GetComponent<LinkedWith>().link;
                 if (iarLink.GetComponent<LinkedWith>())
-                {
-                    if (iarLink.GetComponent<LinkedWith>().link.transform.Find(go.name).gameObject.activeSelf)
-                        saveContent.collectableItemsStates.Add(go.name, 1);
-                    else
-                        saveContent.collectableItemsStates.Add(go.name, 2);
-                }
-                else
-                    saveContent.collectableItemsStates.Add(go.name, 1);
+                    if (iarLink.GetComponent<LinkedWith>().link.transform.Find(go.name))
+                        if (!iarLink.GetComponent<LinkedWith>().link.transform.Find(go.name).gameObject.activeSelf)
+                            saveContent.collectableItemsStates[go.name] = 2;
             }
             else
-                saveContent.collectableItemsStates.Add(go.name, 2);
+                saveContent.collectableItemsStates[go.name] = 2;
         }
 
         // set dream fragments states
         foreach (GameObject go in f_dreamFragments)
         {
-            if (!go.GetComponent<DreamFragment>().viewed)
-                saveContent.dreamFragmentsStates.Add(go.name, 0);
-            else if (go.GetComponent<LinkedWith>().link.GetComponent<NewDreamFragment>() != null)
-                saveContent.dreamFragmentsStates.Add(go.name, 1);
-            else
-                saveContent.dreamFragmentsStates.Add(go.name, 2);
+            saveContent.dreamFragmentsStates.Add(go.name, 0);
+            if (go.GetComponent<DreamFragment>().viewed)
+            {
+                saveContent.dreamFragmentsStates[go.name] = 1;
+                LinkedWith linkWith = go.GetComponent<LinkedWith>();
+                if (linkWith && linkWith.link.GetComponent<NewDreamFragment>() == null) // Green fragment aren't linked with
+                    saveContent.dreamFragmentsStates[go.name] = 2;
+            }
         }
 
         saveContent.pressY_displayed = f_pressY.First().activeSelf;
-        saveContent.ballbox_opened = BallBoxManager.instance.IsLocked();
+        saveContent.ballbox_opened = !BallBoxManager.instance.IsLocked();
         saveContent.wireOnPlank = PlankAndWireManager.instance.IsResolved();
-        saveContent.satchel_opened = SatchelManager.instance.IsLocked();
+        saveContent.satchel_opened = !SatchelManager.instance.IsLocked();
         saveContent.mirrorOnPlank = PlankAndMirrorManager.instance.IsMirrorOnPlank();
 
         // set toggleables states
@@ -388,7 +390,10 @@ public class SaveManager : FSystem {
         Texture2D tmpTex = (Texture2D)f_boardTexture.First().GetComponent<Renderer>().material.mainTexture;
         saveContent.boardEraseTexture = tmpTex.GetRawTextureData();
         // set eraser position
-        saveContent.boardEraserPosition = f_whiteBoard.First().transform.GetChild(2).position;
+        Vector3 eraserPosition = f_whiteBoard.First().transform.GetChild(2).position;
+        saveContent.boardEraserPosition[0] = eraserPosition.x;
+        saveContent.boardEraserPosition[1] = eraserPosition.y;
+        saveContent.boardEraserPosition[2] = eraserPosition.z;
 
         // set queries states
         foreach (GameObject query in f_queries)
@@ -427,15 +432,15 @@ public class SaveManager : FSystem {
         saveContent.hintCooldown = HelpSystem.instance.HintCooldown < 0 ? 0 : HelpSystem.instance.HintCooldown;
         saveContent.systemHintTimer = HelpSystem.instance.SystemHintTimer;
         saveContent.helpLabelCount = HelpSystem.instance.LabelCount;
-        saveContent.bankHints = HelpSystem.instance.GameHints;
+        saveContent.HintDictionary = HelpSystem.instance.GameHints.dictionary;
+        saveContent.HintWrongAnswerFeedbacks = HelpSystem.instance.GameHints.wrongAnswerFeedbacks;
 
         tmpPath = string.Concat(saveFolderPath, "/", fileName, saveFilesExtension);
         try
         {
             // Create all necessary directories if they don't exist
             Directory.CreateDirectory(Path.GetDirectoryName(tmpPath));
-
-            File.WriteAllText(tmpPath, JsonUtility.ToJson(saveContent, true));
+            File.WriteAllText(tmpPath, JsonConvert.SerializeObject(saveContent));
             return tmpPath;
         }
         catch (Exception e)
@@ -497,7 +502,7 @@ public class SaveManager : FSystem {
 
             // set player position
             f_fpsController.First().gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
-            f_fpsController.First().gameObject.transform.position = saveContent.playerPosition;
+            f_fpsController.First().gameObject.transform.position = new Vector3(saveContent.playerPosition[0], saveContent.playerPosition[1], saveContent.playerPosition[2]);
 
             // disable black wall at the beginning
             GameObject night = GameObject.Find("Night");
@@ -544,15 +549,18 @@ public class SaveManager : FSystem {
                         // if collected, turn off fragment in scene
                         DreamFragmentCollecting.instance.TurnOffDreamFragment(go);
                         // enable in IAR
-                        tmpGO = go.GetComponent<LinkedWith>().link;
-                        GameObjectManager.setGameObjectState(tmpGO, true);
-                        if (code == 2)
+                        if (go.GetComponent<LinkedWith>()) // Green fragments don't contain LinkedWith component
                         {
-                            // set as seen in IAR
-                            tmpDFToggle = tmpGO.GetComponent<DreamFragmentToggle>();
-                            tmpGO.GetComponentInChildren<Image>().sprite = tmpDFToggle.offState;
-                            tmpDFToggle.currentState = tmpDFToggle.offState;
-                            GameObjectManager.removeComponent<NewDreamFragment>(tmpDFToggle.gameObject);
+                            tmpGO = go.GetComponent<LinkedWith>().link;
+                            GameObjectManager.setGameObjectState(tmpGO, true);
+                            if (code == 2)
+                            {
+                                // set as seen in IAR
+                                tmpDFToggle = tmpGO.GetComponent<DreamFragmentToggle>();
+                                tmpGO.GetComponentInChildren<Image>().sprite = tmpDFToggle.offState;
+                                tmpDFToggle.currentState = tmpDFToggle.offState;
+                                GameObjectManager.removeComponent<NewDreamFragment>(tmpDFToggle.gameObject);
+                            }
                         }
                     }
                 }
@@ -603,7 +611,7 @@ public class SaveManager : FSystem {
             tex.LoadImage(saveContent.boardEraseTexture);
             f_boardTexture.First().GetComponent<Renderer>().material.mainTexture = tex;
             // set eraser position
-            f_whiteBoard.First().transform.GetChild(2).position = saveContent.boardEraserPosition;
+            f_whiteBoard.First().transform.GetChild(2).position = new Vector3(saveContent.boardEraserPosition[0], saveContent.boardEraserPosition[1], saveContent.boardEraserPosition[2]);
 
             // set queries states
             foreach (GameObject query in f_queries)
@@ -660,7 +668,10 @@ public class SaveManager : FSystem {
                 MonitoringManager.setPetriNetsMarkings(saveContent.petriNetsMarkings);
 
             // set HelpSystem with loaded petri nets
-            HelpSystem.instance.LoadHelpSystemValues(saveContent.hintCooldown, saveContent.systemHintTimer, saveContent.helpLabelCount, saveContent.bankHints);
+
+            HelpSystem.instance.LoadHelpSystemValues(saveContent.hintCooldown, saveContent.systemHintTimer, saveContent.helpLabelCount);
+            HelpSystem.instance.GameHints.dictionary = saveContent.HintDictionary;
+            HelpSystem.instance.GameHints.wrongAnswerFeedbacks = saveContent.HintWrongAnswerFeedbacks;
 
             GameObjectManager.addComponent<ActionPerformedForLRS>(savePopup, new
             {
@@ -717,5 +728,7 @@ public class SaveManager : FSystem {
     {
 		if (!menuSaveButton.interactable)
 			GameObjectManager.setGameObjectState(menuSaveButtonNotice, enabled);
+        else
+            GameObjectManager.setGameObjectState(menuSaveButtonNotice, false);
     }
 }

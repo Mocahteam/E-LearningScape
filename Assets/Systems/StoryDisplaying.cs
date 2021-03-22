@@ -277,6 +277,7 @@ public class StoryDisplaying : FSystem {
                         ActionsManager.instance.Pause = !LoadGameContent.gameContent.trace;
                         HelpSystem.instance.Pause = !LoadGameContent.gameContent.helpSystem;
                         SendStatements.instance.Pause = !LoadGameContent.gameContent.traceToLRS;
+                        SaveManager.instance.Pause = false;
                     }
                     else
                         GameObjectManager.loadScene(SceneManager.GetActiveScene().name); // reset game
@@ -342,8 +343,7 @@ public class StoryDisplaying : FSystem {
     {
         st.storyProgression = storyProgressionCount;
         // start without reading text
-        for (int i = 0; i < storyProgressionCount ; i++)
-            storyTexts[i].Clear();
+        storyTexts[storyProgressionCount].Clear();
     }
 
     public int GetStoryProgression()

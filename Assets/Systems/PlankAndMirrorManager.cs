@@ -14,6 +14,7 @@ public class PlankAndMirrorManager : FSystem {
     private Family f_arrows = FamilyManager.getFamily(new AnyOfTags("PlankE09"), new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
+    private Family f_mirror = FamilyManager.getFamily(new AllOfComponents(typeof(MirrorScript)), new NoneOfComponents(typeof(LinkedWith)));
 
     private float speed;
     private float dist = 1.5f;
@@ -23,7 +24,7 @@ public class PlankAndMirrorManager : FSystem {
     private Vector3 plankTargetPos;
     private GameObject selectedPlank;
     private GameObject plankRotation;
-    private GameObject mirror;
+    private GameObject mirrorOnPlank;
     private GameObject UI;
 
     private bool discovered = false; // true if the plank on the floor was discovered (selected at least once)
@@ -38,6 +39,7 @@ public class PlankAndMirrorManager : FSystem {
         if (Application.isPlaying)
         {
             f_selectedPlank.addEntryCallback(onReadyToWorkOnPlank);
+            mirrorOnPlank = f_mirror.First();
         }
         instance = this;
     }
@@ -67,7 +69,6 @@ public class PlankAndMirrorManager : FSystem {
         movePlank = true;
         prepareClosing = false;
         plankRotation = go.transform.GetChild(0).gameObject;
-        mirror = go.transform.GetChild(1).gameObject;
         UI = go.transform.GetChild(2).gameObject;
 
         // Launch this system
@@ -123,7 +124,7 @@ public class PlankAndMirrorManager : FSystem {
                 if (prepareClosing)
                     rotation *= -1;
                 selectedPlank.transform.Rotate(-Vector3.right, rotation / (dist/speed));
-                mirror.transform.Rotate(-Vector3.right, rotation / (dist / speed));
+                mirrorOnPlank.transform.Rotate(-Vector3.right, rotation / (dist / speed));
                 //when the plank arrives
                 if (selectedPlank.transform.position == plankTargetPos)
                 {
@@ -131,13 +132,13 @@ public class PlankAndMirrorManager : FSystem {
                     if (prepareClosing)
                     {
                         selectedPlank.transform.rotation = Quaternion.Euler(0, 0, 0);
-                        mirror.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        mirrorOnPlank.transform.localRotation = Quaternion.Euler(0, 0, 0);
                         plankRotation.transform.localRotation = Quaternion.Euler(0, 0, 0);
                     }
                     else
                     {
                         selectedPlank.transform.rotation = Quaternion.Euler(-20, 0, 0);
-                        mirror.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        mirrorOnPlank.transform.localRotation = Quaternion.Euler(0, 0, 0);
                         // enable UI
                         GameObjectManager.setGameObjectState(UI, true);
                     }
@@ -198,11 +199,11 @@ public class PlankAndMirrorManager : FSystem {
     public void PutMirrorOnPlank()
     {
         // show ingame mirror on plank
-        GameObjectManager.setGameObjectState(mirror, true);
+        GameObjectManager.setGameObjectState(mirrorOnPlank, true);
     }
 
     public bool IsMirrorOnPlank()
     {
-        return mirror.activeSelf;
+        return mirrorOnPlank.activeSelf;
     }
 }

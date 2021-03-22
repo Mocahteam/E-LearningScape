@@ -48,7 +48,8 @@ public class SatchelManager : FSystem {
             paper = f_bag.First().transform.GetChild(1).gameObject;
             bagPadlock = f_bag.First().transform.GetChild(3).gameObject;
             paperImg = f_bag.First().GetComponentInChildren<Image>();
-            paperImgRef = f_bag.First().GetComponentInChildren<BagImage>(); 
+            paperImgRef = f_bag.First().GetComponentInChildren<BagImage>();
+            bagAnimator = f_bag.First().GetComponentInChildren<Animator>();
 
             f_selectedBag.addEntryCallback(onReadyToWorkOnSatchel);
             f_itemSelected.addEntryCallback(onItemSelectedInInventory);

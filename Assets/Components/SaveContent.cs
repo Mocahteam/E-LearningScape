@@ -48,7 +48,7 @@ public class SaveContent {
     /// <summary>
     /// Player position
     /// </summary>
-    public Vector3 playerPosition = new Vector3();
+    public float[] playerPosition = new float[3];
     /// <summary>
     /// The time spent playing
     /// </summary>
@@ -106,7 +106,7 @@ public class SaveContent {
 	/// <summary>
 	/// The final position of the eraser on the board
 	/// </summary>
-	public Vector3 boardEraserPosition = new Vector3();
+	public float[] boardEraserPosition = new float[3];
 
 	/// <summary>
 	/// Contains the state of the questions in IAR (true if answered).
@@ -146,6 +146,7 @@ public class SaveContent {
     /// <summary>
     /// List of the bank hints still available for the player.
     /// </summary>
-    public GameHints bankHints = null;
+    public Dictionary<string, Dictionary<string, List<KeyValuePair<string, string>>>> HintDictionary = new Dictionary<string, Dictionary<string, List<KeyValuePair<string, string>>>>();
+    public Dictionary<string, Dictionary<string, KeyValuePair<string, string>>> HintWrongAnswerFeedbacks = new Dictionary<string, Dictionary<string, KeyValuePair<string, string>>>();
 
 }
