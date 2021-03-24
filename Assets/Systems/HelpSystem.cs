@@ -239,8 +239,6 @@ public class HelpSystem : FSystem {
                     hintButtonsPool.Add(tmpGo);
                 }
 
-                f_traces.addEntryCallback(OnNewTraces);
-
                 f_wrongAnswerInfo.addEntryCallback(OnWrongAnswer);
 
                 //set player cooldown UI components
@@ -358,6 +356,10 @@ public class HelpSystem : FSystem {
 
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount) {
+        // process pending traces
+        foreach (GameObject go in f_traces)
+            ProcessTraces(go);
+
         //increase labelCount if the player isn't doing anything
         if(Time.time - noActionTimer > config.noActionFrequency)
         {
@@ -412,7 +414,7 @@ public class HelpSystem : FSystem {
     /// Called when a new Trace component is created (they are created by ActionManager when an action is traced)
     /// </summary>
     /// <param name="go">The gameobject of the new Trace component</param>
-    private void OnNewTraces(GameObject go)
+    private void ProcessTraces(GameObject go)
     {
         //reset no action timer every time an action is traced
         noActionTimer = Time.time;

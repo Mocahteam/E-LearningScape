@@ -19,11 +19,10 @@
             The contructor of this system.
             </summary>
         </member>
-        <member name="M:FYFY_plugins.Monitoring.ActionsManager.onResume(System.Int32)">
+        <member name="M:FYFY_plugins.Monitoring.ActionsManager.onProcess(System.Int32)">
             <summary>
-            Used to update member variables when system resume.
+            Use to process your families.
             </summary>
-            <param name="currentFrame"></param>
         </member>
         <member name="T:FYFY_plugins.Monitoring.Trace">
             <summary>
