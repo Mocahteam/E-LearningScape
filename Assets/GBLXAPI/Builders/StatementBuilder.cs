@@ -80,7 +80,7 @@ namespace DIG.GBLXAPI.Builders
 
         // TODO: Fold in enqueue better
         // TODO: Return type?
-        public void Enqueue(Action<bool, string> sendCallback = null)
+        public void Enqueue(Action<string, bool, string> sendCallback = null)
         {
             GBLXAPI.EnqueueStatement(Build(), sendCallback);
         }
@@ -108,7 +108,7 @@ namespace DIG.GBLXAPI.Builders
 
             Statement Build();
 
-            void Enqueue(Action<bool, string> sendCallback = null);
+            void Enqueue(Action<string, bool, string> sendCallback = null);
         }
     }
 }

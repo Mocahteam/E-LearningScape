@@ -109,7 +109,7 @@ public class StoryDisplaying : FSystem {
                 verb = "accessed",
                 objectType = "viewable",
                 objectName = "end link",
-                activityExtensions = new Dictionary<string, List<string>>() { { "link", new List<string>() { st.endLink } } }
+                activityExtensions = new Dictionary<string, string>() { { "link", st.endLink } }
             });
         }
     }
@@ -125,7 +125,7 @@ public class StoryDisplaying : FSystem {
             verb = "read",
             objectType = "text",
             objectName = sdGo.name,
-            activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { sdText.text } } }
+            activityExtensions = new Dictionary<string, string>() { { "content", sdText.text } }
         });
     }
 
@@ -169,9 +169,9 @@ public class StoryDisplaying : FSystem {
                     verb = "started",
                     objectType = "serious-game",
                     objectName = "E-LearningScape",
-                    activityExtensions = new Dictionary<string, List<string>>() {
-                    { "content", new List<string>() { LoadGameContent.gameContent.theme } },
-                    { "help", new List<string>() { LoadGameContent.gameContent.helpSystem.ToString() } }
+                    activityExtensions = new Dictionary<string, string>() {
+                    { "content", LoadGameContent.gameContent.theme },
+                    { "help", LoadGameContent.gameContent.helpSystem.ToString() }
                 }
                 });
             }
@@ -190,9 +190,9 @@ public class StoryDisplaying : FSystem {
                 verb = "completed",
                 objectType = "serious-game",
                 objectName = "E-LearningScape",
-                activityExtensions = new Dictionary<string, List<string>>() {
-                    { "content", new List<string>() { LoadGameContent.gameContent.theme } },
-                    { "time", new List<string>() { string.Concat(hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")) } }
+                activityExtensions = new Dictionary<string, string>() {
+                    { "content", LoadGameContent.gameContent.theme },
+                    { "time", string.Concat(hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")) }
                 }
             });
             fadingImage.color = Color.white;
@@ -332,7 +332,7 @@ public class StoryDisplaying : FSystem {
                         verb = "read",
                         objectType = "text",
                         objectName = sdGo.name,
-                        activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { sdText.text } } }
+                        activityExtensions = new Dictionary<string, string>() { { "content", sdText.text } }
                     });
                 }
             }

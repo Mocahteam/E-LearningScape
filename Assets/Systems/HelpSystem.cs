@@ -790,10 +790,10 @@ public class HelpSystem : FSystem {
                 verb = "received",
                 objectType = "feedback",
                 objectName = string.Concat("hint_", hintButton.transform.GetChild(0).GetComponent<TMP_Text>().text),
-                activityExtensions = new Dictionary<string, List<string>>() {
-                { "type", new List<string>() { "hint" } },
-                { "from", new List<string>() { playerAskedHelp ? "button" : "system" } },
-                { "content", new List<string>() { tmpHC.text } }
+                activityExtensions = new Dictionary<string, string>() {
+                { "type", "hint" },
+                { "from", playerAskedHelp ? "button" : "system" },
+                { "content", tmpHC.text }
             }
             });
         }

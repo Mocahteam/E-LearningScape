@@ -114,7 +114,7 @@ public class IARQueryEvaluator : FSystem {
                 verb = "accessed",
                 objectType = "viewable",
                 objectName = "Password_Room2",
-                activityExtensions = new Dictionary<string, List<string>>() { { "value", new List<string>() { queries.transform.parent.GetChild(1).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text } } }
+                activityExtensions = new Dictionary<string, string>() { { "value", queries.transform.parent.GetChild(1).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text } }
             });
         }
     }
@@ -248,23 +248,23 @@ public class IARQueryEvaluator : FSystem {
                 // Trace to LRS displayed immediate feedback
                 if (i == 3)
                 {
-                    List<string> feedbackTexts = new List<string>();
+                    string feedbackTexts = "";
                     foreach (Transform grandSon in child.transform)
                     {
                         TextMeshProUGUI tmp = grandSon.gameObject.GetComponent<TextMeshProUGUI>();
                         if (tmp && tmp.text != "")
-                            feedbackTexts.Add(grandSon.gameObject.GetComponent<TextMeshProUGUI>().text);
+                            feedbackTexts += grandSon.gameObject.GetComponent<TextMeshProUGUI>().text+" ";
                     }
-                    if (feedbackTexts.Count > 0)
+                    if (feedbackTexts != "")
                     {
                         GameObjectManager.addComponent<ActionPerformedForLRS>(query, new
                         {
                             verb = "received",
                             objectType = "feedback",
                             objectName = string.Concat(query.name, "-", query.tag, "_feedback"),
-                            activityExtensions = new Dictionary<string, List<string>>() {
+                            activityExtensions = new Dictionary<string, string>() {
                             { "content", feedbackTexts },
-                            { "type", new List<string>() { "answer description" } }
+                            { "type", "answer description" }
                         }
                         });
                     }

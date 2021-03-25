@@ -184,7 +184,7 @@ public class DreamFragmentCollecting : FSystem {
             verb = "accessed",
             objectType = "viewable",
             objectName = string.Concat(selectedFragment.name, "_Link"),
-            activityExtensions = new Dictionary<string, List<string>>() { { "link", new List<string>() { df.urlLink } } }
+            activityExtensions = new Dictionary<string, string>() { { "link", df.urlLink } }
         });
     }
 }

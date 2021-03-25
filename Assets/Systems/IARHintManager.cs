@@ -193,9 +193,9 @@ public class IARHintManager : FSystem {
             verb = "read",
             objectType = "feedback",
             objectName = string.Concat("hint_", b.transform.GetChild(0).GetComponent<TMP_Text>().text),
-            activityExtensions = new Dictionary<string, List<string>>() {
-                { "type", new List<string>() { "hint" } },
-                { "content", new List<string>() { b.GetComponent<HintContent>().text } }
+            activityExtensions = new Dictionary<string, string>() {
+                { "type", "hint" },
+                { "content", b.GetComponent<HintContent>().text }
             }
         });
     }
@@ -227,8 +227,8 @@ public class IARHintManager : FSystem {
                 verb = "read",
                 objectType = "viewable",
                 objectName = "hintLink",
-                activityExtensions = new Dictionary<string, List<string>>() {
-                    { "link", new List<string>() { hintLink } }
+                activityExtensions = new Dictionary<string, string>() {
+                    { "link", hintLink }
                 }
             });
         }

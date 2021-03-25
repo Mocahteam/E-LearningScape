@@ -59,9 +59,9 @@ public class UIEffectPlayer : FSystem {
                     verb = "received",
                     objectType = "feedback",
                     objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback"),
-                    activityExtensions = new Dictionary<string, List<string>>() {
-                        { "content", new List<string>() { "blink correct" } },
-                        { "type", new List<string>() { "answer validation" } }
+                    activityExtensions = new Dictionary<string, string>() {
+                        { "content", "blink correct" },
+                        { "type", "answer validation" }
                     }
                 });
             }
@@ -74,9 +74,9 @@ public class UIEffectPlayer : FSystem {
                     verb = "received",
                     objectType = "feedback",
                     objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback"),
-                    activityExtensions = new Dictionary<string, List<string>>() {
-                        { "content", new List<string>() { "correct animation" } },
-                        { "type", new List<string>() { "answer validation" } }
+                    activityExtensions = new Dictionary<string, string>() {
+                        { "content", "correct animation" },
+                        { "type", "answer validation" }
                     }
                 });
             }
@@ -92,9 +92,9 @@ public class UIEffectPlayer : FSystem {
                 verb = "received",
                 objectType = "feedback",
                 objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback"),
-                activityExtensions = new Dictionary<string, List<string>>() {
-                    { "content", new List<string>() { "blink wrong" } },
-                    { "type", new List<string>() { "answer validation" } }
+                activityExtensions = new Dictionary<string, string>() {
+                    { "content", "blink wrong" },
+                    { "type", "answer validation" }
                 }
             });
         }

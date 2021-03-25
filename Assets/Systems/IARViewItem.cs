@@ -122,7 +122,7 @@ public class IARViewItem : FSystem {
             verb = "read",
             objectType = "viewable",
             objectName = string.Concat(go.name, "_Description"),
-            activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { descriptionContent.GetComponent<TextMeshProUGUI>().text } } }
+            activityExtensions = new Dictionary<string, string>() { { "content", descriptionContent.GetComponent<TextMeshProUGUI>().text } }
         });
     }
 

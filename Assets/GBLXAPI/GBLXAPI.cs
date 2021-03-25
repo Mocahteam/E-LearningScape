@@ -7,8 +7,9 @@
 // Copyright 2018 Dig-It! Games, LLC. All rights reserved.
 // This code is licensed under the MIT License (See LICENSE.txt for details)
 // -------------------------------------------------------------------------------------------------
-
+ 
 using System;
+using System.Collections.Generic;
 using DIG.GBLXAPI.Builders;
 using DIG.GBLXAPI.Internal;
 using Newtonsoft.Json.Linq;
@@ -21,10 +22,8 @@ namespace DIG.GBLXAPI
 	{
 		public static bool debugMode = false;
 
-		public const string LrsURL = GBLConfig.LrsURL;
-
 		public static bool IsInit { get; private set; }
-		public static GBLConfig Configuration { get; private set; }
+		public static List<GBLConfig> Configurations { get; private set; }
 
 		public static DurationSlotTracker Timers { get; private set; }
 
@@ -44,14 +43,14 @@ namespace DIG.GBLXAPI
 
 		private static LrsRemoteQueue _lrsQueue;
 
-		public static void Init(GBLConfig config, int queueDepth = 1000)
+		public static void Init(List<GBLConfig> configs, int queueDepth = 1000)
         {
 			if (IsInit) { return; }
 
-			Configuration = config;
+			Configurations = configs;
 
 			_lrsQueue = LrsRemoteQueue.Instance;
-			_lrsQueue.Init(config, queueDepth);
+			_lrsQueue.Init(configs, queueDepth);
 
 			Timers = new DurationSlotTracker();
 
@@ -88,7 +87,7 @@ namespace DIG.GBLXAPI
 			IsInit = true;
 		}
 
-		public static void EnqueueStatement(Statement statement, Action<bool, string> sendCallback = null)
+		public static void EnqueueStatement(Statement statement, Action<string, bool, string> sendCallback = null)
 		{
 			//Debug.Log(statement.ToJSON(true));
 			_lrsQueue.EnqueueStatement(statement, sendCallback);

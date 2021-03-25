@@ -25,15 +25,15 @@ public class SendStatements : FSystem {
 
     public void initGBLXAPI()
     {
-        if (!GBLXAPI.Instance.IsInit())
-            GBLXAPI.Instance.init(GBL_Interface.lrsAddresses, GBL_Interface.standardsConfigDefault, GBL_Interface.standardsConfigUser);
+        if (!GBLXAPI.IsInit)
+            GBLXAPI.Init(GBL_Interface.lrsAddresses);
 
-        GBLXAPI.Instance.debugStatement = false;
+        GBLXAPI.debugMode = false;
 
         //Generate player name unique to each playing session (computer name + date + hour)
         GBL_Interface.playerName = LoadGameContent.sessionID;
         //Generate a UUID from the player name
-        GBL_Interface.userUUID = GBLXAPI.Instance.GenerateActorUUID(LoadGameContent.sessionID);
+        GBL_Interface.userUUID = GBLUtils.GenerateActorUUID(LoadGameContent.sessionID);
     }
 
 	// Use this to update member variables when system resume.
@@ -74,8 +74,7 @@ public class SendStatements : FSystem {
                         else if (ap.success < 0)
                             success = false;
 
-                        GBL_Interface.SendStatementWithResult(ap.verb, ap.objectType, ap.objectName, ap.activityExtensions, ap.resultExtensions,
-                            completed, success, ap.response, ap.score, ap.duration);
+                        GBL_Interface.SendStatementWithResult(ap.verb, ap.objectType, ap.objectName, ap.activityExtensions, ap.resultExtensions, completed, success, ap.response, ap.score, ap.duration);
                     }
                 }
             }

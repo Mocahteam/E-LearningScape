@@ -172,7 +172,7 @@ public class MovingSystem : FSystem
                         verb = "moved",
                         objectType = "avatar",
                         objectName = "player",
-                        activityExtensions = new Dictionary<string, List<string>>() { { "position", new List<string>() { f_player.First().transform.position.ToString("G4") } } }
+                        activityExtensions = new Dictionary<string, string>() { { "position", f_player.First().transform.position.ToString("G4") } }
                     });
                     walkingTraceTimer = Time.time;
                 }

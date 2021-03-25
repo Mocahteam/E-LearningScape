@@ -284,10 +284,9 @@ public class LoginManager : FSystem {
                 verb = "received",
                 objectType = "feedback",
                 objectName = string.Concat(selectedLoginPanel.name, "_feedback"),
-                activityExtensions = new Dictionary<string, List<string>>() {
-                    { "content", new List<string>() {
-                        string.Concat(connectionAnswerCheck1, connectionAnswerCheck2, connectionAnswerCheck3), answer.ToString() } },
-                    { "type", new List<string>() { "answer validation" } }
+                activityExtensions = new Dictionary<string, string>() {
+                    { "content", string.Concat(connectionAnswerCheck1.text, connectionAnswerCheck2.text, connectionAnswerCheck3.text, answer.ToString()) },
+                    { "type", "answer validation" }
                 }
             });
         }

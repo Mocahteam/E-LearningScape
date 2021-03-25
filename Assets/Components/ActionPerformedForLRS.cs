@@ -23,9 +23,9 @@ public class ActionPerformedForLRS : MonoBehaviour {
     /// <summary>
     /// Keys are extention's fields' names and values are lists of values of each field
     /// </summary>
-    public Dictionary<string, List<string>> activityExtensions = null;
+    public Dictionary<string, string> activityExtensions = null;
     /// <summary>
     /// Keys are extention's fields' names and values are lists of values of each field
     /// </summary>
-    public Dictionary<string, List<string>> resultExtensions = null;
+    public Dictionary<string, string> resultExtensions = null;
 }

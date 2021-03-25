@@ -57,7 +57,7 @@ public class PlankAndMirrorManager : FSystem {
                 verb = "moved",
                 objectType = "interactable",
                 objectName = selectedPlank.name,
-                activityExtensions = new Dictionary<string, List<string>>() { { "direction", new List<string>() { way < 0 ? "right" : "left" } } }
+                activityExtensions = new Dictionary<string, string>() { { "direction", way < 0 ? "right" : "left" } }
             });
         }
     }

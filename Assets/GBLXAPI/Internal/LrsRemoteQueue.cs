@@ -1,6 +1,7 @@
 ﻿using DisruptorUnity3d;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TinCan;
 using UnityEngine;
 
@@ -29,9 +30,12 @@ namespace DIG.GBLXAPI.Internal
 
 		public bool useDefaultCallback = true;
 
-		public bool ReadyToSend { get; private set; }
+        public int readyToSend = 0;
 
-		private RemoteLRSAsync _lrsEndpoint; // WebGL/Desktop/Mobile coroutine implementation of RemoteLRS.cs
+        [ReadOnly]
+        public int pendingStatements = 0; // in order to know statementQueue size in inspector
+
+		private List<RemoteLRSAsync> _lrsEndpoints; // WebGL/Desktop/Mobile coroutine implementation of RemoteLRS.cs
 
 		private RingBuffer<QueuedStatement> _statementQueue;
 
@@ -43,25 +47,45 @@ namespace DIG.GBLXAPI.Internal
 			DontDestroyOnLoad(gameObject);
 		}
 
-		public void Init(GBLConfig config, int queueDepth = 1000)
+		public void Init(List<GBLConfig> configs, int queueDepth = 1000)
 		{
-			_lrsEndpoint = new RemoteLRSAsync(GBLConfig.LrsURL, config.lrsUser, config.lrsPassword);
+            _lrsEndpoints = new List<RemoteLRSAsync>();
+            foreach (GBLConfig config in configs)
+                _lrsEndpoints.Add(new RemoteLRSAsync(config.lrsURL, config.lrsUser, config.lrsPassword));
 			_statementQueue = new RingBuffer<QueuedStatement>(queueDepth);
 
-			ReadyToSend = true;
+			readyToSend = _lrsEndpoints.Count;
 		}
 
 		private void Update()
 		{
-			// GBL is open/ready to send?
-			if (!ReadyToSend || _statementQueue == null || _statementQueue.Count == 0) { return; }
+            if (_statementQueue != null && _statementQueue.Count >= 0)
+                pendingStatements = _statementQueue.Count;
+            else
+                pendingStatements = 0;
+            // GBL is open/ready to send?
+            if (readyToSend < _lrsEndpoints.Count || _statementQueue == null || _statementQueue.Count == 0) { return; }
 
 			// TODO: Remove this weird stop / start coroutine sequence
 			StopAllCoroutines();
-			StartCoroutine(SendStatementCoroutine());
+            // Lock
+            readyToSend = 0;
+            foreach (RemoteLRSAsync endPoints in _lrsEndpoints)
+            {
+                // Dequeue statement if exists in queue
+                if (_statementQueue.TryDequeue(out QueuedStatement queuedStatement))
+                {
+                    // Debug statement
+                    if (GBLXAPI.debugMode)
+                    {
+                        Debug.Log(queuedStatement.statement.ToJSON(true));
+                    }
+                    StartCoroutine(SendStatementCoroutine(endPoints, queuedStatement));
+                }
+            }
 		}
 
-		public void EnqueueStatement(Statement statement, Action<bool, string> sendCallback = null)
+		public void EnqueueStatement(Statement statement, Action<string, bool, string> sendCallback = null)
 		{
 			// Make sure all required fields are set
 			bool valid = true;
@@ -90,52 +114,40 @@ namespace DIG.GBLXAPI.Internal
 			}
 			else
 			{
-				sendCallback?.Invoke(false, invalidReason);
+				sendCallback?.Invoke("", false, invalidReason);
 			}
 		}
 
 		// ------------------------------------------------------------------------
 		// This coroutine spawns a thread to send the statement to the LRS
 		// ------------------------------------------------------------------------
-		private IEnumerator SendStatementCoroutine()
+		private IEnumerator SendStatementCoroutine(RemoteLRSAsync endPoint, QueuedStatement queuedStatement)
 		{
-			// Lock
-			ReadyToSend = false;
 
-			// Dequeue statement if exists in queue
-			if (_statementQueue.TryDequeue(out QueuedStatement queuedStatement))
-			{
-				// Debug statement
-				if (GBLXAPI.debugMode)
-				{
-					Debug.Log(queuedStatement.statement.ToJSON(true));
-				}
+            endPoint.PostStatement(queuedStatement.statement);
 
-				_lrsEndpoint.PostStatement(queuedStatement.statement);
+			// Wait for the coroutine to finish
+			while (!endPoint.complete) { yield return null; }
 
-				// Wait for the coroutine to finish
-				while (!_lrsEndpoint.complete) { yield return null; }
+			// Client callback with result
+			queuedStatement.callback?.Invoke(endPoint.endpoint, endPoint.success, endPoint.response);
 
-				// Client callback with result
-				queuedStatement.callback?.Invoke(_lrsEndpoint.success, _lrsEndpoint.response);
-			}
-
-			// Unlock
-			ReadyToSend = true;
+			// Contribute to unlock
+			readyToSend++;
 		}
 
-		private void StatementDefaultCallback(bool result, string resultText)
+		private void StatementDefaultCallback(string endpoint, bool result, string resultText)
 		{
-			if (result) { Debug.Log("GBLXAPI: SUCCESS: " + resultText); }
-			else { Debug.Log("GBLXAPI: ERROR: " + resultText); }
+			if (result) { Debug.Log("GBLXAPI: "+ endpoint + " SUCCESS: " + resultText); }
+			else { Debug.Log("GBLXAPI: "+endpoint+" ERROR: " + resultText); }
 		}
 
 		public struct QueuedStatement
 		{
 			public Statement statement;
-			public Action<bool, string> callback;
+			public Action<string, bool, string> callback;
 
-			public QueuedStatement(Statement statement, Action<bool, string> callback)
+			public QueuedStatement(Statement statement, Action<string, bool, string> callback)
 			{
 				this.statement = statement;
 				this.callback = callback;

@@ -38,29 +38,44 @@ namespace DIG.GBLXAPI.Builders
         {
             standardType = standardType.ToLower();
             standardName = standardName.ToLower();
-
-            try
+            //DARKAOUI ---
+            //Previously an error was throwed if the extension wasn't in the json file
+            //this verification was removed because we can't dynamicaly change the json with the game content modification
+            //try
+            //{
+            //    JToken token = _standardsObject[standardType][standardName];
+            //
+            //    if (token == null) {
+            //        foreach (_standardsObject.v)
+            //        throw new VocabMissingException("extension", standardName); }
+            //
+            //    // If an extension type is specified, use that as the map key
+            //    string key = (string.IsNullOrEmpty(extensionType))
+            //        ? standardType
+            //        : extensionType.ToLower();
+            //
+            //    if(!_standardsMap.ContainsKey(key))
+            //    {
+            //        _standardsMap.Add(key, new List<JToken>());
+            //    }
+            //
+            //    _standardsMap[key].Add(token);
+            //}
+            //catch (NullReferenceException)
+            //{
+            //    throw new VocabMissingException("extension type", standardType);
+            //}
+            // If an extension type is specified, use that as the map key
+            string key = (string.IsNullOrEmpty(extensionType))
+                ? standardType
+                : extensionType.ToLower();
+            
+            if(!_standardsMap.ContainsKey(key))
             {
-                JToken token = _standardsObject[standardType][standardName];
-
-                if (token == null) { throw new VocabMissingException("extension", standardName); }
-
-                // If an extension type is specified, use that as the map key
-                string key = (string.IsNullOrEmpty(extensionType))
-                    ? standardType
-                    : extensionType.ToLower();
-
-                if(!_standardsMap.ContainsKey(key))
-                {
-                    _standardsMap.Add(key, new List<JToken>());
-                }
-
-                _standardsMap[key].Add(token);
+                _standardsMap.Add(key, new List<JToken>());
             }
-            catch (NullReferenceException)
-            {
-                throw new VocabMissingException("extension type", standardType);
-            }
+            _standardsMap[key].Add(standardName);
+            // ---
 
             return this;
         }

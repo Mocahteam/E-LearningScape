@@ -186,9 +186,9 @@ public class LockResolver : FSystem {
                     verb = "moved",
                     objectType = "interactable",
                     objectName = selectedWheel.name,
-                    activityExtensions = new Dictionary<string, List<string>>() {
-                        { "direction", new List<string>() { rotationDirection } },
-                        { "content", new List<string>() { selectedWheel.GetComponent<WheelFrontFace>().faceNumber.ToString() } }
+                    activityExtensions = new Dictionary<string, string>() {
+                        { "direction", rotationDirection },
+                        { "content", selectedWheel.GetComponent<WheelFrontFace>().faceNumber.ToString() }
                     },
                     result = true,
                     success = solved,
@@ -218,7 +218,7 @@ public class LockResolver : FSystem {
                     verb = "completed",
                     objectType = "interactable",
                     objectName = selectedLocker.gameObject.name,
-                    activityExtensions = new Dictionary<string, List<string>>() { { "content", new List<string>() { string.Concat(selectedLocker.wheel1Solution, selectedLocker.wheel2Solution, selectedLocker.wheel3Solution) } } }
+                    activityExtensions = new Dictionary<string, string>() { { "content", string.Concat(selectedLocker.wheel1Solution, selectedLocker.wheel2Solution, selectedLocker.wheel3Solution) } }
                 });
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new { verb = "unlocked", objectType = "menu", objectName = selectedLocker.IARScreenUnlock.name });
                 // disable UI items usable for this enigm

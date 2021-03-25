@@ -152,8 +152,8 @@ public class IARDreamFragmentManager : FSystem {
 					verb = t.isOn ? "activated": "deactivated",
 					objectType = "viewable",
 					objectName = tmpDFToggle.dreamFragmentContent.name,
-					activityExtensions = new Dictionary<string, List<string>>() {
-						{ "type", new List<string>() { "dream fragment" } }
+					activityExtensions = new Dictionary<string, string>() {
+						{ "type", "dream fragment" }
 					}
 			});
 		}
@@ -202,7 +202,7 @@ public class IARDreamFragmentManager : FSystem {
 				verb = "accessed",
 				objectType = "viewable",
 				objectName = string.Concat(selectedDreamFragment.gameObject.name, "_Link"),
-				activityExtensions = new Dictionary<string, List<string>>() { { "link", new List<string>() { selectedDreamFragment.urlLink } } }
+				activityExtensions = new Dictionary<string, string>() { { "link", selectedDreamFragment.urlLink } }
 			});
 		}
 		else
@@ -470,11 +470,11 @@ public class IARDreamFragmentManager : FSystem {
 				verb = "interacted",
 				objectType = "viewable",
 				objectName = string.Concat(tracedDocument.transform.parent.gameObject.name, "/", tracedDocument.name),
-				activityExtensions = new Dictionary<string, List<string>>() {
-					{ "type", new List<string>() { "dream fragment" } },
-					{ "position", new List<string>() { tmpRT.position.ToString() } },
-					{ "rotation", new List<string>() { tmpRT.rotation.eulerAngles.ToString() } },
-					{ "scale", new List<string>() { tmpRT.localScale.ToString() } }
+				activityExtensions = new Dictionary<string, string>() {
+					{ "type", "dream fragment" },
+					{ "position", tmpRT.position.ToString() },
+					{ "rotation", tmpRT.rotation.eulerAngles.ToString() },
+					{ "scale", tmpRT.localScale.ToString() }
 				}
 			});
 
@@ -499,11 +499,11 @@ public class IARDreamFragmentManager : FSystem {
 				verb = "interacted",
 				objectType = "viewable",
 				objectName = string.Concat(dreamFragmentContent.name, "/", document.gameObject.name),
-				activityExtensions = new Dictionary<string, List<string>>() {
-					{ "type", new List<string>() { "dream fragment" } },
-					{ "position", new List<string>() { tmpRT.position.ToString() } },
-					{ "rotation", new List<string>() { tmpRT.rotation.eulerAngles.ToString() } },
-					{ "scale", new List<string>() { tmpRT.localScale.ToString() } }
+				activityExtensions = new Dictionary<string, string>() {
+					{ "type", "dream fragment" },
+					{ "position", tmpRT.position.ToString() },
+					{ "rotation", tmpRT.rotation.eulerAngles.ToString() },
+					{ "scale", tmpRT.localScale.ToString() }
 				}
 			});
 		}
@@ -526,11 +526,11 @@ public class IARDreamFragmentManager : FSystem {
 				verb = "interacted",
 				objectType = "viewable",
 				objectName = string.Concat(tracedDocument.transform.parent.gameObject.name, "/", tracedDocument.name),
-				activityExtensions = new Dictionary<string, List<string>>() {
-					{ "type", new List<string>() { "dream fragment" } },
-					{ "position", new List<string>() { tmpRT.position.ToString() } },
-					{ "rotation", new List<string>() { tmpRT.rotation.eulerAngles.ToString() } },
-					{ "scale", new List<string>() { tmpRT.localScale.ToString() } }
+				activityExtensions = new Dictionary<string, string>() {
+					{ "type", "dream fragment" },
+					{ "position", tmpRT.position.ToString() },
+					{ "rotation", tmpRT.rotation.eulerAngles.ToString() },
+					{ "scale", tmpRT.localScale.ToString() }
 				}
 			});
 

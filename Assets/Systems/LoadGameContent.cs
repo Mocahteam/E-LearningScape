@@ -725,7 +725,7 @@ public class LoadGameContent : FSystem {
         // Load LRS config file
         LoadJsonFile(gameContent.lrsConfigPath, defaultGameContent.lrsConfigFile, out GBL_Interface.lrsAddresses);
         if (GBL_Interface.lrsAddresses == null)
-            GBL_Interface.lrsAddresses = new List<LRSAddress>();
+            GBL_Interface.lrsAddresses = new List<DIG.GBLXAPI.GBLConfig>();
         if (gameContent.traceToLRS)
             SendStatements.instance.initGBLXAPI();
         Debug.Log("LRS config file loaded ");
