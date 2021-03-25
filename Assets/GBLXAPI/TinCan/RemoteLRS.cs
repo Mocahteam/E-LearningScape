@@ -18,10 +18,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Web;
 using Newtonsoft.Json.Linq;
 using TinCan.Documents;
 using TinCan.LRSResponses;
-using UnityEngine;
 
 namespace TinCan
 {
@@ -106,7 +106,7 @@ namespace TinCan
                     {
                         qs += "&";
                     }
-                    qs += WWW.EscapeURL(entry.Key) + "=" + WWW.EscapeURL(entry.Value);
+                    qs += WebUtility.UrlEncode(entry.Key) + "=" + WebUtility.UrlEncode(entry.Value);
                 }
                 if (qs != "")
                 {
