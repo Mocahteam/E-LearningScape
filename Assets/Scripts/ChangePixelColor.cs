@@ -58,7 +58,6 @@ public class ChangePixelColor : MonoBehaviour {
                 Texture2D tex = (Texture2D)hit.transform.gameObject.GetComponent<Renderer>().material.mainTexture;
                 int pointX = (int)(uv.x * tex.width);
                 int pointY = (int)(uv.y * tex.height);
-                Debug.Log(uv.x + " " + uv.y + " " + pointX + " " + pointY);
                 if (oldPointX == int.MinValue)
                     oldPointX = pointX;
                 if (oldPointY == int.MinValue)

@@ -72,7 +72,8 @@ namespace DIG.GBLXAPI.Builders
                 verb = _verb,
                 result = _result,
                 target = _activity,
-                context = _context
+                context = _context,
+                timestamp = DateTime.UtcNow
             };
 
             return statement;

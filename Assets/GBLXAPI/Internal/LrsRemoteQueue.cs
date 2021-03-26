@@ -28,12 +28,7 @@ namespace DIG.GBLXAPI.Internal
 			}
 		}
 
-		public bool useDefaultCallback = true;
-
-        public int readyToSend = 0;
-
-        [ReadOnly]
-        public int pendingStatements = 0; // in order to know statementQueue size in inspector
+		public bool useDefaultCallback = false;
 
 		private List<RemoteLRSAsync> _lrsEndpoints; // WebGL/Desktop/Mobile coroutine implementation of RemoteLRS.cs
 
@@ -53,24 +48,14 @@ namespace DIG.GBLXAPI.Internal
             foreach (GBLConfig config in configs)
                 _lrsEndpoints.Add(new RemoteLRSAsync(config.lrsURL, config.lrsUser, config.lrsPassword));
 			_statementQueue = new RingBuffer<QueuedStatement>(queueDepth);
-
-			readyToSend = _lrsEndpoints.Count;
 		}
 
 		private void Update()
 		{
-            if (_statementQueue != null && _statementQueue.Count >= 0)
-                pendingStatements = _statementQueue.Count;
-            else
-                pendingStatements = 0;
-            // GBL is open/ready to send?
-            if (readyToSend < _lrsEndpoints.Count || _statementQueue == null || _statementQueue.Count == 0) { return; }
+            if (_statementQueue == null || _statementQueue.Count == 0)
+                return;
 
-			// TODO: Remove this weird stop / start coroutine sequence
-			StopAllCoroutines();
-            // Lock
-            readyToSend = 0;
-            foreach (RemoteLRSAsync endPoints in _lrsEndpoints)
+            foreach (RemoteLRSAsync endPoint in _lrsEndpoints)
             {
                 // Dequeue statement if exists in queue
                 if (_statementQueue.TryDequeue(out QueuedStatement queuedStatement))
@@ -80,7 +65,7 @@ namespace DIG.GBLXAPI.Internal
                     {
                         Debug.Log(queuedStatement.statement.ToJSON(true));
                     }
-                    StartCoroutine(SendStatementCoroutine(endPoints, queuedStatement));
+                    StartCoroutine(SendStatementCoroutine(endPoint, queuedStatement));
                 }
             }
 		}
@@ -124,16 +109,13 @@ namespace DIG.GBLXAPI.Internal
 		private IEnumerator SendStatementCoroutine(RemoteLRSAsync endPoint, QueuedStatement queuedStatement)
 		{
 
-            endPoint.PostStatement(queuedStatement.statement);
+            int idState = endPoint.PostStatement(queuedStatement.statement);
 
 			// Wait for the coroutine to finish
-			while (!endPoint.complete) { yield return null; }
+			while (!endPoint.states[idState].complete) { yield return null; }
 
 			// Client callback with result
-			queuedStatement.callback?.Invoke(endPoint.endpoint, endPoint.success, endPoint.response);
-
-			// Contribute to unlock
-			readyToSend++;
+			queuedStatement.callback?.Invoke(endPoint.endpoint, endPoint.states[idState].success, endPoint.states[idState].response);
 		}
 
 		private void StatementDefaultCallback(string endpoint, bool result, string resultText)

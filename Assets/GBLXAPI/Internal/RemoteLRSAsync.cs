@@ -11,6 +11,7 @@
 // -------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using TinCan;
@@ -25,10 +26,14 @@ namespace DIG.GBLXAPI.Internal
 		public TCAPIVersion version { get; set; }
 		public string auth { get; set; }
 
-		// state
-		public bool complete { get; set; }
-		public bool success { get; set; }
-		public string response { get; set; }
+        public class State
+        {
+            public bool complete = false;
+            public bool success = false;
+            public string response = "";
+        }
+
+        public List<State> states;
 
 		public RemoteLRSAsync(string endpoint, string username, string password)
         {
@@ -43,24 +48,17 @@ namespace DIG.GBLXAPI.Internal
 			this.version = TCAPIVersion.latest();
 			this.auth = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password));
 
-			ClearState();
+            states = new List<State>();
 		}
 
 		// ------------------------------------------------------------------------
 		// ------------------------------------------------------------------------
-		public void ClearState()
+		public int PostStatement(Statement statement)
 		{
-			complete = false;
-			success = false;
-			response = "";
-		}
-
-		// ------------------------------------------------------------------------
-		// ------------------------------------------------------------------------
-		public void PostStatement(Statement statement)
-		{
-			// reinit state
-			ClearState();
+            // reinit state
+            State state = new State();
+            states.Add(state);
+            int idState = states.Count - 1;
 
 			// https://learninglocker.dig-itgames.com/data/xAPI/statements?statementId=58098b7c-3353-4f9c-b812-1bddb08876fd
 			string queryURL = endpoint + "statements";
@@ -76,20 +74,22 @@ namespace DIG.GBLXAPI.Internal
 			var requestOperation = request.SendWebRequest();
 			requestOperation.completed += (operation) =>
 			{
-				success = !(request.isNetworkError || request.isHttpError);
+                state.success = !(request.isNetworkError || request.isHttpError);
 
-				if (success)
+				if (state.success)
 				{
 					JArray ids = JArray.Parse(request.downloadHandler.text);
-					response = ids[0].ToString();
+                    state.response = ids[0].ToString();
 				}
 				else
 				{
-					response = request.error;
+                    state.response = request.error;
 				}
 
-				complete = true;
+                state.complete = true;
 			};
-		}
+            return idState;
+
+        }
 	}
 }
