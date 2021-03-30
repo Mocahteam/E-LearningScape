@@ -236,6 +236,10 @@ public class IARViewItem : FSystem {
             // this game object is unselected and it contains a linked game object => we hide the linked game object
             if (item.GetComponent<LinkedWith>())
                 GameObjectManager.setGameObjectState(item.GetComponent<LinkedWith>().link, false); // switch off the view of the last selection
+
+            // enable HUD under cursor
+            if (LoadGameContent.gameContent.displaySelectedItems && item.GetComponent<HUDItemSelected>())
+                GameObjectManager.setGameObjectState(item.GetComponent<HUDItemSelected>().hudGO, false);
         }
         else
         {
@@ -244,6 +248,10 @@ public class IARViewItem : FSystem {
 
             GameObjectManager.addComponent<SelectedInInventory>(item);
             GameObjectManager.addComponent<PlaySound>(item, new { id = 13 }); // id refer to FPSController AudioBank
+
+            // disable HUD under cursor
+            if (LoadGameContent.gameContent.displaySelectedItems && item.GetComponent<HUDItemSelected>())
+                GameObjectManager.setGameObjectState(item.GetComponent<HUDItemSelected>().hudGO, true);
         }
     }
 

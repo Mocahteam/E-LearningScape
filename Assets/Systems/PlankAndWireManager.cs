@@ -235,6 +235,7 @@ public class PlankAndWireManager : FSystem {
                                     // remove the wire from inventory
                                     LinkedWith lw = selectedPlank.GetComponent<LinkedWith>();
                                     GameObjectManager.setGameObjectState(lw.link, false);
+                                    GameObjectManager.setGameObjectState(lw.link.GetComponent<HUDItemSelected>().hudGO, false);
 
                                     // notify player success
                                     GameObjectManager.addComponent<PlayUIEffect>(selectedPlank, new { effectCode = 2 });

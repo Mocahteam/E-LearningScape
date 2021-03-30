@@ -158,6 +158,7 @@ public class PlankAndMirrorManager : FSystem {
             {
                 // remove mirror from inventory
                 GameObjectManager.setGameObjectState(isSelected("Mirror"), false);
+                GameObjectManager.setGameObjectState(isSelected("Mirror").GetComponent<HUDItemSelected>().hudGO, false);
 
                 PutMirrorOnPlank();
 

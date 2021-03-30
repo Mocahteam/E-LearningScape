@@ -181,6 +181,8 @@ public class Window extends JFrame {
 		toggle.setSelected(gameContent.autoSaveProgression);
 		toggle = (JCheckBox) jsonKeyToComponents.get("saveAndLoadProgression").get(0);
 		toggle.setSelected(gameContent.saveAndLoadProgression);
+		toggle = (JCheckBox) jsonKeyToComponents.get("displaySelectedItems").get(0);
+		toggle.setSelected(gameContent.displaySelectedItems);
 		text = (JTextField) jsonKeyToComponents.get("lrsConfigPath").get(0);
 		text.setText(gameContent.lrsConfigPath);
 		text.setColumns(1);
@@ -1369,6 +1371,8 @@ public class Window extends JFrame {
 		gameContent.saveAndLoadProgression = toggle.isSelected();
 		toggle = (JCheckBox) jsonKeyToComponents.get("autoSaveProgression").get(0);
 		gameContent.autoSaveProgression = toggle.isSelected();
+		toggle = (JCheckBox) jsonKeyToComponents.get("displaySelectedItems").get(0);
+		gameContent.displaySelectedItems = toggle.isSelected();
 		text = (JTextField) jsonKeyToComponents.get("lrsConfigPath").get(0);
 		gameContent.lrsConfigPath = text.getText();
 		text = (JTextField) jsonKeyToComponents.get("dreamFragmentLinksPath").get(0);
@@ -2250,11 +2254,13 @@ public class Window extends JFrame {
     	content.add(CreateToggleLine("Sauvegarde et chargement:", "saveAndLoadProgression",
 				(JCheckBox) jsonKeyToComponents.get("autoSaveProgression").get(0), false, false), gbc);
     	gbc.gridy = 11;
+		content.add(CreateToggleLine("Afficher les objets selectionnés en dessous du curseur:", "displaySelectedItems"), gbc);
+		gbc.gridy = 12;
     	content.add(CreateCategory("Chemins de fichiers", GenerateFilesPathsUI()), gbc);
-    	gbc.gridy = 12;
+    	gbc.gridy = 13;
     	content.add(CreateToggleLine("RemoveExtraGeometries:", "removeExtraGeometries"), gbc);
-		gbc.gridy = 13;
-		content.add(CreateTextAreaLine("Crédits", "additionalCredit"), gbc);
+		gbc.gridy = 14;
+		content.add(CreateTextAreaLine("Crédits additionnels", "additionalCredit"), gbc);
     	
     	return new JScrollPane(parent, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }

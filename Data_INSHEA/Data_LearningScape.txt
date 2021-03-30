@@ -10,6 +10,7 @@
     "useEndRoom": false,
     "saveAndLoadProgression": true,
     "autoSaveProgression": true,
+    "displaySelectedItems": true,
     "lrsConfigPath": "./Data/LRSConfig.txt",
     "dreamFragmentLinksPath": "./Data/DreamFragmentLinks.txt",
     "dreamFragmentDocumentsPathFile": "./Data/FragmentsPath.txt",

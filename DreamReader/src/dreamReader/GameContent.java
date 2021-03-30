@@ -53,6 +53,11 @@ public class GameContent {
     /// </summary>
     public boolean autoSaveProgression;
     /// <summary>
+    /// If true, selected items will be displayed under cursor.
+    /// Items unusable in scene (such as scrolls and puzzles) won't be displayed
+    /// </summary>
+    public boolean displaySelectedItems;
+    /// <summary>
     /// If true, remove extra geaometries. This is an additionnal option for very poor hardware
     /// </summary>
     public boolean removeExtraGeometries = true;

@@ -175,6 +175,7 @@ public class SatchelManager : FSystem {
                 UnlockSatchel();
                 //remove key from inventory
                 GameObjectManager.setGameObjectState(isSelected("KeySatchel"), false);
+                GameObjectManager.setGameObjectState(isSelected("KeySatchel").GetComponent<HUDItemSelected>().hudGO, false);
                 GameObjectManager.addComponent<ActionPerformed>(bagPadlock.GetComponentInChildren<ComponentMonitoring>().gameObject, new { name = "perform", performedBy = "system" });
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBag, new { verb = "unlocked", objectType = "interactable", objectName = selectedBag.name });
                 paperOpenning = true;
