@@ -38,6 +38,8 @@ public class SaveManager : FSystem {
 	private Family f_fragmentNotif = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragmentFlag)));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_enabledHintsIAR = FamilyManager.getFamily(new AllOfComponents(typeof(HintContent)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
+    private Family f_lockIntroWheel = FamilyManager.getFamily(new AllOfComponents(typeof(WheelFrontFace)), new AnyOfTags("LockIntroWheel"));
+    private Family f_lockR2Wheel = FamilyManager.getFamily(new AllOfComponents(typeof(WheelFrontFace)), new AnyOfTags("LockR2Wheel"));
 
     public static SaveManager instance;
 
@@ -338,6 +340,12 @@ public class SaveManager : FSystem {
         saveContent.sessionID = LoadGameContent.sessionID;
         saveContent.storyTextCount = StoryDisplaying.instance.GetStoryProgression();
         saveContent.lastRoomUnlocked = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
+
+        for (int i = 0; i < f_lockIntroWheel.Count; i++)
+            saveContent.lockIntroPositions[i] = f_lockIntroWheel.getAt(i).GetComponent<WheelFrontFace>().faceNumber;
+        for (int i = 0; i < f_lockR2Wheel.Count; i++)
+            saveContent.lockRoom2Positions[i] = f_lockR2Wheel.getAt(i).GetComponent<WheelFrontFace>().faceNumber;
+
         Vector3 fpsPosition = f_fpsController.First().gameObject.transform.position;
         saveContent.playerPosition[0] = fpsPosition.x;
         saveContent.playerPosition[1] = fpsPosition.y;
@@ -486,6 +494,21 @@ public class SaveManager : FSystem {
                 GameObjectManager.setGameObjectState(f_gameRooms.First().transform.GetChild(2).gameObject, true);
                 GameObjectManager.setGameObjectState(f_gameRooms.First().transform.GetChild(3).gameObject, true);
             }
+
+            // set locker wheels position
+            for (int i = 0; i < f_lockIntroWheel.Count; i++)
+            {
+                GameObject wheel = f_lockIntroWheel.getAt(i);
+                wheel.GetComponent<WheelFrontFace>().faceNumber = saveContent.lockIntroPositions[i];
+                wheel.transform.Rotate(36* saveContent.lockIntroPositions[i], 0, 0);
+            }
+            for (int i = 0; i < f_lockR2Wheel.Count; i++)
+            {
+                GameObject wheel = f_lockR2Wheel.getAt(i);
+                wheel.GetComponent<WheelFrontFace>().faceNumber = saveContent.lockRoom2Positions[i];
+                wheel.transform.Rotate(36 * saveContent.lockRoom2Positions[i], 0, 0);
+            }
+
             // set doors states
             if (saveContent.lastRoomUnlocked > 0)
                 LockResolver.instance.UnlockIntroWall();

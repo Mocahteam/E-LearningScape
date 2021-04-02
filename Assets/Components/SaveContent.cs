@@ -46,6 +46,14 @@ public class SaveContent {
     /// </summary>
     public int lastRoomUnlocked = 0;
     /// <summary>
+    /// Wheels number of Intro lock
+    /// </summary>
+    public int[] lockIntroPositions = new int[3];
+    /// <summary>
+    /// Wheels number of Room2 lock
+    /// </summary>
+    public int[] lockRoom2Positions = new int[3];
+    /// <summary>
     /// Player position
     /// </summary>
     public float[] playerPosition = new float[3];

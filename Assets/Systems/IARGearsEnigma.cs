@@ -14,7 +14,6 @@ public class IARGearsEnigma : FSystem
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_answer = FamilyManager.getFamily(new AnyOfTags("A-R1"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not displayed of the first room
     private Family f_gears = FamilyManager.getFamily(new AllOfComponents(typeof(Gear)));
-    private Family f_solutionGear = FamilyManager.getFamily(new AllOfComponents(typeof(Gear), typeof(IsSolution)));
     private Family f_rotatingGears = FamilyManager.getFamily(new AnyOfTags("RotateGear")); //gears that can rotate (middle top, middle bot, and the solution gear)
     private Family f_canvas = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
 
@@ -230,7 +229,9 @@ public class IARGearsEnigma : FSystem
 
     public void SolveGearsEnigma()
     {
-        f_solutionGear.First().transform.localPosition = Vector3.zero; //place the gear at the center
+        foreach (GameObject gear in f_gears)
+            if (gear.GetComponent<Gear>().isSolution)
+                gear.transform.localPosition = Vector3.zero; //place the gear at the center
         rotateGear = true;  //rotate gears in the middle
     }
 

@@ -13,6 +13,7 @@ public class StoryDisplaying : FSystem {
     // This system manage displaying of the story
 
     private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
+    private Family f_timer = FamilyManager.getFamily(new AllOfComponents(typeof(Timer)));
     private Family f_game = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_mainHUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
 
@@ -76,10 +77,10 @@ public class StoryDisplaying : FSystem {
             storyTexts.Add(new List<string>(st.transition));
             storyTexts.Add(new List<string>(st.end));
 
-            GameObjectManager.addComponent<Timer>(f_game.First());
+            timer = f_timer.First().GetComponent<Timer>();
 
             // if there is no link, disable link button
-            if(st.endLink == "")
+            if (st.endLink == "")
             {
                 fadingImage.transform.SetAsLastSibling();
                 foreach (Transform child in endText.transform)
@@ -161,7 +162,6 @@ public class StoryDisplaying : FSystem {
         {
             if (st.storyProgression == 0)
             {
-                timer = f_game.First().GetComponent<Timer>();
                 timer.startingTime = Time.time;
 
                 GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
