@@ -207,21 +207,7 @@ public class SaveManager : FSystem {
 
     private void AddNewItemToLists(FileInfo file)
     {
-        SaveContent saveContent = null;
-
-        if (file.Exists)
-        {
-            try
-            {
-                saveContent = JsonConvert.DeserializeObject<SaveContent>(File.ReadAllText(file.FullName)); 
-            }
-            catch (Exception) {
-                Debug.LogError("The save couldn't be loaded because of invalid content.");
-                File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - The save couldn't be loaded because of invalid content."));
-                return;
-            }
-        }
-        else
+        if (!file.Exists)
         {
             Debug.LogError("The save couldn't be loaded because of invalid file path.");
             File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - The save couldn't be loaded because of invalid file path."));
@@ -232,7 +218,7 @@ public class SaveManager : FSystem {
         GameObject loadListElem = GameObject.Instantiate(loadButtonPrefab);
         loadListElem.name = Path.GetFileNameWithoutExtension(file.Name);
         loadListElem.GetComponentInChildren<TextMeshProUGUI>().text = loadListElem.name;
-        loadListElem.GetComponent<SaveComponent>().content = saveContent;
+        loadListElem.GetComponent<SaveComponent>().fileName = file.FullName;
         loadListElem.GetComponent<Button>().onClick.AddListener(delegate
         {
             selectedLoadButton = loadListElem;
@@ -462,7 +448,18 @@ public class SaveManager : FSystem {
     // Called from UI
     public void LoadSelectedSave()
     {
-        SaveContent saveContent = selectedLoadButton.GetComponent<SaveComponent>().content;
+        SaveContent saveContent;
+        try
+        {
+            saveContent = JsonConvert.DeserializeObject<SaveContent>(File.ReadAllText(selectedLoadButton.GetComponent<SaveComponent>().fileName));
+        }
+        catch (Exception)
+        {
+            Debug.LogError("The save couldn't be loaded because of invalid content.");
+            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - The save couldn't be loaded because of invalid content."));
+            return;
+        }
+
         GameObjectManager.setGameObjectState(loadPopup, false);
         popupSaveInputfield.text = selectedLoadButton.name;
         // Check save validity
