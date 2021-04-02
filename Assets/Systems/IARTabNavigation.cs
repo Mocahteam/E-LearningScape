@@ -90,7 +90,7 @@ public class IARTabNavigation : FSystem {
     protected override void onProcess(int familiesUpdateCount)
     {
         // Open/Close IAR with Escape and A keys
-        if (iar.activeInHierarchy && f_settings.Count == 0 && !skipNextClose && (Input.GetButtonDown("Cancel") || (Input.GetButtonDown("Fire1") && iarBackground.GetComponent<PointerOver>())))
+        if (iar.activeInHierarchy && f_settings.Count == 0 && !skipNextClose && Input.GetButtonDown("Cancel"))
             closeIar();
         else
         {
