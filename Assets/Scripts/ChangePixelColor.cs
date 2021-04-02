@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChangePixelColor : MonoBehaviour {
 
-    private int textWidth = 265; // original 1070
-    private int textHeight = 370; // original 1480
+    private int textWidth = 530; // original 1070
+    private int textHeight = 740; // original 1480
 
-    private int radius = 10; // original 40
+    private int radius = 20; // original 40
     private Color eraseColor;
 
     private int oldPointX = int.MinValue;
