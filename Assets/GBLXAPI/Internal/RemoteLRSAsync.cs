@@ -71,7 +71,7 @@ namespace DIG.GBLXAPI.Internal
 			request.SetRequestHeader("X-Experience-API-Version", version.ToString());
 			request.SetRequestHeader("Authorization", auth);
 
-			var requestOperation = request.SendWebRequest();
+            var requestOperation = request.SendWebRequest();
 			requestOperation.completed += (operation) =>
 			{
                 state.success = !(request.isNetworkError || request.isHttpError);
