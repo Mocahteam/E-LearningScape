@@ -70,11 +70,16 @@ public class SaveContent {
 	/// scrolls 1 to 5, lamp, virtuelPuzzleSets 1 to 5
 	/// </summary>
 	public Dictionary<string, int> collectableItemsStates = new Dictionary<string, int>();
-	/// <summary>
-	/// Contains the state of each dream fragment:
-	/// 0 - not collected, 1 - collected but not seen in IAR, 2 - collected and seen in IAR.
+    /// <summary>
+	/// Contains puzzle position in IAR
 	/// </summary>
-	public Dictionary<string, int> dreamFragmentsStates = new Dictionary<string, int>();
+    public Dictionary<string, float[]> puzzlePosition = new Dictionary<string, float[]>();
+    
+    /// <summary>
+    /// Contains the state of each dream fragment:
+    /// 0 - not collected, 1 - collected but not seen in IAR, 2 - collected and seen in IAR.
+    /// </summary>
+    public Dictionary<string, int> dreamFragmentsStates = new Dictionary<string, int>();
 
     /// <summary>
     /// True if the "press Y" is enabled
@@ -95,6 +100,11 @@ public class SaveContent {
     /// True if satchel is unlocked
     /// </summary>
     public bool satchel_opened = false;
+
+    /// <summary>
+    /// True if mirror is discovered
+    /// </summary>
+    public bool plankDiscovered = false;
 
     /// <summary>
     /// True if mirror is on plank

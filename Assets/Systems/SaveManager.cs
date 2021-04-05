@@ -27,7 +27,8 @@ public class SaveManager : FSystem {
 	private Family f_room2Password = FamilyManager.getFamily(new AnyOfTags("PasswordRoom2"));
 
 	private Family f_collectable = FamilyManager.getFamily(new AllOfComponents(typeof(LinkedWith), typeof(ComponentMonitoring)), new NoneOfComponents(typeof(DreamFragment), typeof(Locker)), new NoneOfLayers(5), new NoneOfTags("Plank"));
-	private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
+    private Family f_puzzleUI = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"));
+    private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
 
 	private Family f_pressY = FamilyManager.getFamily(new AnyOfTags("PressY"));
 	private Family f_toggleable = FamilyManager.getFamily(new AllOfComponents(typeof(ToggleableGO), typeof(Animator)));
@@ -356,6 +357,14 @@ public class SaveManager : FSystem {
             else
                 saveContent.collectableItemsStates[go.name] = 2;
         }
+        //set puzzle position un IAR
+        foreach (GameObject go in f_puzzleUI)
+        {
+            saveContent.puzzlePosition.Add(go.name, new float[3]);
+            saveContent.puzzlePosition[go.name][0] = go.transform.localPosition.x;
+            saveContent.puzzlePosition[go.name][1] = go.transform.localPosition.y;
+            saveContent.puzzlePosition[go.name][2] = go.transform.localPosition.z;
+        }
 
         // set dream fragments states
         foreach (GameObject go in f_dreamFragments)
@@ -374,6 +383,7 @@ public class SaveManager : FSystem {
         saveContent.ballbox_opened = !BallBoxManager.instance.IsLocked();
         saveContent.wireOnPlank = PlankAndWireManager.instance.IsResolved();
         saveContent.satchel_opened = !SatchelManager.instance.IsLocked();
+        saveContent.plankDiscovered = PlankAndMirrorManager.instance.GetPlankDiscovered();
         saveContent.mirrorOnPlank = PlankAndMirrorManager.instance.IsMirrorOnPlank();
 
         // set toggleables states
@@ -548,11 +558,21 @@ public class SaveManager : FSystem {
                     int code = saveContent.collectableItemsStates[go.name];
                     // if collected, disable it in the scene
                     GameObjectManager.setGameObjectState(go, code == 0);
-                    GameObjectManager.setGameObjectState(go.GetComponent<LinkedWith>().link, code == 1);
+                    // if at least one has been collected, enable linked IAR
+                    if (code == 1)
+                        GameObjectManager.setGameObjectState(go.GetComponent<LinkedWith>().link, true);
                     // some linked go in IAR is a set of GO (Scrolls and Puzzles). In these cases we have to set state of sublinked go with the same name
                     GameObject iarLink = go.GetComponent<LinkedWith>().link;
                     if (code == 1 && iarLink.GetComponent<LinkedWith>() && iarLink.GetComponent<LinkedWith>().link.transform.Find(go.name))
                         GameObjectManager.setGameObjectState(iarLink.GetComponent<LinkedWith>().link.transform.Find(go.name).gameObject, true);
+                }
+            }
+            //set puzzle position un IAR
+            foreach (GameObject go in f_puzzleUI)
+            {
+                if (saveContent.puzzlePosition.ContainsKey(go.name)) { 
+                    float[] puzzlePos = saveContent.puzzlePosition[go.name];
+                    go.transform.localPosition = new Vector3(puzzlePos[0], puzzlePos[1], puzzlePos[2]);
                 }
             }
 
@@ -616,7 +636,8 @@ public class SaveManager : FSystem {
             if (saveContent.satchel_opened)
                 SatchelManager.instance.UnlockSatchel();
 
-            // set mirror on plank
+            // set mirror and plank
+            PlankAndMirrorManager.instance.SetPlankDiscovered(saveContent.plankDiscovered);
             if (saveContent.mirrorOnPlank)
                 PlankAndMirrorManager.instance.PutMirrorOnPlank();
 

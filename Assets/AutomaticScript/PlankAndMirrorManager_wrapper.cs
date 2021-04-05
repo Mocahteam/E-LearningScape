@@ -14,4 +14,9 @@ public class PlankAndMirrorManager_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("PlankAndMirrorManager", "PutMirrorOnPlank", null);
 	}
 
+	public void SetPlankDiscovered(System.Boolean state)
+	{
+		MainLoop.callAppropriateSystemMethod ("PlankAndMirrorManager", "SetPlankDiscovered", state);
+	}
+
 }
