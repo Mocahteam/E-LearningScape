@@ -211,7 +211,8 @@ public class SatchelManager : FSystem {
     public void UnlockSatchel()
     {
         unlocked = true;
-        bagAnimator.SetTrigger("unlock"); // launch animation to unlock the padlock
+        // launch animation to unlock the padlock
+        bagAnimator.SetTrigger("closeSatchel");
     }
 
     public bool IsLocked()

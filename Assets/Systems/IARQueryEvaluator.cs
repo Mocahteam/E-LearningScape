@@ -179,7 +179,7 @@ public class IARQueryEvaluator : FSystem {
         {
             verb = "answered",
             objectType = "question",
-            objectName = string.Concat(query.name, "-", query.tag),
+            objectName = query.name,
             result = true,
             success = error ? -1 : 1,
             response = answer
@@ -261,7 +261,7 @@ public class IARQueryEvaluator : FSystem {
                         {
                             verb = "received",
                             objectType = "feedback",
-                            objectName = string.Concat(query.name, "-", query.tag, "_feedback"),
+                            objectName = query.name + "_feedback",
                             activityExtensions = new Dictionary<string, string>() {
                             { "content", feedbackTexts },
                             { "type", "answer description" }

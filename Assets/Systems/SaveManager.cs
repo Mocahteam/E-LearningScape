@@ -18,7 +18,8 @@ public class SaveManager : FSystem {
 
 	private Family f_fpsController = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
 	private Family f_timer = FamilyManager.getFamily(new AllOfComponents(typeof(Timer)));
-	private Family f_componentMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
+    private Family f_idTexts = FamilyManager.getFamily(new AllOfComponents(typeof(TextMeshProUGUI)), new AnyOfTags("SessionIDText"));
+    private Family f_componentMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
 	private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
 	private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
@@ -488,6 +489,9 @@ public class SaveManager : FSystem {
                 LoadGameContent.sessionID = saveContent.sessionID;
                 if (LoadGameContent.gameContent.traceToLRS)
                     SendStatements.instance.initGBLXAPI();
+                // add the generated session id after the ui text has been set
+                foreach (GameObject go in f_idTexts)
+                    go.GetComponent<TextMeshProUGUI>().text = LoadGameContent.gameContent.sessionIDText+saveContent.sessionID;
             }
 
             // set story reading progression
@@ -680,7 +684,12 @@ public class SaveManager : FSystem {
                 GameObjectManager.setGameObjectState(f_gearsSet.First().GetComponent<LinkedWith>().link, false);
                 // Check if gears enigma was solved
                 if (saveContent.gearEnigmaState == 2)
+                {
+                    // Hide question
+                    GameObjectManager.setGameObjectState(f_gearsSet.First().transform.GetChild(0).gameObject, false);
+                    // Update system
                     IARGearsEnigma.instance.SolveGearsEnigma();
+                }
             }
 
             // generate received hints
