@@ -233,6 +233,8 @@ public class IARGearsEnigma : FSystem
             if (gear.GetComponent<Gear>().isSolution)
                 gear.transform.localPosition = Vector3.zero; //place the gear at the center
         rotateGear = true;  //rotate gears in the middle
+        // Make login selectable
+        GameObjectManager.addComponent<Selectable>(f_login.First(), new { standingPosDelta = new Vector3(-0.9f, -0.8f, 0f), standingOrientation = new Vector3(1f, 0f, 0f) });
     }
 
     public bool IsResolved()

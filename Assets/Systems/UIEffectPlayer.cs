@@ -58,7 +58,7 @@ public class UIEffectPlayer : FSystem {
                 {
                     verb = "received",
                     objectType = "feedback",
-                    objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback"),
+                    objectName = string.Concat(go.name, "_feedback"),
                     activityExtensions = new Dictionary<string, string>() {
                         { "content", "blink correct" },
                         { "type", "answer validation" }
@@ -73,7 +73,7 @@ public class UIEffectPlayer : FSystem {
                 {
                     verb = "received",
                     objectType = "feedback",
-                    objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback"),
+                    objectName = string.Concat(go.name, "_feedback"),
                     activityExtensions = new Dictionary<string, string>() {
                         { "content", "correct animation" },
                         { "type", "answer validation" }
@@ -91,7 +91,7 @@ public class UIEffectPlayer : FSystem {
             {
                 verb = "received",
                 objectType = "feedback",
-                objectName = go.GetComponent<QuerySolution>() ? string.Concat(go.name, "-", go.tag, "_feedback") : string.Concat(go.name, "_feedback"),
+                objectName = string.Concat(go.name, "_feedback"),
                 activityExtensions = new Dictionary<string, string>() {
                     { "content", "blink wrong" },
                     { "type", "answer validation" }

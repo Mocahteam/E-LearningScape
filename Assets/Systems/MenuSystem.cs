@@ -1,25 +1,20 @@
 ﻿using UnityEngine;
 using FYFY;
 using UnityEngine.UI;
-using UnityEngine.PostProcessing;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using FYFY_plugins.Monitoring;
 
 public class MenuSystem : FSystem {
 
     // this system manage the first main menu
 
-    private Family f_vlr = FamilyManager.getFamily(new AllOfComponents(typeof(VolumetricLightRenderer)));
-    private Family f_postProcessBehaviour = FamilyManager.getFamily(new AllOfComponents(typeof(PostProcessingBehaviour)));
-    private Family f_postProcessProfiles = FamilyManager.getFamily(new AllOfComponents(typeof(PostProcessingProfiles)));
     private Family f_menuCameraFamily = FamilyManager.getFamily(new AllOfComponents(typeof(MenuCamera), typeof(Camera)));
-    private Family f_particles = FamilyManager.getFamily(new AllOfComponents(typeof(ParticleSystem)));
-    private Family f_reflectionProbe = FamilyManager.getFamily(new AllOfComponents(typeof(ReflectionProbe)));
     private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
-    private Family f_windowNavigator = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)));
     private Family f_enabledSettingsMenu = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
+    private Family f_windowNavigator = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)));
 
     private Camera menuCamera;
     private float switchDelay = 12;
@@ -49,38 +44,6 @@ public class MenuSystem : FSystem {
             mainMenu = GameObject.Find("MainMenu");
             GameObjectManager.setGameObjectState(mainMenu, false);
 
-            // Set specific quality settings
-            if (QualitySettings.GetQualityLevel() == 0)
-            {
-                Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier1;
-                foreach (GameObject vlrGo in f_vlr)
-                    vlrGo.GetComponent<VolumetricLightRenderer>().enabled = false;
-                foreach (GameObject ppGo in f_postProcessBehaviour)
-                    ppGo.GetComponent<PostProcessingBehaviour>().profile = f_postProcessProfiles.First().GetComponent<PostProcessingProfiles>().bank[0];
-                // disable reflect in first room
-                GameObjectManager.setGameObjectState(f_reflectionProbe.First(), false);
-                // disable particles except on DreamFragment
-                foreach (GameObject partGo in f_particles)
-                    if (!partGo.GetComponentInParent<DreamFragment>())
-                        GameObjectManager.setGameObjectState(partGo, false);
-            }
-            else if(QualitySettings.GetQualityLevel() == 1)
-            {
-                Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier2;
-                foreach (GameObject vlrGo in f_vlr)
-                    vlrGo.GetComponent<VolumetricLightRenderer>().enabled = false;
-                foreach (GameObject ppGo in f_postProcessBehaviour) // use for the First Person Character post process of the main Menu camera
-                    ppGo.GetComponent<PostProcessingBehaviour>().profile = f_postProcessProfiles.First().GetComponent<PostProcessingProfiles>().bank[1];
-                foreach (GameObject partGo in f_particles)
-                    if(partGo.name.Contains("Poussiere particule")) // disable particles of the first room
-                        GameObjectManager.setGameObjectState(partGo, false);
-            }
-            else if(QualitySettings.GetQualityLevel() == 2)
-            {
-                Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier3;
-                foreach (GameObject ppGo in f_postProcessBehaviour)
-                    ppGo.GetComponent<PostProcessingBehaviour>().profile = f_postProcessProfiles.First().GetComponent<PostProcessingProfiles>().bank[2];
-            }
             // set several camera positions for background animations on main menu
             menuCamera = f_menuCameraFamily.First().GetComponent<Camera>();
             menuCamera.gameObject.GetComponent<MenuCamera>().positions = new PosRot[3];
