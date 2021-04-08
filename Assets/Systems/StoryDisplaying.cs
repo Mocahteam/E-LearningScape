@@ -160,7 +160,7 @@ public class StoryDisplaying : FSystem {
         // define color fading
         if (st.storyProgression < storyTexts.Count - 1)
         {
-            if (st.storyProgression == 0)
+            if (st.storyProgression == 0 && storyTexts[0].Count > 0)
             {
                 timer.startingTime = Time.time;
 
