@@ -172,7 +172,8 @@ public class SatchelManager : FSystem {
             }
             else if (satchelOpenned && !unlocked && isSelected("KeySatchel"))
             {
-                UnlockSatchel();
+                unlocked = true;
+                bagAnimator.SetTrigger("unlock");
                 //remove key from inventory
                 GameObjectManager.setGameObjectState(isSelected("KeySatchel"), false);
                 GameObjectManager.setGameObjectState(isSelected("KeySatchel").GetComponent<HUDItemSelected>().hudGO, false);
