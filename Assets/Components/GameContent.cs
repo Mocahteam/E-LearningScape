@@ -117,6 +117,9 @@ public class GameContent {
     public string optionGameMusicVolume;
     public string optionSoundEffectsVolume;
     public string optionDisplayMenu;
+    public string optionResolution;
+    public string optionQuality;
+    public string optionWindowed;
     public string optionFont;
     public string optionCursorSize;
     public string optionLightIntensity;
