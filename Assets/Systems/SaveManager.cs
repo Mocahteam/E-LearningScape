@@ -654,8 +654,8 @@ public class SaveManager : FSystem {
             // load room 3 board texture
             Texture2D tex = new Texture2D(1, 1);
             bool result = tex. LoadImage(saveContent.boardEraseTexture);
-            Debug.Log("Texture result : " + result);
             f_boardTexture.First().GetComponent<Renderer>().material.mainTexture = tex;
+            WhiteBoardManager.instance.SetRenderOrder(null);
             // set eraser position
             f_whiteBoard.First().transform.GetChild(2).position = new Vector3(saveContent.boardEraserPosition[0], saveContent.boardEraserPosition[1], saveContent.boardEraserPosition[2]);
 
