@@ -2,6 +2,7 @@
 using FYFY;
 using System;
 using System.Diagnostics;
+using System.IO;
 
 public class CheckJava : FSystem
 {
