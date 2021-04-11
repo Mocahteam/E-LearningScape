@@ -92,8 +92,6 @@ public class LoadGameContent : FSystem {
 
     public static LoadGameContent instance;
 
-    private bool loadContent = true;
-
     private bool loadingContextForDreamFragment = false;
 
     private System.Random random;
@@ -106,9 +104,11 @@ public class LoadGameContent : FSystem {
     private List<string> tmpStringList;
     private RectTransform tmpRectTransform;
 
+    private bool dataAvailable = true;
+
     public LoadGameContent()
     {
-        if (Application.isPlaying && loadContent)
+        if (Application.isPlaying)
         {
             instance = this;
 
@@ -118,55 +118,33 @@ public class LoadGameContent : FSystem {
             if (File.Exists("./Data/Data_LearningScape.txt"))
             {
                 //Load game content from the file
-                Load();
+                try
+                {
+                    Load();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("./Data/Data_LearningScape.txt is not consistent, please check content.");
+                    Debug.LogError(e);
+                    dataAvailable = false;
+                }
             }
             else
             {
-                //create default data files
-                Directory.CreateDirectory("./Data");
-                File.WriteAllText("./Data/Data_LearningScape.txt", defaultGameContent.jsonFile.text);
-                File.WriteAllText("./Data/LRSConfig.txt", defaultGameContent.lrsConfigFile.text);
-                File.WriteAllText("./Data/Hints_LearningScape.txt", defaultGameContent.hintsJsonFile.text);
-                File.WriteAllText("./Data/InternalHints_LearningScape.txt", defaultGameContent.internalHintsJsonFile.text);
-                File.WriteAllText("./Data/WrongAnswerFeedbacks.txt", defaultGameContent.wrongAnswerFeedbacks.text);
-                File.WriteAllText("./Data/EnigmasWeight.txt", defaultGameContent.enigmasWeight.text);
-                File.WriteAllText("./Data/LabelWeights.txt", defaultGameContent.labelWeights.text);
-                File.WriteAllText("./Data/DreamFragmentLinks.txt", defaultGameContent.dreamFragmentlinks.text);
-                File.WriteAllText("./Data/FragmentsPath.txt", defaultGameContent.dreamFragmentDocuments.text);
-                File.WriteAllText("./Data/HelpSystemConfig.txt", defaultGameContent.helpSystemConfig.text);
-
-                gameContent = new GameContent();
-                gameContent = JsonUtility.FromJson<GameContent>(defaultGameContent.jsonFile.text);
-
-                int l = defaultGameContent.dreamFragmentPictures.Length;
-                Directory.CreateDirectory("./Data/Fragments");
-                for (int i = 0; i < l; i++)
-                {
-                    File.WriteAllBytes(string.Concat("./Data/Fragments/", defaultGameContent.dreamFragmentPictures[i].name, ".png"), defaultGameContent.dreamFragmentPictures[i].EncodeToPNG());
-                }
-                File.WriteAllBytes(string.Concat("./Data/", defaultGameContent.mastermindPicture.name, ".png"), defaultGameContent.mastermindPicture.EncodeToPNG());
-                l = defaultGameContent.glassesPictures.Length;
-                for(int i = 0; i < l; i++)
-                {
-                    File.WriteAllBytes(string.Concat("./Data/", defaultGameContent.glassesPictures[i].name, ".png"), defaultGameContent.glassesPictures[i].EncodeToPNG());
-                }
-                l = defaultGameContent.lampPictures.Length;
-                for (int i = 0; i < l; i++)
-                {
-                    File.WriteAllBytes(string.Concat("./Data/", defaultGameContent.lampPictures[i].name, ".png"), defaultGameContent.lampPictures[i].EncodeToPNG());
-                }
-                File.WriteAllBytes(string.Concat("./Data/", defaultGameContent.plankPicture.name, ".png"), defaultGameContent.plankPicture.EncodeToPNG());
-                File.WriteAllBytes(string.Concat("./Data/", defaultGameContent.puzzlePicture.name, ".png"), defaultGameContent.puzzlePicture.EncodeToPNG());
-
-                Debug.Log("Data created");
-                File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data created"));
-
-                Load();
-
+                Debug.LogError("./Data/Data_LearningScape.txt doesn't exists or access is not authorized.");
+                dataAvailable = false;
             }
-
-            this.Pause = true;
         }
+    }
+
+    protected override void onProcess(int familiesUpdateCount)
+    {
+        if (Time.frameCount > 10 && !dataAvailable)
+        { // Do not load scene at the first frame => Unity Crash !!! Something wrong with GPU...
+            GameObjectManager.loadScene("DataError");
+        }
+        else if (Time.frameCount > 10)
+            Pause = true;
     }
 
     private void loadIARQuestion(GameObject question, string questionTexte, string answerFeedback, string answerFeedbackDesc, string placeHolder, List<string> andSolutions)
@@ -723,7 +701,7 @@ public class LoadGameContent : FSystem {
 
         #region File Loading
         // Load LRS config file
-        LoadJsonFile(gameContent.lrsConfigPath, defaultGameContent.lrsConfigFile, out GBL_Interface.lrsAddresses);
+        LoadJsonFile(gameContent.lrsConfigPath, out GBL_Interface.lrsAddresses);
         if (GBL_Interface.lrsAddresses == null)
             GBL_Interface.lrsAddresses = new List<DIG.GBLXAPI.GBLConfig>();
         if (gameContent.traceToLRS)
@@ -732,44 +710,44 @@ public class LoadGameContent : FSystem {
 
         // Load Hints config files
         GameHints gameHints = f_gameHints.First().GetComponent<GameHints>();
-        LoadJsonFile(gameContent.hintsPath, defaultGameContent.hintsJsonFile, out gameHints.dictionary);
+        LoadJsonFile(gameContent.hintsPath, out gameHints.dictionary);
         if (gameHints.dictionary == null)
             gameHints.dictionary = new Dictionary<string, Dictionary<string, List<KeyValuePair<string, string>>>> ();
         Debug.Log("Hints loaded");
         // Load Wrong answer feedback
-        LoadJsonFile(gameContent.wrongAnswerFeedbacksPath, defaultGameContent.wrongAnswerFeedbacks, out gameHints.wrongAnswerFeedbacks);
+        LoadJsonFile(gameContent.wrongAnswerFeedbacksPath, out gameHints.wrongAnswerFeedbacks);
         if (gameHints.wrongAnswerFeedbacks == null)
             gameHints.wrongAnswerFeedbacks = new Dictionary<string, Dictionary<string, KeyValuePair<string, string>>>();
         Debug.Log("Wrong answer feedback loaded");
 
         // Load InternalHints config files
         InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
-        LoadJsonFile(gameContent.internalHintsPath, defaultGameContent.internalHintsJsonFile, out internalGameHints.dictionary);
+        LoadJsonFile(gameContent.internalHintsPath, out internalGameHints.dictionary);
         if (internalGameHints.dictionary == null)
             internalGameHints.dictionary = new Dictionary<string, Dictionary<string, List<string>>>();
         Debug.Log("Internal hints loaded");
 
         // Load EnigmasWeight config files
-        LoadJsonFile(gameContent.enigmasWeightPath, defaultGameContent.enigmasWeight, out enigmasWeight);
+        LoadJsonFile(gameContent.enigmasWeightPath, out enigmasWeight);
         if (enigmasWeight == null)
             enigmasWeight = new Dictionary<string, float>();
         Debug.Log("Enigmas weight loaded");
 
         // Load LabelWeights config files
         LabelWeights labelWeights = f_labelWeights.First().GetComponent<LabelWeights>();
-        LoadJsonFile(gameContent.labelWeightsPath, defaultGameContent.labelWeights, out labelWeights.weights);
+        LoadJsonFile(gameContent.labelWeightsPath, out labelWeights.weights);
         if (labelWeights.weights == null)
             labelWeights.weights = new Dictionary<string, float>();
         Debug.Log("Labels weight loaded");
 
         // Load HelpSystem config files
-        LoadJsonFile(gameContent.helpSystemConfigPath, defaultGameContent.helpSystemConfig, out HelpSystem.config);
+        LoadJsonFile(gameContent.helpSystemConfigPath, out HelpSystem.config);
         if (HelpSystem.config == null)
             HelpSystem.config = new HelpSystemConfig();
         Debug.Log("HelpSystem config file loaded");
 
         //Load dream fragment links config files
-        LoadJsonFile(gameContent.dreamFragmentLinksPath, defaultGameContent.dreamFragmentlinks, out dreamFragmentsLinks);
+        LoadJsonFile(gameContent.dreamFragmentLinksPath, out dreamFragmentsLinks);
         if (dreamFragmentsLinks == null)
             dreamFragmentsLinks = new Dictionary<string, List<string>>();
         // Affects urlLinks to dream fragments
@@ -786,7 +764,7 @@ public class LoadGameContent : FSystem {
 
         // Load dream fragment png config files
         FragmentFiles fragmentFilesPaths = null;
-        LoadJsonFile(gameContent.dreamFragmentDocumentsPathFile, defaultGameContent.dreamFragmentDocuments, out fragmentFilesPaths);
+        LoadJsonFile(gameContent.dreamFragmentDocumentsPathFile, out fragmentFilesPaths);
         // Affects dream fragment pictures to documents gameobject in IAR
         if(f_dreamFragmentsContentContainer.Count > 0 && f_dreamFragmentsContentContainer.First().GetComponent<PrefabContainer>().prefab)
         {
@@ -900,29 +878,26 @@ public class LoadGameContent : FSystem {
         File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));
     }
 
-    private void LoadJsonFile<T>(string jsonPath, TextAsset defaultContent, out T target)
+    private void LoadJsonFile<T>(string jsonPath, out T target)
     {
+        target = JsonConvert.DeserializeObject<T>("");
         if (File.Exists(jsonPath))
         {
             try
             {
                 target = JsonConvert.DeserializeObject <T>(File.ReadAllText(jsonPath));
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                target = JsonConvert.DeserializeObject<T>(defaultContent.text);
-                Debug.LogError("Invalid content in file: " + jsonPath + ". Default used.");
-                File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid content in file: " + jsonPath + ". Default used"));
+                Debug.LogError(jsonPath+" is not consistent, please check content.");
+                Debug.LogError(e);
+                dataAvailable = false;
             }
         }
         else
         {
-            // write default content
-            File.WriteAllText(jsonPath, defaultContent.text);
-            // load default content
-            target = JsonConvert.DeserializeObject<T>(defaultContent.text);
-            Debug.LogWarning(jsonPath+ " not found. Default used.");
-            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - "+ jsonPath + " not found. Default used"));
+            Debug.LogError(jsonPath + " doesn't exists or access is not authorized.");
+            dataAvailable = false;
         }
     }
 
@@ -1074,22 +1049,5 @@ public class LoadGameContent : FSystem {
             convertedBoardText[0] = string.Concat(convertedBoardText[0], '#');
             convertedBoardText[1] = string.Concat(convertedBoardText[1], '#');
         }
-    }
-
-	// Use this to update member variables when system pause. 
-	// Advice: avoid to update your families inside this function.
-	protected override void onPause(int currentFrame) {
-	}
-
-	// Use this to update member variables when system resume.
-	// Advice: avoid to update your families inside this function.
-	protected override void onResume(int currentFrame)
-    {   
-        
-    }
-
-	// Use to process your families.
-	protected override void onProcess(int familiesUpdateCount) {
-
     }
 }

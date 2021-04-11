@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/JavaRequired.unity
     guid: ffc519fef75936f4d9638e8b98404009
   - enabled: 1
-    path: Assets/Scenes/MacOSLauncher.unity
+    path: Assets/Scenes/DataError.unity
     guid: e7acb6f393e6ecd4e904c7fd551e155e
   m_configObjects: {}

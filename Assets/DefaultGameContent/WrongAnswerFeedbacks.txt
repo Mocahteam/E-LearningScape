@@ -1,8 +1,0 @@
-{
-  "[Human text to easily identify the game object].[ComponentMonitoringId]": {
-    "givenAnswer": {
-      "Key": "[external link]",
-      "Value": "feedback formulation 1"
-    }
-  }
-}
