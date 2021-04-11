@@ -40,6 +40,11 @@ public class Window extends JFrame {
 	public Window() {
 		jsonKeyToComponents = new HashMap<>();
 		dreamFragmentsLinks = new HashMap<>();
+
+		ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
+		ToolTipManager.sharedInstance().setInitialDelay(300);
+		ToolTipManager.sharedInstance().setReshowDelay(0);
+
     	Initialize();
     }
 
@@ -2230,26 +2235,32 @@ public class Window extends JFrame {
     	gbc.weightx = 1;
     	content.add(CreateTextInputFieldLine("Theme du jeu:", "theme"), gbc);
 		gbc.gridy = 3;
-		content.add(CreateToggleLine("Activation aléatoire du système d'aide:", "randomHelpSystemActivation"), gbc);
+		content.add(CreateToggleLine("Activation aléatoire du système d'aide:", "randomHelpSystemActivation",
+				"Si activé, au lancement du jeu il sera déterminé aléatoirement si l'aide est activée. Désactivé si le système d'aide est désactivé."), gbc);
     	gbc.gridy = 2;
     	content.add(CreateToggleLine("Système d'aide:", "helpSystem",
-				(JCheckBox) jsonKeyToComponents.get("randomHelpSystemActivation").get(0), false, false), gbc);
+				(JCheckBox) jsonKeyToComponents.get("randomHelpSystemActivation").get(0), false, false,
+				"Désactivé si les traces de Laalys sont désactivées."), gbc);
 		gbc.gridy = 1;
 		content.add(CreateToggleLine("Traces de Laalys:", "trace",
-				(JCheckBox) jsonKeyToComponents.get("helpSystem").get(0), false, false), gbc);
+				(JCheckBox) jsonKeyToComponents.get("helpSystem").get(0), false, false,
+				"Traces des actions du joueur permettant de connaître sa progression et de faire fonctionner le système d'aide. Aucune donnée n'est envoyée vers le serveur."), gbc);
     	gbc.gridy = 4;
     	content.add(CreateToggleLine("Traces vers le LRS:", "traceToLRS"), gbc);
     	gbc.gridy = 5;
-    	content.add(CreateFloatInputFieldLine("Fréquence de trace des déplacements:", "traceMovementFrequency"), gbc);
+    	content.add(CreateFloatInputFieldLine("Fréquence de trace des déplacements:", "traceMovementFrequency", "En secondes."), gbc);
     	gbc.gridy = 7;
-    	content.add(CreateToggleLine("Puzzles virtuels:", "virtualPuzzle"), gbc);
+    	content.add(CreateToggleLine("Puzzles virtuels:", "virtualPuzzle",
+				"Activé si les fragments de rêves sont virtuels."), gbc);
 		gbc.gridy = 6;
 		content.add(CreateToggleLine("Fragments de rêves virtuels:", "virtualDreamFragment",
 				(JCheckBox) jsonKeyToComponents.get("virtualPuzzle").get(0), true, true), gbc);
     	gbc.gridy = 8;
-    	content.add(CreateToggleLine("Salle de fin:", "useEndRoom"), gbc);
+    	content.add(CreateToggleLine("Salle de fin:", "useEndRoom",
+				"Si activé, après avoir répondu à la dernière question le joueur sera téléporté à la dernière salle avec les fragments de rêves géants."), gbc);
 		gbc.gridy = 10;
-		content.add(CreateToggleLine("Sauvegarde automatique:", "autoSaveProgression"), gbc);
+		content.add(CreateToggleLine("Sauvegarde automatique:", "autoSaveProgression",
+				"Désactivé si la sauvegarde et le chargement sont désactivés."), gbc);
     	gbc.gridy = 9;
     	content.add(CreateToggleLine("Sauvegarde et chargement:", "saveAndLoadProgression",
 				(JCheckBox) jsonKeyToComponents.get("autoSaveProgression").get(0), false, false), gbc);
@@ -2258,7 +2269,8 @@ public class Window extends JFrame {
 		gbc.gridy = 12;
     	content.add(CreateCategory("Chemins de fichiers", GenerateFilesPathsUI()), gbc);
     	gbc.gridy = 13;
-    	content.add(CreateToggleLine("RemoveExtraGeometries:", "removeExtraGeometries"), gbc);
+    	content.add(CreateToggleLine("RemoveExtraGeometries:", "removeExtraGeometries",
+				"Paramètre additionnel à activer pour les pc très peu performant."), gbc);
 		gbc.gridy = 14;
 		content.add(CreateTextAreaLine("Crédits additionnels", "additionalCredit"), gbc);
     	
@@ -2356,15 +2368,16 @@ public class Window extends JFrame {
     	gbc.gridy = 6;
     	content.add(CreateCategory("Lunettes", GenerateGlassesEnigmaUI()), gbc);
     	gbc.gridy = 7;
-    	content.add(CreateCategory("Enigme 8", GenerateEnigma8UI()), gbc);
+    	content.add(CreateCategory("Enigme 8", GenerateEnigma8UI(), "Correspond à l'énigme des copies dans la version pédagogique."), gbc);
     	gbc.gridy = 8;
     	content.add(CreateCategory("Parchemins", GenerateScrollsEnigmaUI()), gbc);
     	gbc.gridy = 9;
     	content.add(CreateCategory("Miroir", GenerateMirrorEnigmaUI()), gbc);
     	gbc.gridy = 10;
-    	content.add(CreateCategory("Enigme 11", GenerateEnigma11UI()), gbc);
+    	content.add(CreateCategory("Enigme 11", GenerateEnigma11UI(),
+				"Correspond à l'énigme de la grille critériée dans la version pédagogique."), gbc);
     	gbc.gridy = 11;
-    	content.add(CreateCategory("Enigme 12", GenerateEnigma12UI()), gbc);
+    	content.add(CreateCategory("Enigme 12", GenerateEnigma12UI(), "Correspond à l'énigme du labyrinthe dans la version pédagogique."), gbc);
     	gbc.gridy = 12;
     	content.add(CreateCategory("Verrou salle 2", GenerateLockRoom2UI()), gbc);
     	gbc.gridy = 13;
@@ -2374,7 +2387,7 @@ public class Window extends JFrame {
     	gbc.gridy = 15;
     	content.add(CreateCategory("Tableau effaçable", GenerateWhiteBoardEnigmaUI()), gbc);
     	gbc.gridy = 16;
-    	content.add(CreateCategory("Enigme 16", GenerateEnigma16UI()), gbc);
+    	content.add(CreateCategory("Enigme 16", GenerateEnigma16UI(), "Correspond à l'énigme du braille dans la version pédagogique."), gbc);
     	
     	return new JScrollPane(parent, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }
@@ -2424,7 +2437,8 @@ public class Window extends JFrame {
     	gbc.gridy = 5;
     	content.add(CreateTextAreaLine("Réponses attendues dans l'IAR", "ballBoxAnswer"), gbc);
     	gbc.gridy = 6;
-    	content.add(CreateIntInputFieldLine("Numéro des balles solutions:", "ballBoxThreeUsefulBalls", 3), gbc);
+    	content.add(CreateIntInputFieldLine("Numéro des balles solutions:", "ballBoxThreeUsefulBalls", 3,
+				"3 nombres différents entre 1 et 10 inclus."), gbc);
     	gbc.gridy = 7;
     	content.add(CreateTextInputFieldLine("Textes des balles:", "ballTexts", 10), gbc);
     	gbc.gridy = 8;
@@ -2459,9 +2473,11 @@ public class Window extends JFrame {
     	gbc.gridy = 4;
     	content.add(CreateTextInputFieldLine("Description de la bonne réponse:", "plankAndWireAnswerFeedbackDesc"), gbc);
     	gbc.gridy = 5;
-    	content.add(CreateTextInputFieldLine("Réponses attendues dans l'IAR:", "plankAndWireCorrectNumbers", 3), gbc);
+    	content.add(CreateTextInputFieldLine("Réponses attendues dans l'IAR:", "plankAndWireCorrectNumbers", 3,
+				"Correspond aux chiffres sur le tableau dans la version pédagogique."), gbc);
     	gbc.gridy = 6;
-    	content.add(CreateTextInputFieldLine("Mauvaises réponses affichées sur le tableau:", "plankAndWireOtherNumbers", 6), gbc);
+    	content.add(CreateTextInputFieldLine("Mauvaises réponses affichées sur le tableau:", "plankAndWireOtherNumbers", 6,
+				"Correspond aux chiffres sur le tableau dans la version pédagogique."), gbc);
     	gbc.gridy = 7;
     	content.add(CreateTextInputFieldLine("Mots solutions sur le tableau:", "plankAndWireCorrectWords", 3), gbc);
     	gbc.gridy = 8;
@@ -2529,7 +2545,8 @@ public class Window extends JFrame {
     	gbc.gridy = 4;
     	content.add(CreateTextInputFieldLine("Textes des engrenages déplaçables:", "gearMovableTexts", 4), gbc);
     	gbc.gridy = 5;
-    	content.add(CreateTextInputFieldLine("Réponse attendue:", "gearAnswer"), gbc);
+    	content.add(CreateTextInputFieldLine("Réponse attendue:", "gearAnswer",
+				"Doit correspondre au texte d'un des engrenages déplaçables."), gbc);
     	
     	return parent;
     }
@@ -2554,7 +2571,8 @@ public class Window extends JFrame {
     	gbc.gridy = 3;
     	content.add(CreateTextInputFieldLine("Texte du boutton de validation:", "masterMindValidation"), gbc);
     	gbc.gridy = 4;
-    	content.add(CreateFloatInputFieldLine("Position Y de la question sur l'objet dans la scène:", "mastermindQuestionYPos"), gbc);
+    	content.add(CreateFloatInputFieldLine("Position Y de la question sur l'objet dans la scène:", "mastermindQuestionYPos",
+				"-124 par défaut."), gbc);
     	gbc.gridy = 5;
     	content.add(CreateIntInputFieldLine("Réponse attendue:", "mastermindAnswer"), gbc);
     	gbc.gridy = 6;
@@ -2761,7 +2779,7 @@ public class Window extends JFrame {
     	gbc.gridy = 0;
     	gbc.insets = new Insets(5, 25, 0, 0);
     	gbc.weightx = 1;
-    	content.add(CreateIntInputFieldLine("Mot de passe:", "lockRoom2Password"), gbc);
+    	content.add(CreateIntInputFieldLine("Mot de passe:", "lockRoom2Password", "3 chiffres attendus."), gbc);
     	
     	return parent;
     }
@@ -2842,7 +2860,9 @@ public class Window extends JFrame {
     	gbc.gridy = 2;
     	content.add(CreateTextInputFieldLine("Description de la bonne réponse:", "whiteBoardAnswerFeedbackDesc"), gbc);
     	gbc.gridy = 3;
-    	content.add(CreateTextInputFieldLine("Liste des textes du tableau:", "whiteBoardWords", 12), gbc);
+    	content.add(CreateTextInputFieldLine("Liste des textes du tableau:", "whiteBoardWords", 12,
+				"Pour rendre une partie du texte non effaçable dans le jeu, il faut l'encadrer avec des \"##\". " +
+						"Par exemple dans \"##Non## effaça##ble##\", \"Non\" et \"ble\" ne seront pas effaçables, mais \" effaça\" le sera."), gbc);
     	
     	return parent;
     }
@@ -3009,7 +3029,7 @@ public class Window extends JFrame {
     	gbc.gridy = 3;
     	content.add(CreateCategory("Histoire", GenerateStoryReadingUITextsUI()), gbc);
     	gbc.gridy = 4;
-    	content.add(CreateCategory("HUD", GenerateHUDUITextsUI()), gbc);
+    	content.add(CreateCategory("HUD", GenerateHUDUITextsUI(), "Indications des touches tout autour de l'écran quand le joueur n'a pas ouvert l'IAR."), gbc);
     	gbc.gridy = 5;
     	content.add(CreateCategory("Fragments de rêves", GenerateDreamFragmentsUITextsUI()), gbc);
     	gbc.gridy = 6;
@@ -3023,7 +3043,7 @@ public class Window extends JFrame {
     	gbc.gridy = 10;
     	content.add(CreateCategory("Textes tutoriel", GenerateTutorialUITextsUI()), gbc);
     	gbc.gridy = 11;
-    	content.add(CreateCategory("Commandes", GenerateInputsUITextsUI()), gbc);
+    	content.add(CreateCategory("Commandes", GenerateInputsUITextsUI(), "Contient tous les textes de la parties \"Commandes\" des options."), gbc);
     	
     	return new JScrollPane(parent, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }
@@ -3040,7 +3060,7 @@ public class Window extends JFrame {
     	gbc.gridy = 0;
     	gbc.insets = new Insets(5, 25, 0, 0);
     	gbc.weightx = 1;
-    	content.add(CreateTextInputFieldLine("Chargement:", "loadingText"), gbc);
+    	content.add(CreateTextInputFieldLine("Chargement:", "loadingText", "Texte de chargement au lancement du jeu avant les logos."), gbc);
     	gbc.gridy = 1;
     	content.add(CreateTextInputFieldLine("Commencer:", "mainMenuStart"), gbc);
     	gbc.gridy = 2;
@@ -3052,7 +3072,7 @@ public class Window extends JFrame {
     	gbc.gridy = 5;
     	content.add(CreateTextInputFieldLine("Intitulé de l'ID de session:", "sessionIDText"), gbc);
     	gbc.gridy = 6;
-    	content.add(CreateTextInputFieldLine("Indication pour l'ID de session:", "sessionIDPopup"), gbc);
+    	content.add(CreateTextInputFieldLine("Indication pour l'ID de session:", "sessionIDPopup", "Apparaît quand on passe le curseur sur l'ID de session."), gbc);
 		gbc.gridy = 7;
 		content.add(CreateTextInputFieldLine("Voir les crédits:", "mainMenuCredits"), gbc);
 		gbc.gridy = 8;
@@ -3499,6 +3519,24 @@ public class Window extends JFrame {
     	return panel;
     }
 
+	private JPanel CreateCategory(String label, JPanel content, String tooltip) {
+		var panel = new JPanel(new BorderLayout());
+
+		var button = new JToggleButton();
+		button.setText(label);
+		button.addActionListener(arg0 -> {
+			AbstractButton b = (AbstractButton) arg0.getSource();
+			content.setVisible(b.getModel().isSelected());
+		});
+		button.setToolTipText(tooltip);
+		panel.add(button, BorderLayout.PAGE_START);
+
+		content.setVisible(false);
+		panel.add(content, BorderLayout.CENTER);
+
+		return panel;
+	}
+
     private JPanel CreateDreamFragmentCategory(int dreamFragmentID, String dreamFragmentDescription) {
     	var parent = new JPanel(new BorderLayout());
     	var content = new JPanel(new GridBagLayout());
@@ -3561,6 +3599,28 @@ public class Window extends JFrame {
     	line.add(inputfield);
     	return line;
     }
+
+	private JPanel CreateTextInputFieldLine(String label, String dictionaryKey, String tooltip) {
+
+		var layout = new GridLayout(1, 2);
+		layout.setHgap(5);
+		var line = new JPanel();
+		line.setLayout(layout);
+
+		var labelPane = new JTextPane();
+		labelPane.setText(label);
+		labelPane.setEditable(false);
+		labelPane.setBackground(new Color(153, 204, 255));
+		labelPane.setToolTipText(tooltip);
+
+		var inputfield = new JTextField();
+		jsonKeyToComponents.put(dictionaryKey, new ArrayList<>());
+		jsonKeyToComponents.get(dictionaryKey).add(inputfield);
+
+		line.add(labelPane);
+		line.add(inputfield);
+		return line;
+	}
     
     private JPanel CreateTextInputFieldLine(String label, String dictionaryKey, int numberOfInputfield) {
 
@@ -3590,6 +3650,36 @@ public class Window extends JFrame {
     	line.add(inputfields);
     	return line;
     }
+
+	private JPanel CreateTextInputFieldLine(String label, String dictionaryKey, int numberOfInputfield, String tooltip) {
+
+		var layout = new GridLayout(1, 2);
+		layout.setHgap(5);
+		var line = new JPanel();
+		line.setLayout(layout);
+
+		var labelPane = new JTextPane();
+		labelPane.setText(label);
+		labelPane.setEditable(false);
+		labelPane.setBackground(new Color(153, 204, 255));
+		labelPane.setToolTipText(tooltip);
+
+		var inputfields = new JPanel();
+		var inputfieldsLayout = new GridLayout(numberOfInputfield, 1);
+		inputfieldsLayout.setVgap(5);
+		inputfields.setLayout(inputfieldsLayout);
+		JTextField inputfield;
+		jsonKeyToComponents.put(dictionaryKey, new ArrayList<>());
+		for(int i = 0; i < numberOfInputfield; i++){
+			inputfield = new JTextField();
+			inputfields.add(inputfield);
+			jsonKeyToComponents.get(dictionaryKey).add(inputfield);
+		}
+
+		line.add(labelPane);
+		line.add(inputfields);
+		return line;
+	}
     
     private JPanel CreateFloatInputFieldLine(String label, String dictionaryKey) {
 
@@ -3613,6 +3703,30 @@ public class Window extends JFrame {
     	line.add(inputfield);
     	return line;
     }
+
+	private JPanel CreateFloatInputFieldLine(String label, String dictionaryKey, String tooltip) {
+
+		var layout = new GridLayout(1, 2);
+		layout.setHgap(5);
+		var line = new JPanel();
+		line.setLayout(layout);
+
+		var labelPane = new JTextPane();
+		labelPane.setText(label);
+		labelPane.setEditable(false);
+		labelPane.setBackground(new Color(153, 204, 255));
+		labelPane.setToolTipText(tooltip);
+
+		var inputfield = new JTextField();
+		PlainDocument doc = (PlainDocument) inputfield.getDocument();
+		doc.setDocumentFilter(new FloatFilter());
+		jsonKeyToComponents.put(dictionaryKey, new ArrayList<>());
+		jsonKeyToComponents.get(dictionaryKey).add(inputfield);
+
+		line.add(labelPane);
+		line.add(inputfield);
+		return line;
+	}
     
     private JPanel CreateIntInputFieldLine(String label, String dictionaryKey) {
 
@@ -3636,6 +3750,30 @@ public class Window extends JFrame {
     	line.add(inputfield);
     	return line;
     }
+
+	private JPanel CreateIntInputFieldLine(String label, String dictionaryKey, String tooltip) {
+
+		var layout = new GridLayout(1, 2);
+		layout.setHgap(5);
+		var line = new JPanel();
+		line.setLayout(layout);
+
+		var labelPane = new JTextPane();
+		labelPane.setText(label);
+		labelPane.setEditable(false);
+		labelPane.setBackground(new Color(153, 204, 255));
+		labelPane.setToolTipText(tooltip);
+
+		var inputfield = new JTextField();
+		PlainDocument doc = (PlainDocument) inputfield.getDocument();
+		doc.setDocumentFilter(new IntFilter());
+		jsonKeyToComponents.put(dictionaryKey, new ArrayList<>());
+		jsonKeyToComponents.get(dictionaryKey).add(inputfield);
+
+		line.add(labelPane);
+		line.add(inputfield);
+		return line;
+	}
     
     private JPanel CreateIntInputFieldLine(String label, String dictionaryKey, int numberOfInputfield) {
 
@@ -3667,6 +3805,38 @@ public class Window extends JFrame {
     	line.add(inputfields);
     	return line;
     }
+
+	private JPanel CreateIntInputFieldLine(String label, String dictionaryKey, int numberOfInputfield, String tooltip) {
+
+		var layout = new GridLayout(1, 2);
+		layout.setHgap(5);
+		var line = new JPanel();
+		line.setLayout(layout);
+
+		var labelPane = new JTextPane();
+		labelPane.setText(label);
+		labelPane.setEditable(false);
+		labelPane.setBackground(new Color(153, 204, 255));
+		labelPane.setToolTipText(tooltip);
+
+		var inputfields = new JPanel();
+		var inputfieldsLayout = new GridLayout(numberOfInputfield, 1);
+		inputfieldsLayout.setVgap(5);
+		inputfields.setLayout(inputfieldsLayout);
+		JTextField inputfield;
+		jsonKeyToComponents.put(dictionaryKey, new ArrayList<>());
+		for(int i = 0; i < numberOfInputfield; i++) {
+			inputfield = new JTextField();
+			PlainDocument doc = (PlainDocument) inputfield.getDocument();
+			doc.setDocumentFilter(new IntFilter());
+			inputfields.add(inputfield);
+			jsonKeyToComponents.get(dictionaryKey).add(inputfield);
+		}
+
+		line.add(labelPane);
+		line.add(inputfields);
+		return line;
+	}
     
     private JPanel CreateTextAreaLine(String label, String dictionaryKey) {
 		// create category button
@@ -3762,7 +3932,7 @@ public class Window extends JFrame {
     	return line;
     }
 
-	private JPanel CreateToggleLine(String label, String dictionaryKey, JCheckBox dependentToggle, boolean disableWhenOn, boolean valueWhenDisabled) {
+	private JPanel CreateToggleLine(String label, String dictionaryKey, String tooltip) {
 
 		var layout = new GridLayout(1, 2);
 		layout.setHgap(5);
@@ -3773,6 +3943,68 @@ public class Window extends JFrame {
 		labelPane.setText(label);
 		labelPane.setEditable(false);
 		labelPane.setBackground(new Color(153, 204, 255));
+		labelPane.setToolTipText(tooltip);
+
+		var togglePane = new JPanel();
+		var toggle = new JCheckBox();
+		togglePane.add(toggle);
+		jsonKeyToComponents.put(dictionaryKey, new ArrayList<>());
+		jsonKeyToComponents.get(dictionaryKey).add(toggle);
+
+		line.add(labelPane);
+		line.add(togglePane);
+		return line;
+	}
+
+	private JPanel CreateToggleLine(String label, String dictionaryKey, JCheckBox dependentToggle,
+									boolean disableWhenOn, boolean valueWhenDisabled) {
+
+		var layout = new GridLayout(1, 2);
+		layout.setHgap(5);
+		var line = new JPanel();
+		line.setLayout(layout);
+
+		var labelPane = new JTextPane();
+		labelPane.setText(label);
+		labelPane.setEditable(false);
+		labelPane.setBackground(new Color(153, 204, 255));
+
+		var togglePane = new JPanel();
+		var toggle = new JCheckBox();
+		if(dependentToggle != null){
+			toggle.addItemListener(e -> {
+				if((disableWhenOn && toggle.isSelected()) || (!disableWhenOn && !toggle.isSelected())){
+					dependentToggle.setSelected(valueWhenDisabled);
+					dependentToggle.setEnabled(false);
+				}
+				else
+					dependentToggle.setEnabled(true);
+			});
+			toggle.setSelected(true);
+			toggle.setSelected(false);
+		}
+		togglePane.add(toggle);
+		jsonKeyToComponents.put(dictionaryKey, new ArrayList<>());
+		jsonKeyToComponents.get(dictionaryKey).add(toggle);
+
+		line.add(labelPane);
+		line.add(togglePane);
+		return line;
+	}
+
+	private JPanel CreateToggleLine(String label, String dictionaryKey, JCheckBox dependentToggle,
+									boolean disableWhenOn, boolean valueWhenDisabled, String tooltip) {
+
+		var layout = new GridLayout(1, 2);
+		layout.setHgap(5);
+		var line = new JPanel();
+		line.setLayout(layout);
+
+		var labelPane = new JTextPane();
+		labelPane.setText(label);
+		labelPane.setEditable(false);
+		labelPane.setBackground(new Color(153, 204, 255));
+		labelPane.setToolTipText(tooltip);
 
 		var togglePane = new JPanel();
 		var toggle = new JCheckBox();
