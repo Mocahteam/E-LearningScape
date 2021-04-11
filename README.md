@@ -9,8 +9,9 @@ Trois versions du jeu sont disponibles :
    1. faites un **clic-secondaire** (ou clic-droit) sur le fichier **PlayGame**
    2. choisissez **Ouvrir**
    3. Dans la fenêtre vous devriez avoir maintenant un bouton **Ouvrir**, cliquez sur ce bouton
-2. Dans la fenêtre **Terminal** qui s'ouvre vous êtes invité à saisir votre mot de passe afin d'autoriser le lancement du jeu. (Note : dans le terminal aucun symbole n'est affiché lorsque vous saisissez votre mot de passe, c'est tout à fait normal, saisissez simplement votre mot de passe à l'aveugle et validez)
-3. Une fenêtre de configuration s'affiche, cliquez sur le bouton **Play** pour lancer le jeu.
+2. Une fenêtre **Terminal** s'ouvre, si une demande d'autorisation d'accès aux fichiers s'affiche, acceptez la
+3. Dans la fenêtre **Terminal** entrez votre mot de passe quand il vous sera demandé afin d'autoriser le lancement du jeu. (Note : dans le terminal aucun symbole n'est affiché lorsque vous saisissez votre mot de passe, c'est tout à fait normal, saisissez simplement votre mot de passe à l'aveugle et validez)
+4. Attendez que le jeu démarre
 
 # E-LearningScape
 E-LearningScape est un jeu sérieux sous un format d'*escape game*. Les joueurs incarnent des marchands de sable naviguant dans le rêve d'une personne et devant l'aider à répondre à toutes les questions qu'elle se pose avant qu'elle ne se réveille. 
