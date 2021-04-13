@@ -108,6 +108,9 @@ public class GameContent {
     public String optionGameMusicVolume;
     public String optionSoundEffectsVolume;
     public String optionDisplayMenu;
+    public String optionResolution;
+    public String optionQuality;
+    public String optionWindowed;
     public String optionFont;
     public String optionCursorSize;
     public String optionLightIntensity;

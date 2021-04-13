@@ -45,5 +45,5 @@
 	],
 	"fragmentPath17": [
 		"./Data/Fragments/Fragment17.png"
-	],
+	]
 }

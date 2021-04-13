@@ -33,6 +33,7 @@ public class Window extends JFrame {
 
 	private GameContent gameContent;
 	private HashMap<String, List<String>> dreamFragmentsLinks;
+	private HashMap<String, List<String>> dreamFragmentsFilesPaths;
 	private final HashMap<String, List<JComponent>> jsonKeyToComponents;
 
 	private String loadedFilePath;
@@ -40,6 +41,7 @@ public class Window extends JFrame {
 	public Window() {
 		jsonKeyToComponents = new HashMap<>();
 		dreamFragmentsLinks = new HashMap<>();
+		dreamFragmentsFilesPaths = new HashMap<>();
 
 		ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
 		ToolTipManager.sharedInstance().setInitialDelay(300);
@@ -144,12 +146,23 @@ public class Window extends JFrame {
 					}
 				}
 
+				//	load dream fragments paths from json
+				if(gameContent.dreamFragmentDocumentsPathFile != null && gameContent.dreamFragmentDocumentsPathFile.length() != 0){
+					try{
+						dreamFragmentsFilesPaths = null;
+						dreamFragmentsFilesPaths = gson.fromJson(new FileReader(gameContent.dreamFragmentDocumentsPathFile), HashMap.class);
+					}
+					catch (Exception e){
+						e.printStackTrace();
+					}
+				}
+
 				// load gameContent into the window
 				loadConfigContent();
 				loadHistoryContent();
 				loadEnigmasContent();
 				loadInventoryContent();
-				if(dreamFragmentsLinks != null)
+				if(dreamFragmentsLinks != null && dreamFragmentsFilesPaths != null)
 					loadDreamFragmentsContent();
 				loadUIContent();
 				loadCommandsContent();
@@ -832,15 +845,32 @@ public class Window extends JFrame {
 	private void loadDreamFragmentsContent(){
 		JTextField text;
 		String name;
+		String pathName;
+		int length;
 
 		for(int i = 0; i < 19; i++){
 			name = "Fragment_souvenir_" + i;
-			text = (JTextField) jsonKeyToComponents.get(name + "Link").get(0);
-			text.setText(dreamFragmentsLinks.get(name).get(0));
-			text.setColumns(1);
-			text = (JTextField) jsonKeyToComponents.get(name + "Button").get(0);
-			text.setText(dreamFragmentsLinks.get(name).get(1));
-			text.setColumns(1);
+			if(dreamFragmentsLinks.containsKey(name)){
+				text = (JTextField) jsonKeyToComponents.get(name + "Link").get(0);
+				text.setText(dreamFragmentsLinks.get(name).get(0));
+				text.setColumns(1);
+				text = (JTextField) jsonKeyToComponents.get(name + "Button").get(0);
+				text.setText(dreamFragmentsLinks.get(name).get(1));
+				text.setColumns(1);
+			}
+
+			pathName = "fragmentPath" + String.format("%02d",  i);
+			if(dreamFragmentsFilesPaths.containsKey(pathName)){
+				text = (JTextField) jsonKeyToComponents.get(pathName + "Count").get(0);
+				length = dreamFragmentsFilesPaths.get(pathName).size();
+				text.setText(Integer.toString(length));
+				text.setColumns(1);
+				for(int j = 0; j < length; j++){
+					text = (JTextField) jsonKeyToComponents.get(pathName).get(j);
+					text.setText(dreamFragmentsFilesPaths.get(pathName).get(j));
+					text.setColumns(1);
+				}
+			}
 		}
 	}
 
@@ -912,6 +942,15 @@ public class Window extends JFrame {
 		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionDisplayMenu").get(0);
 		text.setText(gameContent.optionDisplayMenu);
+		text.setColumns(1);
+		text = (JTextField) jsonKeyToComponents.get("optionResolution").get(0);
+		text.setText(gameContent.optionResolution);
+		text.setColumns(1);
+		text = (JTextField) jsonKeyToComponents.get("optionQuality").get(0);
+		text.setText(gameContent.optionQuality);
+		text.setColumns(1);
+		text = (JTextField) jsonKeyToComponents.get("optionWindowed").get(0);
+		text.setText(gameContent.optionWindowed);
 		text.setColumns(1);
 		text = (JTextField) jsonKeyToComponents.get("optionFont").get(0);
 		text.setText(gameContent.optionFont);
@@ -1333,10 +1372,22 @@ public class Window extends JFrame {
 		catch(Exception e){
 			e.printStackTrace();
 		}
+
 		if(gameContent.dreamFragmentLinksPath != null && gameContent.dreamFragmentLinksPath.length() != 0){
 			try{
 				fw = new FileWriter(gameContent.dreamFragmentLinksPath);
 				fw.write(gson.toJson(dreamFragmentsLinks));
+				fw.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		if(gameContent.dreamFragmentDocumentsPathFile != null && gameContent.dreamFragmentDocumentsPathFile.length() != 0){
+			try{
+				fw = new FileWriter(gameContent.dreamFragmentDocumentsPathFile);
+				fw.write(gson.toJson(dreamFragmentsFilesPaths));
 				fw.close();
 			}
 			catch(Exception e){
@@ -1899,14 +1950,28 @@ public class Window extends JFrame {
 	private void getDreamFragmentsContentFromWindow(){
 		JTextField text;
 		String name;
+		String pathName;
+		int length;
 
 		for(int i = 0; i < 19; i++){
 			name = "Fragment_souvenir_" + i;
-			dreamFragmentsLinks.get(name).clear();
-			text = (JTextField) jsonKeyToComponents.get(name + "Link").get(0);
-			dreamFragmentsLinks.get(name).add(text.getText());
-			text = (JTextField) jsonKeyToComponents.get(name + "Button").get(0);
-			dreamFragmentsLinks.get(name).add(text.getText());
+			if(dreamFragmentsLinks.containsKey(name)){
+				dreamFragmentsLinks.get(name).clear();
+				text = (JTextField) jsonKeyToComponents.get(name + "Link").get(0);
+				dreamFragmentsLinks.get(name).add(text.getText());
+				text = (JTextField) jsonKeyToComponents.get(name + "Button").get(0);
+				dreamFragmentsLinks.get(name).add(text.getText());
+			}
+
+			pathName = "fragmentPath" + String.format("%02d",  i);
+			if(dreamFragmentsFilesPaths.containsKey(pathName)){
+				length = Math.min(jsonKeyToComponents.get(pathName).size(), dreamFragmentsFilesPaths.get(pathName).size());
+				dreamFragmentsFilesPaths.get(pathName).clear();
+				for(int j = 0; j < length; j++){
+					text = (JTextField) jsonKeyToComponents.get(pathName).get(j);
+					dreamFragmentsFilesPaths.get(pathName).add(text.getText());
+				}
+			}
 		}
 	}
 
@@ -1957,6 +2022,12 @@ public class Window extends JFrame {
 		gameContent.optionSoundEffectsVolume = text.getText();
 		text = (JTextField) jsonKeyToComponents.get("optionDisplayMenu").get(0);
 		gameContent.optionDisplayMenu = text.getText();
+		text = (JTextField) jsonKeyToComponents.get("optionResolution").get(0);
+		gameContent.optionResolution = text.getText();
+		text = (JTextField) jsonKeyToComponents.get("optionQuality").get(0);
+		gameContent.optionQuality = text.getText();
+		text = (JTextField) jsonKeyToComponents.get("optionWindowed").get(0);
+		gameContent.optionWindowed = text.getText();
 		text = (JTextField) jsonKeyToComponents.get("optionFont").get(0);
 		gameContent.optionFont = text.getText();
 		text = (JTextField) jsonKeyToComponents.get("optionCursorSize").get(0);
@@ -3172,12 +3243,18 @@ public class Window extends JFrame {
     	gbc.gridy = 0;
     	gbc.insets = new Insets(5, 25, 0, 0);
     	gbc.weightx = 1;
+		content.add(CreateTextInputFieldLine("Résolution:", "optionResolution"), gbc);
+		gbc.gridy = 1;
+		content.add(CreateTextInputFieldLine("Qualité:", "optionQuality"), gbc);
+		gbc.gridy = 2;
+		content.add(CreateTextInputFieldLine("Mode fenêtré:", "optionWindowed"), gbc);
+		gbc.gridy = 3;
     	content.add(CreateTextInputFieldLine("Police accessible:", "optionFont"), gbc);
-    	gbc.gridy = 1;
+    	gbc.gridy = 4;
     	content.add(CreateTextInputFieldLine("Taille du viseur:", "optionCursorSize"), gbc);
-    	gbc.gridy = 2;
+    	gbc.gridy = 5;
     	content.add(CreateTextInputFieldLine("Intensité lumineuse:", "optionLightIntensity"), gbc);
-    	gbc.gridy = 3;
+    	gbc.gridy = 6;
     	content.add(CreateTextInputFieldLine("Effet de transparence:", "optionTransparency"), gbc);
     	
     	return parent;
@@ -3537,24 +3614,26 @@ public class Window extends JFrame {
 		return panel;
 	}
 
-    private JPanel CreateDreamFragmentCategory(int dreamFragmentID, String dreamFragmentDescription) {
-    	var parent = new JPanel(new BorderLayout());
-    	var content = new JPanel(new GridBagLayout());
-    	content.setSize(900, 20);
-    	parent.add(content, BorderLayout.PAGE_START);
-    	GridBagConstraints gbc = new GridBagConstraints();
+	private JPanel CreateDreamFragmentCategory(int dreamFragmentID, String dreamFragmentDescription) {
+		var parent = new JPanel(new BorderLayout());
+		var content = new JPanel(new GridBagLayout());
+		content.setSize(900, 20);
+		parent.add(content, BorderLayout.PAGE_START);
+		GridBagConstraints gbc = new GridBagConstraints();
 
-    	gbc.fill = GridBagConstraints.HORIZONTAL;
-    	gbc.gridx = 0;
-    	gbc.gridy = 0;
-    	gbc.insets = new Insets(5, 25, 0, 0);
-    	gbc.weightx = 1;
-    	content.add(CreateTextInputFieldLine("Lien du fragment de rêve:", "Fragment_souvenir_" + dreamFragmentID + "Link"), gbc);
-    	gbc.gridy = 1;
-    	content.add(CreateTextInputFieldLine("Texte du bouton vers le lien:", "Fragment_souvenir_" + dreamFragmentID + "Button"), gbc);
-    	
-    	return CreateCategory("Fragment de rêve " + dreamFragmentID + " (" + dreamFragmentDescription + ")", parent);
-    }
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(5, 25, 0, 0);
+		gbc.weightx = 1;
+		content.add(CreateTextInputFieldLine("Lien du fragment de rêve:", "Fragment_souvenir_" + dreamFragmentID + "Link"), gbc);
+		gbc.gridy = 1;
+		content.add(CreateTextInputFieldLine("Texte du bouton vers le lien:", "Fragment_souvenir_" + dreamFragmentID + "Button"), gbc);
+		gbc.gridy = 2;
+		content.add(CreateTextAreaLine("Chemins des fichiers du fragment", "fragmentPath" + String.format("%02d",  dreamFragmentID)), gbc);
+
+		return CreateCategory("Fragment de rêve " + dreamFragmentID + " (" + dreamFragmentDescription + ")", parent);
+	}
 
 	private JPanel CreateInputCategory(String label, String dictionaryKey) {
 		var parent = new JPanel(new BorderLayout());
