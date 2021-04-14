@@ -46,3 +46,6 @@ Pour changer les contenus dans le jeu il vous suffit de travailler sur les fichi
 **E-LearningScape Access** est une version réalisé par l'[INSHEA](https://www.inshea.fr/).
 
 **E-LearningScape Info** est une version réalisé par l’équipe [MOCAH](https://www.lip6.fr/recherche/team.php?acronyme=MOCAH) du LIP6.
+
+# Données personnelles et traceurs
+Il n'est pas collecté de données personnelles au téléchargement et à l'usage du jeu sérieux. Un identifiant aléatoire généré par le système est donné à chaque nouvelle session de jeu. Il est collecté des données sur les interactions du joueur avec le jeu. Elles sont collectées uniquement à des fins de recherche, d'enseignement et d'amélioration du jeu. Ces collectes se font lors des sessions de jeu (traceurs) ainsi que lors du questionnaire facultatif proposé en fin de session (logiciel LimeSurvey). La collecte des usages est anonyme et les résultats obtenus sont uniquement à destination des créateurs du jeu.
