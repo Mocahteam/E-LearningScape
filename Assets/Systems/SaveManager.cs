@@ -326,6 +326,7 @@ public class SaveManager : FSystem {
 
         SaveContent saveContent = new SaveContent();
         saveContent.sessionID = LoadGameContent.sessionID;
+        saveContent.UUID = GBL_Interface.userUUID;
         saveContent.storyTextCount = StoryDisplaying.instance.GetStoryProgression();
         saveContent.lastRoomUnlocked = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
 
@@ -488,7 +489,10 @@ public class SaveManager : FSystem {
             {
                 LoadGameContent.sessionID = saveContent.sessionID;
                 if (LoadGameContent.gameContent.traceToLRS)
+                {
                     SendStatements.instance.initGBLXAPI();
+                    GBL_Interface.userUUID = saveContent.UUID;
+                }
                 // add the generated session id after the ui text has been set
                 foreach (GameObject go in f_idTexts)
                     go.GetComponent<TextMeshProUGUI>().text = LoadGameContent.gameContent.sessionIDText+saveContent.sessionID;

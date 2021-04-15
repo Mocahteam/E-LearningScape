@@ -212,7 +212,7 @@ public class LoadGameContent : FSystem {
         // Generate session ID (the id is added to ui only after ui texts are set)
         if(sessionID == null || sessionID == "")
         {
-            sessionID = string.Concat(Environment.MachineName, "-", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"));
+            sessionID = string.Concat(Environment.MachineName, "-", DateTime.Now.ToString("yyyy.MM.dd.hh.mm.ss"));
 
             // create a hash with sessionID
             sessionID = String.Format("{0:X}", sessionID.GetHashCode());

@@ -36,6 +36,7 @@ public class SaveContent {
 	/// </summary>
 	public DateTime saveDate = new DateTime();
 	public string sessionID = "";
+    public string UUID = "";
 
     /// <summary>
     /// Keep track of the progression in history texts
