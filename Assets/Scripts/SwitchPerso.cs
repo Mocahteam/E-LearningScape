@@ -16,7 +16,6 @@ public class SwitchPerso : MonoBehaviour {
         FirstCamera.enabled = fpsCam;
         ThirdCamera.enabled = !fpsCam;
         GameObjectManager.setGameObjectState(skin, !fpsCam);
-        GameObjectManager.setGameObjectState(skin.GetComponent<LinkedWith>().link, !fpsCam);
     }
 
     void Update () {
@@ -35,6 +34,5 @@ public class SwitchPerso : MonoBehaviour {
         FirstCamera.enabled = fpsCam;
         ThirdCamera.enabled = !fpsCam;
         GameObjectManager.setGameObjectState(skin, !fpsCam);
-        GameObjectManager.setGameObjectState(skin.GetComponent<LinkedWith>().link, !fpsCam);
     }
 }

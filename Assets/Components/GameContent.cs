@@ -132,6 +132,9 @@ public class GameContent {
     public string storyClickToContinue;
     public string hudObserve;
     public string hudMove;
+    public string hudVue;
+    public string hudTeleport;
+    public string hudZoom;
     public string hudCrouch;
     public string hudInventory;
     public string hudDreamFragments;

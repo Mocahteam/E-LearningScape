@@ -27,7 +27,7 @@ public class CollectObject : FSystem {
     {
         if (Application.isPlaying)
         {
-            itemCollectedNotif = f_HUD.First().transform.GetChild(4).gameObject;
+            itemCollectedNotif = f_HUD.First().transform.GetChild(f_HUD.First().transform.childCount-1).gameObject;
 
             //every time a HUD is enabled, checks if it is inventory HUD
             f_rightHUD.addEntryCallback(CheckInventoryHUD);

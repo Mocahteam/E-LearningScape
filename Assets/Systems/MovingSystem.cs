@@ -29,7 +29,7 @@ public class MovingSystem : FSystem
     private Vector3 standingScale = Vector3.one;
     public bool firstCrouchOccurs = false;
     private FirstPersonController playerController;
-    private GameObject movableFragments;
+    private Animation movableFragments;
     private Image tmpImage;
     private TMP_Text[] textMeshs;
     private AudioBank audioBank;
@@ -55,7 +55,7 @@ public class MovingSystem : FSystem
         if (Application.isPlaying)
         {
             playerController = f_player.First().GetComponent<FirstPersonController>();
-            movableFragments = playerController.transform.GetChild(3).gameObject;
+            movableFragments = playerController.GetComponentInChildren<Animation>();
 
             playerCamera = playerController.transform.GetChild(0).GetComponent<Camera>();
             audioBank = playerController.GetComponent<AudioBank>();
@@ -340,8 +340,16 @@ public class MovingSystem : FSystem
         playerWasWalking = playerIsWalking;
         if (playerIsWalking)
         {
-            if (playerController.m_Input.y != 0)
-                movableFragments.transform.Rotate(new Vector3(1, 0, 0), (playerController.m_Input.y > 0 ? 1 : -1) * 100 * Time.deltaTime);
+            if (playerController.m_Input.y > 0)
+                movableFragments.Blend("MoveForward");
+            if (playerController.m_Input.y < 0)
+                movableFragments.Blend("MoveBack");
+            if (playerController.m_Input.x > 0)
+                movableFragments.Blend("StrafRight");
+            if (playerController.m_Input.x < 0)
+                movableFragments.Blend("StrafLeft");
         }
+        else
+            movableFragments.Blend("PlayerIdle");
     }
 }

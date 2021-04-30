@@ -131,6 +131,9 @@
     "storyClickToContinue": "Cliquez pour continuer...",
     "hudObserve": "Observer",
     "hudMove": "Se déplacer",
+    "hudVue": "Changer\nvue",
+    "hudTeleport": "Changer mode\ndéplacement",
+    "hudZoom": "Zoom",
     "hudCrouch": "Se baisser /\nSe relever",
     "hudInventory": "Inventaire",
     "hudDreamFragments": "Rêves",
@@ -175,7 +178,7 @@
     "tutoText4": "Appuie sur\npour accéder à l'inventaire",
 	
 	"ballRandomPositioning": false,
-    "ballBoxQuestion": "Somme des valeurs des boules dont l’écart entre l’indice des lignes et l’indice des colonnes et supérieur à deux :",
+    "ballBoxQuestion": "Somme des valeurs des boules dont l’écart entre l’indice des lignes et l’indice des colonnes est supérieur à deux :",
     "ballBoxPlaceHolder": "1 nombre attendu...",
 	"ballBoxAnswerFeedback": "16",
 	"ballBoxAnswerFeedbackDesc": "3 + 4 + 9",
