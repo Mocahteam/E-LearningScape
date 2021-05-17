@@ -974,7 +974,8 @@ public class LoadGameContent : FSystem {
         // format answer, remove accents, upper case and multiple spaces
         string normalizedString = answer.Normalize(NormalizationForm.FormD);
         // remove multiple spaces
-        normalizedString = new Regex("[ ]{2,}", RegexOptions.None).Replace(normalizedString, " ");
+        normalizedString = normalizedString.Replace(" ", "");
+        //normalizedString = new Regex("[ ]{2,}", RegexOptions.None).Replace(normalizedString, " ");
         // remove first space
         if (normalizedString.StartsWith(" "))
             normalizedString = normalizedString.Remove(0, 1);

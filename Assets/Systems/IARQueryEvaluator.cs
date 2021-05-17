@@ -49,7 +49,7 @@ public class IARQueryEvaluator : FSystem {
                     if (!splitOrSolutions.ContainsKey(or))
                     {
                         //split each solution by "##" and use this to check if the player answer contains all parts of a solution
-                        tmpListString = new List<string>(or.Split(new string[] { "##" }, System.StringSplitOptions.None));
+                        tmpListString = new List<string>(or.Split( new string[] { "##" }, System.StringSplitOptions.None));
                         for (int i = 0; i < tmpListString.Count; i++)
                             tmpListString[i] = LoadGameContent.StringToAnswer(tmpListString[i]);
                         splitOrSolutions.Add(or, tmpListString);
@@ -137,30 +137,39 @@ public class IARQueryEvaluator : FSystem {
         QuerySolution qs = query.GetComponent<QuerySolution>();
         // Check mandatory solution
         bool error = false;
-        int andLength = 0;
-        for (int i = 0 ; i < qs.andSolutions.Count && !error ; i++)
+        // if andSolution available
+        if (qs.andSolutions.Count > 0)
         {
-            andLength += qs.andSolutions[i].Length;
-            if (!answer.Contains(qs.andSolutions[i]))
-                error = true;
+            int andLength = 0;
+            for (int i = 0; i < qs.andSolutions.Count && !error; i++)
+            {
+                //split each part of the solution by "##" and use this to check if the player answer contains one of this part of a solution
+                tmpListString = new List<string>(qs.andSolutions[i].Split(new string[] { "##" }, System.StringSplitOptions.None));
+                bool found = false;
+                for (int j = 0; j < tmpListString.Count && !found; j++)
+                    if (answer.Contains(tmpListString[j]))
+                    {
+                        found = true;
+                        andLength += tmpListString[j].Length;
+                    }
+                error = !found;
+            }
+            // check answer is the same size of andSolutions
+            error = error || answer.Length != andLength;
         }
-        // if no error and no orSolutions available, check if answer is the same size of andSolutions
-        if (!error && qs.orSolutions.Count == 0)
-            error = answer.Length != andLength;
-        // if no error and orSolutions available
-        if (!error && qs.orSolutions.Count > 0)
+        // if orSolutions available
+        else if (qs.orSolutions.Count > 0)
         {
             error = true;
-            bool containsSolution;
             for (int i = 0; i < qs.orSolutions.Count && error; i++)
             {
-                //check if the given answer contains all of the solution parts
-                containsSolution = true;
-                foreach(string s in splitOrSolutions[qs.orSolutions[i]])
+                bool containsSolution = false;
+                //check if the given answer contains one of the solution parts
+                foreach (string s in splitOrSolutions[qs.orSolutions[i]])
                 {
-                    if (!answer.Contains(s))
+                    if (answer == s)
                     {
-                        containsSolution = false;
+                        containsSolution = true;
                         break;
                     }
                 }
