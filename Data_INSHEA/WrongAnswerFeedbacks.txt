@@ -8,31 +8,31 @@
   "BallBoxEnigma.24": {
     "0": {
       "Key": "",
-      "Value": "Éviter d’être exigent : L’apprenant pourra progresser seulement si l’enseignant a un certain niveau d’exigence même si les objectifs peuvent être adaptés."
+      "Value": "Ce n'est pas la boule 0 ! L’apprenant pourra progresser seulement si l’enseignant a un certain niveau d’exigence même si les objectifs peuvent être adaptés."
     },
     "3": {
       "Key": "",
-      "Value": "Mettre l’apprenant en écoute passive place l’apprenant en réception verbale uniquement, le taux rétention de l’information n’est que de 10%."
+      "Value": "Ce n'est pas la boule 3 ! Mettre l’apprenant en écoute passive place l’apprenant en réception verbale uniquement, le taux rétention de l’information n’est que de 10%."
     },
     "4": {
       "Key": "",
-      "Value": "Écrire au tableau est un leurre car tout ce qui est écrit n'est pas forcément appris."
+      "Value": "Ce n'est pas la boule 4 ! Écrire au tableau est un leurre car tout ce qui est écrit n'est pas forcément appris."
     },
     "5": {
       "Key": "",
-      "Value": "Donner du travail à la maison c’est oublier que les personnes à besoin éducatif particulier en inclusion sont plus fatigables."
+      "Value": "Ce n'est pas la boule 5 ! Donner du travail à la maison c’est oublier que les personnes à besoin éducatif particulier en inclusion sont plus fatigables."
     },
     "6": {
       "Key": "",
-      "Value": "Réexpliquer et reformuler le plus possible est une entrée principalement verbale qui peut noyer l’apprenant et le déconcentrer dans sa tâche."
+      "Value": "Ce n'est pas la boule 6 ! Réexpliquer et reformuler le plus possible est une entrée principalement verbale qui peut noyer l’apprenant et le déconcentrer dans sa tâche."
     },
     "7": {
       "Key": "",
-      "Value": "Les aides techniques et humaines sont certes utiles mais nécessitent en amont une réflexion pédagogique."
+      "Value": "Ce n'est pas la boule 7 ! Les aides techniques et humaines sont certes utiles mais nécessitent en amont une réflexion pédagogique."
     },
     "9": {
       "Key": "",
-      "Value": "Interroger un apprenant au hasard peut mettre certains apprenants en grande difficulté. Une personne autiste par exemple a besoin de prévisibilité."
+      "Value": "Ce n'est pas la boule 9 ! Interroger un apprenant au hasard peut mettre certains apprenants en grande difficulté. Une personne autiste par exemple a besoin de prévisibilité."
     }
   },
   "GearsEnigma.151": {
@@ -46,7 +46,7 @@
     },
     "La com-munication": {
       "Key": "",
-      "Value": "La communiccation est l’affaire de chacun mais il s’agit d’un facteur externe."
+      "Value": "La communication est l’affaire de chacun mais il s’agit d’un facteur externe."
     }
   }
 }
