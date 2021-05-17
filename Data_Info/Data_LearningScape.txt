@@ -183,7 +183,7 @@
 	"ballBoxAnswerFeedback": "16",
 	"ballBoxAnswerFeedbackDesc": "3 + 4 + 9",
     "ballBoxAnswer": [
-        "16"
+        "16##seize"
     ],
 	"ballBoxThreeUsefulBalls": [
 		3,
@@ -204,7 +204,7 @@
     ],
 	
     "plankAndWireQuestionIAR": "Le code révélé par la corde est la clé de la science Informatique ?",
-    "plankAndWirePlaceHolder": "1 nombre attendu...",
+    "plankAndWirePlaceHolder": "3 chiffres attendus...",
     "plankAndWireQuestion": "Relier avec la corde les 3 idées fortes de l’informatique",
 	"plankAndWireAnswerFeedback": "512",
 	"plankAndWireAnswerFeedbackDesc": "Science du traitement de l'information",
@@ -214,9 +214,9 @@
         "Information"
     ],
     "plankAndWireCorrectNumbers": [
-        "5",
-        "1",
-        "2"
+        "5##cinq",
+        "1##un",
+        "2##deux"
     ],
     "plankOtherWords": [
 		"Ordinateur",
@@ -292,7 +292,7 @@
     "enigma08Question": "Combien de lignes javascript sont nécessaires pour aider l'astronaute à rejoindre son module le plus vite possible ?",
     "enigma08PlaceHolder": "1 nombre attendu...",
     "enigma08Answer": [
-        "18"
+        "18##dix-huit##dix huit"
     ],
     "enigma08AnswerFeedback": "18",
     "enigma08AnswerFeedbackDesc": "Algo topo !!!",
@@ -315,7 +315,7 @@
     "mirrorQuestion": "Quelle date reflète l’apparition du premier ordinateur personnel (PC) ?",
     "mirrorPlaceHolder": "1 année attendue...",
     "mirrorAnswer": [
-        "1981"
+        "1981##mille neuf cent quatre-vingt-un##mille neuf cent quatre vingt un"
     ],
 	"mirrorAnswerFeedback": "1981",
 	"mirrorAnswerFeedbackDesc": "",
@@ -324,7 +324,7 @@
     "enigma11Question": "Quelle est la réponse de petit panda ?",
     "enigma11PlaceHolder": "1 nombre attendu...",
     "enigma11Answer": [
-        "6"
+        "6##six"
     ],
 	"enigma11AnswerFeedback": "6",
 	"enigma11AnswerFeedbackDesc": "",
@@ -332,7 +332,7 @@
     "enigma12Question": "L’analyse de Compute-it vous donnera la solution...",
     "enigma12PlaceHolder": "1 nombre attendu...",
     "enigma12Answer": [
-        "20"
+        "20##vingt"
     ],
 	"enigma12AnswerFeedback": "20",
 	"enigma12AnswerFeedbackDesc": "",
@@ -344,7 +344,7 @@
     "puzzleAnswerFeedbackDesc": "",
 	"puzzlePicturePath": "./Data/Puzzle_Complet.png",
 	
-    "lampAnswer": "8",
+    "lampAnswer": "8##huit##boucle##8 boucles##huit boucles",
     "lampAnswerFeedback": "8 boucles",
     "lampAnswerFeedbackDesc": "",
     "lampPicturesPath": [
