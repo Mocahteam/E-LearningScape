@@ -137,23 +137,17 @@ public class DebugModeSystem : FSystem
                 codeCount = 0;
             }
 
-            //The player can be teleported to room X by pressing Ctrl + X with X the room number (0 for intro and 4 for end room)
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            //The player can be teleported to room X by pressing Alt + X with X the room number (0 for intro and 4 for end room)
+            if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt) || Input.GetKey(KeyCode.AltGr) || Input.GetKey(KeyCode.LeftApple) || Input.GetKey(KeyCode.RightApple))
             {
-                if (Input.GetKeyDown(KeyCode.Alpha0))
+                if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.DoubleQuote)) // room 0
                     player.gameObject.transform.position = new Vector3(-41, -1, -1);
-                else if (Input.GetKeyDown(KeyCode.Alpha1))
+                else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Quote)) // room 1
                     player.gameObject.transform.position = new Vector3(-11, 2, -1);
-                else if (Input.GetKeyDown(KeyCode.Alpha2))
+                else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.LeftParen)) // room 2
                     player.gameObject.transform.position = new Vector3(11, 2, -2);
-                else if (Input.GetKeyDown(KeyCode.Alpha3))
+                else if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Minus) || Input.GetKeyDown(KeyCode.Dollar)) // room 3
                     player.gameObject.transform.position = new Vector3(30, 2, -2);
-                else if (Input.GetKeyDown(KeyCode.Alpha4))
-                    /* TODO:
-                     * _disable all rooms and enable end room, then teleport the player to the end room
-                     * _set a bool to true and when the player teleports to another room, if this bool is true, disable end room, enable all other rooms and teleport the player
-                     */
-                    player.gameObject.transform.position = player.gameObject.transform.position;
 
             }
         }

@@ -23,6 +23,7 @@ public class MoveInFrontOf : FSystem {
     private Vector3 camNewDir;
     private Vector3 newDir;
     private Vector3 playerLocalScale;
+    private float playerZoom;
 
     private bool moveInFrontOf = false;
     private Vector3 targetPos;
@@ -59,6 +60,8 @@ public class MoveInFrontOf : FSystem {
             f_player.First().transform.localScale = playerLocalScale;
             // reset player camera
             f_player.First().GetComponent<SwitchPerso>().forceUpdate();
+            // reset zoom
+            Camera.main.fieldOfView = playerZoom;
             //Fix camera angle
             Camera.main.transform.parent.localRotation = Quaternion.Euler(0, Camera.main.transform.parent.localRotation.eulerAngles.y, 0);
             Camera.main.transform.localRotation = Quaternion.Euler(Camera.main.transform.localRotation.eulerAngles.x, 0, 0);
@@ -120,7 +123,11 @@ public class MoveInFrontOf : FSystem {
                 ToggleObject.instance.Pause = true;
                 CollectObject.instance.Pause = true;
 
-                // In case player is in third person view, we switvh in First person cam view
+                // save zoom and set default value
+                playerZoom = Camera.main.fieldOfView;
+                Camera.main.fieldOfView = 60;
+
+                // In case player is in third person view, we switch in First person cam view
                 f_player.First().GetComponent<SwitchPerso>().ThirdCamera.enabled = false;
                 f_player.First().GetComponent<SwitchPerso>().FirstCamera.enabled = true;
 

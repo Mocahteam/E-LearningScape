@@ -214,9 +214,9 @@
         "Information"
     ],
     "plankAndWireCorrectNumbers": [
-        "5##cinq",
-        "1##un",
-        "2##deux"
+        "5",
+        "1",
+        "2"
     ],
     "plankOtherWords": [
 		"Ordinateur",
