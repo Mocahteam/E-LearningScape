@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-D18-4FCAD-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-65F4-EEF0C-0" type ="http://www.laas.fr/tina/tpn">
   <name>
-   <text>Enigma11_2</text>
+   <text>PhysicalPuzzleEnigma</text>
   </name>
- <page id="g-D18-4FCBC-1">
-  <place id="p-D18-4FCC1-2">
+ <page id="g-65F4-EEF18-1">
+  <place id="p-65F4-EEF1C-2">
   <name>
    <text>AnswersInput_end_110</text>
     <graphics>
@@ -13,10 +13,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="795" y="175"/>
+    <position x="795" y="210"/>
    </graphics>
   </place>
-  <transition id="t-D18-4FCD3-3">
+  <transition id="t-65F4-EEF2A-3">
   <name>
    <text>AnswersInput_perform_110</text>
     <graphics>
@@ -24,10 +24,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="725" y="165"/>
+    <position x="725" y="200"/>
    </graphics>
   </transition>
-  <place id="p-D18-4FCDB-4">
+  <place id="p-65F4-EEF2D-4">
   <name>
    <text>AnswersInput_start_110</text>
     <graphics>
@@ -38,10 +38,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="645" y="175"/>
+    <position x="645" y="210"/>
    </graphics>
   </place>
-  <place id="p-D18-4FCE4-5">
+  <place id="p-65F4-EEF31-5">
   <name>
    <text>Fragment_souvenir_14_ActivationCount_104</text>
     <graphics>
@@ -49,10 +49,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="435" y="130"/>
+    <position x="455" y="165"/>
    </graphics>
   </place>
-  <transition id="t-D18-4FCEA-6">
+  <transition id="t-65F4-EEF36-6">
   <name>
    <text>Fragment_souvenir_14_activate_104</text>
     <graphics>
@@ -60,10 +60,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="325" y="120"/>
+    <position x="345" y="155"/>
    </graphics>
   </transition>
-  <place id="p-D18-4FCF1-7">
+  <place id="p-65F4-EEF3B-7">
   <name>
    <text>Fragment_souvenir_15_ActivationCount_105</text>
     <graphics>
@@ -71,10 +71,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="200"/>
+    <position x="465" y="240"/>
    </graphics>
   </place>
-  <transition id="t-D18-4FCFA-8">
+  <transition id="t-65F4-EEF3F-8">
   <name>
    <text>Fragment_souvenir_15_activate_105</text>
     <graphics>
@@ -82,10 +82,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="320" y="190"/>
+    <position x="345" y="230"/>
    </graphics>
   </transition>
-  <place id="p-D18-4FD02-9">
+  <place id="p-65F4-EEF43-9">
   <name>
    <text>Fragment_souvenir_16_ActivationCount_106</text>
     <graphics>
@@ -93,10 +93,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="270"/>
+    <position x="465" y="315"/>
    </graphics>
   </place>
-  <transition id="t-D18-4FD0D-10">
+  <transition id="t-65F4-EEF48-10">
   <name>
    <text>Fragment_souvenir_16_activate_106</text>
     <graphics>
@@ -104,10 +104,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="320" y="260"/>
+    <position x="345" y="305"/>
    </graphics>
   </transition>
-  <place id="p-D18-4FD1A-11">
+  <place id="p-65F4-EEF4C-11">
   <name>
    <text>Fragment_souvenir_18_ActivationCount_107</text>
     <graphics>
@@ -115,10 +115,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="335"/>
+    <position x="465" y="385"/>
    </graphics>
   </place>
-  <transition id="t-D18-4FD21-12">
+  <transition id="t-65F4-EEF51-12">
   <name>
    <text>Fragment_souvenir_18_activate_107</text>
     <graphics>
@@ -126,10 +126,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="320" y="325"/>
+    <position x="345" y="375"/>
    </graphics>
   </transition>
-  <place id="p-D18-4FD28-13">
+  <place id="p-65F4-EEF55-13">
   <name>
    <text>Fragment_souvenir_7_ActivationCount_103</text>
     <graphics>
@@ -137,10 +137,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="440" y="60"/>
+    <position x="455" y="85"/>
    </graphics>
   </place>
-  <transition id="t-D18-4FD2F-14">
+  <transition id="t-65F4-EEF5B-14">
   <name>
    <text>Fragment_souvenir_7_activate_103</text>
     <graphics>
@@ -148,10 +148,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="330" y="50"/>
+    <position x="345" y="75"/>
    </graphics>
   </transition>
-  <place id="p-D18-4FD37-15">
+  <place id="p-65F4-EEF5D-15">
   <name>
    <text>boite_off_102</text>
     <graphics>
@@ -162,10 +162,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="50" y="170"/>
+    <position x="50" y="95"/>
    </graphics>
   </place>
-  <place id="p-D18-4FD3C-16">
+  <place id="p-65F4-EEF61-16">
   <name>
    <text>boite_on_102</text>
     <graphics>
@@ -173,10 +173,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="215" y="170"/>
+    <position x="200" y="95"/>
    </graphics>
   </place>
-  <transition id="t-D18-4FD40-17">
+  <transition id="t-65F4-EEF63-17">
   <name>
    <text>boite_turnOff_102</text>
     <graphics>
@@ -184,10 +184,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="135" y="135"/>
+    <position x="125" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-D18-4FD44-18">
+  <transition id="t-65F4-EEF67-18">
   <name>
    <text>boite_turnOn_102</text>
     <graphics>
@@ -195,33 +195,33 @@
     </graphics>
   </name>
    <graphics>
-    <position x="135" y="225"/>
+    <position x="125" y="140"/>
    </graphics>
   </transition>
-  <arc id="e-D18-4FDD9-19" source="t-D18-4FD21-12" target="p-D18-4FD1A-11">
+  <arc id="e-65F4-EEFC7-19" source="t-65F4-EEF51-12" target="p-65F4-EEF4C-11">
   </arc>
-  <arc id="e-D18-4FDDF-20" source="p-D18-4FCDB-4" target="t-D18-4FCD3-3">
+  <arc id="e-65F4-EEFCA-20" source="p-65F4-EEF2D-4" target="t-65F4-EEF2A-3">
   </arc>
-  <arc id="e-D18-4FDE1-21" source="t-D18-4FCFA-8" target="p-D18-4FCF1-7">
+  <arc id="e-65F4-EEFCB-21" source="t-65F4-EEF3F-8" target="p-65F4-EEF3B-7">
   </arc>
-  <arc id="e-D18-4FDE5-22" source="t-D18-4FD0D-10" target="p-D18-4FD02-9">
+  <arc id="e-65F4-EEFCD-22" source="t-65F4-EEF48-10" target="p-65F4-EEF43-9">
   </arc>
-  <arc id="e-D18-4FDE8-23" source="p-D18-4FD3C-16" target="t-D18-4FD2F-14">
+  <arc id="e-65F4-EEFCE-23" source="p-65F4-EEF61-16" target="t-65F4-EEF5B-14">
    <type value="test"/>
   </arc>
-  <arc id="e-D18-4FDEE-24" source="t-D18-4FD2F-14" target="p-D18-4FD28-13">
+  <arc id="e-65F4-EEFD1-24" source="t-65F4-EEF5B-14" target="p-65F4-EEF55-13">
   </arc>
-  <arc id="e-D18-4FDF2-25" source="t-D18-4FCEA-6" target="p-D18-4FCE4-5">
+  <arc id="e-65F4-EEFD2-25" source="t-65F4-EEF36-6" target="p-65F4-EEF31-5">
   </arc>
-  <arc id="e-D18-4FDF4-26" source="p-D18-4FD3C-16" target="t-D18-4FD40-17">
+  <arc id="e-65F4-EEFD3-26" source="p-65F4-EEF61-16" target="t-65F4-EEF63-17">
   </arc>
-  <arc id="e-D18-4FDF5-27" source="p-D18-4FD37-15" target="t-D18-4FD44-18">
+  <arc id="e-65F4-EEFD6-27" source="p-65F4-EEF5D-15" target="t-65F4-EEF67-18">
   </arc>
-  <arc id="e-D18-4FDF6-28" source="t-D18-4FD44-18" target="p-D18-4FD3C-16">
+  <arc id="e-65F4-EEFD7-28" source="t-65F4-EEF67-18" target="p-65F4-EEF61-16">
   </arc>
-  <arc id="e-D18-4FDF9-29" source="t-D18-4FD40-17" target="p-D18-4FD37-15">
+  <arc id="e-65F4-EEFD8-29" source="t-65F4-EEF63-17" target="p-65F4-EEF5D-15">
   </arc>
-  <arc id="e-D18-4FDFA-30" source="t-D18-4FCD3-3" target="p-D18-4FCC1-2">
+  <arc id="e-65F4-EEFD9-30" source="t-65F4-EEF2A-3" target="p-65F4-EEF1C-2">
   </arc>
  </page>
  </net>

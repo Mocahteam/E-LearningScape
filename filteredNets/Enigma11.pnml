@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-84D0-65550-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-2788-B3DB5-0" type ="http://www.laas.fr/tina/tpn">
   <name>
-   <text>Enigma9</text>
+   <text>Enigma11</text>
   </name>
- <page id="g-84D0-6555A-1">
-  <place id="p-84D0-6555C-2">
+ <page id="g-2788-B3DC3-1">
+  <place id="p-2788-B3DC9-2">
   <name>
    <text>Fragment_souvenir_2_ActivationCount_84</text>
     <graphics>
@@ -16,7 +16,7 @@
     <position x="230" y="130"/>
    </graphics>
   </place>
-  <transition id="t-84D0-6556A-3">
+  <transition id="t-2788-B3DDE-3">
   <name>
    <text>Fragment_souvenir_2_activate_84</text>
     <graphics>
@@ -27,20 +27,20 @@
     <position x="110" y="120"/>
    </graphics>
   </transition>
-  <place id="p-84D0-6556F-4">
+  <place id="p-2788-B3DE5-4">
   <name>
-   <text>Q5_Answered_86</text>
+   <text>R2-Q5_Answered_86</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="580" y="60"/>
+    <position x="590" y="60"/>
    </graphics>
   </place>
-  <place id="p-84D0-65573-5">
+  <place id="p-2788-B3DEB-5">
   <name>
-   <text>Q5_Answering_86</text>
+   <text>R2-Q5_Answering_86</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -49,28 +49,28 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="320" y="60"/>
+    <position x="330" y="60"/>
    </graphics>
   </place>
-  <transition id="t-84D0-65575-6">
+  <transition id="t-2788-B3DF2-6">
   <name>
-   <text>Q5_Correct_86</text>
+   <text>R2-Q5_Correct_86</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="460" y="50"/>
+    <position x="470" y="50"/>
    </graphics>
   </transition>
-  <arc id="e-84D0-6557C-7" source="p-84D0-6555C-2" target="t-84D0-65575-6">
+  <arc id="e-2788-B3DFB-7" source="p-2788-B3DC9-2" target="t-2788-B3DF2-6">
    <type value="test"/>
   </arc>
-  <arc id="e-84D0-6557F-8" source="t-84D0-65575-6" target="p-84D0-6556F-4">
+  <arc id="e-2788-B3E01-8" source="t-2788-B3DF2-6" target="p-2788-B3DE5-4">
   </arc>
-  <arc id="e-84D0-65580-9" source="t-84D0-6556A-3" target="p-84D0-6555C-2">
+  <arc id="e-2788-B3E04-9" source="t-2788-B3DDE-3" target="p-2788-B3DC9-2">
   </arc>
-  <arc id="e-84D0-65581-10" source="p-84D0-65573-5" target="t-84D0-65575-6">
+  <arc id="e-2788-B3E06-10" source="p-2788-B3DEB-5" target="t-2788-B3DF2-6">
   </arc>
  </page>
  </net>

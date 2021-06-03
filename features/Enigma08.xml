@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
-  <transition id="Q2_Correct_69" label="Correct Q2" system="False" end="True" />
-  <transition id="Q2_Wrong_69" label="Wrong Q2" system="False" end="False" />
+  <transition id="R2-Q2_Correct_69" label="Correct R2-Q2" system="False" end="True" />
+  <transition id="R2-Q2_Wrong_69" label="Wrong R2-Q2" system="False" end="False" />
   <transition id="Fragment_souvenir_8_activate_67" label="activate Fragment_souvenir_8" system="False" end="False" />
   <transition id="Fragment_souvenir_5_activate_66" label="activate Fragment_souvenir_5" system="False" end="False" />
   <transition id="Fragment_souvenir_1_activate_65" label="activate Fragment_souvenir_1" system="False" end="False" />

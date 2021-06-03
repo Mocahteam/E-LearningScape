@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-8654-D1EBC-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-7D44-780D6-0" type ="http://www.laas.fr/tina/tpn">
   <name>
-   <text>Enigma2</text>
+   <text>WireEnigma</text>
   </name>
- <page id="g-8654-D1ECB-1">
-  <place id="p-8654-D1ED0-2">
+ <page id="g-7D44-780E2-1">
+  <place id="p-7D44-780E5-2">
   <name>
    <text>Fragment_souvenir_17_ActivationCount_30</text>
     <graphics>
@@ -13,10 +13,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="470" y="130"/>
+    <position x="470" y="140"/>
    </graphics>
   </place>
-  <transition id="t-8654-D1EE4-3">
+  <transition id="t-7D44-780F4-3">
   <name>
    <text>Fragment_souvenir_17_activate_30</text>
     <graphics>
@@ -24,10 +24,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="350" y="120"/>
+    <position x="345" y="130"/>
    </graphics>
   </transition>
-  <place id="p-8654-D1EEB-4">
+  <place id="p-7D44-780FA-4">
   <name>
    <text>Fragment_souvenir_9_ActivationCount_29</text>
     <graphics>
@@ -35,10 +35,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="470" y="60"/>
+    <position x="465" y="60"/>
    </graphics>
   </place>
-  <transition id="t-8654-D1EF3-5">
+  <transition id="t-7D44-780FF-5">
   <name>
    <text>Fragment_souvenir_9_activate_29</text>
     <graphics>
@@ -46,10 +46,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="350" y="50"/>
+    <position x="345" y="50"/>
    </graphics>
   </transition>
-  <place id="p-8654-D1EF9-6">
+  <place id="p-7D44-78103-6">
   <name>
    <text>Plank_end_34</text>
     <graphics>
@@ -57,10 +57,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1060" y="390"/>
+    <position x="1010" y="385"/>
    </graphics>
   </place>
-  <place id="p-8654-D1EFD-7">
+  <place id="p-7D44-78105-7">
   <name>
    <text>Plank_off_28</text>
     <graphics>
@@ -71,10 +71,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="320" y="450"/>
+    <position x="310" y="245"/>
    </graphics>
   </place>
-  <place id="p-8654-D1F03-8">
+  <place id="p-7D44-78109-8">
   <name>
    <text>Plank_on_28</text>
     <graphics>
@@ -82,10 +82,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="490" y="450"/>
+    <position x="480" y="250"/>
    </graphics>
   </place>
-  <transition id="t-8654-D1F06-9">
+  <transition id="t-7D44-7810B-9">
   <name>
    <text>Plank_perform_34</text>
     <graphics>
@@ -93,10 +93,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="980" y="390"/>
+    <position x="930" y="385"/>
    </graphics>
   </transition>
-  <place id="p-8654-D1F0B-10">
+  <place id="p-7D44-7810F-10">
   <name>
    <text>Plank_start_34</text>
     <graphics>
@@ -107,10 +107,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="900" y="390"/>
+    <position x="850" y="385"/>
    </graphics>
   </place>
-  <transition id="t-8654-D1F10-11">
+  <transition id="t-7D44-78111-11">
   <name>
    <text>Plank_turnOff_28</text>
     <graphics>
@@ -118,10 +118,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="400" y="420"/>
+    <position x="390" y="205"/>
    </graphics>
   </transition>
-  <transition id="t-8654-D1F14-12">
+  <transition id="t-7D44-78115-12">
   <name>
    <text>Plank_turnOn_28</text>
     <graphics>
@@ -129,23 +129,23 @@
     </graphics>
   </name>
    <graphics>
-    <position x="400" y="510"/>
+    <position x="390" y="305"/>
    </graphics>
   </transition>
-  <place id="p-8654-D1F18-13">
+  <place id="p-7D44-78118-13">
   <name>
-   <text>Q2_Answered_35</text>
+   <text>R1-Q2_Answered_35</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1440" y="530"/>
+    <position x="1280" y="460"/>
    </graphics>
   </place>
-  <place id="p-8654-D1F1D-14">
+  <place id="p-7D44-7811B-14">
   <name>
-   <text>Q2_Answering_35</text>
+   <text>R1-Q2_Answering_35</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -154,21 +154,21 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="1180" y="530"/>
+    <position x="1020" y="460"/>
    </graphics>
   </place>
-  <transition id="t-8654-D1F22-15">
+  <transition id="t-7D44-7811F-15">
   <name>
-   <text>Q2_Correct_35</text>
+   <text>R1-Q2_Correct_35</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1320" y="510"/>
+    <position x="1160" y="440"/>
    </graphics>
   </transition>
-  <place id="p-8654-D1F26-16">
+  <place id="p-7D44-78121-16">
   <name>
    <text>SolutionWord1_off_31</text>
     <graphics>
@@ -179,10 +179,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="640" y="50"/>
+    <position x="690" y="165"/>
    </graphics>
   </place>
-  <place id="p-8654-D1F2B-17">
+  <place id="p-7D44-78125-17">
   <name>
    <text>SolutionWord1_on_31</text>
     <graphics>
@@ -190,10 +190,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="820" y="50"/>
+    <position x="870" y="165"/>
    </graphics>
   </place>
-  <transition id="t-8654-D1F2F-18">
+  <transition id="t-7D44-78129-18">
   <name>
    <text>SolutionWord1_turnOn_31</text>
     <graphics>
@@ -201,10 +201,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="740" y="100"/>
+    <position x="790" y="215"/>
    </graphics>
   </transition>
-  <place id="p-8654-D1F99-19">
+  <place id="p-7D44-7818B-19">
   <name>
    <text>SolutionWord2_off_32</text>
     <graphics>
@@ -215,10 +215,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="900" y="70"/>
+    <position x="950" y="165"/>
    </graphics>
   </place>
-  <place id="p-8654-D1FA0-20">
+  <place id="p-7D44-7818F-20">
   <name>
    <text>SolutionWord2_on_32</text>
     <graphics>
@@ -226,10 +226,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1080" y="70"/>
+    <position x="1110" y="155"/>
    </graphics>
   </place>
-  <transition id="t-8654-D1FA7-21">
+  <transition id="t-7D44-78193-21">
   <name>
    <text>SolutionWord2_turnOn_32</text>
     <graphics>
@@ -237,10 +237,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="990" y="110"/>
+    <position x="1050" y="205"/>
    </graphics>
   </transition>
-  <place id="p-8654-D1FAC-22">
+  <place id="p-7D44-78197-22">
   <name>
    <text>SolutionWord3_off_33</text>
     <graphics>
@@ -251,10 +251,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="1160" y="50"/>
+    <position x="1230" y="145"/>
    </graphics>
   </place>
-  <place id="p-8654-D1FB2-23">
+  <place id="p-7D44-7819A-23">
   <name>
    <text>SolutionWord3_on_33</text>
     <graphics>
@@ -262,10 +262,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1350" y="60"/>
+    <position x="1410" y="145"/>
    </graphics>
   </place>
-  <transition id="t-8654-D1FB7-24">
+  <transition id="t-7D44-7819E-24">
   <name>
    <text>SolutionWord3_turnOn_33</text>
     <graphics>
@@ -273,10 +273,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1260" y="100"/>
+    <position x="1330" y="185"/>
    </graphics>
   </transition>
-  <place id="p-8654-D1FBB-25">
+  <place id="p-7D44-781A2-25">
   <name>
    <text>Wire_end_26</text>
     <graphics>
@@ -284,10 +284,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="210" y="610"/>
+    <position x="210" y="405"/>
    </graphics>
   </place>
-  <place id="p-8654-D1FC0-26">
+  <place id="p-7D44-781A4-26">
   <name>
    <text>Wire_off_27</text>
     <graphics>
@@ -298,10 +298,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="310" y="620"/>
+    <position x="320" y="405"/>
    </graphics>
   </place>
-  <place id="p-8654-D1FC3-27">
+  <place id="p-7D44-781A7-27">
   <name>
    <text>Wire_on_27</text>
     <graphics>
@@ -309,10 +309,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="480" y="610"/>
+    <position x="470" y="385"/>
    </graphics>
   </place>
-  <transition id="t-8654-D1FC7-28">
+  <transition id="t-7D44-781A9-28">
   <name>
    <text>Wire_perform_26</text>
     <graphics>
@@ -320,10 +320,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="130" y="600"/>
+    <position x="130" y="415"/>
    </graphics>
   </transition>
-  <place id="p-8654-D1FCA-29">
+  <place id="p-7D44-781AD-29">
   <name>
    <text>Wire_start_26</text>
     <graphics>
@@ -334,10 +334,21 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="50" y="610"/>
+    <position x="50" y="405"/>
    </graphics>
   </place>
-  <transition id="t-8654-D1FCF-30">
+  <transition id="t-7D44-781AF-30">
+  <name>
+   <text>Wire_turnOff_27</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="390" y="365"/>
+   </graphics>
+  </transition>
+  <transition id="t-7D44-781B2-31">
   <name>
    <text>Wire_turnOn_27</text>
     <graphics>
@@ -345,98 +356,105 @@
     </graphics>
   </name>
    <graphics>
-    <position x="400" y="670"/>
+    <position x="390" y="455"/>
    </graphics>
   </transition>
-  <arc id="e-8654-D1FD8-31" source="p-8654-D1ED0-2" target="t-8654-D1FB7-24">
+  <arc id="e-7D44-781B9-32" source="p-7D44-78103-6" target="t-7D44-7811F-15">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D1FDE-32" source="t-8654-D1EE4-3" target="p-8654-D1ED0-2">
+  <arc id="e-7D44-781BE-33" source="t-7D44-780F4-3" target="p-7D44-780E5-2">
   </arc>
-  <arc id="e-8654-D1FE0-33" source="t-8654-D1FCF-30" target="p-8654-D1FC3-27">
+  <arc id="e-7D44-781BF-34" source="t-7D44-781AF-30" target="p-7D44-781A4-26">
   </arc>
-  <arc id="e-8654-D1FE2-34" source="p-8654-D1F1D-14" target="t-8654-D1F22-15">
+  <arc id="e-7D44-781C1-35" source="p-7D44-7811B-14" target="t-7D44-7811F-15">
   </arc>
-  <arc id="e-8654-D1FE4-35" source="t-8654-D1F22-15" target="p-8654-D1F18-13">
+  <arc id="e-7D44-781C2-36" source="t-7D44-7811F-15" target="p-7D44-78118-13">
   </arc>
-  <arc id="e-8654-D1FE5-36" source="t-8654-D1FB7-24" target="p-8654-D1FB2-23">
+  <arc id="e-7D44-781C3-37" source="t-7D44-781B2-31" target="p-7D44-781A7-27">
   </arc>
-  <arc id="e-8654-D1FE6-37" source="p-8654-D1FAC-22" target="t-8654-D1FB7-24">
+  <arc id="e-7D44-781C4-38" source="t-7D44-7819E-24" target="p-7D44-7819A-23">
   </arc>
-  <arc id="e-8654-D1FE8-38" source="p-8654-D1FC0-26" target="t-8654-D1FCF-30">
+  <arc id="e-7D44-781C5-39" source="p-7D44-78197-22" target="t-7D44-7819E-24">
   </arc>
-  <arc id="e-8654-D1FEA-39" source="p-8654-D1F03-8" target="t-8654-D1FB7-24">
+  <arc id="e-7D44-781C6-40" source="p-7D44-781A4-26" target="t-7D44-781B2-31">
+  </arc>
+  <arc id="e-7D44-781FF-41" source="p-7D44-78109-8" target="t-7D44-7819E-24">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D1FEC-40" source="p-8654-D1FC3-27" target="t-8654-D1FB7-24">
+  <arc id="e-7D44-78203-42" source="p-7D44-781A7-27" target="t-7D44-7819E-24">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D1FEF-41" source="t-8654-D1EF3-5" target="p-8654-D1EEB-4">
-  </arc>
-  <arc id="e-8654-D202C-42" source="p-8654-D1ED0-2" target="t-8654-D1FA7-21">
+  <arc id="e-7D44-78204-43" source="p-7D44-780E5-2" target="t-7D44-7819E-24">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D202F-43" source="t-8654-D1F10-11" target="p-8654-D1EFD-7">
+  <arc id="e-7D44-78206-44" source="t-7D44-780FF-5" target="p-7D44-780FA-4">
   </arc>
-  <arc id="e-8654-D2030-44" source="t-8654-D1F14-12" target="p-8654-D1F03-8">
+  <arc id="e-7D44-78207-45" source="t-7D44-78111-11" target="p-7D44-78105-7">
   </arc>
-  <arc id="e-8654-D2032-45" source="p-8654-D1EFD-7" target="t-8654-D1F14-12">
+  <arc id="e-7D44-78208-46" source="t-7D44-78115-12" target="p-7D44-78109-8">
   </arc>
-  <arc id="e-8654-D2034-46" source="p-8654-D1F03-8" target="t-8654-D1F10-11">
+  <arc id="e-7D44-7820A-47" source="p-7D44-78105-7" target="t-7D44-78115-12">
   </arc>
-  <arc id="e-8654-D2035-47" source="t-8654-D1F06-9" target="p-8654-D1EF9-6">
+  <arc id="e-7D44-7820B-48" source="p-7D44-78109-8" target="t-7D44-78111-11">
   </arc>
-  <arc id="e-8654-D2037-48" source="p-8654-D1F0B-10" target="t-8654-D1F06-9">
+  <arc id="e-7D44-7820C-49" source="t-7D44-7810B-9" target="p-7D44-78103-6">
   </arc>
-  <arc id="e-8654-D2038-49" source="p-8654-D1F2B-17" target="t-8654-D1F06-9">
+  <arc id="e-7D44-7820D-50" source="p-7D44-781A7-27" target="t-7D44-781AF-30">
+  </arc>
+  <arc id="e-7D44-7820E-51" source="p-7D44-7810F-10" target="t-7D44-7810B-9">
+  </arc>
+  <arc id="e-7D44-78212-52" source="p-7D44-78125-17" target="t-7D44-7810B-9">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D203C-50" source="p-8654-D1FA0-20" target="t-8654-D1F06-9">
+  <arc id="e-7D44-78213-53" source="p-7D44-7818F-20" target="t-7D44-7810B-9">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D203F-51" source="p-8654-D1FB2-23" target="t-8654-D1F06-9">
+  <arc id="e-7D44-78214-54" source="p-7D44-780E5-2" target="t-7D44-78193-21">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D2040-52" source="t-8654-D1FC7-28" target="p-8654-D1FBB-25">
-  </arc>
-  <arc id="e-8654-D2042-53" source="p-8654-D1ED0-2" target="t-8654-D1F2F-18">
+  <arc id="e-7D44-78215-55" source="p-7D44-7819A-23" target="t-7D44-7810B-9">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D2044-54" source="p-8654-D1FCA-29" target="t-8654-D1FC7-28">
+  <arc id="e-7D44-78216-56" source="t-7D44-781A9-28" target="p-7D44-781A2-25">
   </arc>
-  <arc id="e-8654-D2046-55" source="t-8654-D1F2F-18" target="p-8654-D1F2B-17">
+  <arc id="e-7D44-78217-57" source="p-7D44-781AD-29" target="t-7D44-781A9-28">
   </arc>
-  <arc id="e-8654-D2048-56" source="p-8654-D1F26-16" target="t-8654-D1F2F-18">
+  <arc id="e-7D44-78218-58" source="t-7D44-78129-18" target="p-7D44-78125-17">
   </arc>
-  <arc id="e-8654-D2049-57" source="p-8654-D1F03-8" target="t-8654-D1F2F-18">
+  <arc id="e-7D44-78219-59" source="p-7D44-78121-16" target="t-7D44-78129-18">
+  </arc>
+  <arc id="e-7D44-7821B-60" source="p-7D44-781A2-25" target="t-7D44-781AF-30">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D204C-58" source="p-8654-D1FC3-27" target="t-8654-D1F2F-18">
+  <arc id="e-7D44-7821D-61" source="p-7D44-78109-8" target="t-7D44-78129-18">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D204E-59" source="t-8654-D1FA7-21" target="p-8654-D1FA0-20">
-  </arc>
-  <arc id="e-8654-D2050-60" source="p-8654-D1F99-19" target="t-8654-D1FA7-21">
-  </arc>
-  <arc id="e-8654-D2052-61" source="p-8654-D1FBB-25" target="t-8654-D1FCF-30">
+  <arc id="e-7D44-7821F-62" source="p-7D44-781A7-27" target="t-7D44-78129-18">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D2054-62" source="p-8654-D1EEB-4" target="t-8654-D1FB7-24">
+  <arc id="e-7D44-78220-63" source="t-7D44-78193-21" target="p-7D44-7818F-20">
+  </arc>
+  <arc id="e-7D44-78221-64" source="p-7D44-7818B-19" target="t-7D44-78193-21">
+  </arc>
+  <arc id="e-7D44-78222-65" source="p-7D44-780E5-2" target="t-7D44-78129-18">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D2056-63" source="p-8654-D1EEB-4" target="t-8654-D1FA7-21">
+  <arc id="e-7D44-78223-66" source="p-7D44-781A2-25" target="t-7D44-781B2-31">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D2058-64" source="p-8654-D1EEB-4" target="t-8654-D1F2F-18">
+  <arc id="e-7D44-78224-67" source="p-7D44-780FA-4" target="t-7D44-7819E-24">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D205A-65" source="p-8654-D1EF9-6" target="t-8654-D1F22-15">
+  <arc id="e-7D44-78225-68" source="p-7D44-780FA-4" target="t-7D44-78193-21">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D205C-66" source="p-8654-D1F03-8" target="t-8654-D1FA7-21">
+  <arc id="e-7D44-78227-69" source="p-7D44-780FA-4" target="t-7D44-78129-18">
    <type value="test"/>
   </arc>
-  <arc id="e-8654-D205D-67" source="p-8654-D1FC3-27" target="t-8654-D1FA7-21">
+  <arc id="e-7D44-7822A-70" source="p-7D44-78109-8" target="t-7D44-78193-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-7D44-7822B-71" source="p-7D44-781A7-27" target="t-7D44-78193-21">
    <type value="test"/>
   </arc>
  </page>

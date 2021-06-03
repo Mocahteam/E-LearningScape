@@ -3,6 +3,6 @@
   <transition id="Fragment_souvenir_3_activate_87" label="activate Fragment_souvenir_3" system="False" end="False" />
   <transition id="Fragment_souvenir_11_activate_88" label="activate Fragment_souvenir_11" system="False" end="False" />
   <transition id="Fragment_souvenir_12_activate_89" label="activate Fragment_souvenir_12" system="False" end="False" />
-  <transition id="Q6_Correct_91" label="Correct Q6" system="False" end="True" />
-  <transition id="Q6_Wrong_91" label="Wrong Q6" system="False" end="False" />
+  <transition id="R2-Q6_Correct_91" label="Correct R2-Q6" system="False" end="True" />
+  <transition id="R2-Q6_Wrong_91" label="Wrong R2-Q6" system="False" end="False" />
 </transitions>

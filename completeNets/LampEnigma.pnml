@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-B6E0-99AB6-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-6C04-34F67-0" type ="http://www.laas.fr/tina/tpn">
   <name>
-   <text>Enigma12</text>
+   <text>LampEnigma</text>
   </name>
- <page id="g-B6E0-99AC1-1">
-  <place id="p-B6E0-99AC3-2">
+ <page id="g-6C04-34F76-1">
+  <place id="p-6C04-34F7C-2">
   <name>
    <text>AnswersInput_end_122</text>
     <graphics>
@@ -13,10 +13,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1330" y="275"/>
+    <position x="1255" y="280"/>
    </graphics>
   </place>
-  <transition id="t-B6E0-99AD1-3">
+  <transition id="t-6C04-34F89-3">
   <name>
    <text>AnswersInput_perform_122</text>
     <graphics>
@@ -24,10 +24,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1250" y="265"/>
+    <position x="1175" y="270"/>
    </graphics>
   </transition>
-  <place id="p-B6E0-99AD6-4">
+  <place id="p-6C04-34F8F-4">
   <name>
    <text>AnswersInput_start_122</text>
     <graphics>
@@ -38,10 +38,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="1170" y="275"/>
+    <position x="1095" y="280"/>
    </graphics>
   </place>
-  <place id="p-B6E0-99AD9-5">
+  <place id="p-6C04-34F93-5">
   <name>
    <text>E12_1_ActivationCount_114</text>
     <graphics>
@@ -49,10 +49,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="965" y="60"/>
+    <position x="940" y="60"/>
    </graphics>
   </place>
-  <transition id="t-B6E0-99ADD-6">
+  <transition id="t-6C04-34F96-6">
   <name>
    <text>E12_1_activate_114</text>
     <graphics>
@@ -60,10 +60,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="845" y="50"/>
+    <position x="820" y="50"/>
    </graphics>
   </transition>
-  <place id="p-B6E0-99AE0-7">
+  <place id="p-6C04-34F9A-7">
   <name>
    <text>E12_2_ActivationCount_115</text>
     <graphics>
@@ -71,10 +71,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="965" y="120"/>
+    <position x="940" y="130"/>
    </graphics>
   </place>
-  <transition id="t-B6E0-99AE4-8">
+  <transition id="t-6C04-34F9E-8">
   <name>
    <text>E12_2_activate_115</text>
     <graphics>
@@ -82,10 +82,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="845" y="120"/>
+    <position x="820" y="120"/>
    </graphics>
   </transition>
-  <place id="p-B6E0-99AE6-9">
+  <place id="p-6C04-34FA0-9">
   <name>
    <text>E12_3_ActivationCount_116</text>
     <graphics>
@@ -93,10 +93,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="955" y="195"/>
+    <position x="930" y="210"/>
    </graphics>
   </place>
-  <transition id="t-B6E0-99AEA-10">
+  <transition id="t-6C04-34FA4-10">
   <name>
    <text>E12_3_activate_116</text>
     <graphics>
@@ -104,10 +104,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="845" y="185"/>
+    <position x="820" y="200"/>
    </graphics>
   </transition>
-  <place id="p-B6E0-99AED-11">
+  <place id="p-6C04-34FA8-11">
   <name>
    <text>E12_4_ActivationCount_117</text>
     <graphics>
@@ -115,10 +115,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="960" y="270"/>
+    <position x="935" y="305"/>
    </graphics>
   </place>
-  <transition id="t-B6E0-99AEF-12">
+  <transition id="t-6C04-34FAC-12">
   <name>
    <text>E12_4_activate_117</text>
     <graphics>
@@ -126,10 +126,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="850" y="255"/>
+    <position x="825" y="295"/>
    </graphics>
   </transition>
-  <place id="p-B6E0-99AF2-13">
+  <place id="p-6C04-34FAE-13">
   <name>
    <text>E12_5_ActivationCount_118</text>
     <graphics>
@@ -137,10 +137,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="970" y="330"/>
+    <position x="940" y="365"/>
    </graphics>
   </place>
-  <transition id="t-B6E0-99AF6-14">
+  <transition id="t-6C04-34FB2-14">
   <name>
    <text>E12_5_activate_118</text>
     <graphics>
@@ -148,10 +148,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="850" y="320"/>
+    <position x="820" y="355"/>
    </graphics>
   </transition>
-  <place id="p-B6E0-99AF8-15">
+  <place id="p-6C04-34FB5-15">
   <name>
    <text>E12_6_ActivationCount_119</text>
     <graphics>
@@ -159,10 +159,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="975" y="400"/>
+    <position x="945" y="440"/>
    </graphics>
   </place>
-  <transition id="t-B6E0-99AFC-16">
+  <transition id="t-6C04-34FB8-16">
   <name>
    <text>E12_6_activate_119</text>
     <graphics>
@@ -170,10 +170,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="855" y="385"/>
+    <position x="825" y="430"/>
    </graphics>
   </transition>
-  <place id="p-B6E0-99AFF-17">
+  <place id="p-6C04-34FBB-17">
   <name>
    <text>Fragment_souvenir_6_ActivationCount_120</text>
     <graphics>
@@ -181,10 +181,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="970" y="500"/>
+    <position x="940" y="530"/>
    </graphics>
   </place>
-  <transition id="t-B6E0-99B03-18">
+  <transition id="t-6C04-34FC0-18">
   <name>
    <text>Fragment_souvenir_6_activate_120</text>
     <graphics>
@@ -192,10 +192,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="860" y="490"/>
+    <position x="830" y="520"/>
    </graphics>
   </transition>
-  <place id="p-B6E0-99B4A-19">
+  <place id="p-6C04-3504C-19">
   <name>
    <text>Lamp_end_112</text>
     <graphics>
@@ -203,10 +203,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="450" y="215"/>
+    <position x="460" y="275"/>
    </graphics>
   </place>
-  <place id="p-B6E0-99B4D-20">
+  <place id="p-6C04-35057-20">
   <name>
    <text>Lamp_off_113</text>
     <graphics>
@@ -217,10 +217,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="545" y="230"/>
+    <position x="545" y="280"/>
    </graphics>
   </place>
-  <place id="p-B6E0-99B51-21">
+  <place id="p-6C04-3505B-21">
   <name>
    <text>Lamp_on_113</text>
     <graphics>
@@ -228,10 +228,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="710" y="235"/>
+    <position x="700" y="285"/>
    </graphics>
   </place>
-  <transition id="t-B6E0-99B53-22">
+  <transition id="t-6C04-35064-22">
   <name>
    <text>Lamp_perform_112</text>
     <graphics>
@@ -239,10 +239,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="385" y="205"/>
+    <position x="390" y="260"/>
    </graphics>
   </transition>
-  <place id="p-B6E0-99B56-23">
+  <place id="p-6C04-35067-23">
   <name>
    <text>Lamp_start_112</text>
     <graphics>
@@ -253,10 +253,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="300" y="215"/>
+    <position x="310" y="275"/>
    </graphics>
   </place>
-  <transition id="t-B6E0-99B5A-24">
+  <transition id="t-6C04-3506C-24">
   <name>
    <text>Lamp_turnOff_113</text>
     <graphics>
@@ -264,10 +264,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="620" y="195"/>
+    <position x="625" y="240"/>
    </graphics>
   </transition>
-  <transition id="t-B6E0-99B5D-25">
+  <transition id="t-6C04-3506F-25">
   <name>
    <text>Lamp_turnOn_113</text>
     <graphics>
@@ -275,10 +275,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="620" y="285"/>
+    <position x="625" y="330"/>
    </graphics>
   </transition>
-  <place id="p-B6E0-99B60-26">
+  <place id="p-6C04-35072-26">
   <name>
    <text>boite_off_111</text>
     <graphics>
@@ -289,10 +289,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="50" y="205"/>
+    <position x="50" y="270"/>
    </graphics>
   </place>
-  <place id="p-B6E0-99B63-27">
+  <place id="p-6C04-35075-27">
   <name>
    <text>boite_on_111</text>
     <graphics>
@@ -300,10 +300,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="225" y="200"/>
+    <position x="210" y="265"/>
    </graphics>
   </place>
-  <transition id="t-B6E0-99B67-28">
+  <transition id="t-6C04-35078-28">
   <name>
    <text>boite_turnOff_111</text>
     <graphics>
@@ -311,10 +311,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="140" y="165"/>
+    <position x="130" y="230"/>
    </graphics>
   </transition>
-  <transition id="t-B6E0-99B69-29">
+  <transition id="t-6C04-3507D-29">
   <name>
    <text>boite_turnOn_111</text>
     <graphics>
@@ -322,73 +322,73 @@
     </graphics>
   </name>
    <graphics>
-    <position x="140" y="255"/>
+    <position x="130" y="320"/>
    </graphics>
   </transition>
-  <arc id="e-B6E0-99B71-30" source="p-B6E0-99B63-27" target="t-B6E0-99B53-22">
+  <arc id="e-6C04-35086-30" source="p-6C04-35075-27" target="t-6C04-35064-22">
    <type value="test"/>
   </arc>
-  <arc id="e-B6E0-99B74-31" source="t-B6E0-99B69-29" target="p-B6E0-99B63-27">
+  <arc id="e-6C04-3508A-31" source="t-6C04-3507D-29" target="p-6C04-35075-27">
   </arc>
-  <arc id="e-B6E0-99B75-32" source="t-B6E0-99B67-28" target="p-B6E0-99B60-26">
+  <arc id="e-6C04-3508B-32" source="t-6C04-35078-28" target="p-6C04-35072-26">
   </arc>
-  <arc id="e-B6E0-99B76-33" source="t-B6E0-99AD1-3" target="p-B6E0-99AC3-2">
+  <arc id="e-6C04-3508E-33" source="t-6C04-34F89-3" target="p-6C04-34F7C-2">
   </arc>
-  <arc id="e-B6E0-99B77-34" source="p-B6E0-99AD6-4" target="t-B6E0-99AD1-3">
+  <arc id="e-6C04-3508F-34" source="p-6C04-34F8F-4" target="t-6C04-34F89-3">
   </arc>
-  <arc id="e-B6E0-99B78-35" source="t-B6E0-99B03-18" target="p-B6E0-99AFF-17">
+  <arc id="e-6C04-35091-35" source="t-6C04-34FC0-18" target="p-6C04-34FBB-17">
   </arc>
-  <arc id="e-B6E0-99B7B-36" source="p-B6E0-99B51-21" target="t-B6E0-99AE4-8">
+  <arc id="e-6C04-35093-36" source="p-6C04-3505B-21" target="t-6C04-34F9E-8">
    <type value="test"/>
   </arc>
-  <arc id="e-B6E0-99B7C-37" source="t-B6E0-99AE4-8" target="p-B6E0-99AE0-7">
+  <arc id="e-6C04-35094-37" source="t-6C04-34F9E-8" target="p-6C04-34F9A-7">
   </arc>
-  <arc id="e-B6E0-99B7E-38" source="p-B6E0-99B51-21" target="t-B6E0-99AFC-16">
+  <arc id="e-6C04-35096-38" source="p-6C04-3505B-21" target="t-6C04-34FB8-16">
    <type value="test"/>
   </arc>
-  <arc id="e-B6E0-99B7F-39" source="t-B6E0-99AFC-16" target="p-B6E0-99AF8-15">
+  <arc id="e-6C04-35097-39" source="t-6C04-34FB8-16" target="p-6C04-34FB5-15">
   </arc>
-  <arc id="e-B6E0-99B80-40" source="p-B6E0-99B51-21" target="t-B6E0-99AEF-12">
+  <arc id="e-6C04-35098-40" source="p-6C04-3505B-21" target="t-6C04-34FAC-12">
    <type value="test"/>
   </arc>
-  <arc id="e-B6E0-99B81-41" source="p-B6E0-99B56-23" target="t-B6E0-99B53-22">
+  <arc id="e-6C04-35099-41" source="p-6C04-35067-23" target="t-6C04-35064-22">
   </arc>
-  <arc id="e-B6E0-99B81-42" source="t-B6E0-99AEF-12" target="p-B6E0-99AED-11">
+  <arc id="e-6C04-3509B-42" source="t-6C04-34FAC-12" target="p-6C04-34FA8-11">
   </arc>
-  <arc id="e-B6E0-99B83-43" source="p-B6E0-99B4A-19" target="t-B6E0-99B5D-25">
+  <arc id="e-6C04-3509F-43" source="p-6C04-3504C-19" target="t-6C04-3506F-25">
    <type value="test"/>
   </arc>
-  <arc id="e-B6E0-99B84-44" source="p-B6E0-99B4A-19" target="t-B6E0-99B5A-24">
+  <arc id="e-6C04-350A0-44" source="p-6C04-3504C-19" target="t-6C04-3506C-24">
    <type value="test"/>
   </arc>
-  <arc id="e-B6E0-99BB5-45" source="p-B6E0-99B51-21" target="t-B6E0-99B5A-24">
+  <arc id="e-6C04-3510C-45" source="p-6C04-3505B-21" target="t-6C04-3506C-24">
   </arc>
-  <arc id="e-B6E0-99BB6-46" source="p-B6E0-99B4D-20" target="t-B6E0-99B5D-25">
+  <arc id="e-6C04-35110-46" source="p-6C04-35057-20" target="t-6C04-3506F-25">
   </arc>
-  <arc id="e-B6E0-99BB8-47" source="t-B6E0-99B5D-25" target="p-B6E0-99B51-21">
+  <arc id="e-6C04-35112-47" source="t-6C04-3506F-25" target="p-6C04-3505B-21">
   </arc>
-  <arc id="e-B6E0-99BB8-48" source="t-B6E0-99B5A-24" target="p-B6E0-99B4D-20">
+  <arc id="e-6C04-35114-48" source="t-6C04-3506C-24" target="p-6C04-35057-20">
   </arc>
-  <arc id="e-B6E0-99BB9-49" source="p-B6E0-99B51-21" target="t-B6E0-99ADD-6">
+  <arc id="e-6C04-35116-49" source="p-6C04-3505B-21" target="t-6C04-34F96-6">
    <type value="test"/>
   </arc>
-  <arc id="e-B6E0-99BBA-50" source="t-B6E0-99ADD-6" target="p-B6E0-99AD9-5">
+  <arc id="e-6C04-35118-50" source="t-6C04-34F96-6" target="p-6C04-34F93-5">
   </arc>
-  <arc id="e-B6E0-99BBC-51" source="t-B6E0-99B53-22" target="p-B6E0-99B4A-19">
+  <arc id="e-6C04-3511A-51" source="t-6C04-35064-22" target="p-6C04-3504C-19">
   </arc>
-  <arc id="e-B6E0-99BBD-52" source="p-B6E0-99B51-21" target="t-B6E0-99AF6-14">
+  <arc id="e-6C04-3511F-52" source="p-6C04-3505B-21" target="t-6C04-34FB2-14">
    <type value="test"/>
   </arc>
-  <arc id="e-B6E0-99BBE-53" source="t-B6E0-99AF6-14" target="p-B6E0-99AF2-13">
+  <arc id="e-6C04-35122-53" source="t-6C04-34FB2-14" target="p-6C04-34FAE-13">
   </arc>
-  <arc id="e-B6E0-99BC1-54" source="p-B6E0-99B51-21" target="t-B6E0-99AEA-10">
+  <arc id="e-6C04-35124-54" source="p-6C04-3505B-21" target="t-6C04-34FA4-10">
    <type value="test"/>
   </arc>
-  <arc id="e-B6E0-99BC2-55" source="t-B6E0-99AEA-10" target="p-B6E0-99AE6-9">
+  <arc id="e-6C04-35127-55" source="t-6C04-34FA4-10" target="p-6C04-34FA0-9">
   </arc>
-  <arc id="e-B6E0-99BC2-56" source="p-B6E0-99B63-27" target="t-B6E0-99B67-28">
+  <arc id="e-6C04-35129-56" source="p-6C04-35075-27" target="t-6C04-35078-28">
   </arc>
-  <arc id="e-B6E0-99BC3-57" source="p-B6E0-99B60-26" target="t-B6E0-99B69-29">
+  <arc id="e-6C04-3512C-57" source="p-6C04-35072-26" target="t-6C04-3507D-29">
   </arc>
  </page>
  </net>

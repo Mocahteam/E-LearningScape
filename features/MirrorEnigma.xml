@@ -5,7 +5,7 @@
   <transition id="Plank_turnOn_80" label="turnOn Plank" system="False" end="False" />
   <transition id="Mirror_turnOff_79" label="turnOff Mirror" system="False" end="False" />
   <transition id="Mirror_turnOn_79" label="turnOn Mirror" system="False" end="False" />
-  <transition id="Q4_Correct_83" label="Correct Q4" system="False" end="True" />
-  <transition id="Q4_Wrong_83" label="Wrong Q4" system="False" end="False" />
+  <transition id="R2-Q4_Correct_83" label="Correct R2-Q4" system="False" end="True" />
+  <transition id="R2-Q4_Wrong_83" label="Wrong R2-Q4" system="False" end="False" />
   <transition id="Mirror_perform_78" label="perform Mirror" system="False" end="False" />
 </transitions>

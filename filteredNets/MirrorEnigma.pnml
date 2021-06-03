@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-9C6C-8466C-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-ED04-CD1F-0" type ="http://www.laas.fr/tina/tpn">
   <name>
-   <text>Enigma8</text>
+   <text>MirrorEnigma</text>
   </name>
- <page id="g-9C6C-84685-1">
-  <place id="p-9C6C-8468B-2">
+ <page id="g-ED04-CD2C-1">
+  <place id="p-ED04-CD30-2">
   <name>
    <text>Mirror_end_78</text>
     <graphics>
@@ -16,7 +16,7 @@
     <position x="215" y="240"/>
    </graphics>
   </place>
-  <place id="p-9C6C-8469C-3">
+  <place id="p-ED04-CD41-3">
   <name>
    <text>Mirror_off_79</text>
     <graphics>
@@ -27,10 +27,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="325" y="240"/>
+    <position x="295" y="240"/>
    </graphics>
   </place>
-  <place id="p-9C6C-846A3-4">
+  <place id="p-ED04-CD45-4">
   <name>
    <text>Mirror_on_79</text>
     <graphics>
@@ -38,10 +38,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="495" y="240"/>
+    <position x="485" y="250"/>
    </graphics>
   </place>
-  <transition id="t-9C6C-846A6-5">
+  <transition id="t-ED04-CD47-5">
   <name>
    <text>Mirror_perform_78</text>
     <graphics>
@@ -49,10 +49,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="135" y="230"/>
+    <position x="135" y="220"/>
    </graphics>
   </transition>
-  <place id="p-9C6C-846AC-6">
+  <place id="p-ED04-CD4C-6">
   <name>
    <text>Mirror_start_78</text>
     <graphics>
@@ -66,7 +66,7 @@
     <position x="55" y="240"/>
    </graphics>
   </place>
-  <transition id="t-9C6C-846B0-7">
+  <transition id="t-ED04-CD50-7">
   <name>
    <text>Mirror_turnOn_79</text>
     <graphics>
@@ -74,10 +74,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="405" y="300"/>
+    <position x="395" y="300"/>
    </graphics>
   </transition>
-  <place id="p-9C6C-846B6-8">
+  <place id="p-ED04-CD53-8">
   <name>
    <text>Plank_end_81</text>
     <graphics>
@@ -85,10 +85,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="665" y="160"/>
+    <position x="675" y="160"/>
    </graphics>
   </place>
-  <place id="p-9C6C-846BC-9">
+  <place id="p-ED04-CD56-9">
   <name>
    <text>Plank_off_80</text>
     <graphics>
@@ -99,10 +99,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="335" y="80"/>
+    <position x="315" y="80"/>
    </graphics>
   </place>
-  <place id="p-9C6C-846C5-10">
+  <place id="p-ED04-CD58-10">
   <name>
    <text>Plank_on_80</text>
     <graphics>
@@ -110,10 +110,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="485" y="80"/>
+    <position x="475" y="90"/>
    </graphics>
   </place>
-  <transition id="t-9C6C-846C8-11">
+  <transition id="t-ED04-CD5C-11">
   <name>
    <text>Plank_perform_81</text>
     <graphics>
@@ -121,10 +121,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="595" y="160"/>
+    <position x="595" y="150"/>
    </graphics>
   </transition>
-  <place id="p-9C6C-846CD-12">
+  <place id="p-ED04-CD5E-12">
   <name>
    <text>Plank_start_81</text>
     <graphics>
@@ -138,7 +138,7 @@
     <position x="515" y="160"/>
    </graphics>
   </place>
-  <transition id="t-9C6C-846D1-13">
+  <transition id="t-ED04-CD62-13">
   <name>
    <text>Plank_turnOff_80</text>
     <graphics>
@@ -146,10 +146,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="405" y="50"/>
+    <position x="395" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-9C6C-846D7-14">
+  <transition id="t-ED04-CD64-14">
   <name>
    <text>Plank_turnOn_80</text>
     <graphics>
@@ -157,23 +157,23 @@
     </graphics>
   </name>
    <graphics>
-    <position x="405" y="140"/>
+    <position x="395" y="140"/>
    </graphics>
   </transition>
-  <place id="p-9C6C-846DE-15">
+  <place id="p-ED04-CD68-15">
   <name>
-   <text>Q4_Answered_83</text>
+   <text>R2-Q4_Answered_83</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1020" y="195"/>
+    <position x="935" y="245"/>
    </graphics>
   </place>
-  <place id="p-9C6C-846E3-16">
+  <place id="p-ED04-CD6A-16">
   <name>
-   <text>Q4_Answering_83</text>
+   <text>R2-Q4_Answering_83</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -182,54 +182,54 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="780" y="195"/>
+    <position x="695" y="245"/>
    </graphics>
   </place>
-  <transition id="t-9C6C-846ED-17">
+  <transition id="t-ED04-CD6E-17">
   <name>
-   <text>Q4_Correct_83</text>
+   <text>R2-Q4_Correct_83</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="900" y="175"/>
+    <position x="815" y="225"/>
    </graphics>
   </transition>
-  <arc id="e-9C6C-846F5-18" source="p-9C6C-846B6-8" target="t-9C6C-846ED-17">
+  <arc id="e-ED04-CD76-18" source="p-ED04-CD53-8" target="t-ED04-CD6E-17">
    <type value="test"/>
   </arc>
-  <arc id="e-9C6C-84794-19" source="p-9C6C-846A3-4" target="t-9C6C-846C8-11">
+  <arc id="e-ED04-CDDF-19" source="p-ED04-CD45-4" target="t-ED04-CD5C-11">
    <type value="test"/>
   </arc>
-  <arc id="e-9C6C-84798-20" source="t-9C6C-846D1-13" target="p-9C6C-846BC-9">
+  <arc id="e-ED04-CDE1-20" source="t-ED04-CD62-13" target="p-ED04-CD56-9">
   </arc>
-  <arc id="e-9C6C-8479A-21" source="t-9C6C-846D7-14" target="p-9C6C-846C5-10">
+  <arc id="e-ED04-CDE2-21" source="t-ED04-CD64-14" target="p-ED04-CD58-10">
   </arc>
-  <arc id="e-9C6C-8479E-22" source="p-9C6C-846BC-9" target="t-9C6C-846D7-14">
+  <arc id="e-ED04-CDE3-22" source="p-ED04-CD56-9" target="t-ED04-CD64-14">
   </arc>
-  <arc id="e-9C6C-8479F-23" source="p-9C6C-846C5-10" target="t-9C6C-846D1-13">
+  <arc id="e-ED04-CDE4-23" source="p-ED04-CD58-10" target="t-ED04-CD62-13">
   </arc>
-  <arc id="e-9C6C-847A1-24" source="t-9C6C-846B0-7" target="p-9C6C-846A3-4">
+  <arc id="e-ED04-CDE5-24" source="t-ED04-CD50-7" target="p-ED04-CD45-4">
   </arc>
-  <arc id="e-9C6C-847A3-25" source="p-9C6C-846AC-6" target="t-9C6C-846A6-5">
+  <arc id="e-ED04-CDE6-25" source="p-ED04-CD4C-6" target="t-ED04-CD47-5">
   </arc>
-  <arc id="e-9C6C-847A5-26" source="p-9C6C-8469C-3" target="t-9C6C-846B0-7">
+  <arc id="e-ED04-CDE9-26" source="p-ED04-CD41-3" target="t-ED04-CD50-7">
   </arc>
-  <arc id="e-9C6C-847A9-27" source="p-9C6C-8468B-2" target="t-9C6C-846B0-7">
+  <arc id="e-ED04-CDEA-27" source="p-ED04-CD30-2" target="t-ED04-CD50-7">
    <type value="test"/>
   </arc>
-  <arc id="e-9C6C-847AB-28" source="p-9C6C-846E3-16" target="t-9C6C-846ED-17">
+  <arc id="e-ED04-CDEB-28" source="p-ED04-CD6A-16" target="t-ED04-CD6E-17">
   </arc>
-  <arc id="e-9C6C-847AE-29" source="t-9C6C-846ED-17" target="p-9C6C-846DE-15">
+  <arc id="e-ED04-CDEC-29" source="t-ED04-CD6E-17" target="p-ED04-CD68-15">
   </arc>
-  <arc id="e-9C6C-847B0-30" source="t-9C6C-846A6-5" target="p-9C6C-8468B-2">
+  <arc id="e-ED04-CDED-30" source="t-ED04-CD47-5" target="p-ED04-CD30-2">
   </arc>
-  <arc id="e-9C6C-847B5-31" source="t-9C6C-846C8-11" target="p-9C6C-846B6-8">
+  <arc id="e-ED04-CDEE-31" source="t-ED04-CD5C-11" target="p-ED04-CD53-8">
   </arc>
-  <arc id="e-9C6C-847B7-32" source="p-9C6C-846CD-12" target="t-9C6C-846C8-11">
+  <arc id="e-ED04-CDEF-32" source="p-ED04-CD5E-12" target="t-ED04-CD5C-11">
   </arc>
-  <arc id="e-9C6C-847B9-33" source="p-9C6C-846C5-10" target="t-9C6C-846C8-11">
+  <arc id="e-ED04-CDF0-33" source="p-ED04-CD58-10" target="t-ED04-CD5C-11">
    <type value="test"/>
   </arc>
  </page>

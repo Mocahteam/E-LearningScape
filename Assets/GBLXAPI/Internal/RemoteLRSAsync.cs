@@ -53,7 +53,7 @@ namespace DIG.GBLXAPI.Internal
 
 		// ------------------------------------------------------------------------
 		// ------------------------------------------------------------------------
-		public int PostStatement(Statement statement)
+		public int PostStatements(List<Statement> statements)
 		{
             // reinit state
             State state = new State();
@@ -63,7 +63,18 @@ namespace DIG.GBLXAPI.Internal
 			// https://learninglocker.dig-itgames.com/data/xAPI/statements?statementId=58098b7c-3353-4f9c-b812-1bddb08876fd
 			string queryURL = endpoint + "statements";
 
-			byte[] formBytes = Encoding.UTF8.GetBytes(statement.ToJSON(version));
+            string jsonData = "";
+            if (statements.Count > 1)
+                jsonData += "[";
+            for (int i = 0; i < statements.Count; i++) {
+                jsonData += statements[i].ToJSON(version);
+                if (i < statements.Count - 1)
+                    jsonData += ", ";
+            }
+            if (statements.Count > 1)
+                jsonData += "]";
+
+			byte[] formBytes = Encoding.UTF8.GetBytes(jsonData);
 
 			UnityWebRequest request = new UnityWebRequest(queryURL, "POST", new DownloadHandlerBuffer(), new UploadHandlerRaw(formBytes));
 

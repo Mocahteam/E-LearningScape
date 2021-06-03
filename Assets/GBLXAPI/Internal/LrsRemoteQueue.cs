@@ -34,6 +34,8 @@ namespace DIG.GBLXAPI.Internal
 
 		private RingBuffer<QueuedStatement> _statementQueue;
 
+        private int batchTreshold = 100;
+
 		// ------------------------------------------------------------------------
 		// Set singleton so it persists across scene loads
 		// ------------------------------------------------------------------------
@@ -51,13 +53,24 @@ namespace DIG.GBLXAPI.Internal
 		}
 
 		private void Update()
-		{
-            if (_statementQueue == null || _statementQueue.Count == 0)
+        {
+            if (_statementQueue == null || _statementQueue.Count < batchTreshold)
                 return;
+            flushQueuedStatements(true);
+        }
 
-            foreach (RemoteLRSAsync endPoint in _lrsEndpoints)
+        private void OnDestroy()
+        {
+            // flush statements
+            flushQueuedStatements(false);
+        }
+
+        private void flushQueuedStatements(bool waitComplete)
+        {
+            // Dequeue statements if exists in queue
+            List<QueuedStatement> batchStatements = new List<QueuedStatement>();
+            while (_statementQueue.Count > 0)
             {
-                // Dequeue statement if exists in queue
                 if (_statementQueue.TryDequeue(out QueuedStatement queuedStatement))
                 {
                     // Debug statement
@@ -65,12 +78,20 @@ namespace DIG.GBLXAPI.Internal
                     {
                         Debug.Log(queuedStatement.statement.ToJSON(true));
                     }
-                    StartCoroutine(SendStatementCoroutine(endPoint, queuedStatement));
+                    batchStatements.Add(queuedStatement);
                 }
             }
-		}
+            // Send to each endPoint
+            foreach (RemoteLRSAsync endPoint in _lrsEndpoints)
+            {
+                if (waitComplete)
+                    StartCoroutine(SendStatementCoroutine(endPoint, batchStatements));
+                else
+                    SendStatementsImmediate(endPoint, batchStatements);
+            }
+        }
 
-		public void EnqueueStatement(Statement statement, Action<string, bool, string> sendCallback = null)
+        public void EnqueueStatement(Statement statement, Action<string, bool, string> sendCallback = null)
 		{
 			// Make sure all required fields are set
 			bool valid = true;
@@ -103,19 +124,28 @@ namespace DIG.GBLXAPI.Internal
 			}
 		}
 
-		// ------------------------------------------------------------------------
-		// This coroutine spawns a thread to send the statement to the LRS
-		// ------------------------------------------------------------------------
-		private IEnumerator SendStatementCoroutine(RemoteLRSAsync endPoint, QueuedStatement queuedStatement)
+        //return idState of posted statements
+        private int SendStatementsImmediate(RemoteLRSAsync endPoint, List<QueuedStatement> queuedStatements)
+        {
+            List<Statement> statements = new List<Statement>();
+            foreach (QueuedStatement qs in queuedStatements)
+                statements.Add(qs.statement);
+            return endPoint.PostStatements(statements);
+        }
+
+        // ------------------------------------------------------------------------
+        // This coroutine spawns a thread to send the statement to the LRS
+        // ------------------------------------------------------------------------
+        private IEnumerator SendStatementCoroutine(RemoteLRSAsync endPoint, List<QueuedStatement> queuedStatements)
 		{
+            int idState = SendStatementsImmediate(endPoint, queuedStatements);
 
-            int idState = endPoint.PostStatement(queuedStatement.statement);
+            // Wait for the coroutine to finish
+            while (!endPoint.states[idState].complete) { yield return null; }
 
-			// Wait for the coroutine to finish
-			while (!endPoint.states[idState].complete) { yield return null; }
-
-			// Client callback with result
-			queuedStatement.callback?.Invoke(endPoint.endpoint, endPoint.states[idState].success, endPoint.states[idState].response);
+            // Client callback with result
+            foreach (QueuedStatement qs in queuedStatements)
+                qs.callback?.Invoke(endPoint.endpoint, endPoint.states[idState].success, endPoint.states[idState].response);
 		}
 
 		private void StatementDefaultCallback(string endpoint, bool result, string resultText)

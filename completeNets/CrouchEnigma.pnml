@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-BC2C-CAB13-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-A744-C170D-0" type ="http://www.laas.fr/tina/tpn">
   <name>
-   <text>Enigma3</text>
+   <text>CrouchEnigma</text>
   </name>
- <page id="g-BC2C-CAB1E-1">
-  <place id="p-BC2C-CAB22-2">
+ <page id="g-A744-C1718-1">
+  <place id="p-A744-C171E-2">
   <name>
    <text>CorrectChair_off_38</text>
     <graphics>
@@ -16,10 +16,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="85" y="280"/>
+    <position x="80" y="280"/>
    </graphics>
   </place>
-  <place id="p-BC2C-CAB30-3">
+  <place id="p-A744-C172B-3">
   <name>
    <text>CorrectChair_on_38</text>
     <graphics>
@@ -27,10 +27,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="230" y="280"/>
+    <position x="280" y="275"/>
    </graphics>
   </place>
-  <transition id="t-BC2C-CAB33-4">
+  <transition id="t-A744-C1731-4">
   <name>
    <text>CorrectChair_turnOff_38</text>
     <graphics>
@@ -38,10 +38,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="155" y="245"/>
+    <position x="180" y="240"/>
    </graphics>
   </transition>
-  <transition id="t-BC2C-CAB37-5">
+  <transition id="t-A744-C1737-5">
   <name>
    <text>CorrectChair_turnOn_38</text>
     <graphics>
@@ -49,10 +49,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="155" y="335"/>
+    <position x="180" y="330"/>
    </graphics>
   </transition>
-  <place id="p-BC2C-CAB3B-6">
+  <place id="p-A744-C173A-6">
   <name>
    <text>FPSController_off_37</text>
     <graphics>
@@ -63,10 +63,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="70" y="435"/>
+    <position x="80" y="470"/>
    </graphics>
   </place>
-  <place id="p-BC2C-CAB3E-7">
+  <place id="p-A744-C173E-7">
   <name>
    <text>FPSController_on_37</text>
     <graphics>
@@ -74,10 +74,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="250" y="430"/>
+    <position x="260" y="465"/>
    </graphics>
   </place>
-  <transition id="t-BC2C-CAB41-8">
+  <transition id="t-A744-C1742-8">
   <name>
    <text>FPSController_turnOff_37</text>
     <graphics>
@@ -85,10 +85,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="155" y="400"/>
+    <position x="170" y="430"/>
    </graphics>
   </transition>
-  <transition id="t-BC2C-CAB45-9">
+  <transition id="t-A744-C1745-9">
   <name>
    <text>FPSController_turnOn_37</text>
     <graphics>
@@ -96,10 +96,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="155" y="490"/>
+    <position x="170" y="520"/>
    </graphics>
   </transition>
-  <place id="p-BC2C-CAB48-10">
+  <place id="p-A744-C174A-10">
   <name>
    <text>Fragment_souvenir_4_ActivationCount_48</text>
     <graphics>
@@ -107,10 +107,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="620" y="700"/>
+    <position x="645" y="720"/>
    </graphics>
   </place>
-  <transition id="t-BC2C-CAB51-11">
+  <transition id="t-A744-C174F-11">
   <name>
    <text>Fragment_souvenir_4_activate_48</text>
     <graphics>
@@ -118,10 +118,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="510" y="690"/>
+    <position x="525" y="720"/>
    </graphics>
   </transition>
-  <place id="p-BC2C-CAB54-12">
+  <place id="p-A744-C1754-12">
   <name>
    <text>Fragment_souvenir_chair_ActivationCount_43</text>
     <graphics>
@@ -129,10 +129,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="635" y="200"/>
+    <position x="675" y="200"/>
    </graphics>
   </place>
-  <transition id="t-BC2C-CAB59-13">
+  <transition id="t-A744-C1758-13">
   <name>
    <text>Fragment_souvenir_chair_activate_43</text>
     <graphics>
@@ -140,10 +140,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="525" y="190"/>
+    <position x="555" y="200"/>
    </graphics>
   </transition>
-  <place id="p-BC2C-CAB5E-14">
+  <place id="p-A744-C175D-14">
   <name>
    <text>Fragment_souvenir_furnitureDown_ActivationCount_41</text>
     <graphics>
@@ -151,10 +151,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="640" y="370"/>
+    <position x="665" y="370"/>
    </graphics>
   </place>
-  <transition id="t-BC2C-CAB62-15">
+  <transition id="t-A744-C1764-15">
   <name>
    <text>Fragment_souvenir_furnitureDown_activate_41</text>
     <graphics>
@@ -162,10 +162,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="530" y="360"/>
+    <position x="555" y="370"/>
    </graphics>
   </transition>
-  <place id="p-BC2C-CAB68-16">
+  <place id="p-A744-C1768-16">
   <name>
    <text>Fragment_souvenir_furnitureUp_ActivationCount_47</text>
     <graphics>
@@ -173,10 +173,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="630" y="630"/>
+    <position x="650" y="625"/>
    </graphics>
   </place>
-  <transition id="t-BC2C-CAB6F-17">
+  <transition id="t-A744-C176D-17">
   <name>
    <text>Fragment_souvenir_furnitureUp_activate_47</text>
     <graphics>
@@ -184,10 +184,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="510" y="620"/>
+    <position x="530" y="625"/>
    </graphics>
   </transition>
-  <place id="p-BC2C-CABE0-18">
+  <place id="p-A744-C17D9-18">
   <name>
    <text>Fragment_souvenir_table_ActivationCount_46</text>
     <graphics>
@@ -195,10 +195,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="615" y="510"/>
+    <position x="670" y="530"/>
    </graphics>
   </place>
-  <transition id="t-BC2C-CABEC-19">
+  <transition id="t-A744-C17E0-19">
   <name>
    <text>Fragment_souvenir_table_activate_46</text>
     <graphics>
@@ -206,10 +206,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="525" y="500"/>
+    <position x="550" y="530"/>
    </graphics>
   </transition>
-  <place id="p-BC2C-CABF4-20">
+  <place id="p-A744-C17E4-20">
   <name>
    <text>Fragment_souvenir_tirroir_ActivationCount_42</text>
     <graphics>
@@ -217,10 +217,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="635" y="440"/>
+    <position x="670" y="455"/>
    </graphics>
   </place>
-  <transition id="t-BC2C-CABFC-21">
+  <transition id="t-A744-C17EB-21">
   <name>
    <text>Fragment_souvenir_tirroir_activate_42</text>
     <graphics>
@@ -228,10 +228,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="525" y="430"/>
+    <position x="560" y="455"/>
    </graphics>
   </transition>
-  <place id="p-BC2C-CAC03-22">
+  <place id="p-A744-C17F0-22">
   <name>
    <text>Fragment_souvenir_wall_ActivationCount_40</text>
     <graphics>
@@ -239,10 +239,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="645" y="300"/>
+    <position x="670" y="295"/>
    </graphics>
   </place>
-  <transition id="t-BC2C-CAC09-23">
+  <transition id="t-A744-C17F5-23">
   <name>
    <text>Fragment_souvenir_wall_activate_40</text>
     <graphics>
@@ -250,23 +250,23 @@
     </graphics>
   </name>
    <graphics>
-    <position x="525" y="290"/>
+    <position x="560" y="295"/>
    </graphics>
   </transition>
-  <place id="p-BC2C-CAC10-24">
+  <place id="p-A744-C17F9-24">
   <name>
-   <text>Q3_Answered_50</text>
+   <text>R1-Q3_Answered_50</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1195" y="340"/>
+    <position x="1115" y="400"/>
    </graphics>
   </place>
-  <place id="p-BC2C-CAC16-25">
+  <place id="p-A744-C17FD-25">
   <name>
-   <text>Q3_Answering_50</text>
+   <text>R1-Q3_Answering_50</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
@@ -275,43 +275,43 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="945" y="340"/>
+    <position x="865" y="400"/>
    </graphics>
   </place>
-  <transition id="t-BC2C-CAC1B-26">
+  <transition id="t-A744-C1800-26">
   <name>
-   <text>Q3_Correct_50</text>
+   <text>R1-Q3_Correct_50</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1075" y="330"/>
+    <position x="995" y="390"/>
    </graphics>
   </transition>
-  <transition id="t-BC2C-CAC21-27">
+  <transition id="t-A744-C1806-27">
   <name>
-   <text>Q3_Wrong_50</text>
+   <text>R1-Q3_Wrong_50</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="1075" y="420"/>
+    <position x="1025" y="495"/>
    </graphics>
   </transition>
-  <place id="p-BC2C-CAC25-28">
+  <place id="p-A744-C1809-28">
   <name>
-   <text>Q3_locker_50</text>
+   <text>R1-Q3_locker_50</text>
     <graphics>
      <offset x="0" y="-10" />
     </graphics>
   </name>
    <graphics>
-    <position x="945" y="440"/>
+    <position x="895" y="515"/>
    </graphics>
   </place>
-  <place id="p-BC2C-CAC2A-29">
+  <place id="p-A744-C180D-29">
   <name>
    <text>Table_off_39</text>
     <graphics>
@@ -322,10 +322,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="75" y="605"/>
+    <position x="70" y="665"/>
    </graphics>
   </place>
-  <place id="p-BC2C-CAC2D-30">
+  <place id="p-A744-C180F-30">
   <name>
    <text>Table_on_39</text>
     <graphics>
@@ -333,10 +333,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="230" y="600"/>
+    <position x="270" y="660"/>
    </graphics>
   </place>
-  <transition id="t-BC2C-CAC31-31">
+  <transition id="t-A744-C1812-31">
   <name>
    <text>Table_turnOff_39</text>
     <graphics>
@@ -344,10 +344,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="155" y="565"/>
+    <position x="170" y="625"/>
    </graphics>
   </transition>
-  <transition id="t-BC2C-CAC35-32">
+  <transition id="t-A744-C1815-32">
   <name>
    <text>Table_turnOn_39</text>
     <graphics>
@@ -355,10 +355,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="155" y="655"/>
+    <position x="170" y="715"/>
    </graphics>
   </transition>
-  <place id="p-BC2C-CAC3B-33">
+  <place id="p-A744-C1819-33">
   <name>
    <text>equivWith_ToggleObject_f_wrongChair_off_125</text>
     <graphics>
@@ -369,10 +369,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="320" y="80"/>
+    <position x="145" y="90"/>
    </graphics>
   </place>
-  <place id="p-BC2C-CAC42-34">
+  <place id="p-A744-C181D-34">
   <name>
    <text>equivWith_ToggleObject_f_wrongChair_on_125</text>
     <graphics>
@@ -380,10 +380,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="150" y="80"/>
+    <position x="325" y="85"/>
    </graphics>
   </place>
-  <transition id="t-BC2C-CAC88-35">
+  <transition id="t-A744-C185C-35">
   <name>
    <text>equivWith_ToggleObject_f_wrongChair_turnOff_125</text>
     <graphics>
@@ -391,10 +391,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="240" y="50"/>
+    <position x="235" y="50"/>
    </graphics>
   </transition>
-  <transition id="t-BC2C-CAC93-36">
+  <transition id="t-A744-C186C-36">
   <name>
    <text>equivWith_ToggleObject_f_wrongChair_turnOn_125</text>
     <graphics>
@@ -402,10 +402,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="240" y="140"/>
+    <position x="235" y="140"/>
    </graphics>
   </transition>
-  <transition id="t-BC2C-CAC9B-37">
+  <transition id="t-A744-C1874-37">
   <name>
    <text>or0_Fragment_souvenir_chair_activate_43</text>
     <graphics>
@@ -413,80 +413,80 @@
     </graphics>
   </name>
    <graphics>
-    <position x="525" y="230"/>
+    <position x="555" y="240"/>
    </graphics>
   </transition>
-  <arc id="e-BC2C-CACA7-38" source="p-BC2C-CAB3E-7" target="t-BC2C-CAB62-15">
+  <arc id="e-A744-C187F-38" source="p-A744-C173E-7" target="t-A744-C1764-15">
    <type value="test"/>
   </arc>
-  <arc id="e-BC2C-CACAD-39" source="t-BC2C-CAB41-8" target="p-BC2C-CAB3B-6">
+  <arc id="e-A744-C1883-39" source="t-A744-C1742-8" target="p-A744-C173A-6">
   </arc>
-  <arc id="e-BC2C-CACB0-40" source="p-BC2C-CAB30-3" target="t-BC2C-CAB33-4">
+  <arc id="e-A744-C1885-40" source="p-A744-C172B-3" target="t-A744-C1731-4">
   </arc>
-  <arc id="e-BC2C-CACB2-41" source="p-BC2C-CAB22-2" target="t-BC2C-CAB37-5">
+  <arc id="e-A744-C1886-41" source="p-A744-C171E-2" target="t-A744-C1737-5">
   </arc>
-  <arc id="e-BC2C-CACBA-42" source="t-BC2C-CAB37-5" target="p-BC2C-CAB30-3">
+  <arc id="e-A744-C1889-42" source="t-A744-C1737-5" target="p-A744-C172B-3">
   </arc>
-  <arc id="e-BC2C-CACBB-43" source="t-BC2C-CAB33-4" target="p-BC2C-CAB22-2">
+  <arc id="e-A744-C188A-43" source="t-A744-C1731-4" target="p-A744-C171E-2">
   </arc>
-  <arc id="e-BC2C-CACBE-44" source="p-BC2C-CAC2D-30" target="t-BC2C-CABEC-19">
+  <arc id="e-A744-C188B-44" source="p-A744-C180F-30" target="t-A744-C17E0-19">
    <type value="test"/>
   </arc>
-  <arc id="e-BC2C-CACC0-45" source="t-BC2C-CABEC-19" target="p-BC2C-CABE0-18">
+  <arc id="e-A744-C188D-45" source="t-A744-C17E0-19" target="p-A744-C17D9-18">
   </arc>
-  <arc id="e-BC2C-CACC3-46" source="p-BC2C-CAB3E-7" target="t-BC2C-CABFC-21">
+  <arc id="e-A744-C188E-46" source="p-A744-C173E-7" target="t-A744-C17EB-21">
    <type value="test"/>
   </arc>
-  <arc id="e-BC2C-CACC4-47" source="t-BC2C-CABFC-21" target="p-BC2C-CABF4-20">
+  <arc id="e-A744-C1890-47" source="t-A744-C17EB-21" target="p-A744-C17E4-20">
   </arc>
-  <arc id="e-BC2C-CACC7-48" source="p-BC2C-CAC2D-30" target="t-BC2C-CAC31-31">
+  <arc id="e-A744-C1891-48" source="p-A744-C180F-30" target="t-A744-C1812-31">
   </arc>
-  <arc id="e-BC2C-CACC9-49" source="t-BC2C-CAB62-15" target="p-BC2C-CAB5E-14">
+  <arc id="e-A744-C1892-49" source="t-A744-C1764-15" target="p-A744-C175D-14">
   </arc>
-  <arc id="e-BC2C-CACCC-50" source="p-BC2C-CAC2A-29" target="t-BC2C-CAC35-32">
+  <arc id="e-A744-C1894-50" source="p-A744-C180D-29" target="t-A744-C1815-32">
   </arc>
-  <arc id="e-BC2C-CACD0-51" source="t-BC2C-CAC35-32" target="p-BC2C-CAC2D-30">
+  <arc id="e-A744-C1897-51" source="t-A744-C1815-32" target="p-A744-C180F-30">
   </arc>
-  <arc id="e-BC2C-CACD2-52" source="t-BC2C-CAC31-31" target="p-BC2C-CAC2A-29">
+  <arc id="e-A744-C1898-52" source="t-A744-C1812-31" target="p-A744-C180D-29">
   </arc>
-  <arc id="e-BC2C-CACD4-53" source="p-BC2C-CAB3E-7" target="t-BC2C-CAC09-23">
+  <arc id="e-A744-C1899-53" source="p-A744-C181D-34" target="t-A744-C185C-35">
+  </arc>
+  <arc id="e-A744-C189B-54" source="p-A744-C1819-33" target="t-A744-C186C-36">
+  </arc>
+  <arc id="e-A744-C189C-55" source="t-A744-C186C-36" target="p-A744-C181D-34">
+  </arc>
+  <arc id="e-A744-C189E-56" source="t-A744-C185C-35" target="p-A744-C1819-33">
+  </arc>
+  <arc id="e-A744-C189F-57" source="p-A744-C173E-7" target="t-A744-C17F5-23">
    <type value="test"/>
   </arc>
-  <arc id="e-BC2C-CACD6-54" source="t-BC2C-CAC09-23" target="p-BC2C-CAC03-22">
+  <arc id="e-A744-C18A0-58" source="t-A744-C17F5-23" target="p-A744-C17F0-22">
   </arc>
-  <arc id="e-BC2C-CACD8-55" source="p-BC2C-CAB3E-7" target="t-BC2C-CAC9B-37">
+  <arc id="e-A744-C18A2-59" source="p-A744-C173E-7" target="t-A744-C1874-37">
    <type value="test"/>
   </arc>
-  <arc id="e-BC2C-CACDB-56" source="t-BC2C-CAC9B-37" target="p-BC2C-CAB54-12">
+  <arc id="e-A744-C18A3-60" source="p-A744-C1809-28" target="t-A744-C1806-27">
   </arc>
-  <arc id="e-BC2C-CACDD-57" source="p-BC2C-CAB30-3" target="t-BC2C-CAB59-13">
+  <arc id="e-A744-C18A6-61" source="t-A744-C1874-37" target="p-A744-C1754-12">
+  </arc>
+  <arc id="e-A744-C18A7-62" source="p-A744-C172B-3" target="t-A744-C1758-13">
    <type value="test"/>
   </arc>
-  <arc id="e-BC2C-CACDF-58" source="t-BC2C-CAB59-13" target="p-BC2C-CAB54-12">
+  <arc id="e-A744-C18A9-63" source="t-A744-C1758-13" target="p-A744-C1754-12">
   </arc>
-  <arc id="e-BC2C-CACE2-59" source="t-BC2C-CAB51-11" target="p-BC2C-CAB48-10">
+  <arc id="e-A744-C18AA-64" source="t-A744-C174F-11" target="p-A744-C174A-10">
   </arc>
-  <arc id="e-BC2C-CACE5-60" source="p-BC2C-CAC25-28" target="t-BC2C-CAC21-27">
+  <arc id="e-A744-C18AB-65" source="t-A744-C1800-26" target="p-A744-C17F9-24">
   </arc>
-  <arc id="e-BC2C-CACE8-61" source="p-BC2C-CAC42-34" target="t-BC2C-CAC88-35">
+  <arc id="e-A744-C18AD-66" source="p-A744-C17FD-25" target="t-A744-C1800-26">
   </arc>
-  <arc id="e-BC2C-CACEA-62" source="p-BC2C-CAC3B-33" target="t-BC2C-CAC93-36">
+  <arc id="e-A744-C18AE-67" source="t-A744-C176D-17" target="p-A744-C1768-16">
   </arc>
-  <arc id="e-BC2C-CACEC-63" source="t-BC2C-CAC93-36" target="p-BC2C-CAC42-34">
+  <arc id="e-A744-C18B0-68" source="p-A744-C173E-7" target="t-A744-C1742-8">
   </arc>
-  <arc id="e-BC2C-CACEE-64" source="t-BC2C-CAC88-35" target="p-BC2C-CAC3B-33">
+  <arc id="e-A744-C18B1-69" source="p-A744-C173A-6" target="t-A744-C1745-9">
   </arc>
-  <arc id="e-BC2C-CACF0-65" source="t-BC2C-CAC1B-26" target="p-BC2C-CAC10-24">
-  </arc>
-  <arc id="e-BC2C-CACF1-66" source="p-BC2C-CAC16-25" target="t-BC2C-CAC1B-26">
-  </arc>
-  <arc id="e-BC2C-CACF3-67" source="t-BC2C-CAB6F-17" target="p-BC2C-CAB68-16">
-  </arc>
-  <arc id="e-BC2C-CACF5-68" source="p-BC2C-CAB3E-7" target="t-BC2C-CAB41-8">
-  </arc>
-  <arc id="e-BC2C-CACF8-69" source="p-BC2C-CAB3B-6" target="t-BC2C-CAB45-9">
-  </arc>
-  <arc id="e-BC2C-CACFA-70" source="t-BC2C-CAB45-9" target="p-BC2C-CAB3E-7">
+  <arc id="e-A744-C18B5-70" source="t-A744-C1745-9" target="p-A744-C173E-7">
   </arc>
  </page>
  </net>

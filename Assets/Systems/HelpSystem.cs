@@ -367,13 +367,12 @@ public class HelpSystem : FSystem {
             float progressionRatio = computeProgressionRatio();
             if (progressionRatio < 0) // means players are late
             {
-                labelCount += (0.1f + labelWeights["stagnation"]) / (1 - progressionRatio);
-
+                labelCount += (0.1f + labelWeights["stagnation"]) / (1 + progressionRatio);
                 //if labelCount reached the step calculate the feedback level and ask a hint and the time spent since the last time the system gave a feedback reached countLabel to know if it can give another one
                 if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration)
                 {
-                    DisplayHint();
-                    labelCount = 0;
+                    if (DisplayHint())
+                        labelCount = 0;
                 }
             }
 
@@ -423,7 +422,7 @@ public class HelpSystem : FSystem {
             systemHintTimer = Time.time;
 
         float progressionRatio = computeProgressionRatio();
-        
+
         Trace[] traces = go.GetComponents<Trace>();
         Trace tmpTrace = null;
         int nbTraces = traces.Length;
@@ -472,18 +471,15 @@ public class HelpSystem : FSystem {
             {
                 if (labelWeights.ContainsKey(tmpTrace.labels[j]))
                 {
-                    if (progressionRatio != 0)
-                        labelCount += (0.1f+labelWeights[tmpTrace.labels[j]]) / (1 - progressionRatio);
-                    else
-                        labelCount += 0.1f+labelWeights[tmpTrace.labels[j]];
+                    labelCount += (0.1f+labelWeights[tmpTrace.labels[j]]) / (1 + progressionRatio);
                     //labelCount can't be negative
                     if (labelCount < 0)
                         labelCount = 0;
 
                     //if labelCount reached the step calculate the feedback level and ask a hint and the time spent since the last time the system gave a feedback reached countLabel to know if it can give another one
                     if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration){
-                        DisplayHint();
-						labelCount = 0;
+                        if (DisplayHint())
+						    labelCount = 0;
 					}
                 }
             }
@@ -657,7 +653,7 @@ public class HelpSystem : FSystem {
             }
         }
         // Parse all selected enigmas
-        foreach(KeyValuePair<ComponentMonitoring, string> selectedEnigma in selectedEnigmas)
+        foreach (KeyValuePair<ComponentMonitoring, string> selectedEnigma in selectedEnigmas)
         {
             int associatedPnToEnigma = EnigmaIdToPnId[selectedEnigma.Key.id];
             if (associatedPnToEnigma != -1)
