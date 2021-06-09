@@ -34,7 +34,7 @@ namespace DIG.GBLXAPI.Internal
 
 		private RingBuffer<QueuedStatement> _statementQueue;
 
-        private int batchTreshold = 100;
+        private int batchTreshold = 200;
 
 		// ------------------------------------------------------------------------
 		// Set singleton so it persists across scene loads
@@ -138,10 +138,17 @@ namespace DIG.GBLXAPI.Internal
         // ------------------------------------------------------------------------
         private IEnumerator SendStatementCoroutine(RemoteLRSAsync endPoint, List<QueuedStatement> queuedStatements)
 		{
-            int idState = SendStatementsImmediate(endPoint, queuedStatements);
+			int idState = -1;
 
-            // Wait for the coroutine to finish
-            while (!endPoint.states[idState].complete) { yield return null; }
+			do
+			{
+				if (idState != -1) // means the previous request fail, we wait fiew seconds to retry
+					yield return new WaitForSeconds(10);
+				idState = SendStatementsImmediate(endPoint, queuedStatements);
+				// Wait answer
+				while (!endPoint.states[idState].complete) { yield return null; }
+			} while (!endPoint.states[idState].success);
+            
 
             // Client callback with result
             foreach (QueuedStatement qs in queuedStatements)
