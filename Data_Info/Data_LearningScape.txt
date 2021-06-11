@@ -26,7 +26,7 @@
 	
     "storyTextIntro": [
         "Il est déjà tard le soir, Camille appréhende un peu son premier examen d'informatique. Toutes les notions abordées en cours lui reviennent en tête, les structures de contrôle, la notion de variable, les fonctions... Demain il lui faudra assurer, réussir cet examen récompenserait les efforts consentis jusqu'à aujourd'hui.",
-        "En se brossant les dents, pleins de questions trottent dans sa tête: Comment coder une information ? Comment parcourir un ensemble de valeurs ? Quel langage de programmation faudra-t-il utiliser ?",
+        "En se brossant les dents, plein de questions trottent dans sa tête: Comment coder une information ? Comment parcourir un ensemble de valeurs ? Quel langage de programmation faudra-t-il utiliser ?",
         "Camille se couche et finit par s'endormir... C'est alors qu'un marchand de sable entre en action pour l’aider à structurer sa pensée pendant son sommeil..."
     ],
     "storyTextransition": [
