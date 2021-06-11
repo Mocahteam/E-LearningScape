@@ -157,6 +157,7 @@ public class GameContent {
     public string masterMindValidation;
     public string questionValidationButton;
     public string hintButtonText;
+    public string NoHintAvailable;
     public string getHintButton;
     public string hintOpenURL;
     public string gameMenuResumeButton;

@@ -167,5 +167,6 @@ public class SaveContent {
     /// </summary>
     public Dictionary<string, Dictionary<string, List<KeyValuePair<string, string>>>> HintDictionary = new Dictionary<string, Dictionary<string, List<KeyValuePair<string, string>>>>();
     public Dictionary<string, Dictionary<string, KeyValuePair<string, string>>> HintWrongAnswerFeedbacks = new Dictionary<string, Dictionary<string, KeyValuePair<string, string>>>();
+    public Dictionary<string, int> pnNetsRequiredStepsOnStart = new Dictionary<string, int>();
 
 }

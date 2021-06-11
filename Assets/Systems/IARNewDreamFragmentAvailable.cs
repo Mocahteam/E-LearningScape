@@ -18,6 +18,7 @@ public class IARNewDreamFragmentAvailable : FSystem
         {
             f_newFragment.addEntryCallback(onNewFragmentAvailable);
             f_tabContent.addExitCallback(onExitDreamFragmentsPanel);
+            f_tabContent.addEntryCallback(onEnterDreamFragmentsPanel);
         }
         instance = this;
     }
@@ -26,17 +27,26 @@ public class IARNewDreamFragmentAvailable : FSystem
     {
         if (!firstFragmentOccurs)
         {
-            GameObjectManager.setGameObjectState(f_fragmentNotif.First().transform.parent.gameObject, IARDreamFragmentManager.virtualDreamFragment);
+            foreach (GameObject notif in f_fragmentNotif)
+                GameObjectManager.setGameObjectState(notif.transform.parent.gameObject, IARDreamFragmentManager.virtualDreamFragment);
             firstFragmentOccurs = true;
         }
-        GameObjectManager.setGameObjectState(f_fragmentNotif.First(), true);
+        foreach(GameObject notif in f_fragmentNotif)
+            GameObjectManager.setGameObjectState(notif, true);
     }
 
-    private void onExitDreamFragmentsPanel(int InstanceId)
+    private void onEnterDreamFragmentsPanel(GameObject unused)
+    {
+        foreach (GameObject notif in f_fragmentNotif)
+            GameObjectManager.setGameObjectState(notif, false);
+    }
+    private void onExitDreamFragmentsPanel(int unused)
     {
         if (f_newFragment.Count > 0)
-            GameObjectManager.setGameObjectState(f_fragmentNotif.First(), true);
+            foreach (GameObject notif in f_fragmentNotif)
+                GameObjectManager.setGameObjectState(notif, true);
         else
-            GameObjectManager.setGameObjectState(f_fragmentNotif.First(), false);
+            foreach (GameObject notif in f_fragmentNotif)
+                GameObjectManager.setGameObjectState(notif, false);
     }
 }

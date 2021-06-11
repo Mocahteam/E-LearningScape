@@ -175,7 +175,7 @@ public class LoadGameContent : FSystem {
 
         // if randomHelpSystemActivation is true, set gamecontent.helpsystem with a random value
         if (gameContent.randomHelpSystemActivation)
-            gameContent.helpSystem = random.Next(2) == 1;
+            gameContent.helpSystem = random.Next(4) <= 2; // HelpSystem is enabled 75%
         HelpSystem.shouldPause = !gameContent.trace || !gameContent.helpSystem || !MonitoringManager.Instance.inGameAnalysis;
         Debug.Log(string.Concat("Help system: ", gameContent.helpSystem, "; Laalys in game analysis: ", MonitoringManager.Instance.inGameAnalysis));
         File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Help system: ", !HelpSystem.shouldPause));

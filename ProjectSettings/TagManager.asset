@@ -90,6 +90,7 @@ TagManager:
   - DreamFragmentButtons
   - SessionIDText
   - CreditArea
+  - InventoryTabContent
   layers:
   - Default
   - TransparentFX

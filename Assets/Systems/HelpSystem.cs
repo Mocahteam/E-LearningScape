@@ -48,7 +48,7 @@ public class HelpSystem : FSystem {
     /// <summary>
     /// Associate for each Petri net name the number of action to carry out at the beginning of the game to reach a player objective in this Petri net
     /// </summary>
-    private Dictionary<string, int> pnNetsRequiredStepsOnStart;
+    public Dictionary<string, int> pnNetsRequiredStepsOnStart;
     /// <summary>
     /// A Thread to compute remaining steps for each Petri net
     /// </summary>
@@ -74,6 +74,7 @@ public class HelpSystem : FSystem {
     /// </summary>
     private RectTransform cooldownRT;
     private TextMeshProUGUI cooldownText;
+    private TMP_Text noHintAvailable;
     /// <summary>
     /// used to count the time spent since the system last gave a hint to the player with labelCount
     /// </summary>
@@ -244,6 +245,7 @@ public class HelpSystem : FSystem {
                 //set player cooldown UI components
                 cooldownRT = f_askHelpButton.First().transform.GetChild(1).GetComponent<RectTransform>();
                 cooldownText = f_askHelpButton.First().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+                noHintAvailable = f_askHelpButton.First().transform.GetChild(3).GetComponent<TMP_Text>();
 
                 // WARNING: Before building the game, be sure that following ComponentMonitorings are properly set
                 // Init dictionary to know for each enigma of the meta Petri net the associated sub Petri net id
@@ -292,7 +294,8 @@ public class HelpSystem : FSystem {
                 foreach (string pnName in pnNames)
                 {
                     pnNetsRemainingSteps[pnName] = MonitoringManager.getNextActionsToReachPlayerObjective(pnName, int.MaxValue).Count;
-                    pnNetsRequiredStepsOnStart[pnName] = pnNetsRemainingSteps[pnName];
+                    if (pnNetsRequiredStepsOnStart[pnName] == 0) // not initialized
+                        pnNetsRequiredStepsOnStart[pnName] = pnNetsRemainingSteps[pnName];
                 }
                 killThread = false;
                 thread = new Thread(updatePnCompletion);
@@ -306,7 +309,7 @@ public class HelpSystem : FSystem {
         try
         {
             int lastCount;
-            while (!killThread) // see EventWrapper Monobehavior attached to MainLoop Game object
+            while (!killThread) // see HelpSystemKiller Monobehavior attached to MainLoop Game object
             {
                 // Update each Petri net
                 List<string> pnNames = new List<string>(instance.pnNetsRemainingSteps.Keys);
@@ -349,7 +352,7 @@ public class HelpSystem : FSystem {
         }
         mut.ReleaseMutex();
 
-         float enigmaProgression = resolutionDone / totalWeightedMetaActions;
+        float enigmaProgression = resolutionDone / totalWeightedMetaActions;
 
         return enigmaProgression - timeProgression;
     }
@@ -403,6 +406,9 @@ public class HelpSystem : FSystem {
             GameObjectManager.setGameObjectState(cooldownRT.gameObject, false);
             cooldownText.text = "";
         }
+
+        if (noHintAvailable.color.a > 0)
+            noHintAvailable.color = new Color(noHintAvailable.color.r, noHintAvailable.color.g, noHintAvailable.color.b, noHintAvailable.color.a-Time.deltaTime/5);
 
         while (cleanHintsByPn.Count > 0)
             RemoveHintsByPN(cleanHintsByPn.Pop());
@@ -522,6 +528,11 @@ public class HelpSystem : FSystem {
                 //if the player received an hint, start the cooldown
                 playerHintTimer = Time.time;
                 GameObjectManager.setGameObjectState(cooldownRT.gameObject, true);
+            }
+            else
+            {
+                // show not hint available
+                noHintAvailable.color = new Color(noHintAvailable.color.r, noHintAvailable.color.g, noHintAvailable.color.b, 1);
             }
         }
     }
@@ -739,7 +750,7 @@ public class HelpSystem : FSystem {
         }
         else
         {
-            Debug.Log("Player is ahead of time => no feedback for the moment");
+            Debug.Log("Player is ahead of time => no feedback for the moment (progression ratio: "+ computeProgressionRatio()+")");
             playerAskedHelp = false;
             return false;
         }

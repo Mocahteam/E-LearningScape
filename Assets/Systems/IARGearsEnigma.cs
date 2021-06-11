@@ -3,6 +3,7 @@ using FYFY;
 using FYFY_plugins.PointerManager;
 using FYFY_plugins.Monitoring;
 using TMPro;
+using System.Collections;
 
 public class IARGearsEnigma : FSystem
 {
@@ -37,6 +38,8 @@ public class IARGearsEnigma : FSystem
     private GameObject gearDragged;
     private GameObject transparentGear;
     private GameObject question;
+
+    private bool avoidCoroutine = false;
 
     private RectTransform iarRectTransform;
 
@@ -111,7 +114,15 @@ public class IARGearsEnigma : FSystem
             GameObjectManager.addComponent<ForceMove>(f_login.First());
             unlockLogin = false;
             LoginManager.instance.Pause = false;
+            avoidCoroutine = true;
         }
+    }
+
+    private IEnumerator autoCloseIAR()
+    {
+        yield return new WaitForSeconds(3);
+        if (!avoidCoroutine)
+            IARTabNavigation.instance.closeIar();
     }
 
     // Use to process your families.
@@ -173,6 +184,8 @@ public class IARGearsEnigma : FSystem
                             Vector3 newDir = Vector3.forward;
                             f_player.First().transform.rotation = Quaternion.LookRotation(f_login.First().transform.position - f_player.First().transform.position);
                             Camera.main.transform.rotation = Quaternion.LookRotation(f_login.First().transform.position - f_player.First().transform.position);
+                            
+                            MainLoop.instance.StartCoroutine(autoCloseIAR());
                         }
                         else //if answer is wrong
                         {

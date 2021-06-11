@@ -48,8 +48,8 @@ public class SaveManager : FSystem {
 	private string saveFolderPath = "./Savegames";
 	private string autoSaveFileName = "auto_save";
 	private string saveFilesExtension = ".txt";
-
-	private GameObject loadPopup;
+    
+    private GameObject loadPopup;
 	private GameObject loadButtonPrefab;
 	private GameObject loadListContainer;
 	// the load button in main menu
@@ -70,7 +70,7 @@ public class SaveManager : FSystem {
 	private GameObject popupSaveOverride;
 	private GameObject popupSaveDone;
 
-	private bool autosaveExists;
+	private bool autosaveAlreadyAdded;
 
 	private string tmpPath;
 	private DreamFragment tmpDF;
@@ -160,9 +160,9 @@ public class SaveManager : FSystem {
             tmpFI = di.GetFiles(string.Concat("*", saveFilesExtension));
             foreach (FileInfo file in tmpFI)
             {
-                if (file.Name == autoSaveFileName+saveFilesExtension)
-                    autosaveExists = true;
                 AddNewItemToLists(file);
+                if (file.Name == autoSaveFileName + saveFilesExtension)
+                    autosaveAlreadyAdded = true;
             }
             // enable loading button if there are valid saves
             if (loadListContainer && loadListContainer.transform.childCount > 0)
@@ -193,8 +193,13 @@ public class SaveManager : FSystem {
         if (!LoadGameContent.gameContent.autoSaveProgression || f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber == 0)
             return;
 
+        if (File.Exists(saveFolderPath + "/" + autoSaveFileName + "_old" + saveFilesExtension))
+            File.Delete(saveFolderPath + "/" + autoSaveFileName + "_old" + saveFilesExtension);
+        if (File.Exists(saveFolderPath + "/" + autoSaveFileName + saveFilesExtension))
+            File.Move(saveFolderPath + "/" + autoSaveFileName + saveFilesExtension, saveFolderPath + "/" + autoSaveFileName + "_old" + saveFilesExtension);
+
         string fullpath = SaveOnFile(autoSaveFileName);
-        if (!autosaveExists && fullpath != "")
+        if (!autosaveAlreadyAdded && fullpath != "")
         {
             // if the auto save didn't already exist, add it to the list in the popup
             tmpPath = string.Concat(saveFolderPath, "/", autoSaveFileName, saveFilesExtension);
@@ -203,7 +208,7 @@ public class SaveManager : FSystem {
             if (newSaveGame.Exists)
                 AddNewItemToLists(newSaveGame);
 
-            autosaveExists = true;
+            autosaveAlreadyAdded = true;
         }
     }
 
@@ -440,6 +445,7 @@ public class SaveManager : FSystem {
         saveContent.helpLabelCount = HelpSystem.instance.LabelCount;
         saveContent.HintDictionary = HelpSystem.instance.GameHints.dictionary;
         saveContent.HintWrongAnswerFeedbacks = HelpSystem.instance.GameHints.wrongAnswerFeedbacks;
+        saveContent.pnNetsRequiredStepsOnStart = HelpSystem.instance.pnNetsRequiredStepsOnStart;
 
         tmpPath = string.Concat(saveFolderPath, "/", fileName, saveFilesExtension);
         try
@@ -624,11 +630,6 @@ public class SaveManager : FSystem {
                 }
             }
 
-            /*          // Normalement géré par les NewDreamFragment => à vérifier
-                *          // disable dream fragment HUD warning if there are no unseen fragment
-                        if (!atleastOneFragmentUnseen)
-                            GameObjectManager.setGameObjectState(f_fragmentNotif.First(), false);*/
-
             // set pressY state
             GameObjectManager.setGameObjectState(f_pressY.First(), saveContent.pressY_displayed);
 
@@ -723,10 +724,10 @@ public class SaveManager : FSystem {
                 MonitoringManager.setPetriNetsMarkings(saveContent.petriNetsMarkings);
 
             // set HelpSystem with loaded petri nets
-
             HelpSystem.instance.LoadHelpSystemValues(saveContent.hintCooldown, saveContent.systemHintTimer, saveContent.helpLabelCount);
             HelpSystem.instance.GameHints.dictionary = saveContent.HintDictionary;
             HelpSystem.instance.GameHints.wrongAnswerFeedbacks = saveContent.HintWrongAnswerFeedbacks;
+            HelpSystem.instance.pnNetsRequiredStepsOnStart = saveContent.pnNetsRequiredStepsOnStart;
 
             GameObjectManager.addComponent<ActionPerformedForLRS>(savePopup, new
             {

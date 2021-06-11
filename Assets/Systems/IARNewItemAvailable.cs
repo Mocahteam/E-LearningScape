@@ -15,6 +15,7 @@ public class IARNewItemAvailable : FSystem {
     private Family f_inventoryWarning = FamilyManager.getFamily(new AnyOfTags("InventoryWarning"));
     private Family f_triggerableWarning = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(Button)), new AnyOfTags("InventoryElements"));
     private Family f_tabs = FamilyManager.getFamily(new AllOfComponents(typeof(NewItemManager), typeof(Button)), new AnyOfTags("IARTab"));
+    private Family f_tabContent = FamilyManager.getFamily(new AnyOfTags("InventoryTabContent"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
     private GameObject lastKeyboardViewed = null;
     private bool HUD_neverDisplayed = true;
@@ -30,6 +31,8 @@ public class IARNewItemAvailable : FSystem {
             f_itemsEnabled.addEntryCallback(OnNewItemEnabled);
             f_itemsEnabled.addExitCallback(OnItemDisabled);
             f_newItemOver.addEntryCallback(OnMouseOver);
+            f_tabContent.addEntryCallback(onEnterInventoryPanel);
+            f_tabContent.addExitCallback(onExitInventoryPanel);
 
             id2Go = new Dictionary<int, GameObject>();
         }
@@ -55,6 +58,16 @@ public class IARNewItemAvailable : FSystem {
             GameObjectManager.setGameObjectState(child, true);
         if (!id2Go.ContainsKey(go.GetInstanceID()))
             id2Go.Add(go.GetInstanceID(), go);
+
+        if (HUD_neverDisplayed)
+        {
+            // enable parent
+            foreach (GameObject notif in f_inventoryWarning)
+                GameObjectManager.setGameObjectState(notif.transform.parent.gameObject, true);
+            HUD_neverDisplayed = false;
+        }
+        foreach (GameObject notif in f_inventoryWarning)
+            GameObjectManager.setGameObjectState(notif, true);
     }
 
     private void OnItemDisabled(int instanceId)
@@ -104,22 +117,21 @@ public class IARNewItemAvailable : FSystem {
         foreach (GameObject go in f_tabs)
             if (go == EventSystem.current.currentSelectedGameObject)
                 OnMouseOver(go);
+    }
 
-        // blink HUD "A" if at least one new item is available
+    private void onEnterInventoryPanel(GameObject unused)
+    {
+        foreach (GameObject notif in f_inventoryWarning)
+            GameObjectManager.setGameObjectState(notif, false);
+    }
+    private void onExitInventoryPanel(int unused)
+    {
         if (f_notificationEnabled.Count > 0)
-        {
-            if (HUD_neverDisplayed)
-            {
-                // enable parent
-                GameObjectManager.setGameObjectState(f_inventoryWarning.First().transform.parent.gameObject, true);
-                HUD_neverDisplayed = false;
-            }
-            if (!f_inventoryWarning.First().activeSelf)
-                GameObjectManager.setGameObjectState(f_inventoryWarning.First(), true);
-        }
+            foreach (GameObject notif in f_inventoryWarning)
+                GameObjectManager.setGameObjectState(notif, true);
         else
-            if (f_inventoryWarning.First().activeSelf)
-                GameObjectManager.setGameObjectState(f_inventoryWarning.First(), false);
+            foreach (GameObject notif in f_inventoryWarning)
+                GameObjectManager.setGameObjectState(notif, false);
     }
 
 }

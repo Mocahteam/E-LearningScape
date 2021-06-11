@@ -26,7 +26,7 @@ public class IARNewQuestionsAvailable : FSystem {
 
     private void onNewQuestionAvailable(GameObject go)
     {
-        if(go.name != "DreamFragments")
+        if(go.name.Contains("ScreenR"))
         {
             if (!firstQuestionOccurs)
             {

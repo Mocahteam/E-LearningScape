@@ -16,6 +16,7 @@ public class IARNewHintAvailable : FSystem {
         if (Application.isPlaying)
         {
             f_newHint.addEntryCallback(onNewHintAvailable);
+            f_tabContent.addEntryCallback(onEnterHintPanel);
             f_tabContent.addExitCallback(onExitHintPanel);
         }
         instance = this;
@@ -25,17 +26,28 @@ public class IARNewHintAvailable : FSystem {
     {
         if (!firstHelpOccurs)
         {
-            GameObjectManager.setGameObjectState(f_helpNotif.First().transform.parent.gameObject, true);
+            foreach (GameObject notif in f_helpNotif)
+                GameObjectManager.setGameObjectState(notif.transform.parent.gameObject, true);
             firstHelpOccurs = true;
         }
-        GameObjectManager.setGameObjectState(f_helpNotif.First(), true);
+        if (f_tabContent.Count == 0)
+            foreach (GameObject notif in f_helpNotif)
+                GameObjectManager.setGameObjectState(notif, true);
+    }
+
+    private void onEnterHintPanel(GameObject unused)
+    {
+        foreach (GameObject notif in f_helpNotif)
+            GameObjectManager.setGameObjectState(notif, false);
     }
 
     private void onExitHintPanel(int InstanceId)
     {
         if (f_newHint.Count > 0)
-            GameObjectManager.setGameObjectState(f_helpNotif.First(), true);
+            foreach (GameObject notif in f_helpNotif)
+                GameObjectManager.setGameObjectState(notif, true);
         else
-            GameObjectManager.setGameObjectState(f_helpNotif.First(), false);
+            foreach (GameObject notif in f_helpNotif)
+                GameObjectManager.setGameObjectState(notif, false);
     }
 }
