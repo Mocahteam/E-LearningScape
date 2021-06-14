@@ -708,7 +708,7 @@ public class SaveManager : FSystem {
                     foreach (ComponentMonitoring monitoringComponent in tmpMonitorsArray)
                         if (monitoringComponent.id == hint.monitorID)
                         {
-                            Button b = HelpSystem.instance.CreateHintButton(monitoringComponent, hint.name, hint.text, hint.link, true);
+                            Button b = HelpSystem.instance.CreateHintButton(monitoringComponent, hint.name, hint.text, hint.link, false);
                             monitorFound = true;
                             if (hint.seen)
                                 IARHintManager.instance.SetNormalColor(b);

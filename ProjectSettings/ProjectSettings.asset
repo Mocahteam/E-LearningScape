@@ -690,10 +690,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 69cdf881-0094-45aa-bfaa-dc8d08d1b207
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
-  projectName: Pedagoscape
-  organizationId: elbaf
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
