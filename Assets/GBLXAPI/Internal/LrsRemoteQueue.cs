@@ -65,7 +65,20 @@ namespace DIG.GBLXAPI.Internal
             flushQueuedStatements(false);
         }
 
-        private void flushQueuedStatements(bool waitComplete)
+		private void OnApplicationFocus(bool hasFocus)
+		{
+			if (!hasFocus)
+				flushQueuedStatements(true);
+		}
+
+		private void OnApplicationPause(bool pauseStatus)
+		{
+			if (pauseStatus)
+				flushQueuedStatements(true);
+		}
+
+
+		private void flushQueuedStatements(bool waitComplete)
         {
             // Dequeue statements if exists in queue
             List<QueuedStatement> batchStatements = new List<QueuedStatement>();

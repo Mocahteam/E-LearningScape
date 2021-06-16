@@ -217,7 +217,6 @@ public class SaveManager : FSystem {
         if (!file.Exists)
         {
             Debug.LogError("The save couldn't be loaded because of invalid file path.");
-            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - The save couldn't be loaded because of invalid file path."));
             return;
         }
 
@@ -458,7 +457,6 @@ public class SaveManager : FSystem {
         catch (Exception e)
         {
             Debug.LogError("Tried to save with an invalid SaveContent. Nothing was done.");
-            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Save fails with exception: " + e + ". Nothing was done."));
         }
         return "";
     }
@@ -474,7 +472,6 @@ public class SaveManager : FSystem {
         catch (Exception)
         {
             Debug.LogError("The save couldn't be loaded because of invalid content.");
-            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - The save couldn't be loaded because of invalid content."));
             return;
         }
 
@@ -484,7 +481,6 @@ public class SaveManager : FSystem {
         if (saveContent == null)
         {
             Debug.LogError("The save couldn't be loaded because of invalid content.");
-            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - The save couldn't be loaded because of invalid content."));
         }
         else
         {

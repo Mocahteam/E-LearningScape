@@ -153,7 +153,7 @@ public class HelpSystem : FSystem {
 
             if (!shouldPause)
             {
-                //get game hints filled with tips loaded from "Data/Hints_LearningScape.txt"
+                //get game hints filled with tips loaded from "Hints_LearningScape.txt"
                 gameHints = f_gameHints.First().GetComponent<GameHints>();
                 //get internal game hints
                 InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
@@ -776,7 +776,6 @@ public class HelpSystem : FSystem {
             hintButtonsPool.Add(tmpGO);
 
             Debug.LogWarning("You should increase hintButtonsPool initial size");
-            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - You should increase hintButtonsPool initial size."));
         }
 
         tmpGO = hintButtonsPool[0];

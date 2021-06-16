@@ -87,7 +87,7 @@ public class LogoDisplaying : FSystem {
         }
         else
         {
-            if (loadingFragment.activeSelf)
+            if (logoGo.transform.GetChild(2).gameObject.activeSelf)
             {
                 GameObjectManager.setGameObjectState(loadingFragment, false);
                 GameObjectManager.setGameObjectState(logoGo.transform.GetChild(2).gameObject, false);

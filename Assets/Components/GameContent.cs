@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 
 /// <summary>
-/// Content of the game loaded from the file "Data/Data_LearningScape.txt" by the system "LaodGameContent".
+/// Content of the game loaded from the file "Data_LearningScape.txt" by the system "LaodGameContent".
 /// If the file is not found the default one set in "DefaultGameContent" is used
 /// </summary>
 [Serializable]

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.TriggerManager;
+using System.Collections.Generic;
 
 public class JumpingSystem : FSystem {
     private GameObject pinTarget;
@@ -84,6 +85,13 @@ public class JumpingSystem : FSystem {
                 {
                     fpsController.transform.position = hit.point + Vector3.up * 2 - Camera.main.transform.forward;
                     GameObjectManager.addComponent<PlaySound>(fpsController, new { id = 18 }); // id refer to FPSController AudioBank
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(fpsController.gameObject, new
+                    {
+                        verb = "moved",
+                        objectType = "avatar",
+                        objectName = "player",
+                        activityExtensions = new Dictionary<string, string>() { { "position", f_player.First().transform.position.ToString("G4") } }
+                    });
                 }
             }
             else

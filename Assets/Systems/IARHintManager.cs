@@ -235,7 +235,6 @@ public class IARHintManager : FSystem {
         catch (Exception)
         {
             Debug.LogError(string.Concat("Invalid hint link: \"", hintLink, "\""));
-            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Invalid hint link: \"", hintLink, "\"."));
         }
     }
 }

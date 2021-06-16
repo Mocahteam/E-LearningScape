@@ -133,21 +133,14 @@ public class SettingsManager : FSystem {
                 settingsSave.togglesValues.Add(go.GetComponent<Toggle>().isOn ? 1 : 0);
         }
 
-        Directory.CreateDirectory("./Data");
-        File.WriteAllText("./Data/GameSettings.txt", JsonUtility.ToJson(settingsSave, true));
+        PlayerPrefs.SetString("GameSettings", JsonUtility.ToJson(settingsSave, false));
     }
 
     public void LoadSettings()
     {
-        if (File.Exists("./Data/GameSettings.txt"))
+        if (PlayerPrefs.HasKey("GameSettings"))
         {
-            tmpSettings = null;
-            try
-            {
-                // load settings from file
-                tmpSettings = JsonUtility.FromJson<SettingsSave>(File.ReadAllText("./Data/GameSettings.txt"));
-            }
-            catch (System.Exception) { }
+            tmpSettings = JsonUtility.FromJson<SettingsSave>(PlayerPrefs.GetString("GameSettings"));
 
             if (CheckSettings(tmpSettings))
             {
@@ -171,10 +164,7 @@ public class SettingsManager : FSystem {
                 Debug.Log("Settings loaded");
             }
             else
-            {
-                Debug.LogError("Couldn't load settings from file because of invalid content.");
-                File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Couldn't load settings from file because of invalid content."));
-            }
+                Debug.LogError("Couldn't load settings from PlayerPrefs because of invalid content.");
         }
     }
 

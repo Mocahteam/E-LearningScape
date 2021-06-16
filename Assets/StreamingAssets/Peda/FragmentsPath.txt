@@ -1,0 +1,49 @@
+{
+	"fragmentPath00": [
+		"Fragments/Fragment00.png"
+	],
+	"fragmentPath01": [
+		"Fragments/Fragment01.png"
+	],
+	"fragmentPath02": [
+		"Fragments/Fragment02_1.png",
+		"Fragments/Fragment02_2.png"
+	],
+	"fragmentPath03": [
+		"Fragments/Fragment03.png"
+	],
+	"fragmentPath04": [
+		"Fragments/Fragment04.png"
+	],
+	"fragmentPath05": [
+		"Fragments/Fragment05_1.png",
+		"Fragments/Fragment05_2.png",
+		"Fragments/Fragment05_3.png"
+	],
+	"fragmentPath06": [
+		"Fragments/Fragment06.png"
+	],
+	"fragmentPath08": [
+		"Fragments/Fragment08_1.png",
+		"Fragments/Fragment08_2.png",
+		"Fragments/Fragment08_3.png"
+	],
+	"fragmentPath09": [
+		"Fragments/Fragment09.png"
+	],
+	"fragmentPath10": [
+		"Fragments/Fragment10.png"
+	],
+	"fragmentPath11": [
+		"Fragments/Fragment11.png"
+	],
+	"fragmentPath12": [
+		"Fragments/Fragment12.png"
+	],
+	"fragmentPath13": [
+		"Fragments/Fragment13.png"
+	],
+	"fragmentPath17": [
+		"Fragments/Fragment17.png"
+	]
+}

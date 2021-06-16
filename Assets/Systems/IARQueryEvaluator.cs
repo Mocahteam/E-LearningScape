@@ -317,14 +317,10 @@ public class IARQueryEvaluator : FSystem {
             catch (System.Exception)
             {
                 Debug.LogWarning("Couldn't set the feedback of the answer \"" + feedback + "\" because of an element missing.");
-                File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - Couldn't set the feedback of the answer \"" + feedback + "\" because of an element missing."));
             }
         }
         else
-        {
             Debug.LogWarning("Couldn't set the feedback of the answer because of invalid solution or query.");
-            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - Couldn't set the feedback of the answer because of invalid solution or query."));
-        }
     }
 
     public IEnumerator SetTerminalScreen()

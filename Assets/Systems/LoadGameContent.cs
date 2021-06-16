@@ -106,6 +106,8 @@ public class LoadGameContent : FSystem {
 
     private bool dataAvailable = true;
 
+    private string dataPath = ".";
+
     public LoadGameContent()
     {
         if (Application.isPlaying)
@@ -114,8 +116,10 @@ public class LoadGameContent : FSystem {
 
             random = new System.Random();
 
+            dataPath = Application.streamingAssetsPath + "/" + GameSelected.version;
+
             defaultGameContent = f_defaultGameContent.First().GetComponent<DefaultGameContent>();
-            if (File.Exists("./Data/Data_LearningScape.txt"))
+            if (File.Exists(dataPath + "/Data_LearningScape.txt"))
             {
                 //Load game content from the file
                 try
@@ -124,14 +128,14 @@ public class LoadGameContent : FSystem {
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError("./Data/Data_LearningScape.txt is not consistent, please check content.");
+                    Debug.LogError(dataPath + "/Data_LearningScape.txt is not consistent, please check content.");
                     Debug.LogError(e);
                     dataAvailable = false;
                 }
             }
             else
             {
-                Debug.LogError("./Data/Data_LearningScape.txt doesn't exists or access is not authorized.");
+                Debug.LogError(dataPath + "/Data_LearningScape.txt doesn't exists or access is not authorized.");
                 dataAvailable = false;
             }
         }
@@ -167,24 +171,21 @@ public class LoadGameContent : FSystem {
     private void Load()
     {
         //Load game content from the file
-        gameContent = JsonUtility.FromJson<GameContent>(File.ReadAllText("./Data/Data_LearningScape.txt"));
+        gameContent = JsonUtility.FromJson<GameContent>(File.ReadAllText(dataPath + "/Data_LearningScape.txt"));
 
         ActionsManager.instance.Pause = !gameContent.trace;
         Debug.Log(string.Concat("Trace: ", gameContent.trace));
-        File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace: ", gameContent.trace));
 
         // if randomHelpSystemActivation is true, set gamecontent.helpsystem with a random value
         if (gameContent.randomHelpSystemActivation)
             gameContent.helpSystem = random.Next(4) <= 2; // HelpSystem is enabled 75%
         HelpSystem.shouldPause = !gameContent.trace || !gameContent.helpSystem || !MonitoringManager.Instance.inGameAnalysis;
         Debug.Log(string.Concat("Help system: ", gameContent.helpSystem, "; Laalys in game analysis: ", MonitoringManager.Instance.inGameAnalysis));
-        File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Help system: ", !HelpSystem.shouldPause));
 
         SendStatements.shouldPause = !gameContent.traceToLRS;
         SendStatements.instance.Pause = !gameContent.traceToLRS;
         MovingSystem.instance.traceMovementFrequency = gameContent.traceMovementFrequency;
         Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
-        File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Trace to LRS: ", gameContent.traceToLRS));
 
         if (gameContent.removeExtraGeometries)
             foreach (GameObject go in f_extraGeometries)
@@ -196,10 +197,10 @@ public class LoadGameContent : FSystem {
             List<Sprite> logos = new List<Sprite>(f_logos.First().GetComponent<ImgBank>().bank);
             foreach (string path in gameContent.additionalLogosPath)
             {
-                if (File.Exists(path))
+                if (File.Exists(dataPath + "/" + path))
                 {
                     tmpTex = new Texture2D(1, 1);
-                    tmpFileData = File.ReadAllBytes(path);
+                    tmpFileData = File.ReadAllBytes(dataPath + "/" +path);
                     if (tmpTex.LoadImage(tmpFileData))
                         logos.Add(Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero));
                 }
@@ -218,12 +219,10 @@ public class LoadGameContent : FSystem {
             sessionID = String.Format("{0:X}", sessionID.GetHashCode());
 
             Debug.Log(string.Concat("Session ID generated: ", sessionID));
-            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Session ID generated: ", sessionID));
         }
         else
         {
             Debug.Log(string.Concat("Previous session ID kept: ", sessionID));
-            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Previous session ID kept: ", sessionID));
         }
 
         #region Story
@@ -311,10 +310,10 @@ public class LoadGameContent : FSystem {
         }
         Debug.Log("Room 1 queries loaded");
 
-        if (File.Exists(gameContent.mastermindBackgroundPicturePath))
+        if (File.Exists(dataPath + "/" + gameContent.mastermindBackgroundPicturePath))
         {
             tmpTex = new Texture2D(1, 1);
-            tmpFileData = File.ReadAllBytes(gameContent.mastermindBackgroundPicturePath);
+            tmpFileData = File.ReadAllBytes(dataPath + "/" + gameContent.mastermindBackgroundPicturePath);
             if (tmpTex.LoadImage(tmpFileData))
                 f_login.First().GetComponent<Image>().sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
         }
@@ -403,10 +402,7 @@ public class LoadGameContent : FSystem {
                 b2.id = tmpID;
             }
             else
-            {
                 Debug.LogWarning(string.Concat("The answer ", j, " of BallBox enigma should be between 0 and 9 included."));
-                File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Warning - The answer ", j, " of BallBox enigma should be between 0 and 9 included"));
-            }
         }
         for (int i = 0; i < nbBalls; i++)
         {
@@ -567,10 +563,10 @@ public class LoadGameContent : FSystem {
         for (int i = 0; i < 4; i++)
         {
             mySprite = defaultGameContent.noPictureFound;
-            if (File.Exists(gameContent.glassesPicturesPath[i]))
+            if (File.Exists(dataPath + "/" + gameContent.glassesPicturesPath[i]))
             {
                 tmpTex = new Texture2D(1, 1);
-                tmpFileData = File.ReadAllBytes(gameContent.glassesPicturesPath[i]);
+                tmpFileData = File.ReadAllBytes(dataPath + "/" + gameContent.glassesPicturesPath[i]);
                 if (tmpTex.LoadImage(tmpFileData))
                     mySprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
             }
@@ -609,10 +605,10 @@ public class LoadGameContent : FSystem {
 
         //Mirror
         f_mirrorImage.First().GetComponent<Image>().sprite = defaultGameContent.noPictureFound;
-        if (File.Exists(gameContent.mirrorPicturePath))
+        if (File.Exists(dataPath + "/" + gameContent.mirrorPicturePath))
         {
             tmpTex = new Texture2D(1, 1);
-            tmpFileData = File.ReadAllBytes(gameContent.mirrorPicturePath);
+            tmpFileData = File.ReadAllBytes(dataPath + "/" + gameContent.mirrorPicturePath);
             if (tmpTex.LoadImage(tmpFileData))
                 f_mirrorImage.First().GetComponent<Image>().sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
         }
@@ -650,10 +646,10 @@ public class LoadGameContent : FSystem {
             GameObjectManager.setGameObjectState(go, !gameContent.virtualPuzzle);
 
         Sprite puzzlePicture = defaultGameContent.noPictureFound;
-        if (gameContent.virtualPuzzle && File.Exists(gameContent.puzzlePicturePath))
+        if (gameContent.virtualPuzzle && File.Exists(dataPath + "/" + gameContent.puzzlePicturePath))
         {
             tmpTex = new Texture2D(1, 1);
-            tmpFileData = File.ReadAllBytes(gameContent.puzzlePicturePath);
+            tmpFileData = File.ReadAllBytes(dataPath + "/" + gameContent.puzzlePicturePath);
             if (tmpTex.LoadImage(tmpFileData))
             {
                 puzzlePicture = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
@@ -673,10 +669,10 @@ public class LoadGameContent : FSystem {
         for (int i = 0; i < nbLampPictures; i++)
         {
             mySprite = defaultGameContent.noPictureFound;
-            if (File.Exists(gameContent.lampPicturesPath[i]))
+            if (File.Exists(dataPath + "/" + gameContent.lampPicturesPath[i]))
             {
                 tmpTex = new Texture2D(1, 1);
-                tmpFileData = File.ReadAllBytes(gameContent.lampPicturesPath[i]);
+                tmpFileData = File.ReadAllBytes(dataPath + "/" + gameContent.lampPicturesPath[i]);
                 if (tmpTex.LoadImage(tmpFileData))
                 {
                     mySprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
@@ -701,7 +697,7 @@ public class LoadGameContent : FSystem {
 
         #region File Loading
         // Load LRS config file
-        LoadJsonFile(gameContent.lrsConfigPath, out GBL_Interface.lrsAddresses);
+        LoadJsonFile(dataPath + "/" + gameContent.lrsConfigPath, out GBL_Interface.lrsAddresses);
         if (GBL_Interface.lrsAddresses == null)
             GBL_Interface.lrsAddresses = new List<DIG.GBLXAPI.GBLConfig>();
         if (gameContent.traceToLRS)
@@ -710,44 +706,44 @@ public class LoadGameContent : FSystem {
 
         // Load Hints config files
         GameHints gameHints = f_gameHints.First().GetComponent<GameHints>();
-        LoadJsonFile(gameContent.hintsPath, out gameHints.dictionary);
+        LoadJsonFile(dataPath + "/" + gameContent.hintsPath, out gameHints.dictionary);
         if (gameHints.dictionary == null)
             gameHints.dictionary = new Dictionary<string, Dictionary<string, List<KeyValuePair<string, string>>>> ();
         Debug.Log("Hints loaded");
         // Load Wrong answer feedback
-        LoadJsonFile(gameContent.wrongAnswerFeedbacksPath, out gameHints.wrongAnswerFeedbacks);
+        LoadJsonFile(dataPath + "/" + gameContent.wrongAnswerFeedbacksPath, out gameHints.wrongAnswerFeedbacks);
         if (gameHints.wrongAnswerFeedbacks == null)
             gameHints.wrongAnswerFeedbacks = new Dictionary<string, Dictionary<string, KeyValuePair<string, string>>>();
         Debug.Log("Wrong answer feedback loaded");
 
         // Load InternalHints config files
         InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
-        LoadJsonFile(gameContent.internalHintsPath, out internalGameHints.dictionary);
+        LoadJsonFile(dataPath + "/" + gameContent.internalHintsPath, out internalGameHints.dictionary);
         if (internalGameHints.dictionary == null)
             internalGameHints.dictionary = new Dictionary<string, Dictionary<string, List<string>>>();
         Debug.Log("Internal hints loaded");
 
         // Load EnigmasWeight config files
-        LoadJsonFile(gameContent.enigmasWeightPath, out enigmasWeight);
+        LoadJsonFile(dataPath + "/" + gameContent.enigmasWeightPath, out enigmasWeight);
         if (enigmasWeight == null)
             enigmasWeight = new Dictionary<string, float>();
         Debug.Log("Enigmas weight loaded");
 
         // Load LabelWeights config files
         LabelWeights labelWeights = f_labelWeights.First().GetComponent<LabelWeights>();
-        LoadJsonFile(gameContent.labelWeightsPath, out labelWeights.weights);
+        LoadJsonFile(dataPath + "/" + gameContent.labelWeightsPath, out labelWeights.weights);
         if (labelWeights.weights == null)
             labelWeights.weights = new Dictionary<string, float>();
         Debug.Log("Labels weight loaded");
 
         // Load HelpSystem config files
-        LoadJsonFile(gameContent.helpSystemConfigPath, out HelpSystem.config);
+        LoadJsonFile(dataPath + "/" + gameContent.helpSystemConfigPath, out HelpSystem.config);
         if (HelpSystem.config == null)
             HelpSystem.config = new HelpSystemConfig();
         Debug.Log("HelpSystem config file loaded");
 
         //Load dream fragment links config files
-        LoadJsonFile(gameContent.dreamFragmentLinksPath, out dreamFragmentsLinks);
+        LoadJsonFile(dataPath + "/" + gameContent.dreamFragmentLinksPath, out dreamFragmentsLinks);
         if (dreamFragmentsLinks == null)
             dreamFragmentsLinks = new Dictionary<string, List<string>>();
         // Affects urlLinks to dream fragments
@@ -764,7 +760,7 @@ public class LoadGameContent : FSystem {
 
         // Load dream fragment png config files
         FragmentFiles fragmentFilesPaths = null;
-        LoadJsonFile(gameContent.dreamFragmentDocumentsPathFile, out fragmentFilesPaths);
+        LoadJsonFile(dataPath + "/" + gameContent.dreamFragmentDocumentsPathFile, out fragmentFilesPaths);
         // Affects dream fragment pictures to documents gameobject in IAR
         if(f_dreamFragmentsContentContainer.Count > 0 && f_dreamFragmentsContentContainer.First().GetComponent<PrefabContainer>().prefab)
         {
@@ -786,10 +782,10 @@ public class LoadGameContent : FSystem {
                     for(int i = 0; i < l; i++)
                     {
                         //load each pictures of the list
-                        if (File.Exists(tmpStringList[i]))
+                        if (File.Exists(dataPath + "/" + tmpStringList[i]))
                         {
                             tmpTex = new Texture2D(1, 1);
-                            tmpFileData = File.ReadAllBytes(tmpStringList[i]);
+                            tmpFileData = File.ReadAllBytes(dataPath + "/" + tmpStringList[i]);
                             if (tmpTex.LoadImage(tmpFileData))
                             {
                                 //if the picture is successfully loaded, create an instance of IARDocument and put the picture in it
@@ -831,10 +827,7 @@ public class LoadGameContent : FSystem {
             Debug.Log("IAR dream fragments' pictures loaded");
         }
         else
-        {
             Debug.LogError("Missing IARDocument prefab, pictures can't be loaded.");
-            File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Error - Missing IARDocument prefab, pictures can't be loaded."));
-        }
         #endregion
 
         // Load fonts
@@ -875,7 +868,6 @@ public class LoadGameContent : FSystem {
         gameContent.autoSaveProgression = gameContent.saveAndLoadProgression && gameContent.autoSaveProgression;
 
         Debug.Log("Data loaded");
-        File.AppendAllText("./Data/UnityLogs.txt", string.Concat(System.Environment.NewLine, "[", DateTime.Now.ToString("yyyy.MM.dd.hh.mm"), "] Log - Data loaded"));
     }
 
     private void LoadJsonFile<T>(string jsonPath, out T target)
