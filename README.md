@@ -1,12 +1,16 @@
 # Téléchargements
-**Version 5.1.1** disponible depuis le 11/06/2021
+**Version 6.0** disponible depuis le 18/06/2021
 
-Trois versions du jeu sont disponibles :
-1. **E-LearningScape Peda** ([Windows](https://github.com/Mocahteam/E-LearningScape/releases/download/v5.1.1/E-LearningScape_Peda_Windows.zip), [MacOS](https://github.com/Mocahteam/E-LearningScape/releases/download/v5.1.1/E-LearningScape_Peda_MacOS.zip), [Linux](https://github.com/Mocahteam/E-LearningScape/releases/download/v5.1.1/E-LearningScape_Peda_Linux.zip)) est une version du jeu traitant de notions généralistes sur la pédagogie
-2. **E-LearningScape Access** ([Windows](https://github.com/Mocahteam/E-LearningScape/releases/download/v5.1.1/E-LearningScape_Access_Windows.zip), [MacOS](https://github.com/Mocahteam/E-LearningScape/releases/download/v5.1.1/E-LearningScape_Access_MacOs.zip), [Linux](https://github.com/Mocahteam/E-LearningScape/releases/download/v5.1.1/E-LearningScape_Access_Linux.zip)) est une version du jeu traitant de notions relatives au handicap, l'accessibilité et la société inclusive 
-3. **E-LearningScape Info** ([Windows](https://github.com/Mocahteam/E-LearningScape/releases/download/v5.1.1/E-LearningScape_Info_Windows.zip), [MacOS](https://github.com/Mocahteam/E-LearningScape/releases/download/v5.1.1/E-LearningScape_Info_MacOS.zip), [Linux](https://github.com/Mocahteam/E-LearningScape/releases/download/v5.1.1/E-LearningScape_Info_Linux.zip)) est une version du jeu traitant de notions relatives à la science Informatique
+1. [**Windows**](https://github.com/Mocahteam/E-LearningScape/releases/download/v6.0/E-LearningScape_Windows.zip)
+2. [**MacOS**](https://github.com/Mocahteam/E-LearningScape/releases/download/v6.0/E-LearningScape_MacOS.zip)
+3. [**Linux**](https://github.com/Mocahteam/E-LearningScape/releases/download/v6.0/E-LearningScape_Linux.zip)
 
-**Aide pour lancer le jeu sur MacOS :**
+Ce jeu étant développé avec des ressources limitées nous n'avons pas actuellement réalisé les procédures pour certifier le jeu sur les différents systèmes d'exploitation. Il est donc fort probable que votre ordinateur considère le jeu comme une menace et refuse de le lancer. Suivez donc les aides ci-dessous pour pouvoir lancer le jeu :
+
+**Pour Windows :**
+1. Votre antivirus peut bloquer le lancement du jeu, si une fenêtre apparaît, autorisez le lancement. Par exemple si vous obtenez le message "Windows a protégé votre ordinateur", cliquez sur le lien "Informations complémentaires" puis sur le bouton "Exécuter quand même".
+
+**Pour MacOS :**
 1. Dans le dossier **E-LearningScape** double cliquez sur le fichier **PlayGame**. Si votre système refuse de lancer le jeu parce qu'il ne le reconnait pas :
    1. faites un **clic-secondaire** (ou clic-droit) sur le fichier **PlayGame**
    2. choisissez **Ouvrir**
@@ -35,10 +39,10 @@ E-LearningScape a été développé sous Unity avec la bibliothèque [FYFY](http
 # Comment créer mon propre jeu à partir d'E-LearningScape
 E-LearningScape propose plusieurs mécaniques d'énigmes (relier trois points sur un tableau avec une corde, effacer les mots d'un tableau, révéler des images à l'aide d'une lampe UV...). Vous n'avez pas la possibilité de modifier ces mécaniques en revanche vous pouvez modifier les contenus qui apparaissent dans le jeu pour créer votre propre version d'E-LearningScape.
 
-Pour changer les contenus dans le jeu il vous suffit de travailler sur les fichiers qui se trouvent dans le dossier **Data** :
-- S'il s'agit d'éléments textuels modifiez le fichier **Data/Data_LearningScape.txt**. Vous pourrez modifier le scénario de votre jeu, l'intitulé des questions, les réponses attendues, la description des objets ramassés...
-- S'il s'agit d'éléments graphiques écrasez simplement les images présentes dans le dossier **Data** avec vos nouveaux visuels pour qu'ils soient automatiquement chargés par le jeu.
-- Le fichier **Data/DreamFragmentLinks.txt** vous permet d'ajouter un lien hypertexte à chaque fragment de rêve.
+Pour changer les contenus dans le jeu il vous suffit de travailler sur les fichiers qui se trouvent dans le dossier **E-LearningScape_Data/StreamingAssets/[versionJeu]** pour Windows et Linux et dans le dossier **E-LearningScape.app/Contents/Resources/Data/StreamingAssets/[versionJeu]** pour MacOS :
+- S'il s'agit d'éléments textuels modifiez le fichier **[...]/StreamingAssets/[versionJeu]/Data_LearningScape.txt**. Vous pourrez modifier le scénario de votre jeu, l'intitulé des questions, les réponses attendues, la description des objets ramassés...
+- S'il s'agit d'éléments graphiques écrasez simplement les images présentes dans le dossier **[...]/StreamingAssets/[versionJeu]** avec vos nouveaux visuels pour qu'ils soient automatiquement chargés par le jeu.
+- Le fichier **[...]/StreamingAssets/[versionJeu]/DreamFragmentLinks.txt** vous permet d'ajouter un lien hypertexte à chaque fragment de rêve.
 
 # Crédits
 **E-LearningScape Peda** a été réalisé par [Sorbonne Université](http://www.sorbonne-universite.fr/) à travers l’équipe [MOCAH](https://www.lip6.fr/recherche/team.php?acronyme=MOCAH) du LIP6, [CAPSULE](http://capsule.sorbonne-universite.fr/) et le projet Play@SU. C'est une adaptation numérique du jeu [LearningScape](https://sapiens-uspc.com/learningscape-2/) développé par la cellule [SAPIENS](https://sapiens-uspc.com/) de l'[USPC](http://www.sorbonne-paris-cite.fr/) et le [CRI](https://cri-paris.org/).
