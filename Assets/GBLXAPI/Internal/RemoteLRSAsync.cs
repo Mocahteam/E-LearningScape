@@ -74,31 +74,39 @@ namespace DIG.GBLXAPI.Internal
             if (statements.Count > 1)
                 jsonData += "]";
 
-			byte[] formBytes = Encoding.UTF8.GetBytes(jsonData);
-
-			UnityWebRequest request = new UnityWebRequest(queryURL, "POST", new DownloadHandlerBuffer(), new UploadHandlerRaw(formBytes));
-
-			request.SetRequestHeader("Content-Type", "application/json");
-			request.SetRequestHeader("X-Experience-API-Version", version.ToString());
-			request.SetRequestHeader("Authorization", auth);
-
-            var requestOperation = request.SendWebRequest();
-			requestOperation.completed += (operation) =>
+			if (jsonData != "")
 			{
-                state.success = !(request.isNetworkError || request.isHttpError);
+				byte[] formBytes = Encoding.UTF8.GetBytes(jsonData);
 
-				if (state.success)
-				{
-					JArray ids = JArray.Parse(request.downloadHandler.text);
-                    state.response = ids[0].ToString();
-				}
-				else
-				{
-                    state.response = request.error;
-				}
+				UnityWebRequest request = new UnityWebRequest(queryURL, "POST", new DownloadHandlerBuffer(), new UploadHandlerRaw(formBytes));
 
-                state.complete = true;
-			};
+				request.SetRequestHeader("Content-Type", "application/json");
+				request.SetRequestHeader("X-Experience-API-Version", version.ToString());
+				request.SetRequestHeader("Authorization", auth);
+
+				var requestOperation = request.SendWebRequest();
+				requestOperation.completed += (operation) =>
+				{
+					state.success = !(request.isNetworkError || request.isHttpError);
+
+					if (state.success)
+					{
+						JArray ids = JArray.Parse(request.downloadHandler.text);
+						state.response = ids[0].ToString();
+					}
+					else
+					{
+						state.response = request.error;
+					}
+
+					state.complete = true;
+				};
+			}
+            else
+            {
+				state.success = true;
+				state.complete = true;
+            }
             return idState;
 
         }
