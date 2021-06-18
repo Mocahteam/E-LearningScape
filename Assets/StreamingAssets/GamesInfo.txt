@@ -1,0 +1,12 @@
+{
+    "directoryName": [
+        "Info",
+        "Access",
+        "Peda"
+    ],
+	"gamesDescription": [
+        "Une version de l'escape game sur le thème de l'informatique",
+        "Une version de l'escape game sur le thème de l'accessibilité et de l'école inclusive",
+        "Une version de l'escape game sur le thème de la pédagogie générale"
+    ]
+}

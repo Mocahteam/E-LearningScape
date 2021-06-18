@@ -116,6 +116,9 @@ public class LoadGameContent : FSystem {
 
             random = new System.Random();
 
+            if (Application.isEditor && GameSelected.version == "")
+                GameSelected.version = "Info";
+
             dataPath = Application.streamingAssetsPath + "/" + GameSelected.version;
 
             defaultGameContent = f_defaultGameContent.First().GetComponent<DefaultGameContent>();
@@ -410,10 +413,11 @@ public class LoadGameContent : FSystem {
             b.GetComponentInChildren<TextMeshPro>().text = b.number.ToString();
         }
 
-        foreach (TextMeshPro tmp in f_ballBoxTop.First().GetComponentsInChildren<TextMeshPro>())
+        foreach (GameObject go in f_ballBoxTop)
         {
-            tmp.text = gameContent.ballBoxQuestion;
+            go.GetComponentInChildren<TMP_Text>().text = gameContent.ballBoxQuestion;
         }
+
         Debug.Log("Ball box loaded");
 
         //Plank and Wire

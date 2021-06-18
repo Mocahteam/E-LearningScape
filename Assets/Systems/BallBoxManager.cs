@@ -38,6 +38,7 @@ public class BallBoxManager : FSystem {
     private GameObject selectedBall = null;  //store the selected ball
     private GameObject ballSubTitles;
     private TextMeshProUGUI ballSubTitlesContent;
+    private GameObject ballQuestion;
     private GameObject box;
     private GameObject boxTop;
 
@@ -59,6 +60,7 @@ public class BallBoxManager : FSystem {
             boxTop = box.transform.GetChild(2).gameObject;
             ballSubTitles = box.transform.GetChild(4).gameObject;
             ballSubTitlesContent = ballSubTitles.GetComponentInChildren<TextMeshProUGUI>();
+            ballQuestion = box.transform.GetChild(5).gameObject;
 
             foreach (GameObject ball in f_balls)
                 ball.GetComponent<Ball>().initialPosition = ball.transform.localPosition;
@@ -84,6 +86,8 @@ public class BallBoxManager : FSystem {
         instance.Pause = false;
 
         depthOfFieldsEnabled = Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled;
+
+        GameObjectManager.setGameObjectState(ballQuestion, true);
 
         GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
     }
@@ -307,6 +311,7 @@ public class BallBoxManager : FSystem {
         ballCounter = 0;
         ballSubTitlesContent.text = "";
         GameObjectManager.setGameObjectState(ballSubTitles, false);
+        GameObjectManager.setGameObjectState(ballQuestion, false);
         boxOpenned = false;
 
         GameObjectManager.addComponent<ActionPerformed>(selectedBox, new { name = "turnOff", performedBy = "player" });

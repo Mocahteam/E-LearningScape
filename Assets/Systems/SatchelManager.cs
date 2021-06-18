@@ -36,6 +36,8 @@ public class SatchelManager : FSystem {
     private bool paperOut = false;
     private bool closingSatchel = false;
 
+    private Vector3 saveCanvasScale;
+
     private int currentPaperViews = 0; // 0 means no glasses, 1 means glass 1 is on, 2 means glass 2 is on, 3 means both glasses are on
 
     public static SatchelManager instance;
@@ -154,9 +156,11 @@ public class SatchelManager : FSystem {
                 if (paperOut)
                 {
                     // Reset rendermode
-                    selectedBag.GetComponentInChildren<Canvas>().scaleFactor = 1;
-                    selectedBag.GetComponentInChildren<Canvas>().renderMode = RenderMode.WorldSpace;
-                    selectedBag.GetComponentInChildren<Canvas>().gameObject.GetComponent<RectTransform>().localPosition = Vector3.forward * (-0.51f - paper.transform.localPosition.z);
+                    Canvas canvas = selectedBag.GetComponentInChildren<Canvas>();
+                    canvas.scaleFactor = 1;
+                    canvas.renderMode = RenderMode.WorldSpace;
+                    canvas.transform.localPosition = Vector3.forward * (-0.51f - paper.transform.localPosition.z);
+                    canvas.transform.localScale = new Vector3(saveCanvasScale.x, saveCanvasScale.y, saveCanvasScale.z);
                 }
                 bagAnimator.SetTrigger("closeSatchel");
                 closingSatchel = true;
@@ -186,6 +190,7 @@ public class SatchelManager : FSystem {
             {
                 //show the paper on the camera screen when it reaches the final position
                 Canvas canvas = selectedBag.GetComponentInChildren<Canvas>();
+                saveCanvasScale = new Vector3(canvas.transform.localScale.x, canvas.transform.localScale.y, canvas.transform.localScale.z);
                 canvas.renderMode = RenderMode.ScreenSpaceCamera;
                 canvas.scaleFactor = 0.85f + (Screen.height - 720) / 900f; // 900 is magic value to add 0.4f when passing from default resolution (1280/720) to high resolution (1980/1080)
                 paper.transform.position = selectedBag.transform.TransformPoint(bagPaperInitialPos) + Vector3.up * 0.8f;
