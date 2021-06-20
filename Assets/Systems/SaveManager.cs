@@ -153,20 +153,28 @@ public class SaveManager : FSystem {
 
             // browse save folder
             DirectoryInfo di;
-            if (!Directory.Exists(saveFolderPath))
-                di = Directory.CreateDirectory(saveFolderPath);
-            else
-                di = new DirectoryInfo(saveFolderPath);
-            tmpFI = di.GetFiles(string.Concat("*", saveFilesExtension));
-            foreach (FileInfo file in tmpFI)
+            try
             {
-                AddNewItemToLists(file);
-                if (file.Name == autoSaveFileName + saveFilesExtension)
-                    autosaveAlreadyAdded = true;
+                if (!Directory.Exists(saveFolderPath))
+                    di = Directory.CreateDirectory(saveFolderPath);
+                else
+                    di = new DirectoryInfo(saveFolderPath);
+                tmpFI = di.GetFiles(string.Concat("*", saveFilesExtension));
+                foreach (FileInfo file in tmpFI)
+                {
+                    AddNewItemToLists(file);
+                    if (file.Name == autoSaveFileName + saveFilesExtension)
+                        autosaveAlreadyAdded = true;
+                }
+                // enable loading button if there are valid saves
+                if (loadListContainer && loadListContainer.transform.childCount > 0)
+                    menuLoadButton.interactable = true;
+            } catch (Exception e)
+            {
+                Debug.LogError("Unable to load savegames: " + e.Message);
+                LoadGameContent.gameContent.saveAndLoadProgression = false;
+                LoadGameContent.gameContent.autoSaveProgression = false;
             }
-            // enable loading button if there are valid saves
-            if (loadListContainer && loadListContainer.transform.childCount > 0)
-                menuLoadButton.interactable = true;
 
             GameObjectManager.setGameObjectState(menuLoadButton.gameObject, LoadGameContent.gameContent.saveAndLoadProgression);
 			GameObjectManager.setGameObjectState(menuSaveButton.gameObject, LoadGameContent.gameContent.saveAndLoadProgression);
