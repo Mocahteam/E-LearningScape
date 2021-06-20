@@ -11,13 +11,15 @@ Ce jeu étant développé avec des ressources limitées nous n'avons pas actuell
 1. Votre antivirus peut bloquer le lancement du jeu, si une fenêtre apparaît, autorisez le lancement. Par exemple si vous obtenez le message "Windows a protégé votre ordinateur", cliquez sur le lien "Informations complémentaires" puis sur le bouton "Exécuter quand même".
 
 **Pour MacOS :**
-1. Dans le dossier **E-LearningScape** double cliquez sur le fichier **PlayGame**. Si votre système refuse de lancer le jeu parce qu'il ne le reconnait pas :
-   1. faites un **clic-secondaire** (ou clic-droit) sur le fichier **PlayGame**
-   2. choisissez **Ouvrir**
-   3. Dans la fenêtre vous devriez avoir maintenant un bouton **Ouvrir**, cliquez sur ce bouton
-2. Une fenêtre **Terminal** s'ouvre, si une demande d'autorisation d'accès aux fichiers s'affiche, acceptez la
-3. Dans la fenêtre **Terminal** entrez votre mot de passe quand il vous sera demandé afin d'autoriser le lancement du jeu. (Note : dans le terminal aucun symbole n'est affiché lorsque vous saisissez votre mot de passe, c'est tout à fait normal, saisissez simplement votre mot de passe à l'aveugle et validez)
-4. Attendez que le jeu démarre
+1. Dans le dossier **E-LearningScape** commencez par simplement **double cliquer** sur l'application **E-LearningScape**
+2. Si votre Mac refuse de lancer le jeu :
+   1. Tentez de faire un **clic-secondaire** (ou clic-droit) sur l'application et choisissez **Ouvrir**
+   2. Dans la fenêtre vous devriez avoir maintenant un bouton **Ouvrir**, cliquez sur ce bouton
+3. Si votre Mac refuse toujours de lancer le jeu :
+   1. Toujours dans le dossier **E-LearningScape** faites un **clic-secondaire** (ou clic-droit) sur le fichier **PlayGame** et choisissez **Ouvrir**
+   2. Dans la fenêtre vous devriez avoir maintenant un bouton **Ouvrir**, cliquez sur ce bouton
+   3. Une fenêtre **Terminal** s'ouvre, si une demande d'autorisation d'accès aux fichiers s'affiche, acceptez la
+   4. Dans la fenêtre **Terminal** entrez votre mot de passe quand il vous sera demandé afin d'autoriser le lancement du jeu. (Note : dans le terminal aucun symbole n'est affiché lorsque vous saisissez votre mot de passe, c'est tout à fait normal, saisissez simplement votre mot de passe à l'aveugle et validez)
 
 # E-LearningScape
 E-LearningScape est un jeu sérieux sous un format d'*escape game*. Les joueurs incarnent des marchands de sable naviguant dans le rêve d'une personne et devant l'aider à répondre à toutes les questions qu'elle se pose avant qu'elle ne se réveille. 
