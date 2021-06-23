@@ -206,7 +206,8 @@ public class SaveManager : FSystem {
         if (File.Exists(saveFolderPath + "/" + autoSaveFileName + saveFilesExtension))
             File.Move(saveFolderPath + "/" + autoSaveFileName + saveFilesExtension, saveFolderPath + "/" + autoSaveFileName + "_old" + saveFilesExtension);
 
-        string fullpath = SaveOnFile(autoSaveFileName);
+        DateTime dateTimeStamp;
+        string fullpath = SaveOnFile(autoSaveFileName, out dateTimeStamp);
         if (!autosaveAlreadyAdded && fullpath != "")
         {
             // if the auto save didn't already exist, add it to the list in the popup
@@ -217,6 +218,15 @@ public class SaveManager : FSystem {
                 AddNewItemToLists(newSaveGame);
 
             autosaveAlreadyAdded = true;
+        }
+        if (fullpath != "")
+        {
+            GameObjectManager.addComponent<ActionPerformedForLRS>(savePopup, new
+            {
+                verb = "saved",
+                objectType = "serious-game",
+                objectName = "E-LearningScape progression (autosaved): " + dateTimeStamp
+            });
         }
     }
 
@@ -271,7 +281,8 @@ public class SaveManager : FSystem {
             if (!checkName) // means overriding
             {
                 // We don't have to check name (already done), we proceed to save
-                string fullpath = SaveOnFile(popupSaveInputfield.text);
+                DateTime dateTimeStamp;
+                string fullpath = SaveOnFile(popupSaveInputfield.text, out dateTimeStamp);
                 if (fullpath != "")
                 {
                     GameObjectManager.setGameObjectState(popupSaveDone, true);
@@ -280,7 +291,7 @@ public class SaveManager : FSystem {
                     {
                         verb = "saved",
                         objectType = "serious-game",
-                        objectName = "E-LearningScape progression"
+                        objectName = "E-LearningScape progression: "+ dateTimeStamp
                     });
                 }
                 else
@@ -302,7 +313,8 @@ public class SaveManager : FSystem {
                     GameObjectManager.setGameObjectState(popupSaveOverride, true);
                 else
                 {
-                    string fullpath = SaveOnFile(popupSaveInputfield.text);
+                    DateTime dateTimeStamp;
+                    string fullpath = SaveOnFile(popupSaveInputfield.text, out dateTimeStamp);
                     // check if file exists
                     FileInfo newSaveGame = new FileInfo(fullpath);
                     if (fullpath != "" && newSaveGame.Exists)
@@ -315,7 +327,7 @@ public class SaveManager : FSystem {
                         {
                             verb = "saved",
                             objectType = "serious-game",
-                            objectName = "E-LearningScape progression"
+                            objectName = "E-LearningScape progression: " + dateTimeStamp
                         });
                     }
                     else
@@ -330,13 +342,15 @@ public class SaveManager : FSystem {
     /// Encrypt and save the content of "save" in a file
     /// </summary>
     /// <param name="path"></param>
-    private string SaveOnFile(string fileName)
-	{
-		// don't save if introduction is not completed
-		if (f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber == 0)
-			return "";
-
+    private string SaveOnFile(string fileName, out DateTime timestamp)
+    {
         SaveContent saveContent = new SaveContent();
+        timestamp = saveContent.saveDate;
+
+        // don't save if introduction is not completed
+        if (f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber == 0)
+            return "";
+
         saveContent.sessionID = LoadGameContent.sessionID;
         saveContent.UUID = GBL_Interface.userUUID;
         saveContent.storyTextCount = StoryDisplaying.instance.GetStoryProgression();
@@ -737,7 +751,7 @@ public class SaveManager : FSystem {
             {
                 verb = "loaded",
                 objectType = "serious-game",
-                objectName = "E-LearningScape progression"
+                objectName = "E-LearningScape progression: " + saveContent.saveDate
             });
 
             MenuSystem.instance.StartGame();

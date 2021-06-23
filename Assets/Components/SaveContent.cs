@@ -32,9 +32,9 @@ public class SaveContent {
     }
 
 	/// <summary>
-	/// Tha time at which the progression was saved on the file
+	/// The time at which the progression was saved on the file
 	/// </summary>
-	public DateTime saveDate = new DateTime();
+	public DateTime saveDate = DateTime.Now;
 	public string sessionID = "";
     public string UUID = "";
 
