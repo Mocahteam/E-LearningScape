@@ -76,8 +76,8 @@ public class TutorialManager : FSystem {
             JumpingSystem.instance.Pause = true;
         }
         GameObjectManager.setGameObjectState(TutorialScreens.GetChild(currentStep).gameObject, true);
-        if (TutorialScreens.GetChild(currentStep).GetComponent<LinkedWith>() != null)
-            GameObjectManager.setGameObjectState(TutorialScreens.GetChild(currentStep).GetComponent<LinkedWith>().link, true);
+        foreach (LinkedWith lw in TutorialScreens.GetChild(currentStep).GetComponents<LinkedWith>())
+            GameObjectManager.setGameObjectState(lw.link, true);
     }
 
     private void onTargetReached(GameObject go)
