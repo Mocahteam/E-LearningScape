@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using FYFY_plugins.TriggerManager;
 using FYFY_plugins.PointerManager;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MovingSystem : FSystem
 {
@@ -62,8 +63,13 @@ public class MovingSystem : FSystem
             f_waterWalking.addEntryCallback(onEnterWater);
             f_waterWalking.addExitCallback(onExitWater);
 
-            f_CrouchHint.addEntryCallback(disableHUDWarning);
-            f_OutOfFirstRoom.addEntryCallback(disableHUDWarning);
+            if (SceneManager.GetActiveScene().name.Contains("Tuto"))
+                firstCrouchOccurs = true;
+            else
+            {
+                f_CrouchHint.addEntryCallback(disableHUDWarning);
+                f_OutOfFirstRoom.addEntryCallback(disableHUDWarning);
+            }
         }
         instance = this;
     }

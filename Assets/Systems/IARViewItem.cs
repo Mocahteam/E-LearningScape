@@ -238,7 +238,7 @@ public class IARViewItem : FSystem {
                 GameObjectManager.setGameObjectState(item.GetComponent<LinkedWith>().link, false); // switch off the view of the last selection
 
             // enable HUD under cursor
-            if (LoadGameContent.gameContent.displaySelectedItems && item.GetComponent<HUDItemSelected>())
+            if (item.GetComponent<HUDItemSelected>())
                 GameObjectManager.setGameObjectState(item.GetComponent<HUDItemSelected>().hudGO, false);
         }
         else
@@ -250,7 +250,7 @@ public class IARViewItem : FSystem {
             GameObjectManager.addComponent<PlaySound>(item, new { id = 13 }); // id refer to FPSController AudioBank
 
             // disable HUD under cursor
-            if (LoadGameContent.gameContent.displaySelectedItems && item.GetComponent<HUDItemSelected>())
+            if (item.GetComponent<HUDItemSelected>())
                 GameObjectManager.setGameObjectState(item.GetComponent<HUDItemSelected>().hudGO, true);
         }
     }

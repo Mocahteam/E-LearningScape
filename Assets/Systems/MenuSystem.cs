@@ -177,6 +177,52 @@ public class MenuSystem : FSystem {
     {
         GameObjectManager.loadScene(SceneManager.GetActiveScene().name);
     }
+
+    public void StartTuto()
+    {
+        // clean all systems instances
+        MonitoringManager.Instance = null;
+        SendStatements.instance = null;
+        CheckDebugMode.instance = null;
+        DebugModeSystem.instance = null;
+        MovingSystem.instance = null;
+        SettingsManager.instance = null;
+        LoadGameContent.instance = null;
+        LogoDisplaying.instance = null;
+        MenuSystem.instance = null;
+        StoryDisplaying.instance = null;
+        SpritesAnimator.instance = null;
+        MoveInFrontOf.instance = null;
+        LockResolver.instance = null;
+        PlankAndWireManager.instance = null;
+        BallBoxManager.instance = null;
+        LoginManager.instance = null;
+        SatchelManager.instance = null;
+        PlankAndMirrorManager.instance = null;
+        LampManager.instance = null;
+        WhiteBoardManager.instance = null;
+        IARQueryEvaluator.instance = null;
+        IARTabNavigation.instance = null;
+        IARNewItemAvailable.instance = null;
+        IARNewDreamFragmentAvailable.instance = null;
+        IARNewHintAvailable.instance = null;
+        IARNewQuestionsAvailable.instance = null;
+        IARViewItem.instance = null;
+        IARGearsEnigma.instance = null;
+        IARHintManager.instance = null;
+        IARDreamFragmentManager.instance = null;
+        UIEffectPlayer.instance = null;
+        HelpSystem.instance = null;
+        Highlighter.instance = null;
+        MirrorSystem.instance = null;
+        ToggleObject.instance = null;
+        CollectObject.instance = null;
+        DreamFragmentCollecting.instance = null;
+        SaveManager.instance = null;
+        JumpingSystem.instance = null;
+
+        GameObjectManager.loadScene("Tutoriel");
+    }
 }
 
 public struct PosRot

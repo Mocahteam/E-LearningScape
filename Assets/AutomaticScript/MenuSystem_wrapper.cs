@@ -24,4 +24,9 @@ public class MenuSystem_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("MenuSystem", "RestartGame", null);
 	}
 
+	public void StartTuto()
+	{
+		MainLoop.callAppropriateSystemMethod ("MenuSystem", "StartTuto", null);
+	}
+
 }

@@ -2,6 +2,7 @@
 using FYFY;
 using FYFY_plugins.PointerManager;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MoveInFrontOf : FSystem {
 
@@ -65,22 +66,25 @@ public class MoveInFrontOf : FSystem {
             //Fix camera angle
             Camera.main.transform.parent.localRotation = Quaternion.Euler(0, Camera.main.transform.parent.localRotation.eulerAngles.y, 0);
             Camera.main.transform.localRotation = Quaternion.Euler(Camera.main.transform.localRotation.eulerAngles.x, 0, 0);
-            // enable systems
-            MovingSystem.instance.Pause = false;
+            
             JumpingSystem.instance.Pause = false;
             Highlighter.instance.Pause = false;
-            MirrorSystem.instance.Pause = false;
             DreamFragmentCollecting.instance.Pause = false;
-            ToggleObject.instance.Pause = false;
             CollectObject.instance.Pause = false;
-            // pause unused system
-            LockResolver.instance.Pause = true;
-            PlankAndWireManager.instance.Pause = true;
-            BallBoxManager.instance.Pause = true;
-            LoginManager.instance.Pause = true;
-            SatchelManager.instance.Pause = true;
-            PlankAndMirrorManager.instance.Pause = true;
-            WhiteBoardManager.instance.Pause = true;
+            MovingSystem.instance.Pause = false;
+            if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
+            {
+                MirrorSystem.instance.Pause = false;
+                ToggleObject.instance.Pause = false;
+                // pause unused system
+                LockResolver.instance.Pause = true;
+                PlankAndWireManager.instance.Pause = true;
+                BallBoxManager.instance.Pause = true;
+                LoginManager.instance.Pause = true;
+                SatchelManager.instance.Pause = true;
+                PlankAndMirrorManager.instance.Pause = true;
+                WhiteBoardManager.instance.Pause = true;
+            }
             // hide help overlay
             GameObjectManager.setGameObjectState(f_quitEnigma.First(), false);
         }
@@ -116,12 +120,13 @@ public class MoveInFrontOf : FSystem {
                 GameObjectManager.addComponent<ActionPerformedForLRS>(focusedGO, new { verb = "accessed", objectType = "interactable", objectName = focusedGO.name });
 
                 // pause unuse systems
-                MovingSystem.instance.Pause = true;
                 JumpingSystem.instance.Pause = true;
                 Highlighter.instance.Pause = true;
                 DreamFragmentCollecting.instance.Pause = true;
-                ToggleObject.instance.Pause = true;
                 CollectObject.instance.Pause = true;
+                MovingSystem.instance.Pause = true;
+                if (ToggleObject.instance != null) // could be null inside tutorial
+                    ToggleObject.instance.Pause = true;
 
                 // save zoom and set default value
                 playerZoom = Camera.main.fieldOfView;

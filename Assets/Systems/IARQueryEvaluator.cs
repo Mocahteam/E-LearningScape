@@ -6,6 +6,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class IARQueryEvaluator : FSystem {
 
@@ -57,20 +58,23 @@ public class IARQueryEvaluator : FSystem {
                 }
 
             // Init feedbacks for room 3
-            room3AnswerFeedbacks = new Dictionary<string, KeyValuePair<string, string>>();
-            tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.puzzleAnswer);
-            room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.puzzleAnswerFeedback, LoadGameContent.gameContent.puzzleAnswerFeedbackDesc));
-            tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma16Answer);
-            if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
-                room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.enigma16AnswerFeedback, LoadGameContent.gameContent.enigma16AnswerFeedbackDesc));
-            tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer);
-            if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
-                room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.lampAnswerFeedback, LoadGameContent.gameContent.lampAnswerFeedbackDesc));
-            tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer);
-            if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
-                room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.whiteBoardAnswerFeedback, LoadGameContent.gameContent.whiteBoardAnswerFeedbackDesc));
+            if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
+            {
+                room3AnswerFeedbacks = new Dictionary<string, KeyValuePair<string, string>>();
+                tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.puzzleAnswer);
+                room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.puzzleAnswerFeedback, LoadGameContent.gameContent.puzzleAnswerFeedbackDesc));
+                tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma16Answer);
+                if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
+                    room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.enigma16AnswerFeedback, LoadGameContent.gameContent.enigma16AnswerFeedbackDesc));
+                tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer);
+                if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
+                    room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.lampAnswerFeedback, LoadGameContent.gameContent.lampAnswerFeedbackDesc));
+                tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer);
+                if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
+                    room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.whiteBoardAnswerFeedback, LoadGameContent.gameContent.whiteBoardAnswerFeedbackDesc));
 
-            f_answerRoom2.addExitCallback(onNewAnswerDisplayed);
+                f_answerRoom2.addExitCallback(onNewAnswerDisplayed);
+            }
             f_uiEffects.addEntryCallback(onUIEffectEnd);
         }
         instance = this;

@@ -10,7 +10,6 @@
     "useEndRoom": false,
     "saveAndLoadProgression": true,
     "autoSaveProgression": true,
-    "displaySelectedItems": true,
     "lrsConfigPath": "LRSConfig.txt",
     "dreamFragmentLinksPath": "DreamFragmentLinks.txt",
     "dreamFragmentDocumentsPathFile": "FragmentsPath.txt",
@@ -39,7 +38,7 @@
         "Les marchands de sable ont bien travaillé et se retrouvent pour faire le bilan de leurs activités."
     ],
 	"additionalCredit": [
-		"<b>Pour l'INSHEA :</b>\n\nArneton Melissa\nBroussolle Elisabeth\nFerrand Marie-Hélène\nGarbarini Délia\nGarnier Philippe\nGeffroy Véronique\nMuratet Mathieu\nVanbrugghe Anne"
+		"<b>Adaptation des contenus pour cette version \"Access\" réalisée par :</b>\n\nArneton Melissa\nBroussolle Elisabeth\nFerrand Marie-Hélène\nGarbarini Délia\nGarnier Philippe\nGeffroy Véronique\nMuratet Mathieu\nVanbrugghe Anne"
 	],
     "scoreText": "Vous avez mis: ",
     "endExplainationText": "Que vous ayez apprécié ce jeu ou pas, votre retour nous serait très utile pour tenter de l'améliorer. Merci de répondre au questionnaire ci-dessous. Ce questionnaire est anonyme et ne vous prendra que quelques minutes.\n\nMerci de votre contribution...",
@@ -98,6 +97,7 @@
 	],
 
     "loadingText": "Chargement terminé",
+    "mainMenuTuto": "Tutoriel",
     "mainMenuStart": "Commencer",
     "mainMenuLoad": "Charger",
     "mainMenuOption": "Options",
@@ -105,7 +105,7 @@
     "mainMenuLeave": "Quitter",
     "sessionIDText": "ID: ",
     "sessionIDPopup": "Cliquer pour copier",
-    "endLinkButtonText": "Remplir le formulaire",
+    "endLinkButtonText": "Je donne mon avis...",
     "endLeaveButtonText": "Retourner au menu",
     "optionControlsMenu": "Contrôle",
     "optionVirtualFragments": "Fragments Virtuels",

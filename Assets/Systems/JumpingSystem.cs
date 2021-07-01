@@ -108,8 +108,9 @@ public class JumpingSystem : FSystem {
             sp.forceUpdate();
 
             // If player switch to assisted mouse navigation disable HUD warnings for moving
-            foreach (LinkedWith link in f_OutOfFirstRoom.First().GetComponents<LinkedWith>())
-                GameObjectManager.setGameObjectState(link.link, false);
+            if (f_OutOfFirstRoom.Count > 0)
+                foreach (LinkedWith link in f_OutOfFirstRoom.First().GetComponents<LinkedWith>())
+                    GameObjectManager.setGameObjectState(link.link, false);
         }
     }
 }

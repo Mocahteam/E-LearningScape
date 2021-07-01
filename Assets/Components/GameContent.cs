@@ -60,11 +60,6 @@ public class GameContent {
     /// </summary>
     public bool autoSaveProgression;
     /// <summary>
-    /// If true, selected items will be displayed under cursor.
-    /// Items unusable in scene (such as scrolls and puzzles) won't be displayed
-    /// </summary>
-    public bool displaySelectedItems;
-    /// <summary>
     /// If true, remove extra geaometries. This is an additionnal option for very poor hardware
     /// </summary>
     public bool removeExtraGeometries = true;
@@ -97,6 +92,7 @@ public class GameContent {
 
     #region UI texts
     public string loadingText;
+    public string mainMenuTuto;
     public string mainMenuStart;
     public string mainMenuLoad;
     public string mainMenuOption;

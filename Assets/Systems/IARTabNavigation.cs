@@ -5,6 +5,7 @@ using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class IARTabNavigation : FSystem {
 
@@ -101,7 +102,7 @@ public class IARTabNavigation : FSystem {
                     openIar(0); // Open IAR on the dream fragments tab if at least one fragment has been found
                 else if (Input.GetButtonDown("ToggleFragments") && IARDreamFragmentManager.virtualDreamFragment && IARNewDreamFragmentAvailable.instance.firstFragmentOccurs)
                     openIar(1); // Open IAR on the last query visible tab
-                else if (Input.GetButtonDown("ToggleQuestions") && unlockedRoom.roomNumber > 0 && unlockedRoom.roomNumber < 4)
+                else if (Input.GetButtonDown("ToggleQuestions") && (unlockedRoom.roomNumber > 0 && unlockedRoom.roomNumber < 4 || SceneManager.GetActiveScene().name.Contains("Tuto")))
                     openLastQuestions(); // Open IAR on the last query visible tab
                 else if (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause)
                     openIar(-2); // Open IAR on the second to last tab
@@ -138,24 +139,27 @@ public class IARTabNavigation : FSystem {
         foreach (FSystem sys in FSystemManager.lateUpdateSystems())
             systemsStates[sys] = sys.Pause;
         // set required systems states
-        MovingSystem.instance.Pause = true;
-        JumpingSystem.instance.Pause = true;
-        DreamFragmentCollecting.instance.Pause = true;
-        Highlighter.instance.Pause = true;
-        MirrorSystem.instance.Pause = true;
-        ToggleObject.instance.Pause = true;
-        CollectObject.instance.Pause = true;
-        IARViewItem.instance.Pause = false;
-        IARGearsEnigma.instance.Pause = false;
-        IARDreamFragmentManager.instance.Pause = false;
         MoveInFrontOf.instance.Pause = true;
-        LockResolver.instance.Pause = true;
-        PlankAndWireManager.instance.Pause = true;
-        BallBoxManager.instance.Pause = true;
-        LoginManager.instance.Pause = true;
-        SatchelManager.instance.Pause = true;
-        PlankAndMirrorManager.instance.Pause = true;
-        WhiteBoardManager.instance.Pause = true;
+        Highlighter.instance.Pause = true;
+        CollectObject.instance.Pause = true;
+        DreamFragmentCollecting.instance.Pause = true;
+        IARDreamFragmentManager.instance.Pause = false;
+        IARViewItem.instance.Pause = false;
+        JumpingSystem.instance.Pause = true;
+        MovingSystem.instance.Pause = true;
+        if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
+        {
+            MirrorSystem.instance.Pause = true;
+            ToggleObject.instance.Pause = true;
+            IARGearsEnigma.instance.Pause = false;
+            LockResolver.instance.Pause = true;
+            PlankAndWireManager.instance.Pause = true;
+            BallBoxManager.instance.Pause = true;
+            LoginManager.instance.Pause = true;
+            SatchelManager.instance.Pause = true;
+            PlankAndMirrorManager.instance.Pause = true;
+            WhiteBoardManager.instance.Pause = true;
+        }
     }
 
     public void closeIar()
@@ -170,14 +174,18 @@ public class IARTabNavigation : FSystem {
         GameObjectManager.addComponent<PlaySound>(iar, new { id = 16 }); // id refer to FPSController AudioBank
 
         // Restaure systems state (exception for LampManager)
-        bool backLampManagerState = LampManager.instance.Pause;
+        bool backLampManagerState = false;
+        if (LampManager.instance != null)
+            backLampManagerState = LampManager.instance.Pause;
         foreach (FSystem sys in systemsStates.Keys)
             sys.Pause = systemsStates[sys];
-        LampManager.instance.Pause = backLampManagerState;
+        if (LampManager.instance != null)
+            LampManager.instance.Pause = backLampManagerState;
         GameObjectManager.setGameObjectState(f_HUD.First(), true); // show HUD
 
         // close save popup if it was on
-        SaveManager.instance.CloseSavePopup();
+        if (SaveManager.instance != null)
+            SaveManager.instance.CloseSavePopup();
 
         //if a terminal was selected, exit it when leaving IAR
         if (selectedTerminal)
@@ -210,6 +218,7 @@ public class IARTabNavigation : FSystem {
             GameObjectManager.addComponent<SelectedTab>(newSelectedTab);
 
         // close save popup if it was on
-        SaveManager.instance.CloseSavePopup();
+        if (SaveManager.instance != null)
+            SaveManager.instance.CloseSavePopup();
     }
 }

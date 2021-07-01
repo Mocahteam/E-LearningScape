@@ -20,7 +20,7 @@ public class IARDreamFragmentManager : FSystem {
     private Family f_togglableFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragmentToggle)));
 
     public static IARDreamFragmentManager instance;
-	public static bool virtualDreamFragment;
+	public static bool virtualDreamFragment = true;
 
 	private RectTransform iarRectTransform;
 	private RectTransform contentContainerRT;
