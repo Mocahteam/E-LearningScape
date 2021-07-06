@@ -80,7 +80,7 @@ public class SaveManager : FSystem {
 	private FileInfo[] tmpFI;
 
     private float lastAutoSave = 0;
-    private float autoSaveFrequency = 10;
+    private float autoSaveFrequency = 60;
 
     public SaveManager()
 	{
