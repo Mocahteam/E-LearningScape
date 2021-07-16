@@ -68,11 +68,11 @@ print("Converting your data...")
 # Load default vocabulary
 # 5 == row F, 8 == row I, 53 == row BB in Excel
 print("Loading default vocabulary...")
-GenerateJson('GBLxAPI_Vocab_Default.xlsx', 'GBLxAPI_Vocab_Default.json', 5, 53, 8)
+GenerateJson('GBLxAPI_Vocab_Default.xls', 'GBLxAPI_Vocab_Default.json', 5, 53, 8)
 
 # Load user overrides
 # 0 == row A, 1 == row B, 2 == row C in Excel
 print("Loading user overrides...")
-GenerateJson('GBLxAPI_Vocab_User.xlsx', 'GBLxAPI_Vocab_User.json', 0, 1, 2)
+GenerateJson('GBLxAPI_Vocab_User.xls', 'GBLxAPI_Vocab_User.json', 0, 1, 2)
 
 print("All done! Move the two generated Json files to Resources/Data to use the GBLxAPI vocabulary in your Unity project.")

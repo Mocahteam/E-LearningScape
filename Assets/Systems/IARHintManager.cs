@@ -195,6 +195,7 @@ public class IARHintManager : FSystem {
             objectName = string.Concat("hint_", b.transform.GetChild(0).GetComponent<TMP_Text>().text),
             activityExtensions = new Dictionary<string, string>() {
                 { "type", "hint" },
+                { "reference", tmpHC.monitor.id+"."+tmpHC.actionName },
                 { "content", b.GetComponent<HintContent>().text }
             }
         });
@@ -222,12 +223,22 @@ public class IARHintManager : FSystem {
         {
             Application.OpenURL(hintLink);
 
+            int monitorId = -1;
+            string actionName = "";
+            if (selectedHint)
+            {
+                HintContent tmpHC = selectedHint.GetComponent<HintContent>();
+                monitorId = tmpHC.monitor.id;
+                actionName = tmpHC.actionName;
+            }
+
             GameObjectManager.addComponent<ActionPerformedForLRS>(hintLinkButton.gameObject, new
             {
                 verb = "read",
                 objectType = "viewable",
                 objectName = "hintLink",
                 activityExtensions = new Dictionary<string, string>() {
+                    { "reference", monitorId + "." + actionName },
                     { "link", hintLink }
                 }
             });

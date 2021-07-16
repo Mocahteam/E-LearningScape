@@ -141,6 +141,15 @@
                 "en-US": "position"
             }
         },
+        "reference": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/extensions/reference",
+            "name": {
+                "en-US": "reference"
+            }
+        },
         "rotation": {
             "description": {
                 "en-US": ""

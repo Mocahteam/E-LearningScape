@@ -799,6 +799,7 @@ public class HelpSystem : FSystem {
                 activityExtensions = new Dictionary<string, string>() {
                 { "type", "hint" },
                 { "from", playerAskedHelp ? "button" : "system" },
+                { "reference", hintMonitor.id+"."+actionName },
                 { "content", tmpHC.text }
             }
             });
