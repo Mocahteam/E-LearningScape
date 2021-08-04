@@ -61,7 +61,7 @@ namespace DIG.GBLXAPI.Internal
 
         private void OnDestroy()
         {
-            // flush statements
+			// flush statements
             flushQueuedStatements(false);
         }
 
@@ -78,7 +78,7 @@ namespace DIG.GBLXAPI.Internal
 		}
 
 
-		private void flushQueuedStatements(bool waitComplete)
+		public void flushQueuedStatements(bool waitComplete)
         {
             // Dequeue statements if exists in queue
             List<QueuedStatement> batchStatements = new List<QueuedStatement>();
@@ -143,7 +143,7 @@ namespace DIG.GBLXAPI.Internal
             List<Statement> statements = new List<Statement>();
             foreach (QueuedStatement qs in queuedStatements)
                 statements.Add(qs.statement);
-            return endPoint.PostStatements(statements);
+			return endPoint.PostStatements(statements);
         }
 
         // ------------------------------------------------------------------------

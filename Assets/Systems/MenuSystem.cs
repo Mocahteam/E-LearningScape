@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using FYFY_plugins.Monitoring;
+using System.Collections;
+using DIG.GBLXAPI.Internal;
 
 public class MenuSystem : FSystem {
 
@@ -170,6 +172,15 @@ public class MenuSystem : FSystem {
 
     public void QuitGame()
     {
+        MainLoop.instance.StartCoroutine(DelayQuit());
+    }
+
+    private IEnumerator DelayQuit()
+    {
+        if (LrsRemoteQueue.Instance != null) {
+            LrsRemoteQueue.Instance.flushQueuedStatements(false);
+            yield return new WaitForSeconds(1);
+        }
         Application.Quit();
     }
 

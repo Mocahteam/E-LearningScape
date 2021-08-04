@@ -73,7 +73,7 @@ namespace DIG.GBLXAPI.Internal
             }
             if (statements.Count > 1)
                 jsonData += "]";
-
+			
 			if (jsonData != "")
 			{
 				byte[] formBytes = Encoding.UTF8.GetBytes(jsonData);
