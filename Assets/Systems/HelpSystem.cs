@@ -4,7 +4,6 @@ using FYFY;
 using FYFY_plugins.Monitoring;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using TMPro;
 using System.Threading;
 
@@ -332,7 +331,7 @@ public class HelpSystem : FSystem {
     }
 
     // Evaluate if resolution process is ahead of remaining time or not.
-    // Return a value between [-1.0, 1.0] that models if player is ahead from time progression. For exemple, -1.0 means time is over and no enigma was resolved, 1.0 means game is over from its beginning, 0.0 means time and resolution process are synchrnized. 
+    // Return a value between [-1.0, 1.0] that models if player is ahead from time progression. For exemple, -1.0 means time is over and no enigma was resolved, 1.0 means game is over from its beginning, 0.0 means time and resolution process are synchronized. 
     private float computeProgressionRatio()
     {
         // First compute time progression
@@ -354,7 +353,7 @@ public class HelpSystem : FSystem {
 
         float enigmaProgression = resolutionDone / totalWeightedMetaActions;
 
-        return enigmaProgression - timeProgression;
+        return Mathf.Clamp(enigmaProgression - timeProgression, -1f, 1f);
     }
 
     // Use to process your families.
@@ -366,7 +365,6 @@ public class HelpSystem : FSystem {
         //increase labelCount if the player isn't doing anything
         if(Time.time - noActionTimer > config.noActionFrequency)
         {
-            noActionTimer = Time.time;
             float progressionRatio = computeProgressionRatio();
             if (progressionRatio < 0) // means players are late
             {
@@ -375,7 +373,10 @@ public class HelpSystem : FSystem {
                 if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration)
                 {
                     if (DisplayHint())
+                    {
+                        noActionTimer = Time.time;
                         labelCount = 0;
+                    }
                 }
             }
 

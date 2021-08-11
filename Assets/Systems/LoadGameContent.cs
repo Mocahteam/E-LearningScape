@@ -114,6 +114,8 @@ public class LoadGameContent : FSystem {
         {
             instance = this;
 
+            Application.runInBackground = true; // do not pause game if application loses focus
+
             random = new System.Random();
 
             if (Application.isEditor && GameSelected.version == "")

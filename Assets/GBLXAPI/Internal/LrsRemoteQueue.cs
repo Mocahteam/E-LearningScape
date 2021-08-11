@@ -80,28 +80,31 @@ namespace DIG.GBLXAPI.Internal
 
 		public void flushQueuedStatements(bool waitComplete)
         {
-            // Dequeue statements if exists in queue
-            List<QueuedStatement> batchStatements = new List<QueuedStatement>();
-            while (_statementQueue.Count > 0)
-            {
-                if (_statementQueue.TryDequeue(out QueuedStatement queuedStatement))
-                {
-                    // Debug statement
-                    if (GBLXAPI.debugMode)
-                    {
-                        Debug.Log(queuedStatement.statement.ToJSON(true));
-                    }
-                    batchStatements.Add(queuedStatement);
-                }
-            }
-            // Send to each endPoint
-            foreach (RemoteLRSAsync endPoint in _lrsEndpoints)
-            {
-                if (waitComplete)
-                    StartCoroutine(SendStatementCoroutine(endPoint, batchStatements));
-                else
-                    SendStatementsImmediate(endPoint, batchStatements);
-            }
+			if (_statementQueue != null)
+			{
+				// Dequeue statements if exists in queue
+				List<QueuedStatement> batchStatements = new List<QueuedStatement>();
+				while (_statementQueue.Count > 0)
+				{
+					if (_statementQueue.TryDequeue(out QueuedStatement queuedStatement))
+					{
+						// Debug statement
+						if (GBLXAPI.debugMode)
+						{
+							Debug.Log(queuedStatement.statement.ToJSON(true));
+						}
+						batchStatements.Add(queuedStatement);
+					}
+				}
+				// Send to each endPoint
+				foreach (RemoteLRSAsync endPoint in _lrsEndpoints)
+				{
+					if (waitComplete)
+						StartCoroutine(SendStatementCoroutine(endPoint, batchStatements));
+					else
+						SendStatementsImmediate(endPoint, batchStatements);
+				}
+			}
         }
 
         public void EnqueueStatement(Statement statement, Action<string, bool, string> sendCallback = null)
