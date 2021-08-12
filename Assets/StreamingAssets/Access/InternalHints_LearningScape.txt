@@ -46,13 +46,13 @@
 		"Comment": ["The in game ball box key"],
 		"1": ["Il me reste au moins un objet à trouver"],
 		"2": ["Je pense qu'une clé me serait utile"],
-		"3": ["Je pressens que la clé est dans la petite commode"]
+		"3": ["Je pressens qu'une clé est dans la petite commode"]
 	},
 	"6.turnOn": {
 		"Comment": ["The ball box key in IAR"],
-		"1": ["Cette clé doit bien me servir à quelque chose"],
-		"2": ["Quel cadenas cette petite clé peut-elle bien ouvrir"],
-		"3": ["Peut-être que cette clé peut ouvrir le cadenas de la grosse boîte"]
+		"1": ["La clé ramassée doit bien me servir à quelque chose"],
+		"2": ["Quel cadenas la petite clé peut-elle bien ouvrir ?"],
+		"3": ["Peut-être que la clé ramassée peut ouvrir le cadenas de la grosse boîte"]
 	},
 	"7.turnOn": {
 		"Comment": ["The ball box"],
@@ -88,12 +88,12 @@
 		"Comment": ["The in game wire"],
 		"1": ["Il me reste au moins un objet à trouver"],
 		"2": ["Je pense qu'une corde me serait utile"],
-		"3": ["Je pressens que la corde se trouve en bas de la grande bibliothèque"]
+		"3": ["Je pressens qu'une corde se trouve en bas de la grande bibliothèque"]
 	},
 	"27.turnOn": {
 		"Comment": ["The wire in IAR"],
-		"1": ["Cette corde doit bien me servir à quelque chose"],
-		"2": ["Je pourrais utiliser cette corde pour relier des éléments entre eux"]
+		"1": ["La corde ramassée doit bien me servir à quelque chose"],
+		"2": ["Je pourrais utiliser la corde pour relier des éléments entre eux"]
 	},
 	"28.turnOn": {
 		"Comment": ["The plank"],
@@ -118,55 +118,53 @@
 	"35.Correct": {
 		"Comment": ["The Plank&Wire question"],
 		"1": ["J'ai tout ce qu'il me faut pour résoudre l'énigme du tableau et de la corde"],
-		"2": ["Sont-ce les mots reliés ou les liens eux-mêmes qui portent du sens ?"],
+		"2": ["Est-ce que ce sont les mots reliés ou les liens eux-mêmes qui portent du sens ?"],
 		"3": ["La corde ne passerait-elle pas par certains chiffres ?"]
 	},
 	
 	"Comment: Crouch enigma": {},
-	"43.activate": {
+	"38.turnOn": {
 		"Comment": ["The dream fragment on the bottom of the chair"],
-		"options": ["--"],
 		"1": ["Il me reste au moins un fragment de rêve à trouver"],
 		"2": ["Un fragment de rêve est peut être caché sous un objet"],
 		"3": ["Je pressens qu'une des chaises cache quelque chose"]
 	},
 	"48.activate": {
 		"Comment": ["The dream fragment at the entrance of the room"],
-		"options": ["--"],
 		"1": ["Il me reste au moins un fragment de rêve à trouver"],
 		"2": ["J'ai dû manquer un fragment à l'entrée de la pièce en face du tableau"]
 	},
 	"41.activate": {
 		"Comment": ["The dream fragment on the bottom of the first shelf"],
-		"options": ["--"],
 		"1": ["Il me reste au moins un fragment de rêve à trouver"],
 		"2": ["Un fragment de rêve est peut être caché sous un objet"],
 		"3": ["Je pressens que quelque chose se cache sous la première étagère de la bibliothèque"]
 	},
 	"47.activate": {
 		"Comment": ["The dream fragment on the bottom of the last shelf"],
-		"options": ["--"],
 		"1": ["Il me reste au moins un fragment de rêve à trouver"],
 		"2": ["Un fragment de rêve est peut être caché sous un objet"],
 		"3": ["Je pressens que quelque chose se cache sous la dernière étagère de la bibliothèque"]
 	},
-	"46.activate": {
+	"37.turnOn": {
+		"Comment": ["Crouch hints"],
+		"2": ["Comment pourrais-je changer mon point de vue ?"],
+		"3": ["Je devrais me baisser pour avoir une vision différente de la pièce"]
+	},
+	"39.turnOn": {
 		"Comment": ["The dream fragment on the bottom of the table"],
-		"options": ["--"],
 		"1": ["Il me reste au moins un fragment de rêve à trouver"],
 		"2": ["Un fragment de rêve est peut être caché sous un objet"],
 		"3": ["Je pressens que quelque chose se cache sous la table"]
 	},
 	"42.activate": {
 		"Comment": ["The dream fragment on the bottom of the drawer"],
-		"options": ["--"],
 		"1": ["Il me reste au moins un fragment de rêve à trouver"],
 		"2": ["Un fragment de rêve est peut être caché sous un objet"],
 		"3": ["Je pressens que quelque chose se cache sous le tiroir de la petite commode"]
 	},
 	"40.activate": {
-		"Comment": ["The dream fragment on the bottom of the table"],
-		"options": ["--"],
+		"Comment": ["The dream fragment on the right"],
 		"1": ["Il me reste au moins un fragment de rêve à trouver"],
 		"2": ["Un fragment de rêve est peut être caché sous un objet"],
 		"3": ["Je pressens que quelque chose se cache au fond de la pièce à droite"]
@@ -174,7 +172,7 @@
 	"50.Correct": {
 		"Comment": ["The Crouch question"],
 		"1": ["J'ai tout ce qu'il me faut pour résoudre la dernière question de cette pièce"],
-		"2": ["Est-ce les fragments cachés ne devraient pas être mis en relation ?"],
+		"2": ["Est-ce que les fragments cachés ne devraient pas être mis en relation ?"],
 	},
 	
 	"Comment: Gears enigma": {},
@@ -222,9 +220,9 @@
 	},
 	"56.turnOn": {
 		"Comment": ["The in IAR satchel's key"],
-		"1": ["Cette clé doit bien me servir à quelque chose"],
-		"2": ["Quel cadenas cette petite clé peut-elle bien ouvrir"],
-		"3": ["Peut-être que cette clé peut ouvrir le cadenas du cartable"]
+		"1": ["La clé ramassée doit bien me servir à quelque chose"],
+		"2": ["Quel cadenas la petite clé peut-elle bien ouvrir ?"],
+		"3": ["Peut-être que la clé ramassée peut ouvrir le cadenas du cartable"]
 	},
 	"57.turnOn": {
 		"Comment": ["The satchel"],
@@ -313,9 +311,9 @@
 	},
 	"79.turnOn": {
 		"Comment": ["The in IAR mirror"],
-		"1": ["Ce miroir doit bien me servir à quelque chose"],
-		"2": ["Ce miroir est cylindrique... Cela doit avoir son importance"],
-		"3": ["Où dois-je positionner ce miroir ?"]
+		"1": ["Le miroir ramassé doit bien me servir à quelque chose"],
+		"2": ["Le miroir est cylindrique... Cela doit avoir son importance"],
+		"3": ["Où dois-je positionner le miroir ramassé ?"]
 	},
 	"80.turnOn": {
 		"Comment": ["The in game mirror's plank"],
@@ -473,9 +471,9 @@
 	},
 	"113.turnOn": {
 		"Comment": ["In IAR lamp"],
-		"1": ["Cette lampe doit bien me servir à quelque chose"],
-		"2": ["Que dois-je éclairer avec cette lampe ?"],
-		"3": ["Cette obélisque est très sombre peut être devrais-je l'éclairer avec ma lampe ?"]
+		"1": ["La lampe ramassée doit bien me servir à quelque chose"],
+		"2": ["Que dois-je éclairer avec la lampe ?"],
+		"3": ["Cette obélisque est très sombre peut être devrais-je l'éclairer avec la lampe ramassée ?"]
 	},
 	"120.activate": {
 		"Comment": ["One of the dream fragment inside second room"],
@@ -547,15 +545,15 @@
 	"127.turnOn": {
 		"Comment": ["The white board"],
 		"options": ["--"],
-		"1": ["Je dois trouver un tableau blanc avec des mots écrits dessus"]
+		"1": ["Je dois trouver un tableau avec des mots écrits dessus"]
 	},
 	"128.turnOn": {
 		"Comment": ["The eraser"],
 		"1": ["Ne serait-ce pas un effaceur aimanté sur le tableau ?"],
-		"2": ["Peut être que je peux déplacer l'effaceur !"]
+		"2": ["Peut être que je peux déplacer l'effaceur aimanté sur le tableau !"]
 	},
 	"142.perform": {
 		"Comment": ["The white board question"],
-		"2": ["J'ai tout ce qu'il faut pour résoudre l'énigme du tableau blanc"]
+		"2": ["J'ai tout ce qu'il faut pour résoudre l'énigme du tableau effaçable"]
 	}
 }

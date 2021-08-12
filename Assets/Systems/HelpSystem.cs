@@ -365,21 +365,21 @@ public class HelpSystem : FSystem {
         //increase labelCount if the player isn't doing anything
         if(Time.time - noActionTimer > config.noActionFrequency)
         {
+            noActionTimer = Time.time;
             float progressionRatio = computeProgressionRatio();
             if (progressionRatio < 0) // means players are late
             {
-                labelCount += (0.1f + labelWeights["stagnation"]) / (1 + progressionRatio);
+                labelCount += (0.1f + labelWeights["stagnation"]) / Mathf.Max(1 + progressionRatio, 0.01f);
                 //if labelCount reached the step calculate the feedback level and ask a hint and the time spent since the last time the system gave a feedback reached countLabel to know if it can give another one
                 if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration)
                 {
                     if (DisplayHint())
                     {
-                        noActionTimer = Time.time;
+                        Debug.Log("Hint given due to inactivity (progression ratio: " + progressionRatio + "; labelCount: " + labelCount + ")");
                         labelCount = 0;
                     }
                 }
             }
-
         }
 
         //check the time spent since the last time the player asked help
@@ -478,7 +478,7 @@ public class HelpSystem : FSystem {
             {
                 if (labelWeights.ContainsKey(tmpTrace.labels[j]))
                 {
-                    labelCount += (0.1f+labelWeights[tmpTrace.labels[j]]) / (1 + progressionRatio);
+                    labelCount += (0.1f+labelWeights[tmpTrace.labels[j]]) / Mathf.Max(1 + progressionRatio, 0.01f);
                     //labelCount can't be negative
                     if (labelCount < 0)
                         labelCount = 0;
@@ -486,7 +486,10 @@ public class HelpSystem : FSystem {
                     //if labelCount reached the step calculate the feedback level and ask a hint and the time spent since the last time the system gave a feedback reached countLabel to know if it can give another one
                     if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration){
                         if (DisplayHint())
-						    labelCount = 0;
+                        {
+                            Debug.Log("Hint given (progression ratio: " + progressionRatio + "; labelCount: " + labelCount + ")");
+                            labelCount = 0;
+                        }
 					}
                 }
             }
@@ -503,7 +506,7 @@ public class HelpSystem : FSystem {
 
         // Then comute feedback level
         int feedbackLevel = -1; // default no feedback
-        if (config.feedbackStep1 < progression && progression < 0)
+        if (config.feedbackStep1 < progression && progression < -0.02)
             feedbackLevel = 1;
         else if (config.feedbackStep2 < progression && progression <= config.feedbackStep1)
             feedbackLevel = 2;
