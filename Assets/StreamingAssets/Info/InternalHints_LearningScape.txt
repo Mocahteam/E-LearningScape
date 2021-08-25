@@ -123,7 +123,7 @@
 	},
 	
 	"Comment: Crouch enigma": {},
-	"38.turnOn": {
+	"43.activate": {
 		"Comment": ["The dream fragment on the bottom of the chair"],
 		"1": ["Il me reste au moins un fragment de rêve à trouver"],
 		"2": ["Un fragment de rêve est peut être caché sous un objet"],

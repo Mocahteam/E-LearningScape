@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using FYFY;
-using FYFY_plugins.Monitoring;
 
 public class CollectObject : FSystem {
 
@@ -12,33 +11,18 @@ public class CollectObject : FSystem {
     private Family f_collectableObjects = FamilyManager.getFamily(new AllOfComponents(typeof(LinkedWith), typeof(Highlighted)), new NoneOfLayers(5), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_pressY = FamilyManager.getFamily(new AnyOfTags("PressY"));
     private Family f_HUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
-    private Family f_rightHUD = FamilyManager.getFamily(new AnyOfTags("HUD_TransparentOnMove"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
 
     public static CollectObject instance;
 
-    private GameObject seenScroll;
-
     private GameObject itemCollectedNotif;
-    private float timeStart;
-
-    private bool inventoryHUDEnabled = false;
 
     public CollectObject()
     {
         if (Application.isPlaying)
         {
             itemCollectedNotif = f_HUD.First().transform.GetChild(f_HUD.First().transform.childCount-1).gameObject;
-
-            //every time a HUD is enabled, checks if it is inventory HUD
-            f_rightHUD.addEntryCallback(CheckInventoryHUD);
         }
         instance = this;
-    }
-
-    private void CheckInventoryHUD(GameObject go)
-    {
-        if (go.name == "Inventory")
-            inventoryHUDEnabled = true;
     }
 
     // Use to process your families.
@@ -82,13 +66,10 @@ public class CollectObject : FSystem {
                 if (!isDreamFragment)
                     GameObjectManager.setGameObjectState(collect, false);
                 // Play notification
-                if (IARDreamFragmentManager.virtualDreamFragment && isDreamFragment && inventoryHUDEnabled)
+                if (!isDreamFragment)
+                    itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start");
+                else if (IARDreamFragmentManager.virtualDreamFragment)
                     itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start2");
-                else
-                {
-                    if (!isDreamFragment || IARDreamFragmentManager.virtualDreamFragment)
-                        itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start");
-                }
 
                 // Play sound
                 GameObjectManager.addComponent<PlaySound>(collect, new { id = 10 }); // id refer to FPSController AudioBank
