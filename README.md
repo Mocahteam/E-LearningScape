@@ -1,5 +1,5 @@
 # Téléchargements
-**Version 6.2** disponible depuis le 12/08/2021
+**Version 6.2** disponible depuis le 12/08/2021 (mise à jour le 25/08/2021)
 
 1. [**Windows**](https://github.com/Mocahteam/E-LearningScape/releases/download/v6.2/E-LearningScape_Windows.zip)
 2. [**MacOS**](https://github.com/Mocahteam/E-LearningScape/releases/download/v6.2/E-LearningScape_MacOS.zip)
