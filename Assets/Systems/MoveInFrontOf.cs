@@ -3,6 +3,7 @@ using FYFY;
 using FYFY_plugins.PointerManager;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class MoveInFrontOf : FSystem {
 
@@ -117,7 +118,12 @@ public class MoveInFrontOf : FSystem {
 
             if (focusedGO)
             {
-                GameObjectManager.addComponent<ActionPerformedForLRS>(focusedGO, new { verb = "accessed", objectType = "interactable", objectName = focusedGO.name });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(focusedGO, new
+                {
+                    verb = "accessed",
+                    objectType = "interactable",
+                    objectName = focusedGO.name
+                });
 
                 // pause unuse systems
                 JumpingSystem.instance.Pause = true;

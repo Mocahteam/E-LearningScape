@@ -35,6 +35,7 @@ namespace DIG.GBLXAPI.Internal
 		private RingBuffer<QueuedStatement> _statementQueue;
 
         private int batchTreshold = 200;
+		private int totalqueuedStatement = 0;
 
 		// ------------------------------------------------------------------------
 		// Set singleton so it persists across scene loads
@@ -63,6 +64,7 @@ namespace DIG.GBLXAPI.Internal
         {
 			// flush statements
             flushQueuedStatements(false);
+			Debug.Log("Total statements sent:" + totalqueuedStatement);
         }
 
 		private void OnApplicationFocus(bool hasFocus)
@@ -127,6 +129,7 @@ namespace DIG.GBLXAPI.Internal
 				// Check if space in the ringbuffer queue, if not discard or will hard lock unity
 				if (_statementQueue.Capacity - _statementQueue.Count > 0)
 				{
+					totalqueuedStatement++;
 					_statementQueue.Enqueue(new QueuedStatement(statement, sendCallback));
 				}
 				else
@@ -146,7 +149,9 @@ namespace DIG.GBLXAPI.Internal
             List<Statement> statements = new List<Statement>();
             foreach (QueuedStatement qs in queuedStatements)
                 statements.Add(qs.statement);
-			return endPoint.PostStatements(statements);
+			int idState = endPoint.PostStatements(statements);
+			Debug.Log(statements.Count+" statements with new idState "+idState+" sent. ");
+			return idState;
         }
 
         // ------------------------------------------------------------------------
@@ -159,7 +164,11 @@ namespace DIG.GBLXAPI.Internal
 			do
 			{
 				if (idState != -1) // means the previous request fail, we wait fiew seconds to retry
+				{
+					Debug.LogWarning("Statements with idState " + idState + " failed, try to send back in 10 seconds");
 					yield return new WaitForSeconds(10);
+					Debug.Log("Try to send back idState: " + idState);
+				}
 				idState = SendStatementsImmediate(endPoint, queuedStatements);
 				// Wait answer
 				while (!endPoint.states[idState].complete) { yield return null; }

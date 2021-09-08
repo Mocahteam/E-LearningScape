@@ -79,12 +79,6 @@ public class IARViewItem : FSystem {
     {
         // force EventSystem to follow mouse focus
         EventSystem.current.SetSelectedGameObject(go);
-        GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
-        {
-            verb = "highlighted",
-            objectType = "viewable",
-            objectName = string.Concat(go.name, "_Description")
-        });
     }
 
     // because f_viewed contains only one gameobject (thanks to PointerOver), if it exits family no game object are focused
@@ -101,13 +95,6 @@ public class IARViewItem : FSystem {
                     EventSystem.current.SetSelectedGameObject(f_selected.getAt(f_selected.Count - 1));
                 else
                     EventSystem.current.SetSelectedGameObject(null);
-
-                GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
-                {
-                    verb = "exitedView",
-                    objectType = "viewable",
-                    objectName = string.Concat(go.name, "_Description")
-                });
             }
         }
     }
@@ -117,13 +104,6 @@ public class IARViewItem : FSystem {
     {
         // display description of this new selection
         showDescription(go);
-        GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
-        {
-            verb = "read",
-            objectType = "viewable",
-            objectName = string.Concat(go.name, "_Description"),
-            activityExtensions = new Dictionary<string, string>() { { "content", descriptionContent.GetComponent<TextMeshProUGUI>().text } }
-        });
     }
 
     // when a selected game object leaves f_selected family, we update the last game object selected to the last game object of the family

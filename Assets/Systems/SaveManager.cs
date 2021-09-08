@@ -79,15 +79,16 @@ public class SaveManager : FSystem {
 	private ComponentMonitoring[] tmpMonitorsArray;
 	private FileInfo[] tmpFI;
 
-    private float lastAutoSave = 0;
-    private float autoSaveFrequency = 60;
+    private float lastAutoSave;
+    private float autoSaveFrequency = 300; // in second
 
     public SaveManager()
 	{
 		if(Application.isPlaying)
 		{
-			// look for the load window
-			foreach (GameObject go in f_prefabs)
+            lastAutoSave = -autoSaveFrequency;  // init lastAutoSave to the oposite of autoSaveFrequency will fire autosave when the first room will be unlocked
+            // look for the load window
+            foreach (GameObject go in f_prefabs)
 			{
 				if (go.name == "LoadPopup")
 				{

@@ -49,17 +49,6 @@ public class PlankAndMirrorManager : FSystem {
     {
         plankRotation.transform.Rotate(Vector3.up, way * 50 * Time.deltaTime);
         rotationCount += way;
-        // trace only each 10°
-        if (rotationCount % 10 == 0)
-        {
-            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new
-            {
-                verb = "moved",
-                objectType = "interactable",
-                objectName = selectedPlank.name,
-                activityExtensions = new Dictionary<string, string>() { { "direction", way < 0 ? "right" : "left" } }
-            });
-        }
     }
 
     private void onReadyToWorkOnPlank(GameObject go)

@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using FYFY;
-using FYFY_plugins.Monitoring;
 using TMPro;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 using System;
-using System.IO;
 using System.Collections.Generic;
 
 public class DreamFragmentCollecting : FSystem {
@@ -108,7 +106,12 @@ public class DreamFragmentCollecting : FSystem {
                         backupIARNavigationState = IARTabNavigation.instance.Pause;
                         IARTabNavigation.instance.Pause = true;
                     }
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "activated", objectType = "viewable", objectName = selectedFragment.name });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new
+                    {
+                        verb = "collected",
+                        objectType = "item",
+                        objectName = selectedFragment.name
+                    });
 
                     GameObjectManager.addComponent<PlaySound>(selectedFragment, new { id = 3 }); // id refer to FPSController AudioBank
 
@@ -133,7 +136,6 @@ public class DreamFragmentCollecting : FSystem {
 
     public void CloseFragmentUI()
     {
-        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new { verb = "deactivated", objectType = "viewable", objectName = selectedFragment.name });
         TurnOffDreamFragment(selectedFragment);
         selectedFragment = null;
         // close UI

@@ -171,19 +171,6 @@ public class LockResolver : FSystem {
                     else
                         room3Unlocked = true;
                 }
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedWheel, new
-                {
-                    verb = "moved",
-                    objectType = "interactable",
-                    objectName = selectedWheel.name,
-                    activityExtensions = new Dictionary<string, string>() {
-                        { "direction", rotationDirection },
-                        { "content", selectedWheel.GetComponent<WheelFrontFace>().faceNumber.ToString() }
-                    },
-                    result = true,
-                    success = solved,
-                    response = string.Concat(selectedLocker.Wheel1.GetComponent<WheelFrontFace>().faceNumber, selectedLocker.Wheel2.GetComponent<WheelFrontFace>().faceNumber, selectedLocker.Wheel3.GetComponent<WheelFrontFace>().faceNumber)
-                });
             }
         }
 

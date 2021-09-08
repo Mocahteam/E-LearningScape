@@ -7,6 +7,7 @@ using FYFY_plugins.TriggerManager;
 using FYFY_plugins.PointerManager;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class MovingSystem : FSystem
 {

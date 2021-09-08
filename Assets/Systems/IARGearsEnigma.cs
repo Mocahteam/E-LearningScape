@@ -158,7 +158,7 @@ public class IARGearsEnigma : FSystem
             if (gearDragged != null) //if a gear is dragged
             {
                 rotateGear = false; //initial value
-                if (Input.GetMouseButtonUp(0))  //when the gear is released
+                if (Input.GetButtonUp("Fire1"))  //when the gear is released
                 {
                     GameObjectManager.addComponent<ActionPerformedForLRS>(gearDragged, new { verb = "dropped", objectType = "draggable", objectName = gearDragged.name });
                     GameObjectManager.setGameObjectState(transparentGear, false);

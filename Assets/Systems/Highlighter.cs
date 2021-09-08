@@ -28,12 +28,6 @@ public class Highlighter : FSystem {
     {
         if (previousHighlight != null)
         {
-            if (previousHighlight.GetComponent<Selectable>())
-                GameObjectManager.addComponent<ActionPerformedForLRS>(previousHighlight, new { verb = "exitedHighlight", objectType = "interactable", objectName = previousHighlight.name });
-            else if (previousHighlight.GetComponent<ToggleableGO>())
-                GameObjectManager.addComponent<ActionPerformedForLRS>(previousHighlight, new { verb = "exitedHighlight", objectType = "toggable", objectName = previousHighlight.name });
-            else
-                GameObjectManager.addComponent<ActionPerformedForLRS>(previousHighlight, new { verb = "exitedHighlight", objectType = "item", objectName = previousHighlight.name });
             tmpRendererList = previousHighlight.GetComponentsInChildren<Renderer>();
             int nb = tmpRendererList.Length;
             for (int i = 0; i < nb; i++)
@@ -54,12 +48,6 @@ public class Highlighter : FSystem {
 
     private void highlight (GameObject currentHighlight)
     {
-        if (currentHighlight.GetComponent<Selectable>())
-            GameObjectManager.addComponent<ActionPerformedForLRS>(currentHighlight, new { verb = "highlighted", objectType = "interactable", objectName = currentHighlight.name });
-        else if(currentHighlight.GetComponent<ToggleableGO>())
-            GameObjectManager.addComponent<ActionPerformedForLRS>(currentHighlight, new { verb = "highlighted", objectType = "toggable", objectName = currentHighlight.name });
-        else
-            GameObjectManager.addComponent<ActionPerformedForLRS>(currentHighlight, new { verb = "highlighted", objectType = "item", objectName = currentHighlight.name });
         if (previousHighlight == null)
             previousHighlight = currentHighlight;
         // Update renderer and highlight game object

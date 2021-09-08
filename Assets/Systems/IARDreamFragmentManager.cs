@@ -36,14 +36,6 @@ public class IARDreamFragmentManager : FSystem {
 	//the offset is used to move the document from the point clicked and not the center
 	private Vector2 offset;
 
-	// Contains the last action performed. The value is changed when a different action is performed;
-	// 0 - reset, 1 - drag, 2 - zoom in, 3 - zoom out, 4 - rotation clockwise, 5 - rotation counterclockwise
-	private int lastAction = -1;
-	private int currentTracedAction = -1;
-	private bool newActionPerformed = false;
-	private GameObject tracedDocument;
-
-
 	private DreamFragmentToggle tmpDFToggle;
 	private RectTransform tmpRT;
 	private DreamFragment tmpDreamFragment;
@@ -210,19 +202,6 @@ public class IARDreamFragmentManager : FSystem {
         if (selectedDocument)
 		{
 			selectedDocument.GetComponent<RectTransform>().Rotate(0, 0, angle);
-
-			// Trace
-			if (angle < 0)
-				lastAction = 4;
-			else if (angle > 0)
-				lastAction = 5;
-			if(currentTracedAction == -1)
-            {
-				currentTracedAction = lastAction;
-				tracedDocument = selectedDocument;
-				newActionPerformed = true;
-            }
-			TraceOnChangingAction(selectedDocument);
 		}
 	}
 
@@ -237,19 +216,6 @@ public class IARDreamFragmentManager : FSystem {
 				tmpRT.localScale = Vector3.one * 0.1f;
 			else if (tmpRT.localScale.x > 3f)
 				tmpRT.localScale = Vector3.one * 3f;
-
-			// Trace
-			if (value < 0)
-				lastAction = 3;
-			else if (value > 0)
-				lastAction = 2;
-			if (currentTracedAction == -1)
-			{
-				currentTracedAction = lastAction;
-				tracedDocument = selectedDocument;
-				newActionPerformed = true;
-			}
-			TraceOnChangingAction(selectedDocument);
 		}
 	}
 
@@ -281,17 +247,12 @@ public class IARDreamFragmentManager : FSystem {
 				tmpRT.localRotation = Quaternion.Euler(0, 0, 0);
 				tmpRT.localScale = Vector3.one;
 			}
-
-			lastAction = 0;
-			currentTracedAction = currentTracedAction == -1 ? lastAction : currentTracedAction;
-			TraceReset(tmpGO);
 		}
 	}
 
 	// Use this to update member variables when system pause. 
 	// Advice: avoid to update your families inside this function.
 	protected override void onPause(int currentFrame) {
-		TraceOnCloseTab();
 	}
 
 	// Use this to update member variables when system resume.
@@ -344,15 +305,6 @@ public class IARDreamFragmentManager : FSystem {
                             tmpDFToggle.currentState = tmpDFToggle.selectedState;
                         }
                     }
-
-                    lastAction = 1;
-					if (currentTracedAction == -1)
-					{
-						currentTracedAction = lastAction;
-						tracedDocument = selectedDocument;
-						newActionPerformed = true;
-					}
-					TraceOnChangingAction(selectedDocument);
 					break;
                 }
             }
@@ -452,87 +404,4 @@ public class IARDreamFragmentManager : FSystem {
 
 		SetOnlineButtonState();
     }
-
-	/// <summary>
-	/// Called to check and trace if the last action is different to the last traced action or performed on a different document
-	/// </summary>
-	private void TraceOnChangingAction(GameObject document)
-    {
-		if(tracedDocument && document && (currentTracedAction != lastAction || tracedDocument != document))
-		{
-			tmpRT = tracedDocument.GetComponent<RectTransform>();
-			GameObjectManager.addComponent<ActionPerformedForLRS>(tracedDocument, new
-			{
-				verb = "interacted",
-				objectType = "viewable",
-				objectName = string.Concat(tracedDocument.transform.parent.gameObject.name, "/", tracedDocument.name),
-				activityExtensions = new Dictionary<string, string>() {
-					{ "type", "dream fragment" },
-					{ "position", tmpRT.position.ToString() },
-					{ "rotation", tmpRT.rotation.eulerAngles.ToString() },
-					{ "scale", tmpRT.localScale.ToString() }
-				}
-			});
-
-			currentTracedAction = lastAction;
-			tracedDocument = document;
-			newActionPerformed = true;
-        }
-    }
-
-	/// <summary>
-	/// trace when the button reset is pressed
-	/// </summary>
-	/// <param name="dreamFragmentContent"></param>
-	private void TraceReset(GameObject dreamFragmentContent)
-    {
-		// trace all documents of the dream fragment
-		foreach(Transform document in dreamFragmentContent.transform)
-		{
-			tmpRT = document.GetComponent<RectTransform>();
-			GameObjectManager.addComponent<ActionPerformedForLRS>(document.gameObject, new
-			{
-				verb = "interacted",
-				objectType = "viewable",
-				objectName = string.Concat(dreamFragmentContent.name, "/", document.gameObject.name),
-				activityExtensions = new Dictionary<string, string>() {
-					{ "type", "dream fragment" },
-					{ "position", tmpRT.position.ToString() },
-					{ "rotation", tmpRT.rotation.eulerAngles.ToString() },
-					{ "scale", tmpRT.localScale.ToString() }
-				}
-			});
-		}
-
-		currentTracedAction = -1;
-		tracedDocument = null;
-		newActionPerformed = false;
-	}
-
-	/// <summary>
-	/// Called to check and trace when the tab is closed if an action was performed since last trace
-	/// </summary>
-	private void TraceOnCloseTab()
-	{
-		if (newActionPerformed && tracedDocument)
-		{
-			tmpRT = tracedDocument.GetComponent<RectTransform>();
-			GameObjectManager.addComponent<ActionPerformedForLRS>(tracedDocument, new
-			{
-				verb = "interacted",
-				objectType = "viewable",
-				objectName = string.Concat(tracedDocument.transform.parent.gameObject.name, "/", tracedDocument.name),
-				activityExtensions = new Dictionary<string, string>() {
-					{ "type", "dream fragment" },
-					{ "position", tmpRT.position.ToString() },
-					{ "rotation", tmpRT.rotation.eulerAngles.ToString() },
-					{ "scale", tmpRT.localScale.ToString() }
-				}
-			});
-
-			currentTracedAction = -1;
-			tracedDocument = null;
-			newActionPerformed = false;
-		}
-	}
 }

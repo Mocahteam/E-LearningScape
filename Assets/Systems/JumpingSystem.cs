@@ -6,14 +6,12 @@ using System.Collections.Generic;
 public class JumpingSystem : FSystem {
     private GameObject pinTarget;
     private GameObject fpsController;
-    private Vector3 higherPosition;
     private Vector3 CameraPlanarPosition;
 
     private Family f_dreamFragmentUI = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AllOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD, PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_highlighted = FamilyManager.getFamily(new AllOfComponents(typeof(Highlighted)));
     private Family f_readyToWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
 
-    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"), new AllOfComponents(typeof(SwitchPerso)));
     private Family f_OutOfFirstRoom = FamilyManager.getFamily(new AllOfComponents(typeof(TriggerSensitive3D), typeof(LinkedWith)));
 
     public bool lockSystem;
@@ -90,7 +88,7 @@ public class JumpingSystem : FSystem {
                         verb = "moved",
                         objectType = "avatar",
                         objectName = "player",
-                        activityExtensions = new Dictionary<string, string>() { { "position", f_player.First().transform.position.ToString("G4") } }
+                        activityExtensions = new Dictionary<string, string>() { { "position", fpsController.transform.position.ToString("G4") } }
                     });
                 }
             }
@@ -103,7 +101,7 @@ public class JumpingSystem : FSystem {
             lockSystem = !lockSystem;
             GameObjectManager.setGameObjectState(pinTarget, !lockSystem);
 
-            SwitchPerso sp = f_player.First().GetComponent<SwitchPerso>();
+            SwitchPerso sp = fpsController.GetComponent<SwitchPerso>();
             sp.fpsCam = true;
             sp.forceUpdate();
 

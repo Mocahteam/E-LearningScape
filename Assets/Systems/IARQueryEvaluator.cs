@@ -113,13 +113,6 @@ public class IARQueryEvaluator : FSystem {
                 objectType = "menu",
                 objectName = queries.transform.parent.gameObject.name
             });
-            GameObjectManager.addComponent<ActionPerformedForLRS>(queries.transform.parent.GetChild(1).gameObject, new
-            {
-                verb = "accessed",
-                objectType = "viewable",
-                objectName = "Password_Room2",
-                activityExtensions = new Dictionary<string, string>() { { "value", queries.transform.parent.GetChild(1).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text } }
-            });
         }
     }
 

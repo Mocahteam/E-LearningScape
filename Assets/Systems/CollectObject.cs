@@ -36,7 +36,12 @@ public class CollectObject : FSystem {
                 if (!isDreamFragment)
                 {
                     GameObjectManager.addComponent<ActionPerformed>(collect, new { name = "perform", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(collect, new { verb = "collected", objectType = "item", objectName = collect.name });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(collect, new 
+                    {
+                        verb = "collected",
+                        objectType = "item",
+                        objectName = collect.name
+                    });
                 }
                 // enable UI target
                 GameObjectManager.setGameObjectState(collect.GetComponent<LinkedWith>().link, true);

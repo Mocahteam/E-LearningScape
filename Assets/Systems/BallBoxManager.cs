@@ -118,12 +118,6 @@ public class BallBoxManager : FSystem {
         ballSubTitlesContent.text = "";
         if (focusedBall)
         {
-            GameObjectManager.addComponent<ActionPerformedForLRS>(focusedBall, new
-            {
-                verb = "exitedView",
-                objectType = "interactable",
-                objectName = focusedBall.name
-            });
             focusedBall.GetComponent<Renderer>().material.color = focusedBall.GetComponent<Ball>().color;
             focusedBall = null;
         }
@@ -220,7 +214,6 @@ public class BallBoxManager : FSystem {
                             ballGo.transform.localPosition = ballPos;
                         }
                         ballCounter = f_balls.Count;
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "skipped", objectType = "animation", objectName = string.Concat(selectedBox.name, "_opening") });
                     }
                     //when the ball reaches to its position
                     if (ballGo.transform.localPosition == ballPos)

@@ -13,6 +13,8 @@ public class IARPuzzleManager : FSystem {
 
     private GameObject tmpGo;
 
+    private bool enableTraceInteraction = true;
+
     public IARPuzzleManager()
     {
         if (Application.isPlaying)
@@ -24,6 +26,7 @@ public class IARPuzzleManager : FSystem {
 
     private void onPuzzleEnabled(GameObject go)
     {
+        enableTraceInteraction = true;
         this.Pause = false;
         synchronizeConnections();
     }
@@ -38,17 +41,15 @@ public class IARPuzzleManager : FSystem {
         if (Input.GetButtonDown("Fire1") && f_focusedPiece.First())
         {
             tmpGo = f_focusedPiece.First();
-            GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new { verb = "dragged", objectType = "draggable", objectName = tmpGo.name });
-        }
-        if (Input.GetMouseButtonUp(0) && tmpGo)
-        {
-            GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
+            // just trace the player interact with the puzzle
+            if (enableTraceInteraction)
             {
-                verb = "dropped",
-                objectType = "draggable",
-                objectName = tmpGo.name,
-                activityExtensions = new Dictionary<string, string>() { { "position", tmpGo.GetComponent<RectTransform>().position.ToString("G4") } }
-            });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new { verb = "interacted", objectType = "interactable", objectName = "Puzzle" });
+                enableTraceInteraction = false;
+            }
+        }
+        if (Input.GetButtonUp("Fire1") && tmpGo)
+        {
             // try to magnet puzzle piece
             int cpt = 0;
             // parse all neighbours

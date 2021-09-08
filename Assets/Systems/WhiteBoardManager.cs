@@ -68,8 +68,6 @@ public class WhiteBoardManager : FSystem {
         prevColor = rend.material.GetColor("_EmissionColor");
         rend.material.EnableKeyword("_EMISSION");
         rend.material.SetColor("_EmissionColor", Color.yellow * Mathf.LinearToGammaSpace(0.8f));
-        if(!eraserDragged)
-            GameObjectManager.addComponent<ActionPerformedForLRS>(go, new { verb = "highlighted", objectType = "draggable", objectName = go.name });
     }
 
     private void onExitEraser(int instanceId)
@@ -121,7 +119,7 @@ public class WhiteBoardManager : FSystem {
                 }
                 if (eraserDragged)
                 {
-                    if (Input.GetMouseButtonUp(0))
+                    if (Input.GetButtonUp("Fire1"))
                     {
                         //stop dragging eraser when the click is released
                         eraserDragged = false;

@@ -54,31 +54,11 @@ public class UIEffectPlayer : FSystem {
             {
                 blinkCorrect = true;
                 startTime = Time.time;
-                GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
-                {
-                    verb = "received",
-                    objectType = "feedback",
-                    objectName = string.Concat(go.name, "_feedback"),
-                    activityExtensions = new Dictionary<string, string>() {
-                        { "content", "blink correct" },
-                        { "type", "answer validation" }
-                    }
-                });
             }
             if (uiEffect.effectCode == 2)
             {
                 solvedAnimation.animate = true;
                 GameObjectManager.setGameObjectState(solvedAnimation.gameObject, true);
-                GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
-                {
-                    verb = "received",
-                    objectType = "feedback",
-                    objectName = string.Concat(go.name, "_feedback"),
-                    activityExtensions = new Dictionary<string, string>() {
-                        { "content", "correct animation" },
-                        { "type", "answer validation" }
-                    }
-                });
             }
         }
         else if (uiEffect.effectCode == 1)
@@ -87,16 +67,6 @@ public class UIEffectPlayer : FSystem {
             GameObjectManager.addComponent<PlaySound>(go, new { id = 1 }); // id refer to FPSController AudioBank
             blinkWrong = true;
             startTime = Time.time;
-            GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
-            {
-                verb = "received",
-                objectType = "feedback",
-                objectName = string.Concat(go.name, "_feedback"),
-                activityExtensions = new Dictionary<string, string>() {
-                    { "content", "blink wrong" },
-                    { "type", "answer validation" }
-                }
-            });
         }
 
         // Remove UI Effect

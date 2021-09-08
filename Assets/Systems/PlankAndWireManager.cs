@@ -65,13 +65,6 @@ public class PlankAndWireManager : FSystem {
         {
             //if the word isn't selected change its color to cyan
             go.GetComponent<TextMeshPro>().color = Color.cyan;
-            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new
-            {
-                verb = "highlighted",
-                objectType = "interactable",
-                objectName = go.name,
-                activityExtensions = new Dictionary<string, string>() { { "content", go.GetComponent<TextMeshPro>().text } }
-            });
         }
         currentFocusedWord = go;
     }
@@ -82,13 +75,6 @@ public class PlankAndWireManager : FSystem {
         {
             //if the word isn't selected change its color to white
             currentFocusedWord.GetComponent<TextMeshPro>().color = Color.white;
-            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new
-            {
-                verb = "exitedHighlight",
-                objectType = "interactable",
-                objectName = currentFocusedWord.name,
-                activityExtensions = new Dictionary<string, string>() { { "content", currentFocusedWord.GetComponent<TextMeshPro>().text } }
-            });
         }
         currentFocusedWord = null;
     }
@@ -218,17 +204,6 @@ public class PlankAndWireManager : FSystem {
                                         correct = false;
                                         break;
                                     }
-
-                                // trace this attempt
-                                GameObjectManager.addComponent<ActionPerformedForLRS>(currentFocusedWord, new
-                                {
-                                    verb = "answered",
-                                    objectType = "interactable",
-                                    objectName = selectedPlank.name,
-                                    result = true,
-                                    success = correct ? 1 : -1,
-                                    response = answers
-                                });
 
                                 if (correct)
                                 {

@@ -150,10 +150,11 @@ public class HelpSystem : FSystem {
                 if (tmpGO.name == "HelpTab")
                     GameObjectManager.setGameObjectState(tmpGO, !shouldPause);
 
+            //get game hints filled with tips loaded from "Hints_LearningScape.txt"
+            gameHints = f_gameHints.First().GetComponent<GameHints>();
+
             if (!shouldPause)
             {
-                //get game hints filled with tips loaded from "Hints_LearningScape.txt"
-                gameHints = f_gameHints.First().GetComponent<GameHints>();
                 //get internal game hints
                 InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
 

@@ -120,13 +120,6 @@ public class StoryDisplaying : FSystem {
         fadingImage.transform.SetAsLastSibling();
         alphaToPlain = true;
         readingTimer = Time.time;
-        GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
-        {
-            verb = "read",
-            objectType = "text",
-            objectName = sdGo.name,
-            activityExtensions = new Dictionary<string, string>() { { "content", sdText.text } }
-        });
     }
 
     // Use this to update member variables when system pause. 
@@ -219,7 +212,6 @@ public class StoryDisplaying : FSystem {
                 if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel") || Input.GetButtonDown("Submit"))
                 {
                     readingTimer = Time.time - (fadeSpeed + 1);
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
                 }
             }
             else
@@ -295,7 +287,6 @@ public class StoryDisplaying : FSystem {
                 if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Cancel") || Input.GetButtonDown("Submit"))
                 {
                     readingTimer = Time.time - (fadeSpeed + 1);
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(fadingImage.gameObject, new { verb = "skipped", objectType = "animation", objectName = fadingImage.gameObject.name });
                 }
             }
             else
@@ -326,13 +317,6 @@ public class StoryDisplaying : FSystem {
                 {
                     alphaToPlain = true;
                     readingTimer = Time.time;
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
-                    {
-                        verb = "read",
-                        objectType = "text",
-                        objectName = sdGo.name,
-                        activityExtensions = new Dictionary<string, string>() { { "content", sdText.text } }
-                    });
                 }
             }
         }
