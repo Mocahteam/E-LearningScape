@@ -43,7 +43,7 @@ namespace DIG.GBLXAPI
 
 		private static LrsRemoteQueue _lrsQueue;
 
-		public static void Init(List<GBLConfig> configs, int queueDepth = 1000)
+		public static void Init(List<GBLConfig> configs, int queueDepth = 2000)
         {
 			if (IsInit) { return; }
 

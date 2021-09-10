@@ -34,7 +34,7 @@ namespace DIG.GBLXAPI.Internal
 
 		private RingBuffer<QueuedStatement> _statementQueue;
 
-        private int batchTreshold = 200;
+        private int batchTreshold = 1500;
 		private int totalqueuedStatement = 0;
 
 		// ------------------------------------------------------------------------
@@ -45,7 +45,7 @@ namespace DIG.GBLXAPI.Internal
 			DontDestroyOnLoad(gameObject);
 		}
 
-		public void Init(List<GBLConfig> configs, int queueDepth = 1000)
+		public void Init(List<GBLConfig> configs, int queueDepth = 2000)
 		{
             _lrsEndpoints = new List<RemoteLRSAsync>();
             foreach (GBLConfig config in configs)
@@ -173,10 +173,12 @@ namespace DIG.GBLXAPI.Internal
 				// Wait answer
 				while (!endPoint.states[idState].complete) { yield return null; }
 			} while (!endPoint.states[idState].success);
-            
 
-            // Client callback with result
-            foreach (QueuedStatement qs in queuedStatements)
+			Debug.Log("Statements with idState " + idState + " sent with success");
+
+
+			// Client callback with result
+			foreach (QueuedStatement qs in queuedStatements)
                 qs.callback?.Invoke(endPoint.endpoint, endPoint.states[idState].success, endPoint.states[idState].response);
 		}
 

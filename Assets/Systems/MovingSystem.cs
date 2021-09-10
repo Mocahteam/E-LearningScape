@@ -71,9 +71,26 @@ public class MovingSystem : FSystem
                 f_CrouchHint.addEntryCallback(disableHUDWarning);
                 f_OutOfFirstRoom.addEntryCallback(disableHUDWarning);
             }
+
+            //MainLoop.instance.StartCoroutine(testLRS());
         }
         instance = this;
     }
+
+    /*private IEnumerator testLRS()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            yield return new WaitForSeconds(0.025f);
+            GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new
+            {
+                verb = "moved",
+                objectType = "avatar",
+                objectName = "player",
+                activityExtensions = new Dictionary<string, string>() { { "position", f_player.First().transform.position.ToString("G4") } }
+            });
+        }
+    }*/
 
     private void disableHUDWarning(GameObject go)
     {
