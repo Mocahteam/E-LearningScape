@@ -46,7 +46,7 @@ public class MovingSystem : FSystem
     private bool previousHUDState;
     private bool walkInWater = false;
 
-    private float walkingTraceTimer = float.MaxValue;
+    private float walkingTraceTimer = 0;
 
     public static MovingSystem instance;
 
@@ -77,17 +77,18 @@ public class MovingSystem : FSystem
         instance = this;
     }
 
-    /*private IEnumerator testLRS()
+/*    private IEnumerator testLRS()
     {
         for (int i = 0; i < 100; i++)
         {
             yield return new WaitForSeconds(0.025f);
+            Vector3 pos = new Vector3(i, i, i);
             GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new
             {
                 verb = "moved",
                 objectType = "avatar",
                 objectName = "player",
-                activityExtensions = new Dictionary<string, string>() { { "position", f_player.First().transform.position.ToString("G4") } }
+                activityExtensions = new Dictionary<string, string>() { { "position", pos.ToString("G4") } }
             });
         }
     }*/
@@ -201,8 +202,6 @@ public class MovingSystem : FSystem
                     walkingTraceTimer = Time.time;
                 }
             }
-            else
-                walkingTraceTimer = Time.time;
         }
 
         if(Input.GetButton("ZoomIn"))

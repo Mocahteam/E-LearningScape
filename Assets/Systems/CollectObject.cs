@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using FYFY;
+using System.Collections.Generic;
 
 public class CollectObject : FSystem {
 
@@ -40,7 +41,8 @@ public class CollectObject : FSystem {
                     {
                         verb = "collected",
                         objectType = "item",
-                        objectName = collect.name
+                        objectName = collect.name,
+                        activityExtensions = new Dictionary<string, string>() { { "type", "object" } }
                     });
                 }
                 // enable UI target

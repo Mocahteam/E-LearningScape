@@ -110,7 +110,8 @@ public class DreamFragmentCollecting : FSystem {
                     {
                         verb = "collected",
                         objectType = "item",
-                        objectName = selectedFragment.name
+                        objectName = selectedFragment.name,
+                        activityExtensions = new Dictionary<string, string>() { { "type", "dreamFragment" } }
                     });
 
                     GameObjectManager.addComponent<PlaySound>(selectedFragment, new { id = 3 }); // id refer to FPSController AudioBank

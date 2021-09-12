@@ -34,7 +34,7 @@ namespace DIG.GBLXAPI.Internal
 
 		private RingBuffer<QueuedStatement> _statementQueue;
 
-        private int batchTreshold = 1500;
+        private int batchTreshold = 1000;
 		private int totalqueuedStatement = 0;
 
 		// ------------------------------------------------------------------------
@@ -159,23 +159,14 @@ namespace DIG.GBLXAPI.Internal
         // ------------------------------------------------------------------------
         private IEnumerator SendStatementCoroutine(RemoteLRSAsync endPoint, List<QueuedStatement> queuedStatements)
 		{
-			int idState = -1;
+			int idState = SendStatementsImmediate(endPoint, queuedStatements);
+			// Wait answer
+			while (!endPoint.states[idState].complete) { yield return null; }
 
-			do
-			{
-				if (idState != -1) // means the previous request fail, we wait fiew seconds to retry
-				{
-					Debug.LogWarning("Statements with idState " + idState + " failed, try to send back in 10 seconds");
-					yield return new WaitForSeconds(10);
-					Debug.Log("Try to send back idState: " + idState);
-				}
-				idState = SendStatementsImmediate(endPoint, queuedStatements);
-				// Wait answer
-				while (!endPoint.states[idState].complete) { yield return null; }
-			} while (!endPoint.states[idState].success);
-
-			Debug.Log("Statements with idState " + idState + " sent with success");
-
+			if (endPoint.states[idState].success)
+				Debug.Log("Statements with idState " + idState + " sent with success");
+			else
+				Debug.LogWarning("Statements with idState " + idState + " failed with error: " + endPoint.states[idState].response);
 
 			// Client callback with result
 			foreach (QueuedStatement qs in queuedStatements)
