@@ -124,6 +124,13 @@ public class MoveInFrontOf : FSystem {
                     objectType = "interactable",
                     objectName = focusedGO.name
                 });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(focusedGO, new
+                {
+                    verb = "moved",
+                    objectType = "avatar",
+                    objectName = "player",
+                    activityExtensions = new Dictionary<string, string>() { { "position", focusedGO.transform.position.ToString("G4") } }
+                });
 
                 // pause unuse systems
                 JumpingSystem.instance.Pause = true;
