@@ -12,4 +12,5 @@ public class DreamFragmentToggle : MonoBehaviour {
 	public Sprite focusedState;
     public Sprite selectedState;
     public Sprite currentState;
+	public int dfContentSibling;
 }

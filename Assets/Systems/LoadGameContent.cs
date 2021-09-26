@@ -665,6 +665,7 @@ public class LoadGameContent : FSystem {
         for (int i = 0; i < nbPuzzleUI; i++)
         {
             RectTransform rt = f_puzzleUI.getAt(i).GetComponent<RectTransform>();
+            rt.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
             rt.GetChild(0).gameObject.GetComponent<Image>().sprite = puzzlePicture;
         }
         Debug.Log("Puzzle loaded");
@@ -824,7 +825,10 @@ public class LoadGameContent : FSystem {
                                     tmpImages = tmpGO.GetComponentsInChildren<Image>();
                                 }
                                 foreach (Image img in tmpImages)
+                                {
                                     img.sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
+                                    img.alphaHitTestMinimumThreshold = 0.5f;
+                                }
                             }
                         }
                     }

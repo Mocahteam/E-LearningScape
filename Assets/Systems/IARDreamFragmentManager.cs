@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class IARDreamFragmentManager : FSystem {
 
@@ -86,27 +87,26 @@ public class IARDreamFragmentManager : FSystem {
 			//(do it even when the object is disabled to prevent a bug happening when it is activated again)
 			tmpDFToggle.dreamFragmentContent.transform.SetAsLastSibling();
 
+			if (!t.isOn && t.gameObject != selectedIARFragment)
+				t.isOn = true;
+
 			//change content's state depending on the value of the toggle
 			GameObjectManager.setGameObjectState(tmpDFToggle.dreamFragmentContent, t.isOn);
 
             //unhighligh in left panel previous controller
             if (selectedDocument != null)
             {
-                foreach (GameObject togglableFragment in f_togglableFragments)
-                {
-                    DreamFragmentToggle dft = togglableFragment.GetComponent<DreamFragmentToggle>();
-                    if (dft.dreamFragmentContent.transform == selectedDocument.transform.parent)
-                    {
-                        togglableFragment.GetComponentInChildren<Image>().sprite = tmpDFToggle.onState;
-                        tmpDFToggle.currentState = tmpDFToggle.onState;
-                    }
-                }
+				GameObject togglableFragment = selectedDocument.GetComponentInParent<LinkedWith>().link;
+				DreamFragmentToggle dft = togglableFragment.GetComponent<DreamFragmentToggle>();
+				togglableFragment.GetComponentInChildren<Image>().sprite = dft.onState;
+				dft.currentState = dft.onState;
             }
             selectedDocument = null;
 			if (t.isOn)
 			{
-				t.GetComponentInChildren<Image>().sprite = tmpDFToggle.onState;
-				tmpDFToggle.currentState = tmpDFToggle.onState;
+				//highligh in left panel new controller
+				t.GetComponentInChildren<Image>().sprite = tmpDFToggle.selectedState;
+				tmpDFToggle.currentState = tmpDFToggle.selectedState;
 				selectedIARFragment = t.gameObject;
                 GameObjectManager.addComponent<PlaySound>(selectedIARFragment, new { id = 13 }); // id refer to FPSController AudioBank
 
@@ -119,19 +119,6 @@ public class IARDreamFragmentManager : FSystem {
 				tmpDFToggle.currentState = tmpDFToggle.offState;
                 GameObjectManager.addComponent<PlaySound>(t.gameObject, new { id = 14 }); // id refer to FPSController AudioBank
                 selectedIARFragment = null;
-            }
-            //highligh in left panel new controller
-            if (selectedDocument != null)
-            {
-                foreach (GameObject togglableFragment in f_togglableFragments)
-                {
-                    DreamFragmentToggle dft = togglableFragment.GetComponent<DreamFragmentToggle>();
-                    if (dft.dreamFragmentContent.transform == selectedDocument.transform.parent)
-                    {
-                        togglableFragment.GetComponentInChildren<Image>().sprite = tmpDFToggle.selectedState;
-                        tmpDFToggle.currentState = tmpDFToggle.selectedState;
-                    }
-                }
             }
 
             SetButtonsState();
@@ -157,7 +144,11 @@ public class IARDreamFragmentManager : FSystem {
 
 		tmpDFToggle.currentState = tmpImage.sprite;
 		tmpImage.sprite = tmpDFToggle.focusedState;
-    }
+
+		//put content in first plane
+		tmpDFToggle.dfContentSibling = tmpDFToggle.dreamFragmentContent.transform.GetSiblingIndex();
+		tmpDFToggle.dreamFragmentContent.transform.SetAsLastSibling();
+	}
 
 	// Changes toggle sprite back to the state before mouse over
 	public void OnMouseExitToggle(int instanceID)
@@ -170,7 +161,12 @@ public class IARDreamFragmentManager : FSystem {
 			tmpImage.sprite = tmpDFToggle.currentState;
 			tmpDFToggle.currentState = null;
 			mouseOverToggle = null;
+			tmpDFToggle.dreamFragmentContent.transform.SetSiblingIndex(tmpDFToggle.dfContentSibling);
 		}
+
+		// put selected content on first plane if it is defined
+		if (selectedIARFragment != null)
+			selectedIARFragment.GetComponent<DreamFragmentToggle>().dreamFragmentContent.transform.SetAsLastSibling();
 	}
 
 	public void OpenLink()
@@ -265,26 +261,23 @@ public class IARDreamFragmentManager : FSystem {
         if (Input.GetButtonDown("Fire1"))
         {
 			//check if a document is clicked and set it as dragged
-			foreach(GameObject go in f_documents)
+			foreach (GameObject go in f_documents)
             {
                 if (go.GetComponent<PointerOver>())
 				{
-                    //unhighligh in left panel previous controller
-                    if (selectedDocument != null)
-                    {
-                        foreach (GameObject togglableFragment in f_togglableFragments)
-                        {
-                            DreamFragmentToggle dft = togglableFragment.GetComponent<DreamFragmentToggle>();
-                            if (dft.dreamFragmentContent.transform == selectedDocument.transform.parent)
-                            {
-                                togglableFragment.GetComponentInChildren<Image>().sprite = tmpDFToggle.onState;
-                                tmpDFToggle.currentState = tmpDFToggle.onState;
-                            }
-                        }
+					GameObject togglableFragment;
+					DreamFragmentToggle dft;
+					//unhighligh in left panel previous controller
+					if (selectedDocument != null)
+					{
+						togglableFragment = selectedDocument.GetComponentInParent<LinkedWith>().link;
+						dft = togglableFragment.GetComponent<DreamFragmentToggle>();
+						togglableFragment.GetComponentInChildren<Image>().sprite = dft.onState;
+						dft.currentState = dft.onState;
                     }
                     draggedDocument = go;
 					selectedDocument = go;
-					selectedIARFragment = go.transform.parent.gameObject;
+					selectedIARFragment = selectedDocument.transform.parent.GetComponent<LinkedWith>().link;
 					tmpRT = go.GetComponent<RectTransform>();
 					float screenOffsetX = (Screen.width - contentContainerRT.sizeDelta.x) / 11.5f;
 					float screenOffsetY = (Screen.height - contentContainerRT.sizeDelta.y) / 14;
@@ -295,16 +288,11 @@ public class IARDreamFragmentManager : FSystem {
 					go.transform.SetAsLastSibling();
 					go.transform.parent.SetAsLastSibling();
 					SetButtonsState();
-                    //highligh in left panel new controller
-                    foreach (GameObject togglableFragment in f_togglableFragments)
-                    {
-                        DreamFragmentToggle dft = togglableFragment.GetComponent<DreamFragmentToggle>();
-                        if (dft.dreamFragmentContent.transform == selectedDocument.transform.parent)
-                        {
-                            togglableFragment.GetComponentInChildren<Image>().sprite = tmpDFToggle.selectedState;
-                            tmpDFToggle.currentState = tmpDFToggle.selectedState;
-                        }
-                    }
+					//highligh in left panel new controller
+					togglableFragment = selectedDocument.GetComponentInParent<LinkedWith>().link;
+					dft = togglableFragment.GetComponent<DreamFragmentToggle>();
+					togglableFragment.GetComponentInChildren<Image>().sprite = dft.selectedState;
+					dft.currentState = dft.selectedState;
 					break;
                 }
             }

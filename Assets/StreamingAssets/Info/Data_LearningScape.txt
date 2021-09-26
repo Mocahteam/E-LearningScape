@@ -240,33 +240,33 @@
         "9"
     ],
 	
-    "crouchQuestion": "L’ordinateur voit des nombres, l’humain voit des lettres, l’ASCII est la solution...",
-    "crouchPlaceHolder": "1 mot attendu...",
+    "crouchQuestion": "Des méthodologies de gestion de projet...",
+    "crouchPlaceHolder": "3 mots attendus...",
     "crouchAnswer": [
-        "CODAGE"
+        "LES METHODES AGILE"
     ],
-    "crouchAnswerFeedback": "CODAGE",
-    "crouchAnswerFeedbackDesc": "",
+    "crouchAnswerFeedback": "Les méthodes AGILE",
+    "crouchAnswerFeedbackDesc": "Scrumm et Safe en sont des exemples",
     "crouchWords": [
-        "1: 67",
-        "2: 79",
-        "3: 68",
-        "4: 65",
-        "5: 71",
-        "6: 69"
+        "Les",
+        "mé-",
+        "-tho-",
+        "-des",
+        "A-",
+        "-GILE"
     ],
 	
-    "gearsQuestion": "Quel processus permet d’obtenir des résultats à partir de données ?",
+    "gearsQuestion": "Quel processus permet de générer un exécutable ?",
     "iarHelpGears": "Déplacez le bon engrenage au centre de l'écran",
-    "gearTextUp": "Donnée",
-    "gearTextDown": "Résultat",
+    "gearTextUp": "Code source",
+    "gearTextDown": "Code binaire",
     "gearMovableTexts": [
-        "Traitement",
-        "Traduction",
-        "Exécution",
-        "Affichage"
+        "Compi-lation",
+        "Tra-duction",
+        "Exé-cution",
+        "Interpré-tation"
     ],
-    "gearAnswer": "Traitement",
+    "gearAnswer": "Compi-lation",
 	
 	"mastermindQuestion": "Vous avez oublié votre code ? Le hasard vous aidera sous doute !",
 	"masterMindPlaceholder": "3 chiffres attendus...",
@@ -345,8 +345,8 @@
     "puzzleAnswerFeedbackDesc": "",
 	"puzzlePicturePath": "Puzzle_Complet.png",
 	
-    "lampAnswer": "8##huit##boucle##8 boucles##huit boucles",
-    "lampAnswerFeedback": "8 boucles",
+    "lampAnswer": "Codage",
+    "lampAnswerFeedback": "Codage",
     "lampAnswerFeedbackDesc": "",
     "lampPicturesPath": [
         "lamp01.png",
@@ -361,22 +361,22 @@
     "enigma16AnswerFeedback": "Variable",
     "enigma16AnswerFeedbackDesc": "",
 	
-    "whiteBoardAnswer": "Condition",
-    "whiteBoardAnswerFeedback": "Condition",
+    "whiteBoardAnswer": "Modéliser",
+    "whiteBoardAnswerFeedback": "Modéliser",
     "whiteBoardAnswerFeedbackDesc": "",
     "whiteBoardWords": [
-        "La boîte à énigme...",
-        "...est-elle un outils ?",
-        "Algorithmes",
-        "Variable aléatoire",
-        "Pro##c##esseur",
-        "C##ond##itionnel",
-        "Impératif",
-        "Comp##i##lateur",
-        "Synchroniser",
-        "Bouclement",
-        "Internet",
-        "Fonc##tion##alité"
+        "Simplifier la réalité...",
+        "...aide à trouver la solution",
+        "##M##esurer",
+        "Enc##od##er",
+        "R##é##solution",
+        "Problèmes",
+        "Comp##l##ex##i##té",
+        "Abstraction",
+        "Réduire",
+        "Décompo##s##er",
+        "Simuler",
+        "Représent##er##"
     ],
 	
 	"inputsSetTitle1": "Touche 1",
