@@ -16,6 +16,7 @@ public class IARNewHintAvailable : FSystem {
         if (Application.isPlaying)
         {
             f_newHint.addEntryCallback(onNewHintAvailable);
+            f_newHint.addExitCallback(onExitHintPanel);
             f_tabContent.addEntryCallback(onEnterHintPanel);
             f_tabContent.addExitCallback(onExitHintPanel);
         }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-1110C-C6F3E-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-12F54-59CE3-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma16</text>
   </name>
- <page id="g-1110C-C6F48-1">
-  <place id="p-1110C-C6F4C-2">
+ <page id="g-12F54-59CFA-1">
+  <place id="p-12F54-59D00-2">
   <name>
    <text>AnswersInput_end_126</text>
     <graphics>
@@ -16,7 +16,7 @@
     <position x="535" y="100"/>
    </graphics>
   </place>
-  <transition id="t-1110C-C6F59-3">
+  <transition id="t-12F54-59D19-3">
   <name>
    <text>AnswersInput_perform_126</text>
     <graphics>
@@ -27,7 +27,7 @@
     <position x="475" y="90"/>
    </graphics>
   </transition>
-  <place id="p-1110C-C6F5E-4">
+  <place id="p-12F54-59D24-4">
   <name>
    <text>AnswersInput_start_126</text>
     <graphics>
@@ -41,7 +41,7 @@
     <position x="395" y="100"/>
    </graphics>
   </place>
-  <place id="p-1110C-C6F63-5">
+  <place id="p-12F54-59D2F-5">
   <name>
    <text>Fragment_souvenir_10_ActivationCount_123</text>
     <graphics>
@@ -52,7 +52,7 @@
     <position x="235" y="60"/>
    </graphics>
   </place>
-  <transition id="t-1110C-C6F67-6">
+  <transition id="t-12F54-59D3D-6">
   <name>
    <text>Fragment_souvenir_10_activate_123</text>
     <graphics>
@@ -63,7 +63,7 @@
     <position x="115" y="50"/>
    </graphics>
   </transition>
-  <place id="p-1110C-C6F6C-7">
+  <place id="p-12F54-59D47-7">
   <name>
    <text>Fragment_souvenir_13_ActivationCount_124</text>
     <graphics>
@@ -71,10 +71,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="225" y="130"/>
+    <position x="215" y="130"/>
    </graphics>
   </place>
-  <transition id="t-1110C-C6F70-8">
+  <transition id="t-12F54-59D53-8">
   <name>
    <text>Fragment_souvenir_13_activate_124</text>
     <graphics>
@@ -85,19 +85,37 @@
     <position x="115" y="120"/>
    </graphics>
   </transition>
-  <arc id="e-1110C-C6F78-9" source="p-1110C-C6F6C-7" target="t-1110C-C6F59-3">
+  <arc id="e-12F54-59D65-9" source="p-12F54-59D47-7" target="t-12F54-59D53-8">
+   <type value="inhibitor"/>
+   <graphics>
+    <position x="184" y="122" />
+    <position x="143" y="117" />
+   </graphics>  </arc>
+  <arc id="e-12F54-59D70-10" source="p-12F54-59D2F-5" target="t-12F54-59D3D-6">
+   <type value="inhibitor"/>
+   <graphics>
+    <position x="204" y="49" />
+    <position x="151" y="45" />
+   </graphics>  </arc>
+  <arc id="e-12F54-59D79-11" source="p-12F54-59D24-4" target="t-12F54-59D19-3">
+  </arc>
+  <arc id="e-12F54-59D7C-12" source="t-12F54-59D3D-6" target="p-12F54-59D2F-5">
+   <graphics>
+    <position x="146" y="60" />
+    <position x="202" y="63" />
+   </graphics>  </arc>
+  <arc id="e-12F54-59D82-13" source="t-12F54-59D53-8" target="p-12F54-59D47-7">
+   <graphics>
+    <position x="148" y="131" />
+    <position x="184" y="135" />
+   </graphics>  </arc>
+  <arc id="e-12F54-59D87-14" source="t-12F54-59D19-3" target="p-12F54-59D00-2">
+  </arc>
+  <arc id="e-12F54-59D8A-15" source="p-12F54-59D2F-5" target="t-12F54-59D19-3">
    <type value="test"/>
   </arc>
-  <arc id="e-1110C-C6F7B-10" source="p-1110C-C6F63-5" target="t-1110C-C6F59-3">
+  <arc id="e-12F54-59D8D-16" source="p-12F54-59D47-7" target="t-12F54-59D19-3">
    <type value="test"/>
-  </arc>
-  <arc id="e-1110C-C6F7C-11" source="t-1110C-C6F59-3" target="p-1110C-C6F4C-2">
-  </arc>
-  <arc id="e-1110C-C6F7D-12" source="t-1110C-C6F70-8" target="p-1110C-C6F6C-7">
-  </arc>
-  <arc id="e-1110C-C6F7E-13" source="t-1110C-C6F67-6" target="p-1110C-C6F63-5">
-  </arc>
-  <arc id="e-1110C-C6F7F-14" source="p-1110C-C6F5E-4" target="t-1110C-C6F59-3">
   </arc>
  </page>
  </net>

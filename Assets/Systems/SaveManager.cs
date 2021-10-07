@@ -457,7 +457,7 @@ public class SaveManager : FSystem {
         foreach (GameObject hint in f_enabledHintsIAR)
         {
             HintContent hintContent = hint.GetComponent<HintContent>();
-            SaveContent.HintData hintSave = new SaveContent.HintData(hintContent.monitor.id, hintContent.actionName, hintContent.text, hintContent.link, hint.GetComponent<NewHint>() == null);
+            SaveContent.HintData hintSave = new SaveContent.HintData(hintContent.monitor.id, hintContent.actionName, hintContent.text, hintContent.link, hintContent.level, hint.GetComponent<NewHint>() == null);
             saveContent.accessibleHints.Add(hintSave);
         }
 
@@ -477,7 +477,7 @@ public class SaveManager : FSystem {
             File.WriteAllText(tmpPath, JsonConvert.SerializeObject(saveContent));
             return tmpPath;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             Debug.LogError("Tried to save with an invalid SaveContent. Nothing was done.");
         }
@@ -727,7 +727,7 @@ public class SaveManager : FSystem {
                     foreach (ComponentMonitoring monitoringComponent in tmpMonitorsArray)
                         if (monitoringComponent.id == hint.monitorID)
                         {
-                            Button b = HelpSystem.instance.CreateHintButton(monitoringComponent, hint.name, hint.text, hint.link, false);
+                            Button b = HelpSystem.instance.CreateHintButton(monitoringComponent, hint.name, hint.text, hint.link, hint.level, false);
                             monitorFound = true;
                             if (hint.seen)
                                 IARHintManager.instance.SetNormalColor(b);

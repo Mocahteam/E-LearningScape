@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-7D44-780D6-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-A27C-615E8-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>WireEnigma</text>
   </name>
- <page id="g-7D44-780E2-1">
-  <place id="p-7D44-780E5-2">
+ <page id="g-A27C-615FF-1">
+  <place id="p-A27C-61607-2">
   <name>
    <text>Fragment_souvenir_17_ActivationCount_30</text>
     <graphics>
@@ -16,7 +16,7 @@
     <position x="470" y="140"/>
    </graphics>
   </place>
-  <transition id="t-7D44-780F4-3">
+  <transition id="t-A27C-61627-3">
   <name>
    <text>Fragment_souvenir_17_activate_30</text>
     <graphics>
@@ -24,10 +24,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="345" y="130"/>
+    <position x="340" y="130"/>
    </graphics>
   </transition>
-  <place id="p-7D44-780FA-4">
+  <place id="p-A27C-61634-4">
   <name>
    <text>Fragment_souvenir_9_ActivationCount_29</text>
     <graphics>
@@ -35,10 +35,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="465" y="60"/>
+    <position x="460" y="60"/>
    </graphics>
   </place>
-  <transition id="t-7D44-780FF-5">
+  <transition id="t-A27C-61642-5">
   <name>
    <text>Fragment_souvenir_9_activate_29</text>
     <graphics>
@@ -46,10 +46,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="345" y="50"/>
+    <position x="340" y="50"/>
    </graphics>
   </transition>
-  <place id="p-7D44-78103-6">
+  <place id="p-A27C-6164D-6">
   <name>
    <text>Plank_end_34</text>
     <graphics>
@@ -57,10 +57,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1010" y="385"/>
+    <position x="1010" y="380"/>
    </graphics>
   </place>
-  <place id="p-7D44-78105-7">
+  <place id="p-A27C-61653-7">
   <name>
    <text>Plank_off_28</text>
     <graphics>
@@ -71,10 +71,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="310" y="245"/>
+    <position x="310" y="240"/>
    </graphics>
   </place>
-  <place id="p-7D44-78109-8">
+  <place id="p-A27C-6165D-8">
   <name>
    <text>Plank_on_28</text>
     <graphics>
@@ -85,7 +85,7 @@
     <position x="480" y="250"/>
    </graphics>
   </place>
-  <transition id="t-7D44-7810B-9">
+  <transition id="t-A27C-61663-9">
   <name>
    <text>Plank_perform_34</text>
     <graphics>
@@ -93,10 +93,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="930" y="385"/>
+    <position x="930" y="380"/>
    </graphics>
   </transition>
-  <place id="p-7D44-7810F-10">
+  <place id="p-A27C-6166B-10">
   <name>
    <text>Plank_start_34</text>
     <graphics>
@@ -107,10 +107,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="850" y="385"/>
+    <position x="850" y="380"/>
    </graphics>
   </place>
-  <transition id="t-7D44-78111-11">
+  <transition id="t-A27C-61671-11">
   <name>
    <text>Plank_turnOff_28</text>
     <graphics>
@@ -118,10 +118,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="390" y="205"/>
+    <position x="390" y="200"/>
    </graphics>
   </transition>
-  <transition id="t-7D44-78115-12">
+  <transition id="t-A27C-6167A-12">
   <name>
    <text>Plank_turnOn_28</text>
     <graphics>
@@ -129,10 +129,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="390" y="305"/>
+    <position x="390" y="300"/>
    </graphics>
   </transition>
-  <place id="p-7D44-78118-13">
+  <place id="p-A27C-61680-13">
   <name>
    <text>R1-Q2_Answered_35</text>
     <graphics>
@@ -143,7 +143,7 @@
     <position x="1280" y="460"/>
    </graphics>
   </place>
-  <place id="p-7D44-7811B-14">
+  <place id="p-A27C-6168A-14">
   <name>
    <text>R1-Q2_Answering_35</text>
     <graphics>
@@ -157,7 +157,7 @@
     <position x="1020" y="460"/>
    </graphics>
   </place>
-  <transition id="t-7D44-7811F-15">
+  <transition id="t-A27C-61693-15">
   <name>
    <text>R1-Q2_Correct_35</text>
     <graphics>
@@ -168,7 +168,7 @@
     <position x="1160" y="440"/>
    </graphics>
   </transition>
-  <place id="p-7D44-78121-16">
+  <place id="p-A27C-6169A-16">
   <name>
    <text>SolutionWord1_off_31</text>
     <graphics>
@@ -179,10 +179,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="690" y="165"/>
+    <position x="690" y="160"/>
    </graphics>
   </place>
-  <place id="p-7D44-78125-17">
+  <place id="p-A27C-616A4-17">
   <name>
    <text>SolutionWord1_on_31</text>
     <graphics>
@@ -190,10 +190,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="870" y="165"/>
+    <position x="870" y="160"/>
    </graphics>
   </place>
-  <transition id="t-7D44-78129-18">
+  <transition id="t-A27C-616AA-18">
   <name>
    <text>SolutionWord1_turnOn_31</text>
     <graphics>
@@ -201,10 +201,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="790" y="215"/>
+    <position x="790" y="220"/>
    </graphics>
   </transition>
-  <place id="p-7D44-7818B-19">
+  <place id="p-A27C-617A2-19">
   <name>
    <text>SolutionWord2_off_32</text>
     <graphics>
@@ -215,10 +215,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="950" y="165"/>
+    <position x="950" y="160"/>
    </graphics>
   </place>
-  <place id="p-7D44-7818F-20">
+  <place id="p-A27C-617AF-20">
   <name>
    <text>SolutionWord2_on_32</text>
     <graphics>
@@ -226,10 +226,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1110" y="155"/>
+    <position x="1110" y="160"/>
    </graphics>
   </place>
-  <transition id="t-7D44-78193-21">
+  <transition id="t-A27C-617B8-21">
   <name>
    <text>SolutionWord2_turnOn_32</text>
     <graphics>
@@ -237,10 +237,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1050" y="205"/>
+    <position x="1050" y="200"/>
    </graphics>
   </transition>
-  <place id="p-7D44-78197-22">
+  <place id="p-A27C-617C1-22">
   <name>
    <text>SolutionWord3_off_33</text>
     <graphics>
@@ -251,10 +251,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="1230" y="145"/>
+    <position x="1230" y="140"/>
    </graphics>
   </place>
-  <place id="p-7D44-7819A-23">
+  <place id="p-A27C-617CB-23">
   <name>
    <text>SolutionWord3_on_33</text>
     <graphics>
@@ -262,10 +262,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1410" y="145"/>
+    <position x="1410" y="140"/>
    </graphics>
   </place>
-  <transition id="t-7D44-7819E-24">
+  <transition id="t-A27C-617D4-24">
   <name>
    <text>SolutionWord3_turnOn_33</text>
     <graphics>
@@ -273,10 +273,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="1330" y="185"/>
+    <position x="1330" y="180"/>
    </graphics>
   </transition>
-  <place id="p-7D44-781A2-25">
+  <place id="p-A27C-617DC-25">
   <name>
    <text>Wire_end_26</text>
     <graphics>
@@ -284,10 +284,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="210" y="405"/>
+    <position x="210" y="400"/>
    </graphics>
   </place>
-  <place id="p-7D44-781A4-26">
+  <place id="p-A27C-617E4-26">
   <name>
    <text>Wire_off_27</text>
     <graphics>
@@ -298,10 +298,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="320" y="405"/>
+    <position x="320" y="400"/>
    </graphics>
   </place>
-  <place id="p-7D44-781A7-27">
+  <place id="p-A27C-617EA-27">
   <name>
    <text>Wire_on_27</text>
     <graphics>
@@ -309,10 +309,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="470" y="385"/>
+    <position x="470" y="380"/>
    </graphics>
   </place>
-  <transition id="t-7D44-781A9-28">
+  <transition id="t-A27C-617F2-28">
   <name>
    <text>Wire_perform_26</text>
     <graphics>
@@ -320,10 +320,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="130" y="415"/>
+    <position x="130" y="420"/>
    </graphics>
   </transition>
-  <place id="p-7D44-781AD-29">
+  <place id="p-A27C-617F8-29">
   <name>
    <text>Wire_start_26</text>
     <graphics>
@@ -334,10 +334,10 @@
     <text>1</text>
    </initialMarking>
    <graphics>
-    <position x="50" y="405"/>
+    <position x="50" y="400"/>
    </graphics>
   </place>
-  <transition id="t-7D44-781AF-30">
+  <transition id="t-A27C-61801-30">
   <name>
    <text>Wire_turnOff_27</text>
     <graphics>
@@ -345,10 +345,10 @@
     </graphics>
   </name>
    <graphics>
-    <position x="390" y="365"/>
+    <position x="390" y="360"/>
    </graphics>
   </transition>
-  <transition id="t-7D44-781B2-31">
+  <transition id="t-A27C-6180A-31">
   <name>
    <text>Wire_turnOn_27</text>
     <graphics>
@@ -356,105 +356,123 @@
     </graphics>
   </name>
    <graphics>
-    <position x="390" y="455"/>
+    <position x="390" y="460"/>
    </graphics>
   </transition>
-  <arc id="e-7D44-781B9-32" source="p-7D44-78103-6" target="t-7D44-7811F-15">
+  <arc id="e-A27C-61818-32" source="p-A27C-61607-2" target="t-A27C-61627-3">
+   <type value="inhibitor"/>
+   <graphics>
+    <position x="435" y="132" />
+    <position x="374" y="127" />
+   </graphics>  </arc>
+  <arc id="e-A27C-61823-33" source="p-A27C-617A2-19" target="t-A27C-617B8-21">
+  </arc>
+  <arc id="e-A27C-61827-34" source="t-A27C-617B8-21" target="p-A27C-617AF-20">
+  </arc>
+  <arc id="e-A27C-6182B-35" source="p-A27C-617EA-27" target="t-A27C-616AA-18">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-781BE-33" source="t-7D44-780F4-3" target="p-7D44-780E5-2">
-  </arc>
-  <arc id="e-7D44-781BF-34" source="t-7D44-781AF-30" target="p-7D44-781A4-26">
-  </arc>
-  <arc id="e-7D44-781C1-35" source="p-7D44-7811B-14" target="t-7D44-7811F-15">
-  </arc>
-  <arc id="e-7D44-781C2-36" source="t-7D44-7811F-15" target="p-7D44-78118-13">
-  </arc>
-  <arc id="e-7D44-781C3-37" source="t-7D44-781B2-31" target="p-7D44-781A7-27">
-  </arc>
-  <arc id="e-7D44-781C4-38" source="t-7D44-7819E-24" target="p-7D44-7819A-23">
-  </arc>
-  <arc id="e-7D44-781C5-39" source="p-7D44-78197-22" target="t-7D44-7819E-24">
-  </arc>
-  <arc id="e-7D44-781C6-40" source="p-7D44-781A4-26" target="t-7D44-781B2-31">
-  </arc>
-  <arc id="e-7D44-781FF-41" source="p-7D44-78109-8" target="t-7D44-7819E-24">
+  <arc id="e-A27C-61831-36" source="p-A27C-6165D-8" target="t-A27C-616AA-18">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-78203-42" source="p-7D44-781A7-27" target="t-7D44-7819E-24">
+  <arc id="e-A27C-61835-37" source="p-A27C-617DC-25" target="t-A27C-61801-30">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-78204-43" source="p-7D44-780E5-2" target="t-7D44-7819E-24">
+  <arc id="e-A27C-61838-38" source="p-A27C-6169A-16" target="t-A27C-616AA-18">
+  </arc>
+  <arc id="e-A27C-618A1-39" source="t-A27C-616AA-18" target="p-A27C-616A4-17">
+  </arc>
+  <arc id="e-A27C-618A4-40" source="p-A27C-617F8-29" target="t-A27C-617F2-28">
+  </arc>
+  <arc id="e-A27C-618A8-41" source="t-A27C-617F2-28" target="p-A27C-617DC-25">
+  </arc>
+  <arc id="e-A27C-618AB-42" source="p-A27C-617CB-23" target="t-A27C-61663-9">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-78206-44" source="t-7D44-780FF-5" target="p-7D44-780FA-4">
-  </arc>
-  <arc id="e-7D44-78207-45" source="t-7D44-78111-11" target="p-7D44-78105-7">
-  </arc>
-  <arc id="e-7D44-78208-46" source="t-7D44-78115-12" target="p-7D44-78109-8">
-  </arc>
-  <arc id="e-7D44-7820A-47" source="p-7D44-78105-7" target="t-7D44-78115-12">
-  </arc>
-  <arc id="e-7D44-7820B-48" source="p-7D44-78109-8" target="t-7D44-78111-11">
-  </arc>
-  <arc id="e-7D44-7820C-49" source="t-7D44-7810B-9" target="p-7D44-78103-6">
-  </arc>
-  <arc id="e-7D44-7820D-50" source="p-7D44-781A7-27" target="t-7D44-781AF-30">
-  </arc>
-  <arc id="e-7D44-7820E-51" source="p-7D44-7810F-10" target="t-7D44-7810B-9">
-  </arc>
-  <arc id="e-7D44-78212-52" source="p-7D44-78125-17" target="t-7D44-7810B-9">
+  <arc id="e-A27C-618AE-43" source="p-A27C-61634-4" target="t-A27C-61642-5">
+   <type value="inhibitor"/>
+   <graphics>
+    <position x="428" y="52" />
+    <position x="375" y="47" />
+   </graphics>  </arc>
+  <arc id="e-A27C-618B7-44" source="p-A27C-61607-2" target="t-A27C-617B8-21">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-78213-53" source="p-7D44-7818F-20" target="t-7D44-7810B-9">
+  <arc id="e-A27C-618BB-45" source="p-A27C-617AF-20" target="t-A27C-61663-9">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-78214-54" source="p-7D44-780E5-2" target="t-7D44-78193-21">
+  <arc id="e-A27C-618BF-46" source="p-A27C-616A4-17" target="t-A27C-61663-9">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-78215-55" source="p-7D44-7819A-23" target="t-7D44-7810B-9">
+  <arc id="e-A27C-618C2-47" source="p-A27C-6166B-10" target="t-A27C-61663-9">
+  </arc>
+  <arc id="e-A27C-618C5-48" source="p-A27C-617EA-27" target="t-A27C-61801-30">
+  </arc>
+  <arc id="e-A27C-618C8-49" source="t-A27C-61663-9" target="p-A27C-6164D-6">
+  </arc>
+  <arc id="e-A27C-618CC-50" source="p-A27C-6165D-8" target="t-A27C-61671-11">
+  </arc>
+  <arc id="e-A27C-618CF-51" source="p-A27C-61653-7" target="t-A27C-6167A-12">
+  </arc>
+  <arc id="e-A27C-618D2-52" source="t-A27C-6167A-12" target="p-A27C-6165D-8">
+  </arc>
+  <arc id="e-A27C-618D8-53" source="t-A27C-61671-11" target="p-A27C-61653-7">
+  </arc>
+  <arc id="e-A27C-618DB-54" source="p-A27C-617EA-27" target="t-A27C-617B8-21">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-78216-56" source="t-7D44-781A9-28" target="p-7D44-781A2-25">
-  </arc>
-  <arc id="e-7D44-78217-57" source="p-7D44-781AD-29" target="t-7D44-781A9-28">
-  </arc>
-  <arc id="e-7D44-78218-58" source="t-7D44-78129-18" target="p-7D44-78125-17">
-  </arc>
-  <arc id="e-7D44-78219-59" source="p-7D44-78121-16" target="t-7D44-78129-18">
-  </arc>
-  <arc id="e-7D44-7821B-60" source="p-7D44-781A2-25" target="t-7D44-781AF-30">
+  <arc id="e-A27C-618DE-55" source="t-A27C-61642-5" target="p-A27C-61634-4">
+   <graphics>
+    <position x="370" y="58" />
+    <position x="428" y="63" />
+   </graphics>  </arc>
+  <arc id="e-A27C-618E4-56" source="p-A27C-61607-2" target="t-A27C-617D4-24">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-7821D-61" source="p-7D44-78109-8" target="t-7D44-78129-18">
+  <arc id="e-A27C-618E9-57" source="p-A27C-617EA-27" target="t-A27C-617D4-24">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-7821F-62" source="p-7D44-781A7-27" target="t-7D44-78129-18">
+  <arc id="e-A27C-618ED-58" source="p-A27C-6165D-8" target="t-A27C-617D4-24">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-78220-63" source="t-7D44-78193-21" target="p-7D44-7818F-20">
+  <arc id="e-A27C-618F1-59" source="p-A27C-617E4-26" target="t-A27C-6180A-31">
   </arc>
-  <arc id="e-7D44-78221-64" source="p-7D44-7818B-19" target="t-7D44-78193-21">
+  <arc id="e-A27C-618F5-60" source="p-A27C-617C1-22" target="t-A27C-617D4-24">
   </arc>
-  <arc id="e-7D44-78222-65" source="p-7D44-780E5-2" target="t-7D44-78129-18">
+  <arc id="e-A27C-618F8-61" source="t-A27C-617D4-24" target="p-A27C-617CB-23">
+  </arc>
+  <arc id="e-A27C-618FE-62" source="t-A27C-6180A-31" target="p-A27C-617EA-27">
+  </arc>
+  <arc id="e-A27C-61901-63" source="t-A27C-61693-15" target="p-A27C-61680-13">
+  </arc>
+  <arc id="e-A27C-61904-64" source="p-A27C-6168A-14" target="t-A27C-61693-15">
+  </arc>
+  <arc id="e-A27C-61907-65" source="p-A27C-6165D-8" target="t-A27C-617B8-21">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-78223-66" source="p-7D44-781A2-25" target="t-7D44-781B2-31">
+  <arc id="e-A27C-6190B-66" source="t-A27C-61801-30" target="p-A27C-617E4-26">
+  </arc>
+  <arc id="e-A27C-6190E-67" source="t-A27C-61627-3" target="p-A27C-61607-2">
+   <graphics>
+    <position x="370" y="140" />
+    <position x="436" y="145" />
+   </graphics>  </arc>
+  <arc id="e-A27C-61913-68" source="p-A27C-6164D-6" target="t-A27C-61693-15">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-78224-67" source="p-7D44-780FA-4" target="t-7D44-7819E-24">
+  <arc id="e-A27C-6192E-69" source="p-A27C-61634-4" target="t-A27C-616AA-18">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-78225-68" source="p-7D44-780FA-4" target="t-7D44-78193-21">
+  <arc id="e-A27C-6193F-70" source="p-A27C-61634-4" target="t-A27C-617B8-21">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-78227-69" source="p-7D44-780FA-4" target="t-7D44-78129-18">
+  <arc id="e-A27C-61942-71" source="p-A27C-61634-4" target="t-A27C-617D4-24">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-7822A-70" source="p-7D44-78109-8" target="t-7D44-78193-21">
+  <arc id="e-A27C-61944-72" source="p-A27C-617DC-25" target="t-A27C-6180A-31">
    <type value="test"/>
   </arc>
-  <arc id="e-7D44-7822B-71" source="p-7D44-781A7-27" target="t-7D44-78193-21">
+  <arc id="e-A27C-61947-73" source="p-A27C-61607-2" target="t-A27C-616AA-18">
    <type value="test"/>
   </arc>
  </page>

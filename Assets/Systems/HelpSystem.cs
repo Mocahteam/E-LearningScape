@@ -718,8 +718,8 @@ public class HelpSystem : FSystem {
             int i = 0;
             while (i < levelsPriority.Count)
             {
-                //check if at least one formulation for the current level is not already displayed inside IAR
-                if (gameHints.dictionary[cm.id + "." + actionName].ContainsKey(levelsPriority[i].ToString()) && containsUniqueHint(gameHints.dictionary[cm.id + "." + actionName][levelsPriority[i].ToString()]))
+                //check if at least one formulation exists for the current level
+                if (gameHints.dictionary[cm.id + "." + actionName].ContainsKey(levelsPriority[i].ToString()))
                 {
                     hintName = cm.id + "." + actionName;
                     break;
@@ -735,6 +735,11 @@ public class HelpSystem : FSystem {
                 int selectedHint = (int)UnityEngine.Random.Range(0, availableHints.Count - 0.01f);
                 KeyValuePair<string, string> tmpPair = availableHints[selectedHint];
                 string hintText = tmpPair.Value;
+                // remove hints with level lower than selected one
+                if (levelFound == "3")
+                    gameHints.dictionary[hintName].Remove("2");
+                if (levelFound == "3" || levelFound == "2")
+                    gameHints.dictionary[hintName].Remove("1");
                 // remove selected formulation
                 availableHints.RemoveAt(selectedHint);
                 if (availableHints.Count == 0)
@@ -743,7 +748,7 @@ public class HelpSystem : FSystem {
                     if (!gameHints.dictionary[hintName].ContainsKey("1") && !gameHints.dictionary[hintName].ContainsKey("2") && !gameHints.dictionary[hintName].ContainsKey("3"))
                         gameHints.dictionary.Remove(hintName);
                 }
-                CreateHintButton(cm, actionName, hintText, tmpPair.Key);
+                CreateHintButton(cm, actionName, hintText, tmpPair.Key, levelFound);
                 return true;
             }
             else
@@ -768,7 +773,7 @@ public class HelpSystem : FSystem {
     /// <param name="actionName"></param>
     /// <param name="hintText"></param>
     /// <param name="hintLink"></param>
-    public Button CreateHintButton(ComponentMonitoring hintMonitor, string actionName, string hintText, string hintLink = "", bool enableTrace = true)
+    public Button CreateHintButton(ComponentMonitoring hintMonitor, string actionName, string hintText, string hintLink = "", string hintLevel = "", bool enableTrace = true)
     {
         //show a button to see hint content in hint tab in IAR
         if (hintButtonsPool.Count == 0)
@@ -792,6 +797,7 @@ public class HelpSystem : FSystem {
         tmpHC.monitor = hintMonitor;
         tmpHC.actionName = actionName;
         tmpHC.text = hintText;
+        tmpHC.level = hintLevel;
         tmpHC.link = hintLink;
 
         if (enableTrace)
@@ -816,28 +822,6 @@ public class HelpSystem : FSystem {
             systemHintTimer = Time.time;
 
         return hintButton;
-    }
-
-    /// <summary>
-    /// Check if at least one of the hints contains at least one formulation not already included into hints displayed to the player
-    /// </summary>
-    /// <param name="hintsCandidate"></param>
-    /// <returns></returns>
-    private bool containsUniqueHint(List<KeyValuePair<string, string>> hintsCandidate)
-    {
-        foreach (KeyValuePair<string, string> pair in hintsCandidate)
-        {
-            bool isUnique = true;
-            foreach (GameObject go in f_enabledHintsIAR)
-                if (pair.Value.Contains(go.GetComponent<HintContent>().text))
-                {
-                    isUnique = false;
-                    break;
-                }
-            if (isUnique)
-                return true;
-        }
-        return false;
     }
 
     /// <summary>

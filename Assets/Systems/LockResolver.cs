@@ -35,7 +35,6 @@ public class LockResolver : FSystem {
     private bool lockRotationDown = false;
     private Color lockWheelColor;
     private float wheelRotationCount = 0;
-    private string rotationDirection = "";
     private float wheelSpeedRotation = 200; // Default value
 
     private bool room1Unlocked = false;
@@ -146,22 +145,18 @@ public class LockResolver : FSystem {
             {
                 if (lockRotationUp)
                 {
-                    rotationDirection = "up";
                     selectedWheel.transform.Rotate(36 - wheelRotationCount, 0, 0);
                     lockRotationUp = false;
                 }
                 else
                 {
-                    rotationDirection = "down";
                     selectedWheel.transform.Rotate(-(36 - wheelRotationCount), 0, 0);
                     lockRotationDown = false;
                 }
                 wheelRotationCount = 0;
-                int solved = -1;
                 // Check if the solution is found
                 if (selectedLocker.Wheel1.GetComponent<WheelFrontFace>().faceNumber == selectedLocker.wheel1Solution && selectedLocker.Wheel2.GetComponent<WheelFrontFace>().faceNumber == selectedLocker.wheel2Solution && selectedLocker.Wheel3.GetComponent<WheelFrontFace>().faceNumber == selectedLocker.wheel3Solution)
                 {
-                    solved = 1;
                     tmpTargetPosition = f_player.First().transform.position + Vector3.back * 3;
                     // depending of locker => unlock the right room
                     if (selectedLocker.tag == "LockIntro")

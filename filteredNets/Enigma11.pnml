@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-2788-B3DB5-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-12490-20A21-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma11</text>
   </name>
- <page id="g-2788-B3DC3-1">
-  <place id="p-2788-B3DC9-2">
+ <page id="g-12490-20A38-1">
+  <place id="p-12490-20A3E-2">
   <name>
    <text>Fragment_souvenir_2_ActivationCount_84</text>
     <graphics>
@@ -16,7 +16,7 @@
     <position x="230" y="130"/>
    </graphics>
   </place>
-  <transition id="t-2788-B3DDE-3">
+  <transition id="t-12490-20A59-3">
   <name>
    <text>Fragment_souvenir_2_activate_84</text>
     <graphics>
@@ -27,7 +27,7 @@
     <position x="110" y="120"/>
    </graphics>
   </transition>
-  <place id="p-2788-B3DE5-4">
+  <place id="p-12490-20A6C-4">
   <name>
    <text>R2-Q5_Answered_86</text>
     <graphics>
@@ -38,7 +38,7 @@
     <position x="590" y="60"/>
    </graphics>
   </place>
-  <place id="p-2788-B3DEB-5">
+  <place id="p-12490-20A75-5">
   <name>
    <text>R2-Q5_Answering_86</text>
     <graphics>
@@ -52,7 +52,7 @@
     <position x="330" y="60"/>
    </graphics>
   </place>
-  <transition id="t-2788-B3DF2-6">
+  <transition id="t-12490-20A7C-6">
   <name>
    <text>R2-Q5_Correct_86</text>
     <graphics>
@@ -63,14 +63,23 @@
     <position x="470" y="50"/>
    </graphics>
   </transition>
-  <arc id="e-2788-B3DFB-7" source="p-2788-B3DC9-2" target="t-2788-B3DF2-6">
+  <arc id="e-12490-20A89-7" source="p-12490-20A3E-2" target="t-12490-20A59-3">
+   <type value="inhibitor"/>
+   <graphics>
+    <position x="196" y="120" />
+    <position x="147" y="117" />
+   </graphics>  </arc>
+  <arc id="e-12490-20A93-8" source="p-12490-20A75-5" target="t-12490-20A7C-6">
+  </arc>
+  <arc id="e-12490-20A95-9" source="t-12490-20A59-3" target="p-12490-20A3E-2">
+   <graphics>
+    <position x="140" y="130" />
+    <position x="196" y="135" />
+   </graphics>  </arc>
+  <arc id="e-12490-20A9A-10" source="t-12490-20A7C-6" target="p-12490-20A6C-4">
+  </arc>
+  <arc id="e-12490-20A9D-11" source="p-12490-20A3E-2" target="t-12490-20A7C-6">
    <type value="test"/>
-  </arc>
-  <arc id="e-2788-B3E01-8" source="t-2788-B3DF2-6" target="p-2788-B3DE5-4">
-  </arc>
-  <arc id="e-2788-B3E04-9" source="t-2788-B3DDE-3" target="p-2788-B3DC9-2">
-  </arc>
-  <arc id="e-2788-B3E06-10" source="p-2788-B3DEB-5" target="t-2788-B3DF2-6">
   </arc>
  </page>
  </net>

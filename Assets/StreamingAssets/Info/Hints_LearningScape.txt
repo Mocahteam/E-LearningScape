@@ -15,5 +15,9 @@
 				"Value": "hint content 2"
 			}
 		]
-	}
+	},
+	"24.Correct": {
+		"Comment": [{"Key": "", "Value": "The ball box question"}],
+		"3": [{"Key": "", "Value": "Le premier chiffre de chaque boule semble représenter sa ligne et le second sa colonne"}]
+	},
 }

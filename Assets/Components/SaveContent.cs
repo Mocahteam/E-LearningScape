@@ -19,14 +19,16 @@ public class SaveContent {
 		public string name;
 		public string text;
         public string link;
+        public string level;
         public bool seen;
 
-		public HintData(int mID, string n, string hintText, string hintLink, bool hintSeen)
+		public HintData(int mID, string n, string hintText, string hintLink, string hintlevel, bool hintSeen)
         {
 			monitorID = mID;
 			name = n;
             text = hintText;
             link = hintLink;
+            level = hintlevel;
 			seen = hintSeen;
         }
     }

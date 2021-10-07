@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using TMPro;
 using System;
 using System.IO;
+using System.Collections;
 
 public class IARHintManager : FSystem {
 
@@ -13,7 +14,6 @@ public class IARHintManager : FSystem {
 
     private Family f_scrollView = FamilyManager.getFamily(new AllOfComponents(typeof(ScrollRect), typeof(PrefabContainer)));
     private Family f_helpTabContent = FamilyManager.getFamily(new AnyOfTags("HelpTabContent"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_visibleHintsIAR = FamilyManager.getFamily(new AllOfComponents(typeof(HintContent)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_enabledHintsIAR = FamilyManager.getFamily(new AllOfComponents(typeof(HintContent)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_description = FamilyManager.getFamily(new AnyOfTags("HelpDescriptionUI"));
 
@@ -48,8 +48,6 @@ public class IARHintManager : FSystem {
     /// </summary>
     private string hintLink;
 
-    private bool needRefresh = true;
-
     public static IARHintManager instance;
 
     public IARHintManager()
@@ -68,44 +66,15 @@ public class IARHintManager : FSystem {
             hintTitle = f_description.First().transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             hintText = f_description.First().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             hintLinkButton = f_description.First().transform.GetChild(2).GetComponent<Button>();
+
+            // start coroutine that refresh list of hints each second
+            MainLoop.instance.StartCoroutine(refreshHints());
         }
         instance = this;
     }
 
     protected override void onProcess(int familiesUpdateCount)
     {
-        // Remove IAR Hints if associated action is not reachable or if the enigma is resolved
-        if (needRefresh)
-        {
-            foreach (GameObject hint in f_visibleHintsIAR)
-            {
-                HintContent hc = hint.GetComponent<HintContent>();
-                if (hc.monitor)
-                {
-                    bool endActionReachable = MonitoringManager.getNextActionsToReachPlayerObjective(MonitoringManager.Instance.PetriNetsName[hc.monitor.fullPnSelected], int.MaxValue).Count > 0;
-
-                    try
-                    {
-                        bool stillReachable = false;
-                        if (endActionReachable)
-                            stillReachable = hc.monitor.isStillReachable(hc.actionName);
-
-                        if (!endActionReachable || !stillReachable)
-                        {
-                            // remove the button
-                            GameObjectManager.unbind(hint);
-                            GameObject.Destroy(hint);
-                        }
-                    }
-                    catch(TraceAborted ta)
-                    {
-                        Debug.Log(ta.Message);
-                    }
-                }
-            }
-            needRefresh = false;
-        }
-
         // reset hint positions
         int nbActivatedHint = scrollViewContent.GetComponentsInChildren<Button>().Length;
         scrollViewContent.sizeDelta = new Vector2(scrollViewContent.sizeDelta.x, (nbActivatedHint + 1) * hintButtonPrefab.GetComponent<RectTransform>().sizeDelta.y);
@@ -129,6 +98,63 @@ public class IARHintManager : FSystem {
             }
     }
 
+
+    // Remove IAR Hints if associated action is not reachable or if the enigma is resolved or if another hint with higher level is displayed or if another hint with same content is already displayed
+    private IEnumerator refreshHints()
+    {
+        yield return new WaitForSeconds(1); // wait one second to synchronize hints
+        List<HintContent> checkCopy = new List<HintContent>();
+        foreach (GameObject hint in f_enabledHintsIAR)
+            checkCopy.Add(hint.GetComponent<HintContent>());
+        foreach (GameObject hint in f_enabledHintsIAR)
+        {
+            HintContent hc = hint.GetComponent<HintContent>();
+            if (hc.monitor)
+            {
+                bool endActionReachable = MonitoringManager.getNextActionsToReachPlayerObjective(MonitoringManager.Instance.PetriNetsName[hc.monitor.fullPnSelected], int.MaxValue).Count > 0;
+
+                try
+                {
+                    bool stillReachable = false;
+                    if (endActionReachable)
+                        stillReachable = hc.monitor.isStillReachable(hc.actionName);
+
+                    bool higherHint = false;
+                    bool sameContent = false;
+                    foreach (HintContent hc2 in checkCopy)
+                    {
+                        if (hc != hc2 && hc.monitor == hc2.monitor && hc.actionName == hc2.actionName && hc.level.CompareTo(hc2.level) < 0)
+                        {
+                            higherHint = true;
+                            break;
+                        }
+                        if (hc != hc2 && hc.text == hc2.text)
+                        {
+                            sameContent = true;
+                            break;
+                        }
+                    }
+
+
+                    if (!endActionReachable || !stillReachable || higherHint || sameContent)
+                    {
+                        // remove the button
+                        if (hint.GetComponent<Button>() == selectedHint)
+                            selectedHint = null;
+                        GameObjectManager.unbind(hint);
+                        GameObject.Destroy(hint);
+                        checkCopy.Remove(hc);
+                    }
+                }
+                catch (TraceAborted ta)
+                {
+                    Debug.Log(ta.Message);
+                }
+            }
+        }
+        MainLoop.instance.StartCoroutine(refreshHints());
+    }
+
     private void onHelpTabExit (int uniqueId)
     {
         this.Pause = true;
@@ -136,7 +162,6 @@ public class IARHintManager : FSystem {
 
     private void onHelpTabSelected(GameObject go)
     {
-        needRefresh = true; // ask to refresh list of hints
         this.Pause = false;
     }
 

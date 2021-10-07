@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-98B8-65A70-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-CEB0-1C06E-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>Enigma12</text>
   </name>
- <page id="g-98B8-65A79-1">
-  <place id="p-98B8-65A7C-2">
+ <page id="g-CEB0-1C085-1">
+  <place id="p-CEB0-1C08B-2">
   <name>
    <text>Fragment_souvenir_11_ActivationCount_88</text>
     <graphics>
@@ -16,7 +16,7 @@
     <position x="230" y="150"/>
    </graphics>
   </place>
-  <transition id="t-98B8-65A8B-3">
+  <transition id="t-CEB0-1C0A9-3">
   <name>
    <text>Fragment_souvenir_11_activate_88</text>
     <graphics>
@@ -27,7 +27,7 @@
     <position x="110" y="140"/>
    </graphics>
   </transition>
-  <place id="p-98B8-65A90-4">
+  <place id="p-CEB0-1C0B7-4">
   <name>
    <text>Fragment_souvenir_12_ActivationCount_89</text>
     <graphics>
@@ -38,7 +38,7 @@
     <position x="220" y="230"/>
    </graphics>
   </place>
-  <transition id="t-98B8-65A95-5">
+  <transition id="t-CEB0-1C0C3-5">
   <name>
    <text>Fragment_souvenir_12_activate_89</text>
     <graphics>
@@ -49,7 +49,7 @@
     <position x="110" y="220"/>
    </graphics>
   </transition>
-  <place id="p-98B8-65A99-6">
+  <place id="p-CEB0-1C0CE-6">
   <name>
    <text>Fragment_souvenir_3_ActivationCount_87</text>
     <graphics>
@@ -60,7 +60,7 @@
     <position x="240" y="60"/>
    </graphics>
   </place>
-  <transition id="t-98B8-65A9D-7">
+  <transition id="t-CEB0-1C0D9-7">
   <name>
    <text>Fragment_souvenir_3_activate_87</text>
     <graphics>
@@ -71,7 +71,7 @@
     <position x="120" y="50"/>
    </graphics>
   </transition>
-  <place id="p-98B8-65AA1-8">
+  <place id="p-CEB0-1C0E4-8">
   <name>
    <text>R2-Q6_Answered_91</text>
     <graphics>
@@ -82,7 +82,7 @@
     <position x="640" y="80"/>
    </graphics>
   </place>
-  <place id="p-98B8-65AA5-9">
+  <place id="p-CEB0-1C0EC-9">
   <name>
    <text>R2-Q6_Answering_91</text>
     <graphics>
@@ -96,7 +96,7 @@
     <position x="400" y="80"/>
    </graphics>
   </place>
-  <transition id="t-98B8-65AA7-10">
+  <transition id="t-CEB0-1C0F7-10">
   <name>
    <text>R2-Q6_Correct_91</text>
     <graphics>
@@ -107,24 +107,51 @@
     <position x="520" y="70"/>
    </graphics>
   </transition>
-  <arc id="e-98B8-65AAE-11" source="p-98B8-65A90-4" target="t-98B8-65AA7-10">
+  <arc id="e-CEB0-1C103-11" source="p-CEB0-1C0B7-4" target="t-CEB0-1C0C3-5">
+   <type value="inhibitor"/>
+   <graphics>
+    <position x="190" y="220" />
+    <position x="147" y="217" />
+   </graphics>  </arc>
+  <arc id="e-CEB0-1C10D-12" source="p-CEB0-1C08B-2" target="t-CEB0-1C0F7-10">
    <type value="test"/>
   </arc>
-  <arc id="e-98B8-65AB2-12" source="p-98B8-65A7C-2" target="t-98B8-65AA7-10">
+  <arc id="e-CEB0-1C111-13" source="p-CEB0-1C0B7-4" target="t-CEB0-1C0F7-10">
    <type value="test"/>
   </arc>
-  <arc id="e-98B8-65AB3-13" source="p-98B8-65A99-6" target="t-98B8-65AA7-10">
+  <arc id="e-CEB0-1C116-14" source="p-CEB0-1C08B-2" target="t-CEB0-1C0A9-3">
+   <type value="inhibitor"/>
+   <graphics>
+    <position x="200" y="142" />
+    <position x="147" y="137" />
+   </graphics>  </arc>
+  <arc id="e-CEB0-1C11C-15" source="p-CEB0-1C0CE-6" target="t-CEB0-1C0D9-7">
+   <type value="inhibitor"/>
+   <graphics>
+    <position x="208" y="50" />
+    <position x="157" y="47" />
+   </graphics>  </arc>
+  <arc id="e-CEB0-1C122-16" source="t-CEB0-1C0F7-10" target="p-CEB0-1C0E4-8">
+  </arc>
+  <arc id="e-CEB0-1C125-17" source="p-CEB0-1C0EC-9" target="t-CEB0-1C0F7-10">
+  </arc>
+  <arc id="e-CEB0-1C128-18" source="t-CEB0-1C0C3-5" target="p-CEB0-1C0B7-4">
+   <graphics>
+    <position x="144" y="230" />
+    <position x="185" y="235" />
+   </graphics>  </arc>
+  <arc id="e-CEB0-1C12E-19" source="t-CEB0-1C0A9-3" target="p-CEB0-1C08B-2">
+   <graphics>
+    <position x="144" y="148" />
+    <position x="196" y="155" />
+   </graphics>  </arc>
+  <arc id="e-CEB0-1C133-20" source="t-CEB0-1C0D9-7" target="p-CEB0-1C0CE-6">
+   <graphics>
+    <position x="154" y="60" />
+    <position x="202" y="65" />
+   </graphics>  </arc>
+  <arc id="e-CEB0-1C13A-21" source="p-CEB0-1C0CE-6" target="t-CEB0-1C0F7-10">
    <type value="test"/>
-  </arc>
-  <arc id="e-98B8-65AB5-14" source="t-98B8-65A9D-7" target="p-98B8-65A99-6">
-  </arc>
-  <arc id="e-98B8-65AB7-15" source="t-98B8-65A8B-3" target="p-98B8-65A7C-2">
-  </arc>
-  <arc id="e-98B8-65AB8-16" source="t-98B8-65A95-5" target="p-98B8-65A90-4">
-  </arc>
-  <arc id="e-98B8-65AB9-17" source="p-98B8-65AA5-9" target="t-98B8-65AA7-10">
-  </arc>
-  <arc id="e-98B8-65ABA-18" source="t-98B8-65AA7-10" target="p-98B8-65AA1-8">
   </arc>
  </page>
  </net>

@@ -37,7 +37,7 @@
 	"44.perform": {
 		"Comment": ["First Locker"],
 		"1": ["J'ai tout ce qu'il faut pour passer cette première énigme"],
-		"2": ["Les roues semblent tourner, mais quelle est la bonne combinaison ?"],
+		"2": ["Les roues semblent tourner, mais quelle est la bonne combinaison?"],
 		"3": ["Le fragment de rêve et le parchemin devraient me donner la solution"]
 	},
 	
@@ -51,7 +51,7 @@
 	"6.turnOn": {
 		"Comment": ["The ball box key in IAR"],
 		"1": ["La clé ramassée doit bien me servir à quelque chose"],
-		"2": ["Quel cadenas la petite clé peut-elle bien ouvrir ?"],
+		"2": ["Quel cadenas la petite clé peut-elle bien ouvrir?"],
 		"3": ["Peut-être que la clé ramassée peut ouvrir le cadenas de la grosse boîte"]
 	},
 	"7.turnOn": {
@@ -60,27 +60,24 @@
 	},
 	"9.activate": {
 		"Comment": ["The first ball that is part of the solution"],
-		"1": ["A quoi peuvent bien me servir ces boules ?"],
-		"2": ["Les chiffres au dos de chaque boule doivent bien servir à quelque chose"],
-		"3": ["Chaque chiffre doit être un élément de la solution"]
+		"1": ["A quoi peuvent bien me servir ces boules?"],
+		"2": ["Les chiffres au dos de chaque boule doivent bien servir à quelque chose"]
 	},
 	"10.activate": {
 		"Comment": ["The second ball that is part of the solution"],
-		"1": ["A quoi peuvent bien me servir ces boules ?"],
-		"2": ["Les chiffres au dos de chaque boule doivent bien servir à quelque chose"],
-		"3": ["Chaque chiffre doit être un élément de la solution"]
+		"1": ["A quoi peuvent bien me servir ces boules?"],
+		"2": ["Les chiffres au dos de chaque boule doivent bien servir à quelque chose"]
 	},
 	"11.activate": {
 		"Comment": ["The third ball that is part of the solution"],
-		"1": ["A quoi peuvent bien me servir ces boules ?"],
-		"2": ["Les chiffres au dos de chaque boule doivent bien servir à quelque chose"],
-		"3": ["Chaque chiffre doit être un élément de la solution"]
+		"1": ["A quoi peuvent bien me servir ces boules?"],
+		"2": ["Les chiffres au dos de chaque boule doivent bien servir à quelque chose"]
 	},
 	"24.Correct": {
 		"Comment": ["The ball box question"],
 		"1": ["J'ai tout ce qu'il me faut pour résoudre la question des boules"],
-		"2": ["Parmi les boules observées, lesquelles me sont utiles ?"],
-		"3": ["9 boules mais seulement 3 chiffres sont utiles"]
+		"2": ["Parmi les boules observées, lesquelles me sont utiles pour répondre à une question?"],
+		"3": ["Neuf boules mais seulement trois chiffres sont utiles pour répondre à une question"]
 	},
 	
 	"Comment: Plank&Wire hints": {},
@@ -97,29 +94,40 @@
 	},
 	"28.turnOn": {
 		"Comment": ["The plank"],
-		"1": ["A quoi peuvent bien servir les mots inscrits sur le tableau ?"],
-		"2": ["Peut être dois-je accrocher quelque chose aux punaises correspondantes à quelques mots du tableau..."]
+		"1": ["Il me reste au moins un objet à trouver"],
+		"2": ["Je devrais aller voir le tableau accroché au mur"],
+		"3": ["Peut être dois-je faire quelque chose avec le tableau accroché au murs, il y a des mots écrits dessus et des punaises permettant d'accrocher quelque chose..."]
+	},
+	"29.activate": {
+		"Comment": ["The dream fragment to the right of the library"],
+		"1": ["Il me reste au moins un fragment de rêve à trouver"],
+		"2": ["J'ai dû manquer un fragment dans la bibliothèque à droite"]
+	},
+	"30.activate": {
+		"Comment": ["The dream fragment inside the drawer"],
+		"1": ["Il me reste au moins un fragment de rêve à trouver"],
+		"2": ["J'ai dû manquer un fragment dans le tiroir de la commode"]
 	},
 	"31.turnOn": {
 		"Comment": ["The first word that is part of the solution"],
 		"1": ["Un tableau, une corde et des mots à relier..."],
-		"2": ["Quels sont les trois mots clés à relier ?"]
+		"2": ["Quels sont les trois mots clés à relier?"]
 	},
 	"32.turnOn": {
 		"Comment": ["The second word that is part of the solution"],
 		"1": ["Un tableau, une corde et des mots à relier..."],
-		"2": ["Quels sont les trois mots clés à relier ?"]
+		"2": ["Quels sont les trois mots clés à relier?"]
 	},
 	"33.turnOn": {
 		"Comment": ["The third word that is part of the solution"],
 		"1": ["Un tableau, une corde et des mots à relier..."],
-		"2": ["Quels sont les trois mots clés à relier ?"]
+		"2": ["Quels sont les trois mots clés à relier?"]
 	},
 	"35.Correct": {
 		"Comment": ["The Plank&Wire question"],
 		"1": ["J'ai tout ce qu'il me faut pour résoudre l'énigme du tableau et de la corde"],
-		"2": ["Est-ce que ce sont les mots reliés ou les liens eux-mêmes qui portent du sens ?"],
-		"3": ["La corde ne passerait-elle pas par certains chiffres ?"]
+		"2": ["Est-ce que ce sont les mots reliés ou les liens eux-mêmes qui portent du sens?",
+			  "La corde ne passerait-elle pas par certains chiffres?"]
 	},
 	
 	"Comment: Crouch enigma": {},
@@ -148,7 +156,7 @@
 	},
 	"37.turnOn": {
 		"Comment": ["Crouch hints"],
-		"2": ["Comment pourrais-je changer mon point de vue ?"],
+		"2": ["Comment pourrais-je changer mon point de vue?"],
 		"3": ["Je devrais me baisser pour avoir une vision différente de la pièce"]
 	},
 	"39.turnOn": {
@@ -171,8 +179,9 @@
 	},
 	"50.Correct": {
 		"Comment": ["The Crouch question"],
-		"1": ["J'ai tout ce qu'il me faut pour résoudre la dernière question de cette pièce"],
-		"2": ["Est-ce que les fragments cachés ne devraient pas être mis en relation ?"],
+		"1": ["J'ai trouvé tous les éléments me permettant de répondre à une nouvelle question"],
+		"2": ["Je n'ai pas encore exploité les fragments qui étaient cachés sous la table et sous la chaise"],
+		"3": ["Est-ce que les fragments cachés (dont ceux trouvés sous la table et la chaise) ne me permettent pas de répondre à la troisième question?"],
 	},
 	
 	"Comment: Gears enigma": {},
@@ -198,8 +207,7 @@
 	},
 	"52.turnOn": {
 		"Comment": ["The left glass in IAR"],
-		"1": ["La branche de lunette que j'ai ramassée doit bien me servir à quelque chose"],
-		"3": ["Je pressens que je devrais utiliser les branches de lunette avec le contenu du cartable"]
+		"1": ["La branche de lunette rouge que j'ai ramassée doit bien me servir à quelque chose"]
 	},
 	"53.perform": {
 		"Comment": ["The in game right glass"],
@@ -209,8 +217,7 @@
 	},
 	"54.turnOn": {
 		"Comment": ["The right glass in IAR"],
-		"1": ["La branche de lunette que j'ai ramassée doit bien me servir à quelque chose"],
-		"3": ["Je pressens que je devrais utiliser les branches de lunette avec le contenu du cartable"]
+		"1": ["La branche de lunette jaune que j'ai ramassée doit bien me servir à quelque chose"]
 	},
 	"55.perform": {
 		"Comment": ["The in game satchel's key"],
@@ -221,18 +228,17 @@
 	"56.turnOn": {
 		"Comment": ["The in IAR satchel's key"],
 		"1": ["La clé ramassée doit bien me servir à quelque chose"],
-		"2": ["Quel cadenas la petite clé peut-elle bien ouvrir ?"],
+		"2": ["Quel cadenas la petite clé peut-elle bien ouvrir?"],
 		"3": ["Peut-être que la clé ramassée peut ouvrir le cadenas du cartable"]
 	},
 	"57.turnOn": {
 		"Comment": ["The satchel"],
-		"2": ["Le contenu du cartable est certainement très intéressant"],
-		"3": ["Peut être que des lunettes me permettraient de mieux comprendre le contenu du cartable"]
+		"2": ["Le contenu du cartable est certainement très intéressant"]
 	},
 	"64.Correct": {
 		"Comment": ["The satchel question"],
 		"1": ["J'ai tout ce qu'il me faut pour résoudre la question relative au contenu du cartable"],
-		"2": ["Que dois-je comprendre de la feuille observée à l'aide des lunettes ?"]
+		"2": ["Que dois-je comprendre de la feuille contenue dans la malette observée à l'aide des lunettes?"]
 	},
 	
 	"Comment: Enigma08": {},
@@ -271,7 +277,7 @@
 		"Comment": ["One of the scrolls inside second room"],
 		"1": ["Il me reste au moins un objet à trouver"],
 		"2": ["Il me manque un parchemin"],
-		"3": ["J'ai l'intuition qu'un parchemin intéressant se trouve à gauche du piédestal au centre de la pièce"]
+		"3": ["J'ai l'intuition qu'un parchemin intéressant se trouve à gauche de la grille au fond de la pièce"]
 	},
 	"73.perform": {
 		"Comment": ["One of the scrolls inside second room"],
@@ -299,7 +305,7 @@
 	"77.Correct": {
 		"Comment": ["The scrolls question"],
 		"1": ["J'ai tout ce qu'il me faut pour résoudre la question des parchemins"],
-		"2": ["Quelle informations dois-je ressortir des parchemins ramassés ?"]
+		"2": ["Quelle informations dois-je ressortir des parchemins ramassés?"]
 	},
 	
 	"Comment: Mirror enigma": {},
@@ -313,7 +319,7 @@
 		"Comment": ["The in IAR mirror"],
 		"1": ["Le miroir ramassé doit bien me servir à quelque chose"],
 		"2": ["Le miroir est cylindrique... Cela doit avoir son importance"],
-		"3": ["Où dois-je positionner le miroir ramassé ?"]
+		"3": ["Où dois-je positionner le miroir ramassé?"]
 	},
 	"80.turnOn": {
 		"Comment": ["The in game mirror's plank"],
@@ -322,16 +328,11 @@
 		"2": ["Je devrais mieux observer le sol"],
 		"3": ["J'ai l'intuition qu'une des dalles du sol est différente"]
 	},
-	"81.perform": {
-		"Comment": ["The in game mirror's plank"],
-		"options": ["--"],
-		"3": ["Il semblerait que le miroir corresponde à l'emplacement au centre de la dalle du sol"]
-	},
 	"83.Correct": {
 		"Comment": ["The mirror question"],
 		"1": ["J'ai tout ce qu'il me faut pour résoudre la question du miroir"],
 		"2": ["Le reflet du miroir est certainement la clé"],
-		"3": ["J'ai l'intuition que je peux lire ou décoder un message dans le reflet du miroir"]
+		"3": ["J'ai l'intuition que je peux lire ou décoder un message dans le reflet du miroir, ça me permettra peut être de répondre à un question"]
 	},
 	
 	"Comment: Enigma11": {},
@@ -381,11 +382,17 @@
 	"167.perform": {
 		"Comment": ["Second Locker"],
 		"1": ["J'ai tout ce qu'il faut pour passer à la prochaine salle"],
-		"2": ["Les roues semblent tourner, mais quelle est la bonne combinaison ?"],
+		"2": ["Les roues semblent tourner, mais quelle est la bonne combinaison?"],
 		"3": ["Le code obtenu dans mon deuxième rêve devrait débloquer le passage"]
 	},
 	
 	"Comment: Virtual puzzle enigma": {},
+	"92.turnOn": {
+		"Comment": ["Box in front of obelisk"],
+		"1": ["Il me reste au moins un objet à trouver"],
+		"2": ["Il me manque des pièces de puzzle"],
+		"3": ["J'ai l'intuition que des choses intéressantes se trouve dans le coffret au pied de l'obélisque noire"]
+	},
 	"93.perform": {
 		"Comment": ["In game puzzle set"],
 		"1": ["Il me reste au moins un objet à trouver"],
@@ -394,15 +401,13 @@
 	},
 	"94.perform": {
 		"Comment": ["In game puzzle set"],
-		"1": ["Il me reste au moins un objet à trouver"],
-		"2": ["Il me manque des pièces de puzzle"],
-		"3": ["J'ai l'intuition que des pièces de puzzle se trouvent dans le coffret au pied de l'obélisque noire"]
+		"3": ["Hey! Il me semble qu'il y a des pièces de puzzle dans le coffret au pied de l'obélisque noire"]
 	},
 	"95.perform": {
 		"Comment": ["In game puzzle set"],
 		"1": ["Il me reste au moins un objet à trouver"],
 		"2": ["Il me manque des pièces de puzzle"],
-		"3": ["J'ai l'intuition que des pièces de puzzle se trouvent au pied des marches de la salle aux deux arbres"]
+		"3": ["J'ai l'intuition que des pièces de puzzle se trouvent dans l'escalier, au bord de l'eau, dans la salle aux deux arbres"]
 	},
 	"96.perform": {
 		"Comment": ["In game puzzle set"],
@@ -414,7 +419,7 @@
 		"Comment": ["In game puzzle set"],
 		"1": ["Il me reste au moins un objet à trouver"],
 		"2": ["Il me manque des pièces de puzzle"],
-		"3": ["J'ai l'intuition que des pièces de puzzle se trouvent au sol au fond à droite de la pièce aux deux arbres"]
+		"3": ["J'ai l'intuition que des pièces de puzzle se trouvent au sol au fond à droite de la pièce aux deux arbres (sous la gerbe d'eau)"]
 	},
 	"98.turnOn": {
 		"Comment": ["In IAR puzzle"],
@@ -423,10 +428,15 @@
 	},
 	"101.perform": {
 		"Comment": ["Puzzle question"],
-		"2": ["J'ai tout ce qu'il faut pour résoudre l'énigme du puzzle"]
+		"2": ["J'ai toutes les pièces du puzzle, il ne reste plus qu'à le résoudre..."]
 	},
 	
 	"Comment: Physical puzzle enigma": {},
+	"102.turnOn": {
+		"Comment": ["Box in front of obelisk"],
+		"1": ["Il me reste au moins un fragment de rêve à trouver"],
+		"3": ["J'ai l'intuition que des choses intéressantes se trouvent dans le coffret au pied de l'obélisque noire"]
+	},
 	"107.activate": {
 		"Comment": ["In game puzzle set"],
 		"options": ["--"],
@@ -436,8 +446,7 @@
 	"103.activate": {
 		"Comment": ["In game puzzle set"],
 		"options": ["--"],
-		"1": ["Il me reste au moins un fragment de rêve à trouver"],
-		"3": ["Je pressens qu'un fragment de rêve est situé dans le coffret au pied de l'obélisque noire"]
+		"3": ["Hey! Il me semble qu'il y a un fragment de rêve dans le coffret au pied de l'obélisque noire"]
 	},
 	"105.activate": {
 		"Comment": ["In game puzzle set"],
@@ -459,21 +468,25 @@
 	},
 	"110.perform": {
 		"Comment": ["Puzzle question"],
-		"2": ["J'ai tout ce qu'il faut pour résoudre l'énigme du puzzle"]
+		"2": ["J'ai toutes les pièces du puzzle, il ne reste plus qu'à le résoudre..."]
 	},
 	
 	"Comment: Lamp enigma": {},
-	"112.perform": {
-		"Comment": ["In game lamp"],
+	"111.turnOn": {
+		"Comment": ["Box in front of obelisk"],
 		"1": ["Il me reste au moins un objet à trouver"],
 		"2": ["Je pense qu'une lampe me serait utile"],
-		"3": ["J'ai l'intuition qu'une lampe se trouve dans le coffret au pied de l'obélisque noire"]
+		"3": ["J'ai l'intuition que des choses intéressantes se trouvent dans le coffret au pied de l'obélisque noire"]
+	},
+	"112.perform": {
+		"Comment": ["In game lamp"],
+		"3": ["Tiens, tiens... N'est ce pas une lampe dans le coffret au pied de l'obélisque noire?"]
 	},
 	"113.turnOn": {
 		"Comment": ["In IAR lamp"],
 		"1": ["La lampe ramassée doit bien me servir à quelque chose"],
-		"2": ["Que dois-je éclairer avec la lampe ?"],
-		"3": ["Cette obélisque est très sombre peut être devrais-je l'éclairer avec la lampe ramassée ?"]
+		"2": ["Que dois-je éclairer avec la lampe?"],
+		"3": ["Cette obélisque est très sombre peut être devrais-je l'éclairer avec la lampe ramassée?"]
 	},
 	"120.activate": {
 		"Comment": ["One of the dream fragment inside second room"],
@@ -549,11 +562,12 @@
 	},
 	"128.turnOn": {
 		"Comment": ["The eraser"],
-		"1": ["Ne serait-ce pas un effaceur aimanté sur le tableau ?"],
-		"2": ["Peut être que je peux déplacer l'effaceur aimanté sur le tableau !"]
+		"1": ["Ne serait-ce pas un effaceur aimanté sur le tableau?"],
+		"2": ["Peut être que je peux déplacer l'effaceur aimanté sur le tableau!"]
 	},
 	"142.perform": {
 		"Comment": ["The white board question"],
-		"2": ["J'ai tout ce qu'il faut pour résoudre l'énigme du tableau effaçable"]
+		"2": ["Et si j'effaçais tout le tableau...",
+			  "Certaines parties de mots sur le tableau devraient me permettre de répondre à une des questions"]
 	}
 }
