@@ -236,6 +236,9 @@ public class IARHintManager : FSystem {
         colorSelectedHint.colorMultiplier = b.colors.colorMultiplier;
         colorSelectedHint.normalColor = new Color(114, 114, 114, 255) / 256;
         b.colors = colorSelectedHint;
+        Transform child = b.transform.GetChild(1);
+        if (child != null)
+            GameObjectManager.setGameObjectState(child.gameObject, false);
     }
 
     /// <summary>
