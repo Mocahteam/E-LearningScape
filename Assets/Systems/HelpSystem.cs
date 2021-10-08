@@ -525,7 +525,7 @@ public class HelpSystem : FSystem {
     public void OnPlayerAskHelp()
     {
         //check cooldown before sending hint
-        if(Time.time - playerHintTimer > config.playerHintCooldownDuration)
+        if (Time.time - playerHintTimer > config.playerHintCooldownDuration)
         {
             playerAskedHelp = true;
             if (DisplayHint())

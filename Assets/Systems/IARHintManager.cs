@@ -102,57 +102,62 @@ public class IARHintManager : FSystem {
     // Remove IAR Hints if associated action is not reachable or if the enigma is resolved or if another hint with higher level is displayed or if another hint with same content is already displayed
     private IEnumerator refreshHints()
     {
-        yield return new WaitForSeconds(1); // wait one second to synchronize hints
-        List<HintContent> checkCopy = new List<HintContent>();
-        foreach (GameObject hint in f_enabledHintsIAR)
-            checkCopy.Add(hint.GetComponent<HintContent>());
-        foreach (GameObject hint in f_enabledHintsIAR)
+        while (true)
         {
-            HintContent hc = hint.GetComponent<HintContent>();
-            if (hc.monitor)
+            yield return new WaitForSeconds(0.5f); // wait one second to synchronize hints
+            List<HintContent> copy = new List<HintContent>();
+            List<HintContent> checkCopy = new List<HintContent>();
+            foreach (GameObject hint in f_enabledHintsIAR) {
+                checkCopy.Add(hint.GetComponent<HintContent>());
+                copy.Add(hint.GetComponent<HintContent>());
+            }
+            foreach (HintContent hc in copy)
             {
-                bool endActionReachable = MonitoringManager.getNextActionsToReachPlayerObjective(MonitoringManager.Instance.PetriNetsName[hc.monitor.fullPnSelected], int.MaxValue).Count > 0;
-
-                try
+                yield return null;
+                if (hc && hc.monitor)
                 {
-                    bool stillReachable = false;
-                    if (endActionReachable)
-                        stillReachable = hc.monitor.isStillReachable(hc.actionName);
+                    bool endActionReachable = MonitoringManager.getNextActionsToReachPlayerObjective(MonitoringManager.Instance.PetriNetsName[hc.monitor.fullPnSelected], int.MaxValue).Count > 0;
 
-                    bool higherHint = false;
-                    bool sameContent = false;
-                    foreach (HintContent hc2 in checkCopy)
+                    try
                     {
-                        if (hc != hc2 && hc.monitor == hc2.monitor && hc.actionName == hc2.actionName && hc.level.CompareTo(hc2.level) < 0)
+                        bool stillReachable = false;
+                        if (endActionReachable)
+                            stillReachable = hc.monitor.isStillReachable(hc.actionName);
+
+                        bool higherHint = false;
+                        bool sameContent = false;
+                        foreach (HintContent hc2 in checkCopy)
                         {
-                            higherHint = true;
-                            break;
+                            if (hc != hc2 && hc.monitor == hc2.monitor && hc.actionName == hc2.actionName && hc.level.CompareTo(hc2.level) < 0)
+                            {
+                                higherHint = true;
+                                break;
+                            }
+                            if (hc != hc2 && hc.text == hc2.text)
+                            {
+                                sameContent = true;
+                                break;
+                            }
                         }
-                        if (hc != hc2 && hc.text == hc2.text)
+
+
+                        if (!endActionReachable || !stillReachable || higherHint || sameContent)
                         {
-                            sameContent = true;
-                            break;
+                            // remove the button
+                            if (hc.GetComponent<Button>() == selectedHint)
+                                selectedHint = null;
+                            GameObjectManager.unbind(hc.gameObject);
+                            GameObject.Destroy(hc.gameObject);
+                            checkCopy.Remove(hc);
                         }
                     }
-
-
-                    if (!endActionReachable || !stillReachable || higherHint || sameContent)
+                    catch (TraceAborted ta)
                     {
-                        // remove the button
-                        if (hint.GetComponent<Button>() == selectedHint)
-                            selectedHint = null;
-                        GameObjectManager.unbind(hint);
-                        GameObject.Destroy(hint);
-                        checkCopy.Remove(hc);
+                        Debug.Log(ta.Message);
                     }
-                }
-                catch (TraceAborted ta)
-                {
-                    Debug.Log(ta.Message);
                 }
             }
         }
-        MainLoop.instance.StartCoroutine(refreshHints());
     }
 
     private void onHelpTabExit (int uniqueId)
