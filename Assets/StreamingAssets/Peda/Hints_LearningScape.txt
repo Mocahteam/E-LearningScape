@@ -15,5 +15,13 @@
 				"Value": "hint content 2"
 			}
 		]
+	},
+	"69.Correct": {
+		"Comment": [{"Key": "", "Value": "The Enigma08 question"}],
+		"3": [{"Key": "", "Value": "Est-ce que l'appréciation de certaines copies ne contiendrait pas des chiffres?"}]
+	},
+	"77.Correct": {
+		"Comment": [{"Key": "", "Value": "The scrolls question"}],
+		"3": [{"Key": "", "Value": "L'acronyme à trouver est aussi le nom d'une petite voiture"}]
 	}
 }
