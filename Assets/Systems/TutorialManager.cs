@@ -40,6 +40,7 @@ public class TutorialManager : FSystem {
             initPosition = new Vector3(playerController.transform.position.x, playerController.transform.position.y, playerController.transform.position.z);
             GameObjectManager.setGameObjectState(TutorialScreens.GetChild(currentStep).gameObject, true);
             f_targetArea.addEntryCallback(onTargetReached);
+            IARDreamFragmentManager.virtualDreamFragment = true; // force virtual dreamFragment for tutorial
         }
     }
 
