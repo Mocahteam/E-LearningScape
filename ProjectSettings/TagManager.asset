@@ -108,8 +108,8 @@ TagManager:
   - EraserSphereTrigger
   - Floor
   - Teleports
-  - 
-  - 
+  - TransparentForMinimapCamera
+  - ViewableOnlyForMInimapCamera
   - 
   - 
   - 

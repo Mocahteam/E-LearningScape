@@ -32,8 +32,7 @@ public class MovingSystem : FSystem
     public bool firstCrouchOccurs = false;
     private FirstPersonController playerController;
     private Animation movableFragments;
-    private Image tmpImage;
-    private TMP_Text[] textMeshs;
+    private Graphic[] tmpGraphics;
     private AudioBank audioBank;
     private Camera playerCamera;
 
@@ -290,29 +289,24 @@ public class MovingSystem : FSystem
             float aCount = 1;
             foreach (GameObject hud in f_TransparentOnMove)
             {
-                tmpImage = hud.GetComponentInChildren<Image>();
-                if (tmpImage)
+                tmpGraphics = hud.GetComponentsInChildren<Graphic>();
+                foreach (Graphic tmpGraphic in tmpGraphics)
                 {
-                    tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, tmpImage.color.a + hudHidingSpeed);
-                    aCount = tmpImage.color.a;
-                }
-                textMeshs = hud.GetComponentsInChildren<TMP_Text>();
-                foreach (TMP_Text tmpTextMesh in textMeshs)
-                {
-                    tmpTextMesh.color = new Color(tmpTextMesh.color.r, tmpTextMesh.color.g, tmpTextMesh.color.b, tmpTextMesh.color.a + hudHidingSpeed);
-                    aCount = tmpTextMesh.color.a;
+                    if (!(tmpGraphic is RawImage))
+                    {
+                        tmpGraphic.color = new Color(tmpGraphic.color.r, tmpGraphic.color.g, tmpGraphic.color.b, tmpGraphic.color.a + hudHidingSpeed);
+                        aCount = tmpGraphic.color.a;
+                    }
                 }
             }
             if (aCount < 0.3f)
             {
                 foreach (GameObject hud in f_TransparentOnMove)
                 {
-                    tmpImage = hud.GetComponentInChildren<Image>();
-                    if (tmpImage)
-                        tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, 0.3f);
-                    textMeshs = hud.GetComponentsInChildren<TMP_Text>();
-                    foreach (TMP_Text tmpTextMesh in textMeshs)
-                        tmpTextMesh.color = new Color(tmpTextMesh.color.r, tmpTextMesh.color.g, tmpTextMesh.color.b, 0.3f);
+                    tmpGraphics = hud.GetComponentsInChildren<Graphic>();
+                    foreach (Graphic tmpGraphic in tmpGraphics)
+                        if (!(tmpGraphic is RawImage))
+                            tmpGraphic.color = new Color(tmpGraphic.color.r, tmpGraphic.color.g, tmpGraphic.color.b, 0.3f);
                 }
                 hideHUD = false;
             }
@@ -322,29 +316,24 @@ public class MovingSystem : FSystem
             float aCount = 0;
             foreach (GameObject hud in f_TransparentOnMove)
             {
-                tmpImage = hud.GetComponentInChildren<Image>();
-                if (tmpImage)
+                tmpGraphics = hud.GetComponentsInChildren<Graphic>();
+                foreach (Graphic tmpGraphic in tmpGraphics)
                 {
-                    tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, tmpImage.color.a + hudShowingSpeed);
-                    aCount = tmpImage.color.a;
-                }
-                textMeshs = hud.GetComponentsInChildren<TMP_Text>();
-                foreach (TMP_Text tmpTextMesh in textMeshs)
-                {
-                    tmpTextMesh.color = new Color(tmpTextMesh.color.r, tmpTextMesh.color.g, tmpTextMesh.color.b, tmpTextMesh.color.a + hudShowingSpeed);
-                    aCount = tmpTextMesh.color.a;
+                    if (!(tmpGraphic is RawImage))
+                    {
+                        tmpGraphic.color = new Color(tmpGraphic.color.r, tmpGraphic.color.g, tmpGraphic.color.b, tmpGraphic.color.a + hudShowingSpeed);
+                        aCount = tmpGraphic.color.a;
+                    }
                 }
             }
             if (aCount >= 1f)
             {
                 foreach (GameObject hud in f_TransparentOnMove)
                 {
-                    tmpImage = hud.GetComponentInChildren<Image>();
-                    if (tmpImage)
-                        tmpImage.color = new Color(tmpImage.color.r, tmpImage.color.g, tmpImage.color.b, 1f);
-                    textMeshs = hud.GetComponentsInChildren<TMP_Text>();
-                    foreach (TMP_Text tmpTextMesh in textMeshs)
-                        tmpTextMesh.color = new Color(tmpTextMesh.color.r, tmpTextMesh.color.g, tmpTextMesh.color.b, 1f);
+                    tmpGraphics = hud.GetComponentsInChildren<Graphic>();
+                    foreach (Graphic tmpGraphic in tmpGraphics)
+                        if (!(tmpGraphic is RawImage))
+                            tmpGraphic.color = new Color(tmpGraphic.color.r, tmpGraphic.color.g, tmpGraphic.color.b, 1f);
                 }
                 showHUD = false;
             }
