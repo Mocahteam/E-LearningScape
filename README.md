@@ -41,7 +41,7 @@ E-LearningScape peut se jouer selon deux modalités :
 <p align="center"><img src="docs/ouvrirFragment.png" alt="Exemple d'écran invitant les joueurs à ouvrir le fragment de rêve numéro 4" height="200"/> <img src="docs/enveloppes.jpg" alt="Enveloppes contenant les fragments de rêve" height="200"/></p>
 
 # Informations techniques
-E-LearningScape a été développé sous Unity avec la bibliothèque [FYFY](https://github.com/Mocahteam/FYFY).
+E-LearningScape a été développé sous Unity avec la bibliothèque [FYFY](https://github.com/Mocahteam/FYFY). Pour le module d'aide E-LearningScape utilise l'outil [Laalys](https://github.com/Mocahteam/Laalys).
 
 # Comment créer mon propre jeu à partir d'E-LearningScape
 E-LearningScape propose plusieurs mécaniques d'énigmes (relier trois points sur un tableau avec une corde, effacer les mots d'un tableau, révéler des images à l'aide d'une lampe UV...). Vous n'avez pas la possibilité de modifier ces mécaniques en revanche vous pouvez modifier les contenus qui apparaissent dans le jeu pour créer votre propre version d'E-LearningScape.
