@@ -76,7 +76,6 @@ TagManager:
   - ArrowUI
   - ValidationButton
   - HidableHUD
-  - HUD_TransparentOnMove
   - QuestionTagContent
   - PressY
   - DreamFragmentContent

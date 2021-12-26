@@ -189,7 +189,7 @@ public class LoadGameContent : FSystem {
 
         SendStatements.shouldPause = !gameContent.traceToLRS;
         SendStatements.instance.Pause = !gameContent.traceToLRS;
-        MovingSystem.instance.traceMovementFrequency = gameContent.traceMovementFrequency;
+        MovingSystem_FPSMode.instance.traceMovementFrequency = gameContent.traceMovementFrequency;
         Debug.Log(string.Concat("Trace to LRS: ", gameContent.traceToLRS));
 
         if (gameContent.removeExtraGeometries)

@@ -20,14 +20,14 @@ public class SwitchPerso : MonoBehaviour {
 
     void Update () {
         if (Input.GetButtonDown("SwitchView") && !iarRef.activeInHierarchy)
-        {
-            fpsCam = !fpsCam;
-            forceUpdate();
-            JumpingSystem.instance.Pause = true;
-            JumpingSystem.instance.lockSystem = true;
-            JumpingSystem.instance.Pause = false;
-        }
+            SwitchView();
 	}
+
+    public void SwitchView()
+    {
+        fpsCam = !fpsCam;
+        forceUpdate();
+    }
    
     public void forceUpdate()
     {

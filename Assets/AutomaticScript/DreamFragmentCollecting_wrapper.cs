@@ -19,9 +19,9 @@ public class DreamFragmentCollecting_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("DreamFragmentCollecting", "TurnOffDreamFragment", fragment);
 	}
 
-	public void OpenFragmentLink()
+	public void OpenFragmentLink(UnityEngine.GameObject selectedFragment)
 	{
-		MainLoop.callAppropriateSystemMethod ("DreamFragmentCollecting", "OpenFragmentLink", null);
+		MainLoop.callAppropriateSystemMethod ("DreamFragmentCollecting", "OpenFragmentLink", selectedFragment);
 	}
 
 }

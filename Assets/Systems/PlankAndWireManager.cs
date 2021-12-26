@@ -14,7 +14,8 @@ public class PlankAndWireManager : FSystem {
     private Family f_focusedWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerOver), typeof(TextMeshPro))); // focused words on the plank
     private Family f_allWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro))); // all clickable words on the plank
     private Family f_wrongWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro)), new NoneOfComponents(typeof(IsSolution)));
-    private Family f_closePlank = FamilyManager.getFamily (new AnyOfTags ("Plank", "PlankText", "InventoryElements", "HUD_TransparentOnMove"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_closePlank_1 = FamilyManager.getFamily (new AnyOfTags ("Plank", "PlankText", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_closePlank_2 = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver), typeof(HUD_TransparentOnMove)));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_solutionWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro), typeof(IsSolution)));
@@ -54,6 +55,14 @@ public class PlankAndWireManager : FSystem {
 
         // launch this system
         instance.Pause = false;
+
+        // Add Colliders to words and pins
+        foreach (GameObject word in f_allWords)
+        {
+            GameObjectManager.addComponent<BoxCollider>(word, new { isTrigger = true });
+            GameObjectManager.addComponent<Rigidbody>(word, new { isKinematic = true });
+            GameObjectManager.addComponent<BoxCollider>(word.transform.GetChild(0).gameObject);
+        }
 
         GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
     }
@@ -104,7 +113,7 @@ public class PlankAndWireManager : FSystem {
         if (selectedPlank)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed (because Escape close IAR)
-            if (((f_closePlank.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)))
+            if (((f_closePlank_1.Count == 0 && f_closePlank_2.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)))
                 ExitPlank();
             else
             {
@@ -291,6 +300,14 @@ public class PlankAndWireManager : FSystem {
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new { verb = "exited", objectType = "interactable", objectName = selectedPlank.name });
 
         selectedPlank = null;
+
+        // Remove Collider2D to words
+        foreach (GameObject word in f_allWords)
+        {
+            GameObjectManager.removeComponent<BoxCollider>(word);
+            GameObjectManager.removeComponent<Rigidbody>(word);
+            GameObjectManager.removeComponent<BoxCollider>(word.transform.GetChild(0).gameObject);
+        }
 
         // pause this system
         instance.Pause = true;

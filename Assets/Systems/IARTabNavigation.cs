@@ -145,8 +145,9 @@ public class IARTabNavigation : FSystem {
         DreamFragmentCollecting.instance.Pause = true;
         IARDreamFragmentManager.instance.Pause = false;
         IARViewItem.instance.Pause = false;
-        JumpingSystem.instance.Pause = true;
-        MovingSystem.instance.Pause = true;
+        MovingSystem_TeleportMode.instance.Pause = true;
+        MovingSystem_FPSMode.instance.Pause = true;
+        MovingSystem_UIMode.instance.Pause = true;
         if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
         {
             MirrorSystem.instance.Pause = true;

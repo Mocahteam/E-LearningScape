@@ -12,7 +12,8 @@ public class LockResolver : FSystem {
     private Family f_focusedLocker = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(ReadyToWork), typeof(Locker)));
 
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
-    private Family f_closeLock = FamilyManager.getFamily(new AnyOfTags("LockIntroWheel", "LockR2Wheel", "ArrowUI", "HUD_TransparentOnMove"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_closeLock_1 = FamilyManager.getFamily(new AnyOfTags("LockIntroWheel", "LockR2Wheel", "ArrowUI"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_closeLock_2 = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver), typeof(HUD_TransparentOnMove)));
 
     private Family f_fences = FamilyManager.getFamily(new AnyOfTags("Fence"), new AllOfComponents(typeof(Animator)));
     private Family f_wallIntro = FamilyManager.getFamily(new AnyOfTags("WallIntro"), new AllOfComponents(typeof(Animator)));
@@ -67,6 +68,10 @@ public class LockResolver : FSystem {
         // Enable UI arrows
         GameObjectManager.setGameObjectState(selectedLocker.LeftRightControl, true);
         GameObjectManager.setGameObjectState(selectedLocker.UpDownControl, true);
+        // Add RigidBody to wheels
+        GameObjectManager.addComponent<Rigidbody>(selectedLocker.Wheel1, new { isKinematic = true });
+        GameObjectManager.addComponent<Rigidbody>(selectedLocker.Wheel2, new { isKinematic = true });
+        GameObjectManager.addComponent<Rigidbody>(selectedLocker.Wheel3, new { isKinematic = true });
         // Change selected wheel color and move Up/Down UI over the selected wheel
         selectedWheel = selectedLocker.Wheel2;
         lockWheelColor = selectedWheel.GetComponent<Renderer>().material.color;
@@ -85,7 +90,7 @@ public class LockResolver : FSystem {
         if (selectedLocker)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed
-            if (((f_closeLock.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && (!room1Unlocked || IARScreenRoom1Unlocked) && (!room3Unlocked || IARScreenRoom3Unlocked) && !lockRotationUp && !lockRotationDown)
+            if (((f_closeLock_1.Count == 0 && f_closeLock_2.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && (!room1Unlocked || IARScreenRoom1Unlocked) && (!room3Unlocked || IARScreenRoom3Unlocked) && !lockRotationUp && !lockRotationDown)
             {
                 closedBy = "player";
                 ExitLocker();
@@ -242,6 +247,10 @@ public class LockResolver : FSystem {
         selectedLocker.Wheel1.GetComponent<Renderer>().material.color = lockWheelColor;
         selectedLocker.Wheel2.GetComponent<Renderer>().material.color = lockWheelColor;
         selectedLocker.Wheel3.GetComponent<Renderer>().material.color = lockWheelColor;
+        // Remove RigidBody to wheels
+        GameObjectManager.removeComponent<Rigidbody>(selectedLocker.Wheel1);
+        GameObjectManager.removeComponent<Rigidbody>(selectedLocker.Wheel2);
+        GameObjectManager.removeComponent<Rigidbody>(selectedLocker.Wheel3);
 
         // remove ReadyToWork component to release selected GameObject
         GameObjectManager.removeComponent<ReadyToWork>(selectedLocker.gameObject);

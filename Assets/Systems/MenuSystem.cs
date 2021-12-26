@@ -196,7 +196,7 @@ public class MenuSystem : FSystem {
         SendStatements.instance = null;
         CheckDebugMode.instance = null;
         DebugModeSystem.instance = null;
-        MovingSystem.instance = null;
+        MovingSystem_FPSMode.instance = null;
         SettingsManager.instance = null;
         LoadGameContent.instance = null;
         LogoDisplaying.instance = null;
@@ -230,7 +230,8 @@ public class MenuSystem : FSystem {
         CollectObject.instance = null;
         DreamFragmentCollecting.instance = null;
         SaveManager.instance = null;
-        JumpingSystem.instance = null;
+        MovingSystem_TeleportMode.instance = null;
+        MovingSystem_UIMode.instance = null;
 
         GameObjectManager.loadScene("Tutoriel");
     }

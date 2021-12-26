@@ -42,6 +42,7 @@ public class SaveManager : FSystem {
     private Family f_enabledHintsIAR = FamilyManager.getFamily(new AllOfComponents(typeof(HintContent)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_lockIntroWheel = FamilyManager.getFamily(new AllOfComponents(typeof(WheelFrontFace)), new AnyOfTags("LockIntroWheel"));
     private Family f_lockR2Wheel = FamilyManager.getFamily(new AllOfComponents(typeof(WheelFrontFace)), new AnyOfTags("LockR2Wheel"));
+    private Family f_movingMode = FamilyManager.getFamily(new AllOfComponents(typeof(MovingModeSelector)));
 
     public static SaveManager instance;
 
@@ -354,6 +355,7 @@ public class SaveManager : FSystem {
 
         saveContent.sessionID = LoadGameContent.sessionID;
         saveContent.UUID = GBL_Interface.userUUID;
+        saveContent.navigationMode = f_movingMode.First().GetComponent<MovingModeSelector>().currentState;
         saveContent.storyTextCount = StoryDisplaying.instance.GetStoryProgression();
         saveContent.lastRoomUnlocked = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
 
@@ -405,6 +407,9 @@ public class SaveManager : FSystem {
                 LinkedWith linkWith = go.GetComponent<LinkedWith>();
                 if (linkWith && linkWith.link.GetComponent<NewDreamFragment>() == null) // Green fragment aren't linked with
                     saveContent.dreamFragmentsStates[go.name] = 2;
+                Animator anim;
+                if (go.TryGetComponent<Animator>(out anim))
+                    anim.enabled = false;
             }
         }
 
@@ -523,6 +528,9 @@ public class SaveManager : FSystem {
                     go.GetComponent<TextMeshProUGUI>().text = LoadGameContent.gameContent.sessionIDText+saveContent.sessionID;
             }
 
+            f_movingMode.First().GetComponent<MovingModeSelector>().currentState = saveContent.navigationMode;
+            f_movingMode.First().GetComponent<MovingModeSelector>().resumeMovingSystems();
+
             // set story reading progression
             StoryDisplaying.instance.LoadStoryProgression(saveContent.storyTextCount);
 
@@ -572,8 +580,7 @@ public class SaveManager : FSystem {
             night.GetComponent<Animator>().enabled = true;
             night.GetComponent<Collider>().enabled = false;
             // display movement HUD
-            MovingSystem.instance.firstCrouchOccurs = true;
-            MovingSystem.instance.SetHUD(true);
+            MovingSystem_FPSMode.instance.UnlockAllHUD();
             // disable movement HUD warnings
             foreach (LinkedWith link in f_OutOfFirstRoom.First().GetComponents<LinkedWith>())
                 GameObjectManager.setGameObjectState(link.link, false);

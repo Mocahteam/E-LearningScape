@@ -3,62 +3,46 @@ using FYFY;
 using FYFY_plugins.TriggerManager;
 using System.Collections.Generic;
 
-public class JumpingSystem : FSystem {
+public class MovingSystem_TeleportMode : FSystem {
     private GameObject pinTarget;
     private GameObject fpsController;
     private Vector3 CameraPlanarPosition;
 
     private Family f_dreamFragmentUI = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AllOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD, PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_highlighted = FamilyManager.getFamily(new AllOfComponents(typeof(Highlighted)));
-    private Family f_readyToWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
 
     private Family f_OutOfFirstRoom = FamilyManager.getFamily(new AllOfComponents(typeof(TriggerSensitive3D), typeof(LinkedWith)));
 
     public bool lockSystem;
 
-    public static JumpingSystem instance;
+    public static MovingSystem_TeleportMode instance;
 
-    public JumpingSystem()
+    public MovingSystem_TeleportMode()
     {
         if (Application.isPlaying)
         {
             pinTarget = GameObject.Find("PinTarget");
             pinTarget.SetActive(false);
-            lockSystem = true; // system is unlocked if "ToggleTarget" input is pressed (key "k")
-            fpsController = GameObject.Find("FPSController");
 
-            f_highlighted.addEntryCallback(onHighlight);
-            f_highlighted.addExitCallback(onUnhighlight);
-            f_readyToWork.addEntryCallback(onHighlight);
-            f_readyToWork.addExitCallback(onUnhighlight);
+            fpsController = GameObject.Find("FPSController");
 
             instance = this;
         }
-    }
-
-    private void onHighlight (GameObject go)
-    {
-        this.Pause = true;
-    }
-
-    private void onUnhighlight(int instanceId)
-    {
-        if (f_highlighted.Count == 0)
-            this.Pause = false;
     }
 
     // Use this to update member variables when system pause. 
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame) {
         GameObjectManager.setGameObjectState(pinTarget, false);
-	}
+    }
 
 	// Use this to update member variables when system resume.
 	// Advice: avoid to update your families inside this function.
 	protected override void onResume(int currentFrame)
     {
-        if (!lockSystem)
-            GameObjectManager.setGameObjectState(pinTarget, true);
+        // If player switch to assisted mouse navigation disable HUD warnings for moving
+        if (f_OutOfFirstRoom.Count > 0)
+            foreach (LinkedWith link in f_OutOfFirstRoom.First().GetComponents<LinkedWith>())
+                GameObjectManager.setGameObjectState(link.link, false);
     }
 
     // Use to process your families.
@@ -79,9 +63,9 @@ public class JumpingSystem : FSystem {
                 // rotate pin to the camera position
                 pinTarget.transform.GetChild(1).transform.LookAt(CameraPlanarPosition);
 
-                if (Input.GetButtonDown("Fire1") && f_highlighted.Count == 0 && f_dreamFragmentUI.Count == 0 && pinTarget.activeInHierarchy)
+                if (Input.GetButtonDown("Fire1") && f_dreamFragmentUI.Count == 0 && pinTarget.activeInHierarchy)
                 {
-                    fpsController.transform.position = hit.point + Vector3.up * 2 - Camera.main.transform.forward;
+                    fpsController.transform.position = hit.point + Vector3.up * 2;
                     GameObjectManager.addComponent<PlaySound>(fpsController, new { id = 18 }); // id refer to FPSController AudioBank
                     GameObjectManager.addComponent<ActionPerformedForLRS>(fpsController.gameObject, new
                     {
@@ -94,21 +78,6 @@ public class JumpingSystem : FSystem {
             }
             else
                 GameObjectManager.setGameObjectState(pinTarget, false); // hide pin
-        }
-
-        if (Input.GetButtonDown("ToggleTarget"))
-        {
-            lockSystem = !lockSystem;
-            GameObjectManager.setGameObjectState(pinTarget, !lockSystem);
-
-            SwitchPerso sp = fpsController.GetComponent<SwitchPerso>();
-            sp.fpsCam = true;
-            sp.forceUpdate();
-
-            // If player switch to assisted mouse navigation disable HUD warnings for moving
-            if (f_OutOfFirstRoom.Count > 0)
-                foreach (LinkedWith link in f_OutOfFirstRoom.First().GetComponents<LinkedWith>())
-                    GameObjectManager.setGameObjectState(link.link, false);
         }
     }
 }

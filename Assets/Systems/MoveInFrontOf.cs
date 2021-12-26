@@ -13,9 +13,15 @@ public class MoveInFrontOf : FSystem {
     private Family f_readyToWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
     private Family f_forcedMove = FamilyManager.getFamily(new AllOfComponents(typeof(Selectable), typeof(ForceMove)));
 
+    private Family f_hidableHUD = FamilyManager.getFamily(new AnyOfTags("HidableHUD"));
+
     private Family f_quitEnigma = FamilyManager.getFamily(new AnyOfTags("QuitEnigma"));
 
-    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"), new AllOfComponents(typeof(SwitchPerso)));
+    private Family f_switchView = FamilyManager.getFamily(new AllOfComponents(typeof(SwitchPerso)));
+
+    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
+
+    private Family f_movingModeSelector = FamilyManager.getFamily(new AllOfComponents(typeof(MovingModeSelector)));
 
     //information for animations
     private float speed;
@@ -61,18 +67,21 @@ public class MoveInFrontOf : FSystem {
             // reset intial player scale
             f_player.First().transform.localScale = playerLocalScale;
             // reset player camera
-            f_player.First().GetComponent<SwitchPerso>().forceUpdate();
+            f_switchView.First().GetComponent<SwitchPerso>().forceUpdate();
             // reset zoom
             Camera.main.fieldOfView = playerZoom;
             //Fix camera angle
             Camera.main.transform.parent.localRotation = Quaternion.Euler(0, Camera.main.transform.parent.localRotation.eulerAngles.y, 0);
             Camera.main.transform.localRotation = Quaternion.Euler(Camera.main.transform.localRotation.eulerAngles.x, 0, 0);
-            
-            JumpingSystem.instance.Pause = false;
+
+            // enable HUD
+            foreach (GameObject hud in f_hidableHUD)
+                GameObjectManager.setGameObjectState(hud, true);
+
             Highlighter.instance.Pause = false;
             DreamFragmentCollecting.instance.Pause = false;
             CollectObject.instance.Pause = false;
-            MovingSystem.instance.Pause = false;
+            f_movingModeSelector.First().GetComponent<MovingModeSelector>().resumeMovingSystems();
             if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
             {
                 MirrorSystem.instance.Pause = false;
@@ -90,16 +99,6 @@ public class MoveInFrontOf : FSystem {
             GameObjectManager.setGameObjectState(f_quitEnigma.First(), false);
         }
     }
-
-    // Use this to update member variables when system pause. 
-    // Advice: avoid to update your families inside this function.
-    protected override void onPause(int currentFrame) {
-	}
-
-	// Use this to update member variables when system resume.
-	// Advice: avoid to update your families inside this function.
-	protected override void onResume(int currentFrame){
-	}
 
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
@@ -132,12 +131,15 @@ public class MoveInFrontOf : FSystem {
                     activityExtensions = new Dictionary<string, string>() { { "position", focusedGO.transform.position.ToString("G4") } }
                 });
 
+                // disable HUD
+                foreach (GameObject hud in f_hidableHUD)
+                    GameObjectManager.setGameObjectState(hud, false);
+
                 // pause unuse systems
-                JumpingSystem.instance.Pause = true;
                 Highlighter.instance.Pause = true;
                 DreamFragmentCollecting.instance.Pause = true;
                 CollectObject.instance.Pause = true;
-                MovingSystem.instance.Pause = true;
+                f_movingModeSelector.First().GetComponent<MovingModeSelector>().pauseMovingSystems();
                 if (ToggleObject.instance != null) // could be null inside tutorial
                     ToggleObject.instance.Pause = true;
 
@@ -146,8 +148,8 @@ public class MoveInFrontOf : FSystem {
                 Camera.main.fieldOfView = 60;
 
                 // In case player is in third person view, we switch in First person cam view
-                f_player.First().GetComponent<SwitchPerso>().ThirdCamera.enabled = false;
-                f_player.First().GetComponent<SwitchPerso>().FirstCamera.enabled = true;
+                f_switchView.First().GetComponent<SwitchPerso>().ThirdCamera.enabled = false;
+                f_switchView.First().GetComponent<SwitchPerso>().FirstCamera.enabled = true;
 
                 // save player scale (crouch or not) in order to reset it when player exit the focused GameObject
                 playerLocalScale = f_player.First().transform.localScale;

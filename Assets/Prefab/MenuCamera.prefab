@@ -461,7 +461,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5424574553275162587}
   - component: {fileID: 2230077425918381301}
-  - component: {fileID: 7716381233489043893}
   m_Layer: 0
   m_Name: LoadingFragment
   m_TagString: LoadingFragment
@@ -505,19 +504,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.43844223, y: 0.4651432, z: 0.47513056}
   m_Center: {x: 0.026693344, y: -0.018110037, z: 0.01987052}
---- !u!114 &7716381233489043893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3721146921175019975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 363e04bd34c6c0545b128dba4b93981f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  link: {fileID: 0}
 --- !u!1 &3844375132000407352
 GameObject:
   m_ObjectHideFlags: 0

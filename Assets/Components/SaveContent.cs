@@ -40,6 +40,11 @@ public class SaveContent {
 	public string sessionID = "";
     public string UUID = "";
 
+
+    /// <summary>
+    /// Navigation mode selected: 0 means FPS, 1 means Teleport, 2 means UI buttons
+    /// </summary>
+    public int navigationMode = 0;
     /// <summary>
     /// Keep track of the progression in history texts
     /// </summary>

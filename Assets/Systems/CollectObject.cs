@@ -33,18 +33,14 @@ public class CollectObject : FSystem {
         {
             foreach (GameObject collect in f_collectableObjects)
             {
-                bool isDreamFragment = collect.GetComponent<DreamFragment>();
-                if (!isDreamFragment)
+                GameObjectManager.addComponent<ActionPerformed>(collect, new { name = "perform", performedBy = "player" });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(collect, new 
                 {
-                    GameObjectManager.addComponent<ActionPerformed>(collect, new { name = "perform", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(collect, new 
-                    {
-                        verb = "collected",
-                        objectType = "item",
-                        objectName = collect.name,
-                        activityExtensions = new Dictionary<string, string>() { { "type", "object" } }
-                    });
-                }
+                    verb = "collected",
+                    objectType = "item",
+                    objectName = collect.name,
+                    activityExtensions = new Dictionary<string, string>() { { "type", "object" } }
+                });
                 // enable UI target
                 GameObjectManager.setGameObjectState(collect.GetComponent<LinkedWith>().link, true);
                 // particular case of collecting room2 scrolls
@@ -69,15 +65,11 @@ public class CollectObject : FSystem {
                     // enable it
                     GameObjectManager.setGameObjectState(UIScroll, true);
                 }
-                // disable in-game source if it is not a dream fragment
-                if (!isDreamFragment)
-                    GameObjectManager.setGameObjectState(collect, false);
+                // disable in-game source
+                GameObjectManager.setGameObjectState(collect, false);
                 // Play notification
-                if (!isDreamFragment)
-                    itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start");
-                else if (IARDreamFragmentManager.virtualDreamFragment)
-                    itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start2");
-
+                itemCollectedNotif.GetComponent<Animator>().SetTrigger("Start");
+                
                 // Play sound
                 GameObjectManager.addComponent<PlaySound>(collect, new { id = 10 }); // id refer to FPSController AudioBank
                 // particular case of collecting Intro_scroll game object => show ingame "Press Y" notification

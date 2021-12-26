@@ -9,7 +9,8 @@ public class WhiteBoardManager : FSystem {
 
     private Family f_whiteBoard = FamilyManager.getFamily(new AnyOfTags("Board"));
     private Family f_focusedWhiteBoard = FamilyManager.getFamily(new AnyOfTags("Board"), new AllOfComponents(typeof(ReadyToWork)));
-    private Family f_closeWhiteBoard = FamilyManager.getFamily (new AnyOfTags ("Board", "Eraser", "BoardTexture", "InventoryElements", "HUD_TransparentOnMove"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_closeWhiteBoard_1 = FamilyManager.getFamily (new AnyOfTags ("Board", "Eraser", "BoardTexture", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_closeWhiteBoard_2 = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver), typeof(HUD_TransparentOnMove)));
     private Family f_eraserFocused = FamilyManager.getFamily(new AnyOfTags("Eraser"), new AllOfComponents(typeof(PointerOver)));
     private Family f_boardRemovableWords = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
     private Family f_boardUnremovableWords = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
@@ -60,6 +61,12 @@ public class WhiteBoardManager : FSystem {
         instance.Pause = false;
 
         GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
+        
+        // Add RigidBody and collider to eraser
+        GameObjectManager.addComponent<Rigidbody>(eraser, new { isKinematic = true });
+        GameObjectManager.addComponent<CapsuleCollider>(eraser);
+        // Add Collider to boardTexture
+        GameObjectManager.addComponent<MeshCollider>(f_boardTexture.First());
     }
 
     private void onEnterEraser (GameObject go)
@@ -75,37 +82,13 @@ public class WhiteBoardManager : FSystem {
         eraser.GetComponent<Renderer>().material.SetColor("_EmissionColor", prevColor);
     }
 
-    //Calculate points equally distributed on an area depending on width, height and eraserWidth
-    private List<Vector2> PointsFromCenter(float width, float height)
-    {
-        if (width == 0 || height == 0)
-            return null;
-        
-        float eraserWidth = 2.1f;
-        List<Vector2> points = new List<Vector2>();
-
-        int nbOfHorizontal, nbOfVertical;
-        nbOfHorizontal = (int)(width / eraserWidth) + 1;
-        nbOfVertical = (int)(height / eraserWidth) + 1;
-
-        float horizontalStep, verticalStep;
-        horizontalStep = width / (nbOfHorizontal + 1);
-        verticalStep = height / (nbOfVertical + 1);
-
-        for (int i = 0; i < nbOfHorizontal; i++)
-            for (int j = 0; j < nbOfVertical; j++)
-                points.Add(new Vector2(-width / 2 + horizontalStep * (i + 1), -height / 2 + verticalStep * (j + 1)) / 7);
-        
-        return points;
-    }
-
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
     {
         if (selectedBoard)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and IAR is closed (because Escape close IAR)
-            if (((f_closeWhiteBoard.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)))
+            if (((f_closeWhiteBoard_1.Count == 0 && f_closeWhiteBoard_2.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)))
                 ExitWhiteBoard();
             else
             {
@@ -166,6 +149,12 @@ public class WhiteBoardManager : FSystem {
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBoard, new { verb = "exited", objectType = "interactable", objectName = selectedBoard.name });
 
         selectedBoard = null;
+
+        // Add RigidBody and collider to eraser
+        GameObjectManager.removeComponent<Rigidbody>(eraser);
+        GameObjectManager.removeComponent<CapsuleCollider>(eraser);
+        // Add Collider to boardTexture
+        GameObjectManager.removeComponent<MeshCollider>(f_boardTexture.First());
 
         // Pause this system
         instance.Pause = true;

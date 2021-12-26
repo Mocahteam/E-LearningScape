@@ -9,27 +9,23 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class MovingSystem : FSystem
+public class MovingSystem_FPSMode : FSystem
 {
     // This system manage HUD on moving, walking speed and state of the FirstPersonController
 
     private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController), typeof(AudioBank)));
-    private Family f_hidableHUD = FamilyManager.getFamily(new AnyOfTags("HidableHUD"));
-    private Family f_TransparentOnMove = FamilyManager.getFamily(new AnyOfTags("HidableHUD", "HUD_TransparentOnMove"));
-    private Family f_endRoom = FamilyManager.getFamily(new AnyOfTags("EndRoom"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_TransparentOnMove = FamilyManager.getFamily(new AllOfComponents(typeof(HUD_TransparentOnMove)));
     private Family f_cursor = FamilyManager.getFamily(new AnyOfTags("Cursor"));
     private Family f_waterWalking = FamilyManager.getFamily(new AnyOfLayers(12), new AllOfComponents(typeof(Triggered3D))); // Layer 12 <=> WaterCollider
     private Family f_CrouchHint = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver), typeof(LinkedWith), typeof(BoxCollider)));
     private Family f_OutOfFirstRoom = FamilyManager.getFamily(new AllOfComponents(typeof(Triggered3D), typeof(LinkedWith)));
 
     public float traceMovementFrequency = 0;
-    private bool crouching = false; // true when the player is crouching
+    public bool crouching = false; // true when the player is crouching
     private bool changingPose = false;
-    private float crouchingSpeed;
     private Vector3 targetScale;
     private Vector3 crouchingScale;
     private Vector3 standingScale = Vector3.one;
-    public bool firstCrouchOccurs = false;
     private FirstPersonController playerController;
     private Animation movableFragments;
     private Graphic[] tmpGraphics;
@@ -42,14 +38,16 @@ public class MovingSystem : FSystem
     private bool hideHUD;
     private float hudShowingSpeed;
     private float hudHidingSpeed;
-    private bool previousHUDState;
     private bool walkInWater = false;
+    private bool firstCrouchOccurs = false;
 
     private float walkingTraceTimer = 0;
 
-    public static MovingSystem instance;
+    private GameObject night;
 
-    public MovingSystem()
+    public static MovingSystem_FPSMode instance;
+
+    public MovingSystem_FPSMode()
     {
         //when crouching, the scale of the player is changed (rather than its position)
         crouchingScale = new Vector3(standingScale.x * 0.2f, standingScale.y * 0.2f, standingScale.z * 0.2f);
@@ -63,13 +61,13 @@ public class MovingSystem : FSystem
             f_waterWalking.addEntryCallback(onEnterWater);
             f_waterWalking.addExitCallback(onExitWater);
 
-            if (SceneManager.GetActiveScene().name.Contains("Tuto"))
-                firstCrouchOccurs = true;
-            else
+            if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
             {
                 f_CrouchHint.addEntryCallback(disableHUDWarning);
                 f_OutOfFirstRoom.addEntryCallback(disableHUDWarning);
             }
+            
+            night = GameObject.Find("Night");
 
             //MainLoop.instance.StartCoroutine(testLRS());
         }
@@ -144,7 +142,6 @@ public class MovingSystem : FSystem
     {
         playerController.enabled = false;
         f_player.First().GetComponentInChildren<ThirdPersonCameraControler>().enabled = false;
-        SetHUD(false);
         // Show mouse cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Confined;
@@ -159,10 +156,9 @@ public class MovingSystem : FSystem
     {
         playerController.m_MouseLook.m_CameraTargetRot = playerCamera.transform.localRotation;
         playerController.m_MouseLook.m_CharacterTargetRot = f_player.First().transform.localRotation;
-        
+
         playerController.enabled = true;
         f_player.First().GetComponentInChildren<ThirdPersonCameraControler>().enabled = true;
-        SetHUD(true);
         // hide mouse cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Locked;
@@ -171,20 +167,87 @@ public class MovingSystem : FSystem
         GameObjectManager.setGameObjectState(f_cursor.First(), true);
     }
 
-    public void SetHUD(bool state)
+    public void UnlockAllHUD()
     {
-        if (firstCrouchOccurs && previousHUDState != state)
+        foreach (GameObject hud in f_TransparentOnMove)
+            if (hud.transform.parent.name == "FPSControl")
+                GameObjectManager.setGameObjectState(hud, true);
+    }
+
+    public void ChangePose(bool animation = true)
+    {
+        if (!changingPose)
         {
-            foreach (GameObject hud in f_hidableHUD)
-                GameObjectManager.setGameObjectState(hud, state);
-            previousHUDState = state;
+            changingPose = true; //true when the player is crouching or standing
+                                 //change moving speed according to the stance
+            if (crouching)
+            {
+                if (!walkInWater)
+                {
+                    playerController.m_WalkSpeed = playerController.m_WalkSpeed * 2;
+                    playerController.m_RunSpeed = playerController.m_RunSpeed * 2;
+                    playerController.m_FootstepSounds[0] = audioBank.audioBank[0];
+                    playerController.m_FootstepSounds[1] = audioBank.audioBank[1];
+                }
+            }
+            else
+            { // standing and want to crouch
+                if (!firstCrouchOccurs && night != null)
+                {
+                    firstCrouchOccurs = true;
+                    night.GetComponent<Animator>().enabled = true;
+                    night.GetComponent<Collider>().enabled = false;
+                    UnlockAllHUD();
+                }
+                if (!walkInWater)
+                {
+                    playerController.m_WalkSpeed = playerController.m_WalkSpeed / 2;
+                    playerController.m_RunSpeed = playerController.m_RunSpeed / 2;
+                    playerController.m_FootstepSounds[0] = audioBank.audioBank[4];
+                    playerController.m_FootstepSounds[1] = audioBank.audioBank[5];
+                }
+            }
+
+            MainLoop.instance.StartCoroutine(operateChangingPose(animation));
+        }
+    }
+
+    private IEnumerator operateChangingPose(bool animation = true)
+    {
+        if (crouching)
+            targetScale = standingScale;
+        else
+            targetScale = crouchingScale;
+
+        if (animation)
+        {
+            while (playerController.transform.localScale != targetScale) //when standing scale is reached
+            {
+                playerController.transform.localScale = Vector3.MoveTowards(playerController.transform.localScale, targetScale, 0.8f); //change stance gradually
+                yield return null;
+            }
+        }
+        else
+            playerController.transform.localScale = targetScale;
+
+        changingPose = false;
+        crouching = !crouching; //true when the player is crouching
+
+        if (crouching)
+        {
+            GameObjectManager.addComponent<ActionPerformed>(playerController.gameObject, new { name = "turnOn", performedBy = "player" });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "crouched", objectType = "avatar", objectName = "player" });
+        }
+        else
+        {
+            GameObjectManager.addComponent<ActionPerformed>(playerController.gameObject, new { name = "turnOff", performedBy = "player" });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "stood", objectType = "avatar", objectName = "player" });
         }
     }
 
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount)
     {
-        SetHUD(f_endRoom.Count == 0);
         if (traceMovementFrequency > 0)
         {
             if (playerController.m_Input != Vector2.zero)
@@ -203,83 +266,9 @@ public class MovingSystem : FSystem
             }
         }
 
-        if(Input.GetButton("ZoomIn"))
-        {
-            Camera.main.fieldOfView -= 1;
-            if (Camera.main.fieldOfView < 20)
-                Camera.main.fieldOfView = 20;
-        }
-
-        if (Input.GetButton("ZoomOut"))
-        {
-            Camera.main.fieldOfView += 1;
-            if (Camera.main.fieldOfView > 60)
-                Camera.main.fieldOfView = 60;
-        }
-
-        crouchingSpeed = 70f * Time.deltaTime;
         // when control button or right click is pressed then the player can alternatively crouch and standing
-        if (Input.GetButtonDown("Fire2") && !changingPose)
-        {
-            changingPose = true; //true when the player is crouching or standing
-            //change moving speed according to the stance
-            if (crouching)
-            {
-                if (!walkInWater)
-                {
-                    playerController.m_WalkSpeed = playerController.m_WalkSpeed * 2;
-                    playerController.m_RunSpeed = playerController.m_RunSpeed * 2;
-                    playerController.m_FootstepSounds[0] = audioBank.audioBank[0];
-                    playerController.m_FootstepSounds[1] = audioBank.audioBank[1];
-                }
-            }
-            else
-            { // standing and want to crouch
-                if (!firstCrouchOccurs)
-                {
-                    firstCrouchOccurs = true;
-                    GameObject night = GameObject.Find("Night");
-                    night.GetComponent<Animator>().enabled = true;
-                    night.GetComponent<Collider>().enabled = false;
-                }
-                if (!walkInWater)
-                {
-                    playerController.m_WalkSpeed = playerController.m_WalkSpeed / 2;
-                    playerController.m_RunSpeed = playerController.m_RunSpeed / 2;
-                    playerController.m_FootstepSounds[0] = audioBank.audioBank[4];
-                    playerController.m_FootstepSounds[1] = audioBank.audioBank[5];
-                }
-            }
-        }
-
-        //if the player is changing stance
-        if (changingPose)
-        {
-            if (crouching)
-                targetScale = standingScale;
-            else
-                targetScale = crouchingScale;
-
-            playerController.transform.localScale = Vector3.MoveTowards(playerController.transform.localScale, targetScale, crouchingSpeed / 10); //change stance gradually
-
-            if (playerController.transform.localScale == targetScale) //when standing scale is reached
-            {
-                changingPose = false;
-                crouching = !crouching; //true when the player is crouching
-
-                if (crouching)
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(playerController.gameObject, new { name = "turnOn", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "crouched", objectType = "avatar", objectName = "player" });
-                }
-                else
-                {
-                    GameObjectManager.addComponent<ActionPerformed>(playerController.gameObject, new { name = "turnOff", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "stood", objectType = "avatar", objectName = "player" });
-                }
-            }
-
-        }
+        if (Input.GetButtonDown("Fire2"))
+            ChangePose();
 
         // make HUD transparent on moving
         hudHidingSpeed = -3f * Time.deltaTime;

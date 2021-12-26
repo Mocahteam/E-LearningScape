@@ -11,7 +11,8 @@ public class SatchelManager : FSystem {
     //all selectable objects
     private Family f_bag = FamilyManager.getFamily(new AnyOfTags("Bag"));
     private Family f_selectedBag = FamilyManager.getFamily(new AnyOfTags("Bag"), new AllOfComponents(typeof(ReadyToWork), typeof(Animator)));
-    private Family f_closeBag = FamilyManager.getFamily(new AnyOfTags("Bag", "InventoryElements", "HUD_TransparentOnMove"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_closeBag_1 = FamilyManager.getFamily(new AnyOfTags("Bag", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_closeBag_2 = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver), typeof(HUD_TransparentOnMove)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_itemUnselected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new NoneOfComponents(typeof(SelectedInInventory)));
@@ -151,7 +152,7 @@ public class SatchelManager : FSystem {
         if (selectedBag)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and paper is out of the bag and IAR is closed (because Escape close IAR)
-            if (((f_closeBag.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && (paperOut || !unlocked) && !closingSatchel)
+            if (((f_closeBag_1.Count == 0 && f_closeBag_2.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && (paperOut || !unlocked) && !closingSatchel)
             {
                 if (paperOut)
                 {

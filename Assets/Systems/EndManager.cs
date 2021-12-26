@@ -135,7 +135,7 @@ public class EndManager : FSystem {
             allSystems.AddRange(FSystemManager.updateSystems());
             allSystems.AddRange(FSystemManager.lateUpdateSystems());
             foreach (FSystem syst in allSystems)
-                if (syst != this && syst != DreamFragmentCollecting.instance && syst != MovingSystem.instance && syst != JumpingSystem.instance && syst != SendStatements.instance && syst != ActionsManager.instance)
+                if (syst != this && syst != DreamFragmentCollecting.instance && syst != MovingSystem_FPSMode.instance && syst != MovingSystem_TeleportMode.instance && syst != MovingSystem_UIMode.instance && syst != SendStatements.instance && syst != ActionsManager.instance)
                     syst.Pause = true;
         }
 

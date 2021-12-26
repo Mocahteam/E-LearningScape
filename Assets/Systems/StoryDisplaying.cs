@@ -20,6 +20,8 @@ public class StoryDisplaying : FSystem {
     // Camera is required in this system to switch menuCamera to fpsCamera during displaying story
     private Family menuCamera = FamilyManager.getFamily(new AllOfComponents(typeof(MenuCamera), typeof(Camera)));
 
+    private Family f_movingModeSelector = FamilyManager.getFamily(new AllOfComponents(typeof(MovingModeSelector)));
+
     private GameObject sdGo;
     private TextMeshProUGUI sdText;
     private Image fadingImage;
@@ -222,9 +224,8 @@ public class StoryDisplaying : FSystem {
                 {
                     background.color = new Color(background.color.r, background.color.g, background.color.b, 1);
                     fadingBackground = false;
-                    // stop systems
-                    MovingSystem.instance.Pause = true;
-                    JumpingSystem.instance.Pause = true;
+                    // stop Moving systems
+                    f_movingModeSelector.First().GetComponent<MovingModeSelector>().pauseMovingSystems();
                 }
                 alphaToPlain = false;
                 // pass to the next text
@@ -254,8 +255,7 @@ public class StoryDisplaying : FSystem {
                         // Enable fps camera (=> disable menuCamera)
                         GameObjectManager.setGameObjectState(menuCamera.First(), false);
                         // Start all required systems
-                        MovingSystem.instance.Pause = false;
-                        JumpingSystem.instance.Pause = false;
+                        f_movingModeSelector.First().GetComponent<MovingModeSelector>().resumeMovingSystems();
                         SpritesAnimator.instance.Pause = false;
                         DreamFragmentCollecting.instance.Pause = false;
                         IARNewItemAvailable.instance.Pause = false;

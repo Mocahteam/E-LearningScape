@@ -19,4 +19,9 @@ public class MovingSystem_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("MovingSystem", "SetHUD", state);
 	}
 
+	public void ChangePose()
+	{
+		MainLoop.callAppropriateSystemMethod ("MovingSystem", "ChangePose", null);
+	}
+
 }

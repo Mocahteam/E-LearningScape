@@ -10,7 +10,8 @@ public class PlankAndMirrorManager : FSystem {
 
     //all selectable objects
     private Family f_selectedPlank = FamilyManager.getFamily(new AnyOfTags("PlankE09"), new AllOfComponents(typeof(ReadyToWork)));
-    private Family f_closePlank = FamilyManager.getFamily(new AnyOfTags("PlankE09", "InventoryElements", "HUD_TransparentOnMove"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_closePlank_1 = FamilyManager.getFamily(new AnyOfTags("PlankE09", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
+    private Family f_closePlank_2 = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver), typeof(HUD_TransparentOnMove)));
     private Family f_arrows = FamilyManager.getFamily(new AnyOfTags("PlankE09"), new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
@@ -83,7 +84,7 @@ public class PlankAndMirrorManager : FSystem {
         if (selectedPlank)
         {
             // "close" ui (give back control to the player) when clicking on nothing or Escape is pressed and paper is out of the bag and IAR is closed (because Escape close IAR)
-            if (((f_closePlank.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && !movePlank)
+            if (((f_closePlank_1.Count == 0 && f_closePlank_2.Count == 0 && Input.GetButtonDown("Fire1")) || (Input.GetButtonDown("Cancel") && f_iarBackground.Count == 0)) && !movePlank)
             {
                 // ask to exit plank
                 prepareClosing = true;

@@ -15,6 +15,8 @@ public class TutorialManager : FSystem {
     private Family f_dreamTabContent = FamilyManager.getFamily(new AnyOfTags("DreamFragmentsTabContent"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_selectableDreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragmentToggle), typeof(Toggle)));
     private Family f_questionTabContent = FamilyManager.getFamily(new AnyOfTags("QuestionTagContent"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
+    private Family f_movingModeButton = FamilyManager.getFamily(new AllOfComponents(typeof(MovingModeSelector)));
+    private Family f_answerQuestion = FamilyManager.getFamily(new AnyOfTags("A-R1"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
 
     private FirstPersonController playerController;
     private Transform TutorialScreens;
@@ -22,6 +24,7 @@ public class TutorialManager : FSystem {
     private Vector3 initPosition;
     private GameObject pinTarget;
 
+    private string currentStepName;
     private int currentStep = 0;
     private float rotationProgress = 0;
     private float previousRotation = 0;
@@ -39,6 +42,10 @@ public class TutorialManager : FSystem {
             initWalkSpeed = playerController.m_WalkSpeed;
             initPosition = new Vector3(playerController.transform.position.x, playerController.transform.position.y, playerController.transform.position.z);
             GameObjectManager.setGameObjectState(TutorialScreens.GetChild(currentStep).gameObject, true);
+            currentStepName = TutorialScreens.GetChild(currentStep).gameObject.name;
+            // Toggle linked GO
+            foreach (LinkedWith lw in TutorialScreens.GetChild(currentStep).GetComponents<LinkedWith>())
+                GameObjectManager.setGameObjectState(lw.link, !lw.link.activeSelf);
             f_targetArea.addEntryCallback(onTargetReached);
             IARDreamFragmentManager.virtualDreamFragment = true; // force virtual dreamFragment for tutorial
         }
@@ -48,9 +55,10 @@ public class TutorialManager : FSystem {
     {
         GameObjectManager.setGameObjectState(TutorialScreens.GetChild(currentStep).gameObject, false);
         currentStep++;
-        if (currentStep == 1)
+        currentStepName = TutorialScreens.GetChild(currentStep).gameObject.name;
+        if (currentStepName == "StepObserve")
         {
-            MovingSystem.instance.Pause = false;
+            MovingSystem_FPSMode.instance.Pause = false;
             MoveInFrontOf.instance.Pause = false;
             IARTabNavigation.instance.Pause = false;
             IARNewItemAvailable.instance.Pause = false;
@@ -59,13 +67,12 @@ public class TutorialManager : FSystem {
             CollectObject.instance.Pause = false;
             DreamFragmentCollecting.instance.Pause = false;
             SpritesAnimator.instance.Pause = false;
-            JumpingSystem.instance.Pause = false;
             playerController.m_WalkSpeed = 0;
-        } else if (currentStep == 2 || currentStep == 8)
+        } else if (currentStepName == "StepMove" || currentStepName == "StepSwitchView")
             playerController.m_WalkSpeed = initWalkSpeed;
-        else if (currentStep == 18)
+        else if (currentStepName == "StepEnd")
         {
-            MovingSystem.instance.Pause = true;
+            MovingSystem_FPSMode.instance.Pause = true;
             MoveInFrontOf.instance.Pause = true;
             IARTabNavigation.instance.Pause = true;
             IARNewItemAvailable.instance.Pause = true;
@@ -74,24 +81,24 @@ public class TutorialManager : FSystem {
             CollectObject.instance.Pause = true;
             DreamFragmentCollecting.instance.Pause = true;
             SpritesAnimator.instance.Pause = true;
-            JumpingSystem.instance.Pause = true;
+            MovingSystem_TeleportMode.instance.Pause = true;
         }
         GameObjectManager.setGameObjectState(TutorialScreens.GetChild(currentStep).gameObject, true);
+        // Toggle linked GO
         foreach (LinkedWith lw in TutorialScreens.GetChild(currentStep).GetComponents<LinkedWith>())
-            GameObjectManager.setGameObjectState(lw.link, true);
+            GameObjectManager.setGameObjectState(lw.link, !lw.link.activeSelf);
     }
 
     private void onTargetReached(GameObject go)
     {
         GameObjectManager.addComponent<PlayUIEffect>(playerController.gameObject, new { effectCode = 2 });
         nextStep();
-        GameObjectManager.unbind(go);
-        GameObject.Destroy(go);
+        GameObjectManager.setGameObjectState(go, false);
     }
 
     protected override void onProcess(int familiesUpdateCount)
     {
-        if (currentStep == 1)
+        if (currentStepName == "StepObserve")
         {
             rotationProgress += Mathf.Abs(playerController.transform.rotation.y - previousRotation);
             previousRotation = playerController.transform.rotation.y;
@@ -100,18 +107,28 @@ public class TutorialManager : FSystem {
                 GameObjectManager.addComponent<PlayUIEffect>(playerController.gameObject, new { effectCode = 2 });
                 nextStep();
             }
-        } else if (currentStep == 3 && playerController.transform.localScale != Vector3.one)
+        } else if (currentStepName == "StepCrouch" && playerController.transform.localScale != Vector3.one)
         {
             GameObjectManager.addComponent<PlayUIEffect>(playerController.gameObject, new { effectCode = 2 });
             nextStep();
         }
-        else if (currentStep == 4 && playerController.transform.localScale == Vector3.one)
+        else if (currentStepName == "StepStandUp" && playerController.transform.localScale == Vector3.one)
         {
             GameObjectManager.addComponent<PlayUIEffect>(playerController.gameObject, new { effectCode = 2 });
             nextStep();
             previousPosition = new Vector3(playerController.transform.position.x, playerController.transform.position.y, playerController.transform.position.z);
+            playerController.m_WalkSpeed = 0; // To force using teleport on next step
+            playerController.transform.position = initPosition;
         }
-        else if (currentStep == 5)
+        else if (currentStepName == "StepWaitK" && Input.GetButtonDown("ToggleTarget"))
+        {
+            GameObjectManager.addComponent<PlayUIEffect>(playerController.gameObject, new { effectCode = 2 });
+            GameObjectManager.setGameObjectState(f_movingModeButton.First(), false);
+            if (TutorialScreens.GetChild(currentStep+1).gameObject.name == "StepMoveUI")
+                playerController.transform.position = initPosition; //reset position to start position
+            nextStep();
+        }
+        else if (currentStepName == "StepSwitchView")
         {
             movingProgress += Vector3.Distance(previousPosition, playerController.transform.position);
             previousPosition = new Vector3(playerController.transform.position.x, playerController.transform.position.y, playerController.transform.position.z);
@@ -119,40 +136,33 @@ public class TutorialManager : FSystem {
             {
                 GameObjectManager.addComponent<PlayUIEffect>(playerController.gameObject, new { effectCode = 2 });
                 nextStep();
-                playerController.m_WalkSpeed = 0; // To force using teleport on next step
-                playerController.transform.position = initPosition;
             }
         }
-        else if (currentStep == 6 && pinTarget.activeInHierarchy) // Wait pinTarget active in hierarchy
-        {
-            GameObjectManager.addComponent<PlayUIEffect>(playerController.gameObject, new { effectCode = 2 });
-            nextStep();
-        }
-        else if (currentStep == 8 && f_itemsEnabled.Count > 0) // Wait one item available inside IAR
+        else if (currentStepName == "StepGetScroll" && f_itemsEnabled.Count > 0) // Wait one item available inside IAR
         {
             nextStep();
         }
-        else if (currentStep == 9 && f_inventoryTabContent.Count > 0) // Wait Inventory panel opened
+        else if (currentStepName == "StepPressY" && f_inventoryTabContent.Count > 0) // Wait Inventory panel opened
         {
             nextStep();
         }
-        else if (currentStep == 10 && f_itemSelected.Count > 0) // Wait item selected
+        else if (currentStepName == "StepSelectScrollIAR" && f_itemSelected.Count > 0) // Wait item selected
         {
             nextStep();
         }
-        else if (currentStep == 11 && f_tabs.Count == 0) // Wait IAR closed
+        else if (currentStepName == "StepWaitIARClose" && f_tabs.Count == 0) // Wait IAR closed
         {
             nextStep();
         }
-        else if (currentStep == 12 && f_newFragment.Count > 0) // Wait one fragment available inside IAR
+        else if (currentStepName == "StepGetDreamFragment" && f_newFragment.Count > 0) // Wait one fragment available inside IAR
         {
             nextStep();
         }
-        else if (currentStep == 13 && f_dreamTabContent.Count > 0) // Wait dream fragment panel opened
+        else if (currentStepName == "StepPressR" && f_dreamTabContent.Count > 0) // Wait dream fragment panel opened
         {
             nextStep();
         }
-        else if (currentStep == 14) // Wait dream fragment selected
+        else if (currentStepName == "StepSelectDreamFragmentIAR") // Wait dream fragment selected
         {
             foreach (GameObject df in f_selectableDreamFragments)
             {
@@ -160,15 +170,11 @@ public class TutorialManager : FSystem {
                     nextStep();
             }
         }
-        else if (currentStep == 15 && f_tabs.Count == 0) // Wait IAR closed
+        else if (currentStepName == "StepWaitAnswerQuestion" && f_answerQuestion.Count > 0)
         {
             nextStep();
         }
-        else if (currentStep == 16 && f_questionTabContent.Count > 0) // Wait Question panel opened
-        {
-            nextStep();
-        }
-        else if (currentStep == 17 && f_tabs.Count == 0) // Wait IAR closed
+        else if (currentStepName == "StepPressB" && f_questionTabContent.Count > 0) // Wait Question panel opened
         {
             nextStep();
         }
