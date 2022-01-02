@@ -46,6 +46,10 @@ public class SaveContent {
     /// </summary>
     public int navigationMode = 0;
     /// <summary>
+    /// Navigation view selected: true means FPS, false means TPS
+    /// </summary>
+    public bool FpsView = true;
+    /// <summary>
     /// Keep track of the progression in history texts
     /// </summary>
     public int storyTextCount = 0;

@@ -43,6 +43,7 @@ public class SaveManager : FSystem {
     private Family f_lockIntroWheel = FamilyManager.getFamily(new AllOfComponents(typeof(WheelFrontFace)), new AnyOfTags("LockIntroWheel"));
     private Family f_lockR2Wheel = FamilyManager.getFamily(new AllOfComponents(typeof(WheelFrontFace)), new AnyOfTags("LockR2Wheel"));
     private Family f_movingMode = FamilyManager.getFamily(new AllOfComponents(typeof(MovingModeSelector)));
+    private Family f_movingView = FamilyManager.getFamily(new AllOfComponents(typeof(SwitchPerso)));
 
     public static SaveManager instance;
 
@@ -174,12 +175,12 @@ public class SaveManager : FSystem {
             } catch (Exception e)
             {
                 Debug.LogError("Unable to load savegames: " + e.Message);
-                LoadGameContent.gameContent.saveAndLoadProgression = false;
-                LoadGameContent.gameContent.autoSaveProgression = false;
+                LoadGameContent.internalGameContent.saveAndLoadProgression = false;
+                LoadGameContent.internalGameContent.autoSaveProgression = false;
             }
 
-            GameObjectManager.setGameObjectState(menuLoadButton.gameObject, LoadGameContent.gameContent.saveAndLoadProgression);
-			GameObjectManager.setGameObjectState(menuSaveButton.gameObject, LoadGameContent.gameContent.saveAndLoadProgression);
+            GameObjectManager.setGameObjectState(menuLoadButton.gameObject, LoadGameContent.internalGameContent.saveAndLoadProgression);
+			GameObjectManager.setGameObjectState(menuSaveButton.gameObject, LoadGameContent.internalGameContent.saveAndLoadProgression);
 		}
 		instance = this;
 	}
@@ -200,7 +201,7 @@ public class SaveManager : FSystem {
     private void AutoSave()
     {
         // don't save if auto save is disabled or if introduction is not completed
-        if (!LoadGameContent.gameContent.autoSaveProgression || f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber == 0)
+        if (!LoadGameContent.internalGameContent.autoSaveProgression || f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber == 0)
             return;
 
         if (File.Exists(saveFolderPath + "/" + autoSaveFileName + "_old" + saveFilesExtension))
@@ -356,6 +357,7 @@ public class SaveManager : FSystem {
         saveContent.sessionID = LoadGameContent.sessionID;
         saveContent.UUID = GBL_Interface.userUUID;
         saveContent.navigationMode = f_movingMode.First().GetComponent<MovingModeSelector>().currentState;
+        saveContent.FpsView = f_movingView.First().GetComponent<SwitchPerso>().fpsCam;
         saveContent.storyTextCount = StoryDisplaying.instance.GetStoryProgression();
         saveContent.lastRoomUnlocked = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
 
@@ -518,18 +520,22 @@ public class SaveManager : FSystem {
             if (saveContent.sessionID != "")
             {
                 LoadGameContent.sessionID = saveContent.sessionID;
-                if (LoadGameContent.gameContent.traceToLRS)
+                if (LoadGameContent.internalGameContent.traceToLRS)
                 {
                     SendStatements.instance.initGBLXAPI();
                     GBL_Interface.userUUID = saveContent.UUID;
                 }
                 // add the generated session id after the ui text has been set
                 foreach (GameObject go in f_idTexts)
-                    go.GetComponent<TextMeshProUGUI>().text = LoadGameContent.gameContent.sessionIDText+saveContent.sessionID;
+                    go.GetComponent<TextMeshProUGUI>().text = LoadGameContent.internalGameContent.sessionIDText+saveContent.sessionID;
             }
 
             f_movingMode.First().GetComponent<MovingModeSelector>().currentState = saveContent.navigationMode;
             f_movingMode.First().GetComponent<MovingModeSelector>().resumeMovingSystems();
+
+            f_movingView.First().GetComponent<SwitchPerso>().fpsCam = saveContent.FpsView;
+            f_movingView.First().GetComponent<SwitchPerso>().forceUpdate();
+
 
             // set story reading progression
             StoryDisplaying.instance.LoadStoryProgression(saveContent.storyTextCount);
@@ -649,7 +655,7 @@ public class SaveManager : FSystem {
             // enable IAR tab and HUD
             if (atLeastOneFragmentClicked)
             {
-                if (LoadGameContent.gameContent.virtualDreamFragment)
+                if (LoadGameContent.internalGameContent.virtualDreamFragment)
                 {
                     GameObjectManager.setGameObjectState(f_tabs.First().transform.parent.GetChild(1).gameObject, true);
                     GameObjectManager.setGameObjectState(f_fragmentNotif.First().transform.parent.gameObject, true);

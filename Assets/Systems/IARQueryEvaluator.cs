@@ -223,7 +223,7 @@ public class IARQueryEvaluator : FSystem {
                 // Prepare correct trace
                 string context = "";
                 if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.puzzleAnswer))
-                    context = LoadGameContent.gameContent.virtualPuzzle ? "VirtualPuzzle" : "PhysicalPuzzle";
+                    context = LoadGameContent.internalGameContent.virtualPuzzle ? "VirtualPuzzle" : "PhysicalPuzzle";
                 else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer))
                     context = "Lamp";
                 else if (answer == LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma16Answer))

@@ -82,7 +82,7 @@ public class DreamFragmentCollecting : FSystem {
                 }
 
                 tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
-                if (!IARDreamFragmentManager.virtualDreamFragment)
+                if (!IARDreamFragmentManager.virtualDreamFragment || tmpDFComponent.type != 0)
                 {
                     // Show fragment UI
                     GameObjectManager.setGameObjectState(dfUI, true);
@@ -98,7 +98,7 @@ public class DreamFragmentCollecting : FSystem {
                         GameObjectManager.setGameObjectState(onlineButton, false);
                     // Set UI text depending on type and id
                     if (tmpDFComponent.type == 0)
-                        FragmentText.text = string.Concat(LoadGameContent.gameContent.dreamFragmentText, tmpDFComponent.id);
+                        FragmentText.text = string.Concat(LoadGameContent.internalGameContent.dreamFragmentText, tmpDFComponent.id);
                     else if (tmpDFComponent.type == 1 || tmpDFComponent.type == 2)
                         FragmentText.text = string.Concat("\"", tmpDFComponent.itemName, "\"");
                     // Pause this system and dependant systems

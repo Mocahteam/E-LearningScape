@@ -165,7 +165,7 @@ public class StoryDisplaying : FSystem {
                     objectName = "E-LearningScape",
                     activityExtensions = new Dictionary<string, string>() {
                     { "content", LoadGameContent.gameContent.theme },
-                    { "help", LoadGameContent.gameContent.helpSystem.ToString() }
+                    { "help", LoadGameContent.internalGameContent.helpSystem.ToString() }
                 }
                 });
             }
@@ -265,9 +265,9 @@ public class StoryDisplaying : FSystem {
                         CollectObject.instance.Pause = false;
                         MoveInFrontOf.instance.Pause = false;
                         UIEffectPlayer.instance.Pause = false;
-                        ActionsManager.instance.Pause = !LoadGameContent.gameContent.trace;
-                        HelpSystem.instance.Pause = !LoadGameContent.gameContent.helpSystem;
-                        SendStatements.instance.Pause = !LoadGameContent.gameContent.traceToLRS;
+                        ActionsManager.instance.Pause = !LoadGameContent.internalGameContent.trace;
+                        HelpSystem.instance.Pause = !LoadGameContent.internalGameContent.helpSystem;
+                        SendStatements.instance.Pause = !LoadGameContent.internalGameContent.traceToLRS;
                         SaveManager.instance.Pause = false;
                     }
                     else

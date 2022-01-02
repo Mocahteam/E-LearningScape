@@ -156,8 +156,8 @@
 	},
 	"37.turnOn": {
 		"Comment": ["Crouch hints"],
-		"2": ["Comment pourrais-je changer mon point de vue?"],
-		"3": ["Je devrais me baisser pour avoir une vision différente de la pièce"]
+		"2": ["Je devrais me baisser pour avoir une vision différente de la pièce"],
+		"3": ["Si je me baisse je découvrirai peut être de nouveaux indices"]
 	},
 	"39.turnOn": {
 		"Comment": ["The dream fragment on the bottom of the table"],

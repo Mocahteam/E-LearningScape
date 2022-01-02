@@ -110,6 +110,7 @@ public class IARGearsEnigma : FSystem
         {
             // Make login selectable
             GameObjectManager.addComponent<Selectable>(f_login.First(), new { standingPosDelta = new Vector3(-0.9f, -0.8f, 0f), standingOrientation = new Vector3(1f, 0f, 0f) });
+            GameObjectManager.addComponent<PointerSensitive>(f_login.First());
             // And force to move on
             GameObjectManager.addComponent<ForceMove>(f_login.First());
             unlockLogin = false;

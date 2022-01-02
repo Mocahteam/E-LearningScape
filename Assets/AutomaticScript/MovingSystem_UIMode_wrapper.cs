@@ -19,4 +19,9 @@ public class MovingSystem_UIMode_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("MovingSystem_UIMode", "moveForward", distance);
 	}
 
+	public void moveOnTheFloor()
+	{
+		MainLoop.callAppropriateSystemMethod ("MovingSystem_UIMode", "moveOnTheFloor", null);
+	}
+
 }

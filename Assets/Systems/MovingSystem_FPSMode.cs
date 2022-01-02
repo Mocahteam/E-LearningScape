@@ -50,7 +50,7 @@ public class MovingSystem_FPSMode : FSystem
     public MovingSystem_FPSMode()
     {
         //when crouching, the scale of the player is changed (rather than its position)
-        crouchingScale = new Vector3(standingScale.x * 0.2f, standingScale.y * 0.2f, standingScale.z * 0.2f);
+        crouchingScale = new Vector3(standingScale.x * 0.5f, standingScale.y * 0.2f, standingScale.z * 0.5f);
         if (Application.isPlaying)
         {
             playerController = f_player.First().GetComponent<FirstPersonController>();
@@ -189,6 +189,7 @@ public class MovingSystem_FPSMode : FSystem
                     playerController.m_FootstepSounds[0] = audioBank.audioBank[0];
                     playerController.m_FootstepSounds[1] = audioBank.audioBank[1];
                 }
+                targetScale = standingScale;
             }
             else
             { // standing and want to crouch
@@ -206,29 +207,18 @@ public class MovingSystem_FPSMode : FSystem
                     playerController.m_FootstepSounds[0] = audioBank.audioBank[4];
                     playerController.m_FootstepSounds[1] = audioBank.audioBank[5];
                 }
+                targetScale = crouchingScale;
             }
-
-            MainLoop.instance.StartCoroutine(operateChangingPose(animation));
+            if (animation)
+                MainLoop.instance.StartCoroutine(animateChangingPose());
+            else
+                hardChangingPose();
         }
     }
 
-    private IEnumerator operateChangingPose(bool animation = true)
+    private void hardChangingPose()
     {
-        if (crouching)
-            targetScale = standingScale;
-        else
-            targetScale = crouchingScale;
-
-        if (animation)
-        {
-            while (playerController.transform.localScale != targetScale) //when standing scale is reached
-            {
-                playerController.transform.localScale = Vector3.MoveTowards(playerController.transform.localScale, targetScale, 0.8f); //change stance gradually
-                yield return null;
-            }
-        }
-        else
-            playerController.transform.localScale = targetScale;
+        playerController.transform.localScale = targetScale;
 
         changingPose = false;
         crouching = !crouching; //true when the player is crouching
@@ -243,6 +233,17 @@ public class MovingSystem_FPSMode : FSystem
             GameObjectManager.addComponent<ActionPerformed>(playerController.gameObject, new { name = "turnOff", performedBy = "player" });
             GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "stood", objectType = "avatar", objectName = "player" });
         }
+    }
+
+    private IEnumerator animateChangingPose()
+    {
+        while (playerController.transform.localScale != targetScale) //when standing scale is reached
+        {
+            playerController.transform.localScale = Vector3.MoveTowards(playerController.transform.localScale, targetScale, 0.8f); //change stance gradually
+            yield return null;
+        }
+
+        hardChangingPose();
     }
 
     // Use to process your families.
@@ -268,7 +269,10 @@ public class MovingSystem_FPSMode : FSystem
 
         // when control button or right click is pressed then the player can alternatively crouch and standing
         if (Input.GetButtonDown("Fire2"))
-            ChangePose();
+        {
+            Debug.Log("Ctrl pressed");
+            ChangePose(true);
+        }
 
         // make HUD transparent on moving
         hudHidingSpeed = -3f * Time.deltaTime;

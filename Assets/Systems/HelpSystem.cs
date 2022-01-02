@@ -190,7 +190,7 @@ public class HelpSystem : FSystem {
                 pnNetsRequiredStepsOnStart.Remove(MonitoringManager.Instance.PetriNetsName[0]);
                 //Removes hints of the unused puzzle Petri net
                 int pnSelected = -1;
-                if (LoadGameContent.gameContent.virtualPuzzle)
+                if (LoadGameContent.internalGameContent.virtualPuzzle)
                     pnSelected = f_puzzlesFragment.First().GetComponent<ComponentMonitoring>().fullPnSelected;
                 else
                     pnSelected = f_puzzles.First().GetComponent<ComponentMonitoring>().fullPnSelected;
@@ -264,7 +264,7 @@ public class HelpSystem : FSystem {
                     {156, 11},
                     {157, 12},
                     {158, 13},
-                    {141, LoadGameContent.gameContent.virtualPuzzle ? 14 : 15},
+                    {141, LoadGameContent.internalGameContent.virtualPuzzle ? 14 : 15},
                     {168, 16},
                     {169, 17},
                     {170, 18},

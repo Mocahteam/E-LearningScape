@@ -39,7 +39,7 @@ public class ToggleObject : FSystem {
                     if (tmpGO.name == "boite")
                     {
                         // puzzle enigma require chest opened
-                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = LoadGameContent.gameContent.virtualPuzzle ? "turnOn_VirtualPuzzleEnigma" : "turnOn_PhysicalPuzzleEnigma", performedBy = "player" });
+                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = LoadGameContent.internalGameContent.virtualPuzzle ? "turnOn_VirtualPuzzleEnigma" : "turnOn_PhysicalPuzzleEnigma", performedBy = "player" });
                         // lamp enigma require chest opened also
                         GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOn_LampEnigma", performedBy = "player" });
                     }
@@ -53,7 +53,7 @@ public class ToggleObject : FSystem {
                     if (tmpGO.name == "boite")
                     {
                         // When the chest is closed, we have to propagate information both in puzzle and lamp enigmas
-                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = LoadGameContent.gameContent.virtualPuzzle ? "turnOff_VirtualPuzzleEnigma" : "turnOff_PhysicalPuzzleEnigma", performedBy = "player" });
+                        GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = LoadGameContent.internalGameContent.virtualPuzzle ? "turnOff_VirtualPuzzleEnigma" : "turnOff_PhysicalPuzzleEnigma", performedBy = "player" });
                         GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { overrideName = "turnOff_LampEnigma", performedBy = "player" });
                     }
                     else

@@ -28,8 +28,6 @@ public class LoginManager : FSystem {
 
     private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
 
-    private Family f_iarTab = FamilyManager.getFamily(new AnyOfTags("IARTab"));
-
     private GameObject selectedLoginPanel;
     private Vector3 playerGoBackPosition;
 

@@ -11,6 +11,10 @@ public class MovingModeSelector : MonoBehaviour
     public Transform verticalRotation;
     public Transform horizontalRotation;
 
+    public Animator FPSNotif;
+    public Animator TeleportNotif;
+    public Animator UINotif;
+
     // Update is called once per frame
     void Update()
     {
@@ -40,19 +44,25 @@ public class MovingModeSelector : MonoBehaviour
                 MovingSystem_TeleportMode.instance.Pause = true;
                 MovingSystem_UIMode.instance.Pause = true;
                 enableAppropriateHUD(true, false);
+                if (FPSNotif != null)
+                    FPSNotif.SetTrigger("flash");
                 break;
             case 1:
                 MovingSystem_FPSMode.instance.Pause = false;
                 MovingSystem_TeleportMode.instance.Pause = false;
                 MovingSystem_UIMode.instance.Pause = true;
                 enableAppropriateHUD(true, false);
+                if (TeleportNotif)
+                    TeleportNotif.SetTrigger("flash");
                 break;
             case 2:
                 MovingSystem_FPSMode.instance.Pause = true;
                 MovingSystem_TeleportMode.instance.Pause = true;
                 MovingSystem_UIMode.instance.Pause = false;
                 enableAppropriateHUD(false, true);
-                // TODO : Tracer les actions de déplacement en mode UI + faire menu avant texte d'intro pour choisir son mode de déplacement
+                if (UINotif)
+                    UINotif.SetTrigger("flash");
+                // TODO : faire visuels boutons pour choisir son mode de déplacement
                 break;
         }
     }

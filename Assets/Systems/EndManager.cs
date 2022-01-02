@@ -42,7 +42,7 @@ public class EndManager : FSystem {
             // Get singleton fading screen
             fadingBackground = GameObject.Find("MenuFadingBackground").GetComponent<Image>();
 
-            useEndRoom = LoadGameContent.gameContent.useEndRoom;
+            useEndRoom = LoadGameContent.internalGameContent.useEndRoom;
         }
     }
 

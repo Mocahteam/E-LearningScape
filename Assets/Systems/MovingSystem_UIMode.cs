@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using FYFY;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class MovingSystem_UIMode : FSystem {
     private GameObject fpsController;
@@ -7,6 +9,7 @@ public class MovingSystem_UIMode : FSystem {
     private GameObject tpsCamera;
     private Quaternion initTpsRotation;
     private Vector3 initTpsPos;
+    private Vector3 previousPosition;
 
     public bool lockSystem;
 
@@ -23,6 +26,7 @@ public class MovingSystem_UIMode : FSystem {
             tpsCamera = GameObject.Find("ThirdCamera");
             initTpsRotation = tpsCamera.transform.localRotation;
             initTpsPos = tpsCamera.transform.localPosition;
+            previousPosition = fpsController.transform.localPosition;
 
             instance = this;
         }
@@ -50,12 +54,12 @@ public class MovingSystem_UIMode : FSystem {
         tempo += Time.deltaTime;
         if (tempo > 0.25f)
         {
-            if (Input.GetAxis("Horizontal") < -0.2)
+            if (Input.GetAxis("Horizontal") < -0.2 && !SceneManager.GetActiveScene().name.Contains("Tuto"))
             {
                 turn(-45);
                 tempo = 0;
             }
-            if (Input.GetAxis("Horizontal") > 0.2)
+            if (Input.GetAxis("Horizontal") > 0.2 && !SceneManager.GetActiveScene().name.Contains("Tuto"))
             {
                 turn(45);
                 tempo = 0;
@@ -66,12 +70,12 @@ public class MovingSystem_UIMode : FSystem {
                 moveOnTheFloor();
                 tempo = 0;
             }
-            if (Input.GetAxis("Vertical") > 0.2)
+            if (Input.GetAxis("Vertical") > 0.2 && !SceneManager.GetActiveScene().name.Contains("Tuto"))
             {
                 moveForward(2);
                 tempo = 0;
             }
-            if (Input.GetAxis("Vertical") < -0.2)
+            if (Input.GetAxis("Vertical") < -0.2 && !SceneManager.GetActiveScene().name.Contains("Tuto"))
             {
                 moveForward(-2);
                 tempo = 0;
@@ -101,10 +105,21 @@ public class MovingSystem_UIMode : FSystem {
             fpsController.transform.localPosition = new Vector3(fpsController.transform.localPosition.x + direction.x * distance, fpsController.transform.localPosition.y + direction.y * distance, fpsController.transform.localPosition.z + direction.z * distance);
             // find the ground and position player on the floor
             moveOnTheFloor();
+            if (Vector3.Distance(previousPosition, fpsController.transform.localPosition) > 7)
+            {
+                GameObjectManager.addComponent<ActionPerformedForLRS>(fpsController.gameObject, new
+                {
+                    verb = "moved",
+                    objectType = "avatar",
+                    objectName = "player",
+                    activityExtensions = new Dictionary<string, string>() { { "position", fpsController.transform.position.ToString("G4") } }
+                });
+                previousPosition = fpsController.transform.localPosition;
+            }
         }
     }
 
-    private void moveOnTheFloor()
+    public void moveOnTheFloor()
     {
         RaycastHit hit;
         Physics.Raycast(fpsCamera.transform.position, -Camera.main.transform.up, out hit, Mathf.Infinity, 1 << 14 | 1 << 4, QueryTriggerInteraction.Ignore);
