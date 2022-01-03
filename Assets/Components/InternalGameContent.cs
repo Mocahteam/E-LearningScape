@@ -121,12 +121,13 @@ public class InternalGameContent {
     public string loadPopupCancelButton;
     public string validateOptions;
     public string storyClickToContinue;
+    public string hudMovingMode;
+    public string hudVue;
+    public string hudZoom;
     public string hudObserve;
     public string hudMove;
-    public string hudVue;
-    public string hudTeleport;
-    public string hudZoom;
     public string hudCrouch;
+    public string hudTeleport;
     public string hudTurnLeft;
     public string hudMoveForward;
     public string hudMoveBackward;

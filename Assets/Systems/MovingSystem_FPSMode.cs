@@ -170,7 +170,7 @@ public class MovingSystem_FPSMode : FSystem
     public void UnlockAllHUD()
     {
         foreach (GameObject hud in f_TransparentOnMove)
-            if (hud.transform.parent.name == "FPSControl")
+            if (hud.transform.parent.name == "FPSControl" || hud.transform.parent.name == "TeleportControl" || hud.transform.parent.name == "ClickControl")
                 GameObjectManager.setGameObjectState(hud, true);
     }
 

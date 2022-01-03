@@ -2,6 +2,8 @@
 using FYFY;
 using FYFY_plugins.TriggerManager;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using FYFY_plugins.PointerManager;
 
 public class MovingSystem_TeleportMode : FSystem {
     private GameObject pinTarget;
@@ -10,7 +12,8 @@ public class MovingSystem_TeleportMode : FSystem {
 
     private Family f_dreamFragmentUI = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AllOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD, PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
-    private Family f_OutOfFirstRoom = FamilyManager.getFamily(new AllOfComponents(typeof(TriggerSensitive3D), typeof(LinkedWith)));
+    private Family f_CrouchHint = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver), typeof(LinkedWith), typeof(BoxCollider)));
+    private Family f_OutOfFirstRoom = FamilyManager.getFamily(new AllOfComponents(typeof(Triggered3D), typeof(LinkedWith)));
 
     public bool lockSystem;
 
@@ -25,8 +28,20 @@ public class MovingSystem_TeleportMode : FSystem {
 
             fpsController = GameObject.Find("FPSController");
 
+            if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
+            {
+                f_CrouchHint.addEntryCallback(disableHUDWarning);
+                f_OutOfFirstRoom.addEntryCallback(disableHUDWarning);
+            }
+
             instance = this;
         }
+    }
+
+    private void disableHUDWarning(GameObject go)
+    {
+        foreach (LinkedWith link in go.GetComponents<LinkedWith>())
+            GameObjectManager.setGameObjectState(link.link, false);
     }
 
     // Use this to update member variables when system pause. 
@@ -39,10 +54,7 @@ public class MovingSystem_TeleportMode : FSystem {
 	// Advice: avoid to update your families inside this function.
 	protected override void onResume(int currentFrame)
     {
-        // If player switch to assisted mouse navigation disable HUD warnings for moving
-        if (f_OutOfFirstRoom.Count > 0)
-            foreach (LinkedWith link in f_OutOfFirstRoom.First().GetComponents<LinkedWith>())
-                GameObjectManager.setGameObjectState(link.link, false);
+        
     }
 
     // Use to process your families.

@@ -19,10 +19,10 @@ public class TutorialManager : FSystem {
     private Family f_answerQuestion = FamilyManager.getFamily(new AnyOfTags("A-R1"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
 
     private FirstPersonController playerController;
+    private GameObject MovingMode;
     private Transform TutorialScreens;
     private float initWalkSpeed;
     private Vector3 initPosition;
-    private GameObject pinTarget;
 
     private string currentStepName;
     private int currentStep = 0;
@@ -37,7 +37,7 @@ public class TutorialManager : FSystem {
         {
             TutorialScreens = GameObject.Find("TutorialScreens").transform;
             playerController = GameObject.Find("FPSController").GetComponent<FirstPersonController>();
-            pinTarget = GameObject.Find("PinTarget");
+            MovingMode = GameObject.Find("MovingMode");
             previousRotation = playerController.transform.rotation.y;
             initWalkSpeed = playerController.m_WalkSpeed;
             initPosition = new Vector3(playerController.transform.position.x, playerController.transform.position.y, playerController.transform.position.z);
@@ -72,7 +72,9 @@ public class TutorialManager : FSystem {
             playerController.m_WalkSpeed = initWalkSpeed;
         else if (currentStepName == "StepEnd")
         {
+            MovingMode.SetActive(false); // do not use FYFY to avoid delay callbacks
             MovingSystem_FPSMode.instance.Pause = true;
+            MovingSystem_UIMode.instance.Pause = true;
             MoveInFrontOf.instance.Pause = true;
             IARTabNavigation.instance.Pause = true;
             IARNewItemAvailable.instance.Pause = true;

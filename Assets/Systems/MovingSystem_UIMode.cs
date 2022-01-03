@@ -2,9 +2,12 @@
 using FYFY;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using FYFY_plugins.PointerManager;
+using FYFY_plugins.TriggerManager;
 
 public class MovingSystem_UIMode : FSystem {
     private GameObject fpsController;
+    private Animation movableFragments;
     private GameObject fpsCamera;
     private GameObject tpsCamera;
     private Quaternion initTpsRotation;
@@ -15,6 +18,9 @@ public class MovingSystem_UIMode : FSystem {
 
     public float tempo = 0;
 
+    private Family f_CrouchHint = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver), typeof(LinkedWith), typeof(BoxCollider)));
+    private Family f_OutOfFirstRoom = FamilyManager.getFamily(new AllOfComponents(typeof(Triggered3D), typeof(LinkedWith)));
+
     public static MovingSystem_UIMode instance;
 
     public MovingSystem_UIMode()
@@ -22,14 +28,27 @@ public class MovingSystem_UIMode : FSystem {
         if (Application.isPlaying)
         {
             fpsController = GameObject.Find("FPSController");
+            movableFragments = fpsController.GetComponentInChildren<Animation>();
             fpsCamera = GameObject.Find("FirstPersonCharacter");
             tpsCamera = GameObject.Find("ThirdCamera");
             initTpsRotation = tpsCamera.transform.localRotation;
             initTpsPos = tpsCamera.transform.localPosition;
             previousPosition = fpsController.transform.localPosition;
 
+            if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
+            {
+                f_CrouchHint.addEntryCallback(disableHUDWarning);
+                f_OutOfFirstRoom.addEntryCallback(disableHUDWarning);
+            }
+
             instance = this;
         }
+    }
+
+    private void disableHUDWarning(GameObject go)
+    {
+        foreach (LinkedWith link in go.GetComponents<LinkedWith>())
+            GameObjectManager.setGameObjectState(link.link, false);
     }
 
     // Use this to update member variables when system pause. 
@@ -81,6 +100,7 @@ public class MovingSystem_UIMode : FSystem {
                 tempo = 0;
             }
         }
+        movableFragments.Blend("PlayerIdle");
     }
 
     public void turn(float angle)

@@ -6,6 +6,7 @@ public class MovingModeSelector : MonoBehaviour
     public int currentState = 0;
 
     public GameObject FPSControl;
+    public GameObject TeleportControl;
     public GameObject ClickControl;
 
     public Transform verticalRotation;
@@ -22,9 +23,15 @@ public class MovingModeSelector : MonoBehaviour
             switchMovingMode();
     }
 
-    public void enableAppropriateHUD(bool FPS_Control, bool UI_Control)
+    void OnEnable()
+    {
+        resumeMovingSystems();
+    }
+
+    public void enableAppropriateHUD(bool FPS_Control, bool Teleport_Control, bool UI_Control)
     {
         GameObjectManager.setGameObjectState(FPSControl, FPS_Control);
+        GameObjectManager.setGameObjectState(TeleportControl, Teleport_Control);
         GameObjectManager.setGameObjectState(ClickControl, UI_Control);
     }
 
@@ -37,34 +44,42 @@ public class MovingModeSelector : MonoBehaviour
 
     public void resumeMovingSystems()
     {
-        switch (currentState)
+        if (MovingSystem_FPSMode.instance != null && MovingSystem_TeleportMode.instance != null && MovingSystem_UIMode.instance != null)
         {
-            case 0:
-                MovingSystem_FPSMode.instance.Pause = false;
-                MovingSystem_TeleportMode.instance.Pause = true;
-                MovingSystem_UIMode.instance.Pause = true;
-                enableAppropriateHUD(true, false);
-                if (FPSNotif != null)
-                    FPSNotif.SetTrigger("flash");
-                break;
-            case 1:
-                MovingSystem_FPSMode.instance.Pause = false;
-                MovingSystem_TeleportMode.instance.Pause = false;
-                MovingSystem_UIMode.instance.Pause = true;
-                enableAppropriateHUD(true, false);
-                if (TeleportNotif)
-                    TeleportNotif.SetTrigger("flash");
-                break;
-            case 2:
-                MovingSystem_FPSMode.instance.Pause = true;
-                MovingSystem_TeleportMode.instance.Pause = true;
-                MovingSystem_UIMode.instance.Pause = false;
-                enableAppropriateHUD(false, true);
-                if (UINotif)
-                    UINotif.SetTrigger("flash");
-                // TODO : faire visuels boutons pour choisir son mode de déplacement
-                break;
+            switch (currentState)
+            {
+                case 0:
+                    MovingSystem_FPSMode.instance.Pause = false;
+                    MovingSystem_TeleportMode.instance.Pause = true;
+                    MovingSystem_UIMode.instance.Pause = true;
+                    enableAppropriateHUD(true, false, false);
+                    if (FPSNotif != null)
+                        FPSNotif.SetTrigger("flash");
+                    break;
+                case 1:
+                    MovingSystem_FPSMode.instance.Pause = false;
+                    MovingSystem_TeleportMode.instance.Pause = false;
+                    MovingSystem_UIMode.instance.Pause = true;
+                    enableAppropriateHUD(false, true, false);
+                    if (TeleportNotif)
+                        TeleportNotif.SetTrigger("flash");
+                    break;
+                case 2:
+                    MovingSystem_FPSMode.instance.Pause = true;
+                    MovingSystem_TeleportMode.instance.Pause = true;
+                    MovingSystem_UIMode.instance.Pause = false;
+                    enableAppropriateHUD(false, false, true);
+                    if (UINotif)
+                        UINotif.SetTrigger("flash");
+                    // TODO : faire visuels boutons pour choisir son mode de déplacement
+                    break;
+            }
         }
+    }
+
+    public void setCurrentState(int newState)
+    {
+        currentState = Mathf.Min(Mathf.Max(newState, 0), 2);
     }
 
 
