@@ -71,7 +71,6 @@ public class MovingModeSelector : MonoBehaviour
                     enableAppropriateHUD(false, false, true);
                     if (UINotif)
                         UINotif.SetTrigger("flash");
-                    // TODO : faire visuels boutons pour choisir son mode de déplacement
                     break;
             }
         }
