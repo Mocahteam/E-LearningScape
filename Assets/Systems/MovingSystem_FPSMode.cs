@@ -27,7 +27,6 @@ public class MovingSystem_FPSMode : FSystem
     private Vector3 crouchingScale;
     private Vector3 standingScale = Vector3.one;
     private FirstPersonController playerController;
-    private Animation movableFragments;
     private Graphic[] tmpGraphics;
     private AudioBank audioBank;
     private Camera playerCamera;
@@ -54,7 +53,6 @@ public class MovingSystem_FPSMode : FSystem
         if (Application.isPlaying)
         {
             playerController = f_player.First().GetComponent<FirstPersonController>();
-            movableFragments = playerController.GetComponentInChildren<Animation>();
 
             playerCamera = playerController.transform.GetChild(0).GetComponent<Camera>();
             audioBank = playerController.GetComponent<AudioBank>();
@@ -141,7 +139,6 @@ public class MovingSystem_FPSMode : FSystem
     protected override void onPause(int currentFrame)
     {
         playerController.enabled = false;
-        f_player.First().GetComponentInChildren<ThirdPersonCameraControler>().enabled = false;
         // Show mouse cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Confined;
@@ -158,7 +155,6 @@ public class MovingSystem_FPSMode : FSystem
         playerController.m_MouseLook.m_CharacterTargetRot = f_player.First().transform.localRotation;
 
         playerController.enabled = true;
-        f_player.First().GetComponentInChildren<ThirdPersonCameraControler>().enabled = true;
         // hide mouse cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Locked;
@@ -270,7 +266,6 @@ public class MovingSystem_FPSMode : FSystem
         // when control button or right click is pressed then the player can alternatively crouch and standing
         if (Input.GetButtonDown("Fire2"))
         {
-            Debug.Log("Ctrl pressed");
             ChangePose(true);
         }
 
@@ -343,18 +338,5 @@ public class MovingSystem_FPSMode : FSystem
             hideHUD = false;
         }
         playerWasWalking = playerIsWalking;
-        if (playerIsWalking)
-        {
-            if (playerController.m_Input.y > 0)
-                movableFragments.Blend("MoveForward");
-            if (playerController.m_Input.y < 0)
-                movableFragments.Blend("MoveBack");
-            if (playerController.m_Input.x > 0)
-                movableFragments.Blend("StrafRight");
-            if (playerController.m_Input.x < 0)
-                movableFragments.Blend("StrafLeft");
-        }
-        else
-            movableFragments.Blend("PlayerIdle");
     }
 }

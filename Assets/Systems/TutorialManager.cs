@@ -68,7 +68,7 @@ public class TutorialManager : FSystem {
             DreamFragmentCollecting.instance.Pause = false;
             SpritesAnimator.instance.Pause = false;
             playerController.m_WalkSpeed = 0;
-        } else if (currentStepName == "StepMove" || currentStepName == "StepSwitchView")
+        } else if (currentStepName == "StepMove" || currentStepName == "StepExplore")
             playerController.m_WalkSpeed = initWalkSpeed;
         else if (currentStepName == "StepEnd")
         {
@@ -82,7 +82,6 @@ public class TutorialManager : FSystem {
             Highlighter.instance.Pause = true;
             CollectObject.instance.Pause = true;
             DreamFragmentCollecting.instance.Pause = true;
-            SpritesAnimator.instance.Pause = true;
             MovingSystem_TeleportMode.instance.Pause = true;
         }
         GameObjectManager.setGameObjectState(TutorialScreens.GetChild(currentStep).gameObject, true);
@@ -130,7 +129,7 @@ public class TutorialManager : FSystem {
                 playerController.transform.position = initPosition; //reset position to start position
             nextStep();
         }
-        else if (currentStepName == "StepSwitchView")
+        else if (currentStepName == "StepExplore")
         {
             movingProgress += Vector3.Distance(previousPosition, playerController.transform.position);
             previousPosition = new Vector3(playerController.transform.position.x, playerController.transform.position.y, playerController.transform.position.z);

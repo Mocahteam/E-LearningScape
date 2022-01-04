@@ -43,7 +43,6 @@ public class SaveManager : FSystem {
     private Family f_lockIntroWheel = FamilyManager.getFamily(new AllOfComponents(typeof(WheelFrontFace)), new AnyOfTags("LockIntroWheel"));
     private Family f_lockR2Wheel = FamilyManager.getFamily(new AllOfComponents(typeof(WheelFrontFace)), new AnyOfTags("LockR2Wheel"));
     private Family f_movingMode = FamilyManager.getFamily(new AllOfComponents(typeof(MovingModeSelector)));
-    private Family f_movingView = FamilyManager.getFamily(new AllOfComponents(typeof(SwitchPerso)));
 
     public static SaveManager instance;
 
@@ -357,7 +356,6 @@ public class SaveManager : FSystem {
         saveContent.sessionID = LoadGameContent.sessionID;
         saveContent.UUID = GBL_Interface.userUUID;
         saveContent.navigationMode = f_movingMode.First().GetComponent<MovingModeSelector>().currentState;
-        saveContent.FpsView = f_movingView.First().GetComponent<SwitchPerso>().fpsCam;
         saveContent.storyTextCount = StoryDisplaying.instance.GetStoryProgression();
         saveContent.lastRoomUnlocked = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
 
@@ -532,9 +530,6 @@ public class SaveManager : FSystem {
 
             f_movingMode.First().GetComponent<MovingModeSelector>().currentState = saveContent.navigationMode;
             f_movingMode.First().GetComponent<MovingModeSelector>().resumeMovingSystems();
-
-            f_movingView.First().GetComponent<SwitchPerso>().fpsCam = saveContent.FpsView;
-            f_movingView.First().GetComponent<SwitchPerso>().forceUpdate();
 
 
             // set story reading progression

@@ -17,8 +17,6 @@ public class MoveInFrontOf : FSystem {
 
     private Family f_quitEnigma = FamilyManager.getFamily(new AnyOfTags("QuitEnigma"));
 
-    private Family f_switchView = FamilyManager.getFamily(new AllOfComponents(typeof(SwitchPerso)));
-
     private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
 
     private Family f_movingModeSelector = FamilyManager.getFamily(new AllOfComponents(typeof(MovingModeSelector)));
@@ -66,8 +64,6 @@ public class MoveInFrontOf : FSystem {
         {
             // reset intial player scale
             f_player.First().transform.localScale = playerLocalScale;
-            // reset player camera
-            f_switchView.First().GetComponent<SwitchPerso>().forceUpdate();
             // reset zoom
             Camera.main.fieldOfView = playerZoom;
             //Fix camera angle
@@ -146,10 +142,6 @@ public class MoveInFrontOf : FSystem {
                 // save zoom and set default value
                 playerZoom = Camera.main.fieldOfView;
                 Camera.main.fieldOfView = 60;
-
-                // In case player is in third person view, we switch in First person cam view
-                f_switchView.First().GetComponent<SwitchPerso>().ThirdCamera.enabled = false;
-                f_switchView.First().GetComponent<SwitchPerso>().FirstCamera.enabled = true;
 
                 // save player scale (crouch or not) in order to reset it when player exit the focused GameObject
                 playerLocalScale = f_player.First().transform.localScale;

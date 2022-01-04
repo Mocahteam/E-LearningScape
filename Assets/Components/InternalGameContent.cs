@@ -122,7 +122,6 @@ public class InternalGameContent {
     public string validateOptions;
     public string storyClickToContinue;
     public string hudMovingMode;
-    public string hudVue;
     public string hudZoom;
     public string hudObserve;
     public string hudMove;

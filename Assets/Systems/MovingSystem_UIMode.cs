@@ -7,11 +7,7 @@ using FYFY_plugins.TriggerManager;
 
 public class MovingSystem_UIMode : FSystem {
     private GameObject fpsController;
-    private Animation movableFragments;
     private GameObject fpsCamera;
-    private GameObject tpsCamera;
-    private Quaternion initTpsRotation;
-    private Vector3 initTpsPos;
     private Vector3 previousPosition;
 
     public bool lockSystem;
@@ -28,11 +24,7 @@ public class MovingSystem_UIMode : FSystem {
         if (Application.isPlaying)
         {
             fpsController = GameObject.Find("FPSController");
-            movableFragments = fpsController.GetComponentInChildren<Animation>();
             fpsCamera = GameObject.Find("FirstPersonCharacter");
-            tpsCamera = GameObject.Find("ThirdCamera");
-            initTpsRotation = tpsCamera.transform.localRotation;
-            initTpsPos = tpsCamera.transform.localPosition;
             previousPosition = fpsController.transform.localPosition;
 
             if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
@@ -62,9 +54,6 @@ public class MovingSystem_UIMode : FSystem {
     {
         fpsController.transform.localEulerAngles = new Vector3(0, (float)(System.Math.Round(fpsController.transform.localEulerAngles.y / 45) * 45), 0); // set angle on the nearest multiple of 45
         fpsCamera.transform.localEulerAngles = new Vector3(0, 0, 0);
-
-        tpsCamera.transform.localRotation = initTpsRotation;
-        tpsCamera.transform.localPosition = initTpsPos;
     }
 
     // Use to process your families.
@@ -100,7 +89,6 @@ public class MovingSystem_UIMode : FSystem {
                 tempo = 0;
             }
         }
-        movableFragments.Blend("PlayerIdle");
     }
 
     public void turn(float angle)

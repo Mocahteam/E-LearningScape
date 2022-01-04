@@ -280,10 +280,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Bien, vous ma\xEEtrisez maintenant tous les modes de d\xE9placement du
-    jeu. Quelque soit le mode de d\xE9placement vous pouvez changer de point de vue.
-    Basculez sur votre mode de d\xE9placement pr\xE9f\xE9r\xE9 \xE0 l'aide de la
-    touche K du clavier et exp\xE9rimentez les deux modes de vue possibles en appuyant
-    sur la touche L du clavier. Explorez un peu votre environnement..."
+    jeu. Basculez sur votre mode de d\xE9placement pr\xE9f\xE9r\xE9 \xE0 l'aide de
+    la touche K du clavier et explorez un peu votre environnement..."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 388fb88c7332f6a4086c9d1069ce3d53, type: 2}
   m_sharedMaterial: {fileID: 3898167904873870984, guid: 388fb88c7332f6a4086c9d1069ce3d53,
@@ -293,7 +291,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291940817
+    rgba: 13750737
   m_fontColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -11125,7 +11123,6 @@ GameObject:
   - component: {fileID: 428084760}
   - component: {fileID: 428084759}
   - component: {fileID: 428084762}
-  - component: {fileID: 428084761}
   m_Layer: 5
   m_Name: StepStart
   m_TagString: Untagged
@@ -11192,19 +11189,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 428084757}
   m_CullTransparentMesh: 0
---- !u!114 &428084761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 428084757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 363e04bd34c6c0545b128dba4b93981f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  link: {fileID: 1497747737}
 --- !u!114 &428084762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13523,7 +13507,7 @@ PrefabInstance:
         type: 3}
       propertyPath: skin
       value: 
-      objectReference: {fileID: 1037473443}
+      objectReference: {fileID: 0}
     - target: {fileID: 4586491543829031102, guid: 6ee3e9761ea060c4084caff6445f1b25,
         type: 3}
       propertyPath: iarRef
@@ -13538,7 +13522,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ThirdCamera
       value: 
-      objectReference: {fileID: 1037473447}
+      objectReference: {fileID: 0}
     - target: {fileID: 4586491543871272168, guid: 6ee3e9761ea060c4084caff6445f1b25,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -32805,12 +32789,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1037473441}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1037473443 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 595712299, guid: 67a03ce6d68a1b349b93be58a3357b17,
-    type: 3}
-  m_PrefabInstance: {fileID: 1037473441}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1037473444 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7979802974906298942, guid: 67a03ce6d68a1b349b93be58a3357b17,
@@ -32826,12 +32804,6 @@ Transform:
 --- !u!20 &1037473446 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 7979802974907903038, guid: 67a03ce6d68a1b349b93be58a3357b17,
-    type: 3}
-  m_PrefabInstance: {fileID: 1037473441}
-  m_PrefabAsset: {fileID: 0}
---- !u!20 &1037473447 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 826466808, guid: 67a03ce6d68a1b349b93be58a3357b17,
     type: 3}
   m_PrefabInstance: {fileID: 1037473441}
   m_PrefabAsset: {fileID: 0}
@@ -37517,10 +37489,9 @@ GameObject:
   - component: {fileID: 1218412846}
   - component: {fileID: 1218412845}
   - component: {fileID: 1218412844}
-  - component: {fileID: 1218412847}
   - component: {fileID: 1218412848}
   m_Layer: 5
-  m_Name: StepSwitchView
+  m_Name: StepExplore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37544,7 +37515,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 10, y: -5}
-  m_SizeDelta: {x: 319.9, y: 326.6}
+  m_SizeDelta: {x: 319.9, y: 188.41}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1218412844
 MonoBehaviour:
@@ -37596,19 +37567,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1218412842}
   m_CullTransparentMesh: 0
---- !u!114 &1218412847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1218412842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 363e04bd34c6c0545b128dba4b93981f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  link: {fileID: 1497747737}
 --- !u!95 &1218412848
 Animator:
   serializedVersion: 3
@@ -45758,12 +45716,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1497425568}
   m_CullTransparentMesh: 0
---- !u!1 &1497747737 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4586491543829031091, guid: 6ee3e9761ea060c4084caff6445f1b25,
-    type: 3}
-  m_PrefabInstance: {fileID: 502994157}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1498675364
 GameObject:
   m_ObjectHideFlags: 0
