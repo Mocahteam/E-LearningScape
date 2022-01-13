@@ -23,7 +23,7 @@ public class HelpSystem : FSystem {
     private Family f_puzzlesFragment = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new AllOfComponents(typeof(DreamFragment), typeof(ComponentMonitoring)));
 
     private Family f_scrollView = FamilyManager.getFamily(new AllOfComponents(typeof(ScrollRect), typeof(PrefabContainer)));
-    private Family f_enabledHintsIAR = FamilyManager.getFamily(new AllOfComponents(typeof(HintContent)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
+    private Family f_helpNotif = FamilyManager.getFamily(new AllOfComponents(typeof(HelpFlag)));
 
     /// <summary>
     /// Contains hints
@@ -145,111 +145,120 @@ public class HelpSystem : FSystem {
     {
         if (Application.isPlaying)
         {
-            // Define IAR tab state
-            foreach (GameObject tmpGO in f_IARTab)
-                if (tmpGO.name == "HelpTab")
-                    GameObjectManager.setGameObjectState(tmpGO, !shouldPause);
+            initHelpSystem();
+        }
+        instance = this;
+    }
 
-            //get game hints filled with tips loaded from "Hints_LearningScape.txt"
-            gameHints = f_gameHints.First().GetComponent<GameHints>();
+    public void initHelpSystem()
+    {
+        // Define IAR tab state
+        foreach (GameObject tmpGO in f_IARTab)
+            if (tmpGO.name == "HelpTab")
+                GameObjectManager.setGameObjectState(tmpGO, !shouldPause);
+        // Define HUD state
+        GameObjectManager.setGameObjectState(f_helpNotif.First().transform.parent.gameObject, !shouldPause);
 
-            if (!shouldPause)
+        //get game hints filled with tips loaded from "Hints_LearningScape.txt"
+        gameHints = f_gameHints.First().GetComponent<GameHints>();
+
+        if (!shouldPause)
+        {
+            //get internal game hints
+            InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
+
+            //add internal game hints to the dictionary of the component GameHints
+            foreach (string key1 in internalGameHints.dictionary.Keys)
             {
-                //get internal game hints
-                InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
-
-                //add internal game hints to the dictionary of the component GameHints
-                foreach (string key1 in internalGameHints.dictionary.Keys)
+                if (!gameHints.dictionary.ContainsKey(key1))
+                    gameHints.dictionary.Add(key1, new Dictionary<string, List<KeyValuePair<string, string>>>());
+                // merge hints with the same level
+                foreach (string key2 in internalGameHints.dictionary[key1].Keys)
                 {
-                    if (!gameHints.dictionary.ContainsKey(key1))
-                        gameHints.dictionary.Add(key1, new Dictionary<string, List<KeyValuePair<string, string>>>());
-                    // merge hints with the same level
-                    foreach (string key2 in internalGameHints.dictionary[key1].Keys)
-                    {
-                        if (!gameHints.dictionary[key1].ContainsKey(key2))
-                            gameHints.dictionary[key1].Add(key2, new List<KeyValuePair<string, string>>());
+                    if (!gameHints.dictionary[key1].ContainsKey(key2))
+                        gameHints.dictionary[key1].Add(key2, new List<KeyValuePair<string, string>>());
 
-                        foreach (string hintContent in internalGameHints.dictionary[key1][key2])
-                            gameHints.dictionary[key1][key2].Add(new KeyValuePair<string, string>("", hintContent));
+                    foreach (string hintContent in internalGameHints.dictionary[key1][key2])
+                        gameHints.dictionary[key1][key2].Add(new KeyValuePair<string, string>("", hintContent));
+                }
+            }
+
+            // Get labels weight
+            labelWeights = f_labelWeights.First().GetComponent<LabelWeights>().weights;
+
+            // clone Petri net names from MonitoringManager
+            pnNetsRemainingSteps = new Dictionary<string, int>();
+            pnNetsRequiredStepsOnStart = new Dictionary<string, int>();
+            foreach (string pnName in MonitoringManager.Instance.PetriNetsName)
+            {
+                pnNetsRemainingSteps.Add(pnName, 0);
+                pnNetsRequiredStepsOnStart.Add(pnName, 0); // will be properly initialized in OnResume function
+            }
+            // Removes meta Petri net
+            pnNetsRemainingSteps.Remove(MonitoringManager.Instance.PetriNetsName[0]);
+            pnNetsRequiredStepsOnStart.Remove(MonitoringManager.Instance.PetriNetsName[0]);
+            //Removes hints of the unused puzzle Petri net
+            int pnSelected = -1;
+            if (LoadGameContent.internalGameContent.virtualPuzzle)
+                pnSelected = f_puzzlesFragment.First().GetComponent<ComponentMonitoring>().fullPnSelected;
+            else
+                pnSelected = f_puzzles.First().GetComponent<ComponentMonitoring>().fullPnSelected;
+            RemoveHintsByPN(pnSelected);
+            pnNetsRemainingSteps.Remove(MonitoringManager.Instance.PetriNetsName[pnSelected]);
+            pnNetsRequiredStepsOnStart.Remove(MonitoringManager.Instance.PetriNetsName[pnSelected]);
+
+            cleanHintsByPn = new Stack<string>();
+
+            //format expected answers to be compared to formated answers from IARQueryEvaluator
+            List<string> tmpListString;
+            string tmpString;
+            foreach (string key1 in gameHints.wrongAnswerFeedbacks.Keys)
+            {
+                tmpListString = new List<string>(gameHints.wrongAnswerFeedbacks[key1].Keys);
+                foreach (string key2 in tmpListString)
+                {
+                    tmpString = LoadGameContent.StringToAnswer(key2);
+                    if (!gameHints.wrongAnswerFeedbacks[key1].ContainsKey(tmpString))
+                    {
+                        // Add new upper case key (without accents) and copy value for the lower case key
+                        gameHints.wrongAnswerFeedbacks[key1].Add(tmpString, gameHints.wrongAnswerFeedbacks[key1][key2]);
+                        // Remove lower case entry
+                        gameHints.wrongAnswerFeedbacks[key1].Remove(key2);
                     }
                 }
+            }
 
-                // Get labels weight
-                labelWeights = f_labelWeights.First().GetComponent<LabelWeights>().weights;
+            weights = LoadGameContent.enigmasWeight;
+            //count the total weighted meta actions
+            foreach (string enigmaName in weights.Keys)
+                totalWeightedMetaActions += weights[enigmaName];
 
-                // clone Petri net names from MonitoringManager
-                pnNetsRemainingSteps = new Dictionary<string, int>();
-                pnNetsRequiredStepsOnStart = new Dictionary<string, int>();
-                foreach (string pnName in MonitoringManager.Instance.PetriNetsName)
-                {
-                    pnNetsRemainingSteps.Add(pnName, 0);
-                    pnNetsRequiredStepsOnStart.Add(pnName, 0); // will be properly initialized in OnResume function
-                }
-                // Removes meta Petri net
-                pnNetsRemainingSteps.Remove(MonitoringManager.Instance.PetriNetsName[0]);
-                pnNetsRequiredStepsOnStart.Remove(MonitoringManager.Instance.PetriNetsName[0]);
-                //Removes hints of the unused puzzle Petri net
-                int pnSelected = -1;
-                if (LoadGameContent.internalGameContent.virtualPuzzle)
-                    pnSelected = f_puzzlesFragment.First().GetComponent<ComponentMonitoring>().fullPnSelected;
-                else
-                    pnSelected = f_puzzles.First().GetComponent<ComponentMonitoring>().fullPnSelected;
-                RemoveHintsByPN(pnSelected);
-                pnNetsRemainingSteps.Remove(MonitoringManager.Instance.PetriNetsName[pnSelected]);
-                pnNetsRequiredStepsOnStart.Remove(MonitoringManager.Instance.PetriNetsName[pnSelected]);
+            //get help UI components
+            scrollViewContent = f_scrollView.First().transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+            hintButtonPrefab = f_scrollView.First().GetComponent<PrefabContainer>().prefab;
 
-                cleanHintsByPn = new Stack<string>();
+            //create a pool of int button right at the beginning and activate them when necessary rather than creating them during the game
+            hintButtonsPool = new List<GameObject>();
+            GameObject tmpGo;
+            for (int i = 0; i < 100; i++)
+            {
+                tmpGo = GameObject.Instantiate(hintButtonPrefab);
+                tmpGo.transform.SetParent(scrollViewContent.transform);
+                tmpGo.SetActive(false);
+                GameObjectManager.bind(tmpGo);
+                hintButtonsPool.Add(tmpGo);
+            }
 
-                //format expected answers to be compared to formated answers from IARQueryEvaluator
-                List<string> tmpListString;
-                string tmpString;
-                foreach (string key1 in gameHints.wrongAnswerFeedbacks.Keys)
-                {
-                    tmpListString = new List<string>(gameHints.wrongAnswerFeedbacks[key1].Keys);
-                    foreach (string key2 in tmpListString)
-                    {
-                        tmpString = LoadGameContent.StringToAnswer(key2);
-                        if (!gameHints.wrongAnswerFeedbacks[key1].ContainsKey(tmpString))
-                        {
-                            // Add new upper case key (without accents) and copy value for the lower case key
-                            gameHints.wrongAnswerFeedbacks[key1].Add(tmpString, gameHints.wrongAnswerFeedbacks[key1][key2]);
-                            // Remove lower case entry
-                            gameHints.wrongAnswerFeedbacks[key1].Remove(key2);
-                        }
-                    }
-                }
+            f_wrongAnswerInfo.addEntryCallback(OnWrongAnswer);
 
-                weights = LoadGameContent.enigmasWeight;
-                //count the total weighted meta actions
-                foreach (string enigmaName in weights.Keys)
-                    totalWeightedMetaActions += weights[enigmaName];
+            //set player cooldown UI components
+            cooldownRT = f_askHelpButton.First().transform.GetChild(1).GetComponent<RectTransform>();
+            cooldownText = f_askHelpButton.First().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+            noHintAvailable = f_askHelpButton.First().transform.GetChild(3).GetComponent<TMP_Text>();
 
-                //get help UI components
-                scrollViewContent = f_scrollView.First().transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
-                hintButtonPrefab = f_scrollView.First().GetComponent<PrefabContainer>().prefab;
-
-                //create a pool of int button right at the beginning and activate them when necessary rather than creating them during the game
-                hintButtonsPool = new List<GameObject>();
-                GameObject tmpGo;
-                for (int i = 0; i < 100; i++)
-                {
-                    tmpGo = GameObject.Instantiate(hintButtonPrefab);
-                    tmpGo.transform.SetParent(scrollViewContent.transform);
-                    tmpGo.SetActive(false);
-                    GameObjectManager.bind(tmpGo);
-                    hintButtonsPool.Add(tmpGo);
-                }
-
-                f_wrongAnswerInfo.addEntryCallback(OnWrongAnswer);
-
-                //set player cooldown UI components
-                cooldownRT = f_askHelpButton.First().transform.GetChild(1).GetComponent<RectTransform>();
-                cooldownText = f_askHelpButton.First().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-                noHintAvailable = f_askHelpButton.First().transform.GetChild(3).GetComponent<TMP_Text>();
-
-                // WARNING: Before building the game, be sure that following ComponentMonitorings are properly set
-                // Init dictionary to know for each enigma of the meta Petri net the associated sub Petri net id
-                EnigmaIdToPnId = new Dictionary<int, int>()
+            // WARNING: Before building the game, be sure that following ComponentMonitorings are properly set
+            // Init dictionary to know for each enigma of the meta Petri net the associated sub Petri net id
+            EnigmaIdToPnId = new Dictionary<int, int>()
                 {
                     { 45,  1},
                     {144,  2},
@@ -274,9 +283,7 @@ public class HelpSystem : FSystem {
                     { 99, 22},
                     {164, -1}
                 };
-            }
         }
-        instance = this;
     }
 
     // Use this to update member variables when system resume.
@@ -485,6 +492,7 @@ public class HelpSystem : FSystem {
                         labelCount = 0;
 
                     //if labelCount reached the step calculate the feedback level and ask a hint and the time spent since the last time the system gave a feedback reached countLabel to know if it can give another one
+                    Debug.Log(labelCount + " " + config.labelCountStep + " " + Time.time + " " + systemHintTimer + " " + config.systemHintCooldownDuration);
                     if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration){
                         if (DisplayHint())
                         {

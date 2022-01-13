@@ -140,7 +140,7 @@ public class SaveManager : FSystem {
 				}
 			// find in game menu save button
 			foreach(GameObject go in f_inGameMenu)
-				if(go.name == "MenuContent")
+				if(go.name == "MainPanel")
                 {
 					tmpGO = go;
 					break;
@@ -466,9 +466,10 @@ public class SaveManager : FSystem {
             saveContent.accessibleHints.Add(hintSave);
         }
 
+        saveContent.helpSystemState = !HelpSystem.shouldPause;
         saveContent.petriNetsMarkings = MonitoringManager.getPetriNetsMarkings();
         saveContent.hintCooldown = HelpSystem.instance.HintCooldown < 0 ? 0 : HelpSystem.instance.HintCooldown;
-        saveContent.systemHintTimer = HelpSystem.instance.SystemHintTimer;
+        saveContent.systemHintTimer = Time.time - HelpSystem.instance.SystemHintTimer;
         saveContent.helpLabelCount = HelpSystem.instance.LabelCount;
         saveContent.HintDictionary = HelpSystem.instance.GameHints.dictionary;
         saveContent.HintWrongAnswerFeedbacks = HelpSystem.instance.GameHints.wrongAnswerFeedbacks;
@@ -724,6 +725,19 @@ public class SaveManager : FSystem {
                 }
             }
 
+            // synchronize help system
+            if (!HelpSystem.shouldPause != saveContent.helpSystemState)
+            {
+                HelpSystem.shouldPause = !saveContent.helpSystemState;
+                if (!HelpSystem.shouldPause)
+                {
+                    // check Java
+                    CheckJava.instance.checkJava();
+                    CheckJava.instance.Pause = false;
+                }
+                // init HelpSystem
+                HelpSystem.instance.initHelpSystem();
+            }
             // generate received hints
             foreach (SaveContent.HintData hint in saveContent.accessibleHints)
             {
@@ -738,7 +752,10 @@ public class SaveManager : FSystem {
                             Button b = HelpSystem.instance.CreateHintButton(monitoringComponent, hint.name, hint.text, hint.link, hint.level, false);
                             monitorFound = true;
                             if (hint.seen)
+                            {
                                 IARHintManager.instance.SetNormalColor(b);
+                                GameObjectManager.removeComponent<NewHint>(b.gameObject);
+                            }
                             break;
                         }
                     if (monitorFound)
@@ -751,7 +768,7 @@ public class SaveManager : FSystem {
                 MonitoringManager.setPetriNetsMarkings(saveContent.petriNetsMarkings);
 
             // set HelpSystem with loaded petri nets
-            HelpSystem.instance.LoadHelpSystemValues(saveContent.hintCooldown, saveContent.systemHintTimer, saveContent.helpLabelCount);
+            HelpSystem.instance.LoadHelpSystemValues(saveContent.hintCooldown, Time.time-saveContent.systemHintTimer, saveContent.helpLabelCount);
             HelpSystem.instance.GameHints.dictionary = saveContent.HintDictionary;
             HelpSystem.instance.GameHints.wrongAnswerFeedbacks = saveContent.HintWrongAnswerFeedbacks;
             HelpSystem.instance.pnNetsRequiredStepsOnStart = saveContent.pnNetsRequiredStepsOnStart;

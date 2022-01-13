@@ -154,7 +154,7 @@ public class MenuSystem : FSystem {
         {
             if (go.name == "Settings_MainMenu")
                 settingsMainMenu = go;
-            if (go.name == "MenuContent")
+            if (go.name == "MainPanel")
                 IARMenuContent = go;
         }
         if (settingsMainMenu != null && IARMenuContent != null)

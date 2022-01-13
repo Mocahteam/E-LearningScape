@@ -9,4 +9,9 @@ public class CheckJava_wrapper : MonoBehaviour
 		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
 	}
 
+	public void checkJava()
+	{
+		MainLoop.callAppropriateSystemMethod ("CheckJava", "checkJava", null);
+	}
+
 }

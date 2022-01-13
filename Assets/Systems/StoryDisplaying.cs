@@ -266,7 +266,7 @@ public class StoryDisplaying : FSystem {
                         MoveInFrontOf.instance.Pause = false;
                         UIEffectPlayer.instance.Pause = false;
                         ActionsManager.instance.Pause = !LoadGameContent.internalGameContent.trace;
-                        HelpSystem.instance.Pause = !LoadGameContent.internalGameContent.helpSystem;
+                        HelpSystem.instance.Pause = HelpSystem.shouldPause;
                         SendStatements.instance.Pause = !LoadGameContent.internalGameContent.traceToLRS;
                         SaveManager.instance.Pause = false;
                     }

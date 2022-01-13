@@ -148,6 +148,10 @@ public class SaveContent {
     public int gearEnigmaState = 0;
 
     /// <summary>
+    /// State of the help system
+    /// </summary>
+    public bool helpSystemState = true;
+    /// <summary>
     /// List of the hints accessible to the player (already shown inside IAR).
     /// </summary>
     public List<HintData> accessibleHints = new List<HintData>();
