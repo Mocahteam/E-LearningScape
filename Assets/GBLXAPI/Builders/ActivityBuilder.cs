@@ -42,7 +42,7 @@ namespace DIG.GBLXAPI.Builders
             _activity = new Activity();
         }
 
-        public IOptional WithID(string iriString) { return WithID(new Uri(iriString)); }
+        public IOptional WithID(string iriString) { UnityEngine.Debug.Log(iriString); return WithID(new Uri(iriString)); }
 
         public IOptional WithID(Uri iri)
         {

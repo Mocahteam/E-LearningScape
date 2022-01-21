@@ -38,8 +38,10 @@ public class CollectObject : FSystem {
                 {
                     verb = "collected",
                     objectType = "item",
-                    objectName = collect.name,
-                    activityExtensions = new Dictionary<string, string>() { { "type", "object" } }
+                    activityExtensions = new Dictionary<string, string>() {
+                        { "type", "object" },
+                        { "value", collect.name }
+                    }
                 });
                 // enable UI target
                 GameObjectManager.setGameObjectState(collect.GetComponent<LinkedWith>().link, true);

@@ -35,11 +35,6 @@ public class IARHintManager : FSystem {
     private TextMeshProUGUI hintText;
 
     /// <summary>
-    /// Count the number of hint given
-    /// </summary>
-    private int hintCounter = 0;
-
-    /// <summary>
     /// used to open a link to get more info about a hint (disabled if link is empty)
     /// </summary>
     private Button hintLinkButton;
@@ -174,8 +169,6 @@ public class IARHintManager : FSystem {
     {
         Button hintButton = newHint.GetComponent<Button>();
         hintButton.onClick.AddListener(delegate { OnClickHint(hintButton); });
-        hintCounter++;
-        newHint.transform.GetChild(0).GetComponent<TMP_Text>().text = LoadGameContent.internalGameContent.hintButtonText + " " + hintCounter;
 
         RectTransform tmpRT = newHint.GetComponent<RectTransform>();
         tmpRT.localScale = Vector3.one;
@@ -222,9 +215,9 @@ public class IARHintManager : FSystem {
         {
             verb = "read",
             objectType = "feedback",
-            objectName = string.Concat("hint_", b.transform.GetChild(0).GetComponent<TMP_Text>().text),
             activityExtensions = new Dictionary<string, string>() {
                 { "type", "hint" },
+                { "value", b.transform.GetChild(0).GetComponent<TMP_Text>().text },
                 { "reference", tmpHC.monitor.id+"."+tmpHC.actionName },
                 { "content", b.GetComponent<HintContent>().text }
             }
@@ -268,9 +261,10 @@ public class IARHintManager : FSystem {
             GameObjectManager.addComponent<ActionPerformedForLRS>(hintLinkButton.gameObject, new
             {
                 verb = "read",
-                objectType = "viewable",
-                objectName = "hintLink",
+                objectType = "link",
                 activityExtensions = new Dictionary<string, string>() {
+                    { "type", "hint" },
+                    { "value", hintLinkButton.transform.GetChild(0).GetComponent<TMP_Text>().text },
                     { "reference", monitorId + "." + actionName },
                     { "link", hintLink }
                 }

@@ -121,9 +121,10 @@ public class DreamFragmentCollecting : FSystem {
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new
                 {
                     verb = "collected",
-                    objectType = "item",
-                    objectName = selectedFragment.name,
-                    activityExtensions = new Dictionary<string, string>() { { "type", "dreamFragment" } }
+                    objectType = "dreamFragment",
+                    activityExtensions = new Dictionary<string, string>() {
+                        { "value", selectedFragment.name }
+                    }
                 });
 
                 GameObjectManager.addComponent<PlaySound>(selectedFragment, new { id = 3 }); // id refer to FPSController AudioBank
@@ -193,9 +194,12 @@ public class DreamFragmentCollecting : FSystem {
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedFragment, new
         {
             verb = "accessed",
-            objectType = "viewable",
-            objectName = string.Concat(selectedFragment.name, "_Link"),
-            activityExtensions = new Dictionary<string, string>() { { "link", df.urlLink } }
+            objectType = "link",
+            activityExtensions = new Dictionary<string, string>() {
+                { "type", "dreamFragment" },
+                { "value", selectedFragment.name },
+                { "link", df.urlLink }
+            }
         });
     }
 }

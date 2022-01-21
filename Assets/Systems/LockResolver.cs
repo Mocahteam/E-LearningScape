@@ -81,6 +81,15 @@ public class LockResolver : FSystem {
         instance.Pause = false;
 
         GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
+
+        GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
+        {
+            verb = "accessed",
+            objectType = "locker",
+            activityExtensions = new Dictionary<string, string>() {
+                { "value", go.name }
+            }
+        });
     }
 
 	// Use to process your families.
@@ -193,11 +202,20 @@ public class LockResolver : FSystem {
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
                 {
                     verb = "completed",
-                    objectType = "interactable",
-                    objectName = selectedLocker.gameObject.name,
-                    activityExtensions = new Dictionary<string, string>() { { "content", string.Concat(selectedLocker.wheel1Solution, selectedLocker.wheel2Solution, selectedLocker.wheel3Solution) } }
+                    objectType = "locker",
+                    activityExtensions = new Dictionary<string, string>() {
+                        { "value", selectedLocker.gameObject.name },
+                        { "content", string.Concat(selectedLocker.wheel1Solution, selectedLocker.wheel2Solution, selectedLocker.wheel3Solution) }
+                    }
                 });
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new { verb = "unlocked", objectType = "menu", objectName = selectedLocker.IARScreenUnlock.name });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
+                {
+                    verb = "completed",
+                    objectType = "quest",
+                    activityExtensions = new Dictionary<string, string>() {
+                        { "value", "introduction" }
+                    }
+                });
                 // disable UI items usable for this enigm
                 if (selectedLocker.GetComponent<LinkedWith>())
                     GameObjectManager.setGameObjectState(selectedLocker.GetComponent<LinkedWith>().link, false);
@@ -223,14 +241,19 @@ public class LockResolver : FSystem {
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
                 {
                     verb = "completed",
-                    objectType = "interactable",
-                    objectName = selectedLocker.gameObject.name
+                    objectType = "locker",
+                    activityExtensions = new Dictionary<string, string>() {
+                        { "value", selectedLocker.gameObject.name },
+                        { "content", string.Concat(selectedLocker.wheel1Solution, selectedLocker.wheel2Solution, selectedLocker.wheel3Solution) }
+                    }
                 });
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.IARScreenUnlock, new
+                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
                 {
-                    verb = "unlocked",
-                    objectType = "menu",
-                    objectName = selectedLocker.IARScreenUnlock.name
+                    verb = "completed",
+                    objectType = "quest",
+                    activityExtensions = new Dictionary<string, string>() {
+                        { "value", "room2" }
+                    }
                 });
                 closedBy = "system";
                 ExitLocker();
@@ -256,7 +279,14 @@ public class LockResolver : FSystem {
         GameObjectManager.removeComponent<ReadyToWork>(selectedLocker.gameObject);
 
         GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { name = "turnOff", performedBy = closedBy });
-        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new { verb = "exited", objectType = "interactable", objectName = selectedLocker.gameObject.name });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new 
+        {
+            verb = "exited",
+            objectType = "locker",
+            activityExtensions = new Dictionary<string, string>() {
+                { "value", selectedLocker.gameObject.name }
+            }
+        });
 
         selectedLocker = null;
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using FYFY;
+using System.Collections.Generic;
 
 public class ToggleObject : FSystem {
 
@@ -60,7 +61,14 @@ public class ToggleObject : FSystem {
                         GameObjectManager.addComponent<ActionPerformed>(tmpGO, new { name = "turnOff", performedBy = "player", family = tmpGO.GetComponent<IsSolution>() ? null : f_wrongChair });
                 }
 
-                GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new { verb = "interacted", objectType = "toggable", objectName = tmpGO.name });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGO, new 
+                {
+                    verb = "interacted",
+                    objectType = "toggable",
+                    activityExtensions = new Dictionary<string, string>() {
+                        { "value", tmpGO.name }
+                    }
+                });
             }
         }
     }

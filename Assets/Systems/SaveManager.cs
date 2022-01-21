@@ -9,6 +9,7 @@ using FYFY_plugins.Monitoring;
 using FYFY_plugins.PointerManager;
 using FYFY_plugins.TriggerManager;
 using TMPro;
+using System.Collections.Generic;
 
 public class SaveManager : FSystem {
 
@@ -74,7 +75,6 @@ public class SaveManager : FSystem {
 	private bool autosaveAlreadyAdded;
 
 	private string tmpPath;
-	private DreamFragment tmpDF;
 	private GameObject tmpGO;
 	private DreamFragmentToggle tmpDFToggle;
 	private ComponentMonitoring[] tmpMonitorsArray;
@@ -227,7 +227,10 @@ public class SaveManager : FSystem {
             {
                 verb = "saved",
                 objectType = "serious-game",
-                objectName = "E-LearningScape progression (autosaved): " + dateTimeStamp
+                activityExtensions = new Dictionary<string, string>() {
+                    { "type", "autosave" },
+                    { "value", dateTimeStamp.ToString() }
+                }
             });
         }
     }
@@ -293,7 +296,10 @@ public class SaveManager : FSystem {
                     {
                         verb = "saved",
                         objectType = "serious-game",
-                        objectName = "E-LearningScape progression: "+ dateTimeStamp
+                        activityExtensions = new Dictionary<string, string>() {
+                            { "type", "humansave" },
+                            { "value", dateTimeStamp.ToString() }
+                        }
                     });
                 }
                 else
@@ -329,7 +335,10 @@ public class SaveManager : FSystem {
                         {
                             verb = "saved",
                             objectType = "serious-game",
-                            objectName = "E-LearningScape progression: " + dateTimeStamp
+                            activityExtensions = new Dictionary<string, string>() {
+                                { "type", "humansave" },
+                                { "value", dateTimeStamp.ToString() }
+                            }
                         });
                     }
                     else
@@ -777,7 +786,9 @@ public class SaveManager : FSystem {
             {
                 verb = "loaded",
                 objectType = "serious-game",
-                objectName = "E-LearningScape progression: " + saveContent.saveDate
+                activityExtensions = new Dictionary<string, string>() {
+                    { "value", saveContent.saveDate.ToString() }
+                }
             });
 
             MenuSystem.instance.StartGame();

@@ -96,6 +96,12 @@ public class LoginManager : FSystem {
 
         GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "turnOn", performedBy = openedBy });
         openedBy = "player";
+
+        GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
+        {
+            verb = "accessed",
+            objectType = "mastermind"
+        });
     }
 
     private void onForceMoveTo(GameObject go)
@@ -140,7 +146,7 @@ public class LoginManager : FSystem {
                 UnlockLoginDoor();
 
                 GameObject IARsecondScreen = f_mainWindow.First().GetComponentInChildren<LinkedWith>().link;
-                GameObjectManager.addComponent<ActionPerformedForLRS>(IARsecondScreen, new { verb = "unlocked", objectType = "menu", objectName = IARsecondScreen.name });
+
                 f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 2;
                 // exit login
                 exitBy = "system";
@@ -159,8 +165,7 @@ public class LoginManager : FSystem {
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
         {
             verb = "exited",
-            objectType = "interactable",
-            objectName = selectedLoginPanel.name
+            objectType = "mastermind"
         });
 
         selectedLoginPanel = null;
@@ -183,11 +188,18 @@ public class LoginManager : FSystem {
             GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
             {
                 verb = "answered",
-                objectType = "question",
-                objectName = selectedLoginPanel.name,
+                objectType = "mastermind",
                 result = true,
                 success = 1,
                 response = answer.ToString()
+            });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
+            {
+                verb = "completed",
+                objectType = "quest",
+                activityExtensions = new Dictionary<string, string>() {
+                        { "value", "room1" }
+                    }
             });
 
             //show correct answer feedback for the 3 numbers
@@ -215,8 +227,7 @@ public class LoginManager : FSystem {
             GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
             {
                 verb = "answered",
-                objectType = "question",
-                objectName = selectedLoginPanel.name,
+                objectType = "mastermind",
                 result = true,
                 success = -1,
                 response = answer.ToString()
@@ -282,10 +293,9 @@ public class LoginManager : FSystem {
             {
                 verb = "received",
                 objectType = "feedback",
-                objectName = string.Concat(selectedLoginPanel.name, "_feedback"),
                 activityExtensions = new Dictionary<string, string>() {
-                    { "content", string.Concat(connectionAnswerCheck1.text, connectionAnswerCheck2.text, connectionAnswerCheck3.text, answer.ToString()) },
-                    { "type", "answer validation" }
+                    { "value", selectedLoginPanel.name },
+                    { "content", string.Concat(connectionAnswerCheck1.text, connectionAnswerCheck2.text, connectionAnswerCheck3.text, answer.ToString()) }
                 }
             });
         }

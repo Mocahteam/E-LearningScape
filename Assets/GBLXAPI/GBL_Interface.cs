@@ -39,18 +39,18 @@ public static class GBL_Interface {
 	Here is where you will put functions to be called whenever you want to send a GBLxAPI statement.
 	 */
 	
-	public static void SendStatement(string verb, string activityType, string activityName, Dictionary<string, string> activityExtensions = null)
+	public static void SendStatement(string verb, string activityType, Dictionary<string, string> activityExtensions = null)
     {
-        ActivityDefinitionBuilder.IOptional definitionBuilder = GBLXAPI.ActivityDefinition
-            .WithType(activityType)
-            .WithName(activityName);
+        ActivityBuilder.IOptional activityBuilder = GBLXAPI.Activity
+            .WithID("https://www.lip6.fr/mocah/ELS")
+            .WithType(activityType);
         if (activityExtensions != null)
         {
             //set extensions
             ExtensionsBuilder extensions = GBLXAPI.Extensions;
             foreach (KeyValuePair<string, string> entry in activityExtensions)
                 extensions = extensions.WithStandard(entry.Key, entry.Value);
-            definitionBuilder.WithExtensions(extensions.Build());
+            activityBuilder.WithExtensions(extensions.Build());
         }
 
         GBLXAPI.Statement
@@ -59,26 +59,24 @@ public static class GBL_Interface {
                 .WithName(playerName)
                 .Build())
             .WithVerb(verb)
-            .WithTargetActivity(GBLXAPI.Activity
-                .WithID("https://www.lip6.fr/mocah/invalidURI/" + activityType + "/" + activityName)
-                .WithDefinition(definitionBuilder.Build())
-                .Build())
+            .WithTargetActivity(activityBuilder.Build())
             .Enqueue();
-	}
+        ;
+    }
 	
-	public static void SendStatementWithResult(string verb, string activityType, string activityName, Dictionary<string, string> activityExtensions = null, Dictionary<string, string> resultExtensions = null, bool? completed = null, bool? success = null, string response = null, int? score = null,
+	public static void SendStatementWithResult(string verb, string activityType, Dictionary<string, string> activityExtensions = null, Dictionary<string, string> resultExtensions = null, bool? completed = null, bool? success = null, string response = null, int? score = null,
         float duration = 0)
     {
-        ActivityDefinitionBuilder.IOptional definitionBuilder = GBLXAPI.ActivityDefinition
-            .WithType(activityType)
-            .WithName(activityName);
+        ActivityBuilder.IOptional activityBuilder = GBLXAPI.Activity
+            .WithID("https://www.lip6.fr/mocah/ELS")
+            .WithType(activityType);
         if (activityExtensions != null)
         {
             //set extensions
             ExtensionsBuilder extensions = GBLXAPI.Extensions;
             foreach (KeyValuePair<string, string> entry in activityExtensions)
                 extensions = extensions.WithStandard(entry.Key, entry.Value);
-            definitionBuilder.WithExtensions(extensions.Build());
+            activityBuilder.WithExtensions(extensions.Build());
         }
 
         ResultBuilder resultBuilder = GBLXAPI.Result;
@@ -101,10 +99,7 @@ public static class GBL_Interface {
                 .WithName(playerName)
                 .Build())
             .WithVerb(verb)
-            .WithTargetActivity(GBLXAPI.Activity
-                .WithID("https://www.lip6.fr/mocah/invalidURI/" + activityType + "/" + activityName)
-                .WithDefinition(definitionBuilder.Build())
-                .Build())
+            .WithTargetActivity(activityBuilder.Build())
             .WithResult(resultBuilder)
             .Enqueue();
 	}

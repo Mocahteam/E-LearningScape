@@ -14,4 +14,9 @@ public class SendStatements_wrapper : MonoBehaviour
 		MainLoop.callAppropriateSystemMethod ("SendStatements", "initGBLXAPI", null);
 	}
 
+	public void initPlayerName(System.String sessionID)
+	{
+		MainLoop.callAppropriateSystemMethod ("SendStatements", "initPlayerName", sessionID);
+	}
+
 }

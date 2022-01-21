@@ -6,7 +6,6 @@ public class ActionPerformedForLRS : MonoBehaviour {
 
     public string verb;
     public string objectType;
-    public string objectName;
 
     public bool result = false;
     /// <summary>

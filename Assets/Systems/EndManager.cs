@@ -51,12 +51,6 @@ public class EndManager : FSystem {
         // When all answer was displayed => ask to teleport in the end room or display end story
         if (f_answer.Count == 0)
         {
-            GameObjectManager.addComponent<ActionPerformedForLRS>(f_questionR3.First().transform.parent.parent.gameObject, new
-            {
-                verb = "completed",
-                objectType = "menu",
-                objectName = f_questionR3.First().transform.parent.parent.gameObject.name
-            });
             if (useEndRoom)
             {
                 switchToEndRoom = true;

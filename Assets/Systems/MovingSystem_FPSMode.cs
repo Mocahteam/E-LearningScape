@@ -222,12 +222,20 @@ public class MovingSystem_FPSMode : FSystem
         if (crouching)
         {
             GameObjectManager.addComponent<ActionPerformed>(playerController.gameObject, new { name = "turnOn", performedBy = "player" });
-            GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "crouched", objectType = "avatar", objectName = "player" });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new 
+            {
+                verb = "crouched",
+                objectType = "avatar"
+            });
         }
         else
         {
             GameObjectManager.addComponent<ActionPerformed>(playerController.gameObject, new { name = "turnOff", performedBy = "player" });
-            GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new { verb = "stood", objectType = "avatar", objectName = "player" });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new 
+            {
+                verb = "stood",
+                objectType = "avatar"
+            });
         }
     }
 
@@ -255,8 +263,9 @@ public class MovingSystem_FPSMode : FSystem
                     {
                         verb = "moved",
                         objectType = "avatar",
-                        objectName = "player",
-                        activityExtensions = new Dictionary<string, string>() { { "position", f_player.First().transform.position.ToString("G4") } }
+                        activityExtensions = new Dictionary<string, string>() {
+                            { "position", f_player.First().transform.position.ToString("G4") } 
+                        }
                     });
                     walkingTraceTimer = Time.time;
                 }

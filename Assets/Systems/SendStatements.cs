@@ -29,11 +29,14 @@ public class SendStatements : FSystem {
             GBLXAPI.Init(GBL_Interface.lrsAddresses);
 
         GBLXAPI.debugMode = false;
+    }
 
+    public void initPlayerName(string sessionID)
+    {
         //Generate player name unique to each playing session (computer name + date + hour)
-        GBL_Interface.playerName = LoadGameContent.sessionID;
+        GBL_Interface.playerName = sessionID;
         //Generate a UUID from the player name
-        GBL_Interface.userUUID = GBLUtils.GenerateActorUUID(LoadGameContent.sessionID);
+        GBL_Interface.userUUID = GBLUtils.GenerateActorUUID(sessionID);
     }
 
 	// Use this to update member variables when system resume.
@@ -58,7 +61,7 @@ public class SendStatements : FSystem {
                     //If no result info filled
                     if (!ap.result)
                     {
-                        GBL_Interface.SendStatement(ap.verb, ap.objectType, ap.objectName, ap.activityExtensions);
+                        GBL_Interface.SendStatement(ap.verb, ap.objectType, ap.activityExtensions);
                     }
                     else
                     {
@@ -74,7 +77,7 @@ public class SendStatements : FSystem {
                         else if (ap.success < 0)
                             success = false;
 
-                        GBL_Interface.SendStatementWithResult(ap.verb, ap.objectType, ap.objectName, ap.activityExtensions, ap.resultExtensions, completed, success, ap.response, ap.score, ap.duration);
+                        GBL_Interface.SendStatementWithResult(ap.verb, ap.objectType, ap.activityExtensions, ap.resultExtensions, completed, success, ap.response, ap.score, ap.duration);
                     }
                 }
             }

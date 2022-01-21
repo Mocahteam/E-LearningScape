@@ -119,7 +119,11 @@ public class IARTabNavigation : FSystem {
 
     public void openIar(int tabId)
     {
-        GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "activated", objectType = "menu", objectName = iar.name });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new
+        {
+            verb = "activated",
+            objectType = "iar"
+        });
         GameObjectManager.setGameObjectState(f_HUD.First(), false); // hide HUD
         GameObjectManager.setGameObjectState(iar, true); // open IAR
 
@@ -165,7 +169,11 @@ public class IARTabNavigation : FSystem {
 
     public void closeIar()
     {
-        GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new { verb = "deactivated", objectType = "menu", objectName = iar.name });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(iar, new 
+        {
+            verb = "deactivated",
+            objectType = "iar"
+        });
         GameObjectManager.setGameObjectState(iar, false); // close IAR
 
         // remove selected tabs notification
@@ -213,7 +221,14 @@ public class IARTabNavigation : FSystem {
         newSelectedTab.GetComponent<TMP_Text>().fontStyle = TMPro.FontStyles.Bold;
         // enable new content
         GameObjectManager.setGameObjectState(newSelectedTab.GetComponent<LinkedWith>().link, true);
-        GameObjectManager.addComponent<ActionPerformedForLRS>(newSelectedTab.GetComponent<LinkedWith>().link, new { verb = "accessed", objectType = "menu", objectName = newSelectedTab.GetComponent<LinkedWith>().link.name });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(newSelectedTab.GetComponent<LinkedWith>().link, new 
+        {
+            verb = "accessed",
+            objectType = "iarTab",
+            activityExtensions = new Dictionary<string, string>() {
+                { "value", newSelectedTab.GetComponent<LinkedWith>().link.name }
+            }
+        });
         // notify this tab as selected
         if (newSelectedTab.GetComponent<SelectedTab>() == null)
             GameObjectManager.addComponent<SelectedTab>(newSelectedTab);

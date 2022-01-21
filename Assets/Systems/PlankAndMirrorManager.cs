@@ -65,6 +65,12 @@ public class PlankAndMirrorManager : FSystem {
         instance.Pause = false;
 
         GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "turnOn", performedBy = "player" });
+
+        GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
+        {
+            verb = "accessed",
+            objectType = "mirroredPlank"
+        });
     }
 
     // return true if UI with name "name" is selected into inventory
@@ -143,7 +149,11 @@ public class PlankAndMirrorManager : FSystem {
                 PutMirrorOnPlank();
 
                 GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "perform", performedBy = "system" });
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new { verb = "completed", objectType = "interactable", objectName = selectedPlank.name });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new 
+                {
+                    verb = "placed",
+                    objectType = "mirror"
+                });
             }
 
             if (!movePlank)
@@ -169,7 +179,11 @@ public class PlankAndMirrorManager : FSystem {
         GameObjectManager.removeComponent<ReadyToWork>(selectedPlank);
 
         GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "turnOff", performedBy = "player" });
-        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new { verb = "exited", objectType = "interactable", objectName = selectedPlank.name });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new 
+        {
+            verb = "exited",
+            objectType = "mirroredPlank"
+        });
 
         selectedPlank = null;
 

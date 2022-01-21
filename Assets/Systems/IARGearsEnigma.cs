@@ -4,6 +4,7 @@ using FYFY_plugins.PointerManager;
 using FYFY_plugins.Monitoring;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class IARGearsEnigma : FSystem
 {
@@ -153,7 +154,14 @@ public class IARGearsEnigma : FSystem
                     gearDragged = tmpGO; //save the dragged gear
                     GameObjectManager.setGameObjectState(question, false);
                     GameObjectManager.setGameObjectState(transparentGear, true);
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(gearDragged, new { verb = "dragged", objectType = "draggable", objectName = gearDragged.name });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(gearDragged, new
+                    {
+                        verb = "dragged",
+                        objectType = "gear",
+                        activityExtensions = new Dictionary<string, string>() {
+                            { "value", gearDragged.name }
+                        }
+                    });
                 }
             }
             if (gearDragged != null) //if a gear is dragged
@@ -161,7 +169,14 @@ public class IARGearsEnigma : FSystem
                 rotateGear = false; //initial value
                 if (Input.GetButtonUp("Fire1"))  //when the gear is released
                 {
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(gearDragged, new { verb = "dropped", objectType = "draggable", objectName = gearDragged.name });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(gearDragged, new
+                    {
+                        verb = "dropped",
+                        objectType = "gear",
+                        activityExtensions = new Dictionary<string, string>() {
+                            { "value", gearDragged.name }
+                        }
+                    });
                     GameObjectManager.setGameObjectState(transparentGear, false);
                     //if the gear is released in the center of the tablet (player answering)
                     if (gearDragged.transform.localPosition.x < 125 && gearDragged.transform.localPosition.x > -125 && gearDragged.transform.localPosition.y < 125f / 2 && gearDragged.transform.localPosition.x > -125f / 2)
@@ -171,10 +186,17 @@ public class IARGearsEnigma : FSystem
                         {
                             GameObjectManager.addComponent<ActionPerformed>(gears, new { name = "Correct", performedBy = "player" });
                             GameObjectManager.addComponent<ActionPerformed>(gears, new { name = "perform", performedBy = "system" });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(gears, new { verb = "answered", objectType = "question",
-                                objectName = gears.name, result = true, success = 1, response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(gears.transform.parent.gameObject, new { verb = "completed",
-                                objectType = "menu", objectName = gears.transform.parent.gameObject.name });
+                            GameObjectManager.addComponent<ActionPerformedForLRS>(gears, new 
+                            { 
+                                verb = "answered",
+                                objectType = "question",
+                                activityExtensions = new Dictionary<string, string>() {
+                                    { "value", gearDragged.name }
+                                },
+                                result = true,
+                                success = 1,
+                                response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text
+                            });
 
                             //start audio and animation for "Right answer"
 
@@ -195,7 +217,9 @@ public class IARGearsEnigma : FSystem
                             {
                                 verb = "answered",
                                 objectType = "question",
-                                objectName = gears.name,
+                                activityExtensions = new Dictionary<string, string>() {
+                                    { "value", gearDragged.name }
+                                },
                                 result = true,
                                 success = -1,
                                 response = gearDragged.GetComponentInChildren<TextMeshProUGUI>().text

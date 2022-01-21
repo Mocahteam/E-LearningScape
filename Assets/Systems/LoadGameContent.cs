@@ -444,10 +444,14 @@ public class LoadGameContent : FSystem {
             // create a hash with sessionID
             sessionID = String.Format("{0:X}", sessionID.GetHashCode());
 
+            SendStatements.instance.initPlayerName(sessionID);
+
             Debug.Log(string.Concat("Session ID generated: ", sessionID));
         }
         else
         {
+            SendStatements.instance.initPlayerName(sessionID);
+
             Debug.Log(string.Concat("Previous session ID kept: ", sessionID));
         }
 

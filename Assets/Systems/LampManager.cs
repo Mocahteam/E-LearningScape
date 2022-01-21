@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.Monitoring;
+using System.Collections.Generic;
 
 public class LampManager : FSystem {
 
@@ -83,8 +84,10 @@ public class LampManager : FSystem {
                         GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
                         {
                             verb = "accessed",
-                            objectType = "interactable",
-                            objectName = tmpGo.name
+                            objectType = "viewable",
+                            activityExtensions = new Dictionary<string, string>() {
+                                { "value", tmpGo.name }
+                            }
                         });
                         GameObjectManager.addComponent<ActionPerformed>(tmpGo, new { name = "activate", performedBy = "player" });
                         GameObjectManager.setGameObjectState(tmpGo, true);
@@ -111,8 +114,10 @@ public class LampManager : FSystem {
                     GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
                     {
                         verb = "exited",
-                        objectType = "interactable",
-                        objectName = tmpGo.name
+                        objectType = "viewable",
+                        activityExtensions = new Dictionary<string, string>() {
+                            { "value", tmpGo.name }
+                        }
                     });
                     GameObjectManager.setGameObjectState(tmpGo, false);
                 }

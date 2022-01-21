@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using FYFY_plugins.Monitoring;
+using System.Collections.Generic;
 
 public class SatchelManager : FSystem {
 
@@ -77,6 +78,12 @@ public class SatchelManager : FSystem {
         instance.Pause = false;
 
         GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
+
+        GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
+        {
+            verb = "accessed",
+            objectType = "satchel"
+        });
     }
 
     private void updatePictures()
@@ -98,7 +105,14 @@ public class SatchelManager : FSystem {
                 break;
         }
         GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = ("activatePaper"+currentPaperViews), performedBy = "system" });
-        GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new { verb = "accessed", objectType = "interactable", objectName = ("paper"+ currentPaperViews) });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new 
+        {
+            verb = "accessed",
+            objectType = "picture",
+            activityExtensions = new Dictionary<string, string>() {
+                { "value", ("paper"+ currentPaperViews) }
+            }
+        });
     }
 
     private void onItemSelectedInInventory(GameObject go)
@@ -183,7 +197,11 @@ public class SatchelManager : FSystem {
                 GameObjectManager.setGameObjectState(isSelected("KeySatchel"), false);
                 GameObjectManager.setGameObjectState(isSelected("KeySatchel").GetComponent<HUDItemSelected>().hudGO, false);
                 GameObjectManager.addComponent<ActionPerformed>(bagPadlock.GetComponentInChildren<ComponentMonitoring>().gameObject, new { name = "perform", performedBy = "system" });
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBag, new { verb = "unlocked", objectType = "interactable", objectName = selectedBag.name });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBag, new 
+                {
+                    verb = "unlocked",
+                    objectType = "satchel"
+                });
                 paperOpenning = true;
                 updatePictures();
             }
@@ -204,7 +222,11 @@ public class SatchelManager : FSystem {
                 GameObjectManager.removeComponent<ReadyToWork>(selectedBag);
 
                 GameObjectManager.addComponent<ActionPerformed>(selectedBag, new { name = "turnOff", performedBy = "player" });
-                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBag, new { verb = "exited", objectType = "interactable", objectName = selectedBag.name });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBag, new 
+                {
+                    verb = "exited",
+                    objectType = "satchel"
+                });
 
                 selectedBag = null;
                 bagAnimator = null;

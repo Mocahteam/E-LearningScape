@@ -109,9 +109,11 @@ public class StoryDisplaying : FSystem {
             GameObjectManager.addComponent<ActionPerformedForLRS>(endText, new
             {
                 verb = "accessed",
-                objectType = "viewable",
-                objectName = "end link",
-                activityExtensions = new Dictionary<string, string>() { { "link", st.endLink } }
+                objectType = "link",
+                activityExtensions = new Dictionary<string, string>() {
+                    { "value", "end link" },
+                    { "link", st.endLink }
+                }
             });
         }
     }
@@ -162,11 +164,11 @@ public class StoryDisplaying : FSystem {
                 {
                     verb = "started",
                     objectType = "serious-game",
-                    objectName = "E-LearningScape",
                     activityExtensions = new Dictionary<string, string>() {
-                    { "content", LoadGameContent.gameContent.theme },
-                    { "help", LoadGameContent.internalGameContent.helpSystem.ToString() }
-                }
+                        { "value", "E-LearningScape" },
+                        { "content", LoadGameContent.gameContent.theme },
+                        { "help", LoadGameContent.internalGameContent.helpSystem.ToString() }
+                    }
                 });
             }
             fadingImage.color = Color.black;
@@ -183,8 +185,8 @@ public class StoryDisplaying : FSystem {
             {
                 verb = "completed",
                 objectType = "serious-game",
-                objectName = "E-LearningScape",
                 activityExtensions = new Dictionary<string, string>() {
+                    { "value", "E-LearningScape" },
                     { "content", LoadGameContent.gameContent.theme },
                     { "time", string.Concat(hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")) }
                 }

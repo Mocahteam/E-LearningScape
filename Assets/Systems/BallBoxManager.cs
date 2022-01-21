@@ -91,6 +91,12 @@ public class BallBoxManager : FSystem {
         GameObjectManager.setGameObjectState(ballQuestion, true);
 
         GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
+
+        GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
+        {
+            verb = "accessed",
+            objectType = "ballbox"
+        });
     }
 
     private void onEnterBall(GameObject go)
@@ -106,9 +112,11 @@ public class BallBoxManager : FSystem {
             GameObjectManager.addComponent<ActionPerformedForLRS>(focusedBall, new
             {
                 verb = "read",
-                objectType = "interactable",
-                objectName = focusedBall.name,
-                activityExtensions = new Dictionary<string, string>() { { "content", b.text } }
+                objectType = "ball",
+                activityExtensions = new Dictionary<string, string>() {
+                    { "value", focusedBall.name },
+                    { "content", b.text }
+                }
             });
         }
     }
@@ -179,7 +187,11 @@ public class BallBoxManager : FSystem {
                     GameObjectManager.setGameObjectState(keySelected().GetComponent<HUDItemSelected>().hudGO, false);
                     // trace
                     GameObjectManager.addComponent<ActionPerformed>(boxPadlock.GetComponentInChildren<ComponentMonitoring>().gameObject, new { name = "perform", performedBy = "system" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "unlocked", objectType = "interactable", objectName = selectedBox.name });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new
+                    { 
+                        verb = "unlocked",
+                        objectType = "ballbox"
+                    });
                 }
             }
 
@@ -246,11 +258,10 @@ public class BallBoxManager : FSystem {
                     GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBall, new
                     {
                         verb = "interacted",
-                        objectType = "interactable",
-                        objectName = selectedBall.name,
+                        objectType = "ball",
                         activityExtensions = new Dictionary<string, string>() {
-                            { "content", focusedBall.GetComponent<Ball>().text },
-                            { "value", focusedBall.GetComponent<Ball>().number.ToString() }
+                            { "value", selectedBall.name },
+                            { "content", selectedBall.GetComponent<Ball>().text }
                         }
                     });
                     Camera.main.GetComponent<PostProcessingBehaviour>().profile.depthOfField.enabled = false;
@@ -309,7 +320,11 @@ public class BallBoxManager : FSystem {
         boxOpenned = false;
 
         GameObjectManager.addComponent<ActionPerformed>(selectedBox, new { name = "turnOff", performedBy = "player" });
-        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new { verb = "exited", objectType = "interactable", objectName = selectedBox.name });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBox, new
+        {
+            verb = "exited",
+            objectType = "ballbox"
+        });
 
         selectedBox = null;
 

@@ -67,6 +67,12 @@ public class WhiteBoardManager : FSystem {
         GameObjectManager.addComponent<CapsuleCollider>(eraser);
         // Add Collider to boardTexture
         GameObjectManager.addComponent<MeshCollider>(f_boardTexture.First());
+
+        GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
+        {
+            verb = "accessed",
+            objectType = "whiteBoard"
+        });
     }
 
     private void onEnterEraser (GameObject go)
@@ -98,7 +104,11 @@ public class WhiteBoardManager : FSystem {
                     eraserDragged = true;
 
                     GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "turnOn", performedBy = "player" });
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "dragged", objectType = "draggable", objectName = eraser.name });
+                    GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new 
+                    {
+                        verb = "dragged",
+                        objectType = "eraser"
+                    });
                 }
                 if (eraserDragged)
                 {
@@ -107,7 +117,11 @@ public class WhiteBoardManager : FSystem {
                         //stop dragging eraser when the click is released
                         eraserDragged = false;
                         GameObjectManager.addComponent<ActionPerformed>(eraser, new { name = "turnOff", performedBy = "player" });
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new { verb = "dropped", objectType = "draggable", objectName = eraser.name });
+                        GameObjectManager.addComponent<ActionPerformedForLRS>(eraser, new 
+                        {
+                            verb = "dropped",
+                            objectType = "eraser"
+                        });
                     }
                     else
                     {
@@ -146,7 +160,11 @@ public class WhiteBoardManager : FSystem {
         GameObjectManager.removeComponent<ReadyToWork>(selectedBoard);
 
         GameObjectManager.addComponent<ActionPerformed>(selectedBoard, new { name = "turnOff", performedBy = "player" });
-        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBoard, new { verb = "exited", objectType = "interactable", objectName = selectedBoard.name });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedBoard, new 
+        {
+            verb = "exited",
+            objectType = "whiteBoard"
+        });
 
         selectedBoard = null;
 

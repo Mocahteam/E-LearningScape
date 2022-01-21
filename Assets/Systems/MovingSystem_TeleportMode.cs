@@ -83,8 +83,9 @@ public class MovingSystem_TeleportMode : FSystem {
                     {
                         verb = "moved",
                         objectType = "avatar",
-                        objectName = "player",
-                        activityExtensions = new Dictionary<string, string>() { { "position", fpsController.transform.position.ToString("G4") } }
+                        activityExtensions = new Dictionary<string, string>() { 
+                            { "position", fpsController.transform.position.ToString("G4") } 
+                        }
                     });
                 }
             }

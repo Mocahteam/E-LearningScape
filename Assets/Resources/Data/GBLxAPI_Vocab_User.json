@@ -19,6 +19,24 @@
                 "en-US": "avatar"
             }
         },
+        "ball": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/ball",
+            "name": {
+                "en-US": "ball"
+            }
+        },
+        "ballbox": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/ballbox",
+            "name": {
+                "en-US": "ballbox"
+            }
+        },
         "draggable": {
             "description": {
                 "en-US": ""
@@ -28,6 +46,24 @@
                 "en-US": "draggable"
             }
         },
+        "dreamfragment": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/dreamfragment",
+            "name": {
+                "en-US": "dreamfragment"
+            }
+        },
+        "eraser": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/eraser",
+            "name": {
+                "en-US": "eraser"
+            }
+        },
         "feedback": {
             "description": {
                 "en-US": ""
@@ -35,6 +71,33 @@
             "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/feedback",
             "name": {
                 "en-US": "feedback"
+            }
+        },
+        "gear": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/gear",
+            "name": {
+                "en-US": "gear"
+            }
+        },
+        "iar": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/iar",
+            "name": {
+                "en-US": "iar"
+            }
+        },
+        "iartab": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/iartab",
+            "name": {
+                "en-US": "iartab"
             }
         },
         "interactable": {
@@ -53,6 +116,78 @@
             "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/key",
             "name": {
                 "en-US": "key"
+            }
+        },
+        "link": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/link",
+            "name": {
+                "en-US": "link"
+            }
+        },
+        "locker": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/locker",
+            "name": {
+                "en-US": "locker"
+            }
+        },
+        "mastermind": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/mastermind",
+            "name": {
+                "en-US": "mastermind"
+            }
+        },
+        "mirroredplank": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/mirroredplank",
+            "name": {
+                "en-US": "mirroredplank"
+            }
+        },
+        "picture": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/picture",
+            "name": {
+                "en-US": "picture"
+            }
+        },
+        "plankandwire": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/plankandwire",
+            "name": {
+                "en-US": "plankandwire"
+            }
+        },
+        "puzzle": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/puzzle",
+            "name": {
+                "en-US": "puzzle"
+            }
+        },
+        "satchel": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/satchel",
+            "name": {
+                "en-US": "satchel"
             }
         },
         "text": {
@@ -80,6 +215,24 @@
             "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/viewable",
             "name": {
                 "en-US": "viewable"
+            }
+        },
+        "whiteboard": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/whiteboard",
+            "name": {
+                "en-US": "whiteboard"
+            }
+        },
+        "word": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/activity-types/word",
+            "name": {
+                "en-US": "word"
             }
         }
     },
@@ -323,6 +476,15 @@
             "id": "https://www.lip6.fr/mocah/invaliduri/verbs/moved",
             "name": {
                 "en-US": "moved"
+            }
+        },
+        "placed": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/verbs/placed",
+            "name": {
+                "en-US": "placed"
             }
         },
         "reached": {

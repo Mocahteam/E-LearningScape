@@ -126,10 +126,9 @@ public class IARDreamFragmentManager : FSystem {
 			GameObjectManager.addComponent<ActionPerformedForLRS>(t.gameObject, new
 			{
 					verb = t.isOn ? "activated": "deactivated",
-					objectType = "viewable",
-					objectName = tmpDFToggle.dreamFragmentContent.name,
+					objectType = "dreamFragment",
 					activityExtensions = new Dictionary<string, string>() {
-						{ "type", "dream fragment" }
+						{ "value", tmpDFToggle.dreamFragmentContent.name }
 					}
 			});
 		}
@@ -184,9 +183,11 @@ public class IARDreamFragmentManager : FSystem {
 			GameObjectManager.addComponent<ActionPerformedForLRS>(selectedDreamFragment.gameObject, new
 			{
 				verb = "accessed",
-				objectType = "viewable",
-				objectName = string.Concat(selectedDreamFragment.gameObject.name, "_Link"),
-				activityExtensions = new Dictionary<string, string>() { { "link", selectedDreamFragment.urlLink } }
+				objectType = "dreamFragment",
+				activityExtensions = new Dictionary<string, string>() {
+					{ "value", selectedDreamFragment.gameObject.name },
+					{ "link", selectedDreamFragment.urlLink }
+				}
 			});
 		}
 		else

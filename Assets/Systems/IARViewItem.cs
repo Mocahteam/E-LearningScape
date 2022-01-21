@@ -208,7 +208,14 @@ public class IARViewItem : FSystem {
         if (item.GetComponent<SelectedInInventory>())
         {
             GameObjectManager.addComponent<ActionPerformed>(item, new { name = "turnOff", performedBy = "player" });
-            GameObjectManager.addComponent<ActionPerformedForLRS>(item, new { verb = "deactivated", objectType = "item", objectName = item.name });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(item, new 
+            {
+                verb = "deactivated",
+                objectType = "item",
+                activityExtensions = new Dictionary<string, string>() {
+                    { "value", item.name }
+                }
+            });
 
             GameObjectManager.removeComponent<SelectedInInventory>(item);
             GameObjectManager.addComponent<PlaySound>(item, new { id = 14 }); // id refer to FPSController AudioBank
@@ -224,7 +231,14 @@ public class IARViewItem : FSystem {
         else
         {
             GameObjectManager.addComponent<ActionPerformed>(item, new { name = "turnOn", performedBy = "player" });
-            GameObjectManager.addComponent<ActionPerformedForLRS>(item, new { verb = "activated", objectType = "item", objectName = item.name });
+            GameObjectManager.addComponent<ActionPerformedForLRS>(item, new 
+            {
+                verb = "activated",
+                objectType = "item",
+                activityExtensions = new Dictionary<string, string>() {
+                    { "value", item.name }
+                }
+            });
 
             GameObjectManager.addComponent<SelectedInInventory>(item);
             GameObjectManager.addComponent<PlaySound>(item, new { id = 13 }); // id refer to FPSController AudioBank

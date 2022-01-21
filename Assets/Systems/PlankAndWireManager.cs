@@ -65,6 +65,12 @@ public class PlankAndWireManager : FSystem {
         }
 
         GameObjectManager.addComponent<ActionPerformed>(go, new { name = "turnOn", performedBy = "player" });
+
+        GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
+        {
+            verb = "accessed",
+            objectType = "plankAndWire"
+        });
     }
 
     private void onWordMouseEnter(GameObject go)
@@ -144,9 +150,11 @@ public class PlankAndWireManager : FSystem {
                             GameObjectManager.addComponent<ActionPerformedForLRS>(currentFocusedWord, new
                             {
                                 verb = "deactivated",
-                                objectType = "interactable",
-                                objectName = currentFocusedWord.name,
-                                activityExtensions = new Dictionary<string, string>() { { "content", currentFocusedWord.GetComponent<TextMeshPro>().text } }
+                                objectType = "word",
+                                activityExtensions = new Dictionary<string, string>() {
+                                    { "value", currentFocusedWord.name },
+                                    { "content", currentFocusedWord.GetComponent<TextMeshPro>().text } 
+                                }
                             });
                         }
                         else //if the word wasn't selected
@@ -162,9 +170,11 @@ public class PlankAndWireManager : FSystem {
                                         GameObjectManager.addComponent<ActionPerformedForLRS>(w, new
                                         {
                                             verb = "deactivated",
-                                            objectType = "interactable",
-                                            objectName = w.name,
-                                            activityExtensions = new Dictionary<string, string>() { { "content", w.GetComponent<TextMeshPro>().text } }
+                                            objectType = "word",
+                                            activityExtensions = new Dictionary<string, string>() {
+                                                { "value", w.name },
+                                                { "content", w.GetComponent<TextMeshPro>().text }
+                                            }
                                         });
                                     }
                                     w.GetComponent<TextMeshPro>().color = Color.white;
@@ -184,9 +194,11 @@ public class PlankAndWireManager : FSystem {
                             GameObjectManager.addComponent<ActionPerformedForLRS>(currentFocusedWord, new
                             {
                                 verb = "activated",
-                                objectType = "interactable",
-                                objectName = currentFocusedWord.name,
-                                activityExtensions = new Dictionary<string, string>() { { "content", currentFocusedWord.GetComponent<TextMeshPro>().text } },
+                                objectType = "word",
+                                activityExtensions = new Dictionary<string, string>() {
+                                    { "value", currentFocusedWord.name },
+                                    { "content", currentFocusedWord.GetComponent<TextMeshPro>().text } 
+                                },
                                 result = true,
                                 success = 1
                             });
@@ -227,8 +239,7 @@ public class PlankAndWireManager : FSystem {
                                     GameObjectManager.addComponent<ActionPerformedForLRS>(currentFocusedWord, new
                                     {
                                         verb = "completed",
-                                        objectType = "interactable",
-                                        objectName = selectedPlank.name
+                                        objectType = "plankAndWire"
                                     });
                                 }
                             }
@@ -240,13 +251,13 @@ public class PlankAndWireManager : FSystem {
                         GameObjectManager.addComponent<ActionPerformedForLRS>(currentFocusedWord, new
                         {
                             verb = "attempted",
-                            objectType = "interactable",
-                            objectName = currentFocusedWord.name,
+                            objectType = "word",
                             activityExtensions = new Dictionary<string, string>() {
-                            { "content", currentFocusedWord.GetComponent<TextMeshPro>().text },
-                            // depends if word is selected or not
-                            { "state", currentFocusedWord.GetComponent<TextMeshPro>().color == Color.yellow ? "selected" : "unselected" }
-                        }
+                                { "value", currentFocusedWord.name },
+                                { "content", currentFocusedWord.GetComponent<TextMeshPro>().text },
+                                // depends if word is selected or not
+                                { "state", currentFocusedWord.GetComponent<TextMeshPro>().color == Color.yellow ? "selected" : "unselected" }
+                            }
                         });
                     }
                 }
@@ -262,9 +273,9 @@ public class PlankAndWireManager : FSystem {
                             GameObjectManager.addComponent<ActionPerformedForLRS>(word, new
                             {
                                 verb = "deactivated",
-                                objectType = "interactable",
-                                objectName = word.GetComponent<TextMeshPro>().text,
+                                objectType = "word",
                                 activityExtensions = new Dictionary<string, string>() {
+                                    { "value", word.GetComponent<TextMeshPro>().text },
                                     { "content", word.GetComponent<TextMeshPro>().text }
                                 }
                             });
@@ -297,7 +308,11 @@ public class PlankAndWireManager : FSystem {
         GameObjectManager.removeComponent<ReadyToWork>(selectedPlank);
 
         GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "turnOff", performedBy = "player" });
-        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new { verb = "exited", objectType = "interactable", objectName = selectedPlank.name });
+        GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new 
+        {
+            verb = "exited",
+            objectType = "plankAndWire"
+        });
 
         selectedPlank = null;
 

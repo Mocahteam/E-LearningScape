@@ -106,13 +106,6 @@ public class IARQueryEvaluator : FSystem {
             GameObjectManager.setGameObjectState(queries, false);
             // enable final code
             GameObjectManager.setGameObjectState(queries.transform.parent.GetChild(1).gameObject, true);
-
-            GameObjectManager.addComponent<ActionPerformedForLRS>(queries.transform.parent.gameObject, new
-            {
-                verb = "completed",
-                objectType = "menu",
-                objectName = queries.transform.parent.gameObject.name
-            });
         }
     }
 
@@ -185,7 +178,9 @@ public class IARQueryEvaluator : FSystem {
         {
             verb = "answered",
             objectType = "question",
-            objectName = query.name,
+            activityExtensions = new Dictionary<string, string>() {
+                { "value", query.name }
+            },
             result = true,
             success = error ? -1 : 1,
             response = answer
@@ -267,11 +262,10 @@ public class IARQueryEvaluator : FSystem {
                         {
                             verb = "received",
                             objectType = "feedback",
-                            objectName = query.name + "_feedback",
                             activityExtensions = new Dictionary<string, string>() {
-                            { "content", feedbackTexts },
-                            { "type", "answer description" }
-                        }
+                                { "value", query.name },
+                                { "content", feedbackTexts }
+                            }
                         });
                     }
                 }

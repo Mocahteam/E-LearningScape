@@ -44,7 +44,11 @@ public class IARPuzzleManager : FSystem {
             // just trace the player interact with the puzzle
             if (enableTraceInteraction)
             {
-                GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new { verb = "interacted", objectType = "interactable", objectName = "Puzzle" });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
+                {
+                    verb = "interacted",
+                    objectType = "puzzle"
+                });
                 enableTraceInteraction = false;
             }
         }

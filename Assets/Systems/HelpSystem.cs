@@ -130,6 +130,11 @@ public class HelpSystem : FSystem {
     /// </summary>
     public static HelpSystemConfig config;
 
+    /// <summary>
+    /// Count the number of hint given
+    /// </summary>
+    private int hintCounter = 0;
+
     public float HintCooldown { 
         get
         { 
@@ -808,19 +813,22 @@ public class HelpSystem : FSystem {
         tmpHC.level = hintLevel;
         tmpHC.link = hintLink;
 
+        hintCounter++;
+        tmpGO.transform.GetChild(0).GetComponent<TMP_Text>().text = LoadGameContent.internalGameContent.hintButtonText + " " + hintCounter;
+
         if (enableTrace)
         {
             GameObjectManager.addComponent<ActionPerformedForLRS>(hintButton.gameObject, new
             {
                 verb = "received",
                 objectType = "feedback",
-                objectName = string.Concat("hint_", hintButton.transform.GetChild(0).GetComponent<TMP_Text>().text),
                 activityExtensions = new Dictionary<string, string>() {
-                { "type", "hint" },
-                { "from", playerAskedHelp ? "button" : "system" },
-                { "reference", hintMonitor.id+"."+actionName },
-                { "content", tmpHC.text }
-            }
+                    { "type", "hint" },
+                    { "value", hintButton.transform.GetChild(0).GetComponent<TMP_Text>().text },
+                    { "from", playerAskedHelp ? "button" : "system" },
+                    { "reference", hintMonitor.id+"."+actionName },
+                    { "content", tmpHC.text }
+                }
             });
         }
 
