@@ -81,14 +81,6 @@ public class LampManager : FSystem {
                 {
                     if (!tmpGo.activeSelf)
                     {
-                        GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
-                        {
-                            verb = "accessed",
-                            objectType = "viewable",
-                            activityExtensions = new Dictionary<string, string>() {
-                                { "value", tmpGo.name }
-                            }
-                        });
                         GameObjectManager.addComponent<ActionPerformed>(tmpGo, new { name = "activate", performedBy = "player" });
                         GameObjectManager.setGameObjectState(tmpGo, true);
                     }
@@ -111,14 +103,6 @@ public class LampManager : FSystem {
                     //disable the mask and the symbol
                     tmpGo.transform.position = position;
                     tmpGo.GetComponentInChildren<Lamp_Symbol>().gameObject.transform.position = position; 
-                    GameObjectManager.addComponent<ActionPerformedForLRS>(tmpGo, new
-                    {
-                        verb = "exited",
-                        objectType = "viewable",
-                        activityExtensions = new Dictionary<string, string>() {
-                            { "value", tmpGo.name }
-                        }
-                    });
                     GameObjectManager.setGameObjectState(tmpGo, false);
                 }
             }

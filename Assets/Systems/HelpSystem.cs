@@ -497,7 +497,6 @@ public class HelpSystem : FSystem {
                         labelCount = 0;
 
                     //if labelCount reached the step calculate the feedback level and ask a hint and the time spent since the last time the system gave a feedback reached countLabel to know if it can give another one
-                    Debug.Log(labelCount + " " + config.labelCountStep + " " + Time.time + " " + systemHintTimer + " " + config.systemHintCooldownDuration);
                     if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration){
                         if (DisplayHint())
                         {

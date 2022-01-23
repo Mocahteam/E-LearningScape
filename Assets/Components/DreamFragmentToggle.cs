@@ -6,6 +6,9 @@ public class DreamFragmentToggle : MonoBehaviour {
 	//the content gameobject assiociated to this toggle, and activated/deactivated on click
 	public GameObject dreamFragmentContent;
 
+	//the source GameObject that enables this from game
+	public GameObject dreamFragmentSrc;
+
 	//sprites used to change toggle state
 	public Sprite onState;
 	public Sprite offState;

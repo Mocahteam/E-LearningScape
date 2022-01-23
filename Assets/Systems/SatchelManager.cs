@@ -104,15 +104,6 @@ public class SatchelManager : FSystem {
                 paperImg.sprite = paperImgRef.image3;
                 break;
         }
-        GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = ("activatePaper"+currentPaperViews), performedBy = "system" });
-        GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new 
-        {
-            verb = "accessed",
-            objectType = "picture",
-            activityExtensions = new Dictionary<string, string>() {
-                { "value", ("paper"+ currentPaperViews) }
-            }
-        });
     }
 
     private void onItemSelectedInInventory(GameObject go)
@@ -124,7 +115,18 @@ public class SatchelManager : FSystem {
             else
                 currentPaperViews = currentPaperViews + 2;
             if (paperOut)
+            {
                 updatePictures();
+                GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = ("activatePaper" + currentPaperViews), performedBy = "system" });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new
+                {
+                    verb = "accessed",
+                    objectType = "picture",
+                    activityExtensions = new Dictionary<string, string>() {
+                        { "value", ("paper"+ currentPaperViews) }
+                    }
+                });
+            }
         }
     }
 
@@ -137,7 +139,18 @@ public class SatchelManager : FSystem {
             else
                 currentPaperViews = currentPaperViews - 2;
             if (paperOut)
+            {
                 updatePictures();
+                GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = ("activatePaper" + currentPaperViews), performedBy = "system" });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new
+                {
+                    verb = "accessed",
+                    objectType = "picture",
+                    activityExtensions = new Dictionary<string, string>() {
+                        { "value", ("paper"+ currentPaperViews) }
+                    }
+                });
+            }
         }
     }
 
@@ -215,6 +228,15 @@ public class SatchelManager : FSystem {
                 paper.transform.position = selectedBag.transform.TransformPoint(bagPaperInitialPos) + Vector3.up * 0.8f;
                 paperOpenning = false;
                 paperOut = true;
+                GameObjectManager.addComponent<ActionPerformed>(paper, new { overrideName = ("activatePaper" + currentPaperViews), performedBy = "system" });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(paper, new
+                {
+                    verb = "accessed",
+                    objectType = "picture",
+                    activityExtensions = new Dictionary<string, string>() {
+                        { "value", ("paper"+ currentPaperViews) }
+                    }
+                });
             }
             else if (closingSatchel && (bagAnimator.GetCurrentAnimatorStateInfo(0).IsName("ClosePaper") || bagAnimator.GetCurrentAnimatorStateInfo(0).IsName("CloseLockedSatchel")) && bagAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
@@ -230,6 +252,8 @@ public class SatchelManager : FSystem {
 
                 selectedBag = null;
                 bagAnimator = null;
+
+                paperOut = false;
 
                 // Pause this system
                 instance.Pause = true;

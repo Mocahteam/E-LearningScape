@@ -54,7 +54,6 @@ namespace DIG.GBLXAPI.Builders
 
         public IOptional WithName(string name)
         {
-            UnityEngine.Debug.Log(name);
             _agent.name = name;
 
             return this;

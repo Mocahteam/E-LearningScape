@@ -295,7 +295,7 @@ public class LoginManager : FSystem {
                 objectType = "feedback",
                 activityExtensions = new Dictionary<string, string>() {
                     { "value", selectedLoginPanel.name },
-                    { "content", string.Concat(connectionAnswerCheck1.text, connectionAnswerCheck2.text, connectionAnswerCheck3.text, answer.ToString()) }
+                    { "content", string.Concat(connectionAnswerCheck1.text, connectionAnswerCheck2.text, connectionAnswerCheck3.text) }
                 }
             });
         }

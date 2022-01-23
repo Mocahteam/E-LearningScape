@@ -128,7 +128,7 @@ public class IARDreamFragmentManager : FSystem {
 					verb = t.isOn ? "activated": "deactivated",
 					objectType = "dreamFragment",
 					activityExtensions = new Dictionary<string, string>() {
-						{ "value", tmpDFToggle.dreamFragmentContent.name }
+						{ "value", tmpDFToggle.dreamFragmentSrc.name }
 					}
 			});
 		}
@@ -183,8 +183,9 @@ public class IARDreamFragmentManager : FSystem {
 			GameObjectManager.addComponent<ActionPerformedForLRS>(selectedDreamFragment.gameObject, new
 			{
 				verb = "accessed",
-				objectType = "dreamFragment",
+				objectType = "link",
 				activityExtensions = new Dictionary<string, string>() {
+					{ "type", "dreamFragment" },
 					{ "value", selectedDreamFragment.gameObject.name },
 					{ "link", selectedDreamFragment.urlLink }
 				}
