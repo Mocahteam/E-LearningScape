@@ -1,22 +1,25 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class IARHintManager_wrapper : MonoBehaviour
+public class IARHintManager_wrapper : BaseWrapper
 {
+	public UnityEngine.GameObject scrollView;
+	public UnityEngine.GameObject helpDescUI;
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
+		MainLoop.initAppropriateSystemField (system, "scrollView", scrollView);
+		MainLoop.initAppropriateSystemField (system, "helpDescUI", helpDescUI);
 	}
 
 	public void SetNormalColor(UnityEngine.UI.Button b)
 	{
-		MainLoop.callAppropriateSystemMethod ("IARHintManager", "SetNormalColor", b);
+		MainLoop.callAppropriateSystemMethod (system, "SetNormalColor", b);
 	}
 
 	public void OnClickHintLinkButton()
 	{
-		MainLoop.callAppropriateSystemMethod ("IARHintManager", "OnClickHintLinkButton", null);
+		MainLoop.callAppropriateSystemMethod (system, "OnClickHintLinkButton", null);
 	}
 
 }

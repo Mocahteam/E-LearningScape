@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using FYFY;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using UnityStandardAssets.Characters.FirstPerson;
 using FYFY_plugins.TriggerManager;
 
@@ -15,8 +14,9 @@ public class TutorialManager : FSystem {
     private Family f_dreamTabContent = FamilyManager.getFamily(new AnyOfTags("DreamFragmentsTabContent"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_selectableDreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragmentToggle), typeof(Toggle)));
     private Family f_questionTabContent = FamilyManager.getFamily(new AnyOfTags("QuestionTagContent"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_movingModeButton = FamilyManager.getFamily(new AllOfComponents(typeof(MovingModeSelector)));
     private Family f_answerQuestion = FamilyManager.getFamily(new AnyOfTags("A-R1"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
+
+    public GameObject movingModeSelector;
 
     private FirstPersonController playerController;
     private GameObject MovingMode;
@@ -31,24 +31,28 @@ public class TutorialManager : FSystem {
     private float movingProgress = 0;
     private Vector3 previousPosition;
 
+    public static TutorialManager instance;
+
     public TutorialManager()
     {
-        if (Application.isPlaying)
-        {
-            TutorialScreens = GameObject.Find("TutorialScreens").transform;
-            playerController = GameObject.Find("FPSController").GetComponent<FirstPersonController>();
-            MovingMode = GameObject.Find("MovingMode");
-            previousRotation = playerController.transform.rotation.y;
-            initWalkSpeed = playerController.m_WalkSpeed;
-            initPosition = new Vector3(playerController.transform.position.x, playerController.transform.position.y, playerController.transform.position.z);
-            GameObjectManager.setGameObjectState(TutorialScreens.GetChild(currentStep).gameObject, true);
-            currentStepName = TutorialScreens.GetChild(currentStep).gameObject.name;
-            // Toggle linked GO
-            foreach (LinkedWith lw in TutorialScreens.GetChild(currentStep).GetComponents<LinkedWith>())
-                GameObjectManager.setGameObjectState(lw.link, !lw.link.activeSelf);
-            f_targetArea.addEntryCallback(onTargetReached);
-            IARDreamFragmentManager.virtualDreamFragment = true; // force virtual dreamFragment for tutorial
-        }
+        instance = this;
+    }
+
+    protected override void onStart()
+    {
+        TutorialScreens = GameObject.Find("TutorialScreens").transform;
+        playerController = GameObject.Find("FPSController").GetComponent<FirstPersonController>();
+        MovingMode = GameObject.Find("MovingMode");
+        previousRotation = playerController.transform.rotation.y;
+        initWalkSpeed = playerController.m_WalkSpeed;
+        initPosition = new Vector3(playerController.transform.position.x, playerController.transform.position.y, playerController.transform.position.z);
+        GameObjectManager.setGameObjectState(TutorialScreens.GetChild(currentStep).gameObject, true);
+        currentStepName = TutorialScreens.GetChild(currentStep).gameObject.name;
+        // Toggle linked GO
+        foreach (LinkedWith lw in TutorialScreens.GetChild(currentStep).GetComponents<LinkedWith>())
+            GameObjectManager.setGameObjectState(lw.link, !lw.link.activeSelf);
+        f_targetArea.addEntryCallback(onTargetReached);
+        IARDreamFragmentManager.virtualDreamFragment = true; // force virtual dreamFragment for tutorial
     }
 
     public void nextStep()
@@ -124,7 +128,7 @@ public class TutorialManager : FSystem {
         else if (currentStepName == "StepWaitK" && Input.GetButtonDown("ToggleTarget"))
         {
             GameObjectManager.addComponent<PlayUIEffect>(playerController.gameObject, new { effectCode = 2 });
-            GameObjectManager.setGameObjectState(f_movingModeButton.First(), false);
+            GameObjectManager.setGameObjectState(movingModeSelector, false);
             if (TutorialScreens.GetChild(currentStep+1).gameObject.name == "StepMoveUI")
                 playerController.transform.position = initPosition; //reset position to start position
             nextStep();

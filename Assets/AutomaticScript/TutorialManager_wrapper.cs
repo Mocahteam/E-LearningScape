@@ -1,27 +1,28 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class TutorialManager_wrapper : MonoBehaviour
+public class TutorialManager_wrapper : BaseWrapper
 {
+	public UnityEngine.GameObject movingModeSelector;
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
+		MainLoop.initAppropriateSystemField (system, "movingModeSelector", movingModeSelector);
 	}
 
 	public void nextStep()
 	{
-		MainLoop.callAppropriateSystemMethod ("TutorialManager", "nextStep", null);
+		MainLoop.callAppropriateSystemMethod (system, "nextStep", null);
 	}
 
 	public void QuitGame()
 	{
-		MainLoop.callAppropriateSystemMethod ("TutorialManager", "QuitGame", null);
+		MainLoop.callAppropriateSystemMethod (system, "QuitGame", null);
 	}
 
 	public void RestartGame()
 	{
-		MainLoop.callAppropriateSystemMethod ("TutorialManager", "RestartGame", null);
+		MainLoop.callAppropriateSystemMethod (system, "RestartGame", null);
 	}
 
 }

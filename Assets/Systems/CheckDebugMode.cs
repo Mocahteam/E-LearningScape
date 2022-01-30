@@ -5,10 +5,7 @@ using System.Collections.Generic;
 
 public class CheckDebugMode : FSystem
 {
-    private Family f_lights = FamilyManager.getFamily(new AllOfComponents(typeof(Light)));
-    private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
     private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"));
-    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
     private Family f_dreamFragmentsToggles = FamilyManager.getFamily(new AllOfComponents(typeof(Toggle), typeof(DreamFragmentToggle)));
 
     public static FSystem instance;
@@ -17,39 +14,22 @@ public class CheckDebugMode : FSystem
     public static bool canPause = false;
 
     //list of KeyCode expected to start debug mode
-    private List<KeyCode> code;
+    public List<string> code;
     //number of consicutive keycode of the list "code" pressed
     //used to know what is the next keycode expected
     private int codeCount = 0;
 
-    private Light sun;
+    public Light sun;
+    public Transform rooms;
+    public UnlockedRoom unlockedRoom;
 
     public CheckDebugMode()
     {
-        if (Application.isPlaying)
-        {
-            //set the code to launch debug mode to "GODMODE"
-            code = new List<KeyCode>();
-            code.Add(KeyCode.G);
-            code.Add(KeyCode.O);
-            code.Add(KeyCode.D);
-            code.Add(KeyCode.M);
-            code.Add(KeyCode.O);
-            code.Add(KeyCode.D);
-            code.Add(KeyCode.E);
-
-            int nbLights = f_lights.Count;
-            for (int i = 0; i < nbLights; i++)
-            {
-                if (f_lights.getAt(i).name == "Soleil")
-                {
-                    //the sun of the game
-                    sun = f_lights.getAt(i).GetComponent<Light>();
-                    break;
-                }
-            }
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
     }
 
     // Use this to update member variables when system pause. 
@@ -106,11 +86,11 @@ public class CheckDebugMode : FSystem
                         GameObjectManager.setGameObjectState(go, true);
 
                     //enable room 2 and 3
-                    foreach (Transform room in f_gameRooms.First().transform)
+                    foreach (Transform room in rooms)
                         if (room.gameObject.name.Contains(2.ToString()) || room.gameObject.name.Contains(3.ToString()))
                             GameObjectManager.setGameObjectState(room.gameObject, true);
 
-                    f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 3;
+                    unlockedRoom.roomNumber = 3;
 
                     //remove hint cooldown
                     DebugModeSystem.initialHintCooldownDuration = HelpSystem.config.playerHintCooldownDuration;

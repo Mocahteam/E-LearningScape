@@ -15,20 +15,21 @@ public class SpritesAnimator : FSystem {
 
     public SpritesAnimator()
     {
-        if (Application.isPlaying)
-        {
-            // Set each animated Sprite on its first frame
-            int nb = f_animatedSprites.Count;
-            for (int i = 0; i < nb; i++)
-            {
-                f_animatedSprites.getAt(i).GetComponent<AnimatedSprites>().usedSpriteID = 0;
-            }
-        }
         instance = this;
     }
 
-	// Use to process your families.
-	protected override void onProcess(int familiesUpdateCount) {
+    protected override void onStart()
+    {
+        // Set each animated Sprite on its first frame
+        int nb = f_animatedSprites.Count;
+        for (int i = 0; i < nb; i++)
+        {
+            f_animatedSprites.getAt(i).GetComponent<AnimatedSprites>().usedSpriteID = 0;
+        }
+    }
+
+    // Use to process your families.
+    protected override void onProcess(int familiesUpdateCount) {
         // parse each animated sprite
         int nb = f_animatedSprites.Count;
         for (int i = 0; i < nb; i++)

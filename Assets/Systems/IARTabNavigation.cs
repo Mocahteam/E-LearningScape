@@ -12,66 +12,54 @@ public class IARTabNavigation : FSystem {
     // Manage base IAR integration (Open/Close + tab switching)
 
     private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
-    private Family f_fgm = FamilyManager.getFamily(new AllOfComponents(typeof(FocusedGOMaterial)));
-    private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)));
     private Family f_iarDisplayed = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AllOfComponents(typeof(PointerSensitive)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_HUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
     private Family f_atWork = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
     private Family f_settings = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
     private Family f_selectedTab = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedTab)));
     private Family f_selectedTerminal = FamilyManager.getFamily(new AnyOfTags("Terminal"), new AllOfComponents(typeof(ReadyToWork)));
 
-    private Sprite selectedTabSprite;
-    private Sprite defaultTabSprite;
+    public Sprite selectedTabSprite;
+    public Sprite defaultTabSprite;
+    public GameObject mainHUD;
+    public UnlockedRoom unlockedRoom;
 
-    private GameObject iar;
-    private GameObject iarBackground;
+    public GameObject iar;
 
     private int tabIdToFocusOn;
 
     private Dictionary<FSystem, bool> systemsStates;
 
-    public bool skipNextClose = false; // enbale to skip the next IAR close (see IARQueryEvaluator)
+    public bool skipNextClose; // enbale to skip the next IAR close (see IARQueryEvaluator)
 
     public static IARTabNavigation instance;
-
-    private UnlockedRoom unlockedRoom;
 
     private GameObject selectedTerminal = null;
 
     public IARTabNavigation()
     {
-        if (Application.isPlaying)
-        {
-            selectedTabSprite = f_fgm.First().GetComponent<FocusedGOMaterial>().selectedTabSprite;
-            defaultTabSprite = f_fgm.First().GetComponent<FocusedGOMaterial>().defaultTabSprite;
-
-            f_iarDisplayed.addEntryCallback(onIarDisplayed);
-            f_selectedTerminal.addEntryCallback(onClickTerminal);
-
-            iarBackground = f_iarBackground.First();
-            iar = iarBackground.transform.parent.gameObject;
-
-            systemsStates = new Dictionary<FSystem, bool>();
-
-            unlockedRoom = f_unlockedRoom.First().GetComponent<UnlockedRoom>();
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        f_iarDisplayed.addEntryCallback(onIarDisplayed);
+        f_selectedTerminal.addEntryCallback(onClickTerminal);
+
+        systemsStates = new Dictionary<FSystem, bool>();
     }
 
     // Use this to update member variables when system pause. 
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame)
     {
-        GameObjectManager.setGameObjectState(f_HUD.First(), false); // hide HUD (case in the end room, see EndManager.cs)
+        GameObjectManager.setGameObjectState(mainHUD, false); // hide HUD (case in the end room, see EndManager.cs)
     }
 
     // Use this to update member variables when system resume.
     // Advice: avoid to update your families inside this function.
     protected override void onResume(int currentFrame)
     {
-        GameObjectManager.setGameObjectState(f_HUD.First(), true); // show HUD
+        GameObjectManager.setGameObjectState(mainHUD, true); // show HUD
     }
 
     private void onIarDisplayed(GameObject go)
@@ -124,7 +112,7 @@ public class IARTabNavigation : FSystem {
             verb = "activated",
             objectType = "iar"
         });
-        GameObjectManager.setGameObjectState(f_HUD.First(), false); // hide HUD
+        GameObjectManager.setGameObjectState(mainHUD, false); // hide HUD
         GameObjectManager.setGameObjectState(iar, true); // open IAR
 
         GameObjectManager.addComponent<PlaySound>(iar, new { id = 15 }); // id refer to FPSController AudioBank
@@ -190,7 +178,7 @@ public class IARTabNavigation : FSystem {
             sys.Pause = systemsStates[sys];
         if (LampManager.instance != null)
             LampManager.instance.Pause = backLampManagerState;
-        GameObjectManager.setGameObjectState(f_HUD.First(), true); // show HUD
+        GameObjectManager.setGameObjectState(mainHUD, true); // show HUD
 
         // close save popup if it was on
         if (SaveManager.instance != null)

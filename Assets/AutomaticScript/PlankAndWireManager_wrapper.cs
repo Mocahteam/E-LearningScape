@@ -1,17 +1,18 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class PlankAndWireManager_wrapper : MonoBehaviour
+public class PlankAndWireManager_wrapper : BaseWrapper
 {
+	public UnityEngine.LineRenderer lineRenderer;
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
+		MainLoop.initAppropriateSystemField (system, "lineRenderer", lineRenderer);
 	}
 
 	public void DisplayWireOnSolution()
 	{
-		MainLoop.callAppropriateSystemMethod ("PlankAndWireManager", "DisplayWireOnSolution", null);
+		MainLoop.callAppropriateSystemMethod (system, "DisplayWireOnSolution", null);
 	}
 
 }

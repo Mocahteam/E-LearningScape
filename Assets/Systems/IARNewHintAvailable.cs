@@ -13,14 +13,15 @@ public class IARNewHintAvailable : FSystem {
 
     public IARNewHintAvailable()
     {
-        if (Application.isPlaying)
-        {
-            f_newHint.addEntryCallback(onNewHintAvailable);
-            f_newHint.addExitCallback(onExitHintPanel);
-            f_tabContent.addEntryCallback(onEnterHintPanel);
-            f_tabContent.addExitCallback(onExitHintPanel);
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        f_newHint.addEntryCallback(onNewHintAvailable);
+        f_newHint.addExitCallback(onExitHintPanel);
+        f_tabContent.addEntryCallback(onEnterHintPanel);
+        f_tabContent.addExitCallback(onExitHintPanel);
     }
 
     private void onNewHintAvailable(GameObject go)

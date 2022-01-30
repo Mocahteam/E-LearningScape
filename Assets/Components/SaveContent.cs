@@ -72,7 +72,7 @@ public class SaveContent {
 
 	/// <summary>
 	/// Contains the state of each collectable items:
-	/// 0 - not collected, 1 - collected, 2 - collected and used (removed from iar).
+	/// 0 - not collected, 1 - collected and not seen in IAR, 2 - collected and used (removed from iar).
 	/// There are 18 collectable items (including virtual puzzles):
 	/// introScroll, keyBallBox, wire, keySatchel, mirror, glasses1, glasses2,
 	/// scrolls 1 to 5, lamp, virtuelPuzzleSets 1 to 5

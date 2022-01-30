@@ -1,7 +1,6 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
 public class MovingSystem_wrapper : MonoBehaviour
 {
 	private void Start()
@@ -11,17 +10,17 @@ public class MovingSystem_wrapper : MonoBehaviour
 
 	public void SetWalkSpeed(System.Single speedW)
 	{
-		MainLoop.callAppropriateSystemMethod ("MovingSystem", "SetWalkSpeed", speedW);
+		MainLoop.callAppropriateSystemMethod (null, "SetWalkSpeed", speedW);
 	}
 
 	public void SetHUD(System.Boolean state)
 	{
-		MainLoop.callAppropriateSystemMethod ("MovingSystem", "SetHUD", state);
+		MainLoop.callAppropriateSystemMethod (null, "SetHUD", state);
 	}
 
 	public void ChangePose()
 	{
-		MainLoop.callAppropriateSystemMethod ("MovingSystem", "ChangePose", null);
+		MainLoop.callAppropriateSystemMethod (null, "ChangePose", null);
 	}
 
 }

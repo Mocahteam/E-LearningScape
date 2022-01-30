@@ -3,7 +3,6 @@ using FYFY;
 using FYFY_plugins.PointerManager;
 using TMPro;
 using UnityEngine.UI;
-using UnityStandardAssets.Characters.FirstPerson;
 using System;
 using System.Collections.Generic;
 
@@ -13,46 +12,35 @@ public class DreamFragmentCollecting : FSystem {
     // This system has to be after "CollectObject" system in main loop
 
     private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment), typeof(PointerOver)));
-    private Family f_dreamFragmentUI = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AnyOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD));
-    private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
-    private Family f_HUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
 
     private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
 
-    private Family f_movingModeSelector = FamilyManager.getFamily(new AllOfComponents(typeof(MovingModeSelector)));
-
-    private GameObject dfUI;
+    public GameObject dfUI;
     private TextMeshProUGUI FragmentText;
     private DreamFragment tmpDFComponent;
     private bool backupIARNavigationState;
     private bool backupHighlighterState;
     //button in dream fragment UI to open the link
-    private GameObject onlineButton;
-    public bool firstFragmentFound = false;
+    public GameObject onlineButton;
+    public bool firstFragmentFound; // defined in inspector
 
-    private GameObject itemCollectedNotif;
+    public GameObject itemCollectedNotif;
+    public MovingModeSelector movingModeSelector;
+    public GameObject player;
 
     public static DreamFragmentCollecting instance;
 
     public DreamFragmentCollecting()
     {
-        if (Application.isPlaying)
-        {
-            dfUI = f_dreamFragmentUI.First();
-            // Add listener on child button to close UI
-            foreach(Button b in dfUI.GetComponentsInChildren<Button>())
-            {
-                if (b.gameObject.name == "ButtonOnline")
-                    onlineButton = b.gameObject;
-            }
-            // Get child text area
-            FragmentText = dfUI.GetComponentInChildren<TextMeshProUGUI>();
-
-            itemCollectedNotif = f_HUD.First().transform.GetChild(f_HUD.First().transform.childCount - 1).gameObject;
-
-            f_dreamFragments.addEntryCallback(onDreamFragmentFocused);
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        // Get child text area
+        FragmentText = dfUI.GetComponentInChildren<TextMeshProUGUI>();
+
+        f_dreamFragments.addEntryCallback(onDreamFragmentFocused);
     }
 
     private void onDreamFragmentFocused(GameObject df)
@@ -103,7 +91,7 @@ public class DreamFragmentCollecting : FSystem {
                         FragmentText.text = string.Concat("\"", tmpDFComponent.itemName, "\"");
                     // Pause this system and dependant systems
                     this.Pause = true;
-                    f_movingModeSelector.First().GetComponent<MovingModeSelector>().pauseMovingSystems();
+                    movingModeSelector.pauseMovingSystems();
                     backupIARNavigationState = IARTabNavigation.instance.Pause;
                     IARTabNavigation.instance.Pause = true;
                     backupHighlighterState = Highlighter.instance.Pause;
@@ -131,7 +119,7 @@ public class DreamFragmentCollecting : FSystem {
 
                 if (selectedFragment.GetComponentInParent<IsSolution>())
                 {
-                    if(f_player.First().transform.localScale.x < 0.9f)
+                    if(player.transform.localScale.x < 0.9f)
                         //if the player is crouching
                         GameObjectManager.addComponent<ActionPerformed>(selectedFragment, new { name = "activate", performedBy = "player", orLabels = new string[] { "crouch"} });
                     else
@@ -150,7 +138,7 @@ public class DreamFragmentCollecting : FSystem {
         GameObjectManager.setGameObjectState(dfUI,false);
         // Unpause this system and dependants systems
         this.Pause = false;
-        f_movingModeSelector.First().GetComponent<MovingModeSelector>().resumeMovingSystems();
+        movingModeSelector.resumeMovingSystems();
         IARTabNavigation.instance.Pause = backupIARNavigationState;
         Highlighter.instance.Pause = backupHighlighterState;
     }

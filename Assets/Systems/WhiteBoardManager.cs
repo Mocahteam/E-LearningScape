@@ -7,7 +7,6 @@ public class WhiteBoardManager : FSystem {
     
     // this system manage the whiteboard and effacer
 
-    private Family f_whiteBoard = FamilyManager.getFamily(new AnyOfTags("Board"));
     private Family f_focusedWhiteBoard = FamilyManager.getFamily(new AnyOfTags("Board"), new AllOfComponents(typeof(ReadyToWork)));
     private Family f_closeWhiteBoard_1 = FamilyManager.getFamily (new AnyOfTags ("Board", "Eraser", "BoardTexture", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_closeWhiteBoard_2 = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver), typeof(HUD_TransparentOnMove)));
@@ -15,47 +14,39 @@ public class WhiteBoardManager : FSystem {
     private Family f_boardRemovableWords = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
     private Family f_boardUnremovableWords = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_boardTexture = FamilyManager.getFamily(new AllOfComponents(typeof(ChangePixelColor)));
     private Family f_activatedBoard = FamilyManager.getFamily(new AnyOfTags("Board"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
-    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
-
     //board
+    public GameObject eraser;
     private GameObject selectedBoard;
-    private GameObject eraser;
     public static bool eraserDragged = false;
     private float distToBoard;
     private Color prevColor;
+    public GameObject boardTexture;
 
-    //List of triggers still active for each word (the words are differenciated by there position)
-    private Dictionary<Vector3, List<GameObject>> triggeredSpheres;
-
-    private List<Vector2> tmpListVector2;
-    private Texture2D tmpTex;
+    public GameObject player;
 
     public static WhiteBoardManager instance;
 
     public WhiteBoardManager()
     {
-        if (Application.isPlaying)
-        {
-            //initialise variables
-            eraser = f_whiteBoard.First().transform.GetChild(2).gameObject;
-
-            // set render order only when the object is activated, else unity doesn't take it in account
-            f_activatedBoard.addEntryCallback(SetRenderOrder);
-
-            f_focusedWhiteBoard.addEntryCallback(onReadyToWorkOnWhiteBoard);
-            f_eraserFocused.addEntryCallback(onEnterEraser);
-            f_eraserFocused.addExitCallback(onExitEraser);
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        // set render order only when the object is activated, else unity doesn't take it in account
+        f_activatedBoard.addEntryCallback(SetRenderOrder);
+
+        f_focusedWhiteBoard.addEntryCallback(onReadyToWorkOnWhiteBoard);
+        f_eraserFocused.addEntryCallback(onEnterEraser);
+        f_eraserFocused.addExitCallback(onExitEraser);
     }
 
     private void onReadyToWorkOnWhiteBoard(GameObject go)
     {
         selectedBoard = go;
-        distToBoard = (f_player.First().transform.position - selectedBoard.transform.position).magnitude;
+        distToBoard = (player.transform.position - selectedBoard.transform.position).magnitude;
 
         // Launch this system
         instance.Pause = false;
@@ -66,7 +57,7 @@ public class WhiteBoardManager : FSystem {
         GameObjectManager.addComponent<Rigidbody>(eraser, new { isKinematic = true });
         GameObjectManager.addComponent<CapsuleCollider>(eraser);
         // Add Collider to boardTexture
-        GameObjectManager.addComponent<MeshCollider>(f_boardTexture.First());
+        GameObjectManager.addComponent<MeshCollider>(boardTexture);
 
         GameObjectManager.addComponent<ActionPerformedForLRS>(go, new
         {
@@ -172,7 +163,7 @@ public class WhiteBoardManager : FSystem {
         GameObjectManager.removeComponent<Rigidbody>(eraser);
         GameObjectManager.removeComponent<CapsuleCollider>(eraser);
         // Add Collider to boardTexture
-        GameObjectManager.removeComponent<MeshCollider>(f_boardTexture.First());
+        GameObjectManager.removeComponent<MeshCollider>(boardTexture);
 
         // Pause this system
         instance.Pause = true;
@@ -187,8 +178,7 @@ public class WhiteBoardManager : FSystem {
             foreach (Renderer r in word.GetComponentsInChildren<Renderer>())
                 r.material.renderQueue = 2001;
         }
-        if (f_boardTexture.First() != null)
-            f_boardTexture.First().GetComponent<Renderer>().material.renderQueue = 2002;
+        boardTexture.GetComponent<Renderer>().material.renderQueue = 2002;
         foreach (GameObject word in f_boardUnremovableWords)
         {
             foreach (Renderer r in word.GetComponentsInChildren<Renderer>())

@@ -13,20 +13,19 @@ public class LoginManager : FSystem {
     private Family f_focusedLogin = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(ReadyToWork)));
     private Family f_closeLogin_1 = FamilyManager.getFamily(new AnyOfTags("Login", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_closeLogin_2 = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver), typeof(HUD_TransparentOnMove)));
-    private Family f_mainWindow = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(PointerSensitive)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_forceMoveToLogin = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(ForceMove)));
-
-    private Family f_door = FamilyManager.getFamily(new AnyOfTags("Door"), new AllOfComponents(typeof(Animator)));
-
-    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
-    private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
-    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
     // Selectable Component is dynamically added by IARGearsEnigma when this enigma is solved => this is a sure condition to know that login is unlocked
     private Family f_loginUnlocked = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(Selectable)));
 
-    private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
+    public GameObject mainWindow;
+    public GameObject door;
+    public Transform player;
+    public GameObject rooms;
+    public UnlockedRoom unlockedRoom;
+    public StoryText storyText;
+
 
     private GameObject selectedLoginPanel;
     private Vector3 playerGoBackPosition;
@@ -44,8 +43,6 @@ public class LoginManager : FSystem {
 
     private bool goBack = false;
 
-    private GameObject door;
-
     private string exitBy = "";
     private string openedBy = "";
 
@@ -53,28 +50,27 @@ public class LoginManager : FSystem {
 
     public LoginManager()
     {
-        if (Application.isPlaying)
-        {
-            TMP_InputField inputField = f_mainWindow.First().transform.GetChild(1).GetComponent<TMP_InputField>();
-
-            ifConnectionR2 = inputField;
-
-            // get fourth child of the password and backup answer UI notifications
-            GameObject answerCheck = inputField.gameObject.transform.GetChild(2).gameObject;
-            connectionAnswerCheck1 = answerCheck.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            cacGreen = connectionAnswerCheck1.color;
-            connectionAnswerCheck2 = answerCheck.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-            cacOrange = connectionAnswerCheck2.color;
-            connectionAnswerCheck3 = answerCheck.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-            cacRed = connectionAnswerCheck3.color;
-
-            f_loginUnlocked.addEntryCallback(onLoginUnlocked);
-            f_focusedLogin.addEntryCallback(onReadyToWorkOnLogin);
-            f_forceMoveToLogin.addEntryCallback(onForceMoveTo);
-
-            door = f_door.First();
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        TMP_InputField inputField = mainWindow.transform.GetChild(1).GetComponent<TMP_InputField>();
+
+        ifConnectionR2 = inputField;
+
+        // get fourth child of the password and backup answer UI notifications
+        GameObject answerCheck = inputField.gameObject.transform.GetChild(2).gameObject;
+        connectionAnswerCheck1 = answerCheck.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        cacGreen = connectionAnswerCheck1.color;
+        connectionAnswerCheck2 = answerCheck.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        cacOrange = connectionAnswerCheck2.color;
+        connectionAnswerCheck3 = answerCheck.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        cacRed = connectionAnswerCheck3.color;
+
+        f_loginUnlocked.addEntryCallback(onLoginUnlocked);
+        f_focusedLogin.addEntryCallback(onReadyToWorkOnLogin);
+        f_forceMoveToLogin.addEntryCallback(onForceMoveTo);
     }
 
     private void onLoginUnlocked(GameObject go)
@@ -136,18 +132,18 @@ public class LoginManager : FSystem {
 
         if (goBack)
         {
-            f_player.First().transform.position = Vector3.MoveTowards(f_player.First().transform.position, playerGoBackPosition, speed);
-            if (f_player.First().transform.position == playerGoBackPosition)
+            player.position = Vector3.MoveTowards(player.position, playerGoBackPosition, speed);
+            if (player.position == playerGoBackPosition)
             {
                 // show story
-                f_storyDisplayer.First().GetComponent<StoryText>().storyProgression++;
+                storyText.storyProgression++;
                 StoryDisplaying.instance.Pause = false;
 
                 UnlockLoginDoor();
 
-                GameObject IARsecondScreen = f_mainWindow.First().GetComponentInChildren<LinkedWith>().link;
+                GameObject IARsecondScreen = mainWindow.GetComponentInChildren<LinkedWith>().link;
 
-                f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 2;
+                unlockedRoom.roomNumber = 2;
                 // exit login
                 exitBy = "system";
                 ExitLogin();
@@ -211,8 +207,8 @@ public class LoginManager : FSystem {
             connectionAnswerCheck3.color = cacGreen;
 
             // enable rooms two and three
-            GameObjectManager.setGameObjectState(f_gameRooms.First().transform.GetChild(2).gameObject, true);
-            GameObjectManager.setGameObjectState(f_gameRooms.First().transform.GetChild(3).gameObject, true);
+            GameObjectManager.setGameObjectState(rooms.transform.GetChild(2).gameObject, true);
+            GameObjectManager.setGameObjectState(rooms.transform.GetChild(3).gameObject, true);
             // solution found play animation
             goBack = true;
             GameObjectManager.addComponent<PlaySound>(door, new { id = 9 }); // id refer to FPSController AudioBank
@@ -311,6 +307,6 @@ public class LoginManager : FSystem {
     {
         door.GetComponent<Animator>().enabled = true; // enable animation
         // Enable IAR second screen
-        GameObjectManager.setGameObjectState(f_mainWindow.First().GetComponentInChildren<LinkedWith>().link, true); // enable questions tab
+        GameObjectManager.setGameObjectState(mainWindow.GetComponentInChildren<LinkedWith>().link, true); // enable questions tab
     }
 }

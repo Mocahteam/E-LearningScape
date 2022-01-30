@@ -15,11 +15,9 @@ public class MoveInFrontOf : FSystem {
 
     private Family f_hidableHUD = FamilyManager.getFamily(new AnyOfTags("HidableHUD"));
 
-    private Family f_quitEnigma = FamilyManager.getFamily(new AnyOfTags("QuitEnigma"));
-
-    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
-
-    private Family f_movingModeSelector = FamilyManager.getFamily(new AllOfComponents(typeof(MovingModeSelector)));
+    public GameObject player;
+    public MovingModeSelector movingModeSelector;
+    public GameObject quitEnigma;
 
     //information for animations
     private float speed;
@@ -42,13 +40,14 @@ public class MoveInFrontOf : FSystem {
 
     public MoveInFrontOf()
     {
-        if (Application.isPlaying)
-        {
-            f_forcedMove.addEntryCallback(onForceMove);
-
-            f_readyToWork.addExitCallback(onWorkFinished);
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        f_forcedMove.addEntryCallback(onForceMove);
+
+        f_readyToWork.addExitCallback(onWorkFinished);
     }
 
     private void onForceMove(GameObject go)
@@ -63,7 +62,7 @@ public class MoveInFrontOf : FSystem {
         if (f_readyToWork.Count == 0)
         {
             // reset intial player scale
-            f_player.First().transform.localScale = playerLocalScale;
+            player.transform.localScale = playerLocalScale;
             // reset zoom
             Camera.main.fieldOfView = playerZoom;
             //Fix camera angle
@@ -77,7 +76,7 @@ public class MoveInFrontOf : FSystem {
             Highlighter.instance.Pause = false;
             DreamFragmentCollecting.instance.Pause = false;
             CollectObject.instance.Pause = false;
-            f_movingModeSelector.First().GetComponent<MovingModeSelector>().resumeMovingSystems();
+            movingModeSelector.resumeMovingSystems();
             if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
             {
                 MirrorSystem.instance.Pause = false;
@@ -92,7 +91,7 @@ public class MoveInFrontOf : FSystem {
                 WhiteBoardManager.instance.Pause = true;
             }
             // hide help overlay
-            GameObjectManager.setGameObjectState(f_quitEnigma.First(), false);
+            GameObjectManager.setGameObjectState(quitEnigma, false);
         }
     }
 
@@ -130,7 +129,7 @@ public class MoveInFrontOf : FSystem {
                 Highlighter.instance.Pause = true;
                 DreamFragmentCollecting.instance.Pause = true;
                 CollectObject.instance.Pause = true;
-                f_movingModeSelector.First().GetComponent<MovingModeSelector>().pauseMovingSystems();
+                movingModeSelector.pauseMovingSystems();
                 if (ToggleObject.instance != null) // could be null inside tutorial
                     ToggleObject.instance.Pause = true;
 
@@ -139,14 +138,14 @@ public class MoveInFrontOf : FSystem {
                 Camera.main.fieldOfView = 60;
 
                 // save player scale (crouch or not) in order to reset it when player exit the focused GameObject
-                playerLocalScale = f_player.First().transform.localScale;
+                playerLocalScale = player.transform.localScale;
                 // be sure the player standing in front of the selected game object
-                f_player.First().transform.localScale = Vector3.one;
+                player.transform.localScale = Vector3.one;
                 // compute target position and orientation in front of the focused GameObject
                 Selectable selectable = focusedGO.GetComponent<Selectable>();
                 targetPos = new Vector3(focusedGO.transform.position.x + selectable.standingPosDelta.x, focusedGO.transform.position.y + selectable.standingPosDelta.y, focusedGO.transform.position.z + selectable.standingPosDelta.z);
                 // compute distance between the player and the focused GO and compute speed rotation
-                dist = (targetPos - f_player.First().transform.position).magnitude;
+                dist = (targetPos - player.transform.position).magnitude;
                 camNewDir = selectable.standingOrientation;
                 angleRotation = Vector3.Angle(Camera.main.transform.forward, camNewDir);
                 moveInFrontOf = true; // start animation to move the player in front of the selected GameObject
@@ -157,18 +156,18 @@ public class MoveInFrontOf : FSystem {
         if (moveInFrontOf)
         {
             // move the player in front of the selected GO
-            f_player.First().transform.position = Vector3.MoveTowards(f_player.First().transform.position, targetPos, speed);
+            player.transform.position = Vector3.MoveTowards(player.transform.position, targetPos, speed);
             speedRotation = angleRotation * speed / dist;
             newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, Mathf.Deg2Rad * speedRotation, 0);
             Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
             // Check if the animation is finished
-            if (Vector3.Angle(Camera.main.transform.forward, camNewDir) < 0.5f && f_player.First().transform.position == targetPos)
+            if (Vector3.Angle(Camera.main.transform.forward, camNewDir) < 0.5f && player.transform.position == targetPos)
             {
                 // Correct position
-                f_player.First().transform.position = targetPos;
+                player.transform.position = targetPos;
                 // Correct the rotation
-                newDir = Vector3.RotateTowards(f_player.First().transform.forward, camNewDir, 360, 0);
-                f_player.First().transform.rotation = Quaternion.LookRotation(newDir);
+                newDir = Vector3.RotateTowards(player.transform.forward, camNewDir, 360, 0);
+                player.transform.rotation = Quaternion.LookRotation(newDir);
                 newDir = Vector3.RotateTowards(Camera.main.transform.forward, camNewDir, 360, 0);
                 Camera.main.transform.rotation = Quaternion.LookRotation(newDir);
                 // animation is over
@@ -176,7 +175,7 @@ public class MoveInFrontOf : FSystem {
                 // Add ReadyToWork component
                 GameObjectManager.addComponent<ReadyToWork>(focusedGO);
                 // show help overlay
-                GameObjectManager.setGameObjectState(f_quitEnigma.First(), true);
+                GameObjectManager.setGameObjectState(quitEnigma, true);
             }
         }
     }

@@ -4,25 +4,25 @@ using UnityEngine.UI;
 
 public class SoundEffectManager : FSystem {
     private Family f_Sounds = FamilyManager.getFamily(new AllOfComponents(typeof(PlaySound)));
-    private Family f_AudioSource = FamilyManager.getFamily(new AllOfComponents(typeof(AudioSource), typeof(AudioBank)), new NoneOfTags("Player"));
     private Family f_buttons = FamilyManager.getFamily(new AllOfComponents(typeof(Button)), new NoneOfTags("InventoryElements"));
 
-    private AudioSource audioSource;
-    private AudioBank audioBank;
+    public AudioSource audioSource;
+    public AudioBank audioBank;
+
+    public static SoundEffectManager instance;
 
     public SoundEffectManager()
     {
-        if (Application.isPlaying)
-        {
-            audioSource = f_AudioSource.First().GetComponent<AudioSource>();
-            audioBank = f_AudioSource.First().GetComponent<AudioBank>();
+        instance = this;
+    }
 
-            f_Sounds.addEntryCallback(onNewSoundToPlay);
+    protected override void onStart()
+    {
+        f_Sounds.addEntryCallback(onNewSoundToPlay);
 
-            foreach (GameObject go in f_buttons)
-                addActionListener(go);
-            f_buttons.addEntryCallback(addActionListener);
-        }
+        foreach (GameObject go in f_buttons)
+            addActionListener(go);
+        f_buttons.addEntryCallback(addActionListener);
     }
 
     private void addActionListener(GameObject go)

@@ -1,27 +1,38 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class LoginManager_wrapper : MonoBehaviour
+public class LoginManager_wrapper : BaseWrapper
 {
+	public UnityEngine.GameObject mainWindow;
+	public UnityEngine.GameObject door;
+	public UnityEngine.Transform player;
+	public UnityEngine.GameObject rooms;
+	public UnlockedRoom unlockedRoom;
+	public StoryText storyText;
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
+		MainLoop.initAppropriateSystemField (system, "mainWindow", mainWindow);
+		MainLoop.initAppropriateSystemField (system, "door", door);
+		MainLoop.initAppropriateSystemField (system, "player", player);
+		MainLoop.initAppropriateSystemField (system, "rooms", rooms);
+		MainLoop.initAppropriateSystemField (system, "unlockedRoom", unlockedRoom);
+		MainLoop.initAppropriateSystemField (system, "storyText", storyText);
 	}
 
 	public void CheckMastermindAnswer()
 	{
-		MainLoop.callAppropriateSystemMethod ("LoginManager", "CheckMastermindAnswer", null);
+		MainLoop.callAppropriateSystemMethod (system, "CheckMastermindAnswer", null);
 	}
 
 	public void OnEndEditMastermindAnswer()
 	{
-		MainLoop.callAppropriateSystemMethod ("LoginManager", "OnEndEditMastermindAnswer", null);
+		MainLoop.callAppropriateSystemMethod (system, "OnEndEditMastermindAnswer", null);
 	}
 
 	public void UnlockLoginDoor()
 	{
-		MainLoop.callAppropriateSystemMethod ("LoginManager", "UnlockLoginDoor", null);
+		MainLoop.callAppropriateSystemMethod (system, "UnlockLoginDoor", null);
 	}
 
 }

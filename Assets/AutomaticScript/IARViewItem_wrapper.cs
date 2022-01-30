@@ -1,17 +1,20 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class IARViewItem_wrapper : MonoBehaviour
+public class IARViewItem_wrapper : BaseWrapper
 {
+	public UnityEngine.GameObject descriptionUI;
+	public UnityEngine.GameObject defaultIarTab;
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
+		MainLoop.initAppropriateSystemField (system, "descriptionUI", descriptionUI);
+		MainLoop.initAppropriateSystemField (system, "defaultIarTab", defaultIarTab);
 	}
 
 	public void ToggleItem(UnityEngine.GameObject item)
 	{
-		MainLoop.callAppropriateSystemMethod ("IARViewItem", "ToggleItem", item);
+		MainLoop.callAppropriateSystemMethod (system, "ToggleItem", item);
 	}
 
 }

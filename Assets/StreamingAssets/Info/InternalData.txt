@@ -2,7 +2,7 @@
     "trace": true,
     "helpSystem": true,
     "randomHelpSystemActivation": false,
-    "traceToLRS": true,
+    "traceToLRS": false,
     "traceMovementFrequency": 2,
 	"virtualDreamFragment": true,
     "virtualPuzzle": true,

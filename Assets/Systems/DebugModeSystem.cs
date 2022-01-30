@@ -5,24 +5,21 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class DebugModeSystem : FSystem
 {
-    private Family f_lights = FamilyManager.getFamily(new AllOfComponents(typeof(Light)));
-    private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController)));
-
     public static FSystem instance;
     //this bool is used to switch between CheckDebugMode paused and DebugModeSystem paused
     //the "canPause" of the two systems never have the same value
     public static bool canPause = true;
 
     //list of KeyCode expected to stop debug mode
-    private List<KeyCode> code;
+    public List<string> code;
     //number of consicutive keycode of the list "code" pressed
     //used to know what is the next keycode expected
     private int codeCount = 0;
 
-    private FirstPersonController player;
+    public FirstPersonController player;
     
     //variables used for the sun behaviour (randomly moving)
-    private Light sun;
+    public Light sun;
     private Color sunInitialColor;
     private Quaternion sunRotation;
     private float amplitude = 90f;
@@ -35,32 +32,14 @@ public class DebugModeSystem : FSystem
 
     public DebugModeSystem()
     {
-        if (Application.isPlaying)
-        {
-            //set the code to stop debug mode to "HUMAN"
-            code = new List<KeyCode>();
-            code.Add(KeyCode.H);
-            code.Add(KeyCode.U);
-            code.Add(KeyCode.M);
-            code.Add(KeyCode.A);
-            code.Add(KeyCode.N);
-
-            //set player and sun variables
-            player = f_player.First().GetComponent<FirstPersonController>();
-            int nbLights = f_lights.Count;
-            for (int i = 0; i < nbLights; i++)
-            {
-                if (f_lights.getAt(i).name == "Soleil")
-                {
-                    sun = f_lights.getAt(i).GetComponent<Light>();
-                    break;
-                }
-            }
-            sunInitialColor = sun.color;
-            sunRotation = sun.gameObject.transform.rotation;
-            currentFrame = nbFrame;
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {   
+        sunInitialColor = sun.color;
+        sunRotation = sun.gameObject.transform.rotation;
+        currentFrame = nbFrame;
     }
 
     // Use this to update member variables when system pause. 

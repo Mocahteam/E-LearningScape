@@ -9,19 +9,9 @@ using FYFY_plugins.Monitoring;
 using Newtonsoft.Json;
 using System.Text;
 using System.Globalization;
-using FYFY_plugins.PointerManager;
 
 public class LoadGameContent : FSystem {
-    
-    private Family f_defaultGameContent = FamilyManager.getFamily(new AllOfComponents(typeof(DefaultGameContent)));
-
-    private Family f_logos = FamilyManager.getFamily(new AllOfComponents(typeof(ImgBank)));
-
     private Family f_idTexts = FamilyManager.getFamily(new AllOfComponents(typeof(TextMeshProUGUI)), new AnyOfTags("SessionIDText"));
-
-    private Family f_storyText = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
-
-    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
 
     private Family f_queriesR1 = FamilyManager.getFamily(new AnyOfTags("Q-R1"), new AllOfComponents(typeof(QuerySolution)));
     private Family f_queriesR2 = FamilyManager.getFamily(new AnyOfTags("Q-R2"), new AllOfComponents(typeof(QuerySolution)));
@@ -36,21 +26,10 @@ public class LoadGameContent : FSystem {
     private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
     private Family f_dreamFragmentsContentContainer = FamilyManager.getFamily(new AllOfComponents(typeof(PrefabContainer)), new AnyOfTags("DreamFragmentContentContainer"));
     private Family f_dreamFragmentsContents = FamilyManager.getFamily(new AnyOfTags("DreamFragmentContent"));
-    private Family f_fragmentNotif = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragmentFlag)));
 
-    private Family f_gears = FamilyManager.getFamily(new AnyOfTags("Gears"));
     private Family f_gearComponent = FamilyManager.getFamily(new AllOfComponents(typeof(Gear)));
 
-    private Family f_login = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(PointerSensitive)));
-
-    private Family f_bagImage = FamilyManager.getFamily(new AllOfComponents(typeof(BagImage)));
-
     private Family f_scrollUI = FamilyManager.getFamily(new AnyOfTags("ScrollUI"));
-
-    private Family f_mirrorImage = FamilyManager.getFamily(new AnyOfTags("MirrorPlankImage"), new AllOfComponents(typeof(Image)));
-
-    private Family f_passwordRoom2 = FamilyManager.getFamily(new AnyOfTags("PasswordRoom2"));
-    private Family f_lockRoom2 = FamilyManager.getFamily(new AnyOfTags("LockRoom2"), new AllOfComponents(typeof(Locker)));
 
     private Family f_puzzleUI = FamilyManager.getFamily(new AnyOfTags("PuzzleUI"), new AllOfComponents(typeof(RectTransform)));
     private Family f_puzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)));
@@ -61,10 +40,6 @@ public class LoadGameContent : FSystem {
     private Family f_boardUnremovable = FamilyManager.getFamily(new AnyOfTags("BoardUnremovableWords"));
     private Family f_boardRemovable = FamilyManager.getFamily(new AnyOfTags("BoardRemovableWords"));
 
-    private Family f_gameHints = FamilyManager.getFamily(new AllOfComponents(typeof(GameHints)));
-    private Family f_internalGameHints = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameHints)));
-    private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
-
     private Family f_inventoryElements = FamilyManager.getFamily(new AllOfComponents(typeof(Collected)));
 
     private Family f_uiTexts = FamilyManager.getFamily(new AllOfComponents(typeof(UIText)), new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)));
@@ -72,17 +47,28 @@ public class LoadGameContent : FSystem {
 
     private Family f_extraGeometries = FamilyManager.getFamily(new AllOfComponents(typeof(RemoveIfVeryVeryLow)));
 
-    private Family f_credit = FamilyManager.getFamily(new AllOfComponents(typeof(TextMeshProUGUI)), new AnyOfTags("CreditArea"));
-
     public static GameContent gameContent;
     public static InternalGameContent internalGameContent;
-    private DefaultGameContent defaultGameContent;
     public static Dictionary<string, List<string>> dreamFragmentsLinks;
 
     public static Dictionary<string, float> enigmasWeight;
 
     public static string sessionID;
 
+    public ImgBank Logos;
+    public StoryText storyText;
+    public GameObject iarTabs;
+    public GameObject gears;
+    public GameObject dreamFragmentHUD;
+    public GameObject login;
+    public BagImage bagImage;
+    public Image mirrorPlank;
+    public Locker lockerRoom2;
+    public GameHints gameHints;
+    public InternalGameHints internalGameHints;
+    public TextMeshProUGUI passwordRoom2;
+    public LabelWeights labelWeights;
+    public TextMeshProUGUI creditText;
     public TMP_FontAsset AccessibleFont;
     public TMP_FontAsset AccessibleFontUI;
     public TMP_FontAsset DefaultFont;
@@ -108,87 +94,86 @@ public class LoadGameContent : FSystem {
 
     public LoadGameContent()
     {
-        if (Application.isPlaying)
+        instance = this;
+    }
+
+    protected override void onStart()
+    {
+        Application.runInBackground = true; // do not pause game if application loses focus
+
+        random = new System.Random();
+
+        if (Application.isEditor && GameSelected.version == "")
+            GameSelected.version = "Info";
+
+        dataPath = Application.streamingAssetsPath + "/" + GameSelected.version;
+
+        if (File.Exists(dataPath + "/InternalData.txt"))
         {
-            instance = this;
-
-            Application.runInBackground = true; // do not pause game if application loses focus
-
-            random = new System.Random();
-
-            if (Application.isEditor && GameSelected.version == "")
-                GameSelected.version = "Info";
-
-            dataPath = Application.streamingAssetsPath + "/" + GameSelected.version;
-
-            defaultGameContent = f_defaultGameContent.First().GetComponent<DefaultGameContent>();
-
-            if (File.Exists(dataPath + "/InternalData.txt"))
+            //Load game content from the file
+            try
             {
-                //Load game content from the file
-                try
-                {
-                    LoadInternalData();
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError(dataPath + "/InternalData.txt is not consistent, please check content.");
-                    Debug.LogError(e);
-                    dataAvailable = false;
-                }
+                LoadInternalData();
             }
-            else
+            catch (Exception e)
             {
-                Debug.LogError(dataPath + "/InternalData.txt doesn't exists or access is not authorized.");
+                Debug.LogError(dataPath + "/InternalData.txt is not consistent, please check content.");
+                Debug.LogError(e);
                 dataAvailable = false;
             }
-
-            if (File.Exists(dataPath + "/InternalData.txt"))
-            {
-                //Load game content from the file
-                try
-                {
-                    Load();
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError(dataPath + "/Data_LearningScape.txt is not consistent, please check content.");
-                    Debug.LogError(e);
-                    dataAvailable = false;
-                }
-            }
-            else
-            {
-                Debug.LogError(dataPath + "/Data_LearningScape.txt doesn't exists or access is not authorized.");
-                dataAvailable = false;
-            }
-
-            #region UI Texts
-            foreach (GameObject go in f_uiTexts)
-            {
-                tmpUIText = go.GetComponent<UIText>();
-                //write the content of the variable of gameContent corresponding to the uiText in its text mesh pro component
-                try
-                {
-                    go.GetComponent<TMP_Text>().text = (string)typeof(InternalGameContent).GetField(tmpUIText.gameContentVariable).GetValue(internalGameContent);
-                } catch(Exception)
-                {
-                    try
-                    {
-                        go.GetComponent<TMP_Text>().text = (string)typeof(GameContent).GetField(tmpUIText.gameContentVariable).GetValue(gameContent);
-                    }
-                    catch (Exception)
-                    {
-                        Debug.LogError("The key \""+ tmpUIText.gameContentVariable + "\" is not defined in InternalData.txt or in Data_LearningScape.txt, please check content.");
-                        dataAvailable = false;
-                    }
-                }
-            }
-            // add the generated session id after the ui text has been set
-            foreach (GameObject go in f_idTexts)
-                go.GetComponent<TextMeshProUGUI>().text += sessionID;
-            #endregion
         }
+        else
+        {
+            Debug.LogError(dataPath + "/InternalData.txt doesn't exists or access is not authorized.");
+            dataAvailable = false;
+        }
+
+        if (File.Exists(dataPath + "/InternalData.txt"))
+        {
+            //Load game content from the file
+            try
+            {
+                Load();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(dataPath + "/Data_LearningScape.txt is not consistent, please check content.");
+                Debug.LogError(e);
+                dataAvailable = false;
+            }
+        }
+        else
+        {
+            Debug.LogError(dataPath + "/Data_LearningScape.txt doesn't exists or access is not authorized.");
+            dataAvailable = false;
+        }
+
+        #region UI Texts
+        foreach (GameObject go in f_uiTexts)
+        {
+            tmpUIText = go.GetComponent<UIText>();
+            //write the content of the variable of gameContent corresponding to the uiText in its text mesh pro component
+            try
+            {
+                go.GetComponent<TMP_Text>().text = (string)typeof(InternalGameContent).GetField(tmpUIText.gameContentVariable).GetValue(internalGameContent);
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    go.GetComponent<TMP_Text>().text = (string)typeof(GameContent).GetField(tmpUIText.gameContentVariable).GetValue(gameContent);
+                }
+                catch (Exception)
+                {
+                    Debug.LogError("The key \"" + tmpUIText.gameContentVariable + "\" is not defined in InternalData.txt or in Data_LearningScape.txt, please check content.");
+                    dataAvailable = false;
+                }
+            }
+        }
+        // add the generated session id after the ui text has been set
+        foreach (GameObject go in f_idTexts)
+            go.GetComponent<TextMeshProUGUI>().text += sessionID;
+        #endregion
     }
 
     protected override void onProcess(int familiesUpdateCount)
@@ -245,7 +230,6 @@ public class LoadGameContent : FSystem {
         Debug.Log("LRS config file loaded ");
 
         // Load Hints config files
-        GameHints gameHints = f_gameHints.First().GetComponent<GameHints>();
         LoadJsonFile(dataPath + "/" + internalGameContent.hintsPath, out gameHints.dictionary);
         if (gameHints.dictionary == null)
             gameHints.dictionary = new Dictionary<string, Dictionary<string, List<KeyValuePair<string, string>>>>();
@@ -257,7 +241,6 @@ public class LoadGameContent : FSystem {
         Debug.Log("Wrong answer feedback loaded");
 
         // Load InternalHints config files
-        InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
         LoadJsonFile(dataPath + "/" + internalGameContent.internalHintsPath, out internalGameHints.dictionary);
         if (internalGameHints.dictionary == null)
             internalGameHints.dictionary = new Dictionary<string, Dictionary<string, List<string>>>();
@@ -270,7 +253,6 @@ public class LoadGameContent : FSystem {
         Debug.Log("Enigmas weight loaded");
 
         // Load LabelWeights config files
-        LabelWeights labelWeights = f_labelWeights.First().GetComponent<LabelWeights>();
         LoadJsonFile(dataPath + "/" + internalGameContent.labelWeightsPath, out labelWeights.weights);
         if (labelWeights.weights == null)
             labelWeights.weights = new Dictionary<string, float>();
@@ -373,13 +355,6 @@ public class LoadGameContent : FSystem {
             Debug.LogError("Missing IARDocument prefab, pictures can't be loaded.");
         #endregion
 
-        // Load fonts
-        AccessibleFont = defaultGameContent.accessibleFontTMPro;
-        AccessibleFontUI = defaultGameContent.accessibleFontTMProUI;
-        DefaultFont = defaultGameContent.defaultFontTMPro;
-        DefaultFontUI = defaultGameContent.defaultFontTMProUI;
-        Debug.Log("Fonts loaded");
-
         // Set IAR tabs and HUD depending on gameContent.virtualDreamFragment value
         foreach (GameObject go in f_settingToggles)
             if (go.transform.parent.name == "VirtualFragments")
@@ -420,7 +395,7 @@ public class LoadGameContent : FSystem {
         // Load additional Logos
         if (gameContent.additionalLogosPath.Length > 0)
         {
-            List<Sprite> logos = new List<Sprite>(f_logos.First().GetComponent<ImgBank>().bank);
+            List<Sprite> _logos = new List<Sprite>(Logos.bank);
             foreach (string path in gameContent.additionalLogosPath)
             {
                 if (File.Exists(dataPath + "/" + path))
@@ -428,11 +403,11 @@ public class LoadGameContent : FSystem {
                     tmpTex = new Texture2D(1, 1);
                     tmpFileData = File.ReadAllBytes(dataPath + "/" +path);
                     if (tmpTex.LoadImage(tmpFileData))
-                        logos.Add(Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero));
+                        _logos.Add(Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero));
                 }
             }
             // Update bank of logos
-            f_logos.First().GetComponent<ImgBank>().bank = logos.ToArray();
+            Logos.bank = _logos.ToArray();
         }
         Debug.Log("Additional Logo loaded");
 
@@ -456,18 +431,16 @@ public class LoadGameContent : FSystem {
         }
 
         #region Story
-        StoryText st = f_storyText.First().GetComponent<StoryText>();
-        st.intro = gameContent.storyTextIntro;
-        st.transition = gameContent.storyTextransition;
-        st.end = gameContent.storyTextEnd;
-        st.endLink = gameContent.endLink;
+        storyText.intro = gameContent.storyTextIntro;
+        storyText.transition = gameContent.storyTextransition;
+        storyText.end = gameContent.storyTextEnd;
+        storyText.endLink = gameContent.endLink;
         if (gameContent.endLink != "" && gameContent.concatIdToLink)
-            st.endLink = string.Concat(st.endLink, sessionID);
+            storyText.endLink = string.Concat(storyText.endLink, sessionID);
         Debug.Log("Story loaded");
         #endregion
 
         #region Credit
-        TextMeshProUGUI creditText = f_credit.First().GetComponent<TextMeshProUGUI>();
         foreach (string newCredit in gameContent.additionalCredit)
             creditText.text += newCredit + "\n\n";
         Debug.Log("Story loaded");
@@ -533,10 +506,10 @@ public class LoadGameContent : FSystem {
             tmpTex = new Texture2D(1, 1);
             tmpFileData = File.ReadAllBytes(dataPath + "/" + gameContent.mastermindBackgroundPicturePath);
             if (tmpTex.LoadImage(tmpFileData))
-                f_login.First().GetComponent<Image>().sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
+                login.GetComponent<Image>().sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
         }
         // init question text and position
-        TextMeshProUGUI textMP = f_login.First().transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI textMP = login.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
         textMP.transform.localPosition = new Vector3(textMP.transform.localPosition.x, gameContent.mastermindQuestionYPos, textMP.transform.localPosition.z);
         LoginManager.passwordSolution = gameContent.mastermindAnswer;
 
@@ -687,7 +660,7 @@ public class LoadGameContent : FSystem {
         //Gears
         int nbAnswerGears = 0;
         bool answerGearFound = false;
-        foreach (Transform child in f_gears.First().transform)
+        foreach (Transform child in gears.transform)
         {
             if (child.gameObject.name.Contains("Gear"))
             {
@@ -757,11 +730,10 @@ public class LoadGameContent : FSystem {
         Debug.Log("Room 2 queries loaded");
 
         //Glasses
-        BagImage bi = f_bagImage.First().GetComponent<BagImage>();
         Sprite mySprite;
         for (int i = 0; i < 4; i++)
         {
-            mySprite = defaultGameContent.noPictureFound;
+            mySprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), Vector2.zero);
             if (File.Exists(dataPath + "/" + gameContent.glassesPicturesPath[i]))
             {
                 tmpTex = new Texture2D(1, 1);
@@ -772,23 +744,23 @@ public class LoadGameContent : FSystem {
             switch (i)
             {
                 case 0:
-                    bi.image0 = mySprite;
+                    bagImage.image0 = mySprite;
                     break;
 
                 case 1:
-                    bi.image1 = mySprite;
+                    bagImage.image1 = mySprite;
                     break;
 
                 case 2:
-                    bi.image2 = mySprite;
+                    bagImage.image2 = mySprite;
                     break;
 
                 default:
-                    bi.image3 = mySprite;
+                    bagImage.image3 = mySprite;
                     break;
             }
         }
-        bi.gameObject.GetComponent<Image>().sprite = bi.image0;
+        bagImage.gameObject.GetComponent<Image>().sprite = bagImage.image0;
         Debug.Log("Glasses loaded");
 
         //Scrolls
@@ -803,22 +775,21 @@ public class LoadGameContent : FSystem {
         Debug.Log("Scrolls loaded");
 
         //Mirror
-        f_mirrorImage.First().GetComponent<Image>().sprite = defaultGameContent.noPictureFound;
+        mirrorPlank.sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), Vector2.zero);
         if (File.Exists(dataPath + "/" + gameContent.mirrorPicturePath))
         {
             tmpTex = new Texture2D(1, 1);
             tmpFileData = File.ReadAllBytes(dataPath + "/" + gameContent.mirrorPicturePath);
             if (tmpTex.LoadImage(tmpFileData))
-                f_mirrorImage.First().GetComponent<Image>().sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
+                mirrorPlank.sprite = Sprite.Create(tmpTex, new Rect(0, 0, tmpTex.width, tmpTex.height), Vector2.zero);
         }
         Debug.Log("Mirror loaded");
 
         //Lock Room 2
-        Locker locker = f_lockRoom2.First().GetComponent<Locker>();
-        locker.wheel1Solution = (gameContent.lockRoom2Password / 100) % 10;
-        locker.wheel2Solution = (gameContent.lockRoom2Password / 10) % 10;
-        locker.wheel3Solution = gameContent.lockRoom2Password % 10;
-        f_passwordRoom2.First().GetComponentInChildren<TextMeshProUGUI>().text = (gameContent.lockRoom2Password % 1000).ToString();
+        lockerRoom2.wheel1Solution = (gameContent.lockRoom2Password / 100) % 10;
+        lockerRoom2.wheel2Solution = (gameContent.lockRoom2Password / 10) % 10;
+        lockerRoom2.wheel3Solution = gameContent.lockRoom2Password % 10;
+        passwordRoom2.text = (gameContent.lockRoom2Password % 1000).ToString();
         Debug.Log("Locker loaded");
         #endregion
 
@@ -843,7 +814,7 @@ public class LoadGameContent : FSystem {
         foreach (GameObject go in f_puzzlesFragment)
             GameObjectManager.setGameObjectState(go, !internalGameContent.virtualPuzzle);
 
-        Sprite puzzlePicture = defaultGameContent.noPictureFound;
+        Sprite puzzlePicture = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), Vector2.zero);
         if (internalGameContent.virtualPuzzle && File.Exists(dataPath + "/" + gameContent.puzzlePicturePath))
         {
             tmpTex = new Texture2D(1, 1);
@@ -867,7 +838,7 @@ public class LoadGameContent : FSystem {
         nbLampPictures = nbLampPictures > gameContent.lampPicturesPath.Length ? gameContent.lampPicturesPath.Length : nbLampPictures;
         for (int i = 0; i < nbLampPictures; i++)
         {
-            mySprite = defaultGameContent.noPictureFound;
+            mySprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), Vector2.zero);
             if (File.Exists(dataPath + "/" + gameContent.lampPicturesPath[i]))
             {
                 tmpTex = new Texture2D(1, 1);
@@ -930,45 +901,44 @@ public class LoadGameContent : FSystem {
         bool enableHUD = false;
         if (!loadingContextForDreamFragment && IARNewDreamFragmentAvailable.instance != null) // require this test because IARNewDreamFragmentAvailable is initialized after LoadGameContent inside MainLoop
             enableHUD = virtualDreamFragment && IARNewDreamFragmentAvailable.instance.firstFragmentOccurs;
-        GameObjectManager.setGameObjectState(f_fragmentNotif.First().transform.parent.gameObject, enableHUD);
+        GameObjectManager.setGameObjectState(dreamFragmentHUD, enableHUD);
         // Set IAR tabs and HUD depending on virtualDreamFragment value
-        Transform tabParent = f_tabs.First().transform.parent;
-        int tabCount = tabParent.childCount - 1; // -1 because of the under line among the children
+        int tabCount = iarTabs.transform.childCount - 1; // -1 because of the under line among the children
         if (virtualDreamFragment)
         {
             // IAR tabs
-            tmpRectTransform = tabParent.GetChild(0).GetComponent<RectTransform>();
+            tmpRectTransform = iarTabs.transform.GetChild(0).GetComponent<RectTransform>();
             tmpRectTransform.anchoredPosition = new Vector2(54.66f, -20);
             tmpRectTransform.sizeDelta = new Vector2(99, 40);
 
             bool viewTab = !DebugModeSystem.instance.Pause;
             if (DreamFragmentCollecting.instance != null) // require this test because DreamFragmentCollecting is initialized after LoadGameContent inside MainLoop
                 viewTab = viewTab || DreamFragmentCollecting.instance.firstFragmentFound;
-            GameObjectManager.setGameObjectState(tabParent.GetChild(1).gameObject, viewTab);
+            GameObjectManager.setGameObjectState(iarTabs.transform.GetChild(1).gameObject, viewTab);
             for (int i = 1; i < tabCount; i++)
             {
-                tmpRectTransform = tabParent.GetChild(i).GetComponent<RectTransform>();
-                tmpRectTransform.anchoredPosition = new Vector2(tabParent.GetChild(i - 1).GetComponent<RectTransform>().anchoredPosition.x + 109.32f, -20);
+                tmpRectTransform = iarTabs.transform.GetChild(i).GetComponent<RectTransform>();
+                tmpRectTransform.anchoredPosition = new Vector2(iarTabs.transform.GetChild(i - 1).GetComponent<RectTransform>().anchoredPosition.x + 109.32f, -20);
                 tmpRectTransform.sizeDelta = new Vector2(99, 40);
             }
         }
         else
         {
-            GameObjectManager.setGameObjectState(tabParent.GetChild(1).gameObject, false);
+            GameObjectManager.setGameObjectState(iarTabs.transform.GetChild(1).gameObject, false);
 
             // IAR tabs
-            tmpRectTransform = tabParent.GetChild(0).GetComponent<RectTransform>();
+            tmpRectTransform = iarTabs.transform.GetChild(0).GetComponent<RectTransform>();
             tmpRectTransform.anchoredPosition = new Vector2(63.765f, -20);
             tmpRectTransform.sizeDelta = new Vector2(127.53f, 40);
 
-            tmpRectTransform = tabParent.GetChild(2).GetComponent<RectTransform>();
-            tmpRectTransform.anchoredPosition = new Vector2(tabParent.GetChild(0).GetComponent<RectTransform>().anchoredPosition.x + 127.53f, -20);
+            tmpRectTransform = iarTabs.transform.GetChild(2).GetComponent<RectTransform>();
+            tmpRectTransform.anchoredPosition = new Vector2(iarTabs.transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition.x + 127.53f, -20);
             tmpRectTransform.sizeDelta = new Vector2(127.53f, 40);
 
             for (int i = 3; i < tabCount; i++)
             {
-                tmpRectTransform = tabParent.GetChild(i).GetComponent<RectTransform>();
-                tmpRectTransform.anchoredPosition = new Vector2(tabParent.GetChild(i - 1).GetComponent<RectTransform>().anchoredPosition.x + 127.53f, -20);
+                tmpRectTransform = iarTabs.transform.GetChild(i).GetComponent<RectTransform>();
+                tmpRectTransform.anchoredPosition = new Vector2(iarTabs.transform.GetChild(i - 1).GetComponent<RectTransform>().anchoredPosition.x + 127.53f, -20);
                 tmpRectTransform.sizeDelta = new Vector2(127.53f, 40);
             }
         }

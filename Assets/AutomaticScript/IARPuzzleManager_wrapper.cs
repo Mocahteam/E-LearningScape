@@ -1,12 +1,11 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class IARPuzzleManager_wrapper : MonoBehaviour
+public class IARPuzzleManager_wrapper : BaseWrapper
 {
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
 	}
 
 }

@@ -5,7 +5,6 @@ using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
 using FYFY_plugins.TriggerManager;
 using FYFY_plugins.PointerManager;
-using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
@@ -13,15 +12,14 @@ public class MovingSystem_FPSMode : FSystem
 {
     // This system manage HUD on moving, walking speed and state of the FirstPersonController
 
-    private Family f_player = FamilyManager.getFamily(new AllOfComponents(typeof(FirstPersonController), typeof(AudioBank)));
     private Family f_TransparentOnMove = FamilyManager.getFamily(new AllOfComponents(typeof(HUD_TransparentOnMove)));
-    private Family f_cursor = FamilyManager.getFamily(new AnyOfTags("Cursor"));
     private Family f_waterWalking = FamilyManager.getFamily(new AnyOfLayers(12), new AllOfComponents(typeof(Triggered3D))); // Layer 12 <=> WaterCollider
     private Family f_CrouchHint = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver), typeof(LinkedWith), typeof(BoxCollider)));
     private Family f_OutOfFirstRoom = FamilyManager.getFamily(new AllOfComponents(typeof(Triggered3D), typeof(LinkedWith)));
 
-    public float traceMovementFrequency = 0;
-    public bool crouching = false; // true when the player is crouching
+    public GameObject player;
+    public float traceMovementFrequency;
+    public bool crouching; // true when the player is crouching
     private bool changingPose = false;
     private Vector3 targetScale;
     private Vector3 crouchingScale;
@@ -30,6 +28,8 @@ public class MovingSystem_FPSMode : FSystem
     private Graphic[] tmpGraphics;
     private AudioBank audioBank;
     private Camera playerCamera;
+
+    public GameObject cursor;
 
     private bool playerIsWalking = false;
     private bool playerWasWalking = false;
@@ -42,51 +42,53 @@ public class MovingSystem_FPSMode : FSystem
 
     private float walkingTraceTimer = 0;
 
-    private GameObject night;
+    public GameObject night;
 
     public static MovingSystem_FPSMode instance;
 
     public MovingSystem_FPSMode()
     {
-        //when crouching, the scale of the player is changed (rather than its position)
-        crouchingScale = new Vector3(standingScale.x * 0.5f, standingScale.y * 0.2f, standingScale.z * 0.5f);
-        if (Application.isPlaying)
-        {
-            playerController = f_player.First().GetComponent<FirstPersonController>();
-
-            playerCamera = playerController.transform.GetChild(0).GetComponent<Camera>();
-            audioBank = playerController.GetComponent<AudioBank>();
-            f_waterWalking.addEntryCallback(onEnterWater);
-            f_waterWalking.addExitCallback(onExitWater);
-
-            if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
-            {
-                f_CrouchHint.addEntryCallback(disableHUDWarning);
-                f_OutOfFirstRoom.addEntryCallback(disableHUDWarning);
-            }
-            
-            night = GameObject.Find("Night");
-
-            //MainLoop.instance.StartCoroutine(testLRS());
-        }
         instance = this;
     }
 
-/*    private IEnumerator testLRS()
+    protected override void onStart()
     {
-        for (int i = 0; i < 100; i++)
+        //when crouching, the scale of the player is changed (rather than its position)
+        crouchingScale = new Vector3(standingScale.x * 0.5f, standingScale.y * 0.2f, standingScale.z * 0.5f);
+        traceMovementFrequency = 0;
+        crouching = false;
+
+        playerController = player.GetComponent<FirstPersonController>();
+
+        playerCamera = playerController.transform.GetChild(0).GetComponent<Camera>();
+        audioBank = playerController.GetComponent<AudioBank>();
+        f_waterWalking.addEntryCallback(onEnterWater);
+        f_waterWalking.addExitCallback(onExitWater);
+
+        if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
         {
-            yield return new WaitForSeconds(0.025f);
-            Vector3 pos = new Vector3(i, i, i);
-            GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new
-            {
-                verb = "moved",
-                objectType = "avatar",
-                objectName = "player",
-                activityExtensions = new Dictionary<string, string>() { { "position", pos.ToString("G4") } }
-            });
+            f_CrouchHint.addEntryCallback(disableHUDWarning);
+            f_OutOfFirstRoom.addEntryCallback(disableHUDWarning);
         }
-    }*/
+
+        //MainLoop.instance.StartCoroutine(testLRS());
+    }
+
+    /*    private IEnumerator testLRS()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                yield return new WaitForSeconds(0.025f);
+                Vector3 pos = new Vector3(i, i, i);
+                GameObjectManager.addComponent<ActionPerformedForLRS>(playerController.gameObject, new
+                {
+                    verb = "moved",
+                    objectType = "avatar",
+                    objectName = "player",
+                    activityExtensions = new Dictionary<string, string>() { { "position", pos.ToString("G4") } }
+                });
+            }
+        }*/
 
     private void disableHUDWarning(GameObject go)
     {
@@ -144,7 +146,7 @@ public class MovingSystem_FPSMode : FSystem
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
         // Hide fps cursor
-        GameObjectManager.setGameObjectState(f_cursor.First(), false);
+        GameObjectManager.setGameObjectState(cursor, false);
     }
 
     // Use this to update member variables when system resume.
@@ -152,7 +154,7 @@ public class MovingSystem_FPSMode : FSystem
     protected override void onResume(int currentFrame)
     {
         playerController.m_MouseLook.m_CameraTargetRot = playerCamera.transform.localRotation;
-        playerController.m_MouseLook.m_CharacterTargetRot = f_player.First().transform.localRotation;
+        playerController.m_MouseLook.m_CharacterTargetRot = player.transform.localRotation;
 
         playerController.enabled = true;
         // hide mouse cursor
@@ -160,7 +162,7 @@ public class MovingSystem_FPSMode : FSystem
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         // Show fps cursor
-        GameObjectManager.setGameObjectState(f_cursor.First(), true);
+        GameObjectManager.setGameObjectState(cursor, true);
     }
 
     public void UnlockAllHUD()
@@ -264,7 +266,7 @@ public class MovingSystem_FPSMode : FSystem
                         verb = "moved",
                         objectType = "avatar",
                         activityExtensions = new Dictionary<string, string>() {
-                            { "position", f_player.First().transform.position.ToString("G4") } 
+                            { "position", player.transform.position.ToString("G4") } 
                         }
                     });
                     walkingTraceTimer = Time.time;

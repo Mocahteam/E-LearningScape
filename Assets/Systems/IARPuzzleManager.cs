@@ -15,13 +15,17 @@ public class IARPuzzleManager : FSystem {
 
     private bool enableTraceInteraction = true;
 
+    public static IARPuzzleManager instance;
+
     public IARPuzzleManager()
     {
-        if (Application.isPlaying)
-        {
-            f_puzzle.addEntryCallback(onPuzzleEnabled);
-            f_puzzle.addExitCallback(onPuzzleDisabled);
-        }
+        instance = this;
+    }
+
+    protected override void onStart()
+    {
+        f_puzzle.addEntryCallback(onPuzzleEnabled);
+        f_puzzle.addExitCallback(onPuzzleDisabled);
     }
 
     private void onPuzzleEnabled(GameObject go)

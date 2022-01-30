@@ -16,14 +16,15 @@ public class ToggleObject : FSystem {
     public static ToggleObject instance;
 
     public ToggleObject(){
-        if (Application.isPlaying)
-        {
-            instance = this;
-        }
+        instance = this;
 	}
 
-	// Use to process your families.
-	protected override void onProcess(int familiesUpdateCount) {
+    protected override void onStart()
+    {
+    }
+
+    // Use to process your families.
+    protected override void onProcess(int familiesUpdateCount) {
         if (Input.GetButtonDown("Fire1"))
         {
             int nbToggleable = f_toggleable.Count;

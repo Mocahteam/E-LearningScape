@@ -1,30 +1,30 @@
 ﻿using UnityEngine;
 using FYFY;
-using FYFY_plugins.Monitoring;
-using System.Collections.Generic;
 
 public class LampManager : FSystem {
 
     // this system manage the lamp and symbols
 
     private Family f_symbols = FamilyManager.getFamily(new AnyOfTags("E12_Symbol"));
-    private Family f_light = FamilyManager.getFamily(new AllOfComponents(typeof(Light)), new NoneOfComponents(typeof(VolumetricLight))); // get lamp and exclude sun
 
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
 
-    public GameObject lampSelected;
-    public GameObject tmpGo;
+    public GameObject fpsLight;
+
+    private GameObject lampSelected;
+    private GameObject tmpGo;
 
     public static LampManager instance;
 
     public LampManager()
     {
-        if (Application.isPlaying)
-        {
-            f_itemSelected.addEntryCallback(onItemSelectedInInventory);
-            f_itemSelected.addExitCallback(onItemUnselectedInInventory);
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        f_itemSelected.addEntryCallback(onItemSelectedInInventory);
+        f_itemSelected.addExitCallback(onItemUnselectedInInventory);
     }
 
     private void onItemSelectedInInventory(GameObject go)
@@ -34,7 +34,7 @@ public class LampManager : FSystem {
         {
             // turn on lamp
             lampSelected = go;
-            GameObjectManager.setGameObjectState(f_light.First(), true);
+            GameObjectManager.setGameObjectState(fpsLight, true);
             this.Pause = false;
         }
     }
@@ -45,7 +45,7 @@ public class LampManager : FSystem {
         if (lampSelected && lampSelected.GetInstanceID() == instanceId)
         {
             // turn off lamp
-            GameObjectManager.setGameObjectState(f_light.First(), false);
+            GameObjectManager.setGameObjectState(fpsLight, false);
             lampSelected = null;
 
             // hide all symbols in case one of them is viewed

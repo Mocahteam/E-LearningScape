@@ -15,16 +15,15 @@ public class IARViewItem : FSystem {
     private Family f_viewed = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver)), new AnyOfTags("InventoryElements"));
     // Contains all game objects selected inside inventory (SelectedInInventory is dynamically added by this system)
     private Family f_selected = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedInInventory), typeof(Collected), typeof(AnimatedSprites)), new AnyOfTags("InventoryElements"));
-    private Family f_descriptionUI = FamilyManager.getFamily(new AnyOfTags("DescriptionUI"));
     private Family f_viewable = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_selectedItem = FamilyManager.getFamily(new AnyOfTags("IARItemSelected"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    // Contains all IAR tabs
-    private Family f_tabs = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfComponents(typeof(LinkedWith), typeof(Button)));
 
-    private GameObject descriptionUI;
+    public GameObject descriptionUI; 
     private GameObject descriptionTitle;
     private GameObject descriptionContent;
     private GameObject descriptionInfo;
+
+    public GameObject defaultIarTab;
 
     private Dictionary<int, GameObject> id2go;
 
@@ -36,25 +35,25 @@ public class IARViewItem : FSystem {
 
     public IARViewItem()
     {
-        if (Application.isPlaying)
-        {
-            // cache UI elements
-            descriptionUI = f_descriptionUI.First();
-            descriptionTitle = descriptionUI.transform.GetChild(0).gameObject; // the first child is the title
-            descriptionContent = descriptionUI.transform.GetChild(1).gameObject; // the second child is the content of the description
-            descriptionInfo = descriptionUI.transform.GetChild(2).gameObject; // the third child is the usable info of the description
-
-            // add callback on families
-            f_viewed.addEntryCallback(onMouseEnterItem);
-            f_viewed.addExitCallback(onMouseExitItem);
-            f_selected.addEntryCallback(onNewItemSelected);
-            f_selected.addExitCallback(onItemUnselected);
-            f_viewable.addEntryCallback(onNewItemEnabled);
-            f_viewable.addExitCallback(onItemDisabled);
-
-            id2go = new Dictionary<int, GameObject>();
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        // cache UI elements
+        descriptionTitle = descriptionUI.transform.GetChild(0).gameObject; // the first child is the title
+        descriptionContent = descriptionUI.transform.GetChild(1).gameObject; // the second child is the content of the description
+        descriptionInfo = descriptionUI.transform.GetChild(2).gameObject; // the third child is the usable info of the description
+
+        // add callback on families
+        f_viewed.addEntryCallback(onMouseEnterItem);
+        f_viewed.addExitCallback(onMouseExitItem);
+        f_selected.addEntryCallback(onNewItemSelected);
+        f_selected.addExitCallback(onItemUnselected);
+        f_viewable.addEntryCallback(onNewItemEnabled);
+        f_viewable.addExitCallback(onItemDisabled);
+
+        id2go = new Dictionary<int, GameObject>();
     }
 
     private void onNewItemEnabled(GameObject go)
@@ -185,7 +184,7 @@ public class IARViewItem : FSystem {
         }
         if (lastfocusedItem == null || (!lastfocusedItem.activeInHierarchy && isChildOfDescription(lastfocusedItem)))
         {
-            EventSystem.current.SetSelectedGameObject(f_tabs.First()); // If new focused item is not active in hierarchy, we give to EventSystem the first element in IAR Tab (appears on keyboard navigation when player moves from unselected item to description scroll bar, in this case description will be hidden and keyboard navigation is braken).
+            EventSystem.current.SetSelectedGameObject(defaultIarTab); // If new focused item is not active in hierarchy, we give to EventSystem the default element in IAR Tab (appears on keyboard navigation when player moves from unselected item to description scroll bar, in this case description will be hidden and keyboard navigation is braken).
         }
 
 

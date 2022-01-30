@@ -26,17 +26,18 @@ public class IARNewItemAvailable : FSystem {
 
     public IARNewItemAvailable()
     {
-        if (Application.isPlaying)
-        {
-            f_itemsEnabled.addEntryCallback(OnNewItemEnabled);
-            f_itemsEnabled.addExitCallback(OnItemDisabled);
-            f_newItemOver.addEntryCallback(OnMouseOver);
-            f_tabContent.addEntryCallback(onEnterInventoryPanel);
-            f_tabContent.addExitCallback(onExitInventoryPanel);
-
-            id2Go = new Dictionary<int, GameObject>();
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        f_itemsEnabled.addEntryCallback(OnNewItemEnabled);
+        f_itemsEnabled.addExitCallback(OnItemDisabled);
+        f_newItemOver.addEntryCallback(OnMouseOver);
+        f_tabContent.addEntryCallback(onEnterInventoryPanel);
+        f_tabContent.addExitCallback(onExitInventoryPanel);
+
+        id2Go = new Dictionary<int, GameObject>();
     }
 
     private GameObject getFeedbackChild(GameObject go)

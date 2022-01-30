@@ -10,29 +10,27 @@ using System.Threading;
 public class HelpSystem : FSystem {
 
     private Family f_traces = FamilyManager.getFamily(new AllOfComponents(typeof(Trace)));
-    private Family f_gameHints = FamilyManager.getFamily(new AllOfComponents(typeof(GameHints)));
-    private Family f_internalGameHints = FamilyManager.getFamily(new AllOfComponents(typeof(InternalGameHints)));
-    private Family f_timer = FamilyManager.getFamily(new AllOfComponents(typeof(Timer)));
     private Family f_componentMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
-    private Family f_askHelpButton = FamilyManager.getFamily(new AnyOfTags("AskHelpButton"), new AllOfComponents(typeof(Button)));
-    private Family f_labelWeights = FamilyManager.getFamily(new AllOfComponents(typeof(LabelWeights)));
     private Family f_wrongAnswerInfo = FamilyManager.getFamily(new AllOfComponents(typeof(WrongAnswerInfo), typeof(ComponentMonitoring)));
-    private Family f_IARTab = FamilyManager.getFamily(new AnyOfTags("IARTab"));
 
     private Family f_puzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)), new AllOfComponents(typeof(ComponentMonitoring)));
     private Family f_puzzlesFragment = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new AllOfComponents(typeof(DreamFragment), typeof(ComponentMonitoring)));
 
-    private Family f_scrollView = FamilyManager.getFamily(new AllOfComponents(typeof(ScrollRect), typeof(PrefabContainer)));
-    private Family f_helpNotif = FamilyManager.getFamily(new AllOfComponents(typeof(HelpFlag)));
-
     /// <summary>
-    /// Contains hints
+    /// Contains hints filled with tips loaded from "Hints_LearningScape.txt"
     /// </summary>
-    private GameHints gameHints;
+    public GameHints gameHints;
+
+    public InternalGameHints internalGameHints;
+    public GameObject askHelpButton;
     /// <summary>
     /// Contains weights for each Laalys labels used to increase/decrease labelCount
     /// </summary>
-    private Dictionary<string, float> labelWeights;
+    public LabelWeights labelWeights;
+    public GameObject helpTab; 
+    public Timer timer;
+
+    public GameObject scrollView;
 
     /// <summary>
     /// Key: ComponentMonitoring id of enigmas inside meta Petri net
@@ -148,30 +146,21 @@ public class HelpSystem : FSystem {
 
     public HelpSystem()
     {
-        if (Application.isPlaying)
-        {
-            initHelpSystem();
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        initHelpSystem();
     }
 
     public void initHelpSystem()
     {
         // Define IAR tab state
-        foreach (GameObject tmpGO in f_IARTab)
-            if (tmpGO.name == "HelpTab")
-                GameObjectManager.setGameObjectState(tmpGO, !shouldPause);
-        // Define HUD state
-        GameObjectManager.setGameObjectState(f_helpNotif.First().transform.parent.gameObject, !shouldPause);
-
-        //get game hints filled with tips loaded from "Hints_LearningScape.txt"
-        gameHints = f_gameHints.First().GetComponent<GameHints>();
+        GameObjectManager.setGameObjectState(helpTab, !shouldPause);
 
         if (!shouldPause)
         {
-            //get internal game hints
-            InternalGameHints internalGameHints = f_internalGameHints.First().GetComponent<InternalGameHints>();
-
             //add internal game hints to the dictionary of the component GameHints
             foreach (string key1 in internalGameHints.dictionary.Keys)
             {
@@ -187,9 +176,6 @@ public class HelpSystem : FSystem {
                         gameHints.dictionary[key1][key2].Add(new KeyValuePair<string, string>("", hintContent));
                 }
             }
-
-            // Get labels weight
-            labelWeights = f_labelWeights.First().GetComponent<LabelWeights>().weights;
 
             // clone Petri net names from MonitoringManager
             pnNetsRemainingSteps = new Dictionary<string, int>();
@@ -239,8 +225,8 @@ public class HelpSystem : FSystem {
                 totalWeightedMetaActions += weights[enigmaName];
 
             //get help UI components
-            scrollViewContent = f_scrollView.First().transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
-            hintButtonPrefab = f_scrollView.First().GetComponent<PrefabContainer>().prefab;
+            scrollViewContent = scrollView.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+            hintButtonPrefab = scrollView.GetComponent<PrefabContainer>().prefab;
 
             //create a pool of int button right at the beginning and activate them when necessary rather than creating them during the game
             hintButtonsPool = new List<GameObject>();
@@ -257,9 +243,9 @@ public class HelpSystem : FSystem {
             f_wrongAnswerInfo.addEntryCallback(OnWrongAnswer);
 
             //set player cooldown UI components
-            cooldownRT = f_askHelpButton.First().transform.GetChild(1).GetComponent<RectTransform>();
-            cooldownText = f_askHelpButton.First().transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-            noHintAvailable = f_askHelpButton.First().transform.GetChild(3).GetComponent<TMP_Text>();
+            cooldownRT = askHelpButton.transform.GetChild(1).GetComponent<RectTransform>();
+            cooldownText = askHelpButton.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+            noHintAvailable = askHelpButton.transform.GetChild(3).GetComponent<TMP_Text>();
 
             // WARNING: Before building the game, be sure that following ComponentMonitorings are properly set
             // Init dictionary to know for each enigma of the meta Petri net the associated sub Petri net id
@@ -348,7 +334,7 @@ public class HelpSystem : FSystem {
     private float computeProgressionRatio()
     {
         // First compute time progression
-        float timeProgression = (Time.time - f_timer.First().GetComponent<Timer>().startingTime) / config.sessionDuration;
+        float timeProgression = (Time.time - timer.startingTime) / config.sessionDuration;
 
         // Second compute resolution progression (taking into account enigma weights)
         float resolutionDone = 0;
@@ -382,7 +368,7 @@ public class HelpSystem : FSystem {
             float progressionRatio = computeProgressionRatio();
             if (progressionRatio < 0) // means players are late
             {
-                labelCount += (0.1f + labelWeights["stagnation"]) / Mathf.Max(1 + progressionRatio, 0.01f);
+                labelCount += (0.1f + labelWeights.weights["stagnation"]) / Mathf.Max(1 + progressionRatio, 0.01f);
                 //if labelCount reached the step calculate the feedback level and ask a hint and the time spent since the last time the system gave a feedback reached countLabel to know if it can give another one
                 if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration)
                 {
@@ -489,9 +475,9 @@ public class HelpSystem : FSystem {
             //add the weight of each label to labelCount
             for (int j = 0; j < nbLabels; j++)
             {
-                if (labelWeights.ContainsKey(tmpTrace.labels[j]))
+                if (labelWeights.weights.ContainsKey(tmpTrace.labels[j]))
                 {
-                    labelCount += (0.1f+labelWeights[tmpTrace.labels[j]]) / Mathf.Max(1 + progressionRatio, 0.01f);
+                    labelCount += (0.1f+labelWeights.weights[tmpTrace.labels[j]]) / Mathf.Max(1 + progressionRatio, 0.01f);
                     //labelCount can't be negative
                     if (labelCount < 0)
                         labelCount = 0;
@@ -845,6 +831,11 @@ public class HelpSystem : FSystem {
     public void LoadHelpSystemValues(float hintCooldown, float systemHintTimer, float helpLabelCount)
     {
         playerHintTimer = Time.time + hintCooldown - config.playerHintCooldownDuration;
+
+        float timeLeft = config.playerHintCooldownDuration - (Time.time - playerHintTimer);
+        if (timeLeft > 0)
+            GameObjectManager.setGameObjectState(cooldownRT.gameObject, true);
+
         this.systemHintTimer = systemHintTimer;
         labelCount = helpLabelCount;
         noActionTimer = Time.time;

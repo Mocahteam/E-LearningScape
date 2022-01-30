@@ -14,14 +14,15 @@ public class CheckJava : FSystem
 
     public CheckJava()
     {
-        if (Application.isPlaying)
-        {
-            if (!HelpSystem.shouldPause)
-                checkJava();
-            else
-                javaOK = true; // java is not required
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        if (!HelpSystem.shouldPause)
+            checkJava();
+        else
+            javaOK = true; // java is not required
     }
 
     public void checkJava()

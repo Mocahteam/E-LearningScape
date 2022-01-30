@@ -9,7 +9,6 @@ public class PlankAndWireManager : FSystem {
     // this system manage the plank and the wire
 
     //all selectable objects
-    private Family f_plank = FamilyManager.getFamily(new AnyOfTags("Plank"));
     private Family f_focusedPlank = FamilyManager.getFamily(new AnyOfTags("Plank"), new AllOfComponents(typeof(ReadyToWork), typeof(LinkedWith)));
     private Family f_focusedWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerOver), typeof(TextMeshPro))); // focused words on the plank
     private Family f_allWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro))); // all clickable words on the plank
@@ -21,8 +20,8 @@ public class PlankAndWireManager : FSystem {
     private Family f_solutionWords = FamilyManager.getFamily(new AnyOfTags("PlankText"), new AllOfComponents(typeof(PointerSensitive), typeof(TextMeshPro), typeof(IsSolution)));
 
     //plank
+    public LineRenderer lineRenderer;
     private GameObject selectedPlank = null;
-    private LineRenderer lr;                //used to link words
     private List<Vector3> lrPositions;
     private int nbWordsSelected;
 
@@ -34,19 +33,19 @@ public class PlankAndWireManager : FSystem {
 
     public PlankAndWireManager()
     {
-        if (Application.isPlaying)
-        {
-            //initialise vairables
-            lr = f_plank.First().GetComponent<LineRenderer>();
-            lrPositions = new List<Vector3>();
-            nbWordsSelected = 0;
-
-            f_focusedPlank.addEntryCallback(onReadyToWorkOnPlank);
-
-            f_focusedWords.addEntryCallback(onWordMouseEnter);
-            f_focusedWords.addExitCallback(onWordMouseExit);
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        //initialise vairables
+        lrPositions = new List<Vector3>();
+        nbWordsSelected = 0;
+
+        f_focusedPlank.addEntryCallback(onReadyToWorkOnPlank);
+
+        f_focusedWords.addEntryCallback(onWordMouseEnter);
+        f_focusedWords.addExitCallback(onWordMouseExit);
     }
 
     private void onReadyToWorkOnPlank(GameObject go)
@@ -113,6 +112,30 @@ public class PlankAndWireManager : FSystem {
         return null;
     }
 
+    private void unselectAllWords()
+    {
+        foreach (GameObject word in f_allWords)
+        {
+            if (word.GetComponent<TextMeshPro>().color == Color.yellow)
+            {
+                GameObjectManager.addComponent<ActionPerformed>(word, new { name = "turnOff", performedBy = "player", family = word.GetComponent<IsSolution>() ? null : f_wrongWords });
+                GameObjectManager.addComponent<ActionPerformedForLRS>(word, new
+                {
+                    verb = "deactivated",
+                    objectType = "word",
+                    activityExtensions = new Dictionary<string, string>() {
+                                    { "value", word.GetComponent<TextMeshPro>().text },
+                                    { "content", word.GetComponent<TextMeshPro>().text }
+                                }
+                });
+            }
+            word.GetComponent<TextMeshPro>().color = Color.white;
+            lineRenderer.positionCount = 0;
+            nbWordsSelected = 0;
+            lrPositions.Clear();
+        }
+    }
+
 	// Use to process your families.
 	protected override void onProcess(int familiesUpdateCount)
     {
@@ -143,9 +166,9 @@ public class PlankAndWireManager : FSystem {
                             //remove the vertex from the linerenderer
                             lrPositions.Remove(currentFocusedWord.transform.TransformPoint(Vector3.up * -4));
                             nbWordsSelected--;
-                            lr.positionCount = nbWordsSelected;
+                            lineRenderer.positionCount = nbWordsSelected;
                             //set the new positions
-                            lr.SetPositions(lrPositions.ToArray());
+                            lineRenderer.SetPositions(lrPositions.ToArray());
 
                             GameObjectManager.addComponent<ActionPerformedForLRS>(currentFocusedWord, new
                             {
@@ -179,7 +202,7 @@ public class PlankAndWireManager : FSystem {
                                     }
                                     w.GetComponent<TextMeshPro>().color = Color.white;
                                 }
-                                lr.positionCount = 0;
+                                lineRenderer.positionCount = 0;
                                 nbWordsSelected = 0;
                                 lrPositions.Clear();
                             }
@@ -187,9 +210,9 @@ public class PlankAndWireManager : FSystem {
                             currentFocusedWord.GetComponent<TextMeshPro>().color = Color.yellow;
                             //update the linerenderer
                             nbWordsSelected++;
-                            lr.positionCount = nbWordsSelected;
+                            lineRenderer.positionCount = nbWordsSelected;
                             lrPositions.Add(currentFocusedWord.transform.TransformPoint(Vector3.up * -4));
-                            lr.SetPositions(lrPositions.ToArray());
+                            lineRenderer.SetPositions(lrPositions.ToArray());
 
                             GameObjectManager.addComponent<ActionPerformedForLRS>(currentFocusedWord, new
                             {
@@ -264,39 +287,18 @@ public class PlankAndWireManager : FSystem {
 
                 //if click over nothing unselect all
                 if (Input.GetButtonDown("Fire1") && !currentFocusedWord && wireSelected())
-                {
-                    foreach (GameObject word in f_allWords)
-                    {
-                        if (word.GetComponent<TextMeshPro>().color == Color.yellow)
-                        {
-                            GameObjectManager.addComponent<ActionPerformed>(word, new { name = "turnOff", performedBy = "player", family = word.GetComponent<IsSolution>() ? null : f_wrongWords });
-                            GameObjectManager.addComponent<ActionPerformedForLRS>(word, new
-                            {
-                                verb = "deactivated",
-                                objectType = "word",
-                                activityExtensions = new Dictionary<string, string>() {
-                                    { "value", word.GetComponent<TextMeshPro>().text },
-                                    { "content", word.GetComponent<TextMeshPro>().text }
-                                }
-                            });
-                        }
-                        word.GetComponent<TextMeshPro>().color = Color.white;
-                        lr.positionCount = 0;
-                        nbWordsSelected = 0;
-                        lrPositions.Clear();
-                    }
-                }
+                    unselectAllWords();
 
                 if (nbWordsSelected > 0 && nbWordsSelected < 3 && wireSelected())
                 {
                     //update the linerenderer
-                    lr.positionCount = nbWordsSelected + 1; // one more for mouse position
+                    lineRenderer.positionCount = nbWordsSelected + 1; // one more for mouse position
                     List<Vector3> lrPositionsWithMouse = new List<Vector3>(lrPositions);
                     Vector3 screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
-                    float dist = Vector3.Distance(Camera.main.transform.position, lr.transform.position);
+                    float dist = Vector3.Distance(Camera.main.transform.position, lineRenderer.transform.position);
                     screenPoint.z = dist-0.2f; //distance of the plane from the camera
                     lrPositionsWithMouse.Add(Camera.main.ScreenToWorldPoint(screenPoint));
-                    lr.SetPositions(lrPositionsWithMouse.ToArray());
+                    lineRenderer.SetPositions(lrPositionsWithMouse.ToArray());
                 }
             }
         }
@@ -306,6 +308,9 @@ public class PlankAndWireManager : FSystem {
     {
         // remove ReadyToWork component to release selected GameObject
         GameObjectManager.removeComponent<ReadyToWork>(selectedPlank);
+
+        if (!correct && wireSelected())
+            unselectAllWords();
 
         GameObjectManager.addComponent<ActionPerformed>(selectedPlank, new { name = "turnOff", performedBy = "player" });
         GameObjectManager.addComponent<ActionPerformedForLRS>(selectedPlank, new 
@@ -333,8 +338,8 @@ public class PlankAndWireManager : FSystem {
         lrPositions.Clear();
         foreach (GameObject solution in f_solutionWords)
             lrPositions.Add(solution.transform.TransformPoint(Vector3.up * -4));
-        lr.positionCount = lrPositions.Count;
-        lr.SetPositions(lrPositions.ToArray());
+        lineRenderer.positionCount = lrPositions.Count;
+        lineRenderer.SetPositions(lrPositions.ToArray());
     }
 
     public bool IsResolved()

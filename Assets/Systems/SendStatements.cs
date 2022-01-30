@@ -16,11 +16,11 @@ public class SendStatements : FSystem {
 
     public SendStatements()
     {
-        if (Application.isPlaying)
-        {
-            // Add code to constructor here
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
     }
 
     public void initGBLXAPI()

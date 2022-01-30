@@ -14,13 +14,14 @@ public class IARNewDreamFragmentAvailable : FSystem
 
     public IARNewDreamFragmentAvailable()
     {
-        if (Application.isPlaying)
-        {
-            f_newFragment.addEntryCallback(onNewFragmentAvailable);
-            f_tabContent.addExitCallback(onExitDreamFragmentsPanel);
-            f_tabContent.addEntryCallback(onEnterDreamFragmentsPanel);
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        f_newFragment.addEntryCallback(onNewFragmentAvailable);
+        f_tabContent.addExitCallback(onExitDreamFragmentsPanel);
+        f_tabContent.addEntryCallback(onEnterDreamFragmentsPanel);
     }
 
     private void onNewFragmentAvailable(GameObject go)

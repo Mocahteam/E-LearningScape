@@ -6,13 +6,11 @@ using FYFY_plugins.PointerManager;
 using FYFY_plugins.TriggerManager;
 
 public class MovingSystem_UIMode : FSystem {
-    private GameObject fpsController;
-    private GameObject fpsCamera;
+    public GameObject fpsController;
+    public GameObject fpsCamera;
     private Vector3 previousPosition;
 
-    public bool lockSystem;
-
-    public float tempo = 0;
+    private float tempo = 0;
 
     private Family f_CrouchHint = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver), typeof(LinkedWith), typeof(BoxCollider)));
     private Family f_OutOfFirstRoom = FamilyManager.getFamily(new AllOfComponents(typeof(Triggered3D), typeof(LinkedWith)));
@@ -21,19 +19,17 @@ public class MovingSystem_UIMode : FSystem {
 
     public MovingSystem_UIMode()
     {
-        if (Application.isPlaying)
+        instance = this;
+    }
+
+    protected override void onStart()
+    {
+        previousPosition = fpsController.transform.localPosition;
+
+        if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
         {
-            fpsController = GameObject.Find("FPSController");
-            fpsCamera = GameObject.Find("FirstPersonCharacter");
-            previousPosition = fpsController.transform.localPosition;
-
-            if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
-            {
-                f_CrouchHint.addEntryCallback(disableHUDWarning);
-                f_OutOfFirstRoom.addEntryCallback(disableHUDWarning);
-            }
-
-            instance = this;
+            f_CrouchHint.addEntryCallback(disableHUDWarning);
+            f_OutOfFirstRoom.addEntryCallback(disableHUDWarning);
         }
     }
 

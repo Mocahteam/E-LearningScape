@@ -11,7 +11,6 @@ public class BallBoxManager : FSystem {
     // this system manage the box and balls
 
     //all selectable objects
-    private Family f_box = FamilyManager.getFamily(new AnyOfTags("Box"));
     private Family f_selectedBox = FamilyManager.getFamily(new AnyOfTags("Box"), new AllOfComponents(typeof(ReadyToWork)));
     private Family f_balls = FamilyManager.getFamily(new AnyOfTags("Ball"));
     private Family f_focusedBalls = FamilyManager.getFamily(new AnyOfTags("Ball"), new AllOfComponents(typeof(PointerOver), typeof(MeshRenderer)));
@@ -40,7 +39,7 @@ public class BallBoxManager : FSystem {
     private GameObject ballSubTitles;
     private TextMeshProUGUI ballSubTitlesContent;
     private GameObject ballQuestion;
-    private GameObject box;
+    public GameObject ballBox;
     private GameObject boxTop;
 
     private bool unlocked = false;
@@ -54,23 +53,23 @@ public class BallBoxManager : FSystem {
 
     public BallBoxManager()
     {
-        if (Application.isPlaying)
-        {
-            box = f_box.First();
-            boxPadlock = box.transform.GetChild(0).gameObject;
-            boxTop = box.transform.GetChild(2).gameObject;
-            ballSubTitles = box.transform.GetChild(4).gameObject;
-            ballSubTitlesContent = ballSubTitles.GetComponentInChildren<TextMeshProUGUI>();
-            ballQuestion = box.transform.GetChild(5).gameObject;
-
-            foreach (GameObject ball in f_balls)
-                ball.GetComponent<Ball>().initialPosition = ball.transform.localPosition;
-
-            f_selectedBox.addEntryCallback(onReadyToWorkOnBallBox);
-            f_focusedBalls.addEntryCallback(onEnterBall);
-            f_focusedBalls.addExitCallback(onExitBall);
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        boxPadlock = ballBox.transform.GetChild(0).gameObject;
+        boxTop = ballBox.transform.GetChild(2).gameObject;
+        ballSubTitles = ballBox.transform.GetChild(4).gameObject;
+        ballSubTitlesContent = ballSubTitles.GetComponentInChildren<TextMeshProUGUI>();
+        ballQuestion = ballBox.transform.GetChild(5).gameObject;
+
+        foreach (GameObject ball in f_balls)
+            ball.GetComponent<Ball>().initialPosition = ball.transform.localPosition;
+
+        f_selectedBox.addEntryCallback(onReadyToWorkOnBallBox);
+        f_focusedBalls.addEntryCallback(onEnterBall);
+        f_focusedBalls.addExitCallback(onExitBall);
     }
 
     private void onReadyToWorkOnBallBox(GameObject go)

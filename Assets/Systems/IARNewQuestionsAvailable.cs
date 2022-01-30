@@ -5,10 +5,11 @@ public class IARNewQuestionsAvailable : FSystem {
 
     private Family f_newQuestions = FamilyManager.getFamily(new AnyOfTags("IARTab"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_tabContent = FamilyManager.getFamily(new AnyOfTags("QuestionTagContent"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_questionNotif = FamilyManager.getFamily(new AllOfComponents(typeof(QuestionFlag)));
-    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
     private Family f_terminalScreens = FamilyManager.getFamily(new AnyOfTags("TerminalScreen"));
+
+    public GameObject questionNotif;
+    public UnlockedRoom unlockedRoom;
 
     private bool firstQuestionOccurs = false;
 
@@ -16,12 +17,13 @@ public class IARNewQuestionsAvailable : FSystem {
 
     public IARNewQuestionsAvailable()
     {
-        if (Application.isPlaying)
-        {
-            f_newQuestions.addEntryCallback(onNewQuestionAvailable);
-            f_tabContent.addEntryCallback(onQuestionsViewed);
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        f_newQuestions.addEntryCallback(onNewQuestionAvailable);
+        f_tabContent.addEntryCallback(onQuestionsViewed);
     }
 
     private void onNewQuestionAvailable(GameObject go)
@@ -30,21 +32,20 @@ public class IARNewQuestionsAvailable : FSystem {
         {
             if (!firstQuestionOccurs)
             {
-                GameObjectManager.setGameObjectState(f_questionNotif.First().transform.parent.gameObject, true);
+                GameObjectManager.setGameObjectState(questionNotif.transform.parent.gameObject, true);
                 firstQuestionOccurs = true;
             }
-            GameObjectManager.setGameObjectState(f_questionNotif.First(), true);
+            GameObjectManager.setGameObjectState(questionNotif, true);
         }
     }
 
     private void onQuestionsViewed(GameObject go)
     {
-        if (go.name.EndsWith(f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber.ToString()))
+        if (go.name.EndsWith(unlockedRoom.roomNumber.ToString()))
         {
-            GameObjectManager.setGameObjectState(f_questionNotif.First(), false);
+            GameObjectManager.setGameObjectState(questionNotif, false);
             // put a screenshot of the IAR on the terminal when the screen is viewed for the first time
-            int lastUnlockedRoom = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
-            if (f_terminalScreens.Count >= lastUnlockedRoom)
+            if (f_terminalScreens.Count >= unlockedRoom.roomNumber)
                 MainLoop.instance.StartCoroutine(IARQueryEvaluator.instance.SetTerminalScreen());
         }
     }

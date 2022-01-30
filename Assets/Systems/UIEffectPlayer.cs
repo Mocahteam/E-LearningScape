@@ -7,11 +7,10 @@ public class UIEffectPlayer : FSystem {
     // Display UI Effect based on PlayUIEffect component
 
     private Family f_playUiEffect = FamilyManager.getFamily(new AllOfComponents(typeof(PlayUIEffect)));
-    private Family f_uiEffect = FamilyManager.getFamily(new AnyOfTags("UIEffect"));
 
-    private GameObject rightBG;
-    private GameObject wrongBG;
-    private AnimatedSprites solvedAnimation;
+    public GameObject rightBG;
+    public GameObject wrongBG;
+    public AnimatedSprites solvedAnimation;
 
     private GameObject workingBG;
 
@@ -24,22 +23,13 @@ public class UIEffectPlayer : FSystem {
 
     public UIEffectPlayer()
     {
-        if (Application.isPlaying)
-        {
-            foreach (GameObject go in f_uiEffect)
-            {
-                if (go.name == "Right")
-                    rightBG = go;
-                else if (go.name == "Wrong")
-                    wrongBG = go;
-                else if (go.name == "Solved")
-                    solvedAnimation = go.GetComponent<AnimatedSprites>();
-            }
-
-            // add callback on families
-            f_playUiEffect.addEntryCallback(onNewEffect);
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        // add callback on families
+        f_playUiEffect.addEntryCallback(onNewEffect);
     }
 
     // if new gameobject enter inside f_uiEffect we play associated effect

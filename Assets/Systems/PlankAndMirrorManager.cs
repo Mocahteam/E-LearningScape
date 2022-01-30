@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
-using FYFY_plugins.Monitoring;
 
 public class PlankAndMirrorManager : FSystem {
 
@@ -15,7 +13,6 @@ public class PlankAndMirrorManager : FSystem {
     private Family f_arrows = FamilyManager.getFamily(new AnyOfTags("PlankE09"), new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver)));
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
-    private Family f_mirror = FamilyManager.getFamily(new AllOfComponents(typeof(MirrorScript)), new NoneOfComponents(typeof(LinkedWith)));
 
     private float speed;
     private float dist = 1.5f;
@@ -25,31 +22,28 @@ public class PlankAndMirrorManager : FSystem {
     private Vector3 plankTargetPos;
     private GameObject selectedPlank;
     private GameObject plankRotation;
-    private GameObject mirrorOnPlank;
+    public GameObject mirrorOnPlank;
     private GameObject UI;
 
     private bool discovered = false; // true if the plank on the floor was discovered (selected at least once)
     private bool prepareClosing = false;
 
-    private int rotationCount = 0;
-
     public static PlankAndMirrorManager instance;
 
     public PlankAndMirrorManager()
     {
-        if (Application.isPlaying)
-        {
-            f_selectedPlank.addEntryCallback(onReadyToWorkOnPlank);
-            mirrorOnPlank = f_mirror.First();
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        f_selectedPlank.addEntryCallback(onReadyToWorkOnPlank);
     }
 
     // Rotate Plank
     private void rotatePlank(int way)
     {
         plankRotation.transform.Rotate(Vector3.up, way * 50 * Time.deltaTime);
-        rotationCount += way;
     }
 
     private void onReadyToWorkOnPlank(GameObject go)

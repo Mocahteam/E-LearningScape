@@ -10,20 +10,20 @@ public class CollectObject : FSystem {
     // 5 <=> UI layer. We want only in game linked game object so we exlude ones in UI
     // We process only Highlighted game objects (this component is dynamically added by Highlight system)
     private Family f_collectableObjects = FamilyManager.getFamily(new AllOfComponents(typeof(LinkedWith), typeof(Highlighted)), new NoneOfLayers(5), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
-    private Family f_pressY = FamilyManager.getFamily(new AnyOfTags("PressY"));
-    private Family f_HUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
+
+    public GameObject pressY;
 
     public static CollectObject instance;
 
-    private GameObject itemCollectedNotif;
+    public GameObject itemCollectedNotif;
 
     public CollectObject()
     {
-        if (Application.isPlaying)
-        {
-            itemCollectedNotif = f_HUD.First().transform.GetChild(f_HUD.First().transform.childCount-1).gameObject;
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
     }
 
     // Use to process your families.
@@ -77,7 +77,7 @@ public class CollectObject : FSystem {
                 // particular case of collecting Intro_scroll game object => show ingame "Press Y" notification
                 if (collect.name == "Intro_Scroll")
                 {
-                    GameObjectManager.setGameObjectState(f_pressY.First(), true);
+                    GameObjectManager.setGameObjectState(pressY, true);
                 }
             }
         }

@@ -1,17 +1,18 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class BallBoxManager_wrapper : MonoBehaviour
+public class BallBoxManager_wrapper : BaseWrapper
 {
+	public UnityEngine.GameObject ballBox;
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
+		MainLoop.initAppropriateSystemField (system, "ballBox", ballBox);
 	}
 
 	public void UnlockBallBox()
 	{
-		MainLoop.callAppropriateSystemMethod ("BallBoxManager", "UnlockBallBox", null);
+		MainLoop.callAppropriateSystemMethod (system, "UnlockBallBox", null);
 	}
 
 }

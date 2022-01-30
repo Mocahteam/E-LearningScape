@@ -9,19 +9,18 @@ public class EndManager : FSystem {
     // this system manage the epilog
 
     private Family f_answer = FamilyManager.getFamily(new AnyOfTags("A-R3"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not already displayed of the third room
-    private Family f_questionR3 = FamilyManager.getFamily(new AnyOfTags("Q-R3"));
     // Will contain a game object when IAR is openned
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
-    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
-    private Family f_gameRooms = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
-    private Family f_waterFloor = FamilyManager.getFamily(new AnyOfTags("WaterFloor"));
-    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
     private Family f_onEnigma = FamilyManager.getFamily(new AllOfComponents(typeof(ReadyToWork)));
 
-    private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
+    public GameObject player;
+    public GameObject gameRooms;
+    public GameObject waterFloor;
+    public UnlockedRoom unlockedRoom;
+    public StoryText storyText;
 
-    private Image fadingBackground;
+    public Image fadingBackground;
     private float fadingTimer = 2;
     private float fadingStart;
     private bool alphaToWhite = false;
@@ -32,18 +31,19 @@ public class EndManager : FSystem {
 
     private bool useEndRoom = false;
 
+    public static EndManager instance;
+
     public EndManager()
     {
-        if (Application.isPlaying)
-        {
-            f_answer.addExitCallback(onNewAnswerDisplayed);
-            f_iarBackground.addExitCallback(onIARClosed);
+        instance = this;
+    }
 
-            // Get singleton fading screen
-            fadingBackground = GameObject.Find("MenuFadingBackground").GetComponent<Image>();
+    protected override void onStart()
+    {
+        f_answer.addExitCallback(onNewAnswerDisplayed);
+        f_iarBackground.addExitCallback(onIARClosed);
 
-            useEndRoom = LoadGameContent.internalGameContent.useEndRoom;
-        }
+        useEndRoom = LoadGameContent.internalGameContent.useEndRoom;
     }
 
     private void onNewAnswerDisplayed(int instanceId)
@@ -55,8 +55,8 @@ public class EndManager : FSystem {
             {
                 switchToEndRoom = true;
 
-                GameObjectManager.addComponent<ActionPerformed>(f_player.First(), new { overrideName = "teleportToFinalScene", performedBy = "system" });
-                f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber = 4;
+                GameObjectManager.addComponent<ActionPerformed>(player, new { overrideName = "teleportToFinalScene", performedBy = "system" });
+                unlockedRoom.roomNumber = 4;
             }
             else
             {
@@ -85,9 +85,9 @@ public class EndManager : FSystem {
                 GameObjectManager.removeComponent<ReadyToWork>(go);
 
             // show story
-            f_storyDisplayer.First().GetComponent<StoryText>().storyProgression++;
+            storyText.storyProgression++;
             StoryDisplaying.instance.Pause = false;
-            GameObjectManager.addComponent<PlaySound>(f_storyDisplayer.First(), new { id = 8 }); // id refer to FPSController AudioBank}
+            GameObjectManager.addComponent<PlaySound>(storyText.gameObject, new { id = 8 }); // id refer to FPSController AudioBank
         }
     }
 
@@ -106,21 +106,21 @@ public class EndManager : FSystem {
             whiteToAlpha = true;
             fadingStart = Time.time;
             // switch to end room
-            f_player.First().transform.position = new Vector3(74, 0.33f, -3);
-            f_player.First().transform.localRotation = Quaternion.Euler(0, -90, 0);
+            player.transform.position = new Vector3(74, 0.33f, -3);
+            player.transform.localRotation = Quaternion.Euler(0, -90, 0);
             Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            foreach (Transform child in f_gameRooms.First().transform)
+            foreach (Transform child in gameRooms.transform)
                 GameObjectManager.setGameObjectState(child.gameObject, false);
-            GameObject endRoom = f_gameRooms.First().transform.GetChild(4).gameObject;
+            GameObject endRoom = gameRooms.transform.GetChild(4).gameObject;
             GameObjectManager.setGameObjectState(endRoom, true);
-            if (f_player.First().GetComponentInChildren<Light>())
-                GameObjectManager.setGameObjectState(f_player.First().GetComponentInChildren<Light>().gameObject, false);
+            if (player.GetComponentInChildren<Light>())
+                GameObjectManager.setGameObjectState(player.GetComponentInChildren<Light>().gameObject, false);
             RenderSettings.fogDensity = 0; // to view far fragment inside the last scene
             Camera.main.farClipPlane = 300;
             foreach (Transform child in endRoom.transform)
                 if (child.gameObject.GetComponent<MeshRenderer>())
                     child.gameObject.GetComponent<MeshRenderer>().allowOcclusionWhenDynamic = false;
-            foreach (Transform child in f_waterFloor.First().transform)
+            foreach (Transform child in waterFloor.transform)
                 if (child.gameObject.GetComponent<MeshRenderer>())
                     child.gameObject.GetComponent<MeshRenderer>().allowOcclusionWhenDynamic = false;
 

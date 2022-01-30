@@ -1,22 +1,21 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class SendStatements_wrapper : MonoBehaviour
+public class SendStatements_wrapper : BaseWrapper
 {
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
 	}
 
 	public void initGBLXAPI()
 	{
-		MainLoop.callAppropriateSystemMethod ("SendStatements", "initGBLXAPI", null);
+		MainLoop.callAppropriateSystemMethod (system, "initGBLXAPI", null);
 	}
 
 	public void initPlayerName(System.String sessionID)
 	{
-		MainLoop.callAppropriateSystemMethod ("SendStatements", "initPlayerName", sessionID);
+		MainLoop.callAppropriateSystemMethod (system, "initPlayerName", sessionID);
 	}
 
 }

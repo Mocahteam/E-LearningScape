@@ -11,13 +11,17 @@ public class WarnItemAnimator : FSystem {
     private Image img;
     private WarnItem wi;
 
+    public static WarnItemAnimator instance;
+
     public WarnItemAnimator()
     {
-        if (Application.isPlaying)
-        {
-            f_warnableItems.addEntryCallback(onItemToWarn);
-            f_warnableItems.addExitCallback(onItemNotWarnable);
-        }
+        instance = this;
+    }
+
+    protected override void onStart()
+    {
+        f_warnableItems.addEntryCallback(onItemToWarn);
+        f_warnableItems.addExitCallback(onItemNotWarnable);
     }
 
     private void onItemToWarn(GameObject go)

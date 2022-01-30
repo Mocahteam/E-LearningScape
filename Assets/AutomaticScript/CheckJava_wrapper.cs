@@ -1,17 +1,16 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class CheckJava_wrapper : MonoBehaviour
+public class CheckJava_wrapper : BaseWrapper
 {
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
 	}
 
 	public void checkJava()
 	{
-		MainLoop.callAppropriateSystemMethod ("CheckJava", "checkJava", null);
+		MainLoop.callAppropriateSystemMethod (system, "checkJava", null);
 	}
 
 }

@@ -1,17 +1,18 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class SatchelManager_wrapper : MonoBehaviour
+public class SatchelManager_wrapper : BaseWrapper
 {
+	public UnityEngine.GameObject bag;
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
+		MainLoop.initAppropriateSystemField (system, "bag", bag);
 	}
 
 	public void UnlockSatchel()
 	{
-		MainLoop.callAppropriateSystemMethod ("SatchelManager", "UnlockSatchel", null);
+		MainLoop.callAppropriateSystemMethod (system, "UnlockSatchel", null);
 	}
 
 }

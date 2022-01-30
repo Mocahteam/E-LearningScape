@@ -13,11 +13,12 @@ public class Highlighter : FSystem {
 
     public Highlighter()
     {
-        if (Application.isPlaying)
-        {
-            f_needUnhighlight.addEntryCallback(unhighlight);
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        f_needUnhighlight.addEntryCallback(unhighlight);
     }
 
     private void unhighlight(GameObject currentHighlight)

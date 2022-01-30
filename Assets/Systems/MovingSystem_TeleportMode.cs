@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 using FYFY_plugins.PointerManager;
 
 public class MovingSystem_TeleportMode : FSystem {
-    private GameObject pinTarget;
-    private GameObject fpsController;
+    public GameObject pinTarget;
+    public GameObject fpsController;
     private Vector3 CameraPlanarPosition;
 
     private Family f_dreamFragmentUI = FamilyManager.getFamily(new AnyOfTags("DreamFragmentUI"), new AllOfProperties(PropertyMatcher.PROPERTY.HAS_CHILD, PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
@@ -15,26 +15,21 @@ public class MovingSystem_TeleportMode : FSystem {
     private Family f_CrouchHint = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites), typeof(PointerOver), typeof(LinkedWith), typeof(BoxCollider)));
     private Family f_OutOfFirstRoom = FamilyManager.getFamily(new AllOfComponents(typeof(Triggered3D), typeof(LinkedWith)));
 
-    public bool lockSystem;
-
     public static MovingSystem_TeleportMode instance;
 
     public MovingSystem_TeleportMode()
     {
-        if (Application.isPlaying)
+        instance = this;
+    }
+
+    protected override void onStart()
+    {
+        GameObjectManager.setGameObjectState(pinTarget, false);
+
+        if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
         {
-            pinTarget = GameObject.Find("PinTarget");
-            pinTarget.SetActive(false);
-
-            fpsController = GameObject.Find("FPSController");
-
-            if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
-            {
-                f_CrouchHint.addEntryCallback(disableHUDWarning);
-                f_OutOfFirstRoom.addEntryCallback(disableHUDWarning);
-            }
-
-            instance = this;
+            f_CrouchHint.addEntryCallback(disableHUDWarning);
+            f_OutOfFirstRoom.addEntryCallback(disableHUDWarning);
         }
     }
 
@@ -62,7 +57,7 @@ public class MovingSystem_TeleportMode : FSystem {
     {
         RaycastHit hit;
         // Launch a ray to hit clother colider (exclude layer with id 2)
-        if (!lockSystem && Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, ~(1 << 2), QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, ~(1 << 2), QueryTriggerInteraction.Ignore))
         {
             // check if this collider is the ground or the water
             if (hit.collider.gameObject.layer == 14 || hit.collider.gameObject.layer == 4)

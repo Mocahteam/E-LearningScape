@@ -10,7 +10,6 @@ public class SatchelManager : FSystem {
     // this system manage the satchel and its paper
 
     //all selectable objects
-    private Family f_bag = FamilyManager.getFamily(new AnyOfTags("Bag"));
     private Family f_selectedBag = FamilyManager.getFamily(new AnyOfTags("Bag"), new AllOfComponents(typeof(ReadyToWork), typeof(Animator)));
     private Family f_closeBag_1 = FamilyManager.getFamily(new AnyOfTags("Bag", "InventoryElements"), new AllOfComponents(typeof(PointerOver)));
     private Family f_closeBag_2 = FamilyManager.getFamily(new AllOfComponents(typeof(PointerOver), typeof(HUD_TransparentOnMove)));
@@ -18,7 +17,7 @@ public class SatchelManager : FSystem {
     private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_itemUnselected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new NoneOfComponents(typeof(SelectedInInventory)));
 
-    private float dist;
+    public GameObject bag;
 
     //bag
     private Vector3 bagPaperInitialPos;
@@ -46,20 +45,21 @@ public class SatchelManager : FSystem {
 
     public SatchelManager()
     {
-        if (Application.isPlaying)
-        {
-            bagPaperInitialPos = f_bag.First().GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition;
-            paper = f_bag.First().transform.GetChild(1).gameObject;
-            bagPadlock = f_bag.First().transform.GetChild(3).gameObject;
-            paperImg = f_bag.First().GetComponentInChildren<Image>();
-            paperImgRef = f_bag.First().GetComponentInChildren<BagImage>();
-            bagAnimator = f_bag.First().GetComponentInChildren<Animator>();
-
-            f_selectedBag.addEntryCallback(onReadyToWorkOnSatchel);
-            f_itemSelected.addEntryCallback(onItemSelectedInInventory);
-            f_itemUnselected.addEntryCallback(onItemUnselectedInInventory);
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        bagPaperInitialPos = bag.GetComponentInChildren<Canvas>().gameObject.transform.parent.localPosition;
+        paper = bag.transform.GetChild(1).gameObject;
+        bagPadlock = bag.transform.GetChild(3).gameObject;
+        paperImg = bag.GetComponentInChildren<Image>();
+        paperImgRef = bag.GetComponentInChildren<BagImage>();
+        bagAnimator = bag.GetComponentInChildren<Animator>();
+
+        f_selectedBag.addEntryCallback(onReadyToWorkOnSatchel);
+        f_itemSelected.addEntryCallback(onItemSelectedInInventory);
+        f_itemUnselected.addEntryCallback(onItemUnselectedInInventory);
     }
 
     private void onReadyToWorkOnSatchel(GameObject go)

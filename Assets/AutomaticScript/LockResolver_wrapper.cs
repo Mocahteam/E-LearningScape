@@ -1,47 +1,56 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class LockResolver_wrapper : MonoBehaviour
+public class LockResolver_wrapper : BaseWrapper
 {
+	public System.Single wheelSpeedRotation;
+	public UnityEngine.GameObject wallIntro;
+	public UnityEngine.GameObject fences;
+	public UnlockedRoom unlockedRoom;
+	public UnityEngine.Transform player;
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
+		MainLoop.initAppropriateSystemField (system, "wheelSpeedRotation", wheelSpeedRotation);
+		MainLoop.initAppropriateSystemField (system, "wallIntro", wallIntro);
+		MainLoop.initAppropriateSystemField (system, "fences", fences);
+		MainLoop.initAppropriateSystemField (system, "unlockedRoom", unlockedRoom);
+		MainLoop.initAppropriateSystemField (system, "player", player);
 	}
 
 	public void moveWheelUp()
 	{
-		MainLoop.callAppropriateSystemMethod ("LockResolver", "moveWheelUp", null);
+		MainLoop.callAppropriateSystemMethod (system, "moveWheelUp", null);
 	}
 
 	public void moveWheelDown()
 	{
-		MainLoop.callAppropriateSystemMethod ("LockResolver", "moveWheelDown", null);
+		MainLoop.callAppropriateSystemMethod (system, "moveWheelDown", null);
 	}
 
 	public void SelectLeftWheel()
 	{
-		MainLoop.callAppropriateSystemMethod ("LockResolver", "SelectLeftWheel", null);
+		MainLoop.callAppropriateSystemMethod (system, "SelectLeftWheel", null);
 	}
 
 	public void SelectRightWheel()
 	{
-		MainLoop.callAppropriateSystemMethod ("LockResolver", "SelectRightWheel", null);
+		MainLoop.callAppropriateSystemMethod (system, "SelectRightWheel", null);
 	}
 
 	public void SetWheelSpeed(System.Single newValue)
 	{
-		MainLoop.callAppropriateSystemMethod ("LockResolver", "SetWheelSpeed", newValue);
+		MainLoop.callAppropriateSystemMethod (system, "SetWheelSpeed", newValue);
 	}
 
 	public void UnlockIntroWall()
 	{
-		MainLoop.callAppropriateSystemMethod ("LockResolver", "UnlockIntroWall", null);
+		MainLoop.callAppropriateSystemMethod (system, "UnlockIntroWall", null);
 	}
 
 	public void UnlockRoom2Fences()
 	{
-		MainLoop.callAppropriateSystemMethod ("LockResolver", "UnlockRoom2Fences", null);
+		MainLoop.callAppropriateSystemMethod (system, "UnlockRoom2Fences", null);
 	}
 
 }

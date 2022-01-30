@@ -5,17 +5,18 @@ using FYFY_plugins.Monitoring;
 using System.Collections.Generic;
 using TMPro;
 using System;
-using System.IO;
 using System.Collections;
 
 public class IARHintManager : FSystem {
 
     // manage IAR menu (last-1 tab)
 
-    private Family f_scrollView = FamilyManager.getFamily(new AllOfComponents(typeof(ScrollRect), typeof(PrefabContainer)));
     private Family f_helpTabContent = FamilyManager.getFamily(new AnyOfTags("HelpTabContent"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_enabledHintsIAR = FamilyManager.getFamily(new AllOfComponents(typeof(HintContent)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
-    private Family f_description = FamilyManager.getFamily(new AnyOfTags("HelpDescriptionUI"));
+
+
+    public GameObject scrollView;
+    public GameObject helpDescUI;
 
     /// <summary>
     /// The content of the scroll view containing received hint buttons (left part of help tab in IAR)
@@ -47,25 +48,26 @@ public class IARHintManager : FSystem {
 
     public IARHintManager()
     {
-        if (Application.isPlaying)
-        {
-            scrollViewContent = f_scrollView.First().transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
-            hintButtonPrefab = f_scrollView.First().GetComponent<PrefabContainer>().prefab;
-
-            f_helpTabContent.addEntryCallback(onHelpTabSelected);
-            f_helpTabContent.addExitCallback(onHelpTabExit);
-
-            f_enabledHintsIAR.addEntryCallback(onNewButtonAvailable);
-            f_enabledHintsIAR.addExitCallback(onButtonRemoved);
-
-            hintTitle = f_description.First().transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            hintText = f_description.First().transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-            hintLinkButton = f_description.First().transform.GetChild(2).GetComponent<Button>();
-
-            // start coroutine that refresh list of hints each second
-            MainLoop.instance.StartCoroutine(refreshHints());
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        scrollViewContent = scrollView.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+        hintButtonPrefab = scrollView.GetComponent<PrefabContainer>().prefab;
+
+        f_helpTabContent.addEntryCallback(onHelpTabSelected);
+        f_helpTabContent.addExitCallback(onHelpTabExit);
+
+        f_enabledHintsIAR.addEntryCallback(onNewButtonAvailable);
+        f_enabledHintsIAR.addExitCallback(onButtonRemoved);
+
+        hintTitle = helpDescUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        hintText = helpDescUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        hintLinkButton = helpDescUI.transform.GetChild(2).GetComponent<Button>();
+
+        // start coroutine that refresh list of hints each second
+        MainLoop.instance.StartCoroutine(refreshHints());
     }
 
     protected override void onProcess(int familiesUpdateCount)

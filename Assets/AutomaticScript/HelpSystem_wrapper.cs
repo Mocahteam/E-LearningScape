@@ -1,27 +1,45 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class HelpSystem_wrapper : MonoBehaviour
+public class HelpSystem_wrapper : BaseWrapper
 {
+	public GameHints gameHints;
+	public InternalGameHints internalGameHints;
+	public UnityEngine.GameObject askHelpButton;
+	public LabelWeights labelWeights;
+	public UnityEngine.GameObject helpTab;
+	public Timer timer;
+	public UnityEngine.GameObject scrollView;
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
+		MainLoop.initAppropriateSystemField (system, "gameHints", gameHints);
+		MainLoop.initAppropriateSystemField (system, "internalGameHints", internalGameHints);
+		MainLoop.initAppropriateSystemField (system, "askHelpButton", askHelpButton);
+		MainLoop.initAppropriateSystemField (system, "labelWeights", labelWeights);
+		MainLoop.initAppropriateSystemField (system, "helpTab", helpTab);
+		MainLoop.initAppropriateSystemField (system, "timer", timer);
+		MainLoop.initAppropriateSystemField (system, "scrollView", scrollView);
 	}
 
 	public void initHelpSystem()
 	{
-		MainLoop.callAppropriateSystemMethod ("HelpSystem", "initHelpSystem", null);
+		MainLoop.callAppropriateSystemMethod (system, "initHelpSystem", null);
 	}
 
 	public void updatePnCompletion()
 	{
-		MainLoop.callAppropriateSystemMethod ("HelpSystem", "updatePnCompletion", null);
+		MainLoop.callAppropriateSystemMethod (system, "updatePnCompletion", null);
 	}
 
 	public void OnPlayerAskHelp()
 	{
-		MainLoop.callAppropriateSystemMethod ("HelpSystem", "OnPlayerAskHelp", null);
+		MainLoop.callAppropriateSystemMethod (system, "OnPlayerAskHelp", null);
+	}
+
+	public void LoadHelpSystemValues()
+	{
+		MainLoop.callAppropriateSystemMethod (system, "LoadHelpSystemValues", null);
 	}
 
 }

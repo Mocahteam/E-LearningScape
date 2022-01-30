@@ -1,22 +1,23 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class PlankAndMirrorManager_wrapper : MonoBehaviour
+public class PlankAndMirrorManager_wrapper : BaseWrapper
 {
+	public UnityEngine.GameObject mirrorOnPlank;
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
+		MainLoop.initAppropriateSystemField (system, "mirrorOnPlank", mirrorOnPlank);
 	}
 
 	public void PutMirrorOnPlank()
 	{
-		MainLoop.callAppropriateSystemMethod ("PlankAndMirrorManager", "PutMirrorOnPlank", null);
+		MainLoop.callAppropriateSystemMethod (system, "PutMirrorOnPlank", null);
 	}
 
 	public void SetPlankDiscovered(System.Boolean state)
 	{
-		MainLoop.callAppropriateSystemMethod ("PlankAndMirrorManager", "SetPlankDiscovered", state);
+		MainLoop.callAppropriateSystemMethod (system, "SetPlankDiscovered", state);
 	}
 
 }

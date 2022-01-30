@@ -1,7 +1,6 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
 public class TutoMovingSystem_wrapper : MonoBehaviour
 {
 	private void Start()
@@ -11,12 +10,12 @@ public class TutoMovingSystem_wrapper : MonoBehaviour
 
 	public void SetWalkSpeed(System.Single speedW)
 	{
-		MainLoop.callAppropriateSystemMethod ("TutoMovingSystem", "SetWalkSpeed", speedW);
+		MainLoop.callAppropriateSystemMethod (null, "SetWalkSpeed", speedW);
 	}
 
 	public void SetHUD(System.Boolean state)
 	{
-		MainLoop.callAppropriateSystemMethod ("TutoMovingSystem", "SetHUD", state);
+		MainLoop.callAppropriateSystemMethod (null, "SetHUD", state);
 	}
 
 }

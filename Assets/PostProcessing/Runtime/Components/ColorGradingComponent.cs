@@ -39,8 +39,10 @@ namespace UnityEngine.PostProcessing
         {
             get
             {
-                return model.enabled
+                if (model != null && context != null)
+                    return model.enabled
                        && !context.interrupted;
+                else return false;
             }
         }
 

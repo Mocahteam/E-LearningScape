@@ -1,7 +1,6 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
 public class TutoIARQueryEvaluator_wrapper : MonoBehaviour
 {
 	private void Start()
@@ -11,22 +10,22 @@ public class TutoIARQueryEvaluator_wrapper : MonoBehaviour
 
 	public void TutoIarOnEndEditAnswer(UnityEngine.GameObject query)
 	{
-		MainLoop.callAppropriateSystemMethod ("TutoIARQueryEvaluator", "TutoIarOnEndEditAnswer", query);
+		MainLoop.callAppropriateSystemMethod (null, "TutoIarOnEndEditAnswer", query);
 	}
 
 	public void TutoIarCheckAnswer(UnityEngine.GameObject query)
 	{
-		MainLoop.callAppropriateSystemMethod ("TutoIARQueryEvaluator", "TutoIarCheckAnswer", query);
+		MainLoop.callAppropriateSystemMethod (null, "TutoIarCheckAnswer", query);
 	}
 
 	public void IarOnEndEditAnswer(UnityEngine.GameObject query)
 	{
-		MainLoop.callAppropriateSystemMethod ("TutoIARQueryEvaluator", "IarOnEndEditAnswer", query);
+		MainLoop.callAppropriateSystemMethod (null, "IarOnEndEditAnswer", query);
 	}
 
 	public void IarCheckAnswer(UnityEngine.GameObject query)
 	{
-		MainLoop.callAppropriateSystemMethod ("TutoIARQueryEvaluator", "IarCheckAnswer", query);
+		MainLoop.callAppropriateSystemMethod (null, "IarCheckAnswer", query);
 	}
 
 }

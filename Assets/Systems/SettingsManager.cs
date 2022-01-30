@@ -3,8 +3,6 @@ using FYFY;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
-using System;
-using System.IO;
 
 public class SettingsManager : FSystem {
 
@@ -28,19 +26,20 @@ public class SettingsManager : FSystem {
 
     public SettingsManager ()
     {
-        if (Application.isPlaying)
-        {
-            foreach (GameObject go in DefaultSetting_f)
-            {
-                if (go.GetComponent<Slider>())
-                    go.GetComponent<DefaultValueSetting>().defaultValue = go.GetComponent<Slider>().value;
-                else
-                    go.GetComponent<DefaultValueSetting>().defaultValue = go.GetComponent<Toggle>().isOn ? 1 : 0;
-            }
+        instance = this;
+    }
 
-            text_f.addEntryCallback(OnNewText);
-            instance = this;
+    protected override void onStart()
+    {
+        foreach (GameObject go in DefaultSetting_f)
+        {
+            if (go.GetComponent<Slider>())
+                go.GetComponent<DefaultValueSetting>().defaultValue = go.GetComponent<Slider>().value;
+            else
+                go.GetComponent<DefaultValueSetting>().defaultValue = go.GetComponent<Toggle>().isOn ? 1 : 0;
         }
+
+        text_f.addEntryCallback(OnNewText);
     }
 
     public void OnNewText(GameObject go)

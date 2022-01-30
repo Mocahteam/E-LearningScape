@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using FYFY;
 using FYFY_plugins.PointerManager;
-using FYFY_plugins.Monitoring;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +11,6 @@ public class IARGearsEnigma : FSystem
     // Evaluate queries inside IAR
 
     // Contains all query
-    private Family f_gearsSet = FamilyManager.getFamily(new AnyOfTags("Gears"), new AllOfComponents(typeof(LinkedWith)));
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
     private Family f_answer = FamilyManager.getFamily(new AnyOfTags("A-R1"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not displayed of the first room
     private Family f_gears = FamilyManager.getFamily(new AllOfComponents(typeof(Gear)));
@@ -22,11 +20,7 @@ public class IARGearsEnigma : FSystem
     // Will contain a game object when IAR is openned
     private Family f_iarBackground = FamilyManager.getFamily(new AnyOfTags("UIBackground"), new AnyOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
 
-    private Family f_login = FamilyManager.getFamily(new AnyOfTags("Login"), new NoneOfComponents(typeof(PointerSensitive))); // to unlock login
-    private Family f_player = FamilyManager.getFamily(new AnyOfTags("Player"));
-
     private Family f_terminalScreens = FamilyManager.getFamily(new AnyOfTags("TerminalScreen"));
-    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
     private bool switchToGears = false;
     private bool takeGearsScreenshot = false;
@@ -34,11 +28,17 @@ public class IARGearsEnigma : FSystem
     private bool unlockLogin = false;
     private bool rotateGear;
 
-    private GameObject gears;
+    public GameObject gears;
     private GameObject tmpGO;
     private GameObject gearDragged;
     private GameObject transparentGear;
     private GameObject question;
+
+    // to unlock login
+    public GameObject login;
+
+    public GameObject player;
+    public UnlockedRoom unlockedRoom;
 
     private bool avoidCoroutine = false;
 
@@ -48,35 +48,35 @@ public class IARGearsEnigma : FSystem
 
     public IARGearsEnigma()
     {
-        if (Application.isPlaying)
+        instance = this;
+    }
+
+    protected override void onStart()
+    {
+        //set the initial position of each gear to their local position at the beginning of the game
+        int nbGears = f_gears.Count;
+        for (int i = 0; i < nbGears; i++)
         {
-            //set the initial position of each gear to their local position at the beginning of the game
-            int nbGears = f_gears.Count;
-            for (int i = 0; i < nbGears; i++)
-            {
-                tmpGO = f_gears.getAt(i);
-                tmpGO.GetComponent<Gear>().initialPosition = tmpGO.transform.localPosition;
-            }
-            f_answer.addExitCallback(onNewAnswerDisplayed);
-            f_uiEffects.addEntryCallback(onUiEffectFinished);
-            f_iarBackground.addExitCallback(onIARClosed);
+            tmpGO = f_gears.getAt(i);
+            tmpGO.GetComponent<Gear>().initialPosition = tmpGO.transform.localPosition;
+        }
+        f_answer.addExitCallback(onNewAnswerDisplayed);
+        f_uiEffects.addEntryCallback(onUiEffectFinished);
+        f_iarBackground.addExitCallback(onIARClosed);
 
-            gears = f_gearsSet.First();
-            question = gears.transform.GetChild(0).gameObject; // first child is the question text
-            transparentGear = gears.transform.GetChild(7).gameObject; // eight child is the transparent gear
+        question = gears.transform.GetChild(0).gameObject; // first child is the question text
+        transparentGear = gears.transform.GetChild(7).gameObject; // eight child is the transparent gear
 
-            int nbCanvas = f_canvas.Count;
-            for(int i = 0; i < nbCanvas; i++)
+        int nbCanvas = f_canvas.Count;
+        for (int i = 0; i < nbCanvas; i++)
+        {
+            tmpGO = f_canvas.getAt(i);
+            if (tmpGO.name == "IAR")
             {
-                tmpGO = f_canvas.getAt(i);
-                if(tmpGO.name == "IAR")
-                {
-                    iarRectTransform = tmpGO.GetComponent<RectTransform>();
-                    break;
-                }
+                iarRectTransform = tmpGO.GetComponent<RectTransform>();
+                break;
             }
         }
-        instance = this;
     }
 
     private void onNewAnswerDisplayed(int instanceId)
@@ -110,10 +110,10 @@ public class IARGearsEnigma : FSystem
         if (unlockLogin)
         {
             // Make login selectable
-            GameObjectManager.addComponent<Selectable>(f_login.First(), new { standingPosDelta = new Vector3(-0.9f, -0.8f, 0f), standingOrientation = new Vector3(1f, 0f, 0f) });
-            GameObjectManager.addComponent<PointerSensitive>(f_login.First());
+            GameObjectManager.addComponent<Selectable>(login, new { standingPosDelta = new Vector3(-0.9f, -0.8f, 0f), standingOrientation = new Vector3(1f, 0f, 0f) });
+            GameObjectManager.addComponent<PointerSensitive>(login);
             // And force to move on
-            GameObjectManager.addComponent<ForceMove>(f_login.First());
+            GameObjectManager.addComponent<ForceMove>(login);
             unlockLogin = false;
             LoginManager.instance.Pause = false;
             avoidCoroutine = true;
@@ -135,8 +135,7 @@ public class IARGearsEnigma : FSystem
         if (takeGearsScreenshot)
         {
             // put a screenshot of the IAR on the terminal when gears are displayed
-            int lastUnlockedRoom = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
-            if (f_terminalScreens.Count >= lastUnlockedRoom)
+            if (f_terminalScreens.Count >= unlockedRoom.roomNumber)
                 MainLoop.instance.StartCoroutine(IARQueryEvaluator.instance.SetTerminalScreen());
             takeGearsScreenshot = false;
         }
@@ -205,8 +204,8 @@ public class IARGearsEnigma : FSystem
                             unlockLogin = true; // unlock login when UIEffect will be end
                             // Look the panel
                             Vector3 newDir = Vector3.forward;
-                            f_player.First().transform.rotation = Quaternion.LookRotation(f_login.First().transform.position - f_player.First().transform.position);
-                            Camera.main.transform.rotation = Quaternion.LookRotation(f_login.First().transform.position - f_player.First().transform.position);
+                            player.transform.rotation = Quaternion.LookRotation(login.transform.position - player.transform.position);
+                            Camera.main.transform.rotation = Quaternion.LookRotation(login.transform.position - player.transform.position);
                             
                             MainLoop.instance.StartCoroutine(autoCloseIAR());
                         }
@@ -272,7 +271,7 @@ public class IARGearsEnigma : FSystem
                 gear.transform.localPosition = Vector3.zero; //place the gear at the center
         rotateGear = true;  //rotate gears in the middle
         // Make login selectable
-        GameObjectManager.addComponent<Selectable>(f_login.First(), new { standingPosDelta = new Vector3(-0.9f, -0.8f, 0f), standingOrientation = new Vector3(1f, 0f, 0f) });
+        GameObjectManager.addComponent<Selectable>(login, new { standingPosDelta = new Vector3(-0.9f, -0.8f, 0f), standingOrientation = new Vector3(1f, 0f, 0f) });
     }
 
     public bool IsResolved()

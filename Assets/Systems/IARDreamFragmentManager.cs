@@ -1,30 +1,25 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using TMPro;
-using UnityEngine.EventSystems;
 
 public class IARDreamFragmentManager : FSystem {
 
 	//Manage collected dream fragment in the IAR
 
-	private Family f_contentContainer = FamilyManager.getFamily(new AllOfComponents(typeof(PrefabContainer)), new AnyOfTags("DreamFragmentContentContainer"));
 	private Family f_documents = FamilyManager.getFamily(new AllOfComponents(typeof(PointerSensitive)), new AnyOfTags("IARDocument"));
 	private Family f_buttons = FamilyManager.getFamily(new AnyOfTags("DreamFragmentButtons"));
-	private Family f_canvas = FamilyManager.getFamily(new AllOfComponents(typeof(Canvas)));
 	private Family f_dreamFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragment)));
 	private Family f_focusedToggles = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragmentToggle), typeof(Toggle), typeof(PointerSensitive), typeof(PointerOver)));
-    private Family f_togglableFragments = FamilyManager.getFamily(new AllOfComponents(typeof(DreamFragmentToggle)));
 
     public static IARDreamFragmentManager instance;
 	public static bool virtualDreamFragment = true;
 
-	private RectTransform iarRectTransform;
-	private RectTransform contentContainerRT;
+	public RectTransform iarRectTransform;
+	public RectTransform contentContainerRT;
 	//button to open the link of a dream fragment
 	private GameObject onlineButton;
 
@@ -45,36 +40,24 @@ public class IARDreamFragmentManager : FSystem {
 
 	public IARDreamFragmentManager()
     {
-        if (Application.isPlaying)
-        {
-			foreach(GameObject go in f_canvas)
-			{
-				if (go.name == "IAR")
-				{
-					iarRectTransform = go.GetComponent<RectTransform>();
-					break;
-				}
-			}
-
-			if (f_contentContainer.Count > 0)
-				contentContainerRT = f_contentContainer.First().GetComponent<RectTransform>();
-            else
-				Debug.LogError("Missing right panel for the dream fragment tab in IAR.");
-
-			foreach(GameObject go in f_buttons)
-            {
-				if (go.name == "SeeMore")
-					onlineButton = go;
-            }
-
-			// Add callbacks for mouse over toggle
-			f_focusedToggles.addEntryCallback(OnMouseEnterToggle);
-			f_focusedToggles.addExitCallback(OnMouseExitToggle);
-        }
 		instance = this;
     }
 
-	public void OnClickDreamToggle(Toggle t)
+    protected override void onStart()
+	{
+		foreach (GameObject go in f_buttons)
+		{
+			if (go.name == "SeeMore")
+				onlineButton = go;
+		}
+
+		// Add callbacks for mouse over toggle
+		f_focusedToggles.addEntryCallback(OnMouseEnterToggle);
+		f_focusedToggles.addExitCallback(OnMouseExitToggle);
+	}
+
+
+    public void OnClickDreamToggle(Toggle t)
     {
 		tmpDFToggle = t.GetComponent<DreamFragmentToggle>();
 		if (tmpDFToggle)

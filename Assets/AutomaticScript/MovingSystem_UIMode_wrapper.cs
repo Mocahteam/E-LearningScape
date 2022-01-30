@@ -1,27 +1,30 @@
 using UnityEngine;
 using FYFY;
 
-[ExecuteInEditMode]
-public class MovingSystem_UIMode_wrapper : MonoBehaviour
+public class MovingSystem_UIMode_wrapper : BaseWrapper
 {
+	public UnityEngine.GameObject fpsController;
+	public UnityEngine.GameObject fpsCamera;
 	private void Start()
 	{
-		this.hideFlags = HideFlags.HideInInspector; // Hide this component in Inspector
+		this.hideFlags = HideFlags.NotEditable;
+		MainLoop.initAppropriateSystemField (system, "fpsController", fpsController);
+		MainLoop.initAppropriateSystemField (system, "fpsCamera", fpsCamera);
 	}
 
 	public void turn(System.Single angle)
 	{
-		MainLoop.callAppropriateSystemMethod ("MovingSystem_UIMode", "turn", angle);
+		MainLoop.callAppropriateSystemMethod (system, "turn", angle);
 	}
 
 	public void moveForward(System.Single distance)
 	{
-		MainLoop.callAppropriateSystemMethod ("MovingSystem_UIMode", "moveForward", distance);
+		MainLoop.callAppropriateSystemMethod (system, "moveForward", distance);
 	}
 
 	public void moveOnTheFloor()
 	{
-		MainLoop.callAppropriateSystemMethod ("MovingSystem_UIMode", "moveOnTheFloor", null);
+		MainLoop.callAppropriateSystemMethod (system, "moveOnTheFloor", null);
 	}
 
 }

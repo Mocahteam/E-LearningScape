@@ -16,7 +16,6 @@ public class IARQueryEvaluator : FSystem {
     // Contains all query
     private Family f_queries = FamilyManager.getFamily(new AnyOfTags("Q-R1", "Q-R2", "Q-R3"), new AllOfComponents(typeof(QuerySolution)));
 
-    private Family f_queriesRoom2 = FamilyManager.getFamily(new AnyOfTags("Q-R2"));
     private Family f_answerRoom2 = FamilyManager.getFamily(new AnyOfTags("A-R2"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not displayed for the second room
     private Family f_queriesRoom3 = FamilyManager.getFamily(new AnyOfTags("Q-R3"));
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
@@ -24,9 +23,11 @@ public class IARQueryEvaluator : FSystem {
     private Family f_selectedTab = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedTab)));
 
     private Family f_terminalScreens = FamilyManager.getFamily(new AnyOfTags("TerminalScreen"));
-    private Family f_unlockedRoom = FamilyManager.getFamily(new AllOfComponents(typeof(UnlockedRoom)));
 
     public static IARQueryEvaluator instance;
+
+    public GameObject queriesRoom2;
+    public UnlockedRoom unlockedRoom;
 
     private HashSet<string> availableOrSolutions;
     private Dictionary<string, List<string>> splitOrSolutions;
@@ -38,46 +39,47 @@ public class IARQueryEvaluator : FSystem {
 
     public IARQueryEvaluator()
     {
-        if (Application.isPlaying)
-        {
-            // Init callbacks and/or solutions
-            availableOrSolutions = new HashSet<string>();
-            splitOrSolutions = new Dictionary<string, List<string>>();
-            foreach (GameObject query in f_queries)
-                foreach (string or in query.GetComponent<QuerySolution>().orSolutions)
-                {
-                    availableOrSolutions.Add(or);
-                    if (!splitOrSolutions.ContainsKey(or))
-                    {
-                        //split each solution by "##" and use this to check if the player answer contains all parts of a solution
-                        tmpListString = new List<string>(or.Split( new string[] { "##" }, System.StringSplitOptions.None));
-                        for (int i = 0; i < tmpListString.Count; i++)
-                            tmpListString[i] = LoadGameContent.StringToAnswer(tmpListString[i]);
-                        splitOrSolutions.Add(or, tmpListString);
-                    }
-                }
-
-            // Init feedbacks for room 3
-            if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
-            {
-                room3AnswerFeedbacks = new Dictionary<string, KeyValuePair<string, string>>();
-                tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.puzzleAnswer);
-                room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.puzzleAnswerFeedback, LoadGameContent.gameContent.puzzleAnswerFeedbackDesc));
-                tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma16Answer);
-                if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
-                    room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.enigma16AnswerFeedback, LoadGameContent.gameContent.enigma16AnswerFeedbackDesc));
-                tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer);
-                if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
-                    room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.lampAnswerFeedback, LoadGameContent.gameContent.lampAnswerFeedbackDesc));
-                tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer);
-                if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
-                    room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.whiteBoardAnswerFeedback, LoadGameContent.gameContent.whiteBoardAnswerFeedbackDesc));
-
-                f_answerRoom2.addExitCallback(onNewAnswerDisplayed);
-            }
-            f_uiEffects.addEntryCallback(onUIEffectEnd);
-        }
         instance = this;
+    }
+
+    protected override void onStart()
+    {
+        // Init callbacks and/or solutions
+        availableOrSolutions = new HashSet<string>();
+        splitOrSolutions = new Dictionary<string, List<string>>();
+        foreach (GameObject query in f_queries)
+            foreach (string or in query.GetComponent<QuerySolution>().orSolutions)
+            {
+                availableOrSolutions.Add(or);
+                if (!splitOrSolutions.ContainsKey(or))
+                {
+                    //split each solution by "##" and use this to check if the player answer contains all parts of a solution
+                    tmpListString = new List<string>(or.Split(new string[] { "##" }, System.StringSplitOptions.None));
+                    for (int i = 0; i < tmpListString.Count; i++)
+                        tmpListString[i] = LoadGameContent.StringToAnswer(tmpListString[i]);
+                    splitOrSolutions.Add(or, tmpListString);
+                }
+            }
+
+        // Init feedbacks for room 3
+        if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
+        {
+            room3AnswerFeedbacks = new Dictionary<string, KeyValuePair<string, string>>();
+            tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.puzzleAnswer);
+            room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.puzzleAnswerFeedback, LoadGameContent.gameContent.puzzleAnswerFeedbackDesc));
+            tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.enigma16Answer);
+            if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
+                room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.enigma16AnswerFeedback, LoadGameContent.gameContent.enigma16AnswerFeedbackDesc));
+            tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.lampAnswer);
+            if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
+                room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.lampAnswerFeedback, LoadGameContent.gameContent.lampAnswerFeedbackDesc));
+            tmpStr = LoadGameContent.StringToAnswer(LoadGameContent.gameContent.whiteBoardAnswer);
+            if (!room3AnswerFeedbacks.ContainsKey(tmpStr))
+                room3AnswerFeedbacks.Add(tmpStr, new KeyValuePair<string, string>(LoadGameContent.gameContent.whiteBoardAnswerFeedback, LoadGameContent.gameContent.whiteBoardAnswerFeedbackDesc));
+
+            f_answerRoom2.addExitCallback(onNewAnswerDisplayed);
+        }
+        f_uiEffects.addEntryCallback(onUIEffectEnd);
     }
 
     // return true if UI with name "name" is selected into inventory
@@ -101,11 +103,10 @@ public class IARQueryEvaluator : FSystem {
         if (showRoom2FinalCode)
         {
             showRoom2FinalCode = false;
-            GameObject queries = f_queriesRoom2.First().transform.parent.gameObject;
             // disable queries
-            GameObjectManager.setGameObjectState(queries, false);
+            GameObjectManager.setGameObjectState(queriesRoom2.transform.GetChild(0).gameObject, false);
             // enable final code
-            GameObjectManager.setGameObjectState(queries.transform.parent.GetChild(1).gameObject, true);
+            GameObjectManager.setGameObjectState(queriesRoom2.transform.GetChild(1).gameObject, true);
         }
     }
 
@@ -272,8 +273,7 @@ public class IARQueryEvaluator : FSystem {
             }
 
             // put a screenshot of the IAR on the terminal of the last unlocked room
-            int lastUnlockedRoom = f_unlockedRoom.First().GetComponent<UnlockedRoom>().roomNumber;
-            if (f_terminalScreens.Count >= lastUnlockedRoom)
+            if (f_terminalScreens.Count >= unlockedRoom.roomNumber)
                 MainLoop.instance.StartCoroutine(SetTerminalScreen());
 
             // if linked hide item in inventory

@@ -3,26 +3,18 @@ using UnityEngine.PostProcessing;
 using FYFY;
 using FYFY_plugins.Monitoring;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class LogoDisplaying : FSystem {
 
     // This system manage displaying of the story
 
-    private Family f_logo = FamilyManager.getFamily(new AllOfComponents(typeof(ImgBank)));
     private Family f_fadingMenuElems = FamilyManager.getFamily(new AllOfComponents(typeof(FadingMenu)));
-    private Family f_loadingFragment = FamilyManager.getFamily(new AnyOfTags("LoadingFragment"));
 
-    private GameObject logoGo;
-    private Image fadingImage;
-    private Image background;
+    public GameObject logoGo;
+    public Image fadingImage;
+    public Image background;
 
-    // Contains all texts of the story
-    private List<List<string>> storyTexts;
-    // Contains current texts of the story
-    private string[] readTexts;
-
-    ImgBank logo;
+    public ImgBank logos;
 
     private int fadeSpeed = 3;
 
@@ -32,10 +24,10 @@ public class LogoDisplaying : FSystem {
     private bool showLogo = false;
     private bool closeLogo = false;
 
-    private GameObject loadingFragment;
-    private Material lfMat;
+    public GameObject loadingFragment;
+    public Renderer lfMat;
     private Vector3 targetEmissionColor;
-    private Vector3 currentColor;
+    public Vector3 currentColor;
     private bool menuFaded = false;
     private bool motionBlurWasOn;
 
@@ -43,27 +35,14 @@ public class LogoDisplaying : FSystem {
 
     public LogoDisplaying()
     {
-        if (Application.isPlaying)
-        {
-            logoGo = f_logo.First();
-            foreach (Transform child in logoGo.transform)
-            {
-                if (child.gameObject.name == "Background")
-                    background = child.gameObject.GetComponent<Image>();
-                else if (child.gameObject.name == "FadingImage")
-                    fadingImage = child.gameObject.GetComponent<Image>();
-            }
-
-            logo = logoGo.GetComponent<ImgBank>();
-
-            loadingFragment = f_loadingFragment.First();
-            lfMat = loadingFragment.transform.GetChild(0).GetComponent<Renderer>().material;
-            targetEmissionColor = Random.insideUnitSphere * 155 + Vector3.one * 100;
-            currentColor = new Vector3(0, 86, 255);
-        }
         instance = this;
     }
-    
+
+    protected override void onStart()
+    {
+        targetEmissionColor = Random.insideUnitSphere * 155 + Vector3.one * 100;
+    }
+
     protected override void onPause(int currentFrame)
     {
         GameObjectManager.setGameObjectState(logoGo, false);
@@ -83,7 +62,7 @@ public class LogoDisplaying : FSystem {
                 currentColor = Vector3.MoveTowards(currentColor, targetEmissionColor, 20);
             else
                 targetEmissionColor = Random.insideUnitSphere * 155 + Vector3.one * 100;
-            lfMat.SetColor("_EmissionColor", new Color(currentColor.x / 256, currentColor.y / 256, currentColor.z / 256) * Mathf.LinearToGammaSpace(2));
+            lfMat.material.SetColor("_EmissionColor", new Color(currentColor.x / 256, currentColor.y / 256, currentColor.z / 256) * Mathf.LinearToGammaSpace(2));
         }
         else
         {
@@ -104,10 +83,10 @@ public class LogoDisplaying : FSystem {
                 // make logo transparent (usefull in case of clicking)
                 fadingImage.color = new Color(1, 1, 1, 0);
                 // check if logo remaining
-                if (nextLogo < logo.bank.Length)
+                if (nextLogo < logos.bank.Length)
                 {
                     currentLogo = nextLogo;
-                    fadingImage.sprite = logo.bank[currentLogo];
+                    fadingImage.sprite = logos.bank[currentLogo];
                     fadingImage.preserveAspect = true;
                     showLogo = true;
                     readingTimer = Time.time;

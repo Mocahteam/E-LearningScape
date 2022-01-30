@@ -6,45 +6,40 @@ using TMPro;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System;
-using System.IO;
 
 public class StoryDisplaying : FSystem {
 
     // This system manage displaying of the story
 
-    private Family f_storyDisplayer = FamilyManager.getFamily(new AllOfComponents(typeof(StoryText)));
-    private Family f_timer = FamilyManager.getFamily(new AllOfComponents(typeof(Timer)));
-    private Family f_game = FamilyManager.getFamily(new AnyOfTags("GameRooms"));
-    private Family f_mainHUD = FamilyManager.getFamily(new AnyOfTags("HUD_Main"));
-
     // Camera is required in this system to switch menuCamera to fpsCamera during displaying story
-    private Family menuCamera = FamilyManager.getFamily(new AllOfComponents(typeof(MenuCamera), typeof(Camera)));
+    public GameObject menuCamera;
 
-    private Family f_movingModeSelector = FamilyManager.getFamily(new AllOfComponents(typeof(MovingModeSelector)));
+    public MovingModeSelector movingModeSelector;
 
-    private GameObject sdGo;
-    private TextMeshProUGUI sdText;
-    private Image fadingImage;
-    private Image background;
-    private GameObject clickFeedback;
-    private GameObject endText;
+    public GameObject mainHUD;
+
+    public TextMeshProUGUI sdText;
+    public Image fadingImage;
+    public Image background;
+    public GameObject clickFeedback;
+    public GameObject endText;
 
     // Contains all texts of the story
     private List<List<string>> storyTexts;
     // Contains current texts of the story
     private string[] readTexts;
 
-    StoryText st;
+    public StoryText storyText;
 
     private int fadeSpeed = 1;
 
     private float readingTimer = -Mathf.Infinity;
-    public int textCount = -1;
+    private int textCount = -1;
     private bool plainToAlpha = false;
     private bool alphaToPlain = false;
     private bool fadingBackground = false;
 
-    private Timer timer;
+    public Timer timer;
 
     public static StoryDisplaying instance;
 
@@ -55,56 +50,37 @@ public class StoryDisplaying : FSystem {
 
     public StoryDisplaying()
     {
-        if (Application.isPlaying)
+        instance = this;
+    }
+
+    protected override void onStart()
+    {
+        storyTexts = new List<List<string>>();
+        storyTexts.Add(new List<string>(storyText.intro));
+        storyTexts.Add(new List<string>(storyText.transition));
+        storyTexts.Add(new List<string>(storyText.end));
+
+        // if there is no link, disable link button
+        if (storyText.endLink == "")
         {
-            sdGo = f_storyDisplayer.First();
-            foreach (Transform child in sdGo.transform)
-            {
-                if (child.gameObject.name == "Background")
-                    background = child.gameObject.GetComponent<Image>();
-                else if (child.gameObject.name == "Text")
-                    sdText = child.gameObject.GetComponent<TextMeshProUGUI>();
-                else if (child.gameObject.name == "FadingImage")
-                    fadingImage = child.gameObject.GetComponent<Image>();
-                else if (child.gameObject.name == "Click")
-                    clickFeedback = child.gameObject;
-                else if (child.gameObject.name == "EndText")
-                    endText = child.gameObject;
-            }
-
-            st = sdGo.GetComponent<StoryText>();
-
-            storyTexts = new List<List<string>>();
-            storyTexts.Add(new List<string>(st.intro));
-            storyTexts.Add(new List<string>(st.transition));
-            storyTexts.Add(new List<string>(st.end));
-
-            timer = f_timer.First().GetComponent<Timer>();
-
-            // if there is no link, disable link button
-            if (st.endLink == "")
-            {
-                fadingImage.transform.SetAsLastSibling();
-                foreach (Transform child in endText.transform)
-                    if (child.GetComponent<Button>())
-                        GameObjectManager.setGameObjectState(child.gameObject, false);
-            }
-
-            instance = this;
+            fadingImage.transform.SetAsLastSibling();
+            foreach (Transform child in endText.transform)
+                if (child.GetComponent<Button>())
+                    GameObjectManager.setGameObjectState(child.gameObject, false);
         }
     }
 
     public void OpenEndLink()
     {
-        if(st.endLink != "")
+        if(storyText.endLink != "")
         {
             try
             {
-                Application.OpenURL(st.endLink);
+                Application.OpenURL(storyText.endLink);
             }
             catch (Exception)
             {
-                Debug.LogError(string.Concat("Invalid end link: ", st.endLink));
+                Debug.LogError(string.Concat("Invalid end link: ", storyText.endLink));
             }
             GameObjectManager.addComponent<ActionPerformedForLRS>(endText, new
             {
@@ -112,7 +88,7 @@ public class StoryDisplaying : FSystem {
                 objectType = "link",
                 activityExtensions = new Dictionary<string, string>() {
                     { "value", "end link" },
-                    { "link", st.endLink }
+                    { "link", storyText.endLink }
                 }
             });
         }
@@ -130,7 +106,7 @@ public class StoryDisplaying : FSystem {
     // Advice: avoid to update your families inside this function.
     protected override void onPause(int currentFrame) {
         // Disable UI story
-        GameObjectManager.setGameObjectState(f_storyDisplayer.First(), false);
+        GameObjectManager.setGameObjectState(storyText.gameObject, false);
     }
 
 	// Use this to update member variables when system resume.
@@ -145,7 +121,7 @@ public class StoryDisplaying : FSystem {
             if (syst != this && syst != ActionsManager.instance && syst != SendStatements.instance && syst != HelpSystem.instance)
                 syst.Pause = true;
         // Enable UI Story
-        GameObjectManager.setGameObjectState(f_storyDisplayer.First(), true);
+        GameObjectManager.setGameObjectState(storyText.gameObject, true);
         // Set first fading
         readingTimer = Time.time;
         alphaToPlain = true;
@@ -154,13 +130,13 @@ public class StoryDisplaying : FSystem {
         sdText.text = "";
         textCount = -1;
         // define color fading
-        if (st.storyProgression < storyTexts.Count - 1)
+        if (storyText.storyProgression < storyTexts.Count - 1)
         {
-            if (st.storyProgression == 0 && storyTexts[0].Count > 0)
+            if (storyText.storyProgression == 0 && storyTexts[0].Count > 0)
             {
                 timer.startingTime = Time.time;
 
-                GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
+                GameObjectManager.addComponent<ActionPerformedForLRS>(storyText.gameObject, new
                 {
                     verb = "started",
                     objectType = "serious-game",
@@ -180,8 +156,8 @@ public class StoryDisplaying : FSystem {
             int hours = (int)d / 3600;
             int minutes = (int)(d % 3600) / 60;
             int seconds = (int)(d % 3600) % 60;
-            storyTexts[st.storyProgression].Add(string.Concat("<align=\"center\">", LoadGameContent.gameContent.scoreText, Environment.NewLine, hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")));
-            GameObjectManager.addComponent<ActionPerformedForLRS>(sdGo, new
+            storyTexts[storyText.storyProgression].Add(string.Concat("<align=\"center\">", LoadGameContent.gameContent.scoreText, Environment.NewLine, hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")));
+            GameObjectManager.addComponent<ActionPerformedForLRS>(storyText.gameObject, new
             {
                 verb = "completed",
                 objectType = "serious-game",
@@ -195,9 +171,9 @@ public class StoryDisplaying : FSystem {
             background.color = Color.white;
         }
         // Get current set of texts
-        readTexts = storyTexts[st.storyProgression].ToArray();
+        readTexts = storyTexts[storyText.storyProgression].ToArray();
         // Disable HUD
-        GameObjectManager.setGameObjectState(f_mainHUD.First(), false);
+        GameObjectManager.setGameObjectState(mainHUD, false);
     }
 
 	// Use to process your families.
@@ -227,7 +203,7 @@ public class StoryDisplaying : FSystem {
                     background.color = new Color(background.color.r, background.color.g, background.color.b, 1);
                     fadingBackground = false;
                     // stop Moving systems
-                    f_movingModeSelector.First().GetComponent<MovingModeSelector>().pauseMovingSystems();
+                    movingModeSelector.pauseMovingSystems();
                 }
                 alphaToPlain = false;
                 // pass to the next text
@@ -235,7 +211,7 @@ public class StoryDisplaying : FSystem {
                 if (textCount < readTexts.Length)
                 {
                     sdText.text = readTexts[textCount];
-                    if(st.storyProgression == storyTexts.Count - 1 && textCount == readTexts.Length - 1)
+                    if(storyText.storyProgression == storyTexts.Count - 1 && textCount == readTexts.Length - 1)
                     {
                         // enable endText when last text is reached
                         GameObjectManager.setGameObjectState(endText, true);
@@ -250,14 +226,14 @@ public class StoryDisplaying : FSystem {
                 else
                 {
                     // end text reached
-                    if (st.storyProgression < storyTexts.Count - 1)
+                    if (storyText.storyProgression < storyTexts.Count - 1)
                     {
                         sdText.text = "";
                         fadingBackground = true;
                         // Enable fps camera (=> disable menuCamera)
-                        GameObjectManager.setGameObjectState(menuCamera.First(), false);
+                        GameObjectManager.setGameObjectState(menuCamera, false);
                         // Start all required systems
-                        f_movingModeSelector.First().GetComponent<MovingModeSelector>().resumeMovingSystems();
+                        movingModeSelector.resumeMovingSystems();
                         SpritesAnimator.instance.Pause = false;
                         DreamFragmentCollecting.instance.Pause = false;
                         IARNewItemAvailable.instance.Pause = false;
@@ -296,7 +272,7 @@ public class StoryDisplaying : FSystem {
                 fadingImage.color = new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, 0);
                 plainToAlpha = false;
                 // Displaying text if it is not the end text or there is no end link
-                GameObjectManager.setGameObjectState(clickFeedback, !(st.storyProgression == storyTexts.Count - 1 && textCount == readTexts.Length - 1 && st.endLink != ""));
+                GameObjectManager.setGameObjectState(clickFeedback, !(storyText.storyProgression == storyTexts.Count - 1 && textCount == readTexts.Length - 1 && storyText.endLink != ""));
                 if (fadingBackground)
                 {
                     background.color = new Color(background.color.r, background.color.g, background.color.b, 0);
@@ -306,7 +282,7 @@ public class StoryDisplaying : FSystem {
                     this.Pause = true; // Stop this system
 
                     // Enable HUD
-                    GameObjectManager.setGameObjectState(f_mainHUD.First(), true);
+                    GameObjectManager.setGameObjectState(mainHUD, true);
                 }
             }
         }
@@ -315,7 +291,7 @@ public class StoryDisplaying : FSystem {
             if (Input.GetButtonDown ("Fire1") || Input.GetButtonDown("Cancel") || Input.GetButtonDown("Submit"))
             {
                 // if it is not the end text or there is no end link
-                if (!(st.storyProgression == storyTexts.Count - 1 && textCount == readTexts.Length - 1 && st.endLink != ""))
+                if (!(storyText.storyProgression == storyTexts.Count - 1 && textCount == readTexts.Length - 1 && storyText.endLink != ""))
                 {
                     alphaToPlain = true;
                     readingTimer = Time.time;
@@ -326,13 +302,13 @@ public class StoryDisplaying : FSystem {
 
     public void LoadStoryProgression(int storyProgressionCount)
     {
-        st.storyProgression = storyProgressionCount;
+        storyText.storyProgression = storyProgressionCount;
         // start without reading text
         storyTexts[storyProgressionCount].Clear();
     }
 
     public int GetStoryProgression()
     {
-        return st.storyProgression;
+        return storyText.storyProgression;
     }
 }
