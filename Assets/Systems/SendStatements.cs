@@ -36,7 +36,7 @@ public class SendStatements : FSystem {
         //Generate player name unique to each playing session (computer name + date + hour)
         GBL_Interface.playerName = sessionID;
         //Generate a UUID from the player name
-        GBL_Interface.userUUID = GBLUtils.GenerateActorUUID(sessionID);
+        GBL_Interface.userUUID = sessionID;
     }
 
 	// Use this to update member variables when system resume.

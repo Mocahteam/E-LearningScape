@@ -42,7 +42,7 @@ public static class GBL_Interface {
 	public static void SendStatement(string verb, string activityType, Dictionary<string, string> activityExtensions = null)
     {
         ActivityBuilder.IOptional activityBuilder = GBLXAPI.Activity
-            .WithID("https://www.lip6.fr/mocah/ELS")
+            .WithID("https://www.lip6.fr/mocah/ELS/" + activityType)
             .WithType(activityType);
         if (activityExtensions != null)
         {
@@ -68,7 +68,7 @@ public static class GBL_Interface {
         float duration = 0)
     {
         ActivityBuilder.IOptional activityBuilder = GBLXAPI.Activity
-            .WithID("https://www.lip6.fr/mocah/ELS")
+            .WithID("https://www.lip6.fr/mocah/ELS/" + activityType)
             .WithType(activityType);
         if (activityExtensions != null)
         {

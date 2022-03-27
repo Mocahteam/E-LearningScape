@@ -1,7 +1,7 @@
 [
   {
     "lrsURL": "https://lrsels.lip6.fr/data/xAPI",
-    "lrsUser": "3d265c625aa010aae2eec8ac30c40f1fd29d7c74",
-    "lrsPassword": "007b97bd815024ec1197b5a9c3a72b75ee83da19"
+    "lrsUser": "00cb27562338a9969d0587c0272d3ac72223fc4d",
+    "lrsPassword": "7ef2bf266333f97d505487fadbd62580a8a9eac6"
   }
 ]
