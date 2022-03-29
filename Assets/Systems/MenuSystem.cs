@@ -34,6 +34,8 @@ public class MenuSystem : FSystem {
     public GameObject settingsMainMenu;
     public GameObject IARMenuContent;
 
+    public GameObject Chronometer;
+
     public static MenuSystem instance;
 
     public MenuSystem()
@@ -142,6 +144,8 @@ public class MenuSystem : FSystem {
         wn.defaultUiInParent = wn.parent.transform.GetChild(2).gameObject;
 
         GameObjectManager.addComponent<PlaySound>(mainMenu, new { id = 4 }); // id refer to FPSController AudioBank
+
+        GameObjectManager.setGameObjectState(Chronometer, true);
 
         // Play story
         StoryDisplaying.instance.Pause = false;

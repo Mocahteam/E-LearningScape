@@ -136,6 +136,7 @@ public class InternalGameContent {
     public string hudQuestions;
     public string hudHelp;
     public string hudMenu;
+    public string disableTimer;
     public string EscapeToQuit;
     public string dreamFragmentText;
     public string dreamFragmentValidation;

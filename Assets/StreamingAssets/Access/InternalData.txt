@@ -86,6 +86,7 @@
     "hudQuestions": "Questions",
     "hudHelp": "Intuitions",
     "hudMenu": "Menu",
+    "disableTimer": "Désactiver le réveil",
     "EscapeToQuit": "Appuyez sur Echap pour quitter l'énigme",
     "dreamFragmentText": "Ouvrez le fragment de rêve numéro ",
     "dreamFragmentValidation": "OK",

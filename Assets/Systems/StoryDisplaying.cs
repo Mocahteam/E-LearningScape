@@ -41,6 +41,8 @@ public class StoryDisplaying : FSystem {
 
     public Timer timer;
 
+    public GameObject Chronometer;
+
     public static StoryDisplaying instance;
 
     private RectTransform tmpRT;
@@ -167,6 +169,7 @@ public class StoryDisplaying : FSystem {
                     { "time", string.Concat(hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")) }
                 }
             });
+            GameObjectManager.setGameObjectState(Chronometer, false);
             fadingImage.color = Color.white;
             background.color = Color.white;
         }
