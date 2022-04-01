@@ -24,6 +24,7 @@ public class GameContent {
     public string scoreText;
     public string endExplainationText;
     public string endLink;
+    public string debriefingLink;
     public bool concatIdToLink;
 
     //Inventory texts 

@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using FYFY;
-using System;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;

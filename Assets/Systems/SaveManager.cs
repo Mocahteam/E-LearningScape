@@ -632,7 +632,7 @@ public class SaveManager : FSystem {
             // enable IAR tab and HUD
             if (atLeastOneFragmentClicked)
             {
-                if (LoadGameContent.internalGameContent.virtualDreamFragment)
+                if (IARDreamFragmentManager.virtualDreamFragment)
                 {
                     IARNewDreamFragmentAvailable.instance.firstFragmentOccurs = true;
                     GameObjectManager.setGameObjectState(IAR_Tabs, true);

@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.EventSystems;
-using FYFY_plugins.Monitoring;
 
 public class IARViewItem : FSystem {
 
@@ -196,9 +194,7 @@ public class IARViewItem : FSystem {
 
     public void ToggleItem(GameObject item) // called from EventWrapper
     {
-        // we toggle animation
         AnimatedSprites animation = item.GetComponent<AnimatedSprites>();
-        animation.animate = !animation.animate;
         // get second child
         Transform secondChild = item.transform.GetChild(1);
         if (secondChild && secondChild.gameObject.tag == "IARItemSelected")
@@ -226,6 +222,8 @@ public class IARViewItem : FSystem {
             // enable HUD under cursor
             if (item.GetComponent<HUDItemSelected>())
                 GameObjectManager.setGameObjectState(item.GetComponent<HUDItemSelected>().hudGO, false);
+
+            animation.animate = false; // stop animation
         }
         else
         {
@@ -245,6 +243,8 @@ public class IARViewItem : FSystem {
             // disable HUD under cursor
             if (item.GetComponent<HUDItemSelected>())
                 GameObjectManager.setGameObjectState(item.GetComponent<HUDItemSelected>().hudGO, true);
+
+            animation.animate = true; // start animation
         }
     }
 

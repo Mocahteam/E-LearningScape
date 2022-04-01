@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using FYFY;
-using FYFY_plugins.PointerManager;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 

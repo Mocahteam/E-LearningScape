@@ -35,6 +35,11 @@ public class StoryDisplaying_wrapper : BaseWrapper
 		MainLoop.callAppropriateSystemMethod (system, "OpenEndLink", null);
 	}
 
+	public void OpenDebriefingLink()
+	{
+		MainLoop.callAppropriateSystemMethod (system, "OpenDebriefingLink", null);
+	}
+
 	public void ResetGame()
 	{
 		MainLoop.callAppropriateSystemMethod (system, "ResetGame", null);

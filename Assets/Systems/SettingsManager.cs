@@ -11,7 +11,6 @@ public class SettingsManager : FSystem {
     private Family DefaultSetting_f = FamilyManager.getFamily(new AnyOfComponents(typeof(Slider), typeof(Toggle)), new AllOfComponents(typeof(DefaultValueSetting)));
     private Family UIColorAlpha_f = FamilyManager.getFamily(new AnyOfTags("UIBackground", "DreamFragmentUI", "Q-R1", "Q-R2", "Q-R3"), new AllOfComponents(typeof(Image)));
     private Family text_f = FamilyManager.getFamily(new AnyOfComponents (typeof(TextMeshPro), typeof(TextMeshProUGUI)));
-    private Family AnimatedObject_f = FamilyManager.getFamily(new AllOfComponents(typeof(AnimatedSprites)), new NoneOfTags("InventoryElements", "UIEffect"));
 
     private Family UICursorSize_f = FamilyManager.getFamily(new AnyOfTags("CursorImage"));
 
@@ -19,8 +18,6 @@ public class SettingsManager : FSystem {
 
     private SettingsSave settingsSave;
     private SettingsSave tmpSettings;
-
-    private GameObject tmpGO;
 
     private bool isAccessibilityFontSelected = false;
 
@@ -99,14 +96,13 @@ public class SettingsManager : FSystem {
         foreach (GameObject alpha in UIColorAlpha_f)
         {
             Image img = alpha.GetComponent<Image>();
-            img.color = new Color(img.color.r, img.color.g, img.color.b, newAlpha);
+            img.color = new Color(img.color.r, img.color.g, img.color.b, 1-newAlpha);
         }
     }
 
     public void ToggleTextAnimation(bool newState)
     {
-        foreach (GameObject objAnimated in AnimatedObject_f)
-            objAnimated.GetComponent<AnimatedSprites>().animate = newState;
+        SpritesAnimator.locked = !newState;
     }
 
     public void ResetDefaultValues()
@@ -165,6 +161,8 @@ public class SettingsManager : FSystem {
             else
                 Debug.LogError("Couldn't load settings from PlayerPrefs because of invalid content.");
         }
+        else
+            SaveSettings();
     }
 
     /// <summary>

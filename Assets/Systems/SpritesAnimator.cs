@@ -11,6 +11,8 @@ public class SpritesAnimator : FSystem {
     private AnimatedSprites tmpAS;
     private float lastChangeTime = -Mathf.Infinity;
 
+    public static bool locked = false;
+
     public static SpritesAnimator instance;
 
     public SpritesAnimator()
@@ -30,44 +32,47 @@ public class SpritesAnimator : FSystem {
 
     // Use to process your families.
     protected override void onProcess(int familiesUpdateCount) {
-        // parse each animated sprite
-        int nb = f_animatedSprites.Count;
-        for (int i = 0; i < nb; i++)
+        if (!locked)
         {
-            tmpAS = f_animatedSprites.getAt(i).GetComponent<AnimatedSprites>();
-            if (tmpAS.animate)
+            // parse each animated sprite
+            int nb = f_animatedSprites.Count;
+            for (int i = 0; i < nb; i++)
             {
-                if (Time.time - lastChangeTime > 1f / 10)
+                tmpAS = f_animatedSprites.getAt(i).GetComponent<AnimatedSprites>();
+                if (tmpAS.animate)
                 {
-                    tmpAS.usedSpriteID++;
-                    // if last animation frame is reached
-                    if (tmpAS.usedSpriteID == tmpAS.sprites.Length)
+                    if (Time.time - lastChangeTime > 1f / 10)
                     {
-                        // restart to the first one
-                        tmpAS.usedSpriteID = 0;
-                        // if loop is disable => stop animation
-                        if (!tmpAS.loop)
+                        tmpAS.usedSpriteID++;
+                        // if last animation frame is reached
+                        if (tmpAS.usedSpriteID == tmpAS.sprites.Length)
                         {
-                            tmpAS.animate = false;
-                            if (tmpAS.disableWhenFinished)
-                                GameObjectManager.setGameObjectState(tmpAS.gameObject, false);
+                            // restart to the first one
+                            tmpAS.usedSpriteID = 0;
+                            // if loop is disable => stop animation
+                            if (!tmpAS.loop)
+                            {
+                                tmpAS.animate = false;
+                                if (tmpAS.disableWhenFinished)
+                                    GameObjectManager.setGameObjectState(tmpAS.gameObject, false);
+                            }
                         }
+                        // Swicth to the current frame
+                        tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[tmpAS.usedSpriteID];
                     }
-                    // Swicth to the current frame
-                    tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[tmpAS.usedSpriteID];
-                }
 
-                // in case of animation is stoppable
-                if (tmpAS.stopable && (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Submit")))
-                {
-                    tmpAS.animate = false;
-                    tmpAS.usedSpriteID = 0;
-                    tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[0];
-                    GameObjectManager.setGameObjectState(tmpAS.gameObject, false);
+                    // in case of animation is stoppable
+                    if (tmpAS.stopable && (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Submit")))
+                    {
+                        tmpAS.animate = false;
+                        tmpAS.usedSpriteID = 0;
+                        tmpAS.GetComponent<Image>().sprite = tmpAS.sprites[0];
+                        GameObjectManager.setGameObjectState(tmpAS.gameObject, false);
+                    }
                 }
             }
+            if (Time.time - lastChangeTime > 1f / 10)
+                lastChangeTime = Time.time;
         }
-        if (Time.time - lastChangeTime > 1f / 10)
-            lastChangeTime = Time.time;
 	}
 }

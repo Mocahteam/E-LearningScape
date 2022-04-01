@@ -19,8 +19,9 @@
 		"<b>Adaptation des contenus pour cette version \"Info\" réalisée par :</b>\n\nThibault Carron\nMathieu Muratet"
 	],
     "scoreText": "Vous avez mis: ",
-    "endExplainationText": "Que vous ayez apprécié ce jeu ou pas, votre retour nous serait très utile pour tenter de l'améliorer. Merci de répondre au questionnaire ci-dessous. Ce questionnaire est anonyme et ne vous prendra que quelques minutes.\n\nMerci de votre contribution...",
+    "endExplainationText": "Pour compléter votre session de jeu n'hésitez pas à regarder la vidéo de debriefing...\n\nQue vous ayez apprécié ce jeu ou pas, votre retour nous serait très utile pour tenter de l'améliorer. Merci de répondre au questionnaire ci-dessous. Ce questionnaire est anonyme et ne vous prendra que quelques minutes.\n\nMerci de votre contribution...",
     "endLink": "http://sondages.inshea.fr/index.php/153235/lang/en/newtest/Y?153235X167X2174=",
+    "debriefingLink": "https://webia.lip6.fr/~muratetm/elearningscape/debriefingInfo.mp4",
     "concatIdToLink": true,
 	
 	"inventoryScrollIntro": [

@@ -29,12 +29,7 @@ public class InternalGameContent {
     /// </summary>
     public float traceMovementFrequency = 0;
     /// <summary>
-    /// It true, dream fragments will be viewed in IAR. If false,
-    /// dream fragments have to be printed inside envelops
-    /// </summary>
-    public bool virtualDreamFragment = true;
-    /// <summary>
-    /// If true, puzzles will be included in the game.
+    /// If true, puzzles will be included in the game (require physical dream fragment - not virtual).
     /// Else dream fragments will replace collectable puzzles
     /// </summary>
     public bool virtualPuzzle = true;
@@ -95,6 +90,7 @@ public class InternalGameContent {
     public string ViewingModeTPSComment;
     public string sessionIDText;
     public string sessionIDPopup;
+    public string watchDebriefing;
     public string endLinkButtonText;
     public string endLeaveButtonText;
     public string optionControlsMenu;

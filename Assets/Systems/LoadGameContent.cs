@@ -43,7 +43,6 @@ public class LoadGameContent : FSystem {
     private Family f_inventoryElements = FamilyManager.getFamily(new AllOfComponents(typeof(Collected)));
 
     private Family f_uiTexts = FamilyManager.getFamily(new AllOfComponents(typeof(UIText)), new AnyOfComponents(typeof(TextMeshPro), typeof(TextMeshProUGUI)));
-    private Family f_settingToggles = FamilyManager.getFamily(new AllOfComponents(typeof(DefaultValueSetting), typeof(Toggle)));
 
     private Family f_extraGeometries = FamilyManager.getFamily(new AllOfComponents(typeof(RemoveIfVeryVeryLow)));
 
@@ -75,8 +74,6 @@ public class LoadGameContent : FSystem {
     public TMP_FontAsset DefaultFontUI;
 
     public static LoadGameContent instance;
-
-    private bool loadingContextForDreamFragment = false;
 
     private System.Random random;
 
@@ -128,7 +125,7 @@ public class LoadGameContent : FSystem {
             dataAvailable = false;
         }
 
-        if (File.Exists(dataPath + "/InternalData.txt"))
+        if (File.Exists(dataPath + "/Data_LearningScape.txt"))
         {
             //Load game content from the file
             try
@@ -215,10 +212,6 @@ public class LoadGameContent : FSystem {
         if (internalGameContent.removeExtraGeometries)
             foreach (GameObject go in f_extraGeometries)
                 GameObjectManager.setGameObjectState(go, false);
-
-        //Puzzles
-        // if dream fragment are set to virtual, do the same for the puzzles
-        internalGameContent.virtualPuzzle = internalGameContent.virtualPuzzle || internalGameContent.virtualDreamFragment;
 
         #region File Loading
         // Load LRS config file
@@ -355,31 +348,8 @@ public class LoadGameContent : FSystem {
             Debug.LogError("Missing IARDocument prefab, pictures can't be loaded.");
         #endregion
 
-        // Set IAR tabs and HUD depending on gameContent.virtualDreamFragment value
-        foreach (GameObject go in f_settingToggles)
-            if (go.transform.parent.name == "VirtualFragments")
-            {
-                go.GetComponent<Toggle>().isOn = internalGameContent.virtualDreamFragment;
-                go.GetComponent<DefaultValueSetting>().defaultValue = internalGameContent.virtualDreamFragment ? 1 : 0;
-                break;
-            }
+        // Load playerPrefs
         SettingsManager.instance.LoadSettings();
-        bool fragmentsSet = false;
-        loadingContextForDreamFragment = true;
-        foreach (GameObject go in f_settingToggles)
-            if (go.transform.parent.name == "VirtualFragments")
-            {
-                fragmentsSet = true;
-                // set virtual fragments with the final value of the toggle
-                // which means either the value from saved settings or the value in gameContent
-                SetFragments(go.GetComponent<Toggle>().isOn);
-                break;
-            }
-        if (!fragmentsSet)
-        {
-            SetFragments(internalGameContent.virtualDreamFragment);
-        }
-        loadingContextForDreamFragment = false;
 
         // disable auto save if save and load are disabled
         internalGameContent.autoSaveProgression = internalGameContent.saveAndLoadProgression && internalGameContent.autoSaveProgression;
@@ -898,10 +868,10 @@ public class LoadGameContent : FSystem {
     public void SetFragments(bool virtualDreamFragment)
     {
         // Set HUD depending on virtualDreamFragment value
-        bool enableHUD = false;
-        if (!loadingContextForDreamFragment && IARNewDreamFragmentAvailable.instance != null) // require this test because IARNewDreamFragmentAvailable is initialized after LoadGameContent inside MainLoop
-            enableHUD = virtualDreamFragment && IARNewDreamFragmentAvailable.instance.firstFragmentOccurs;
-        GameObjectManager.setGameObjectState(dreamFragmentHUD, enableHUD);
+        GameObjectManager.setGameObjectState(
+            dreamFragmentHUD,
+            virtualDreamFragment && IARNewDreamFragmentAvailable.instance != null && IARNewDreamFragmentAvailable.instance.firstFragmentOccurs
+        );
         // Set IAR tabs and HUD depending on virtualDreamFragment value
         int tabCount = iarTabs.transform.childCount - 1; // -1 because of the under line among the children
         if (virtualDreamFragment)

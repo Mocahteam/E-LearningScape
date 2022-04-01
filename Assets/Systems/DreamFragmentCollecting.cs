@@ -70,7 +70,7 @@ public class DreamFragmentCollecting : FSystem {
                 }
 
                 tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
-                if (!IARDreamFragmentManager.virtualDreamFragment || tmpDFComponent.type != 0)
+                if (!IARDreamFragmentManager.virtualDreamFragment || tmpDFComponent.tag == "Puzzle" || tmpDFComponent.type != 0)
                 {
                     // Show fragment UI
                     GameObjectManager.setGameObjectState(dfUI, true);
