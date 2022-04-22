@@ -38,7 +38,6 @@ public class SaveContent {
 	/// </summary>
 	public DateTime saveDate = DateTime.Now;
 	public string sessionID = "";
-    public string UUID = "";
 
 
     /// <summary>

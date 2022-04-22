@@ -334,7 +334,6 @@ public class SaveManager : FSystem {
             return "";
 
         saveContent.sessionID = LoadGameContent.sessionID;
-        saveContent.UUID = GBL_Interface.userUUID;
         saveContent.navigationMode = movingModeSelector.currentState;
         saveContent.storyTextCount = StoryDisplaying.instance.GetStoryProgression();
         saveContent.lastRoomUnlocked = unlockedRoom.roomNumber;
@@ -498,7 +497,7 @@ public class SaveManager : FSystem {
                 if (LoadGameContent.internalGameContent.traceToLRS)
                 {
                     SendStatements.instance.initGBLXAPI();
-                    GBL_Interface.userUUID = saveContent.UUID;
+                    SendStatements.instance.initPlayerName(saveContent.sessionID);
                 }
                 // add the generated session id after the ui text has been set
                 foreach (GameObject go in f_idTexts)
