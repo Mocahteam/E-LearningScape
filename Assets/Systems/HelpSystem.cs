@@ -32,6 +32,8 @@ public class HelpSystem : FSystem {
 
     public GameObject scrollView;
 
+    public GameObject intuitionPopUp;
+
     /// <summary>
     /// Key: ComponentMonitoring id of enigmas inside meta Petri net
     /// Value: id of sub Petri net that details the resolution process of enigma
@@ -710,8 +712,10 @@ public class HelpSystem : FSystem {
         int requiredLevel = getFeedbackLevel();
         if (requiredLevel != -1)
         {
-            // First we check asked feedback level and next from the most abstract (level 1) to the most precise (level 3)
-            List<int> levelsPriority = new List<int> { requiredLevel, 1, 2, 3 };
+            // First we check asked feedback level and next from the most abstract (level 1) to the most precise clamped to required level
+            List<int> levelsPriority = new List<int> { requiredLevel };
+            for (int lvl = 1; lvl < requiredLevel; lvl++)
+                levelsPriority.Add(lvl);
             string hintName = "";
             int i = 0;
             while (i < levelsPriority.Count)
@@ -816,6 +820,9 @@ public class HelpSystem : FSystem {
                 }
             });
         }
+
+        intuitionPopUp.SetActive(false);
+        GameObjectManager.setGameObjectState(intuitionPopUp, true);
 
         if (playerAskedHelp)
             playerAskedHelp = false;

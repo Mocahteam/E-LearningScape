@@ -72,6 +72,7 @@ public class LoadGameContent : FSystem {
     public TMP_FontAsset AccessibleFontUI;
     public TMP_FontAsset DefaultFont;
     public TMP_FontAsset DefaultFontUI;
+    public TMP_Text GameType;
 
     public static LoadGameContent instance;
 
@@ -361,6 +362,8 @@ public class LoadGameContent : FSystem {
     {
         //Load game content from the file
         gameContent = JsonUtility.FromJson<GameContent>(File.ReadAllText(dataPath + "/Data_LearningScape.txt"));
+
+        GameType.text = "Version : "+gameContent.theme;
 
         // Load additional Logos
         if (gameContent.additionalLogosPath.Length > 0)

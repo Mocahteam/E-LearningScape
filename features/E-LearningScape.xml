@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <transitions>
+  <transition id="FPSController_perform_130" label="teleportToFinalScene FPSController" system="True" end="True" />
   <transition id="R1-Q2_perform_145" label="perform R1-Q2" system="True" end="False" />
   <transition id="R2-Q2_perform_153" label="perform R2-Q2" system="True" end="False" />
   <transition id="R3-Q2_perform_4" label="perform R3-Q2" system="True" end="False" />
@@ -18,7 +19,6 @@
   <transition id="R1-Q1_perform_144" label="perform R1-Q1" system="True" end="False" />
   <transition id="R2-Q5_perform_156" label="perform R2-Q5" system="True" end="False" />
   <transition id="R2-Q4_perform_155" label="perform R2-Q4" system="True" end="False" />
-  <transition id="FPSController_perform_164" label="teleportToFinalScene FPSController" system="True" end="True" />
   <transition id="R1-Q3_perform_146" label="perform R1-Q3" system="True" end="False" />
   <transition id="Gears_perform_147" label="perform Gears" system="True" end="False" />
   <transition id="R3-Q3_perform_21" label="perform R3-Q3" system="True" end="False" />

@@ -10,6 +10,7 @@ public class HelpSystem_wrapper : BaseWrapper
 	public UnityEngine.GameObject helpTab;
 	public Timer timer;
 	public UnityEngine.GameObject scrollView;
+	public UnityEngine.GameObject intuitionPopUp;
 	private void Start()
 	{
 		this.hideFlags = HideFlags.NotEditable;
@@ -20,6 +21,7 @@ public class HelpSystem_wrapper : BaseWrapper
 		MainLoop.initAppropriateSystemField (system, "helpTab", helpTab);
 		MainLoop.initAppropriateSystemField (system, "timer", timer);
 		MainLoop.initAppropriateSystemField (system, "scrollView", scrollView);
+		MainLoop.initAppropriateSystemField (system, "intuitionPopUp", intuitionPopUp);
 	}
 
 	public void initHelpSystem()

@@ -2,11 +2,11 @@
 <transitions>
   <transition id="R1-Q2_Correct_35" label="Correct R1-Q2" system="False" end="True" />
   <transition id="R1-Q2_Wrong_35" label="Wrong R1-Q2" system="False" end="False" />
-  <transition id="equivWith_PlankAndWireManager_f_wrongWords_turnOff_121" label="turnOff equivWith_PlankAndWireManager_f_wrongWords" system="False" end="False" />
-  <transition id="equivWith_PlankAndWireManager_f_wrongWords_turnOn_121" label="turnOn equivWith_PlankAndWireManager_f_wrongWords" system="False" end="False" />
   <transition id="SolutionWord3_turnOff_33" label="turnOff SolutionWord3" system="False" end="False" />
   <transition id="SolutionWord3_turnOn_33" label="turnOn SolutionWord3" system="False" end="False" />
   <transition id="Fragment_souvenir_9_activate_29" label="activate Fragment_souvenir_9" system="False" end="False" />
+  <transition id="equivWith_PlankAndWireManager_f_wrongWords_turnOff_121" label="turnOff equivWith_PlankAndWireManager_f_wrongWords" system="False" end="False" />
+  <transition id="equivWith_PlankAndWireManager_f_wrongWords_turnOn_121" label="turnOn equivWith_PlankAndWireManager_f_wrongWords" system="False" end="False" />
   <transition id="Plank_turnOff_28" label="turnOff Plank" system="False" end="False" />
   <transition id="Plank_turnOn_28" label="turnOn Plank" system="False" end="False" />
   <transition id="Plank_perform_34" label="perform Plank" system="True" end="False" />

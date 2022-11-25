@@ -21,6 +21,7 @@ public class LoadGameContent_wrapper : BaseWrapper
 	public TMPro.TMP_FontAsset AccessibleFontUI;
 	public TMPro.TMP_FontAsset DefaultFont;
 	public TMPro.TMP_FontAsset DefaultFontUI;
+	public TMPro.TMP_Text GameType;
 	private void Start()
 	{
 		this.hideFlags = HideFlags.NotEditable;
@@ -42,6 +43,7 @@ public class LoadGameContent_wrapper : BaseWrapper
 		MainLoop.initAppropriateSystemField (system, "AccessibleFontUI", AccessibleFontUI);
 		MainLoop.initAppropriateSystemField (system, "DefaultFont", DefaultFont);
 		MainLoop.initAppropriateSystemField (system, "DefaultFontUI", DefaultFontUI);
+		MainLoop.initAppropriateSystemField (system, "GameType", GameType);
 	}
 
 	public void SetFragments(System.Boolean virtualDreamFragment)

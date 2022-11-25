@@ -4,5 +4,35 @@
       "Key": "[external link]",
       "Value": "feedback formulation 1"
     }
+  },
+  "BallBoxEnigma.24": {
+    "0": {
+      "Key": "",
+      "Value": "Ce n'est pas la boule 0 ! L'écart entre l'indice des lignes [0] et l'indice des colonnes [0] est inférieur à 2, il est égal à 0."
+    },
+    "1": {
+      "Key": "",
+      "Value": "Ce n'est pas la boule 1 ! L'écart entre l'indice des lignes [0] et l'indice des colonnes [1] est inférieur à 2, il est égal à 1."
+    },
+    "2": {
+      "Key": "",
+      "Value": "Ce n'est pas la boule 2 ! L'écart entre l'indice des lignes [0] et l'indice des colonnes [2] n'est pas supérieur à 2, il est égal à 2."
+    },
+    "5": {
+      "Key": "",
+      "Value": "Ce n'est pas la boule 5 ! L'écart entre l'indice des lignes [1] et l'indice des colonnes [0] est inférieur à 2, il est égal à 1."
+    },
+    "6": {
+      "Key": "",
+      "Value": "Ce n'est pas la boule 6 ! L'écart entre l'indice des lignes [1] et l'indice des colonnes [1] est inférieur à 2, il est égal à 0."
+    },
+    "7": {
+      "Key": "",
+      "Value": "Ce n'est pas la boule 7 ! L'écart entre l'indice des lignes [1] et l'indice des colonnes [2] est inférieur à 2, il est égal à 1."
+    },
+    "8": {
+      "Key": "",
+      "Value": "Ce n'est pas la boule 8 ! L'écart entre l'indice des lignes [1] et l'indice des colonnes [3] n'est pas supérieur à 2, il est égal à 2."
+    }
   }
 }

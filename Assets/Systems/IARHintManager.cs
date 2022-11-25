@@ -101,7 +101,7 @@ public class IARHintManager : FSystem {
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.5f); // wait one second to synchronize hints
+            yield return new WaitForSeconds(0.5f); // wait 0.5 second to synchronize hints
             List<HintContent> copy = new List<HintContent>();
             List<HintContent> checkCopy = new List<HintContent>();
             foreach (GameObject hint in f_enabledHintsIAR) {

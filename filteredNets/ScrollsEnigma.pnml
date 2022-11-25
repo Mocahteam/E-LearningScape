@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
- <net id="n-11B50-691BC-0" type ="http://www.laas.fr/tina/tpn">
+ <net id="n-162D4-20A56-0" type ="http://www.laas.fr/tina/tpn">
   <name>
    <text>ScrollsEnigma</text>
   </name>
- <page id="g-11B50-691CB-1">
-  <place id="p-11B50-691D0-2">
+ <page id="g-162D4-20A6E-1">
+  <place id="p-162D4-20A76-2">
   <name>
    <text>R2-Q3_Answered_77</text>
     <graphics>
@@ -16,7 +16,7 @@
     <position x="730" y="330"/>
    </graphics>
   </place>
-  <place id="p-11B50-691E2-3">
+  <place id="p-162D4-20E30-3">
   <name>
    <text>R2-Q3_Answering_77</text>
     <graphics>
@@ -30,7 +30,7 @@
     <position x="470" y="330"/>
    </graphics>
   </place>
-  <transition id="t-11B50-691E9-4">
+  <transition id="t-162D4-20E42-4">
   <name>
    <text>R2-Q3_Correct_77</text>
     <graphics>
@@ -41,7 +41,7 @@
     <position x="610" y="320"/>
    </graphics>
   </transition>
-  <place id="p-11B50-691EE-5">
+  <place id="p-162D4-20E4B-5">
   <name>
    <text>Scroll1_end_71</text>
     <graphics>
@@ -52,7 +52,7 @@
     <position x="220" y="120"/>
    </graphics>
   </place>
-  <transition id="t-11B50-691F4-6">
+  <transition id="t-162D4-20E59-6">
   <name>
    <text>Scroll1_perform_71</text>
     <graphics>
@@ -63,7 +63,7 @@
     <position x="140" y="110"/>
    </graphics>
   </transition>
-  <place id="p-11B50-691F8-7">
+  <place id="p-162D4-20E60-7">
   <name>
    <text>Scroll1_start_71</text>
     <graphics>
@@ -77,7 +77,7 @@
     <position x="60" y="120"/>
    </graphics>
   </place>
-  <place id="p-11B50-691FE-8">
+  <place id="p-162D4-20E6A-8">
   <name>
    <text>Scroll2_end_72</text>
     <graphics>
@@ -88,7 +88,7 @@
     <position x="210" y="210"/>
    </graphics>
   </place>
-  <transition id="t-11B50-69201-9">
+  <transition id="t-162D4-20E70-9">
   <name>
    <text>Scroll2_perform_72</text>
     <graphics>
@@ -99,7 +99,7 @@
     <position x="140" y="200"/>
    </graphics>
   </transition>
-  <place id="p-11B50-69207-10">
+  <place id="p-162D4-20E79-10">
   <name>
    <text>Scroll2_start_72</text>
     <graphics>
@@ -113,7 +113,7 @@
     <position x="60" y="210"/>
    </graphics>
   </place>
-  <place id="p-11B50-6920D-11">
+  <place id="p-162D4-20E83-11">
   <name>
    <text>Scroll3_end_73</text>
     <graphics>
@@ -124,7 +124,7 @@
     <position x="220" y="300"/>
    </graphics>
   </place>
-  <transition id="t-11B50-69210-12">
+  <transition id="t-162D4-20E89-12">
   <name>
    <text>Scroll3_perform_73</text>
     <graphics>
@@ -135,7 +135,7 @@
     <position x="140" y="280"/>
    </graphics>
   </transition>
-  <place id="p-11B50-69215-13">
+  <place id="p-162D4-20E95-13">
   <name>
    <text>Scroll3_start_73</text>
     <graphics>
@@ -149,7 +149,7 @@
     <position x="60" y="300"/>
    </graphics>
   </place>
-  <place id="p-11B50-69219-14">
+  <place id="p-162D4-20E9E-14">
   <name>
    <text>Scroll4_end_74</text>
     <graphics>
@@ -160,7 +160,7 @@
     <position x="220" y="380"/>
    </graphics>
   </place>
-  <transition id="t-11B50-69221-15">
+  <transition id="t-162D4-20EA8-15">
   <name>
    <text>Scroll4_perform_74</text>
     <graphics>
@@ -171,7 +171,7 @@
     <position x="140" y="360"/>
    </graphics>
   </transition>
-  <place id="p-11B50-69226-16">
+  <place id="p-162D4-20EB3-16">
   <name>
    <text>Scroll4_start_74</text>
     <graphics>
@@ -185,7 +185,7 @@
     <position x="60" y="380"/>
    </graphics>
   </place>
-  <place id="p-11B50-6922A-17">
+  <place id="p-162D4-20EBA-17">
   <name>
    <text>Scroll5_end_75</text>
     <graphics>
@@ -196,7 +196,7 @@
     <position x="210" y="460"/>
    </graphics>
   </place>
-  <transition id="t-11B50-6923D-18">
+  <transition id="t-162D4-20EC3-18">
   <name>
    <text>Scroll5_perform_75</text>
     <graphics>
@@ -207,7 +207,7 @@
     <position x="140" y="450"/>
    </graphics>
   </transition>
-  <place id="p-11B50-692A8-19">
+  <place id="p-162D4-20FB5-19">
   <name>
    <text>Scroll5_start_75</text>
     <graphics>
@@ -221,7 +221,7 @@
     <position x="60" y="460"/>
    </graphics>
   </place>
-  <place id="p-11B50-692AF-20">
+  <place id="p-162D4-20FC1-20">
   <name>
    <text>Scrolls_ActivationCount_70</text>
     <graphics>
@@ -232,7 +232,7 @@
     <position x="680" y="170"/>
    </graphics>
   </place>
-  <place id="p-11B50-692B6-21">
+  <place id="p-162D4-20FCA-21">
   <name>
    <text>Scrolls_off_70</text>
     <graphics>
@@ -246,7 +246,7 @@
     <position x="500" y="50"/>
    </graphics>
   </place>
-  <place id="p-11B50-692BA-22">
+  <place id="p-162D4-20FD1-22">
   <name>
    <text>Scrolls_on_70</text>
     <graphics>
@@ -257,7 +257,7 @@
     <position x="680" y="50"/>
    </graphics>
   </place>
-  <place id="p-11B50-692BF-23">
+  <place id="p-162D4-20FD9-23">
   <name>
    <text>Scrolls_place_129</text>
     <graphics>
@@ -268,7 +268,7 @@
     <position x="380" y="60"/>
    </graphics>
   </place>
-  <transition id="t-11B50-692C3-24">
+  <transition id="t-162D4-20FE6-24">
   <name>
    <text>Scrolls_turnOn_70</text>
     <graphics>
@@ -279,66 +279,75 @@
     <position x="580" y="110"/>
    </graphics>
   </transition>
-  <arc id="e-11B50-692CE-25" source="p-11B50-6922A-17" target="t-11B50-691E9-4">
+  <arc id="e-162D4-20FF6-25" source="t-162D4-20FE6-24" target="p-162D4-20FC1-20">
+  </arc>
+  <arc id="e-162D4-20FFB-26" source="p-162D4-20E79-10" target="t-162D4-20E70-9">
+  </arc>
+  <arc id="e-162D4-21001-27" source="t-162D4-20E70-9" target="p-162D4-20E6A-8">
+  </arc>
+  <arc id="e-162D4-21006-28" source="t-162D4-20EC3-18" target="p-162D4-20FD9-23">
+  </arc>
+  <arc id="e-162D4-2100C-29" source="p-162D4-20FB5-19" target="t-162D4-20EC3-18">
+  </arc>
+  <arc id="e-162D4-2100F-30" source="t-162D4-20EC3-18" target="p-162D4-20EBA-17">
+  </arc>
+  <arc id="e-162D4-21012-31" source="t-162D4-20E59-6" target="p-162D4-20FD9-23">
+  </arc>
+  <arc id="e-162D4-21016-32" source="p-162D4-20E9E-14" target="t-162D4-20E42-4">
    <type value="test"/>
   </arc>
-  <arc id="e-11B50-692D3-26" source="p-11B50-691E2-3" target="t-11B50-691E9-4">
+  <arc id="e-162D4-2101D-33" source="p-162D4-20E60-7" target="t-162D4-20E59-6">
   </arc>
-  <arc id="e-11B50-692D5-27" source="t-11B50-691E9-4" target="p-11B50-691D0-2">
+  <arc id="e-162D4-21025-34" source="t-162D4-20E59-6" target="p-162D4-20E4B-5">
   </arc>
-  <arc id="e-11B50-692D7-28" source="t-11B50-69221-15" target="p-11B50-69219-14">
+  <arc id="e-162D4-21028-35" source="t-162D4-20E89-12" target="p-162D4-20FD9-23">
   </arc>
-  <arc id="e-11B50-692DB-29" source="p-11B50-69226-16" target="t-11B50-69221-15">
+  <arc id="e-162D4-2102C-36" source="p-162D4-20FCA-21" target="t-162D4-20FE6-24">
   </arc>
-  <arc id="e-11B50-692DD-30" source="t-11B50-69221-15" target="p-11B50-692BF-23">
+  <arc id="e-162D4-2102F-37" source="p-162D4-20E95-13" target="t-162D4-20E89-12">
   </arc>
-  <arc id="e-11B50-692DE-31" source="t-11B50-69210-12" target="p-11B50-6920D-11">
+  <arc id="e-162D4-21034-38" source="t-162D4-20E89-12" target="p-162D4-20E83-11">
   </arc>
-  <arc id="e-11B50-692E0-32" source="p-11B50-69215-13" target="t-11B50-69210-12">
+  <arc id="e-162D4-21038-39" source="t-162D4-20EA8-15" target="p-162D4-20FD9-23">
   </arc>
-  <arc id="e-11B50-692E2-33" source="t-11B50-69210-12" target="p-11B50-692BF-23">
+  <arc id="e-162D4-2103B-40" source="p-162D4-20EB3-16" target="t-162D4-20EA8-15">
   </arc>
-  <arc id="e-11B50-692E4-34" source="t-11B50-691F4-6" target="p-11B50-691EE-5">
+  <arc id="e-162D4-2103E-41" source="t-162D4-20EA8-15" target="p-162D4-20E9E-14">
   </arc>
-  <arc id="e-11B50-692E6-35" source="p-11B50-691F8-7" target="t-11B50-691F4-6">
+  <arc id="e-162D4-21041-42" source="t-162D4-20E42-4" target="p-162D4-20A76-2">
   </arc>
-  <arc id="e-11B50-692E8-36" source="p-11B50-69219-14" target="t-11B50-691E9-4">
+  <arc id="e-162D4-21045-43" source="p-162D4-20E30-3" target="t-162D4-20E42-4">
+  </arc>
+  <arc id="e-162D4-2104A-44" source="p-162D4-20EBA-17" target="t-162D4-20E42-4">
    <type value="test"/>
   </arc>
-  <arc id="e-11B50-692EA-37" source="t-11B50-691F4-6" target="p-11B50-692BF-23">
+  <arc id="e-162D4-2104F-45" source="t-162D4-20FE6-24" target="p-162D4-20FD1-22">
   </arc>
-  <arc id="e-11B50-692ED-38" source="t-11B50-6923D-18" target="p-11B50-6922A-17">
-  </arc>
-  <arc id="e-11B50-692EF-39" source="p-11B50-692A8-19" target="t-11B50-6923D-18">
-  </arc>
-  <arc id="e-11B50-692F0-40" source="t-11B50-6923D-18" target="p-11B50-692BF-23">
-  </arc>
-  <arc id="e-11B50-692F2-41" source="t-11B50-69201-9" target="p-11B50-691FE-8">
-  </arc>
-  <arc id="e-11B50-692F4-42" source="p-11B50-69207-10" target="t-11B50-69201-9">
-  </arc>
-  <arc id="e-11B50-692F6-43" source="t-11B50-69201-9" target="p-11B50-692BF-23">
-  </arc>
-  <arc id="e-11B50-692F7-44" source="p-11B50-692BF-23" target="t-11B50-692C3-24">
+  <arc id="e-162D4-21053-46" source="p-162D4-20FC1-20" target="t-162D4-20E42-4">
    <type value="test"/>
   </arc>
-  <arc id="e-11B50-692F9-45" source="p-11B50-6920D-11" target="t-11B50-691E9-4">
+  <arc id="e-162D4-21059-47" source="p-162D4-20E4B-5" target="t-162D4-20E42-4">
    <type value="test"/>
   </arc>
-  <arc id="e-11B50-692FB-46" source="p-11B50-691FE-8" target="t-11B50-691E9-4">
+  <arc id="e-162D4-2105C-48" source="p-162D4-20E6A-8" target="t-162D4-20E42-4">
    <type value="test"/>
   </arc>
-  <arc id="e-11B50-692FF-47" source="p-11B50-691EE-5" target="t-11B50-691E9-4">
+  <arc id="e-162D4-21060-49" source="p-162D4-20E83-11" target="t-162D4-20E42-4">
    <type value="test"/>
   </arc>
-  <arc id="e-11B50-69300-48" source="p-11B50-692AF-20" target="t-11B50-691E9-4">
+  <arc id="e-162D4-21062-50" source="p-162D4-20FD9-23" target="t-162D4-20FE6-24">
+   <inscription>
+    <text>5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+   </inscription>
    <type value="test"/>
-  </arc>
-  <arc id="e-11B50-69302-49" source="t-11B50-692C3-24" target="p-11B50-692BA-22">
-  </arc>
-  <arc id="e-11B50-69304-50" source="p-11B50-692B6-21" target="t-11B50-692C3-24">
-  </arc>
-  <arc id="e-11B50-69346-51" source="t-11B50-692C3-24" target="p-11B50-692AF-20">
+   <graphics>
+    <position x="417" y="84" />
+    <position x="526" y="115" />
+   </graphics>  </arc>
+  <arc id="e-162D4-210DA-51" source="t-162D4-20E70-9" target="p-162D4-20FD9-23">
   </arc>
  </page>
  </net>
