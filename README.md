@@ -11,27 +11,36 @@ Ce jeu étant développé avec des ressources limitées nous n'avons pas actuell
 1. Votre antivirus peut bloquer le lancement du jeu, si une fenêtre apparaît, autorisez le lancement. Par exemple si vous obtenez le message "Windows a protégé votre ordinateur", cliquez sur le lien "Informations complémentaires" puis sur le bouton "Exécuter quand même".
 
 **Pour MacOS :**
-1. Dans le dossier **E-LearningScape** commencez par simplement **double cliquer** sur l'application **E-LearningScape**
-2. Si votre Mac refuse de lancer le jeu :
-   1. Tentez de faire un **clic-secondaire** (ou clic-droit) sur l'application et choisissez **Ouvrir**
-   2. Dans la fenêtre vous devriez avoir maintenant un bouton **Ouvrir**, cliquez sur ce bouton
-3. Si votre Mac refuse toujours de lancer le jeu :
-   1. Toujours dans le dossier **E-LearningScape** faites un **clic-secondaire** (ou clic-droit) sur le fichier **PlayGame** et choisissez **Ouvrir**
-   2. Dans la fenêtre vous devriez avoir maintenant un bouton **Ouvrir**, cliquez sur ce bouton
+   1. Dans le dossier **E-LearningScape** faites un **clic-secondaire** (ou clic-droit) sur le fichier **PlayGame** et choisissez **Ouvrir**
+   2. Dans la fenêtre qui s'ouvre vous devriez avoir un bouton **Ouvrir**, cliquez sur ce bouton
    3. Une fenêtre **Terminal** s'ouvre, si une demande d'autorisation d'accès aux fichiers s'affiche, acceptez la
    4. Dans la fenêtre **Terminal** entrez votre mot de passe quand il vous sera demandé afin d'autoriser le lancement du jeu. (Note : dans le terminal aucun symbole n'est affiché lorsque vous saisissez votre mot de passe, c'est tout à fait normal, saisissez simplement votre mot de passe à l'aveugle et validez)
 
 # E-LearningScape
 E-LearningScape est un jeu sérieux sous un format d'*escape game*. Les joueurs incarnent des marchands de sable naviguant dans le rêve d'une personne et devant l'aider à répondre à toutes les questions qu'elle se pose avant qu'elle ne se réveille. 
 
-Le jeu inclus trois versions traitant de trois thèmes différents :
+Le jeu inclus par défaut trois versions traitant de trois thèmes différents :
    1. Accessibilité et école inclusive ([Accéder à la page web dédiée](https://www.inshea.fr/fr/content/serious-games-de-lorna))
    2. Informatique ([Accéder à la page web dédiée](https://webia.lip6.fr/~muratetm/elearningscape/))
    3. Pédagogie
 
 <p align="center"><img src="docs/CaptureLearningScape.PNG" alt="Une vue du jeu" height="200"/> <img src="docs/collaboratif.jpg" alt="Travail collaboratif" height="200"/></p>
-
+   
 Vidéo de présentation : https://www.youtube.com/watch?v=K2mYKNe35Q4
+
+D'autres versions du jeu existent (créées par de tierces personnes) que vous pouvez télécharger avec les liens ci-dessous :
+   - [Cinema](https://webia.lip6.fr/~muratetm/elearningscape/Mods/Cinema.zip)
+   - [DevelopementDurable](https://webia.lip6.fr/~muratetm/elearningscape/Mods/DevelopementDurable.zip)
+   - [EIAH](https://webia.lip6.fr/~muratetm/elearningscape/Mods/EIAH.zip)
+   - [LaCommunication](https://webia.lip6.fr/~muratetm/elearningscape/Mods/LaCommunication.zip)
+   - [LaMemoire](https://webia.lip6.fr/~muratetm/elearningscape/Mods/LaMemoire.zip)
+   - [ScienceForensique](https://webia.lip6.fr/~muratetm/elearningscape/Mods/ScienceForensique.zip)
+   - [UXDesign](https://webia.lip6.fr/~muratetm/elearningscape/Mods/UXDesign.zip)
+   - [ViolenceScolaire](https://webia.lip6.fr/~muratetm/elearningscape/Mods/ViolenceScolaire.zip)
+
+Pour installer ces autres versions, téléchargez l'un des fichier zip ci-dessus et décompressez son contenu dans le dossier StreamingAssets de votre jeu. Pour Windows et Linux, voir le dossier **E-LearningScape_Data/StreamingAssets/[versionJeu]** et pour MacOS voir le dossier **E-LearningScape.app/Contents/Resources/Data/StreamingAssets/[versionJeu]**.
+
+Pour créer votre propre version d'E-LearningScape jetez un coup d'oeil à la section [Comment créer mon propre jeu à partir d'E-LearningScape](#comment-créer-mon-propre-jeu-à-partir-de-learningscape).
 
 # Principes de jeu
 E-LearningScape peut se jouer selon deux modalités :
@@ -50,6 +59,7 @@ Pour changer les contenus dans le jeu il vous suffit de travailler sur les fichi
 - S'il s'agit d'éléments textuels modifiez le fichier **[...]/StreamingAssets/[versionJeu]/Data_LearningScape.txt**. Vous pourrez modifier le scénario de votre jeu, l'intitulé des questions, les réponses attendues, la description des objets ramassés...
 - S'il s'agit d'éléments graphiques écrasez simplement les images présentes dans le dossier **[...]/StreamingAssets/[versionJeu]** avec vos nouveaux visuels pour qu'ils soient automatiquement chargés par le jeu.
 - Le fichier **[...]/StreamingAssets/[versionJeu]/DreamFragmentLinks.txt** vous permet d'ajouter un lien hypertexte à chaque fragment de rêve.
+
 
 # Crédits
 **E-LearningScape Peda** a été réalisé par [Sorbonne Université](http://www.sorbonne-universite.fr/) à travers l’équipe [MOCAH](https://www.lip6.fr/recherche/team.php?acronyme=MOCAH) du LIP6, [CAPSULE](http://capsule.sorbonne-universite.fr/) et le projet Play@SU. C'est une adaptation numérique du jeu [LearningScape](https://sapiens-uspc.com/learningscape-2/) développé par la cellule [SAPIENS](https://sapiens-uspc.com/) de l'[USPC](http://www.sorbonne-paris-cite.fr/) et le [CRI](https://cri-paris.org/).
