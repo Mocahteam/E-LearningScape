@@ -34,5 +34,5 @@
 	"122.perform": {
 		"Comment": [{"Key": "", "Value": "Lamp question"}],
 		"3": [{"Key": "", "Value": "Peut être que les indices sur l'obélisque représentent un mot codé. Le premier nombre pourrait être l'ordre des caractères et le second le caractère lui même codé en ASCII? Le fragment de rêve 6 devrait m'aider à le décoder."}]
-	},
+	}
 }

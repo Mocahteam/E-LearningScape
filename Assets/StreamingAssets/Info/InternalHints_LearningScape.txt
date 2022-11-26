@@ -438,32 +438,32 @@
 	"114.activate": {
 		"Comment": ["One of the symbol on obelisk"],
 		"options": ["--"],
-		"1": ["Je dois encore chercher des indices sur l'obélisque avec ma lampe1"]
+		"1": ["Je dois encore chercher des indices sur l'obélisque avec ma lampe"]
 	},
 	"115.activate": {
 		"Comment": ["One of the symbol on obelisk"],
 		"options": ["--"],
-		"1": ["Je dois encore chercher des indices sur l'obélisque avec ma lampe2"]
+		"1": ["Je dois encore chercher des indices sur l'obélisque avec ma lampe"]
 	},
 	"116.activate": {
 		"Comment": ["One of the symbol on obelisk"],
 		"options": ["--"],
-		"1": ["Je dois encore chercher des indices sur l'obélisque avec ma lampe3"]
+		"1": ["Je dois encore chercher des indices sur l'obélisque avec ma lampe"]
 	},
 	"117.activate": {
 		"Comment": ["One of the symbol on obelisk"],
 		"options": ["--"],
-		"1": ["Je dois encore chercher des indices sur l'obélisque avec ma lampe4"]
+		"1": ["Je dois encore chercher des indices sur l'obélisque avec ma lampe"]
 	},
 	"118.activate": {
 		"Comment": ["One of the symbol on obelisk"],
 		"options": ["--"],
-		"1": ["Je dois encore chercher des indices sur l'obélisque avec ma lampe5"]
+		"1": ["Je dois encore chercher des indices sur l'obélisque avec ma lampe"]
 	},
 	"119.activate": {
 		"Comment": ["One of the symbol on obelisk"],
 		"options": ["--"],
-		"1": ["Je dois encore chercher des indices sur l'obélisque avec ma lampe6"]
+		"1": ["Je dois encore chercher des indices sur l'obélisque avec ma lampe"]
 	},
 	"122.perform": {
 		"Comment": ["Lamp question"],

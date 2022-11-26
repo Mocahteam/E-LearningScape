@@ -16,8 +16,47 @@
 			}
 		]
 	},
+	
+	"31.turnOn": {
+		"Comment": [{"Key": "", "Value": "The first word that is part of the solution"}],
+		"3": [{"Key": "", "Value": "Certains mots des fragments de rêve 9 et 17 sont mis en évidence... Peut être qu'il s'agit des mots à relier sur le tableau?"}]
+	},
+	"32.turnOn": {
+		"Comment": [{"Key": "", "Value": "The second word that is part of the solution"}],
+		"3": [{"Key": "", "Value": "Certains mots des fragments de rêve 9 et 17 sont mis en évidence... Peut être qu'il s'agit des mots à relier sur le tableau?"}]
+	},
+	"33.turnOn": {
+		"Comment": [{"Key": "", "Value": "The third word that is part of the solution"}],
+		"3": [{"Key": "", "Value": "Certains mots des fragments de rêve 9 et 17 sont mis en évidence... Peut être qu'il s'agit des mots à relier sur le tableau?"}]
+	},
+	
+	"50.Correct": {
+		"Comment": [{"Key": "", "Value": "The Crouch question"}],
+		"3": [{"Key": "", "Value": "Avec les indices trouvés (\"Île\", \"faux\", \"ça voire\", \"chant geai\", \"deux\", \"pause Tür\") et le fragment de rêve 4, je devrais pouvoir répondre à la question sur l'écoute des besoins."}]
+	},
+	
+	"69.Correct": {
+		"Comment": [{"Key": "", "Value": "The Enigma08 question"}],
+		"3": [{"Key": "", "Value": "Les fragments de rêve 1, 5 et 8 présentent deux versions d'un même contenu, mais pour chacun d'eux lequel est à retenir? Ceci devrait me permettre de répondre à la question sur l'attention à porter lors de la conception d'un document."}]
+	},
+	
 	"77.Correct": {
 		"Comment": [{"Key": "", "Value": "The scrolls question"}],
 		"3": [{"Key": "", "Value": "L'acronyme à trouver est aussi le nom d'une petite voiture"}]
+	},
+	
+	"83.Correct": {
+		"Comment": [{"Key": "", "Value": "The mirror question"}],
+		"3": [{"Key": "", "Value": "Le reflet du miroir devrait me permettre de répondre à la question sur l'estime de soi"}]
+	},
+	
+	"86.Correct": {
+		"Comment": [{"Key": "", "Value": "The Enigma11 question"}],
+		"3": [{"Key": "", "Value": "Le fragment de rêve 2 fait référence à un mode de raisonnement"}]
+	},
+	
+	"126.perform": {
+		"Comment": [{"Key": "", "Value": "The Enigma16 question"}],
+		"3": [{"Key": "", "Value": "Les fragments de rêve 10, 11 et 13 devraient me permettre de trouver une des réponses"}]
 	},
 }
