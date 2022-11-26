@@ -12,7 +12,7 @@ Ce jeu étant développé avec des ressources limitées nous n'avons pas actuell
 
 **Pour MacOS :**
    1. Dans le dossier **E-LearningScape** faites un **clic-secondaire** (ou clic-droit) sur le fichier **PlayGame** et choisissez **Ouvrir**
-   2. Dans la fenêtre qui s'ouvre vous devriez avoir un bouton **Ouvrir**, cliquez sur ce bouton
+   2. Dans la fenêtre qui s'ouvre, cliquez sur ce bouton **Ouvrir**
    3. Une fenêtre **Terminal** s'ouvre, si une demande d'autorisation d'accès aux fichiers s'affiche, acceptez la
    4. Dans la fenêtre **Terminal** entrez votre mot de passe quand il vous sera demandé afin d'autoriser le lancement du jeu. (Note : dans le terminal aucun symbole n'est affiché lorsque vous saisissez votre mot de passe, c'est tout à fait normal, saisissez simplement votre mot de passe à l'aveugle et validez)
 
@@ -28,7 +28,8 @@ Le jeu inclus par défaut trois versions traitant de trois thèmes différents :
    
 Vidéo de présentation : https://www.youtube.com/watch?v=K2mYKNe35Q4
 
-D'autres versions du jeu existent que vous pouvez télécharger avec les liens ci-dessous. Si vous souhaitez partager votre propre version n'hésitez pas à nous contacter :
+# Mods
+Le jeu E-LearningScape inclus par défaut trois versions traitant de trois thèmes différents (Informatique, Accessibilité et Pédagogie). D'autres versions du jeu existent que vous pouvez télécharger avec les liens ci-dessous. Si vous souhaitez partager votre propre version n'hésitez pas à nous contacter :
    - [Cinema](https://webia.lip6.fr/~muratetm/elearningscape/Mods/Cinema.zip)
    - [DevelopementDurable](https://webia.lip6.fr/~muratetm/elearningscape/Mods/DevelopementDurable.zip)
    - [EIAH](https://webia.lip6.fr/~muratetm/elearningscape/Mods/EIAH.zip)
