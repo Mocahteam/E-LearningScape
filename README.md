@@ -28,7 +28,7 @@ Le jeu inclus par défaut trois versions traitant de trois thèmes différents :
    
 Vidéo de présentation : https://www.youtube.com/watch?v=K2mYKNe35Q4
 
-D'autres versions du jeu existent (créées par de tierces personnes) que vous pouvez télécharger avec les liens ci-dessous :
+D'autres versions du jeu existent que vous pouvez télécharger avec les liens ci-dessous. Si vous souhaitez partager votre propre version n'hésitez pas à nous contacter :
    - [Cinema](https://webia.lip6.fr/~muratetm/elearningscape/Mods/Cinema.zip)
    - [DevelopementDurable](https://webia.lip6.fr/~muratetm/elearningscape/Mods/DevelopementDurable.zip)
    - [EIAH](https://webia.lip6.fr/~muratetm/elearningscape/Mods/EIAH.zip)
