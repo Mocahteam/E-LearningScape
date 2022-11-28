@@ -285,6 +285,15 @@
                 "en-US": "help"
             }
         },
+        "level": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://www.lip6.fr/mocah/invaliduri/extensions/level",
+            "name": {
+                "en-US": "level"
+            }
+        },
         "link": {
             "description": {
                 "en-US": ""

@@ -815,6 +815,7 @@ public class HelpSystem : FSystem {
                     { "type", "hint" },
                     { "value", hintButton.transform.GetChild(0).GetComponent<TMP_Text>().text },
                     { "from", playerAskedHelp ? "button" : "system" },
+                    { "level", tmpHC.level },
                     { "reference", hintMonitor.id+"."+actionName },
                     { "content", tmpHC.text }
                 }

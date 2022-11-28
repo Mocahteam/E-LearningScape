@@ -220,6 +220,7 @@ public class IARHintManager : FSystem {
             activityExtensions = new Dictionary<string, string>() {
                 { "type", "hint" },
                 { "value", b.transform.GetChild(0).GetComponent<TMP_Text>().text },
+                { "level", tmpHC.level },
                 { "reference", tmpHC.monitor.id+"."+tmpHC.actionName },
                 { "content", b.GetComponent<HintContent>().text }
             }
