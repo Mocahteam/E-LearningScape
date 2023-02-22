@@ -51,12 +51,14 @@ public class InternalGameContent {
     /// If true, remove extra geaometries. This is an additionnal option for very poor hardware
     /// </summary>
     public bool removeExtraGeometries = true;
+    public int gameDuration = 3600;
 
     //Paths for other config files
     #region Config Files Paths
     public string lrsConfigPath;
     public string dreamFragmentLinksPath;
     public string dreamFragmentDocumentsPathFile;
+    public bool dreamFragmentOutline;
     public string hintsPath;
     public string internalHintsPath;
     public string wrongAnswerFeedbacksPath;

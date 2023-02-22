@@ -22,6 +22,7 @@ public class LoadGameContent_wrapper : BaseWrapper
 	public TMPro.TMP_FontAsset DefaultFont;
 	public TMPro.TMP_FontAsset DefaultFontUI;
 	public TMPro.TMP_Text GameType;
+	public Chronometer chronometer;
 	private void Start()
 	{
 		this.hideFlags = HideFlags.NotEditable;
@@ -44,6 +45,7 @@ public class LoadGameContent_wrapper : BaseWrapper
 		MainLoop.initAppropriateSystemField (system, "DefaultFont", DefaultFont);
 		MainLoop.initAppropriateSystemField (system, "DefaultFontUI", DefaultFontUI);
 		MainLoop.initAppropriateSystemField (system, "GameType", GameType);
+		MainLoop.initAppropriateSystemField (system, "chronometer", chronometer);
 	}
 
 	public void SetFragments(System.Boolean virtualDreamFragment)

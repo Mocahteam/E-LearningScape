@@ -179,7 +179,7 @@
 	"166.Correct": {
 		"Comment": ["The mastermind enigma question"],
 		"1": ["Peut être que je devrais commencer par mettre une réponse au hasard"],
-		"2": ["Les indices à mes tentatives devraient me permettre de trouver la bonne combinaison"],
+		"2": ["Les indices de mes tentatives au hazard (<color=red>X</color>, <color=orange>?</color> et <color=green>O</color>) devraient me permettre de trouver la bonne combinaison"],
 	},
 	
 	"Comment: Glasses enigma": {},

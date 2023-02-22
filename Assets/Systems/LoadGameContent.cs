@@ -73,6 +73,7 @@ public class LoadGameContent : FSystem {
     public TMP_FontAsset DefaultFont;
     public TMP_FontAsset DefaultFontUI;
     public TMP_Text GameType;
+    public Chronometer chronometer;
 
     public static LoadGameContent instance;
 
@@ -102,7 +103,7 @@ public class LoadGameContent : FSystem {
         random = new System.Random();
 
         if (Application.isEditor && GameSelected.version == "")
-            GameSelected.version = "Access";
+            GameSelected.version = "Info";
 
         dataPath = Application.streamingAssetsPath + "/" + GameSelected.version;
 
@@ -198,6 +199,8 @@ public class LoadGameContent : FSystem {
 
         ActionsManager.instance.Pause = !internalGameContent.trace;
         Debug.Log(string.Concat("Trace: ", internalGameContent.trace));
+
+        chronometer.sessionTimer = internalGameContent.gameDuration;
 
         // if randomHelpSystemActivation is true, set gamecontent.helpsystem with a random value
         if (internalGameContent.randomHelpSystemActivation)
@@ -310,6 +313,9 @@ public class LoadGameContent : FSystem {
                                 tmpGO.transform.SetParent(go.transform);
                                 tmpRectTransform = tmpGO.GetComponent<RectTransform>();
                                 tmpRectTransform.localScale = Vector3.one;
+                                Debug.Log(internalGameContent.dreamFragmentOutline);
+                                if (!internalGameContent.dreamFragmentOutline)
+                                    tmpGO.transform.Find("Outline").gameObject.SetActive(false);
                                 //if there are several document for one dream fragment, give them different position to make them visible
                                 //(here we put a gap of 30 between each, alternating left and right)
                                 posID = l - i - 1;
