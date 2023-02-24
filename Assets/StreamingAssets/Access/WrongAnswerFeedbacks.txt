@@ -12,7 +12,7 @@
     },
     "1": {
       "Key": "",
-      "Value": "Ce n'est pas la boule 4 ! Écrire au tableau est un leurre car tout ce qui est écrit n'est pas forcément appris."
+      "Value": "Ce n'est pas la boule 1 ! Écrire au tableau est un leurre car tout ce qui est écrit n'est pas forcément appris."
     },
     "3": {
       "Key": "",
