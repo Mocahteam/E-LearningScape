@@ -11,10 +11,10 @@ Ce jeu étant développé avec des ressources limitées nous n'avons pas actuell
 1. Votre antivirus peut bloquer le lancement du jeu, si une fenêtre apparaît, autorisez le lancement. Par exemple si vous obtenez le message "Windows a protégé votre ordinateur", cliquez sur le lien "Informations complémentaires" puis sur le bouton "Exécuter quand même".
 
 **Pour MacOS :**
-   1. Dans le dossier **E-LearningScape** faites un **clic-secondaire** (ou clic-droit) sur le fichier **PlayGame** et choisissez **Ouvrir**
+   1. Dans le dossier **E-LearningScape** faites un **clic-secondaire** (ou clic-droit) sur le fichier **Configure** et choisissez **Ouvrir**
    2. Dans la fenêtre qui s'ouvre, cliquez sur ce bouton **Ouvrir**
-   3. Une fenêtre **Terminal** s'ouvre, si une demande d'autorisation d'accès aux fichiers s'affiche, acceptez la
-   4. Dans la fenêtre **Terminal** entrez votre mot de passe quand il vous sera demandé afin d'autoriser le lancement du jeu. (Note : dans le terminal aucun symbole n'est affiché lorsque vous saisissez votre mot de passe, c'est tout à fait normal, saisissez simplement votre mot de passe à l'aveugle et validez)
+   3. Une fenêtre **Terminal** s'ouvre, attendez d'avoir le message **[Opération terminée]**
+   4. Vous pouvez maintenant lancer le jeu en cliquant sur le fichier **E-LearningScape** (icône avec un diamant bleu)
 
 # E-LearningScape
 E-LearningScape est un jeu sérieux sous un format d'*escape game*. Les joueurs incarnent des marchands de sable naviguant dans le rêve d'une personne et devant l'aider à répondre à toutes les questions qu'elle se pose avant qu'elle ne se réveille. 
@@ -39,7 +39,9 @@ Le jeu E-LearningScape inclus par défaut trois versions traitant de trois thèm
    - [UXDesign](https://webia.lip6.fr/~muratetm/elearningscape/Mods/UXDesign.zip)
    - [ViolenceScolaire](https://webia.lip6.fr/~muratetm/elearningscape/Mods/ViolenceScolaire.zip)
 
-Pour installer ces autres versions, téléchargez l'un des fichier zip ci-dessus et décompressez son contenu dans le dossier StreamingAssets de votre jeu. Pour Windows et Linux, voir le dossier **E-LearningScape_Data/StreamingAssets/[versionJeu]** et pour MacOS voir le dossier **E-LearningScape.app/Contents/Resources/Data/StreamingAssets/[versionJeu]**.
+Pour installer ces autres versions, téléchargez l'un des fichier zip ci-dessus et décompressez son contenu dans le dossier StreamingAssets de votre jeu :
+   - Pour **Windows** et **Linux**, voir le dossier **E-LearningScape_Data/StreamingAssets/[versionJeu]**
+   - Pour **MacOS** voir le dossier **E-LearningScape.app/Contents/Resources/Data/StreamingAssets/[versionJeu]**
 
 Pour créer votre propre version d'E-LearningScape jetez un coup d'oeil à la section [Comment créer mon propre jeu à partir d'E-LearningScape](#comment-créer-mon-propre-jeu-à-partir-de-learningscape).
 
