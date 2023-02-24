@@ -10,13 +10,13 @@
       "Key": "",
       "Value": "Ce n'est pas la boule 0 ! L’apprenant pourra progresser seulement si l’enseignant a un certain niveau d’exigence même si les objectifs peuvent être adaptés."
     },
+    "1": {
+      "Key": "",
+      "Value": "Ce n'est pas la boule 4 ! Écrire au tableau est un leurre car tout ce qui est écrit n'est pas forcément appris."
+    },
     "3": {
       "Key": "",
       "Value": "Ce n'est pas la boule 3 ! Mettre l’apprenant en écoute passive place l’apprenant en réception verbale uniquement, le taux rétention de l’information n’est que de 10%."
-    },
-    "4": {
-      "Key": "",
-      "Value": "Ce n'est pas la boule 4 ! Écrire au tableau est un leurre car tout ce qui est écrit n'est pas forcément appris."
     },
     "5": {
       "Key": "",
