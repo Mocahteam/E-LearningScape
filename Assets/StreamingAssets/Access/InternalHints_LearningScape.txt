@@ -84,7 +84,7 @@
 	"28.turnOn": {
 		"Comment": ["The plank"],
 		"1": ["Je devrais aller voir le tableau accroché au mur"],
-		"2": ["Peut être dois-je faire quelque chose avec le tableau accroché au murs, il y a des mots écrits dessus et des punaises permettant d'accrocher quelque chose..."]
+		"2": ["Peut être dois-je faire quelque chose avec le tableau accroché au mur, il y a des mots écrits dessus et des punaises permettant d'accrocher quelque chose..."]
 	},
 	"29.activate": {
 		"Comment": ["The dream fragment to the right of the library"],
