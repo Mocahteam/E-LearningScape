@@ -63,6 +63,14 @@ Pour changer les contenus dans le jeu il vous suffit de travailler sur les fichi
 - S'il s'agit d'éléments graphiques écrasez simplement les images présentes dans le dossier **[...]/StreamingAssets/[versionJeu]** avec vos nouveaux visuels pour qu'ils soient automatiquement chargés par le jeu.
 - Le fichier **[...]/StreamingAssets/[versionJeu]/DreamFragmentLinks.txt** vous permet d'ajouter un lien hypertexte à chaque fragment de rêve.
 
+# Publications
+- M. Muratet, A. Yessad, T. Carron : "How to assist designers model learning games with Petri nets?", FDG 2022, Athens, Greece (2022)
+- M. Muratet, M. Arneton, A. Vanbrugghe, V. Geffroy, T. Planques : "A propos de la création d'un Escape Game à partir d'une coquille de jeu sérieux numérique accessible", CIGE 2022, May 2022, en ligne, France (2022).
+- M. Arneton, M. Muratet, A. Vanbrugghe, V. Geffroy, M.-H. Ferrand : “Proposer un jeu sérieux pour former à l’inclusion : retour d’expérience en France”, Revue Internationale des Technologies en Pédagogie Universitaire, vol. 19 (1), pp. 68-75, (Conférence des recteurs et principaux des universités du Québec [CREPUQ]) (2022)
+- M. Muratet, Th. Carron, I. N'hari, B. Hasenknopf, B. Grosjean, L. Sixdenier, R. Vuilleumier : “Usages de jeux sérieux pour motiver les étudiants : initiatives d’enseignants et impulsions institutionnelles”, Les Annales de QPES, vol. 1 (3) (2021)
+- M. Muratet, D. Garbarini : “Accessibility and serious games: What about Entity- Component-System software architecture?”, GALA 2020, Laval, France (2020)
+- D. Garbarini, M. Muratet : “Accessibilité et jeux vidéo : Quid de l’architecture logicielle Entités-Composants-Systèmes ?”, Handicap 2020, Paris, France (2020)
+- M. Muratet, M. Arneton, M.H. Ferrand, V. Geffroy, A. Vanbrugghe, D. Garbarini : “De la réingénierie d’un serious escape game sur la société inclusive aux recherches en informatique”, 1024 : Bulletin de la Société Informatique de France n°15, pp. 73-81, (Société Informatique de France) (2020)
 
 # Crédits
 **E-LearningScape Peda** a été réalisé par [Sorbonne Université](http://www.sorbonne-universite.fr/) à travers l’équipe [MOCAH](https://www.lip6.fr/recherche/team.php?acronyme=MOCAH) du LIP6, [CAPSULE](http://capsule.sorbonne-universite.fr/) et le projet Play@SU. C'est une adaptation numérique du jeu [LearningScape](https://sapiens-uspc.com/learningscape-2/) développé par la cellule [SAPIENS](https://sapiens-uspc.com/) de l'[USPC](http://www.sorbonne-paris-cite.fr/) et le [CRI](https://cri-paris.org/).
