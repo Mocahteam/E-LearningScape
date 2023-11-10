@@ -1,5 +1,5 @@
 # Téléchargements
-**Version 7.2** mise à jour le 23/02/2023
+**Version 7.2** mise à jour le 10/11/2023
 
 1. [**Windows**](https://github.com/Mocahteam/E-LearningScape/releases/download/v7.2/E-LearningScape_Windows.zip)
 2. [**MacOS**](https://github.com/Mocahteam/E-LearningScape/releases/download/v7.2/E-LearningScape_MacOS.zip)
