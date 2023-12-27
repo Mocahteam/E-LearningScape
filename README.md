@@ -32,6 +32,7 @@ Vidéo de présentation : https://www.youtube.com/watch?v=K2mYKNe35Q4
 Le jeu E-LearningScape inclus par défaut trois versions traitant de trois thèmes différents (Informatique, Accessibilité et Pédagogie). D'autres versions du jeu existent que vous pouvez télécharger avec les liens ci-dessous. Si vous souhaitez partager votre propre version n'hésitez pas à nous contacter :
    - [Cinema](https://webia.lip6.fr/~muratetm/elearningscape/Mods/Cinema.zip) (une adaptation sur le cinéma)
    - [DeveloppementDurable](https://webia.lip6.fr/~muratetm/elearningscape/Mods/DeveloppementDurable.zip) (une adaptation sur le développement durable)
+   - [Ecologie](https://webia.lip6.fr/~muratetm/elearningscape/Mods/Ecologie.zip) (une adaptation sur l'écologie)
    - [EIAH](https://webia.lip6.fr/~muratetm/elearningscape/Mods/EIAH.zip) (une adaptation sur les Environnements Informatiques pour l'Apprentissage Humain)
    - [Erasmus at Hogwarts](https://webia.lip6.fr/~muratetm/elearningscape/Mods/Erasmus%20at%20Hogwarts.zip) (une adaptation dans l'univers d'Harry Potter pour travailler l'anglais)
    - [ESCAPAID](https://webia.lip6.fr/~muratetm/elearningscape/Mods/ESCAPAID.zip) (une adaptation sur l'aide aux premiers secours)
