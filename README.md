@@ -30,14 +30,18 @@ Vidéo de présentation : https://www.youtube.com/watch?v=K2mYKNe35Q4
 
 # Mods
 Le jeu E-LearningScape inclus par défaut trois versions traitant de trois thèmes différents (Informatique, Accessibilité et Pédagogie). D'autres versions du jeu existent que vous pouvez télécharger avec les liens ci-dessous. Si vous souhaitez partager votre propre version n'hésitez pas à nous contacter :
-   - [Cinema](https://webia.lip6.fr/~muratetm/elearningscape/Mods/Cinema.zip)
-   - [DeveloppementDurable](https://webia.lip6.fr/~muratetm/elearningscape/Mods/DeveloppementDurable.zip)
-   - [EIAH](https://webia.lip6.fr/~muratetm/elearningscape/Mods/EIAH.zip)
-   - [LaCommunication](https://webia.lip6.fr/~muratetm/elearningscape/Mods/LaCommunication.zip)
-   - [LaMemoire](https://webia.lip6.fr/~muratetm/elearningscape/Mods/LaMemoire.zip)
-   - [ScienceForensique](https://webia.lip6.fr/~muratetm/elearningscape/Mods/ScienceForensique.zip)
-   - [UXDesign](https://webia.lip6.fr/~muratetm/elearningscape/Mods/UXDesign.zip)
-   - [ViolenceScolaire](https://webia.lip6.fr/~muratetm/elearningscape/Mods/ViolenceScolaire.zip)
+   - [Cinema](https://webia.lip6.fr/~muratetm/elearningscape/Mods/Cinema.zip) (une adaptation sur le cinéma)
+   - [DeveloppementDurable](https://webia.lip6.fr/~muratetm/elearningscape/Mods/DeveloppementDurable.zip) (une adaptation sur le développement durable)
+   - [EIAH](https://webia.lip6.fr/~muratetm/elearningscape/Mods/EIAH.zip) (une adaptation sur les Environnements Informatiques pour l'Apprentissage Humain)
+   - [Erasmus at Hogwarts](https://webia.lip6.fr/~muratetm/elearningscape/Mods/Erasmus%20at%20Hogwarts.zip) (une adaptation dans l'univers d'Harry Potter pour travailler l'anglais)
+   - [ESCAPAID](https://webia.lip6.fr/~muratetm/elearningscape/Mods/ESCAPAID.zip) (une adaptation sur l'aide aux premiers secours)
+   - [LaCommunication](https://webia.lip6.fr/~muratetm/elearningscape/Mods/LaCommunication.zip) (une adaptation sur les principes de communication)
+   - [LaMemoire](https://webia.lip6.fr/~muratetm/elearningscape/Mods/LaMemoire.zip) (une adaptation sur le fonctionnement de la mémoire)
+   - [Prepositions](https://webia.lip6.fr/~muratetm/elearningscape/Mods/Prepositions.zip) (une adaptation sur les prépositions en anglais)
+   - [ScienceForensique](https://webia.lip6.fr/~muratetm/elearningscape/Mods/ScienceForensique.zip) (une adaptation sur les sciences forensiques ou l'analyse scientifique de cas)
+   - [Stop Harcelement](https://webia.lip6.fr/~muratetm/elearningscape/Mods/Stop%20Harcelement.zip) (une adaptation sur le harcelmeent scolaire)
+   - [UXDesign](https://webia.lip6.fr/~muratetm/elearningscape/Mods/UXDesign.zip) (une adaptation sur la conception centrée utilisateur)
+   - [ViolenceScolaire](https://webia.lip6.fr/~muratetm/elearningscape/Mods/ViolenceScolaire.zip) (une adaptation sur les violences scolaires)
 
 Pour installer ces autres versions, téléchargez l'un des fichier zip ci-dessus et décompressez son contenu dans le dossier StreamingAssets de votre jeu :
    - Pour **Windows** et **Linux**, voir le dossier **E-LearningScape_Data/StreamingAssets/[versionJeu]**
