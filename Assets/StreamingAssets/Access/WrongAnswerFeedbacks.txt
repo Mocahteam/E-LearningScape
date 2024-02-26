@@ -36,7 +36,7 @@
     }
   },
   "GearsEnigma.151": {
-    "Le cadre bâti": {
+    "Les locaux": {
       "Key": "",
       "Value": "Le cadre bâti est une facette de l’accessibilité mais qui ne dépend pas essentiellement de vous."
     },
