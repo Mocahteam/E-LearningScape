@@ -21,11 +21,6 @@
 		"3": [{"Key": "", "Value": "Le premier chiffre de chaque boule semble représenter sa ligne et le second sa colonne"}]
 	},
 	
-	"69.Correct": {
-		"Comment": [{"Key": "", "Value": "The Enigma08 question"}],
-		"3": [{"Key": "", "Value": "Je devrais recopier les programmes des fragments de rêve 1, 5 et 8 à l'adresse indiquée, identifier celui qui met le moins de temps à résoudre le problème et noter le nombre de lignes de JavaScript correspondant à cette solution."}]
-	},
-	
 	"77.Correct": {
 		"Comment": [{"Key": "", "Value": "The scrolls question"}],
 		"3": [{"Key": "", "Value": "Je pense que la solution de l'énigme des parchemins commence par un P et est un verbe du premier groupe"}]

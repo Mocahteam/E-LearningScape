@@ -4,7 +4,7 @@
       "Voir plus"
   ],
   "Fragment_souvenir_1": [
-      "https://blockly.games/maze?lang=fr&level=10&skin=1",
+      "",
       "Voir en ligne"
   ],
   "Fragment_souvenir_2": [
@@ -20,7 +20,7 @@
       "Voir plus"
   ],
   "Fragment_souvenir_5": [
-      "https://blockly.games/maze?lang=fr&level=10&skin=1",
+      "",
       "Voir en ligne"
   ],
   "Fragment_souvenir_6": [
@@ -32,7 +32,7 @@
       "Voir plus"
   ],
   "Fragment_souvenir_8": [
-      "https://blockly.games/maze?lang=fr&level=10&skin=1",
+      "https://spy.lip6.fr/game.html?lang=fr&level=Levels/ELS/ELS.xml",
       "Voir en ligne"
   ],
   "Fragment_souvenir_9": [
