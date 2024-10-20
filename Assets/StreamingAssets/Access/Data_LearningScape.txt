@@ -144,9 +144,9 @@
     "crouchQuestion": "Comment être à l’écoute des besoins ?",
     "crouchPlaceHolder": "6 mots attendus...",
     "crouchAnswer": [
-        "Il faut savoir changer de posture"
+        "Il faut savoir changer de posture.##Il faut savoir changer de posture"
     ],
-    "crouchAnswerFeedback": "Il faut savoir changer de posture",
+    "crouchAnswerFeedback": "Il faut savoir changer de posture.",
     "crouchAnswerFeedbackDesc": "",
     "crouchWords": [
         "Île",
@@ -162,12 +162,12 @@
     "gearTextUp": "Chacun de nous est acteur",
     "gearTextDown": "Application des lois",
     "gearMovableTexts": [
-        "Ses repré-sentations",
+        "Mes repré-sentations",
         "Les locaux",
         "Les besoins de la personne",
         "La com-munication"
     ],
-    "gearAnswer": "Ses repré-sentations",
+    "gearAnswer": "Mes repré-sentations",
 	
 	"mastermindQuestion": "Combien (approximativement) existe-t-il de fiches ORNA ?\nLe hasard vous aidera peut-être !",
     "masterMindPlaceholder": "3 chiffres attendus...",

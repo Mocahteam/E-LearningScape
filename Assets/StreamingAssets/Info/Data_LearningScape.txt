@@ -132,9 +132,9 @@
     "crouchQuestion": "Des méthodologies de gestion de projet...",
     "crouchPlaceHolder": "3 mots attendus...",
     "crouchAnswer": [
-        "LES METHODES AGILE"
+        "LES METHODES AGILES"
     ],
-    "crouchAnswerFeedback": "Les méthodes AGILE",
+    "crouchAnswerFeedback": "Les méthodes AGILES",
     "crouchAnswerFeedbackDesc": "Scrumm et Safe en sont des exemples",
     "crouchWords": [
         "Les",
@@ -142,7 +142,7 @@
         "-tho-",
         "-des",
         "A-",
-        "-GILE"
+        "-GILES"
     ],
 	
     "gearsQuestion": "Quel processus permet de générer un exécutable ?",
@@ -179,13 +179,13 @@
         "glasses04.png"
     ],
 	
-    "enigma08Question": "Combien de lignes javascript sont nécessaires pour aider l'astronaute à rejoindre son module le plus vite possible ?",
-    "enigma08PlaceHolder": "1 nombre attendu...",
+    "enigma08Question": "Qu’est-ce que dans SPY est aussi valable pour les variables et les fonctions ?",
+    "enigma08PlaceHolder": "1 not attendu...",
     "enigma08Answer": [
-        "18##dix-huit##dix huit"
+        "nommage"
     ],
-    "enigma08AnswerFeedback": "18",
-    "enigma08AnswerFeedbackDesc": "Algo topo ! Ce n'est pas toujours le programme le plus court qui est le plus rapide.",
+    "enigma08AnswerFeedback": "Nommage",
+    "enigma08AnswerFeedbackDesc": "",
 	
     "scrollsQuestion": "Agencez ces lettres entre elles pour trouver le plaisir de l’informatique",
     "scrollsPlaceHolder": "1 mot attendu...",
@@ -219,7 +219,7 @@
 	"enigma11AnswerFeedback": "6",
 	"enigma11AnswerFeedbackDesc": "",
 	
-    "enigma12Question": "L’analyse de Compute-it vous donnera la solution...",
+    "enigma12Question": "Dans Compute-it combien d'actions doit réaliser l'ordinateur ?",
     "enigma12PlaceHolder": "1 nombre attendu...",
     "enigma12Answer": [
         "20##vingt"

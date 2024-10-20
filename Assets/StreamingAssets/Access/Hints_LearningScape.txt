@@ -57,6 +57,6 @@
 	
 	"126.perform": {
 		"Comment": [{"Key": "", "Value": "The Enigma16 question"}],
-		"3": [{"Key": "", "Value": "Les fragments de rêve 10, 11 et 13 devraient me permettre de trouver une des réponses"}]
+		"3": [{"Key": "", "Value": "Les fragments de rêve 10 et 11 devraient me permettre de décoder les deux mots du fragment de rêve 13"}]
 	},
 }

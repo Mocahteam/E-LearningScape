@@ -12,6 +12,7 @@ public class HelpSystem : FSystem {
     private Family f_traces = FamilyManager.getFamily(new AllOfComponents(typeof(Trace)));
     private Family f_componentMonitoring = FamilyManager.getFamily(new AllOfComponents(typeof(ComponentMonitoring)));
     private Family f_wrongAnswerInfo = FamilyManager.getFamily(new AllOfComponents(typeof(WrongAnswerInfo), typeof(ComponentMonitoring)));
+    private Family f_enabledHintsIAR = FamilyManager.getFamily(new AllOfComponents(typeof(HintContent)), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
 
     private Family f_puzzles = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new NoneOfComponents(typeof(DreamFragment)), new AllOfComponents(typeof(ComponentMonitoring)));
     private Family f_puzzlesFragment = FamilyManager.getFamily(new AnyOfTags("Puzzle"), new AllOfComponents(typeof(DreamFragment), typeof(ComponentMonitoring)));
@@ -692,6 +693,29 @@ public class HelpSystem : FSystem {
                 }
             }
         }
+
+        // If we have hints enabled, keep only candidates for components monitoring in the same enigma
+        if (f_enabledHintsIAR.Count > 0)
+        {
+            // Parse all candidates
+            for (int i = actionCandidates.Count - 1; i >= 0; i--)
+            {
+                // look if an enabled hint is in the same full petri net
+                bool linkedToEnabledHint = false;
+                foreach (GameObject hintGO in f_enabledHintsIAR)
+                {
+                    HintContent hint = hintGO.GetComponent<HintContent>();
+                    if (hint.monitor.fullPnSelected == actionCandidates[i].Key.fullPnSelected)
+                    {
+                        linkedToEnabledHint = true;
+                        break;
+                    }
+                }
+                // if not found => remove this candidate
+                if (!linkedToEnabledHint)
+                    actionCandidates.RemoveAt(i);
+            }
+        }
         if (actionCandidates.Count > 0)
         {
             KeyValuePair<ComponentMonitoring, string> candidateSelection = actionCandidates[(int)UnityEngine.Random.Range(0, actionCandidates.Count - 0.01f)];
@@ -804,7 +828,7 @@ public class HelpSystem : FSystem {
 
         hintCounter++;
         tmpGO.transform.GetChild(0).GetComponent<TMP_Text>().text = LoadGameContent.internalGameContent.hintButtonText + " " + hintCounter;
-
+        
         if (enableTrace)
         {
             GameObjectManager.addComponent<ActionPerformedForLRS>(hintButton.gameObject, new

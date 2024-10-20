@@ -172,7 +172,7 @@
 	"Comment: Gears enigma": {},
 	"151.Correct": {
 		"Comment": ["The gears enigma question"],
-		"1": ["L'une des quatre roues doit sûrement avoir sa place au centre du mécanisme"]
+		"1": ["L'une des quatre roues jaunes doit sûrement avoir sa place au centre du mécanisme"]
 	},
 	
 	"Comment: Mastermind enigma": {},

@@ -1,5 +1,5 @@
 {
-  "sessionDuration": 2700.0,
+  "sessionDuration": 3000.0,
   "playerHintCooldownDuration": 120.0,
   "systemHintCooldownDuration": 30.0,
   "feedbackStep1": -0.10,

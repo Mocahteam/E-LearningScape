@@ -422,11 +422,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'An error occurs while loading.
 
-    See logs for more details.
-
-
-    For
-    MacOS users, be sure to launch the game with "PlayGame" file.'
+    See logs for more details.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 388fb88c7332f6a4086c9d1069ce3d53, type: 2}
   m_sharedMaterial: {fileID: 3898167904873870984, guid: 388fb88c7332f6a4086c9d1069ce3d53,
@@ -454,7 +450,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.2
+  m_fontSize: 48.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

@@ -151,6 +151,7 @@ public class InternalGameContent {
     public string NoHintAvailable;
     public string getHintButton;
     public string hintOpenURL;
+    public string ScreenR3Title;
     public string gameMenuResumeButton;
     public string gameMenuSaveButton;
     public string gameMenuSaveNotice;

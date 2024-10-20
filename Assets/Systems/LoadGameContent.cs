@@ -103,7 +103,7 @@ public class LoadGameContent : FSystem {
         random = new System.Random();
 
         if (Application.isEditor && GameSelected.version == "")
-            GameSelected.version = "Info";
+            GameSelected.version = "Access";
 
         dataPath = Application.streamingAssetsPath + "/" + GameSelected.version;
 
