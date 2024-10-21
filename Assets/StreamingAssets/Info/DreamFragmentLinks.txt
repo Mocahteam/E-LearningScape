@@ -12,7 +12,7 @@
       "Voir en ligne"
   ],
   "Fragment_souvenir_3": [
-      "http://compute-it.toxicode.fr/",
+      "",
       "Voir en ligne"
   ],
   "Fragment_souvenir_4": [
@@ -48,7 +48,7 @@
       "Voir plus"
   ],
   "Fragment_souvenir_12": [
-      "",
+      "http://compute-it.toxicode.fr/",
       "Voir plus"
   ],
   "Fragment_souvenir_13": [
