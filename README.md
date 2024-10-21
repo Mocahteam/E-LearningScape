@@ -20,7 +20,7 @@ Ce jeu étant développé avec des ressources limitées nous n'avons pas actuell
 E-LearningScape est un jeu sérieux sous un format d'*escape game*. Les joueurs incarnent des marchands de sable naviguant dans le rêve d'une personne et devant l'aider à répondre à toutes les questions qu'elle se pose avant qu'elle ne se réveille. 
 
 Le jeu inclus par défaut trois versions traitant de trois thèmes différents :
-   1. Accessibilité et école inclusive ([Accéder à la page web dédiée](https://www.inshea.fr/fr/content/serious-games-de-lorna))
+   1. Accessibilité et école inclusive ([Accéder à la page web dédiée](https://bepep.inshea.fr/course/view.php?id=15))
    2. Informatique ([Accéder à la page web dédiée](https://webia.lip6.fr/~muratetm/elearningscape/))
    3. Pédagogie
 
