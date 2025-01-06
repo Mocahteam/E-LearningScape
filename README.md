@@ -43,6 +43,7 @@ Le jeu E-LearningScape inclus par défaut trois versions traitant de trois thèm
    - [Stop Harcelement](https://webia.lip6.fr/~muratetm/elearningscape/Mods/Stop%20Harcelement.zip) (une adaptation sur le harcelmeent scolaire)
    - [UXDesign](https://webia.lip6.fr/~muratetm/elearningscape/Mods/UXDesign.zip) (une adaptation sur la conception centrée utilisateur)
    - [ViolenceScolaire](https://webia.lip6.fr/~muratetm/elearningscape/Mods/ViolenceScolaire.zip) (une adaptation sur les violences scolaires)
+   - [RevolNum](https://webia.lip6.fr/~muratetm/elearningscape/Mods/RevolNum.zip) (une adaptation pour SNT)
 
 Pour installer ces autres versions, téléchargez l'un des fichier zip ci-dessus et décompressez son contenu dans le dossier StreamingAssets de votre jeu :
    - Pour **Windows** et **Linux**, voir le dossier **E-LearningScape_Data/StreamingAssets/[versionJeu]**
