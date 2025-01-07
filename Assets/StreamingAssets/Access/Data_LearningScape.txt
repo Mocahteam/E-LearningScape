@@ -147,7 +147,7 @@
         "Il faut savoir changer de posture.##Il faut savoir changer de posture"
     ],
     "crouchAnswerFeedback": "Il faut savoir changer de posture.",
-    "crouchAnswerFeedbackDesc": "",
+    "crouchAnswerFeedbackDesc": "Une personne ressource devant accompagner des personnes en situation de handicap devra en permanence savoir changer de posture pour pouvoir adapter sa pratique",
     "crouchWords": [
         "Île",
         "faux",
@@ -182,8 +182,8 @@
     "glassesAnswer": [
         "Handicap invisible"
     ],
-    "glassesAnswerFeedback": "Handicap invisible",
-    "glassesAnswerFeedbackDesc": "",
+    "glassesAnswerFeedback": "Le handicap invisible...",
+    "glassesAnswerFeedbackDesc": "... est un handicap qui n'est pas apparent à première vue. Il peut parfois générer une incompréhension voire des remarques déplacées. Certaines personnes préfèrent dissimuler leur handicap par peur de stigmatisation.",
     "glassesPicturesPath": [
         "glasses01.png",
         "glasses02.png",
@@ -197,7 +197,7 @@
         "Lisibilité"
     ],
     "enigma08AnswerFeedback": "Lisibilité",
-    "enigma08AnswerFeedbackDesc": "",
+    "enigma08AnswerFeedbackDesc": "Faire attention aux contrastes, aux polices d’écritures, à la qualité des images utilisées sont quelques éléments à considérer parmi bien d’autres pour favoriser la lisibilité d’un document",
 	
     "scrollsQuestion": "Acronyme bien utile pour construire et mettre en place un projet personnalisé",
     "scrollsPlaceHolder": "1 mot anglais attendu...",
@@ -220,7 +220,7 @@
         "Stigmatisation"
     ],
 	"mirrorAnswerFeedback": "Stigmatisation",
-	"mirrorAnswerFeedbackDesc": "",
+	"mirrorAnswerFeedbackDesc": "A l'image du reflet cylindrique qui déforme la réalité, le professionnel doit réfléchir aux choix qu'il fait dans sa pratique pour ne pas stigmatiser les personnes dont il ne perçoit qu'une part de leur réalité",
     "mirrorPicturePath": "Plank.png",
 	
     "enigma11Question": "Un processus de raisonnement…",
@@ -229,7 +229,7 @@
         "Inférence"
     ],
 	"enigma11AnswerFeedback": "Inférence",
-	"enigma11AnswerFeedbackDesc": "",
+	"enigma11AnswerFeedbackDesc": "Passer d'une ou plusieurs assertions affirmées comme vraies à une nouvelle assertions qui en est la conclusion",
 	
     "enigma12Question": "Elle est nécessaire pour sortir du labyrinthe de l’école inclusive",
     "enigma12PlaceHolder": "1 mot attendu...",
@@ -237,18 +237,18 @@
         "Collaboration"
     ],
 	"enigma12AnswerFeedback": "Collaboration",
-	"enigma12AnswerFeedbackDesc": "",
+	"enigma12AnswerFeedbackDesc": "Chaque professionnel voit la complexité d'une situation localement mais il faut souvent prendre de la hauteur (comme dans un labyrinthe) et collaborer pour trouver la solution",
 	
     "lockRoom2Password": 703,
 	
     "puzzleAnswer": "Adapter sa pratique",
-    "puzzleAnswerFeedback": "Adapter sa pratique",
-    "puzzleAnswerFeedbackDesc": "",
+    "puzzleAnswerFeedback": "Adapter sa pratique...",
+    "puzzleAnswerFeedbackDesc": "... c'est la clé pour répondre aux besoins des personnes",
 	"puzzlePicturePath": "Puzzle_Complet.png",
 	
     "lampAnswer": "Besoins",
     "lampAnswerFeedback": "Besoins",
-    "lampAnswerFeedbackDesc": "",
+    "lampAnswerFeedbackDesc": "Les besoins d'une personne sont liés à ses cinq sens et à la cognition",
     "lampPicturesPath": [
         "lamp01.png",
         "lamp02.png",
@@ -260,11 +260,11 @@
 	
     "enigma16Answer": "Personne ressource",
     "enigma16AnswerFeedback": "Personne ressource",
-    "enigma16AnswerFeedbackDesc": "",
+    "enigma16AnswerFeedbackDesc": "Les alphabets Braille et dactylologique sont deux ressources utiles aux personnes ressources mais il en existe bien d’autres…",
 	
     "whiteBoardAnswer": "Accessibilité",
     "whiteBoardAnswerFeedback": "Accessibilité",
-    "whiteBoardAnswerFeedbackDesc": "",
+    "whiteBoardAnswerFeedbackDesc": "Effacer les obstacles, les barrières... c'est rendre accessible",
     "whiteBoardWords": [
         "Dépendances",
         "Déni",
