@@ -70,6 +70,7 @@ Pour changer les contenus dans le jeu il vous suffit de travailler sur les fichi
 - Le fichier **[...]/StreamingAssets/[versionJeu]/DreamFragmentLinks.txt** vous permet d'ajouter un lien hypertexte à chaque fragment de rêve.
 
 # Publications
+- O. El Montaser, S. Lallé, M. Muratet : “Evaluating the Impact of Automated Hints in a 3D Educational Escape Game: A Comparative Study of Accessibility and Computer Science Versions”, 30th International Conference on Intelligent User Interfaces, Cagliari, Italy, (ACM) (2025)
 - M. Muratet, A. Yessad, T. Carron : "How to assist designers model learning games with Petri nets?", FDG 2022, Athens, Greece (2022)
 - M. Muratet, M. Arneton, A. Vanbrugghe, V. Geffroy, T. Planques : "A propos de la création d'un Escape Game à partir d'une coquille de jeu sérieux numérique accessible", CIGE 2022, May 2022, en ligne, France (2022).
 - M. Arneton, M. Muratet, A. Vanbrugghe, V. Geffroy, M.-H. Ferrand : “Proposer un jeu sérieux pour former à l’inclusion : retour d’expérience en France”, Revue Internationale des Technologies en Pédagogie Universitaire, vol. 19 (1), pp. 68-75, (Conférence des recteurs et principaux des universités du Québec [CREPUQ]) (2022)
