@@ -26,7 +26,9 @@ Le jeu inclus par défaut trois versions traitant de trois thèmes différents :
 
 <p align="center"><img src="docs/CaptureLearningScape.PNG" alt="Une vue du jeu" height="200"/> <img src="docs/collaboratif.jpg" alt="Travail collaboratif" height="200"/></p>
    
-Vidéo de présentation : https://www.youtube.com/watch?v=K2mYKNe35Q4
+Vidéos en lien avec le projet :
+   - https://www.youtube.com/watch?v=WYbos_2Zq50
+   - https://www.youtube.com/watch?v=K2mYKNe35Q4
 
 # Mods
 Le jeu E-LearningScape inclus par défaut trois versions traitant de trois thèmes différents (Informatique, Accessibilité et Pédagogie). D'autres versions du jeu existent que vous pouvez télécharger avec les liens ci-dessous. Si vous souhaitez partager votre propre version n'hésitez pas à nous contacter :
