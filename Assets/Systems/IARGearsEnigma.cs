@@ -117,6 +117,11 @@ public class IARGearsEnigma : FSystem
             unlockLogin = false;
             LoginManager.instance.Pause = false;
             avoidCoroutine = true;
+            // Switch back to the questions
+            // Hide gears
+            GameObjectManager.setGameObjectState(gears, false);
+            // Show queries
+            GameObjectManager.setGameObjectState(gears.GetComponent<LinkedWith>().link, true);
         }
     }
 

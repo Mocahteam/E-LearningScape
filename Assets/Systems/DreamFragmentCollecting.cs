@@ -88,7 +88,7 @@ public class DreamFragmentCollecting : FSystem {
                     if (tmpDFComponent.type == 0)
                         FragmentText.text = string.Concat(LoadGameContent.internalGameContent.dreamFragmentText, tmpDFComponent.id);
                     else if (tmpDFComponent.type == 1 || tmpDFComponent.type == 2)
-                        FragmentText.text = string.Concat("\"", tmpDFComponent.itemName, "\"");
+                        FragmentText.text = tmpDFComponent.itemName;
                     // Pause this system and dependant systems
                     this.Pause = true;
                     movingModeSelector.pauseMovingSystems();
@@ -96,6 +96,8 @@ public class DreamFragmentCollecting : FSystem {
                     IARTabNavigation.instance.Pause = true;
                     backupHighlighterState = Highlighter.instance.Pause;
                     Highlighter.instance.Pause = true;
+                    if (tmpDFComponent.type == 1)
+                        GameObjectManager.addComponent<ForceCollect>(selectedFragment);
                 }
                 else
                 {

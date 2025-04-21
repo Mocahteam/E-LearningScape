@@ -202,7 +202,9 @@ public class IARViewItem : FSystem {
         // we manage SelectedInInventory component
         if (item.GetComponent<SelectedInInventory>())
         {
-            GameObjectManager.addComponent<ActionPerformed>(item, new { name = "turnOff", performedBy = "player" });
+            // Ne pas générer de trace pour Laalys dans les cas des fragments de l'énigme où il faut se baisser
+            if (item.name != "CrouchFragments")
+                GameObjectManager.addComponent<ActionPerformed>(item, new { name = "turnOff", performedBy = "player" });
             GameObjectManager.addComponent<ActionPerformedForLRS>(item, new 
             {
                 verb = "deactivated",
@@ -227,7 +229,9 @@ public class IARViewItem : FSystem {
         }
         else
         {
-            GameObjectManager.addComponent<ActionPerformed>(item, new { name = "turnOn", performedBy = "player" });
+            // Ne pas générer de trace pour Laalys dans les cas des fragments de l'énigme où il faut se baisser
+            if (item.name != "CrouchFragments")
+                GameObjectManager.addComponent<ActionPerformed>(item, new { name = "turnOn", performedBy = "player" });
             GameObjectManager.addComponent<ActionPerformedForLRS>(item, new 
             {
                 verb = "activated",

@@ -280,7 +280,7 @@ public class StoryDisplaying : FSystem {
                         DreamFragmentCollecting.instance.Pause = false;
                         IARNewItemAvailable.instance.Pause = false;
                         Highlighter.instance.Pause = false;
-                        MirrorSystem.instance.Pause = false;
+                        MirrorCamSystem.instance.Pause = false;
                         ToggleObject.instance.Pause = false;
                         CollectObject.instance.Pause = false;
                         MoveInFrontOf.instance.Pause = false;

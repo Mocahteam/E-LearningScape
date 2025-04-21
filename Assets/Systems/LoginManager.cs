@@ -30,7 +30,7 @@ public class LoginManager : FSystem {
 
     private float speed;
     private TMP_InputField ifConnectionR2;
-    public static int passwordSolution;
+    public static string passwordSolution;
 
     private TextMeshProUGUI connectionAnswerCheck1;
     private TextMeshProUGUI connectionAnswerCheck2;
@@ -139,8 +139,6 @@ public class LoginManager : FSystem {
 
                 UnlockLoginDoor();
 
-                GameObject IARsecondScreen = mainWindow.GetComponentInChildren<LinkedWith>().link;
-
                 unlockedRoom.roomNumber = 2;
                 // exit login
                 exitBy = "system";
@@ -170,12 +168,15 @@ public class LoginManager : FSystem {
 
     public void CheckMastermindAnswer() //mastermind
     {
-        int answer;
-        int.TryParse(ifConnectionR2.text, out answer);
-        if (ifConnectionR2.text == "")
-            answer = -1;
+        string answer = ifConnectionR2.text;
+        char answerHundreds = answer.Length == 3 ? answer[0] : '0';
+        char answerTens = answer.Length == 3 ? answer[1] : (answer.Length == 2 ? answer[0] : '0');
+        char answerUnits = answer.Length == 3 ? answer[2] : (answer.Length == 2 ? answer[1] : (answer.Length == 1 ? answer[0] : '0'));
+        char solutionHundreds = passwordSolution.Length == 3 ? passwordSolution[0] : '0';
+        char solutionTens = passwordSolution.Length == 3 ? passwordSolution[1] : (passwordSolution.Length == 2 ? passwordSolution[0] : '0');
+        char solutionUnits = passwordSolution.Length == 3 ? passwordSolution[2] : (passwordSolution.Length == 2 ? passwordSolution[1] : (passwordSolution.Length == 1 ? passwordSolution[0] : '0'));
 
-        if (answer == passwordSolution) //if the answer is correct
+        if (answerHundreds == solutionHundreds && answerTens == solutionTens && answerUnits == solutionUnits) //if the answer is correct
         {
             GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "Correct", performedBy = "player" });
             GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "perform", performedBy = "system" });
@@ -224,23 +225,17 @@ public class LoginManager : FSystem {
                 objectType = "mastermind",
                 result = true,
                 success = -1,
-                response = answer.ToString()
+                response = answer
             });
 
             ifConnectionR2.ActivateInputField();
-            int answerHundreds = answer / 100;
-            int answerTens = answer / 10 % 10;
-            int answerUnits = answer % 10;
-            int solutionHundreds = passwordSolution / 100;
-            int solutionTens = passwordSolution / 10 % 10;
-            int solutionUnits = passwordSolution % 10;
 
             if (answerHundreds == solutionHundreds)
             {
                 connectionAnswerCheck1.text = "O";
                 connectionAnswerCheck1.color = cacGreen;
             }
-            else if ((answerTens != solutionTens && answerHundreds == solutionTens) || (answerUnits != solutionUnits && answerHundreds == solutionUnits))
+            else if (passwordSolution.Contains(answerHundreds + ""))
             {
                 connectionAnswerCheck1.text = "?";
                 connectionAnswerCheck1.color = cacOrange;
@@ -256,7 +251,7 @@ public class LoginManager : FSystem {
                 connectionAnswerCheck2.text = "O";
                 connectionAnswerCheck2.color = cacGreen;
             }
-            else if ((answerHundreds != solutionHundreds && answerTens == solutionHundreds) || (answerUnits != solutionUnits && answerTens == solutionUnits))
+            else if (passwordSolution.Contains(answerTens + ""))
             {
                 connectionAnswerCheck2.text = "?";
                 connectionAnswerCheck2.color = cacOrange;
@@ -272,7 +267,7 @@ public class LoginManager : FSystem {
                 connectionAnswerCheck3.text = "O";
                 connectionAnswerCheck3.color = cacGreen;
             }
-            else if ((answerHundreds != solutionHundreds && answerUnits == solutionHundreds) || (answerTens != solutionTens && answerUnits == solutionTens))
+            else if (passwordSolution.Contains(answerUnits + ""))
             {
                 connectionAnswerCheck3.text = "?";
                 connectionAnswerCheck3.color = cacOrange;

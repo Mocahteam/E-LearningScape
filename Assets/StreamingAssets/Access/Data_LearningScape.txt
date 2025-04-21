@@ -41,6 +41,11 @@
 		"Cette corde n’est pas très longue mais elle semble assez solide et en bon état. Elle permet sans doute de lier des éléments ensemble.",
 		"Cliquez sur la corde pour l'activer/la désactiver"
 	],
+	"inventoryCrouchFragments": [
+		"Fragments",
+		"Se sont les fragments cachés sous les objets. Ces informations pourraient être utiles pour la suite.",
+		"Cliquez sur les fragments pour les ouvrir/les refermer"
+	],
 	"inventoryKeySatchel": [
 		"Clé",
 		"Cette clé a été trouvée dans le vase se renversant. Elle ouvre certainement une porte ou un cadenas...",
@@ -174,7 +179,7 @@
     "masterMindPasswordText": "Mot de passe:",
     "masterMindValidation": "Valider",
 	"mastermindQuestionYPos" : 65,
-	"mastermindAnswer": 250,
+	"mastermindAnswer2": "250",
 	"mastermindBackgroundPicturePath": "MasterMindINSHEA.png",
 	
     "glassesQuestion": "Quelle caractéristique commune ressort de cette foule ?",

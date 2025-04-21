@@ -31,6 +31,7 @@ public class GameContent {
     public List<string> inventoryScrollIntro;
     public List<string> inventoryKeyBallBox;
     public List<string> inventoryWire;
+    public List<string> inventoryCrouchFragments;
     public List<string> inventoryKeySatchel;
     public List<string> inventoryScrolls;
     public List<string> inventoryGlasses1;
@@ -82,7 +83,8 @@ public class GameContent {
     public string masterMindPasswordText;
     public string masterMindValidation;
     public int mastermindQuestionYPos;
-    public int mastermindAnswer;
+    public int mastermindAnswer; // for retrocompatibility
+    public string mastermindAnswer2;
     public string mastermindBackgroundPicturePath;
 
     //Glasses

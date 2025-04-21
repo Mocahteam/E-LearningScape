@@ -17,6 +17,7 @@ public class IARTabNavigation : FSystem {
     private Family f_settings = FamilyManager.getFamily(new AllOfComponents(typeof(WindowNavigator)), new AnyOfTags("UIBackground"), new AllOfProperties(PropertyMatcher.PROPERTY.ACTIVE_IN_HIERARCHY));
     private Family f_selectedTab = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedTab)));
     private Family f_selectedTerminal = FamilyManager.getFamily(new AnyOfTags("Terminal"), new AllOfComponents(typeof(ReadyToWork)));
+    private Family f_focusedLogin = FamilyManager.getFamily(new AnyOfTags("Login"), new AllOfComponents(typeof(ReadyToWork)));
 
     public Sprite selectedTabSprite;
     public Sprite defaultTabSprite;
@@ -84,7 +85,7 @@ public class IARTabNavigation : FSystem {
         else
         {
             skipNextClose = false;
-            if (!iar.activeInHierarchy)
+            if (!iar.activeInHierarchy && f_focusedLogin.Count == 0)
             {
                 if (Input.GetButtonDown("ToggleInventory"))
                     openIar(0); // Open IAR on the dream fragments tab if at least one fragment has been found
@@ -92,7 +93,7 @@ public class IARTabNavigation : FSystem {
                     openIar(1); // Open IAR on the last query visible tab
                 else if (Input.GetButtonDown("ToggleQuestions") && (unlockedRoom.roomNumber > 0 && unlockedRoom.roomNumber < 4 || SceneManager.GetActiveScene().name.Contains("Tuto")))
                     openLastQuestions(); // Open IAR on the last query visible tab
-                else if (Input.GetButtonDown("ToggleHelp") && !HelpSystem.shouldPause)
+                else if (Input.GetButtonDown("ToggleHelp"))
                     openIar(-2); // Open IAR on the second to last tab
                 else if (Input.GetButtonDown("Cancel") && f_atWork.Count == 0) // Check not working in enigma because else Cancel action has to leave enigma and not open IAR
                     openIar(-1); // Open IAR on the last tab
@@ -142,7 +143,7 @@ public class IARTabNavigation : FSystem {
         MovingSystem_UIMode.instance.Pause = true;
         if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
         {
-            MirrorSystem.instance.Pause = true;
+            MirrorCamSystem.instance.Pause = true;
             ToggleObject.instance.Pause = true;
             IARGearsEnigma.instance.Pause = false;
             LockResolver.instance.Pause = true;

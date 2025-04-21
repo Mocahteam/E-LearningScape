@@ -162,6 +162,42 @@ public class HelpSystem : FSystem {
         // Define IAR tab state
         GameObjectManager.setGameObjectState(helpTab, !shouldPause);
 
+        f_wrongAnswerInfo.addEntryCallback(OnWrongAnswer);
+
+        //format expected answers to be compared to formated answers from IARQueryEvaluator
+        List<string> tmpListString;
+        string tmpString;
+        foreach (string key1 in gameHints.wrongAnswerFeedbacks.Keys)
+        {
+            tmpListString = new List<string>(gameHints.wrongAnswerFeedbacks[key1].Keys);
+            foreach (string key2 in tmpListString)
+            {
+                tmpString = LoadGameContent.StringToAnswer(key2);
+                if (!gameHints.wrongAnswerFeedbacks[key1].ContainsKey(tmpString))
+                {
+                    // Add new upper case key (without accents) and copy value for the lower case key
+                    gameHints.wrongAnswerFeedbacks[key1].Add(tmpString, gameHints.wrongAnswerFeedbacks[key1][key2]);
+                    // Remove lower case entry
+                    gameHints.wrongAnswerFeedbacks[key1].Remove(key2);
+                }
+            }
+        }
+
+        //get help UI components
+        scrollViewContent = scrollView.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+        hintButtonPrefab = scrollView.GetComponent<PrefabContainer>().prefab;
+        //create a pool of int button right at the beginning and activate them when necessary rather than creating them during the game
+        hintButtonsPool = new List<GameObject>();
+        GameObject tmpGo;
+        for (int i = 0; i < 100; i++)
+        {
+            tmpGo = GameObject.Instantiate(hintButtonPrefab);
+            tmpGo.transform.SetParent(scrollViewContent.transform);
+            tmpGo.SetActive(false);
+            GameObjectManager.bind(tmpGo);
+            hintButtonsPool.Add(tmpGo);
+        }
+
         if (!shouldPause)
         {
             //add internal game hints to the dictionary of the component GameHints
@@ -203,47 +239,10 @@ public class HelpSystem : FSystem {
 
             cleanHintsByPn = new Stack<string>();
 
-            //format expected answers to be compared to formated answers from IARQueryEvaluator
-            List<string> tmpListString;
-            string tmpString;
-            foreach (string key1 in gameHints.wrongAnswerFeedbacks.Keys)
-            {
-                tmpListString = new List<string>(gameHints.wrongAnswerFeedbacks[key1].Keys);
-                foreach (string key2 in tmpListString)
-                {
-                    tmpString = LoadGameContent.StringToAnswer(key2);
-                    if (!gameHints.wrongAnswerFeedbacks[key1].ContainsKey(tmpString))
-                    {
-                        // Add new upper case key (without accents) and copy value for the lower case key
-                        gameHints.wrongAnswerFeedbacks[key1].Add(tmpString, gameHints.wrongAnswerFeedbacks[key1][key2]);
-                        // Remove lower case entry
-                        gameHints.wrongAnswerFeedbacks[key1].Remove(key2);
-                    }
-                }
-            }
-
             weights = LoadGameContent.enigmasWeight;
             //count the total weighted meta actions
             foreach (string enigmaName in weights.Keys)
                 totalWeightedMetaActions += weights[enigmaName];
-
-            //get help UI components
-            scrollViewContent = scrollView.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
-            hintButtonPrefab = scrollView.GetComponent<PrefabContainer>().prefab;
-
-            //create a pool of int button right at the beginning and activate them when necessary rather than creating them during the game
-            hintButtonsPool = new List<GameObject>();
-            GameObject tmpGo;
-            for (int i = 0; i < 100; i++)
-            {
-                tmpGo = GameObject.Instantiate(hintButtonPrefab);
-                tmpGo.transform.SetParent(scrollViewContent.transform);
-                tmpGo.SetActive(false);
-                GameObjectManager.bind(tmpGo);
-                hintButtonsPool.Add(tmpGo);
-            }
-
-            f_wrongAnswerInfo.addEntryCallback(OnWrongAnswer);
 
             //set player cooldown UI components
             cooldownRT = askHelpButton.transform.GetChild(1).GetComponent<RectTransform>();
@@ -278,6 +277,9 @@ public class HelpSystem : FSystem {
                     {164, -1}
                 };
         }
+        else
+            // Disbale asking button if the help system should pause
+            GameObjectManager.setGameObjectState(askHelpButton, false);
     }
 
     // Use this to update member variables when system resume.
@@ -550,6 +552,9 @@ public class HelpSystem : FSystem {
     /// <param name="go"></param>
     private void OnWrongAnswer(GameObject go)
     {
+        // Be sure the help tab is available
+        GameObjectManager.setGameObjectState(helpTab, true);
+
         // Check if wrong answers are defined for each the monitor of this game object
         foreach (ComponentMonitoring cm in go.GetComponents<ComponentMonitoring>())
         {

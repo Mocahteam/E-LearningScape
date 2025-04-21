@@ -206,7 +206,7 @@ public class MenuSystem : FSystem {
         UIEffectPlayer.instance = null;
         HelpSystem.instance = null;
         Highlighter.instance = null;
-        MirrorSystem.instance = null;
+        MirrorCamSystem.instance = null;
         ToggleObject.instance = null;
         CollectObject.instance = null;
         DreamFragmentCollecting.instance = null;

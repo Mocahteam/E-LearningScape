@@ -205,7 +205,7 @@ public class LoadGameContent : FSystem {
         // if randomHelpSystemActivation is true, set gamecontent.helpsystem with a random value
         if (internalGameContent.randomHelpSystemActivation)
             internalGameContent.helpSystem = random.Next(4) <= 2; // HelpSystem is enabled 75%
-        HelpSystem.shouldPause = !internalGameContent.trace || !internalGameContent.helpSystem || !MonitoringManager.Instance.inGameAnalysis;
+        HelpSystem.shouldPause = !internalGameContent.trace || !internalGameContent.helpSystem || !MonitoringManager.Instance.inGameAnalysis || GameObject.Find("ForceLaunch");
         Debug.Log(string.Concat("Help system: ", internalGameContent.helpSystem, "; Laalys in game analysis: ", MonitoringManager.Instance.inGameAnalysis));
 
         SendStatements.shouldPause = !internalGameContent.traceToLRS;
@@ -431,6 +431,7 @@ public class LoadGameContent : FSystem {
             {"ScrollIntro", gameContent.inventoryScrollIntro},
             {"KeyBallBox", gameContent.inventoryKeyBallBox },
             {"Wire", gameContent.inventoryWire },
+            {"CrouchFragments", gameContent.inventoryCrouchFragments },
             {"KeySatchel", gameContent.inventoryKeySatchel },
             {"Scrolls", gameContent.inventoryScrolls },
             {"Glasses1", gameContent.inventoryGlasses1 },
@@ -441,7 +442,8 @@ public class LoadGameContent : FSystem {
         };
         foreach (GameObject inventoryGo in f_inventoryElements)
         {
-            if (inventoryTexts.ContainsKey(inventoryGo.name)){
+            if (inventoryTexts.ContainsKey(inventoryGo.name) && inventoryTexts[inventoryGo.name].Count == 3)
+            {
                 Collected coll = inventoryGo.GetComponent<Collected>();
                 coll.itemName = inventoryTexts[inventoryGo.name][0];
                 coll.description = inventoryTexts[inventoryGo.name][1];
@@ -490,7 +492,13 @@ public class LoadGameContent : FSystem {
         // init question text and position
         TextMeshProUGUI textMP = login.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
         textMP.transform.localPosition = new Vector3(textMP.transform.localPosition.x, gameContent.mastermindQuestionYPos, textMP.transform.localPosition.z);
-        LoginManager.passwordSolution = gameContent.mastermindAnswer;
+        LoginManager.passwordSolution = gameContent.mastermindAnswer2;
+        if (LoginManager.passwordSolution == null) // Keep for retrocompatibility
+        { 
+            LoginManager.passwordSolution = gameContent.mastermindAnswer + "";
+            while (LoginManager.passwordSolution.Length < 3)
+                LoginManager.passwordSolution = "0" + LoginManager.passwordSolution;
+        }
 
         Debug.Log("Master mind picture loaded");
 
@@ -629,6 +637,7 @@ public class LoadGameContent : FSystem {
             if (tmpDF.type == 1)
             {
                 tmpDF.itemName = gameContent.crouchWords[nbGreenFragments];
+                tmpDF.GetComponent<LinkedWith>().link.GetComponent<LinkedWith>().link.transform.GetChild(nbGreenFragments).GetComponentInChildren<TMP_Text>().text = tmpDF.itemName;
                 nbGreenFragments++;
                 if (nbGreenFragments > 5)
                     break;

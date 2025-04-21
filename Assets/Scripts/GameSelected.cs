@@ -26,24 +26,29 @@ public class GameSelected : MonoBehaviour
 
     private void Start()
     {
-        string[] gameDirectories = Directory.GetDirectories(Application.streamingAssetsPath);
-        if (gameDirectories.Length == 0)
-            startGame(""); // Will display scene error on loading game
-        else if (gameDirectories.Length == 1)
-            startGame(Path.GetFileName(gameDirectories[0]));
-        else
+        if (GameSelected.version == "") // Cas général
         {
-            if (File.Exists(Application.streamingAssetsPath + "/GamesInfo.txt"))
-                gamesInfo = JsonUtility.FromJson<GamesInfo>(File.ReadAllText(Application.streamingAssetsPath + "/GamesInfo.txt"));
-            foreach (string gameDirectory in gameDirectories)
+            string[] gameDirectories = Directory.GetDirectories(Application.streamingAssetsPath);
+            if (gameDirectories.Length == 0)
+                startGame(""); // Will display scene error on loading game
+            else if (gameDirectories.Length == 1)
+                startGame(Path.GetFileName(gameDirectories[0]));
+            else
             {
-                GameObject newGame = Instantiate(gamePrefab);
-                newGame.name = Path.GetFileName(gameDirectory);
-                newGame.GetComponentInChildren<TMPro.TMP_Text>().text = newGame.name;
-                newGame.transform.SetParent(scrollContent.transform);
-                newGame.transform.localScale = new Vector3(1, 1, 1);
+                if (File.Exists(Application.streamingAssetsPath + "/GamesInfo.txt"))
+                    gamesInfo = JsonUtility.FromJson<GamesInfo>(File.ReadAllText(Application.streamingAssetsPath + "/GamesInfo.txt"));
+                foreach (string gameDirectory in gameDirectories)
+                {
+                    GameObject newGame = Instantiate(gamePrefab);
+                    newGame.name = Path.GetFileName(gameDirectory);
+                    newGame.GetComponentInChildren<TMPro.TMP_Text>().text = newGame.name;
+                    newGame.transform.SetParent(scrollContent.transform);
+                    newGame.transform.localScale = new Vector3(1, 1, 1);
+                }
             }
         }
+        else
+            startGame(GameSelected.version); // Cas où on revient du check Java et qu'on force le lancement
     }
 
     public void startGame(string version)

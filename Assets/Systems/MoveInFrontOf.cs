@@ -77,7 +77,7 @@ public class MoveInFrontOf : FSystem {
             movingModeSelector.resumeMovingSystems();
             if (!SceneManager.GetActiveScene().name.Contains("Tuto"))
             {
-                MirrorSystem.instance.Pause = false;
+                MirrorCamSystem.instance.Pause = false;
                 ToggleObject.instance.Pause = false;
                 // pause unused system
                 LockResolver.instance.Pause = true;
