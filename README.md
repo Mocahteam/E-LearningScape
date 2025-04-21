@@ -1,5 +1,5 @@
 # Téléchargements
-**Version 7.3** mise à jour le 20/10/2024
+**Version 7.3** mise à jour le 07/01/2025
 
 1. [**Windows**](https://github.com/Mocahteam/E-LearningScape/releases/download/v7.3/E-LearningScape_Windows.zip)
 2. [**MacOS**](https://github.com/Mocahteam/E-LearningScape/releases/download/v7.3/E-LearningScape_MacOS.zip)
@@ -26,7 +26,9 @@ Le jeu inclus par défaut trois versions traitant de trois thèmes différents :
 
 <p align="center"><img src="docs/CaptureLearningScape.PNG" alt="Une vue du jeu" height="200"/> <img src="docs/collaboratif.jpg" alt="Travail collaboratif" height="200"/></p>
    
-Vidéo de présentation : https://www.youtube.com/watch?v=K2mYKNe35Q4
+Vidéos en lien avec le projet :
+   - https://www.youtube.com/watch?v=WYbos_2Zq50
+   - https://www.youtube.com/watch?v=K2mYKNe35Q4
 
 # Mods
 Le jeu E-LearningScape inclus par défaut trois versions traitant de trois thèmes différents (Informatique, Accessibilité et Pédagogie). D'autres versions du jeu existent que vous pouvez télécharger avec les liens ci-dessous. Si vous souhaitez partager votre propre version n'hésitez pas à nous contacter :
@@ -70,6 +72,7 @@ Pour changer les contenus dans le jeu il vous suffit de travailler sur les fichi
 - Le fichier **[...]/StreamingAssets/[versionJeu]/DreamFragmentLinks.txt** vous permet d'ajouter un lien hypertexte à chaque fragment de rêve.
 
 # Publications
+- O. El Montaser, S. Lallé, M. Muratet : “Evaluating the Impact of Automated Hints in a 3D Educational Escape Game: A Comparative Study of Accessibility and Computer Science Versions”, 30th International Conference on Intelligent User Interfaces, Cagliari, Italy, (ACM) (2025)
 - M. Muratet, A. Yessad, T. Carron : "How to assist designers model learning games with Petri nets?", FDG 2022, Athens, Greece (2022)
 - M. Muratet, M. Arneton, A. Vanbrugghe, V. Geffroy, T. Planques : "A propos de la création d'un Escape Game à partir d'une coquille de jeu sérieux numérique accessible", CIGE 2022, May 2022, en ligne, France (2022).
 - M. Arneton, M. Muratet, A. Vanbrugghe, V. Geffroy, M.-H. Ferrand : “Proposer un jeu sérieux pour former à l’inclusion : retour d’expérience en France”, Revue Internationale des Technologies en Pédagogie Universitaire, vol. 19 (1), pp. 68-75, (Conférence des recteurs et principaux des universités du Québec [CREPUQ]) (2022)
