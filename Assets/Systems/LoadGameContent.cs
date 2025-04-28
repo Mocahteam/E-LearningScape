@@ -637,7 +637,7 @@ public class LoadGameContent : FSystem {
             if (tmpDF.type == 1)
             {
                 tmpDF.itemName = gameContent.crouchWords[nbGreenFragments];
-                tmpDF.GetComponent<LinkedWith>().link.GetComponent<LinkedWith>().link.transform.GetChild(nbGreenFragments).GetComponentInChildren<TMP_Text>().text = tmpDF.itemName;
+                tmpDF.GetComponent<LinkedWith>().link.GetComponent<LinkedWith>().link.transform.Find(tmpDF.gameObject.name).GetComponentInChildren<TMP_Text>().text = tmpDF.itemName;
                 nbGreenFragments++;
                 if (nbGreenFragments > 5)
                     break;

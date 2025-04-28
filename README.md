@@ -1,9 +1,9 @@
 # Téléchargements
-**Version 7.3** mise à jour le 07/01/2025
+**Version 7.4** mise à jour le 28/04/2025
 
-1. [**Windows**](https://github.com/Mocahteam/E-LearningScape/releases/download/v7.3/E-LearningScape_Windows.zip)
-2. [**MacOS**](https://github.com/Mocahteam/E-LearningScape/releases/download/v7.3/E-LearningScape_MacOS.zip)
-3. [**Linux**](https://github.com/Mocahteam/E-LearningScape/releases/download/v7.3/E-LearningScape_Linux.zip)
+1. [**Windows**](https://github.com/Mocahteam/E-LearningScape/releases/download/v7.4/E-LearningScape_Windows.zip)
+2. [**MacOS**](https://github.com/Mocahteam/E-LearningScape/releases/download/v7.4/E-LearningScape_MacOS.zip)
+3. [**Linux**](https://github.com/Mocahteam/E-LearningScape/releases/download/v7.4/E-LearningScape_Linux.zip)
 
 Ce jeu étant développé avec des ressources limitées nous n'avons pas actuellement réalisé les procédures pour certifier le jeu sur les différents systèmes d'exploitation. Il est donc fort probable que votre ordinateur considère le jeu comme une menace et refuse de le lancer. Suivez donc les aides ci-dessous pour pouvoir lancer le jeu :
 
