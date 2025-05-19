@@ -55,8 +55,9 @@ public class DreamFragmentCollecting : FSystem {
         {
             foreach (GameObject selectedFragment in f_dreamFragments)
             {
-                // display IAR dream fragments tab after the first one is found
-                if (!firstFragmentFound && IARDreamFragmentManager.virtualDreamFragment)
+                tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
+                // display IAR dream fragments tab after the first blue one is found
+                if (!firstFragmentFound && IARDreamFragmentManager.virtualDreamFragment && tmpDFComponent.type == 0)
                 {
                     foreach (GameObject go in f_tabs)
                     {
@@ -69,7 +70,6 @@ public class DreamFragmentCollecting : FSystem {
                     firstFragmentFound = true;
                 }
 
-                tmpDFComponent = selectedFragment.GetComponent<DreamFragment>();
                 if (!IARDreamFragmentManager.virtualDreamFragment || tmpDFComponent.tag == "Puzzle" || tmpDFComponent.type != 0)
                 {
                     // Show fragment UI

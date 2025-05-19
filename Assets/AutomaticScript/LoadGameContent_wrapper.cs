@@ -53,6 +53,11 @@ public class LoadGameContent_wrapper : BaseWrapper
 		MainLoop.callAppropriateSystemMethod (system, "SetFragments", virtualDreamFragment);
 	}
 
+	public void SetTimerVisibility(System.Boolean isVisible)
+	{
+		MainLoop.callAppropriateSystemMethod (system, "SetTimerVisibility", isVisible);
+	}
+
 	public void CopySessionID()
 	{
 		MainLoop.callAppropriateSystemMethod (system, "CopySessionID", null);

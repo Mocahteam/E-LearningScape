@@ -56,16 +56,10 @@ public class CollectObject : FSystem {
         });
         // enable UI target
         GameObjectManager.setGameObjectState(collect.GetComponent<LinkedWith>().link, true);
-        // particular case of collecting room2 scrolls
+        // particular case of collecting room2 scrolls and green dream fragments
         if ((collect.name.Contains("Scroll") && collect.name.Length == 7) || collect.name.Contains("Crouch_Fragment_souvenir"))
         {
-            // find link into IAR left screen
-            GameObject UI_metaItem = collect.GetComponent<LinkedWith>().link;
-            GameObjectManager.setGameObjectState(UI_metaItem.transform.GetChild(0).gameObject, true); // force to enable new item notification
-            // find link into IAR right screen
-            GameObject IAR_Item = UI_metaItem.GetComponent<LinkedWith>().link.transform.Find(collect.name).gameObject;
-            // enable it
-            GameObjectManager.setGameObjectState(IAR_Item, true);
+            enableTargetInIAR(collect);
         }
         // particular case of puzzle pieces
         if (collect.name.Contains("PuzzleSet_") && collect.name.Length == 12)
@@ -91,5 +85,18 @@ public class CollectObject : FSystem {
         {
             GameObjectManager.setGameObjectState(pressY, true);
         }
+    }
+
+    public void enableTargetInIAR(GameObject source)
+    {
+        // find link into IAR left screen
+        GameObject UI_metaItem = source.GetComponent<LinkedWith>().link;
+        // force to enable new item notification
+        GameObjectManager.setGameObjectState(UI_metaItem.transform.GetChild(0).gameObject, true);
+        // find link into IAR right screen
+        GameObject IAR_Item = UI_metaItem.GetComponent<LinkedWith>().link.transform.Find(source.name).gameObject;
+        // enable it
+        GameObjectManager.setGameObjectState(IAR_Item, true);
+
     }
 }

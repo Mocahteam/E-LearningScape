@@ -277,6 +277,7 @@ public class IARGearsEnigma : FSystem
         rotateGear = true;  //rotate gears in the middle
         // Make login selectable
         GameObjectManager.addComponent<Selectable>(login, new { standingPosDelta = new Vector3(-0.9f, -0.8f, 0f), standingOrientation = new Vector3(1f, 0f, 0f) });
+        GameObjectManager.addComponent<PointerSensitive>(login);
     }
 
     public bool IsResolved()

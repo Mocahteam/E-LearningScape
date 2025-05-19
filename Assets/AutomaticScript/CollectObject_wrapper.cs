@@ -12,4 +12,9 @@ public class CollectObject_wrapper : BaseWrapper
 		MainLoop.initAppropriateSystemField (system, "itemCollectedNotif", itemCollectedNotif);
 	}
 
+	public void enableTargetInIAR(UnityEngine.GameObject source)
+	{
+		MainLoop.callAppropriateSystemMethod (system, "enableTargetInIAR", source);
+	}
+
 }

@@ -34,6 +34,11 @@ public class InternalGameContent {
     /// </summary>
     public bool virtualPuzzle = true;
     /// <summary>
+    /// If true, make timer visible.
+    /// Else make timer invisible
+    /// </summary>
+    public bool displayTimer = true;
+    /// <summary>
     /// If false, after answering the last question and leaving IAR,
     /// the ending text will be displayed without going to the last room
     /// </summary>
@@ -97,6 +102,7 @@ public class InternalGameContent {
     public string endLeaveButtonText;
     public string optionControlsMenu;
     public string optionVirtualFragments;
+    public string optionDisplayTimer;
     public string optionMovingTexts;
     public string optionMoveSpeed;
     public string optionCameraSensitivity;

@@ -164,8 +164,7 @@ public class LoadGameContent : FSystem {
                 }
                 catch (Exception)
                 {
-                    Debug.LogError("The key \"" + tmpUIText.gameContentVariable + "\" is not defined in InternalData.txt or in Data_LearningScape.txt, please check content.");
-                    dataAvailable = false;
+                    Debug.LogError("The key \"" + tmpUIText.gameContentVariable + "\" is not defined in InternalData.txt or in Data_LearningScape.txt, use default value.");
                 }
             }
         }
@@ -201,6 +200,7 @@ public class LoadGameContent : FSystem {
         Debug.Log(string.Concat("Trace: ", internalGameContent.trace));
 
         chronometer.sessionTimer = internalGameContent.gameDuration;
+        chronometer.GetComponent<TMP_Text>().enabled = internalGameContent.displayTimer;
 
         // if randomHelpSystemActivation is true, set gamecontent.helpsystem with a random value
         if (internalGameContent.randomHelpSystemActivation)
@@ -313,7 +313,6 @@ public class LoadGameContent : FSystem {
                                 tmpGO.transform.SetParent(go.transform);
                                 tmpRectTransform = tmpGO.GetComponent<RectTransform>();
                                 tmpRectTransform.localScale = Vector3.one;
-                                Debug.Log(internalGameContent.dreamFragmentOutline);
                                 if (!internalGameContent.dreamFragmentOutline)
                                     tmpGO.transform.Find("Outline").gameObject.SetActive(false);
                                 //if there are several document for one dream fragment, give them different position to make them visible
@@ -932,6 +931,15 @@ public class LoadGameContent : FSystem {
         }
         IARDreamFragmentManager.virtualDreamFragment = virtualDreamFragment;
         Debug.Log(string.Concat("Virtual dream fragments: ", virtualDreamFragment));
+    }
+
+    /// <summary>
+    /// Set timing visibility.
+    /// </summary>
+    /// <param name="isVisible">If true, timing will be visible</param>
+    public void SetTimerVisibility(bool isVisible)
+    {
+        chronometer.GetComponent<TMP_Text>().enabled = isVisible;
     }
 
     /// <summary>

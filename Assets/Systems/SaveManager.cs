@@ -376,11 +376,12 @@ public class SaveManager : FSystem {
         foreach (GameObject go in f_dreamFragments)
         {
             saveContent.dreamFragmentsStates.Add(go.name, 0);
-            if (go.GetComponent<DreamFragment>().viewed)
+            DreamFragment df = go.GetComponent<DreamFragment>();
+            if (df.viewed)
             {
                 saveContent.dreamFragmentsStates[go.name] = 1;
                 LinkedWith linkWith = go.GetComponent<LinkedWith>();
-                if (linkWith && linkWith.link.GetComponent<NewDreamFragment>() == null) // Green fragment aren't linked with
+                if (linkWith && linkWith.link.GetComponent<NewDreamFragment>() == null && df.type == 0)
                     saveContent.dreamFragmentsStates[go.name] = 2;
                 Animator anim;
                 if (go.TryGetComponent<Animator>(out anim))
@@ -426,12 +427,12 @@ public class SaveManager : FSystem {
         }
 
         // Set gears state
-        if (!gears.activeSelf)
-            saveContent.gearEnigmaState = 0;
-        else if (!IARGearsEnigma.instance.IsResolved())
-            saveContent.gearEnigmaState = 1;
-        else
+        if (IARGearsEnigma.instance.IsResolved())
             saveContent.gearEnigmaState = 2;
+        else if (!gears.activeSelf)
+            saveContent.gearEnigmaState = 0;
+        else
+            saveContent.gearEnigmaState = 1; // gears displayed but not resolved
         
         // generate received hints
         foreach (GameObject hint in f_enabledHintsIAR)
@@ -540,13 +541,7 @@ public class SaveManager : FSystem {
             if (saveContent.lastRoomUnlocked > 1)
                 LoginManager.instance.UnlockLoginDoor();
             if (saveContent.lastRoomUnlocked > 2)
-            {
                 LockResolver.instance.UnlockRoom2Fences();
-                // disable queries
-                GameObjectManager.setGameObjectState(IAR_Room2.transform.GetChild(0).gameObject, false);
-                // enable final code
-                GameObjectManager.setGameObjectState(IAR_Room2.transform.GetChild(1).gameObject, true);
-            }
 
             // set player position
             player.transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -589,7 +584,7 @@ public class SaveManager : FSystem {
             // enable inventory HUD
             GameObjectManager.setGameObjectState(inventoryHUD, true);
 
-            //set puzzle position un IAR
+            //set puzzle position in IAR
             foreach (GameObject go in f_puzzleUI)
             {
                 if (saveContent.puzzlePosition.ContainsKey(go.name)) { 
@@ -611,11 +606,12 @@ public class SaveManager : FSystem {
                         // if collected, turn off fragment in scene
                         DreamFragmentCollecting.instance.TurnOffDreamFragment(go);
                         // enable in IAR
-                        if (go.GetComponent<LinkedWith>()) // Green fragments don't contain LinkedWith component
+                        if (go.GetComponent<LinkedWith>())
                         {
                             tmpGO = go.GetComponent<LinkedWith>().link;
                             GameObjectManager.setGameObjectState(tmpGO, true);
-                            if (code == 2)
+                            DreamFragment df = go.GetComponent<DreamFragment>();
+                            if (code == 2 && df.type == 0) // case of blue dream fragments
                             {
                                 // set as seen in IAR
                                 tmpDFToggle = tmpGO.GetComponent<DreamFragmentToggle>();
@@ -623,6 +619,8 @@ public class SaveManager : FSystem {
                                 tmpDFToggle.currentState = tmpDFToggle.offState;
                                 GameObjectManager.removeComponent<NewDreamFragment>(tmpDFToggle.gameObject);
                             }
+                            else if (df.type == 1) // case of green dream fragments
+                                CollectObject.instance.enableTargetInIAR(df.gameObject);
                         }
                     }
                 }
@@ -664,12 +662,13 @@ public class SaveManager : FSystem {
 
             // load room 3 board texture
             Texture2D tex = new Texture2D(1, 1);
-            bool result = tex. LoadImage(saveContent.boardEraseTexture);
+            tex.LoadImage(saveContent.boardEraseTexture);
             boardTexture.material.mainTexture = tex;
             WhiteBoardManager.instance.SetRenderOrder(null);
             // set eraser position
             eraser.transform.position = new Vector3(saveContent.boardEraserPosition[0], saveContent.boardEraserPosition[1], saveContent.boardEraserPosition[2]);
 
+            bool allR2queriesSolved = true;
             // set queries states
             foreach (GameObject query in f_queries)
                 if (saveContent.iarQueriesStates.ContainsKey(query.name) && saveContent.iarQueriesAnswer.ContainsKey(query.name) && saveContent.iarQueriesDesc.ContainsKey(query.name))
@@ -680,27 +679,34 @@ public class SaveManager : FSystem {
                             GameObject child = query.transform.GetChild(i).gameObject;
                             GameObjectManager.setGameObjectState(child, !child.activeSelf);
                             // For the third set answer and description
-                            if (i == 3) {
+                            if (i == 3)
+                            {
                                 child.transform.GetChild(0).GetComponent<TMP_Text>().text = saveContent.iarQueriesAnswer[query.name];
                                 child.transform.GetChild(1).GetComponent<TMP_Text>().text = saveContent.iarQueriesDesc[query.name];
                             }
                         }
-            
+                    else if (query.tag == "Q-R2")
+                        // We found a query in room 2 not resolved
+                        allR2queriesSolved = false;
+            // special case if savegame occurs when all R2 queries are solved and player doesn't unlock the last room => display code in IAR
+            if (saveContent.lastRoomUnlocked == 1 && allR2queriesSolved)
+                IARQueryEvaluator.instance.showR2FinalCode();
+
             // Set gears state
-            if (saveContent.gearEnigmaState > 0)
+            // Check if gears enigma was solved
+            if (saveContent.gearEnigmaState == 2)
+            {
+                // Hide question
+                GameObjectManager.setGameObjectState(gears.transform.GetChild(0).gameObject, false);
+                // Update system
+                IARGearsEnigma.instance.SolveGearsEnigma();
+            }
+            else if (saveContent.gearEnigmaState == 1)
             {
                 // display gears
                 GameObjectManager.setGameObjectState(gears, true);
                 // Hide queries
                 GameObjectManager.setGameObjectState(gears.GetComponent<LinkedWith>().link, false);
-                // Check if gears enigma was solved
-                if (saveContent.gearEnigmaState == 2)
-                {
-                    // Hide question
-                    GameObjectManager.setGameObjectState(gears.transform.GetChild(0).gameObject, false);
-                    // Update system
-                    IARGearsEnigma.instance.SolveGearsEnigma();
-                }
             }
 
             // synchronize help system
@@ -771,7 +777,7 @@ public class SaveManager : FSystem {
 	/// </summary>
 	public bool CheckSaveNameValidity()
     {
-		bool isValid = true;
+		bool isValid;
 
 		// remove file extension
 		if (popupSaveInputfield.text.EndsWith(saveFilesExtension))

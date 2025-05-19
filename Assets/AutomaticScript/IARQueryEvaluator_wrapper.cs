@@ -12,6 +12,11 @@ public class IARQueryEvaluator_wrapper : BaseWrapper
 		MainLoop.initAppropriateSystemField (system, "unlockedRoom", unlockedRoom);
 	}
 
+	public void showR2FinalCode()
+	{
+		MainLoop.callAppropriateSystemMethod (system, "showR2FinalCode", null);
+	}
+
 	public void IarOnEndEditAnswer(UnityEngine.GameObject query)
 	{
 		MainLoop.callAppropriateSystemMethod (system, "IarOnEndEditAnswer", query);

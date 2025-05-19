@@ -23,7 +23,7 @@ public class Chronometer : MonoBehaviour
         int seconds = (int)(d % 3600) % 60;
         UI_Chrono.text = (hours > 0 ? (hours.ToString("D2") + ":") : "") + minutes.ToString("D2") + ":" + seconds.ToString("D2");
         UI_Chrono.color = new Color(1, d / sessionTimer, d / sessionTimer);
-        if (d == 0)
+        if (d == 0 && GetComponent<TMPro.TMP_Text>().enabled)
         {
             GameObjectManager.setGameObjectState(muteBt, true);
             // Show mouse cursor

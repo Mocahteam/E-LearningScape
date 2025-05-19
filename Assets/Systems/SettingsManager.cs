@@ -159,7 +159,10 @@ public class SettingsManager : FSystem {
                 Debug.Log("Settings loaded");
             }
             else
-                Debug.LogError("Couldn't load settings from PlayerPrefs because of invalid content.");
+            {
+                Debug.LogError("Couldn't load settings from PlayerPrefs because of invalid content. Rebuild PlayerPrefs settings.");
+                SaveSettings();
+            }
         }
         else
             SaveSettings();

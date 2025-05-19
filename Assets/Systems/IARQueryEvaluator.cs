@@ -17,7 +17,6 @@ public class IARQueryEvaluator : FSystem {
     private Family f_answerRoom2 = FamilyManager.getFamily(new AnyOfTags("A-R2"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF)); // answers not displayed for the second room
     private Family f_queriesRoom3 = FamilyManager.getFamily(new AnyOfTags("Q-R3"));
     private Family f_uiEffects = FamilyManager.getFamily(new AnyOfTags("UIEffect"), new NoneOfProperties(PropertyMatcher.PROPERTY.ACTIVE_SELF));
-    private Family f_itemSelected = FamilyManager.getFamily(new AnyOfTags("InventoryElements"), new AllOfComponents(typeof(SelectedInInventory)));
     private Family f_selectedTab = FamilyManager.getFamily(new AllOfComponents(typeof(SelectedTab)));
 
     private Family f_terminalScreens = FamilyManager.getFamily(new AnyOfTags("TerminalScreen"));
@@ -80,15 +79,6 @@ public class IARQueryEvaluator : FSystem {
         f_uiEffects.addEntryCallback(onUIEffectEnd);
     }
 
-    // return true if UI with name "name" is selected into inventory
-    private GameObject isSelected(string name)
-    {
-        foreach (GameObject go in f_itemSelected)
-            if (go.name == name)
-                return go;
-        return null;
-    }
-
     private void onNewAnswerDisplayed(int instanceId)
     {
         // When all answer was displayed => ask to display final code for second room
@@ -101,11 +91,16 @@ public class IARQueryEvaluator : FSystem {
         if (showRoom2FinalCode)
         {
             showRoom2FinalCode = false;
-            // disable queries
-            GameObjectManager.setGameObjectState(queriesRoom2.transform.GetChild(0).gameObject, false);
-            // enable final code
-            GameObjectManager.setGameObjectState(queriesRoom2.transform.GetChild(1).gameObject, true);
+            showR2FinalCode();
         }
+    }
+
+    public void showR2FinalCode()
+    {
+        // disable queries
+        GameObjectManager.setGameObjectState(queriesRoom2.transform.GetChild(0).gameObject, false);
+        // enable final code
+        GameObjectManager.setGameObjectState(queriesRoom2.transform.GetChild(1).gameObject, true);
     }
 
     public void IarOnEndEditAnswer(GameObject query)

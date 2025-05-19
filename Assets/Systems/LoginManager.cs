@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FYFY;
 using FYFY_plugins.PointerManager;
 using TMPro;
+using System.Collections;
 
 public class LoginManager : FSystem {
 
@@ -301,5 +302,16 @@ public class LoginManager : FSystem {
         door.GetComponent<Animator>().enabled = true; // enable animation
         // Enable IAR second screen
         GameObjectManager.setGameObjectState(mainWindow.GetComponentInChildren<LinkedWith>().link, true); // enable questions tab
+        // be sure that login is not more selectable (important for loading savegame)
+        MainLoop.instance.StartCoroutine(delayUninteractiveLogin());
+    }
+
+    // We have to yied two times before checking if login is selectable in case of loading savegame
+    private IEnumerator delayUninteractiveLogin()
+    {
+        yield return null;
+        yield return null;
+        if (f_loginUnlocked.Count > 0)
+            GameObjectManager.removeComponent<Selectable>(f_loginUnlocked.First());
     }
 }
