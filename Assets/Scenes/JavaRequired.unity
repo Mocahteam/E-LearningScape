@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400.1739, y: -247.05165}
+  m_AnchoredPosition: {x: 399.8567, y: -247.18546}
   m_SizeDelta: {x: 225.85, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &57676196
@@ -541,7 +541,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400.1739, y: -369.25385}
+  m_AnchoredPosition: {x: 399.85672, y: -369.56607}
   m_SizeDelta: {x: 106.3, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &123041557
@@ -671,8 +671,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400.1739, y: -308.15277}
-  m_SizeDelta: {x: 407.7, y: 30}
+  m_AnchoredPosition: {x: 399.85672, y: -308.37576}
+  m_SizeDelta: {x: 493.7, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &179375358
 MonoBehaviour:
@@ -955,7 +955,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Je ne peux installer Java, lancer quand m\xEAme"
+  m_text: "Je ne peux installer Java, lancer le jeu quand m\xEAme"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 388fb88c7332f6a4086c9d1069ce3d53, type: 2}
   m_sharedMaterial: {fileID: 3898167904873870984, guid: 388fb88c7332f6a4086c9d1069ce3d53,
@@ -1197,7 +1197,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400.1739, y: -133.25055}
+  m_AnchoredPosition: {x: 399.85672, y: -133.29515}
   m_SizeDelta: {x: 436.71, y: 135.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &550977342
@@ -1336,7 +1336,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 30}
+  m_SizeDelta: {x: 541.44, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &821272258
 MonoBehaviour:
@@ -1754,7 +1754,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: I can't install Java, launch anyway
+  m_text: I can't install Java, launch the game anyway
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 388fb88c7332f6a4086c9d1069ce3d53, type: 2}
   m_sharedMaterial: {fileID: 3898167904873870984, guid: 388fb88c7332f6a4086c9d1069ce3d53,
