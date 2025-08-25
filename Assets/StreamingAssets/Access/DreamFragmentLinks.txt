@@ -8,7 +8,7 @@
       "Voir plus"
   ],
   "Fragment_souvenir_2": [
-      "http://www-ia.lip6.fr/~muratetm/elearningscape/Fragment18.png",
+      "http://www.lip6.fr/Mathieu.Muratet/elearningscape/Fragment18.png",
       "Besoin de plus d'aide ?"
   ],
   "Fragment_souvenir_3": [

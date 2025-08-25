@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1271605648}
-  m_IndirectSpecularColor: {r: 0.3375433, g: 0.3455641, b: 0.3997331, a: 1}
+  m_IndirectSpecularColor: {r: 0.34049016, g: 0.348542, b: 0.40274608, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -46553,7 +46553,7 @@ PrefabInstance:
     - target: {fileID: 114992790695588028, guid: 024bb2dfb3c21504ead59e7744b73e4a,
         type: 3}
       propertyPath: urlLink
-      value: https://webia.lip6.fr/~muratetm/elearningscape/tuto.html
+      value: https://www.lip6.fr/Mathieu.Muratet/elearningscape/tuto.html
       objectReference: {fileID: 0}
     - target: {fileID: 114992790695588028, guid: 024bb2dfb3c21504ead59e7744b73e4a,
         type: 3}
