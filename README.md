@@ -13,16 +13,16 @@ Ce jeu étant développé avec des ressources limitées nous n'avons pas actuell
 **Pour MacOS :**
    1. Décompressez l'archive sur votre Mac (normalement ça se fait automatiquement)
    2. Tentez de lancer le jeu en cliquant sur le fichier **E-LearningScape** (icône avec un diamant bleu). **Si votre Mac bloque le lancement du jeu** vous avez deux options pour l'autoriser :
-    - Option 1 (à privilégier) :
-      * Ouvrez les **Réglages Systèmes**
-      * Cliquez sur **Confidentialité et sécurité**, faites défiler vers le bas jusqu'à atteindre la section **Sécurité**
-      * Vous devriez voir le message "E-LearningScape a été bloqué pour protéger votre Mac", cliquez sur le bouton **Ouvrir quand même**
-      * Vous pouvez maintenant lancer le jeu normalement en cliquant sur le fichier **E-LearningScape** (icône avec un diamant bleu)
-   - Option 2 :
-      * Dans le dossier **E-LearningScape** faites un **clic-secondaire** (ou clic-droit) sur le fichier **Configure** et choisissez **Ouvrir**
-      * Dans la fenêtre qui s'ouvre, cliquez sur ce bouton **Ouvrir**
-      * Une fenêtre **Terminal** s'ouvre, attendez d'avoir le message **[Opération terminée]**
-      * Vous pouvez maintenant lancer le jeu en cliquant sur le fichier **E-LearningScape** (icône avec un diamant bleu)
+      - Option 1 (à privilégier) :
+         * Ouvrez les **Réglages Systèmes**
+         * Cliquez sur **Confidentialité et sécurité**, faites défiler vers le bas jusqu'à atteindre la section **Sécurité**
+         * Vous devriez voir le message "E-LearningScape a été bloqué pour protéger votre Mac", cliquez sur le bouton **Ouvrir quand même**
+         * Vous pouvez maintenant lancer le jeu normalement en cliquant sur le fichier **E-LearningScape** (icône avec un diamant bleu)
+      - Option 2 :
+         * Dans le dossier **E-LearningScape** faites un **clic-secondaire** (ou clic-droit) sur le fichier **Configure** et choisissez **Ouvrir**
+         * Dans la fenêtre qui s'ouvre, cliquez sur ce bouton **Ouvrir**
+         * Une fenêtre **Terminal** s'ouvre, attendez d'avoir le message **[Opération terminée]**
+         * Vous pouvez maintenant lancer le jeu en cliquant sur le fichier **E-LearningScape** (icône avec un diamant bleu)
 
 # E-LearningScape
 E-LearningScape est un jeu sérieux sous un format d'*escape game*. Les joueurs incarnent des marchands de sable naviguant dans le rêve d'une personne et devant l'aider à répondre à toutes les questions qu'elle se pose avant qu'elle ne se réveille. 
