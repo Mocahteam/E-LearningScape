@@ -54,6 +54,7 @@ Le jeu E-LearningScape inclus par défaut trois versions traitant de trois thèm
    - [UXDesign](https://www.lip6.fr/Mathieu.Muratet/elearningscape/Mods/UXDesign.zip) (une adaptation sur la conception centrée utilisateur)
    - [ViolenceScolaire](https://www.lip6.fr/Mathieu.Muratet/elearningscape/Mods/ViolenceScolaire.zip) (une adaptation sur les violences scolaires)
    - [RevolNum](https://www.lip6.fr/Mathieu.Muratet/elearningscape/Mods/RevolNum.zip) (une adaptation pour SNT)
+   - [ValeursRep](https://www.lip6.fr/Mathieu.Muratet/elearningscape/Mods/ValeursRep.zip) (une adaptation sur les valeurs de la république, conçu par des enseignants en CEF - Centre Educatif Fermé)
 
 Pour installer ces autres versions, téléchargez l'un des fichier zip ci-dessus et décompressez son contenu dans le dossier StreamingAssets de votre jeu :
    - Pour **Windows** et **Linux**, voir le dossier **E-LearningScape_Data/StreamingAssets/[versionJeu]**
