@@ -33,9 +33,7 @@ public class LoginManager : FSystem {
     private TMP_InputField ifConnectionR2;
     public static string passwordSolution;
 
-    private TextMeshProUGUI connectionAnswerCheck1;
-    private TextMeshProUGUI connectionAnswerCheck2;
-    private TextMeshProUGUI connectionAnswerCheck3;
+    private Transform answerCheck;
     private Color cacGreen;
     private Color cacOrange;
     private Color cacRed;
@@ -59,13 +57,10 @@ public class LoginManager : FSystem {
         ifConnectionR2 = inputField;
 
         // get fourth child of the password and backup answer UI notifications
-        GameObject answerCheck = inputField.gameObject.transform.GetChild(2).gameObject;
-        connectionAnswerCheck1 = answerCheck.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        cacGreen = connectionAnswerCheck1.color;
-        connectionAnswerCheck2 = answerCheck.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        cacOrange = connectionAnswerCheck2.color;
-        connectionAnswerCheck3 = answerCheck.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        cacRed = connectionAnswerCheck3.color;
+        answerCheck = inputField.transform.GetChild(2);
+        cacGreen = answerCheck.GetChild(0).GetComponent<TextMeshProUGUI>().color;
+        cacOrange = answerCheck.GetChild(1).GetComponent<TextMeshProUGUI>().color;
+        cacRed = answerCheck.GetChild(2).GetComponent<TextMeshProUGUI>().color; ;
 
         f_loginUnlocked.addEntryCallback(onLoginUnlocked);
         f_focusedLogin.addEntryCallback(onReadyToWorkOnLogin);
@@ -170,14 +165,8 @@ public class LoginManager : FSystem {
     public void CheckMastermindAnswer() //mastermind
     {
         string answer = ifConnectionR2.text;
-        char answerHundreds = answer.Length == 3 ? answer[0] : '0';
-        char answerTens = answer.Length == 3 ? answer[1] : (answer.Length == 2 ? answer[0] : '0');
-        char answerUnits = answer.Length == 3 ? answer[2] : (answer.Length == 2 ? answer[1] : (answer.Length == 1 ? answer[0] : '0'));
-        char solutionHundreds = passwordSolution.Length == 3 ? passwordSolution[0] : '0';
-        char solutionTens = passwordSolution.Length == 3 ? passwordSolution[1] : (passwordSolution.Length == 2 ? passwordSolution[0] : '0');
-        char solutionUnits = passwordSolution.Length == 3 ? passwordSolution[2] : (passwordSolution.Length == 2 ? passwordSolution[1] : (passwordSolution.Length == 1 ? passwordSolution[0] : '0'));
 
-        if (answerHundreds == solutionHundreds && answerTens == solutionTens && answerUnits == solutionUnits) //if the answer is correct
+        if (answer == passwordSolution) //if the answer is correct
         {
             GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "Correct", performedBy = "player" });
             GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "perform", performedBy = "system" });
@@ -198,13 +187,17 @@ public class LoginManager : FSystem {
                     }
             });
 
-            //show correct answer feedback for the 3 numbers
-            connectionAnswerCheck1.text = "O";
-            connectionAnswerCheck1.color = cacGreen;
-            connectionAnswerCheck2.text = "O";
-            connectionAnswerCheck2.color = cacGreen;
-            connectionAnswerCheck3.text = "O";
-            connectionAnswerCheck3.color = cacGreen;
+            //set all check mark to the green one
+            foreach (Transform child in answerCheck)
+            {
+                TextMeshProUGUI tmp = child.GetComponent<TextMeshProUGUI>();
+                tmp.text = "O";
+                tmp.color = cacGreen;
+                GameObjectManager.setGameObjectState(child.gameObject, true);
+            }
+            //hide unused checkmarks
+            for (int i = 0; i < answerCheck.childCount - passwordSolution.Length; i++)
+                GameObjectManager.setGameObjectState(answerCheck.GetChild(i).gameObject, false);
 
             // enable rooms two and three
             GameObjectManager.setGameObjectState(rooms.transform.GetChild(2).gameObject, true);
@@ -217,7 +210,7 @@ public class LoginManager : FSystem {
         }
         else
         {
-            //else, feedback following the rules of mastermind ('O' correct, '?' right number but wrong place, 'X' wrong number)
+            //else, feedback following the rules of mastermind ('O' correct, '?' right char but wrong place, 'X' wrong char)
 
             GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "Wrong", performedBy = "player" });
             GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
@@ -231,52 +224,31 @@ public class LoginManager : FSystem {
 
             ifConnectionR2.ActivateInputField();
 
-            if (answerHundreds == solutionHundreds)
-            {
-                connectionAnswerCheck1.text = "O";
-                connectionAnswerCheck1.color = cacGreen;
-            }
-            else if (passwordSolution.Contains(answerHundreds + ""))
-            {
-                connectionAnswerCheck1.text = "?";
-                connectionAnswerCheck1.color = cacOrange;
-            }
-            else
-            {
-                connectionAnswerCheck1.text = "X";
-                connectionAnswerCheck1.color = cacRed;
-            }
+            // make visible only useful marks
+            for (int i = 0; i < answerCheck.childCount; i++)
+                GameObjectManager.setGameObjectState(answerCheck.Find(i+"").gameObject, i < answer.Length);
 
-            if (answerTens == solutionTens)
+            string feedback = "";
+            // set approriate marks and colors
+            for (int i = 0; i < answer.Length ; i++)
             {
-                connectionAnswerCheck2.text = "O";
-                connectionAnswerCheck2.color = cacGreen;
-            }
-            else if (passwordSolution.Contains(answerTens + ""))
-            {
-                connectionAnswerCheck2.text = "?";
-                connectionAnswerCheck2.color = cacOrange;
-            }
-            else
-            {
-                connectionAnswerCheck2.text = "X";
-                connectionAnswerCheck2.color = cacRed;
-            }
-
-            if (answerUnits == solutionUnits)
-            {
-                connectionAnswerCheck3.text = "O";
-                connectionAnswerCheck3.color = cacGreen;
-            }
-            else if (passwordSolution.Contains(answerUnits + ""))
-            {
-                connectionAnswerCheck3.text = "?";
-                connectionAnswerCheck3.color = cacOrange;
-            }
-            else
-            {
-                connectionAnswerCheck3.text = "X";
-                connectionAnswerCheck3.color = cacRed;
+                TextMeshProUGUI tmp = answerCheck.Find(i+"").GetComponent<TextMeshProUGUI>();
+                if (i < passwordSolution.Length && answer[answer.Length-1-i] == passwordSolution[passwordSolution.Length-1-i])
+                {
+                    tmp.text = "O";
+                    tmp.color = cacGreen;
+                }
+                else if (passwordSolution.Contains(answer[answer.Length - 1 - i] + ""))
+                {
+                    tmp.text = "?";
+                    tmp.color = cacOrange;
+                }
+                else
+                {
+                    tmp.text = "X";
+                    tmp.color = cacRed;
+                }
+                feedback += tmp.text;
             }
 
             GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
@@ -285,7 +257,7 @@ public class LoginManager : FSystem {
                 objectType = "feedback",
                 activityExtensions = new Dictionary<string, string>() {
                     { "value", selectedLoginPanel.name },
-                    { "content", string.Concat(connectionAnswerCheck1.text, connectionAnswerCheck2.text, connectionAnswerCheck3.text) }
+                    { "content", feedback }
                 }
             });
         }

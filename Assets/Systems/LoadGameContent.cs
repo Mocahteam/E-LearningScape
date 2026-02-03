@@ -493,11 +493,9 @@ public class LoadGameContent : FSystem {
         textMP.transform.localPosition = new Vector3(textMP.transform.localPosition.x, gameContent.mastermindQuestionYPos, textMP.transform.localPosition.z);
         LoginManager.passwordSolution = gameContent.mastermindAnswer2;
         if (LoginManager.passwordSolution == null) // Keep for retrocompatibility
-        { 
             LoginManager.passwordSolution = gameContent.mastermindAnswer + "";
-            while (LoginManager.passwordSolution.Length < 3)
-                LoginManager.passwordSolution = "0" + LoginManager.passwordSolution;
-        }
+        // limit length to the first 6 characters
+        LoginManager.passwordSolution = LoginManager.passwordSolution.Substring(0, Math.Min(LoginManager.passwordSolution.Length, 6));
 
         Debug.Log("Master mind picture loaded");
 
