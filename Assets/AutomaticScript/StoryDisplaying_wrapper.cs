@@ -13,7 +13,7 @@ public class StoryDisplaying_wrapper : BaseWrapper
 	public UnityEngine.GameObject endText;
 	public StoryText storyText;
 	public Timer timer;
-	public UnityEngine.GameObject Chronometer;
+	public UnityEngine.GameObject ProgressionUI;
 	private void Start()
 	{
 		this.hideFlags = HideFlags.NotEditable;
@@ -27,7 +27,7 @@ public class StoryDisplaying_wrapper : BaseWrapper
 		MainLoop.initAppropriateSystemField (system, "endText", endText);
 		MainLoop.initAppropriateSystemField (system, "storyText", storyText);
 		MainLoop.initAppropriateSystemField (system, "timer", timer);
-		MainLoop.initAppropriateSystemField (system, "Chronometer", Chronometer);
+		MainLoop.initAppropriateSystemField (system, "ProgressionUI", ProgressionUI);
 	}
 
 	public void OpenEndLink()

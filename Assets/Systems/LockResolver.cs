@@ -192,6 +192,7 @@ public class LockResolver : FSystem {
 
                 GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock", performedBy = "player" });
                 GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock_meta", performedBy = "system" });
+                HelpSystem.instance.rememberEnigmaIsOver(selectedLocker.gameObject);
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
                 {
                     verb = "completed",
@@ -231,6 +232,7 @@ public class LockResolver : FSystem {
 
                 GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock", performedBy = "player" });
                 GameObjectManager.addComponent<ActionPerformed>(selectedLocker.gameObject, new { overrideName = "unlock_meta", performedBy = "player" });
+                HelpSystem.instance.rememberEnigmaIsOver(selectedLocker.gameObject);
                 GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLocker.gameObject, new
                 {
                     verb = "completed",
@@ -250,6 +252,7 @@ public class LockResolver : FSystem {
                 });
                 closedBy = "system";
                 ExitLocker();
+                IARQueryEvaluator.instance.showR2Queries();
             }
         }
     }

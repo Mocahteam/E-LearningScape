@@ -17,6 +17,11 @@ public class IARQueryEvaluator_wrapper : BaseWrapper
 		MainLoop.callAppropriateSystemMethod (system, "showR2FinalCode", null);
 	}
 
+	public void showR2Queries()
+	{
+		MainLoop.callAppropriateSystemMethod (system, "showR2Queries", null);
+	}
+
 	public void IarOnEndEditAnswer(UnityEngine.GameObject query)
 	{
 		MainLoop.callAppropriateSystemMethod (system, "IarOnEndEditAnswer", query);

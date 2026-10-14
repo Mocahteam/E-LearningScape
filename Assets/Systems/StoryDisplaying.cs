@@ -41,7 +41,7 @@ public class StoryDisplaying : FSystem {
 
     public Timer timer;
 
-    public GameObject Chronometer;
+    public GameObject ProgressionUI;
 
     public static StoryDisplaying instance;
 
@@ -193,8 +193,8 @@ public class StoryDisplaying : FSystem {
             int seconds = (int)(d % 3600) % 60;
             // display timer indise the story text
             storyTexts[storyText.storyProgression].Add(string.Concat("<align=\"center\">", LoadGameContent.gameContent.scoreText, Environment.NewLine, hours.ToString("D2"), ":", minutes.ToString("D2"), ":", seconds.ToString("D2")));
-            // hide in game timer
-            GameObjectManager.setGameObjectState(Chronometer, false);
+            // hide in game timer/progression
+            GameObjectManager.setGameObjectState(ProgressionUI, false);
             // trace that the game is over
             GameObjectManager.addComponent<ActionPerformedForLRS>(storyText.gameObject, new
             {

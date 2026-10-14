@@ -11,6 +11,7 @@ public class HelpSystem_wrapper : BaseWrapper
 	public Timer timer;
 	public UnityEngine.GameObject scrollView;
 	public UnityEngine.GameObject intuitionPopUp;
+	public TMPro.TMP_Text Completion;
 	private void Start()
 	{
 		this.hideFlags = HideFlags.NotEditable;
@@ -22,6 +23,7 @@ public class HelpSystem_wrapper : BaseWrapper
 		MainLoop.initAppropriateSystemField (system, "timer", timer);
 		MainLoop.initAppropriateSystemField (system, "scrollView", scrollView);
 		MainLoop.initAppropriateSystemField (system, "intuitionPopUp", intuitionPopUp);
+		MainLoop.initAppropriateSystemField (system, "Completion", Completion);
 	}
 
 	public void initHelpSystem()
@@ -32,6 +34,11 @@ public class HelpSystem_wrapper : BaseWrapper
 	public void updatePnCompletion()
 	{
 		MainLoop.callAppropriateSystemMethod (system, "updatePnCompletion", null);
+	}
+
+	public void rememberEnigmaIsOver(UnityEngine.GameObject src)
+	{
+		MainLoop.callAppropriateSystemMethod (system, "rememberEnigmaIsOver", src);
 	}
 
 	public void OnPlayerAskHelp()

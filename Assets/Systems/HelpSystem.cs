@@ -35,6 +35,8 @@ public class HelpSystem : FSystem {
 
     public GameObject intuitionPopUp;
 
+    public TMP_Text Completion;
+
     /// <summary>
     /// Key: ComponentMonitoring id of enigmas inside meta Petri net
     /// Value: id of sub Petri net that details the resolution process of enigma
@@ -42,7 +44,7 @@ public class HelpSystem : FSystem {
     private Dictionary<int, int> EnigmaIdToPnId;
 
     /// <summary>
-    /// Associate for each Petri net name the number of remaining action to reach a player objective in this Petri net
+    /// Associate for each Petri net name the number of remaining action to reach a player objective in this Petri net (exclude system actions)
     /// </summary>
     private Dictionary<string, int> pnNetsRemainingSteps;
     /// <summary>
@@ -135,6 +137,8 @@ public class HelpSystem : FSystem {
     /// Count the number of hint given
     /// </summary>
     private int hintCounter = 0;
+
+    private int sumRequiredStepsOnStart;
 
     public float HintCooldown { 
         get
@@ -274,7 +278,7 @@ public class HelpSystem : FSystem {
                     {  4, 20},
                     { 21, 21},
                     { 99, 22},
-                    {164, -1}
+                    {130, -1}
                 };
         }
         else
@@ -293,18 +297,39 @@ public class HelpSystem : FSystem {
 
             if (thread == null)
             {
+                sumRequiredStepsOnStart = 0;
                 List<string> pnNames = new List<string>(pnNetsRemainingSteps.Keys);
                 foreach (string pnName in pnNames)
                 {
-                    pnNetsRemainingSteps[pnName] = MonitoringManager.getNextActionsToReachPlayerObjective(pnName, int.MaxValue).Count;
+                    pnNetsRemainingSteps[pnName] = computeRequiredPlayerActionToReachObjective(pnName);
                     if (pnNetsRequiredStepsOnStart[pnName] == 0) // not initialized
                         pnNetsRequiredStepsOnStart[pnName] = pnNetsRemainingSteps[pnName];
+                    sumRequiredStepsOnStart += pnNetsRemainingSteps[pnName];
                 }
                 killThread = false;
                 thread = new Thread(updatePnCompletion);
                 thread.Start();
             }
         }
+    }
+
+    private int computeRequiredPlayerActionToReachObjective(string pnName)
+    {
+        List<KeyValuePair<ComponentMonitoring, string>> list = MonitoringManager.getNextActionsToReachPlayerObjective(pnName, int.MaxValue);
+        int playerActions = 0;
+        foreach (KeyValuePair<ComponentMonitoring, string> info in list)
+        {
+            // Par défaut on compte ce ComponentMonitoring
+            playerActions += 1;
+            // Mais on regarde si parmis ses transitions au moins une ne serait pas taguée "système" au quel cas on retire le compteur car on ne souhaite ici que les ComponenetMonitoring entièrement non système
+            foreach (TransitionLink tl in info.Key.transitionLinks)
+                if (tl.isSystemAction)
+                {
+                    playerActions -= 1;
+                    break;
+                }
+        }
+        return playerActions;
     }
 
     public void updatePnCompletion()
@@ -316,14 +341,20 @@ public class HelpSystem : FSystem {
             {
                 // Update each Petri net
                 List<string> pnNames = new List<string>(instance.pnNetsRemainingSteps.Keys);
+                int cpt = 1;
                 foreach (string pnName in pnNames)
                 {
-                    lastCount = MonitoringManager.getNextActionsToReachPlayerObjective(pnName, int.MaxValue).Count;
-                    if (lastCount == 0 && lastCount < instance.pnNetsRemainingSteps[pnName])
-                        cleanHintsByPn.Push(pnName);
                     mut.WaitOne();
-                    instance.pnNetsRemainingSteps[pnName] = lastCount;
+                    Debug.Log("Process: " + pnName + " "+cpt+"/"+pnNames.Count);
+                    if (instance.pnNetsRemainingSteps[pnName] > 0)
+                    {
+                        lastCount = computeRequiredPlayerActionToReachObjective(pnName);
+                        if (lastCount == 0 && lastCount < instance.pnNetsRemainingSteps[pnName])
+                            cleanHintsByPn.Push(pnName);
+                        instance.pnNetsRemainingSteps[pnName] = lastCount;
+                    }
                     mut.ReleaseMutex();
+                    cpt++;
                     Thread.Sleep(250);
                 }
             }
@@ -332,6 +363,20 @@ public class HelpSystem : FSystem {
             Debug.Log(e.Message);
         }
         thread = null;
+    }
+
+    public void rememberEnigmaIsOver(GameObject src)
+    {
+        // Rechercher le ou les ComponentMonitoring associés au méta
+        foreach(ComponentMonitoring cm in src.GetComponents<ComponentMonitoring>())
+        {
+            if (EnigmaIdToPnId.ContainsKey(cm.id))
+            {
+                mut.WaitOne();
+                pnNetsRemainingSteps[MonitoringManager.Instance.PetriNetsName[EnigmaIdToPnId[cm.id]]] = 0;
+                mut.ReleaseMutex();
+            }
+        }
     }
 
     // Evaluate if resolution process is ahead of remaining time or not.
@@ -344,16 +389,16 @@ public class HelpSystem : FSystem {
         // Second compute resolution progression (taking into account enigma weights)
         float resolutionDone = 0;
 
-        mut.WaitOne(); // because pnNetsRemainingSteps is also modified in thread, we have to protect it during iterations
-
+        float globalRemainingSteps = 0;
         foreach (KeyValuePair<string, int> entry in pnNetsRemainingSteps)
         {
             string pnName = entry.Key;
             float remainingSteps = entry.Value;
+            globalRemainingSteps += remainingSteps;
             float requiredSteps = pnNetsRequiredStepsOnStart[pnName];
-            resolutionDone += ((requiredSteps - remainingSteps) / requiredSteps)*weights[pnName];
+            resolutionDone += (1 - remainingSteps/requiredSteps)*weights[pnName];
         }
-        mut.ReleaseMutex();
+        Completion.text = $"{(1f - (globalRemainingSteps / sumRequiredStepsOnStart))*100:F0}%";
 
         float enigmaProgression = resolutionDone / totalWeightedMetaActions;
 
@@ -577,7 +622,7 @@ public class HelpSystem : FSystem {
                                 //display feedback in hint list in IAR
                                 string hintText = gameHints.wrongAnswerFeedbacks[key][wrongAnswer].Value;
                                 // Add new hint button
-                                CreateHintButton(cm, key, hintText, gameHints.wrongAnswerFeedbacks[key][wrongAnswer].Key);
+                                CreateHintButton(cm, key, hintText, gameHints.wrongAnswerFeedbacks[key][wrongAnswer].Key, "", true, true);
                                 // Remove this hint
                                 gameHints.wrongAnswerFeedbacks[key].Remove(wrongAnswer);
                                 break;
@@ -677,23 +722,26 @@ public class HelpSystem : FSystem {
         // Parse all selected enigmas
         foreach (KeyValuePair<ComponentMonitoring, string> selectedEnigma in selectedEnigmas)
         {
+            if (EnigmaIdToPnId.ContainsKey(selectedEnigma.Key.id))
+                continue;
+
             int associatedPnToEnigma = EnigmaIdToPnId[selectedEnigma.Key.id];
-            if (associatedPnToEnigma != -1)
+            if (associatedPnToEnigma == -1)
+                continue;
+
+            // get the shortest path in sub Petri net to reach the end of the enigma
+            List<KeyValuePair<ComponentMonitoring, string>> usefullActions = MonitoringManager.getNextActionsToReachPlayerObjective(MonitoringManager.Instance.PetriNetsName[associatedPnToEnigma], int.MaxValue);
+            // compute intersections between the usefullActions and the triggerableActions in order to select action required to solve enigma
+            foreach (KeyValuePair<ComponentMonitoring, string> triggerableAction in triggerableActions)
             {
-                // get the shortest path in sub Petri net to reach the end of the enigma
-                List<KeyValuePair<ComponentMonitoring, string>> usefullActions = MonitoringManager.getNextActionsToReachPlayerObjective(MonitoringManager.Instance.PetriNetsName[associatedPnToEnigma], int.MaxValue);
-                // compute intersections between the usefullActions and the triggerableActions in order to select action required to solve enigma
-                foreach (KeyValuePair<ComponentMonitoring, string> triggerableAction in triggerableActions)
+                // filter action of the selected sub Petri net
+                if (triggerableAction.Key.fullPnSelected == associatedPnToEnigma)
                 {
-                    // filter action of the selected sub Petri net
-                    if (triggerableAction.Key.fullPnSelected == associatedPnToEnigma)
+                    // Select candidates which are triggerable, inside the sortest path and have hints available
+                    foreach (KeyValuePair<ComponentMonitoring, string> usefullAction in usefullActions)
                     {
-                        // Select candidates which are triggerable, inside the sortest path and have hints available
-                        foreach (KeyValuePair<ComponentMonitoring, string> usefullAction in usefullActions)
-                        {
-                            if (usefullAction.Key.id == triggerableAction.Key.id && usefullAction.Value == triggerableAction.Value && gameHints.dictionary.ContainsKey(usefullAction.Key.id + "." + usefullAction.Value))
-                                actionCandidates.Add(usefullAction);
-                        }
+                        if (usefullAction.Key.id == triggerableAction.Key.id && usefullAction.Value == triggerableAction.Value && gameHints.dictionary.ContainsKey(usefullAction.Key.id + "." + usefullAction.Value))
+                            actionCandidates.Add(usefullAction);
                     }
                 }
             }
@@ -804,7 +852,7 @@ public class HelpSystem : FSystem {
     /// <param name="actionName"></param>
     /// <param name="hintText"></param>
     /// <param name="hintLink"></param>
-    public Button CreateHintButton(ComponentMonitoring hintMonitor, string actionName, string hintText, string hintLink = "", string hintLevel = "", bool enableTrace = true)
+    public Button CreateHintButton(ComponentMonitoring hintMonitor, string actionName, string hintText, string hintLink = "", string hintLevel = "", bool enableTrace = true, bool isWrongAnswerFeedback = false)
     {
         //show a button to see hint content in hint tab in IAR
         if (hintButtonsPool.Count == 0)
@@ -830,6 +878,7 @@ public class HelpSystem : FSystem {
         tmpHC.text = hintText;
         tmpHC.level = hintLevel;
         tmpHC.link = hintLink;
+        tmpHC.isWrongAnswerFeedback = isWrongAnswerFeedback;
 
         hintCounter++;
         tmpGO.transform.GetChild(0).GetComponent<TMP_Text>().text = LoadGameContent.internalGameContent.hintButtonText + " " + hintCounter;

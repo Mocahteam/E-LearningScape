@@ -201,6 +201,7 @@ public class LoadGameContent : FSystem {
 
         chronometer.sessionTimer = internalGameContent.gameDuration;
         chronometer.GetComponent<TMP_Text>().enabled = internalGameContent.displayTimer;
+        GameObjectManager.setGameObjectState(chronometer.transform.parent.Find("Completion").gameObject, internalGameContent.displayCompletion);
 
         // if randomHelpSystemActivation is true, set gamecontent.helpsystem with a random value
         if (internalGameContent.randomHelpSystemActivation)
@@ -267,14 +268,17 @@ public class LoadGameContent : FSystem {
             dreamFragmentsLinks = new Dictionary<string, List<string>>();
         // Affects urlLinks to dream fragments
         foreach (GameObject dream_go in f_dreamFragments)
-            if (dreamFragmentsLinks.ContainsKey(dream_go.name))
+        {
+            string normalizedName = dream_go.name.Substring(7); // on elève le début du nom "Crouch_..."
+            if (dreamFragmentsLinks.ContainsKey(normalizedName))
             {
-                if (dreamFragmentsLinks[dream_go.name] != null && dreamFragmentsLinks[dream_go.name].Count > 1)
+                if (dreamFragmentsLinks[normalizedName] != null && dreamFragmentsLinks[normalizedName].Count > 1)
                 {
-                    dream_go.GetComponent<DreamFragment>().urlLink = dreamFragmentsLinks[dream_go.name][0];
-                    dream_go.GetComponent<DreamFragment>().linkButtonText = dreamFragmentsLinks[dream_go.name][1];
+                    dream_go.GetComponent<DreamFragment>().urlLink = dreamFragmentsLinks[normalizedName][0];
+                    dream_go.GetComponent<DreamFragment>().linkButtonText = dreamFragmentsLinks[normalizedName][1];
                 }
             }
+        }
         Debug.Log("Dream fragments links loaded");
 
         // Load dream fragment png config files
@@ -938,6 +942,15 @@ public class LoadGameContent : FSystem {
     public void SetTimerVisibility(bool isVisible)
     {
         chronometer.GetComponent<TMP_Text>().enabled = isVisible;
+    }
+
+    /// <summary>
+    /// Set completion visibility.
+    /// </summary>
+    /// <param name="isVisible">If true, completion will be visible</param>
+    public void SetCompletionVisibility(bool isVisible)
+    {
+        GameObjectManager.setGameObjectState(chronometer.transform.parent.Find("Completion").gameObject, isVisible);
     }
 
     /// <summary>

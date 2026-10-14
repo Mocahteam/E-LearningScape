@@ -169,7 +169,8 @@ public class LoginManager : FSystem {
         if (answer == passwordSolution) //if the answer is correct
         {
             GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "Correct", performedBy = "player" });
-            GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "perform", performedBy = "system" });
+            GameObjectManager.addComponent<ActionPerformed>(selectedLoginPanel, new { name = "perform", performedBy = "system" }); // meta
+            HelpSystem.instance.rememberEnigmaIsOver(selectedLoginPanel);
             GameObjectManager.addComponent<ActionPerformedForLRS>(selectedLoginPanel, new
             {
                 verb = "answered",

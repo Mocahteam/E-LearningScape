@@ -13,7 +13,7 @@ public class MenuSystem_wrapper : BaseWrapper
 	public UnityEngine.GameObject mainMenu;
 	public UnityEngine.GameObject settingsMainMenu;
 	public UnityEngine.GameObject IARMenuContent;
-	public UnityEngine.GameObject Chronometer;
+	public UnityEngine.GameObject ProgressionUI;
 	private void Start()
 	{
 		this.hideFlags = HideFlags.NotEditable;
@@ -27,7 +27,7 @@ public class MenuSystem_wrapper : BaseWrapper
 		MainLoop.initAppropriateSystemField (system, "mainMenu", mainMenu);
 		MainLoop.initAppropriateSystemField (system, "settingsMainMenu", settingsMainMenu);
 		MainLoop.initAppropriateSystemField (system, "IARMenuContent", IARMenuContent);
-		MainLoop.initAppropriateSystemField (system, "Chronometer", Chronometer);
+		MainLoop.initAppropriateSystemField (system, "ProgressionUI", ProgressionUI);
 	}
 
 	public void StartGame()

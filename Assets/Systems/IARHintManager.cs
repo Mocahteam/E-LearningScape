@@ -113,12 +113,13 @@ public class IARHintManager : FSystem {
                 yield return null;
                 if (hc && hc.monitor)
                 {
+
                     bool endActionReachable = MonitoringManager.getNextActionsToReachPlayerObjective(MonitoringManager.Instance.PetriNetsName[hc.monitor.fullPnSelected], int.MaxValue).Count > 0;
 
                     try
                     {
                         bool stillReachable = false;
-                        if (endActionReachable)
+                        if (endActionReachable && !hc.isWrongAnswerFeedback)
                             stillReachable = hc.monitor.isStillReachable(hc.actionName);
 
                         bool higherHint = false;
@@ -137,8 +138,7 @@ public class IARHintManager : FSystem {
                             }
                         }
 
-
-                        if (!endActionReachable || !stillReachable || higherHint || sameContent)
+                        if ((!endActionReachable && !HelpSystem.shouldPause) || (!stillReachable && !hc.isWrongAnswerFeedback) || higherHint || sameContent)
                         {
                             // remove the button
                             if (hc.GetComponent<Button>() == selectedHint)

@@ -39,6 +39,11 @@ public class InternalGameContent {
     /// </summary>
     public bool displayTimer = true;
     /// <summary>
+    /// If true, make completion visible.
+    /// Else make completion invisible
+    /// </summary>
+    public bool displayCompletion = true;
+    /// <summary>
     /// If false, after answering the last question and leaving IAR,
     /// the ending text will be displayed without going to the last room
     /// </summary>
@@ -103,6 +108,7 @@ public class InternalGameContent {
     public string optionControlsMenu;
     public string optionVirtualFragments;
     public string optionDisplayTimer;
+    public string optionDisplayCompletion;
     public string optionMovingTexts;
     public string optionMoveSpeed;
     public string optionCameraSensitivity;

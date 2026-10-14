@@ -58,6 +58,11 @@ public class LoadGameContent_wrapper : BaseWrapper
 		MainLoop.callAppropriateSystemMethod (system, "SetTimerVisibility", isVisible);
 	}
 
+	public void SetCompletionVisibility(System.Boolean isVisible)
+	{
+		MainLoop.callAppropriateSystemMethod (system, "SetCompletionVisibility", isVisible);
+	}
+
 	public void CopySessionID()
 	{
 		MainLoop.callAppropriateSystemMethod (system, "CopySessionID", null);

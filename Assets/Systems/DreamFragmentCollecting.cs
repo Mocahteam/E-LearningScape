@@ -76,7 +76,7 @@ public class DreamFragmentCollecting : FSystem {
                     GameObjectManager.setGameObjectState(dfUI, true);
                     if(tmpDFComponent.urlLink != null && tmpDFComponent.urlLink != "")
                     {
-                        onlineButton.GetComponentInChildren<TextMeshProUGUI>().text = tmpDFComponent.linkButtonText;
+                        onlineButton.GetComponentInChildren<TextMeshProUGUI>(true).text = tmpDFComponent.linkButtonText;
                         GameObjectManager.setGameObjectState(onlineButton, true);
                         // set callback
                         onlineButton.GetComponent<Button>().onClick.RemoveAllListeners();

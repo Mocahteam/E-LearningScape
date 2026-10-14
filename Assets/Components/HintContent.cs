@@ -12,4 +12,5 @@ public class HintContent : MonoBehaviour {
     public string text;
     public string link;
     public string level;
+    public bool isWrongAnswerFeedback;
 }

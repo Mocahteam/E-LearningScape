@@ -189,7 +189,8 @@ public class IARGearsEnigma : FSystem
                         if (gearDragged.GetComponent<Gear>().isSolution) //if answer is correct
                         {
                             GameObjectManager.addComponent<ActionPerformed>(gears, new { name = "Correct", performedBy = "player" });
-                            GameObjectManager.addComponent<ActionPerformed>(gears, new { name = "perform", performedBy = "system" });
+                            GameObjectManager.addComponent<ActionPerformed>(gears, new { name = "perform", performedBy = "system" }); // meta
+                            HelpSystem.instance.rememberEnigmaIsOver(gears);
                             GameObjectManager.addComponent<ActionPerformedForLRS>(gears, new 
                             { 
                                 verb = "answered",

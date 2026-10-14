@@ -103,6 +103,14 @@ public class IARQueryEvaluator : FSystem {
         GameObjectManager.setGameObjectState(queriesRoom2.transform.GetChild(1).gameObject, true);
     }
 
+    public void showR2Queries()
+    {
+        // enable queries
+        GameObjectManager.setGameObjectState(queriesRoom2.transform.GetChild(0).gameObject, true);
+        // disable final code
+        GameObjectManager.setGameObjectState(queriesRoom2.transform.GetChild(1).gameObject, false);
+    }
+
     public void IarOnEndEditAnswer(GameObject query)
     {
         if (Input.GetButtonDown("Submit"))
@@ -234,6 +242,7 @@ public class IARQueryEvaluator : FSystem {
 
             GameObjectManager.addComponent<ActionPerformed>(query, new { name = "Correct", performedBy = "player" });
             GameObjectManager.addComponent<ActionPerformed>(query, new { name = "perform", performedBy = "system" }); // meta
+            HelpSystem.instance.rememberEnigmaIsOver(query);
 
             // Toggle UI element (hide input text and button and show answer)
             for (int i = 1; i < query.transform.childCount; i++)
