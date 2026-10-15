@@ -1,11 +1,14 @@
 using UnityEngine;
 using FYFY;
 
-public class FYFY_plugins_Monitoring_ActionsManager_wrapper : BaseWrapper
+namespace FYFY_plugins.Monitoring
 {
-	private void Start()
+	public class ActionsManager_wrapper : BaseWrapper
 	{
-		this.hideFlags = HideFlags.NotEditable;
-	}
+		private void Start()
+		{
+			this.hideFlags = HideFlags.NotEditable;
+		}
 
+	}
 }

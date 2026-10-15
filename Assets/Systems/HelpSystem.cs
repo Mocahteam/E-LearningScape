@@ -313,9 +313,9 @@ public class HelpSystem : FSystem {
         }
     }
 
-    private int computeRequiredPlayerActionToReachObjective(string pnName)
+    private int computeRequiredPlayerActionToReachObjective(string pnName, int millisecondsTimeout = -1)
     {
-        List<KeyValuePair<ComponentMonitoring, string>> list = MonitoringManager.getNextActionsToReachPlayerObjective(pnName, int.MaxValue);
+        List<KeyValuePair<ComponentMonitoring, string>> list = MonitoringManager.getNextActionsToReachPlayerObjective(pnName, int.MaxValue, millisecondsTimeout);
         int playerActions = 0;
         foreach (KeyValuePair<ComponentMonitoring, string> info in list)
         {
@@ -341,20 +341,25 @@ public class HelpSystem : FSystem {
             {
                 // Update each Petri net
                 List<string> pnNames = new List<string>(instance.pnNetsRemainingSteps.Keys);
-                int cpt = 1;
                 foreach (string pnName in pnNames)
                 {
                     mut.WaitOne();
-                    Debug.Log("Process: " + pnName + " "+cpt+"/"+pnNames.Count);
                     if (instance.pnNetsRemainingSteps[pnName] > 0)
                     {
-                        lastCount = computeRequiredPlayerActionToReachObjective(pnName);
-                        if (lastCount == 0 && lastCount < instance.pnNetsRemainingSteps[pnName])
-                            cleanHintsByPn.Push(pnName);
-                        instance.pnNetsRemainingSteps[pnName] = lastCount;
+                        try
+                        {
+                            lastCount = computeRequiredPlayerActionToReachObjective(pnName, 250);
+                            if (lastCount == 0 && lastCount < instance.pnNetsRemainingSteps[pnName])
+                                cleanHintsByPn.Push(pnName);
+                            instance.pnNetsRemainingSteps[pnName] = lastCount;
+                        }
+                        catch(TraceAborted e)
+                        {
+                            Debug.LogWarning(e.Message);
+                            Debug.LogWarning("Remaining steps for enigma \"" + pnName + "\" not updated, trying on next iteration...");
+                        }
                     }
                     mut.ReleaseMutex();
-                    cpt++;
                     Thread.Sleep(250);
                 }
             }
@@ -367,16 +372,16 @@ public class HelpSystem : FSystem {
 
     public void rememberEnigmaIsOver(GameObject src)
     {
+        mut.WaitOne();
         // Rechercher le ou les ComponentMonitoring associés au méta
-        foreach(ComponentMonitoring cm in src.GetComponents<ComponentMonitoring>())
+        foreach (ComponentMonitoring cm in src.GetComponents<ComponentMonitoring>())
         {
             if (EnigmaIdToPnId.ContainsKey(cm.id))
             {
-                mut.WaitOne();
                 pnNetsRemainingSteps[MonitoringManager.Instance.PetriNetsName[EnigmaIdToPnId[cm.id]]] = 0;
-                mut.ReleaseMutex();
             }
         }
+        mut.ReleaseMutex();
     }
 
     // Evaluate if resolution process is ahead of remaining time or not.
@@ -534,6 +539,7 @@ public class HelpSystem : FSystem {
 
                     //if labelCount reached the step calculate the feedback level and ask a hint and the time spent since the last time the system gave a feedback reached countLabel to know if it can give another one
                     if (labelCount > config.labelCountStep && Time.time - systemHintTimer > config.systemHintCooldownDuration){
+
                         if (DisplayHint())
                         {
                             Debug.Log("Hint given (progression ratio: " + progressionRatio + "; labelCount: " + labelCount + ")");
@@ -719,10 +725,11 @@ public class HelpSystem : FSystem {
                 }
             }
         }
+        
         // Parse all selected enigmas
         foreach (KeyValuePair<ComponentMonitoring, string> selectedEnigma in selectedEnigmas)
         {
-            if (EnigmaIdToPnId.ContainsKey(selectedEnigma.Key.id))
+            if (!EnigmaIdToPnId.ContainsKey(selectedEnigma.Key.id))
                 continue;
 
             int associatedPnToEnigma = EnigmaIdToPnId[selectedEnigma.Key.id];

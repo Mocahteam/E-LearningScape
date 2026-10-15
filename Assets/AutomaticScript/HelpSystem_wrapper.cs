@@ -46,9 +46,4 @@ public class HelpSystem_wrapper : BaseWrapper
 		MainLoop.callAppropriateSystemMethod (system, "OnPlayerAskHelp", null);
 	}
 
-	public void LoadHelpSystemValues()
-	{
-		MainLoop.callAppropriateSystemMethod (system, "LoadHelpSystemValues", null);
-	}
-
 }
