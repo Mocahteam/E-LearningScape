@@ -269,7 +269,7 @@ public class LoadGameContent : FSystem {
         // Affects urlLinks to dream fragments
         foreach (GameObject dream_go in f_dreamFragments)
         {
-            string normalizedName = dream_go.name.Substring(7); // on elève le début du nom "Crouch_..."
+            string normalizedName = dream_go.name.StartsWith("Crouch_") ? dream_go.name.Substring(7) : dream_go.name; // on elève le début du nom "Crouch_..." pour les fragment de cette énigme, pour les autre on garde leur nom tel quel
             if (dreamFragmentsLinks.ContainsKey(normalizedName))
             {
                 if (dreamFragmentsLinks[normalizedName] != null && dreamFragmentsLinks[normalizedName].Count > 1)

@@ -372,6 +372,9 @@ public class HelpSystem : FSystem {
 
     public void rememberEnigmaIsOver(GameObject src)
     {
+        if (EnigmaIdToPnId == null)
+            return;
+
         mut.WaitOne();
         // Rechercher le ou les ComponentMonitoring associés au méta
         foreach (ComponentMonitoring cm in src.GetComponents<ComponentMonitoring>())
